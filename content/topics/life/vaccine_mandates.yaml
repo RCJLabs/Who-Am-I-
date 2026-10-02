@@ -108,6 +108,7 @@ items:
   # --- Challenges: against requirements ----------------------------------------------------------
   - id: ch_drunk_driving
     type: challenge
+    name: Drunk driving
     targets: stance
     when: stance < 0
     source: >-
@@ -136,6 +137,7 @@ items:
 
   - id: ch_quarantine
     type: challenge
+    name: Forced isolation
     targets: stance
     when: stance < 0
     source: Original scenario; public health laws in many countries allow compulsory isolation of infectious people
@@ -160,6 +162,7 @@ items:
 
   - id: ch_measles
     type: challenge
+    name: The measles classroom
     targets: school
     when: school < 0
     source: Original scenario; the first measles vaccine dose is usually given at 12–15 months (CDC schedule)
@@ -186,6 +189,7 @@ items:
   # --- Challenges: for requirements --------------------------------------------------------------
   - id: ch_blood
     type: challenge
+    name: Required blood donation
     targets: stance
     when: stance > 0
     source: Original scenario
@@ -210,6 +214,7 @@ items:
 
   - id: ch_low_risk
     type: challenge
+    name: Low risk, small benefit
     targets: stance
     when: stance > 0
     source: Original scenario
@@ -236,6 +241,7 @@ items:
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_vote
     type: challenge
+    name: Hospital staff
     targets: stance
     when: stance == 0
     source: Original scenario

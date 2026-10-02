@@ -134,6 +134,7 @@ const ChallengeOptionSchema = OptionSchema.extend({
 export const ChallengeSchema = z.strictObject({
   ...base,
   type: z.literal('challenge'),
+  name: z.string().min(1).optional().describe('Short name used in results, e.g. "The violinist"'),
   targets: Ref.describe('The earlier answer this challenge is aimed at'),
   scenario: z.string().min(1),
   source: z.string().min(1).optional().describe('Citation for the argument or thought experiment'),

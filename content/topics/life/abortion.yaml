@@ -128,6 +128,7 @@ items:
   # --- Challenges: restrictive side -------------------------------------------------------------
   - id: ch_ectopic
     type: challenge
+    name: Ectopic pregnancy
     targets: life_risk
     when: life_risk < 0
     source: "Medical background: ACOG Practice Bulletin No. 193, Tubal Ectopic Pregnancy (2018)"
@@ -153,6 +154,7 @@ items:
 
   - id: ch_violinist
     type: challenge
+    name: The violinist
     targets: stance
     when: stance < 0
     source: Judith Jarvis Thomson, "A Defense of Abortion," Philosophy & Public Affairs (1971)
@@ -183,6 +185,7 @@ items:
 
   - id: ch_rape
     type: challenge
+    name: The rape exception
     targets: rape
     when: stance < 0 and rape > 0
     source: Original scenario, based on a common objection to rape exceptions
@@ -213,6 +216,7 @@ items:
 
   - id: ch_ivf
     type: challenge
+    name: The burning IVF clinic
     targets: stance
     deep: true
     when: stance < 0
@@ -239,6 +243,7 @@ items:
   # --- Challenges: permissive side --------------------------------------------------------------
   - id: ch_future
     type: challenge
+    name: A future like ours
     targets: stance
     when: stance > 0
     source: Don Marquis, "Why Abortion Is Immoral," Journal of Philosophy (1989)
@@ -265,6 +270,7 @@ items:
 
   - id: ch_late_term
     type: challenge
+    name: At 34 weeks
     targets: gest
     when: stance > 0 and gest is any
     source: Original scenario
@@ -290,6 +296,7 @@ items:
 
   - id: ch_sex_selection
     type: challenge
+    name: Choosing by sex
     targets: stance
     deep: true
     when: stance > 0
@@ -316,6 +323,7 @@ items:
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_ballot
     type: challenge
+    name: The 15-week ballot
     targets: stance
     when: stance == 0
     source: Original scenario

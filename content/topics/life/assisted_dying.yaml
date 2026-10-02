@@ -113,6 +113,7 @@ items:
   # --- Challenges: restrictive side -------------------------------------------------------------
   - id: ch_rachels
     type: challenge
+    name: Killing and letting die
     targets: stance
     when: stance < 0 and withdraw > 0
     source: James Rachels, "Active and Passive Euthanasia," New England Journal of Medicine (1975)
@@ -139,6 +140,7 @@ items:
 
   - id: ch_suffering
     type: challenge
+    name: Pain that can’t be controlled
     targets: stance
     when: stance < 0
     source: Original scenario
@@ -165,6 +167,7 @@ items:
   # --- Challenges: permissive side --------------------------------------------------------------
   - id: ch_expansion
     type: challenge
+    name: The moving line
     targets: stance
     when: stance > 0
     source: Canada's Criminal Code s. 241.2, enacted in 2016 (Bill C-14) and amended in 2021 (Bill C-7)
@@ -191,6 +194,7 @@ items:
 
   - id: ch_burden
     type: challenge
+    name: Not wanting to be a burden
     targets: stance
     when: stance > 0
     source: Original scenario; "burden on family" is a frequently reported concern in Oregon Death with Dignity Act annual reports
@@ -217,6 +221,7 @@ items:
 
   - id: ch_dementia
     type: challenge
+    name: The advance request
     targets: dementia
     deep: true
     when: dementia > 0
@@ -244,6 +249,7 @@ items:
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_vote
     type: challenge
+    name: The six-month law
     targets: stance
     when: stance == 0
     source: Original scenario, modeled on laws like Oregon's Death with Dignity Act

@@ -127,6 +127,7 @@ A challenge is a thought experiment aimed at **the answer the user actually gave
 ```yaml
 - id: ch_violinist
   type: challenge
+  name: The violinist        # short name shown in results ("The violinist moved you 2 steps")
   targets: stance            # the answer under challenge
   when: stance < 0           # who sees it
   source: Judith Jarvis Thomson, "A Defense of Abortion" (1971)

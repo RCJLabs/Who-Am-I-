@@ -410,6 +410,7 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
         });
         const item: Item = { ...base, type: 'challenge', targets, scenario: ai.scenario, options: opts, weight: ai.weight ?? 1 };
         if (ai.source) item.source = ai.source;
+        if (ai.name) item.name = ai.name;
         return item;
       }
       case 'reask': {
