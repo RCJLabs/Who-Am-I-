@@ -2,7 +2,8 @@ name: Communitarian
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
    value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges,
-   free_speech, guns, surveillance, religious_liberty, protest, public_safety]
+   free_speech, guns, surveillance, religious_liberty, protest, public_safety,
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -224,8 +225,86 @@ answers:
   public_safety.ch_birmingham_six: both_cost
   public_safety.ch_blackstone: depends
   public_safety.ch_prediction: reviews
+  taxes.stance: 5
+  taxes.importance: 3
+  taxes.top_rate: 3
+  taxes.wealth_tax: 4
+  taxes.flat_tax: 2
+  taxes.corporate: 4
+  taxes.ch_france: design
+  taxes.ch_wealth_taxes: other_ways
+  taxes.ch_forced_labor: need
+  healthcare.stance: 6
+  healthcare.importance: 3
+  healthcare.pre_existing: 1
+  healthcare.user_fees: 3
+  healthcare.mandate: 5
+  healthcare.drug_prices: 4
+  healthcare.anchor_ml: 6
+  healthcare.ch_waiting: wait_better
+  healthcare.ch_nice: rationing
+  healthcare.ch_chaoulli: two_tier
+  welfare.stance: 3
+  welfare.importance: 3
+  welfare.basic_income: 2
+  welfare.time_limit: 3
+  welfare.drug_tests: 4
+  welfare.child_payment: 5
+  welfare.anchor_desert: 5
+  welfare.ch_recession: downturns
+  welfare.ch_finland: contribute
+  welfare.ch_children: separate
+  minimum_wage.stance: 5
+  minimum_wage.importance: 3
+  minimum_wage.youth: 4
+  minimum_wage.regional: 3
+  minimum_wage.gig: 4
+  minimum_wage.small_business: 2
+  minimum_wage.ch_cbo: careful
+  minimum_wage.ch_seattle: steps
+  minimum_wage.ch_first_job: youth_rate
+  regulation.stance: 5
+  regulation.importance: 2
+  regulation.licensing: 4
+  regulation.price_rises: 5
+  regulation.ch_licensing: protect
+  regulation.ch_capture: some_industries
+  unions.stance: 5
+  unions.importance: 3
+  unions.essential: 4
+  unions.agency_fee: 4
+  unions.sectoral: 4
+  unions.board_seats: 4
+  unions.ch_winter: essential_only
+  unions.ch_outsiders: most_gain
+  unions.ch_police: fair_process
+  trade.stance: 3
+  trade.importance: 3
+  trade.security: 5
+  trade.farmers: 5
+  trade.buy_national: 4
+  trade.takeovers: 5
+  trade.ch_washers: towns
+  trade.ch_depression: depression
+  trade.ch_poverty: poorest
+  housing.stance: 5
+  housing.importance: 3
+  housing.zoning: 2
+  housing.public_housing: 5
+  housing.empty_homes: 4
+  housing.no_reason: 2
+  housing.ch_supply: stability
+  housing.ch_economists: not_only
+  housing.ch_tokyo: both
+  inheritance.stance: 3
+  inheritance.importance: 2
+  inheritance.family_home: 2
+  inheritance.family_business: 5
+  inheritance.anchor_desert: 4
+  inheritance.ch_carnegie: scale
+  inheritance.ch_florence: family
 expect:
-  axes: { civil: "> 0.3", cultural: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
+  axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -243,6 +322,15 @@ expect:
     surveillance: { civil: "> 0" }
     protest: { civil: "> 0" }
     public_safety: { civil: "> 0" }
+    taxes: { economic: "< 0" }
+    healthcare: { economic: "< 0" }
+    welfare: { economic: "> 0" }
+    minimum_wage: { economic: "< 0" }
+    regulation: { economic: "< 0" }
+    unions: { economic: "< 0" }
+    trade: { economic: "< 0" }
+    housing: { economic: "< 0" }
+    inheritance: { economic: "> 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -252,8 +340,11 @@ expect:
       liberty: "< -0.3"
     guns: { protect_vulnerable: "> 0.5" }
     protest: { obey_law: "> 0.5" }
+    healthcare: { market_limits: "> 0.5" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
-  # religious objectors alike, and due process weighed the same for guns and freedom.
+  # religious objectors alike, and due process weighed the same for guns and freedom. In economics:
+  # money shouldn't buy quicker treatment any more than a kidney or sex, and just deserts weighs
+  # about the same for people who could work and for heirs.
   tensions: []

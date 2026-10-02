@@ -17,8 +17,8 @@ items:
     steps: 7
     text: A legal minimum wage should be…
     help: >-
-      Typical pay here means the median hourly wage of full-time workers: half earn more and half
-      earn less. If typical pay is $24 an hour, half of it is $12.
+      Typical pay here means the median hourly wage: half of workers earn more and half earn less.
+      If typical pay is $24 an hour, half of it is $12.
     poles: [Abolished, Two-thirds of typical pay or more]
     labels:
       - Abolished

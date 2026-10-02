@@ -164,13 +164,15 @@ items:
     name: Who really pays
     targets: stance
     when: stance > 0
-    source: HM Revenue & Customs, Inheritance Tax statistics (2025)
+    source: >-
+      HM Revenue & Customs, Inheritance Tax statistics; Institute for Fiscal Studies, "Raising
+      revenue from closing inheritance tax loopholes" (2024)
     scenario: >-
-      In the UK, inheritance tax was due on fewer than 5 in every 100 deaths in 2022–23, and in
-      2023–24 it raised £7.5 billion, well under 1% of all tax revenue. The very wealthy can pass on
-      much of their wealth without paying it, through gifts made years before death and exemptions
-      for farms and businesses.
-    text: If the richest can avoid much of it, is a heavy inheritance tax worth having?
+      In the UK, inheritance tax is due on fewer than 5 in every 100 deaths. In 2023–24 it raised
+      £7.5 billion, just under 1% of all tax revenue. A 2024 study found that estates worth more than
+      £10 million paid a smaller share of their value in tax than estates worth £3 million to £7.5
+      million, mainly because of exemptions for farms and businesses.
+    text: If the largest estates pay less of it, is a heavy inheritance tax worth having?
     options:
       - id: close_gaps
         label: Yes, with the gaps closed. The exemptions are the problem, not the tax.

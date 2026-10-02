@@ -80,7 +80,7 @@ items:
       (2019)
     scenario: >-
       In 1994 San Francisco extended rent control to small apartment buildings built before 1980.
-      Tenants who gained it were about 20% more likely to still be living at the same address years
+      Tenants who gained it were 10% to 20% more likely to still be living at the same address years
       later, and older tenants and those who'd lived there longest gained the most.
     text: Is stability like that worth protecting by law?
     options:
@@ -219,8 +219,8 @@ items:
     source: Robin Harding, "Why Tokyo is the land of rising home construction but not prices," Financial Times (2016)
     scenario: >-
       Japan's national rules make it easier to build homes than in most rich countries. In 2014,
-      work started on 142,417 new homes in Tokyo, more than in all of England (137,010) or California
-      (83,657).
+      work started on 142,417 new homes in Tokyo, more than in all of England (137,010). California,
+      with nearly three times Tokyo's population, gave permits for 83,657.
     text: Is building more homes a better answer than limiting rents?
     options:
       - id: both

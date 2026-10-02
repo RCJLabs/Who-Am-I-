@@ -2,7 +2,8 @@ name: Secular progressive
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing,
    value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, strangers, fairness, omelas,
-   free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety]
+   free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety,
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -235,8 +236,89 @@ answers:
   public_safety.ch_retrial: final
   public_safety.ch_bail: partner
   public_safety.ch_silence: burden
+  taxes.stance: 6
+  taxes.importance: 4
+  taxes.top_rate: 5
+  taxes.wealth_tax: 5
+  taxes.flat_tax: 1
+  taxes.corporate: 5
+  taxes.ch_france: design
+  taxes.ch_wealth_taxes: loopholes
+  taxes.ch_forced_labor: choice
+  healthcare.stance: 6
+  healthcare.importance: 4
+  healthcare.pre_existing: 1
+  healthcare.user_fees: 1
+  healthcare.mandate: 4
+  healthcare.drug_prices: 4
+  healthcare.anchor_ml: 6 # money shouldn't buy quicker treatment, though surrogates may be paid
+  healthcare.ch_waiting: funding
+  healthcare.ch_nice: rationing
+  healthcare.ch_chaoulli: two_tier
+  welfare.stance: 5
+  welfare.importance: 3
+  welfare.basic_income: 4
+  welfare.time_limit: 1
+  welfare.drug_tests: 1
+  welfare.child_payment: 5
+  welfare.anchor_desert: 2 # unearned support is fine for people who could work...
+  welfare.ch_reform: poverty
+  welfare.ch_neighbor: require_search
+  welfare.ch_guaranteed: design
+  minimum_wage.stance: 6
+  minimum_wage.importance: 3
+  minimum_wage.youth: 2
+  minimum_wage.regional: 2
+  minimum_wage.gig: 5
+  minimum_wage.small_business: 1
+  minimum_wage.ch_cbo: worth_it
+  minimum_wage.ch_seattle: steps
+  minimum_wage.ch_first_job: training
+  regulation.stance: 6
+  regulation.importance: 3
+  regulation.licensing: 3
+  regulation.price_rises: 5
+  regulation.untested_drugs: 2
+  regulation.break_up: 5
+  regulation.ch_licensing: fix_these
+  regulation.ch_capture: independent
+  regulation.ch_unseen: fast_track
+  unions.stance: 6
+  unions.importance: 3
+  unions.essential: 2
+  unions.agency_fee: 4
+  unions.sectoral: 5
+  unions.board_seats: 5
+  unions.ch_winter: leverage
+  unions.ch_outsiders: industry_wide
+  unions.ch_police: police_different
+  trade.stance: 5 # free trade, with help for workers who lose out
+  trade.importance: 2
+  trade.security: 3
+  trade.farmers: 3
+  trade.ch_china_shock: help_places
+  trade.ch_rana_plaza: brands
+  housing.stance: 5
+  housing.importance: 3
+  housing.zoning: 5
+  housing.public_housing: 5
+  housing.empty_homes: 5
+  housing.no_reason: 1
+  housing.ch_supply: loopholes
+  housing.ch_economists: old_style
+  housing.ch_tokyo: both
+  inheritance.stance: 6
+  inheritance.importance: 3
+  inheritance.family_home: 4
+  inheritance.family_business: 2
+  inheritance.gains_at_death: 1
+  inheritance.lifetime_limit: 5
+  inheritance.anchor_desert: 6 # ...but not for heirs
+  inheritance.ch_who_pays: close_gaps
+  inheritance.ch_bakery: spread
+  inheritance.ch_twice: never_taxed
 expect:
-  axes: { cultural: "> 0.6", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5" }
+  axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -257,6 +339,15 @@ expect:
     protest: { civil: "< 0" }
     torture: { civil: "< 0" }
     public_safety: { civil: "< 0" }
+    taxes: { economic: "< 0" }
+    healthcare: { economic: "< 0" }
+    welfare: { economic: "< 0" }
+    minimum_wage: { economic: "< 0" }
+    regulation: { economic: "< 0" }
+    unions: { economic: "< 0" }
+    trade: { economic: "> 0" }
+    housing: { economic: "< 0" }
+    inheritance: { economic: "< 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -271,6 +362,9 @@ expect:
     protest: { obey_law: "< 0" }
     torture: { doing_vs_allowing: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
+    healthcare: { market_limits: "> 0.5" }
+    welfare: { retribution: "< 0" }
+    inheritance: { retribution: "> 0.5" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -278,7 +372,9 @@ expect:
   # In the rights topics, each new principle flips the other way from the religious conservative:
   # protecting the vulnerable high on guns, liberty high for private messages but not speech,
   # obeying the law required of religious objectors but not protesters, due process demanded before
-  # losing freedom but not guns, and doing vs. allowing high for torture.
+  # losing freedom but not guns, and doing vs. allowing high for torture. In the economics topics,
+  # just deserts is demanded of heirs but not of people who could work, and money shouldn't buy
+  # quicker medical treatment, though surrogates may be paid.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -295,3 +391,5 @@ expect:
     - liberty|free_speech|surveillance
     - obey_law|protest|religious_liberty
     - due_process|guns|public_safety
+    - retribution|inheritance|welfare
+    - market_limits|healthcare|surrogacy

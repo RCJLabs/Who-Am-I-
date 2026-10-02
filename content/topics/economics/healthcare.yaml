@@ -85,10 +85,10 @@ items:
     when: stance < 0
     source: Peterson-KFF Health System Tracker, from OECD health statistics
     scenario: >-
-      The United States relies on private health insurance more than any other rich country. It
-      spends about $13,400 per person a year on healthcare, about 1.8 times as much as other wealthy
-      countries on average. Yet Americans live about four years less: 78.4 years on average, against
-      82.7 in those countries.
+      The United States relies on private health insurance more than any other rich country. In
+      2023 it spent about $13,400 per person on healthcare, about 1.8 times the average of other
+      wealthy countries. Yet Americans lived about four years less: 78.4 years on average, against
+      82.5 in those countries.
     text: Is relying on private insurance giving Americans good value?
     options:
       - id: innovation
@@ -140,9 +140,9 @@ items:
     source: Kenneth Arrow, "Uncertainty and the Welfare Economics of Medical Care," American Economic Review (1963)
     scenario: >-
       Economist Kenneth Arrow argued in 1963 that healthcare can't work like an ordinary market. You
-      can't predict when you'll need it or how much it will cost, you can't easily judge whether the
-      treatment you're sold is the right one, and when you need it most you're in no position to shop
-      around.
+      can't predict when you'll fall ill or whether a treatment will work, and you can't easily judge
+      whether the treatment you're sold is the right one, because doctors know far more than their
+      patients.
     text: Can healthcare be bought and sold like other things?
     options:
       - id: markets_adapt
@@ -221,10 +221,10 @@ items:
     when: stance > 0
     source: Chaoulli v. Quebec (Attorney General), 2005 SCC 35
     scenario: >-
-      In 2005 a Quebec doctor and a patient who had waited about a year for a hip replacement won a
-      case at Canada's Supreme Court against the province's ban on private insurance for care the
-      public system covers. "Access to a waiting list is not access to health care," the Chief
-      Justice wrote.
+      In 2005 a Quebec doctor and a patient won a case at Canada's Supreme Court, by four judges to
+      three, against the province's ban on private insurance for care the public system covers.
+      "Access to a waiting list is not access to health care," wrote Chief Justice Beverley McLachlin
+      and Justice John Major.
     text: Should people be free to pay for treatment the public system makes them wait for?
     options:
       - id: two_tier

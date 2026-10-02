@@ -222,9 +222,8 @@ items:
     deep: true
     when: stance > 0
     source: >-
-      Final Report of the Seattle-Denver Income Maintenance Experiment (1983); Philip Robins, "A
-      Comparison of the Labor Supply Findings from the Four Negative Income Tax Experiments,"
-      Journal of Human Resources (1985)
+      Philip Robins and Richard West, "Labor Supply Response Over Time," Journal of Human Resources
+      (1980); Overview of the Final Report of the Seattle-Denver Income Maintenance Experiment (1983)
     scenario: >-
       In the 1970s, the US tested guaranteed incomes on thousands of families. In the largest trials,
       in Seattle and Denver, husbands who received one worked about 9% fewer hours, and wives about

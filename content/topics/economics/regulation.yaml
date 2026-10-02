@@ -161,10 +161,10 @@ items:
       The White House, Occupational Licensing: A Framework for Policymakers (2015); Morris Kleiner's
       research on occupational licensing
     scenario: >-
-      In the early 1950s, about 1 in 20 American workers needed a government license to do their
-      job. By 2008 about 1 in 4 did, from hairdressers to, in Louisiana, florists. Most studies find
-      that licensing raises prices and makes it harder for people to start in a trade, without
-      clearly improving the quality of the work.
+      In the early 1950s, fewer than 1 in 20 American workers needed a license from their state to
+      do their job. By 2008 about 1 in 4 did, from hairdressers to, in Louisiana, florists. A 2015
+      White House report found that licensing raises prices and makes it harder for people to start
+      in a trade, and that most research doesn't find it improves quality or safety.
     text: Do rules like these protect the public, or the people already in the trade?
     options:
       - id: protect
