@@ -48,4 +48,5 @@ export const RULES: Readonly<Record<string, string>> = {
   W107: 'unused-or-single-anchor',
   W108: 'loaded-term',
   W109: 'anchor-cross-load',
+  W110: 'lopsided-options',
 };

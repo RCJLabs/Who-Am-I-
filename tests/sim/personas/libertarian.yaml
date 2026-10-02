@@ -1,0 +1,44 @@
+name: Libertarian
+topics: [abortion, assisted_dying, vaccine_mandates]
+answers:
+  abortion.stance: 6
+  abortion.importance: 2 # low: deep items are skipped
+  abortion.life_risk: 5
+  abortion.rape: 5
+  abortion.lethal_anomaly: 5
+  abortion.nonlethal_anomaly: 4
+  abortion.gest: viability
+  abortion.anchor_ba: 7
+  abortion.anchor_sol: 3
+  abortion.ch_future: body
+  assisted_dying.stance: 7
+  assisted_dying.importance: 3
+  assisted_dying.withdraw: 5
+  assisted_dying.terminal: 5
+  assisted_dying.chronic: 5
+  assisted_dying.psychiatric: 5
+  assisted_dying.dementia: 4
+  assisted_dying.minors: 4
+  assisted_dying.anchor_ba: 7
+  assisted_dying.anchor_sol: 2
+  assisted_dying.anchor_pv: 2
+  assisted_dying.ch_expansion: no_line
+  assisted_dying.ch_burden: her_reasons
+  assisted_dying.ch_dementia: honor
+  vaccine_mandates.stance: 1
+  vaccine_mandates.importance: 4
+  vaccine_mandates.hospital: 2
+  vaccine_mandates.school: 2
+  vaccine_mandates.pandemic: 1
+  vaccine_mandates.military: 3
+  vaccine_mandates.religious: 1
+  vaccine_mandates.anchor_ba: 7
+  vaccine_mandates.anchor_pv: 2
+  vaccine_mandates.ch_drunk_driving: small_risk
+  vaccine_mandates.ch_quarantine: isolation_too
+  vaccine_mandates.ch_measles: parents_decide
+expect:
+  axes: { civil: "< -0.6", cultural: "> 0.5" }
+  principles: { bodily_autonomy: "> 0.6" }
+  # Consistent: bodily autonomy high everywhere, protecting the vulnerable low everywhere.
+  tensions: []

@@ -1,5 +1,5 @@
 // W101 keying balance · W105 challenge source · W106 option effects · W107 unused / single-anchor ·
-// W108 loaded terms
+// W108 loaded terms · W110 lopsided option sets
 import type { Path } from '../yaml.ts';
 import { itemLoc, topicLoc, type RuleCtx } from '../context.ts';
 
@@ -29,6 +29,29 @@ export function qualityRules(ctx: RuleCtx): void {
         `Axis '${axis}': agree/disagree items carry ${round(b.pos)} weight keyed one way and ${round(b.neg)} the other. Balance them so habitual agreement doesn't push scores.`,
         { pf: env.axesFile, path: [axisIndex.get(axis) ?? 0, 'id'] },
       );
+    }
+  }
+
+  // W110: an undecided respondent (any option equally likely) should land in the middle of every
+  // axis a choice feeds. Challenges are exempt: their options are deliberately directional.
+  for (const ct of ctx.topics) {
+    for (const it of ct.topic.items) {
+      if (it.type !== 'choice' && it.type !== 'pair') continue;
+      const positions = new Map<string, number[]>();
+      const add = (axis: string, v: number) => positions.set(axis, [...(positions.get(axis) ?? []), v]);
+      for (const o of it.options) for (const e of o.effects) if (e.target.startsWith('axis:')) add(e.target.slice(5), e.v);
+      if (it.type === 'choice' && it.effects.length) {
+        for (const e of it.effects) {
+          if (!e.target.startsWith('axis:')) continue;
+          for (const o of it.options) if (o.value !== undefined) add(e.target.slice(5), Math.sign(e.w) * o.value);
+        }
+      }
+      for (const [axis, vs] of positions) {
+        const mean = vs.reduce((a, b) => a + b, 0) / vs.length;
+        if (vs.length >= 2 && Math.abs(mean) > 0.25) {
+          rep.report('W110', `Options average ${round(mean)} on '${axis}': an undecided respondent gets pushed toward one pole. Balance the options.`, itemLoc(ct, it.key, 'options'));
+        }
+      }
     }
   }
 

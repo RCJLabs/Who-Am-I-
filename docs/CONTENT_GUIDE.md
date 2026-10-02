@@ -79,6 +79,8 @@ principles: { bodily_autonomy: 1 }
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
 - Keep stances at weight 1 and circumstances around 0.5: the overall view should dominate the axis.
+- **Balanced option sets.** Choice options should be spread symmetrically around 0 on each axis
+  they feed (e.g. −1, −0.6, 0, 0.6, 1), so someone picking at random lands in the middle (W110).
 
 **Keying.** On agree/disagree items, people tend to agree regardless of content. For any axis fed
 by agree/disagree items, phrase roughly half so that agreeing pushes one way and half the other way
@@ -261,3 +263,4 @@ excluded from shared output by default. Identity items **describe and never scor
 | W107 | unused axis/principle, or principle anchored in one topic |
 | W108 | loaded term |
 | W109 | anchor loads a second principle |
+| W110 | choice/pair options average away from 0 on an axis (an undecided respondent gets pushed one way) |
