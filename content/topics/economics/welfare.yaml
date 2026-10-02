@@ -1,0 +1,277 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Support for people who could work but don't have a job; a basic income for everyone is a
+# circumstance. The anchor is the just-deserts frame, which covers rewards only. Here the right
+# tends to invoke it; in inheritance, the left. values/fairness already asks about people who
+# became poor through their own choices, so this topic doesn't. Yields toward more generous
+# support record care or equality; toward firmer conditions, just deserts (reciprocity).
+id: welfare
+domain: economics
+title: Welfare and basic income
+summary: How much should the government support people who could work but don't have a job?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Government support for adults who could work but don't have a job should be…
+    poles: [None, "Generous, with no conditions attached"]
+    labels:
+      - None; family, charity and savings should provide
+      - Minimal and short-term, with strict work requirements
+      - Modest, with firm requirements to look for work
+      - Torn / it depends
+      - Enough to live on, with help finding work
+      - Generous, with light conditions
+      - Generous, with no conditions attached
+    axes: { economic: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: basic_income
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A basic income paid by the government to every adult, whether or not they work, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: time_limit
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A limit of five years, over a whole lifetime, on receiving support while out of work is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: drug_tests
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring people who receive support to pass drug tests is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { liberty: -0.5 }
+
+  - id: child_payment
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Paying every family a monthly sum for each child, whatever the parents earn, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_desert
+    type: likert
+    points: 7
+    text: When it comes to support for people who could work, no one should get money they haven't earned through their own efforts, even if that means real hardship for those who can't find a job.
+    principles: { retribution: 1 }
+    anchor: { principle: retribution, context: support for people who could work, against: the hardship of people who can't find a job }
+
+  # --- Challenges: for more generous support -------------------------------------------------------
+  - id: ch_recession
+    type: challenge
+    name: When the jobs disappear
+    targets: stance
+    when: stance < 0
+    source: US Bureau of Labor Statistics, unemployment rate, 2008–2009
+    scenario: >-
+      In January 2008, America's unemployment rate was 5%. By October 2009, after the financial
+      crisis, it had doubled to 10%. Millions of people lost their jobs in less than two years, most
+      through no fault of their own.
+    text: When jobs vanish across the economy, how much support should people get?
+    options:
+      - id: bridge
+        label: Even then, savings, family and charity should come first, with government help only as a short bridge.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: downturns
+        label: Downturns are different. Support should grow when jobs are scarce and shrink when they're plentiful.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: More than I said. It makes me want a more generous system.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_finland
+    type: challenge
+    name: Finland's experiment
+    targets: stance
+    when: stance < 0
+    source: >-
+      Kela (Social Insurance Institution of Finland), The Basic Income Experiment 2017–2018 in
+      Finland: Final Results (2020)
+    scenario: >-
+      In 2017 and 2018, Finland paid 2,000 unemployed people €560 a month with no conditions, which
+      they kept even if they found work. Compared with similar people on ordinary unemployment
+      benefits, they worked slightly more, about six more days over a year, and reported less stress
+      and better wellbeing.
+    text: If money without conditions doesn't stop people working, why attach conditions?
+    options:
+      - id: contribute
+        label: Conditions aren't only about getting people into work. People who can contribute should.
+        reaction: hold
+        principles: { retribution: 0.5 }
+      - id: small_trial
+        label: A small, two-year trial can't show what a permanent payment for everyone would do.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Maybe there's no need. I'd attach fewer conditions, and give more, than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_children
+    type: challenge
+    name: The children
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A father misses an appointment at the job center, and his support is cut for a month as a
+      penalty. His two children live on that money too.
+    text: Should children go without because of a parent's mistake?
+    options:
+      - id: rules
+        label: The rules are clear, and parents are responsible for their children. Without penalties, the conditions mean nothing.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: separate
+        label: Support for children should be kept separate, so it's never cut because of what a parent does.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: No. It makes me want a more generous system, with fewer penalties, than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenges: for firmer conditions -----------------------------------------------------------
+  - id: ch_reform
+    type: challenge
+    name: Welfare to work
+    targets: stance
+    when: stance > 0
+    source: >-
+      Personal Responsibility and Work Opportunity Reconciliation Act of 1996; US Department of
+      Health and Human Services caseload data
+    scenario: >-
+      In 1996 the US replaced its main program of support for poor families with one that required
+      most adults to work and limited federal help to five years in a lifetime. Over the next few
+      years the number of families receiving it fell by more than half, and many more single mothers
+      went to work.
+    text: Do firm conditions help people more than generous support?
+    options:
+      - id: poverty
+        label: No. The goal is fewer families in poverty, not fewer on welfare, and some of those who left got poorer.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: boom
+        label: Jobs were plentiful in the late 1990s, and tax credits for working parents did much of the work.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me think support should come with firmer conditions than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 0.5 }
+
+  - id: ch_neighbor
+    type: challenge
+    name: The neighbor
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      A woman works night shifts in a warehouse, earning little more than she'd get from benefits.
+      Her neighbor could work but has chosen not to for years, and lives on support paid for partly
+      by her taxes.
+    text: Is it fair to ask her to support him?
+    options:
+      - id: no_one_hungry
+        label: Yes. A decent society doesn't let anyone go without, even people who make poor choices.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: require_search
+        label: It's fair to require him to look for work, but not to leave him with nothing.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. Support should come with firmer expectations than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 0.5 }
+
+  - id: ch_guaranteed
+    type: challenge
+    name: The guaranteed-income trials
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Philip Robins and Richard West, "Labor Supply Response Over Time," Journal of Human Resources
+      (1980); Overview of the Final Report of the Seattle-Denver Income Maintenance Experiment (1983)
+    scenario: >-
+      In the 1970s, the US tested guaranteed incomes on thousands of families. In the largest trials,
+      in Seattle and Denver, husbands who received one worked about 9% fewer hours, and wives about
+      20% fewer.
+    text: If unconditional money leads people to work less, should support come with conditions?
+    options:
+      - id: time_used
+        label: Working a little less isn't a disaster. Some of that time went into looking for better jobs, studying and caring for children.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: design
+        label: It shows that design matters, like how fast payments fall as people earn more, not that support should be cut.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me think support should come with firmer conditions than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A rise in support
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise support for people out of work by 10%, paid for by a rise in income
+      tax.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

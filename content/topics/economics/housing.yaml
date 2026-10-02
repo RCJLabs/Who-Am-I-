@@ -1,0 +1,270 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Rent control is the stance; building rules and public housing are circumstances, since people
+# who agree on rents often split on those. The same San Francisco study faces both sides: it found
+# tenants gained stability, and that rents rose for everyone else. Yields toward firmer limits
+# record protecting the vulnerable; toward the market, liberty.
+id: housing
+domain: economics
+title: Housing and rents
+summary: Should the law limit how much landlords can raise rents?
+tier: extended
+order: 8
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Legal limits on how much landlords can raise rents should be…
+    poles: [None at all, Strict]
+    labels:
+      - None at all; the market should set rents
+      - Used only in emergencies, like after a disaster
+      - Light, stopping only sudden steep rises
+      - Torn / it depends
+      - Moderate, keeping yearly rises close to inflation
+      - Strict, for most rented homes
+      - Strict, with rents frozen or cut where they're too high
+    axes: { economic: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: zoning
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Allowing apartment blocks to be built in neighborhoods of single-family houses is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: public_housing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: The government building homes to rent cheaply to people on low incomes is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: empty_homes
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Extra taxes on second homes and homes left empty are…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  - id: no_reason
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting landlords end a tenancy without giving a reason, once the lease is up, is…
+    poles: [Wrong, Fair]
+    labels: [Wrong, Probably wrong, Torn, Probably fair, Fair]
+    principles: { liberty: 0.5 }
+
+  # --- Challenges: for limits on rents -------------------------------------------------------------
+  - id: ch_staying
+    type: challenge
+    name: Staying put
+    targets: stance
+    when: stance < 0
+    source: >-
+      Rebecca Diamond, Tim McQuade and Franklin Qian, "The Effects of Rent Control Expansion on
+      Tenants, Landlords, and Inequality: Evidence from San Francisco," American Economic Review
+      (2019)
+    scenario: >-
+      In 1994 San Francisco extended rent control to small apartment buildings built before 1980.
+      Tenants who gained it were 10% to 20% more likely to still be living at the same address years
+      later, and older tenants and those who'd lived there longest gained the most.
+    text: Is stability like that worth protecting by law?
+    options:
+      - id: fewer_homes
+        label: Not if it means fewer homes to rent for everyone else.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: eviction
+        label: Protect tenants from being evicted without a reason, but leave rents to the market.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want firmer limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_rise
+    type: challenge
+    name: Forty percent
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A nurse has rented the same flat for 12 years. Her landlord tells her the rent will rise by 40%
+      next year, because that's what a new tenant would pay. She'll have to leave the neighborhood
+      where she works and her children go to school.
+    text: Should the law let a landlord do that?
+    options:
+      - id: property
+        label: Yes. It's the landlord's property, and limits on rents end up cutting the supply of homes.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: phase_in
+        label: Big rises should be phased in so tenants can plan, but rents should still reach market levels.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want firmer limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_revision
+    type: challenge
+    name: Old controls and new
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Richard Arnott, "Time for Revisionism on Rent Control?" Journal of Economic Perspectives (1995)
+    scenario: >-
+      In 1995 economist Richard Arnott argued that economists' hostility to rent control rested on
+      old-style rent freezes, like those in New York and much of Europe after World War II, and on
+      treating housing as a perfectly competitive market. Modern rules that let rents start at market
+      levels and then limit how fast they rise are different, he said, and the case against them is
+      weak.
+    text: Could well-designed limits on rents do more good than harm?
+    options:
+      - id: still_harm
+        label: No. Even light limits discourage building and upkeep in the long run.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: notice
+        label: Tenants need protection from sudden steep rises, but long notice would give that without capping rents.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me more open to limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: against limits on rents ---------------------------------------------------------
+  - id: ch_supply
+    type: challenge
+    name: Fewer homes to rent
+    targets: stance
+    when: stance > 0
+    source: >-
+      Rebecca Diamond, Tim McQuade and Franklin Qian, "The Effects of Rent Control Expansion on
+      Tenants, Landlords, and Inequality: Evidence from San Francisco," American Economic Review
+      (2019)
+    scenario: >-
+      In 1994 San Francisco extended rent control to small apartment buildings built before 1980.
+      Their landlords cut the number of homes they rented out by 15%, often by converting them into
+      condos for sale, and economists at Stanford estimated that this pushed up rents across the city
+      by about 5%.
+    text: Does protecting today's tenants hurt tomorrow's?
+    options:
+      - id: stability
+        label: Stable homes for people who already live there matter more than a modest rise in other rents.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: loopholes
+        label: Better-designed rules, without a way out through conversions, can avoid that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want lighter limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_economists
+    type: challenge
+    name: What economists think
+    targets: stance
+    when: stance > 0
+    source: IGM Forum, University of Chicago Booth School of Business, survey on rent control (February 2012)
+    scenario: >-
+      In 2012 the University of Chicago asked a panel of leading economists whether rent control in
+      cities like New York and San Francisco had improved the amount and quality of affordable
+      housing. 81% disagreed. Only one agreed.
+    text: When economists agree this much, should that settle it?
+    options:
+      - id: not_only
+        label: No. Economists measure supply and prices, not what it means to lose your home.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: old_style
+        label: They were judging old-style rent freezes. Modern limits tied to inflation are different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It should count for a lot. It makes me want lighter limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_tokyo
+    type: challenge
+    name: Tokyo builds
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Robin Harding, "Why Tokyo is the land of rising home construction but not prices," Financial Times (2016)
+    scenario: >-
+      Japan's national rules make it easier to build homes than in most rich countries. In 2014,
+      work started on 142,417 new homes in Tokyo, more than in all of England (137,010). California,
+      with nearly three times Tokyo's population, gave permits for 83,657.
+    text: Is building more homes a better answer than limiting rents?
+    options:
+      - id: both
+        label: Both are needed. New homes take years to build, and tenants need protection now.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: japan
+        label: Japan's population is shrinking, and its houses are built to be replaced. It isn't a model for everyone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want lighter limits on rents than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A cap on rent rises
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would limit yearly rent rises to inflation plus 2 percentage points, but exempt
+      homes built in the last 15 years.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

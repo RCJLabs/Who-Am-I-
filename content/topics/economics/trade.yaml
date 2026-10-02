@@ -1,0 +1,269 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Free trade against protection. The stance feeds the economic axis with the opposite sign to the
+# other economics topics (free trade is the markets end), and deliberately not the diplomatic
+# axis: protection is popular on both left and right. Yields toward freer trade record liberty;
+# toward protection, loyalty to fellow citizens, except where the reason is foreign workers' safety.
+id: trade
+domain: economics
+title: Trade and tariffs
+summary: Should your country trade freely with the world, or protect its own industries?
+tier: extended
+order: 7
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Trade between your country and others should be…
+    poles: [Heavily restricted, Completely free]
+    labels:
+      - Heavily restricted, to protect industries at home
+      - Restricted, with tariffs on many imports
+      - Mostly free, with tariffs to protect important industries
+      - Torn / it depends
+      - Free, with help for workers who lose out
+      - Free, with few exceptions
+      - Completely free, with no tariffs at all
+    axes: { economic: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: security
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Tariffs to make sure your country can make its own steel, medicines and computer chips are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: farmers
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Protecting your country's farmers from cheaper food imports is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: buy_national
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring the government to buy from companies in your own country, even when foreign ones are cheaper, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { loyalty: 0.5 }
+
+  - id: takeovers
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Blocking foreign companies from buying important companies in your country is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Challenges: for freer trade -----------------------------------------------------------------
+  - id: ch_washers
+    type: challenge
+    name: The price of a job
+    targets: stance
+    when: stance < 0
+    source: >-
+      Aaron Flaaen, Ali Hortaçsu and Felix Tintelnot, "The Production Relocation and Price Effects
+      of US Trade Policy: The Case of Washing Machines," American Economic Review (2020)
+    scenario: >-
+      In 2018 the US put tariffs on imported washing machines to protect American factories. Prices
+      of washing machines rose by about 12%, and about 1,800 American jobs were created. Economists
+      estimated that buyers paid about $815,000 a year for each of those jobs.
+    text: Is that a good price for saving jobs?
+    options:
+      - id: towns
+        label: Factory jobs keep whole towns alive. They're worth more than their wages.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: wrong_tool
+        label: Tariffs on household goods are a poor tool. Protecting important industries is different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think trade should be freer than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_depression
+    type: challenge
+    name: The 1930 tariffs
+    targets: stance
+    when: stance < 0
+    source: >-
+      Douglas Irwin, Peddling Protectionism: Smoot-Hawley and the Great Depression (2011)
+    scenario: >-
+      In 1930, as the Great Depression took hold, the US raised tariffs on thousands of imports, and
+      other countries hit back with tariffs of their own. World trade fell by about two-thirds
+      between 1929 and 1934, though falling prices and incomes explain much of that. Most economists
+      think the tariffs didn't cause the Depression but made it worse.
+    text: Do trade barriers backfire?
+    options:
+      - id: protect_own
+        label: Sometimes, but a country still has to protect its own industries and workers.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: depression
+        label: Tariffs on everything during a depression are very different from targeted protection.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me think trade should be freer than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_poverty
+    type: challenge
+    name: The great escape from poverty
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: World Bank, Poverty and Shared Prosperity 2022
+    scenario: >-
+      Between 1990 and 2019, the share of the world's people living in extreme poverty, on less than
+      $2.15 a day by the World Bank's measure at the time, fell from 38% to under 10%. Most of the
+      fall came in China and India after they opened up to world trade, though economists still
+      debate how much trade itself did.
+    text: Should rich countries keep their markets open to poorer countries' goods?
+    options:
+      - id: citizens_first
+        label: My country's first duty is to its own workers.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: poorest
+        label: Open markets for the poorest countries, yes, but not for big exporters that already compete with us.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me think trade should be freer than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenges: for protection ------------------------------------------------------------------
+  - id: ch_china_shock
+    type: challenge
+    name: The China shock
+    targets: stance
+    when: stance > 0
+    source: >-
+      Daron Acemoglu, David Autor, David Dorn, Gordon Hanson and Brendan Price, "Import Competition
+      and the Great US Employment Sag of the 2000s," Journal of Labor Economics (2016); Autor, Dorn
+      and Hanson, "The China Shock," Annual Review of Economics (2016)
+    scenario: >-
+      After China joined the World Trade Organization in 2001, competition from Chinese imports cost
+      the US up to 2.4 million jobs between 1999 and 2011, by one leading estimate. The towns hit
+      hardest still had fewer jobs and lower wages a decade later.
+    text: Was cheaper shopping for everyone worth it for those towns?
+    options:
+      - id: gains
+        label: Yes. Cheaper goods helped hundreds of millions of people, poorer families most of all.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: help_places
+        label: Trade was right. The failure was not helping the places that lost out.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think trade should be less free than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_rana_plaza
+    type: challenge
+    name: Rana Plaza
+    targets: stance
+    when: stance > 0
+    source: International Labour Organization, The Rana Plaza Accident and Its Aftermath
+    scenario: >-
+      In April 2013 the Rana Plaza building near Dhaka, Bangladesh, collapsed, killing 1,134 people.
+      Most were garment workers making clothes for brands sold in rich countries. Cracks had appeared
+      in the building the day before, but the workers were ordered back in.
+    text: Should countries refuse to import goods made in unsafe conditions?
+    options:
+      - id: jobs_help
+        label: No. Those jobs pay more than workers' other options, and shutting them out would hurt them most.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: brands
+        label: Trade should stay open, but brands should answer for the factories they use.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: Yes. Trade should come with firmer conditions than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_ladder
+    type: challenge
+    name: Kicking away the ladder
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Ha-Joon Chang, Kicking Away the Ladder (2002)
+    scenario: >-
+      Economist Ha-Joon Chang argues that Britain and the United States built up their industries
+      behind high tariffs, and that South Korea and Taiwan later protected young industries until
+      they could compete. Only once they were rich, he says, did these countries champion free trade.
+    text: Is free trade the right policy for every country, at every stage?
+    options:
+      - id: rare_success
+        label: Yes. Many countries that tried protection stayed poor. The successes are the exceptions.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: poor_countries
+        label: Poor countries protecting young industries is different from rich countries shielding old ones.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think trade should be less free than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A trade deal
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed trade deal would remove tariffs between your country and a large, poorer country,
+      with money to retrain workers whose jobs move abroad.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

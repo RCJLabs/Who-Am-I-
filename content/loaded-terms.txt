@@ -1,5 +1,6 @@
 # Terms that signal a side or insult one. Flagged (W108) in anything users read.
-# Use neutral wording instead ("fetus", "people who oppose mandates"), or justify inside a quotation.
+# Use neutral wording instead ("fetus", "people who oppose mandates"). Warnings fail CI, so
+# paraphrase quotations too; only the `source` citation isn't checked.
 pro-life
 pro-choice
 anti-abortion
@@ -66,3 +67,37 @@ mostly peaceful
 enhanced interrogation
 soft on crime
 tough on crime
+death tax
+death taxes
+job creators
+job-killing
+welfare queen
+welfare queens
+handout
+handouts
+freeloader
+freeloaders
+scrounger
+scroungers
+socialized medicine
+socialised medicine
+fat cat
+fat cats
+robber baron
+robber barons
+corporate greed
+trickle-down
+trickle down
+tax relief
+sweatshop
+sweatshops
+slave labor
+slave labour
+scab
+scabs
+union bosses
+globalist
+globalists
+big pharma
+big tech
+makers and takers

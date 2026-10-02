@@ -5,7 +5,8 @@ name: Religious conservative
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, sex_work, surrogacy, gene_editing,
    value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, honesty, experience_machine, omelas,
-   free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety]
+   free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety,
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -243,8 +244,80 @@ answers:
   public_safety.ch_birmingham_six: reform
   public_safety.ch_blackstone: depends
   public_safety.ch_prediction: risk
+  taxes.stance: 3
+  taxes.importance: 3
+  taxes.top_rate: 2
+  taxes.wealth_tax: 2
+  taxes.flat_tax: 4
+  taxes.corporate: 2
+  taxes.ch_ownership: shared_costs
+  taxes.ch_extra_dollar: targeted
+  taxes.ch_public_research: real_work
+  healthcare.stance: 2
+  healthcare.importance: 3
+  healthcare.pre_existing: 2
+  healthcare.user_fees: 4
+  healthcare.mandate: 2
+  healthcare.drug_prices: 2
+  healthcare.anchor_ml: 2 # money may buy quicker treatment, though not sex or surrogacy
+  healthcare.ch_spending: not_free
+  healthcare.ch_bill: catastrophic
+  healthcare.ch_arrow: routine
+  welfare.stance: 2
+  welfare.importance: 3
+  welfare.basic_income: 1
+  welfare.time_limit: 4
+  welfare.drug_tests: 4
+  welfare.child_payment: 4
+  welfare.anchor_desert: 6 # no unearned money for people who could work...
+  welfare.ch_recession: bridge
+  welfare.ch_finland: contribute
+  welfare.ch_children: separate
+  minimum_wage.stance: 3
+  minimum_wage.importance: 2 # low: deep items are skipped
+  minimum_wage.youth: 4
+  minimum_wage.regional: 4
+  minimum_wage.ch_new_jersey: modest
+  minimum_wage.ch_two_thirds: boom
+  regulation.stance: 3
+  regulation.importance: 2
+  regulation.licensing: 3
+  regulation.price_rises: 4
+  regulation.ch_thalidomide: medicine
+  regulation.ch_standard_oil: monopoly
+  unions.stance: 3
+  unions.importance: 2
+  unions.essential: 4
+  unions.agency_fee: 2
+  unions.ch_triangle: laws
+  unions.ch_inequality: other_causes
+  trade.stance: 3 # protection: the one economics stance on the equality side
+  trade.importance: 3
+  trade.security: 5
+  trade.farmers: 4
+  trade.buy_national: 4
+  trade.takeovers: 4
+  trade.ch_washers: towns
+  trade.ch_depression: protect_own
+  trade.ch_poverty: citizens_first
+  housing.stance: 2
+  housing.importance: 2
+  housing.zoning: 2
+  housing.public_housing: 3
+  housing.ch_staying: eviction
+  housing.ch_rise: property
+  inheritance.stance: 2
+  inheritance.importance: 3
+  inheritance.family_home: 1
+  inheritance.family_business: 5
+  inheritance.gains_at_death: 4
+  inheritance.lifetime_limit: 2
+  inheritance.anchor_desert: 2 # ...but heirs may keep money they didn't earn
+  inheritance.ch_carnegie: scale
+  inheritance.ch_florence: family
+  inheritance.ch_heirs: not_bad
 expect:
-  axes: { cultural: "< -0.6", civil: "> 0", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0" }
+  axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -265,9 +338,18 @@ expect:
     protest: { civil: "> 0" }
     torture: { civil: "> 0" }
     public_safety: { civil: "> 0" }
+    taxes: { economic: "> 0" }
+    healthcare: { economic: "> 0" }
+    welfare: { economic: "> 0" }
+    minimum_wage: { economic: "> 0" }
+    regulation: { economic: "> 0" }
+    unions: { economic: "> 0" }
+    trade: { economic: "< 0" }
+    housing: { economic: "> 0" }
+    inheritance: { economic: "> 0" }
   principles:
     sanctity_of_life: "> 0.5"
-    market_limits: "> 0.6"
+    market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
     retribution: "> 0.5"
     natural_order: "> 0.5"
   topicPrinciples:
@@ -282,6 +364,10 @@ expect:
     religious_liberty: { obey_law: "< 0" }
     protest: { obey_law: "> 0.5" }
     public_safety: { due_process: "< 0" }
+    healthcare: { market_limits: "< 0" }
+    welfare: { retribution: "> 0.5" }
+    trade: { loyalty: "> 0.3" }
+    inheritance: { retribution: "< 0" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the
   # sanctity of life high on abortion and assisted dying but low on the death penalty; caution with
@@ -289,6 +375,8 @@ expect:
   # liberty high for speech but not for private messages; obeying the law required of protesters
   # but not of religious objectors; due process demanded before losing guns but not freedom; and
   # doing vs. allowing high for assisted dying and the footbridge but low for torturing a suspect.
+  # In the economics topics: just deserts demanded of people who could work but not of heirs, and
+  # money may buy quicker medical treatment but not sex or surrogacy.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -306,3 +394,6 @@ expect:
     - due_process|guns|public_safety
     - doing_vs_allowing|assisted_dying|torture
     - doing_vs_allowing|sacrifice|torture
+    - retribution|inheritance|welfare
+    - market_limits|healthcare|sex_work
+    - market_limits|healthcare|surrogacy

@@ -92,8 +92,9 @@ describe('random respondents', () => {
   const runs = Array.from({ length: 1000 }, (_, i) => runRespondent(b, randomPolicy({ skipRate: 0.1 }), { seed: i + 1 }));
 
   it('center on every spectrum axis (mean within 4 standard errors of 0)', () => {
+    const profiles = runs.map(profileOf);
     for (const a of spectrumAxes) {
-      const scores = runs.map((r) => profileOf(r).axes[a.id]!.score).filter((s): s is number => s !== null);
+      const scores = profiles.map((p) => p.axes[a.id]!.score).filter((s): s is number => s !== null);
       if (scores.length < 30) continue; // planned axis with no content yet
       const mean = scores.reduce((x, y) => x + y, 0) / scores.length;
       const sd = Math.sqrt(scores.reduce((x, y) => x + (y - mean) ** 2, 0) / scores.length);
@@ -129,6 +130,8 @@ describe('ideology bots (pipeline sanity; they use the content weights)', () => 
     ['axis:cultural', -1],
     ['axis:civil', 1],
     ['axis:civil', -1],
+    ['axis:economic', 1],
+    ['axis:economic', -1],
     ['axis:novelty', 1],
     ['axis:mainstream', -1],
     ['axis:change', 1],
@@ -147,6 +150,8 @@ describe('tensions on real content', () => {
   const anchorsAt = (step: number): Policy => (ctx) =>
     ctx.item.anchor ? { kind: 'scale', step } : randomAnswer(ctx.item, ctx.rng);
 
+  // 150 runs through the whole bank. Like the termination test, its time grows with the square of
+  // the bank's size (about 20 s locally with four domains), so it gets its own budget.
   it('never fire when anchors are answered consistently, however erratic everything else is', () => {
     for (let seed = 1; seed <= 50; seed++) {
       for (const step of [1, 4, 7]) {
@@ -154,7 +159,7 @@ describe('tensions on real content', () => {
         expect(openTensions(run.state, run.resolutions), `seed ${seed}, anchors at ${step}`).toEqual([]);
       }
     }
-  });
+  }, 120_000);
 });
 
 describe('challenge behavior on real content', () => {

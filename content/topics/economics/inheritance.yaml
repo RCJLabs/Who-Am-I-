@@ -1,0 +1,272 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Taxing what people leave when they die. values/fairness already asks whether inheriting a
+# fortune is fair, so this topic asks about the tax. The anchor is the just-deserts frame, which
+# covers rewards only: here the left tends to invoke it; in welfare, the right. Yields toward
+# heavier taxes record equality or just deserts; toward lighter ones, liberty or loyalty to family.
+id: inheritance
+domain: economics
+title: Inheritance and great wealth
+summary: Should people be free to pass their wealth to their children, or should it be taxed?
+tier: extended
+order: 9
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Taxes on inheritances should be…
+    poles: [Abolished, Very heavy]
+    labels:
+      - Abolished
+      - Low, and only on the largest estates
+      - Modest, with generous tax-free allowances
+      - Torn / it depends
+      - Substantial on large inheritances
+      - Heavy on all but modest inheritances
+      - So heavy that great fortunes can't be passed on
+    axes: { economic: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: family_home
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Taxing the family home when parents leave it to their children is…
+    poles: [Wrong, Fair]
+    labels: [Wrong, Probably wrong, Torn, Probably fair, Fair]
+
+  - id: family_business
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Exempting family farms and businesses from inheritance tax, so heirs don't have to sell them to pay it, is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  - id: gains_at_death
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting heirs sell inherited shares or property without paying tax on the rise in value during the owner's lifetime, as US law does, is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  - id: lifetime_limit
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Taxing what each person inherits over their whole life, from everyone combined, above a single tax-free limit, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_desert
+    type: likert
+    points: 7
+    text: When it comes to inheritance, no one should get money they haven't earned through their own efforts, even if that means parents can't pass on everything they built.
+    principles: { retribution: 1 }
+    anchor: { principle: retribution, context: inheritance, against: parents' freedom to provide for their children }
+
+  # --- Challenges: for heavier taxes ---------------------------------------------------------------
+  - id: ch_carnegie
+    type: challenge
+    name: Dying rich
+    targets: stance
+    when: stance < 0
+    source: Andrew Carnegie, "Wealth," North American Review (1889)
+    scenario: >-
+      Andrew Carnegie, once among the richest men in the world, wrote in 1889 that "the man who dies
+      thus rich dies disgraced." He backed heavy taxes on large estates and gave most of his own
+      fortune away, believing that great wealth left to heirs did them more harm than good.
+    text: If one of the richest men in history thought great fortunes shouldn't pass down, why should they?
+    options:
+      - id: his_choice
+        label: Carnegie chose to give his fortune away. That should be each owner's choice, not the state's.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: scale
+        label: Vast fortunes are different from ordinary families passing on a home or a business.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want heavier taxes on large inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_florence
+    type: challenge
+    name: Six hundred years in Florence
+    targets: stance
+    when: stance < 0
+    source: >-
+      Guglielmo Barone and Sauro Mocetti, "Intergenerational Mobility in the Very Long Run: Florence
+      1427–2011," Bank of Italy working paper (2016)
+    scenario: >-
+      Economists at the Bank of Italy compared tax records from Florence in 1427 with those from
+      2011. Families whose ancestors were among the richest in 1427 were still more likely to be
+      well-off nearly 600 years later.
+    text: Should wealth be able to stay in a family for centuries?
+    options:
+      - id: family
+        label: Families that build wealth and keep it over generations do nothing wrong.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: not_money
+        label: That comes from education, connections and family culture as much as from money left in wills.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want heavier taxes on inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_heirs
+    type: challenge
+    name: The heirs
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Douglas Holtz-Eakin, David Joulfaian and Harvey Rosen, "The Carnegie Conjecture: Some
+      Empirical Evidence," Quarterly Journal of Economics (1993)
+    scenario: >-
+      A study of US tax records found that people who inherited more than $150,000 were about four
+      times as likely to stop working as people who inherited less than $25,000.
+    text: Does a large inheritance do heirs any good?
+    options:
+      - id: their_life
+        label: What heirs do with their money is up to them.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: not_bad
+        label: Leaving work isn't always bad. Some heirs start businesses, study or care for family.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not much, and it makes me want heavier taxes on large inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 0.5 }
+
+  # --- Challenges: for lighter taxes ---------------------------------------------------------------
+  - id: ch_who_pays
+    type: challenge
+    name: Who really pays
+    targets: stance
+    when: stance > 0
+    source: >-
+      HM Revenue & Customs, Inheritance Tax statistics; Institute for Fiscal Studies, "Raising
+      revenue from closing inheritance tax loopholes" (2024)
+    scenario: >-
+      In the UK, inheritance tax is due on fewer than 5 in every 100 deaths. In 2023–24 it raised
+      £7.5 billion, just under 1% of all tax revenue. A 2024 study found that estates worth more than
+      £10 million paid a smaller share of their value in tax than estates worth £3 million to £7.5
+      million, mainly because of exemptions for farms and businesses.
+    text: If the largest estates pay less of it, is a heavy inheritance tax worth having?
+    options:
+      - id: close_gaps
+        label: Yes, with the gaps closed. The exemptions are the problem, not the tax.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: lifetime
+        label: A tax on what each heir receives over their life, gifts included, would be harder to avoid.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me favor lighter taxes on inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_bakery
+    type: challenge
+    name: The family bakery
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      A family has run a bakery for three generations. When the owner dies, the business is worth far
+      more than the tax-free allowance, and her children have to sell it to pay the tax.
+    text: Should an inheritance tax be able to force a family business to be sold?
+    options:
+      - id: still_inherit
+        label: If the alternative is letting fortunes pass untaxed, yes. The children still inherit something valuable.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: spread
+        label: Let them pay over ten years, so no one has to sell.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me favor lighter taxes on inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_twice
+    type: challenge
+    name: Taxed twice?
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Most money left in a will was taxed when it was earned, and often again as it grew through
+      savings and investments. An inheritance tax takes a further share when it's passed on.
+    text: Is taxing it again fair?
+    options:
+      - id: never_taxed
+        label: Yes. Much of it was never taxed, because gains on shares and property often escape tax entirely when the owner dies.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: new_income
+        label: The tax falls on heirs, for whom it's new money, not on the person who earned it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me favor lighter taxes on inheritances than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A million tax-free
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would let anyone inherit up to $1 million tax-free, and tax anything above that
+      at 40%.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

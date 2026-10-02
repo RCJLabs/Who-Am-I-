@@ -2,7 +2,8 @@ name: Libertarian
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
    surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine,
-   free_speech, guns, surveillance, protest, torture, public_safety]
+   free_speech, guns, surveillance, protest, torture, public_safety,
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -226,8 +227,89 @@ answers:
   public_safety.ch_retrial: final
   public_safety.ch_bail: evidence
   public_safety.ch_silence: burden
+  taxes.stance: 1
+  taxes.importance: 4
+  taxes.top_rate: 1
+  taxes.wealth_tax: 1
+  taxes.flat_tax: 5
+  taxes.corporate: 1
+  taxes.ch_ownership: market_value
+  taxes.ch_extra_dollar: more_needed
+  taxes.ch_public_research: real_work
+  healthcare.stance: 1
+  healthcare.importance: 3
+  healthcare.pre_existing: 4
+  healthcare.user_fees: 5
+  healthcare.mandate: 1
+  healthcare.drug_prices: 1
+  healthcare.anchor_ml: 1
+  healthcare.ch_spending: not_free
+  healthcare.ch_bill: choice
+  healthcare.ch_arrow: markets_adapt
+  welfare.stance: 1
+  welfare.importance: 3
+  welfare.basic_income: 2
+  welfare.time_limit: 5
+  welfare.drug_tests: 1
+  welfare.child_payment: 1
+  welfare.anchor_desert: 7 # no unearned money for people who could work...
+  welfare.ch_recession: bridge
+  welfare.ch_finland: contribute
+  welfare.ch_children: rules
+  minimum_wage.stance: 1
+  minimum_wage.importance: 3
+  minimum_wage.youth: 5
+  minimum_wage.regional: 5
+  minimum_wage.gig: 1
+  minimum_wage.small_business: 5
+  minimum_wage.ch_new_jersey: freedom
+  minimum_wage.ch_two_thirds: prices
+  minimum_wage.ch_full_time: costs
+  regulation.stance: 1
+  regulation.importance: 4
+  regulation.licensing: 1
+  regulation.price_rises: 1
+  regulation.untested_drugs: 5
+  regulation.break_up: 1
+  regulation.ch_thalidomide: costs_too
+  regulation.ch_standard_oil: competition
+  regulation.ch_self_check: incentives
+  unions.stance: 1
+  unions.importance: 2
+  unions.essential: 4
+  unions.agency_fee: 1
+  unions.ch_triangle: free_bargaining
+  unions.ch_inequality: fair_outcome
+  trade.stance: 7
+  trade.importance: 3
+  trade.security: 1
+  trade.farmers: 1
+  trade.buy_national: 1
+  trade.takeovers: 1
+  trade.ch_china_shock: gains
+  trade.ch_rana_plaza: jobs_help
+  trade.ch_ladder: rare_success
+  housing.stance: 1
+  housing.importance: 3
+  housing.zoning: 5
+  housing.public_housing: 1
+  housing.empty_homes: 1
+  housing.no_reason: 5
+  housing.ch_staying: fewer_homes
+  housing.ch_rise: property
+  housing.ch_revision: still_harm
+  inheritance.stance: 1
+  inheritance.importance: 3
+  inheritance.family_home: 1
+  inheritance.family_business: 5
+  inheritance.gains_at_death: 5
+  inheritance.lifetime_limit: 1
+  inheritance.anchor_desert: 1 # ...but heirs may keep money they didn't earn
+  inheritance.ch_carnegie: his_choice
+  inheritance.ch_florence: not_money
+  inheritance.ch_heirs: their_life
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5", change: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -248,6 +330,15 @@ expect:
     protest: { civil: "< 0" }
     torture: { civil: "< 0" }
     public_safety: { civil: "< 0" }
+    taxes: { economic: "> 0" }
+    healthcare: { economic: "> 0" }
+    welfare: { economic: "> 0" }
+    minimum_wage: { economic: "> 0" }
+    regulation: { economic: "> 0" }
+    unions: { economic: "> 0" }
+    trade: { economic: "> 0" }
+    housing: { economic: "> 0" }
+    inheritance: { economic: "> 0" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -260,11 +351,21 @@ expect:
     surveillance: { liberty: "> 0.5" }
     guns: { due_process: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
+    taxes: { equality: "< -0.5" }
+    healthcare: { market_limits: "< -0.5", liberty: "> 0.5" }
+    welfare: { retribution: "> 0.5", liberty: "> 0.5" }
+    regulation: { liberty: "> 0.5" }
+    unions: { liberty: "> 0.5" }
+    trade: { loyalty: "< -0.5" }
+    housing: { liberty: "> 0.5" }
+    inheritance: { retribution: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
   # rights topics add no tensions: liberty and due process high everywhere, and protecting the
-  # vulnerable low on guns as on drugs and vaccines.
+  # vulnerable low on guns as on drugs and vaccines. Economics adds one: just deserts demanded of
+  # people who could work but not of heirs. Paid markets stay acceptable in healthcare too.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty
+    - retribution|inheritance|welfare
