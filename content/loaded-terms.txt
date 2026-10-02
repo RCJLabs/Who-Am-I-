@@ -1,0 +1,21 @@
+# Terms that signal a side or insult one. Flagged (W108) in anything users read.
+# Use neutral wording instead ("fetus", "people who oppose mandates"), or justify inside a quotation.
+pro-life
+pro-choice
+anti-abortion
+pro-abortion
+forced birth
+baby killer
+baby killing
+clump of cells
+unborn baby
+unborn child
+abortion on demand
+culture of death
+death panel
+anti-vaxxer
+anti-vax
+plandemic
+sheeple
+woke
+snowflake

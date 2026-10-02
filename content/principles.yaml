@@ -1,0 +1,26 @@
+# Moral principles. Answers record how strongly each is endorsed per topic; anchor items
+# (matched wording across topics) are what the tension detector compares.
+- id: bodily_autonomy
+  label: Bodily autonomy
+  definition: People have the right to decide what happens to their own bodies.
+- id: sanctity_of_life
+  label: Sanctity of life
+  definition: Human life has inherent worth, and deliberately ending it is wrong.
+- id: protect_vulnerable
+  label: Protecting the vulnerable
+  definition: Laws should shield people who can't protect themselves, even at some cost to others' freedom.
+- id: harm_principle
+  label: Preventing harm to others
+  definition: The state may limit people's freedom to stop them from harming others.
+- id: collective_welfare
+  label: Collective welfare
+  definition: Individuals should accept burdens for the good of the community.
+- id: relief_of_suffering
+  label: Relief of suffering
+  definition: Reducing suffering should come first.
+- id: personal_responsibility
+  label: Personal responsibility
+  definition: People take on obligations through their voluntary choices.
+- id: doing_vs_allowing
+  label: Doing vs. allowing
+  definition: Actively causing harm is worse than failing to prevent it.

@@ -1,0 +1,92 @@
+# Spectrums shown in results. poles: [negative end, positive end].
+# Evidence rule: below minWeight (or fewer than minTopics topics) the axis shows "not enough data";
+# confidence reaches 1 at fullWeight.
+
+# --- Political ---
+- id: economic
+  family: political
+  title: Economic
+  description: Should markets or collective action decide who gets what?
+  poles: [Equality, Markets]
+  minWeight: 3
+  fullWeight: 10
+  minTopics: 2
+  planned: true
+- id: civil
+  family: political
+  title: Civil
+  description: How far should the state limit individual freedom for safety, order or the common good?
+  poles: [Liberty, Authority]
+  minWeight: 2
+  fullWeight: 8
+  minTopics: 2
+- id: cultural
+  family: political
+  title: Cultural
+  description: Should society hold to established norms, or reform them?
+  poles: [Tradition, Progress]
+  minWeight: 2
+  fullWeight: 8
+  minTopics: 2
+- id: diplomatic
+  family: political
+  title: Diplomatic
+  description: Should your country put its own interests first, or cooperate globally?
+  poles: [National, Global]
+  minWeight: 3
+  fullWeight: 10
+  minTopics: 2
+  planned: true
+
+# --- Personality (Big Five; raw position on the scale, no population norms) ---
+- id: extraversion
+  family: personality
+  title: Extraversion
+  description: Energy drawn from people, activity and attention.
+  poles: [Reserved, Outgoing]
+  minWeight: 3
+  fullWeight: 4
+- id: agreeableness
+  family: personality
+  title: Agreeableness
+  description: Warmth, sympathy and concern for others.
+  poles: [Tough-minded, Compassionate]
+  minWeight: 3
+  fullWeight: 4
+- id: conscientiousness
+  family: personality
+  title: Conscientiousness
+  description: Order, follow-through and self-discipline.
+  poles: [Spontaneous, Organized]
+  minWeight: 3
+  fullWeight: 4
+- id: neuroticism
+  family: personality
+  title: Emotional reactivity (Neuroticism)
+  description: How often and how strongly you feel negative emotions.
+  poles: [Even-keeled, Reactive]
+  minWeight: 3
+  fullWeight: 4
+- id: openness
+  family: personality
+  title: Intellect & Imagination (Openness)
+  description: Imagination and interest in abstract ideas.
+  poles: [Practical, Imaginative]
+  minWeight: 3
+  fullWeight: 4
+
+# --- Taste ---
+- id: novelty
+  family: taste
+  title: Novelty
+  description: Comfort favorites, or constant discovery?
+  poles: [Familiar, Novel]
+  minWeight: 1
+  fullWeight: 2
+- id: mainstream
+  family: taste
+  title: Mainstream
+  description: Popular picks, or off the beaten path?
+  poles: [Popular, Niche]
+  minWeight: 1
+  fullWeight: 2
