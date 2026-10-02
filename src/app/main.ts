@@ -3,6 +3,7 @@ import { mount } from 'svelte';
 import bundle from 'virtual:content';
 import App from './App.svelte';
 import { initApp } from './context.ts';
+import { pwa } from './pwa.svelte.ts';
 import { loadAll, type Loaded } from './storage/db.ts';
 import { AnswersStore } from './stores/answers.svelte.ts';
 import { SettingsStore } from './stores/settings.svelte.ts';
@@ -28,3 +29,4 @@ initApp({
 
 target.replaceChildren();
 mount(App, { target });
+pwa.init();

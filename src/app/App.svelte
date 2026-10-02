@@ -4,6 +4,7 @@
   import { router } from './router.svelte.ts';
   import NavBar from './components/NavBar.svelte';
   import Toasts from './components/Toasts.svelte';
+  import UpdateBanner from './components/UpdateBanner.svelte';
   import About from './routes/About.svelte';
   import ContentPreview from './routes/ContentPreview.svelte';
   import Flow from './routes/Flow.svelte';
@@ -67,5 +68,6 @@
 
 {#if route.name !== 'flow'}
   <NavBar active={tab} />
+  <UpdateBanner />
 {/if}
 <Toasts />

@@ -19,8 +19,6 @@ to export or share them.
 - It sends **nothing about you or your answers** to anyone. No analytics, no advertising, no
   tracking, no third-party services. The app's security policy technically blocks it from
   contacting other servers.
-  <!-- TODO before release: the Content Security Policy lands with the app shell; verify it. -->
-
 
 ## Exporting and sharing
 
