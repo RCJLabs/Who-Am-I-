@@ -64,17 +64,17 @@ The full map of what Who Am I covers.
 | Rights of the accused (due process vs. public safety) | extended | custom | ✅ | the Birmingham Six, Blackstone's ratio, double jeopardy |
 
 ### Economics
-| Topic | Tier | Status |
-|---|---|---|
-| Taxes and redistribution | core | ◻️ |
-| Healthcare system | core | ◻️ |
-| Welfare and universal basic income | core | ◻️ |
-| Minimum wage | core | ◻️ |
-| Regulating business | extended | ◻️ |
-| Unions | extended | ◻️ |
-| Trade and tariffs | extended | ◻️ |
-| Housing (rent control, zoning) | extended | ◻️ |
-| Inheritance and great wealth | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Taxes and redistribution | core | custom | ✅ | Murphy and Nagel on ownership, France's 75% tax, the disappearing wealth taxes |
+| Paying for healthcare | core | custom | ✅ | US spending and life expectancy, the NHS waiting list, NICE, the Chaoulli case |
+| Welfare and basic income | core | custom | ✅ | Finland's basic-income trial, the 1996 US reform, the 1970s guaranteed-income trials |
+| Minimum wage | core | custom | ✅ | the CBO estimate, Seattle, New Jersey's fast-food restaurants, the UK at two-thirds of typical pay |
+| Regulating business | extended | custom | ✅ | thalidomide and the drug rules after it, Standard Oil, the 737 MAX, occupational licensing |
+| Unions | extended | custom | ✅ | the winter of discontent, police unions, the Triangle fire, Nordic bargaining |
+| Trade and tariffs | extended | custom | ✅ | the washing-machine tariffs, the 1930 tariffs, the China shock, Rana Plaza |
+| Housing and rents (rent control; building rules and public housing as circumstances) | extended | custom | ✅ | San Francisco's 1994 expansion, the economists' poll, Tokyo's building |
+| Inheritance and great wealth | extended | custom | ✅ | Carnegie, Florence 1427–2011, the UK's inheritance tax |
 
 ### Society
 | Topic | Tier | Status |
@@ -189,14 +189,14 @@ can surface in both directions.
 | Bodily autonomy | abortion, drug policy, selling sex, assisted dying | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex |
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
 | Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns |
-| Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers) | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy |
+| Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers), paying for quicker medical treatment | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy, paying for healthcare |
 | Caution with the irreversible | death penalty, climate, GMOs | gene editing, rapid social change | death penalty, gene editing |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
 | Personal responsibility | | welfare, drugs, abortion | *(effects only)* |
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
-| Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only; anchor with economics)* |
-| Just deserts | | death penalty, prisons, welfare | *(effects and moral foundations only; anchor with criminal justice)* |
+| Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only)* |
+| Just deserts | inheritance (heirs didn't earn it) | support for people who could work, death penalty, prisons | welfare and basic income, inheritance (rewards only: punishment needs its own principle) |
 | Loyalty | | patriotism, national service | *(moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
@@ -212,14 +212,16 @@ abortion and low on vaccine requirements raises a tension, and so does the rever
 sanctity of life rated high on abortion and low on the death penalty raises one, and so does the
 reverse. The rights anchors work the same way: liberty rated high for speech and low for private
 messages, obeying the law required of protesters but not of religious objectors, and due process
-demanded before losing guns but not freedom each raise a tension, and so does each reverse. The
-personas in `tests/sim/personas` pin these down.
+demanded before losing guns but not freedom each raise a tension, and so does each reverse. So
+do the economics anchors: just deserts demanded of people who could work but not of heirs, and
+money allowed to buy quicker medical treatment but not sex or surrogacy, each raise a tension in
+either direction. The personas in `tests/sim/personas` pin these down.
 
 ## Axes
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
-| Economic | political | Equality ↔ Markets | at half weight: what makes a society fair (shows once a second topic feeds it) |
+| Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage; at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
 | Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
 | Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, faith and equality law |
 | Diplomatic | political | National ↔ Global | *(planned)* |

@@ -209,7 +209,12 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Liberty | When it comes to {context}, the government should leave people free to {the freedom}, even though some will misuse that freedom to {the harm}. |
   | Due process | No one should lose {a right} because a court fears what they might do, rather than for something they've been proven to have done, even if that means some dangerous people {keep it} for a while. |
   | Obeying the law | {Who} should obey {the law} even when {the conflict}, and work for change only through legal means. |
+  | Just deserts | When it comes to {context}, no one should get money they haven't earned through their own efforts, even if that means {the cost}. |
 
+- **Just deserts anchors cover rewards only.** The principle also covers punishment, but someone
+  can hold that rewards should be earned without holding that punishment should match wrongdoing.
+  A future punishment anchor (in policing or prisons) needs its own principle, or the tension
+  detector would compare the two as if they were the same claim.
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of
   other people*").
@@ -242,6 +247,16 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | protesters, people who oppose abortion | thugs, eco-terrorists, anti-abortion activists |
 | the method itself (sleep deprivation, stress positions) | enhanced interrogation |
 | people accused, defendants | criminals (before a conviction) |
+| inheritance tax, estate tax | death tax |
+| employers, business owners | job creators |
+| people receiving support or benefits | welfare queens, scroungers, freeloaders, handouts |
+| healthcare paid for by taxes | socialized medicine |
+| tax cuts | tax relief |
+| replacement workers | scabs |
+| union leaders | union bosses |
+| drug companies, the largest technology companies | big pharma, big tech |
+| low-paid or unsafe factories, naming the conditions; forced labor where it is forced | sweatshops, slave labor |
+| laws banning required union fees | "right-to-work" (fine in the names of laws) |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
