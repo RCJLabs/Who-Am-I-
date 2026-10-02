@@ -1,0 +1,15 @@
+# expect: E011@15
+id: bad_e011
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: c
+    type: choice
+    text: C
+    axes: { social: 1 }
+    options:
+      - { id: one, label: One, value: -1 }
+      - { id: two, label: Two }

@@ -96,7 +96,7 @@ export interface Anchor {
   against?: string;
 }
 
-interface ItemBase {
+export interface ItemBase {
   id: ItemId;
   key: string;
   topic: TopicId;

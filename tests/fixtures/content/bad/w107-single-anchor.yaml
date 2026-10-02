@@ -1,0 +1,14 @@
+# expect: W107@14
+id: bad_w107
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: a
+    type: likert
+    points: 7
+    text: A
+    principles: { duty: 1 }
+    anchor: { principle: duty, context: test }

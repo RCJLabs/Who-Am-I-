@@ -1,0 +1,9 @@
+# expect: E002@9
+id: bad_e002_reserved
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - { id: and, type: slider, steps: 5, text: Q, poles: [A, B] }

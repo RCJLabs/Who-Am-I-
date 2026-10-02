@@ -1,0 +1,16 @@
+# expect: E010@13
+id: bad_e010_order
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+importance: importance
+items:
+  - id: q
+    type: slider
+    steps: 5
+    deep: true
+    text: Q
+    poles: [A, B]
+  - { id: importance, type: importance, text: How much? }

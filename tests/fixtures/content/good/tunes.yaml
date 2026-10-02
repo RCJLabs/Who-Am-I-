@@ -1,0 +1,33 @@
+id: tunes
+domain: interests
+title: Tunes
+summary: Interest topic.
+tier: core
+evidence: for-fun
+items:
+  - id: genres
+    type: multi
+    intensity: true
+    text: Which do you enjoy?
+    options:
+      - { id: jazz, label: Jazz }
+      - { id: rock, label: Rock }
+      - { id: pop, label: Pop }
+  - id: jazz_era
+    type: choice
+    when: genres has jazz
+    text: Favorite jazz era?
+    options:
+      - { id: swing, label: Swing }
+      - { id: bebop, label: Bebop }
+  - id: discovery
+    type: slider
+    steps: 5
+    text: I mostly listen to…
+    poles: [What I already love, New things]
+    axes: { novelty: 1 }
+  - id: love
+    type: rating
+    tags: [interest]
+    text: How much does music matter to you?
+    poles: [Not at all, Hugely]

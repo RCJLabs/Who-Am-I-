@@ -1,0 +1,11 @@
+# expect: E002@10
+id: bad_e002_type
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: likret
+    text: Hi

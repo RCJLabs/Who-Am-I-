@@ -1,0 +1,64 @@
+id: beta
+domain: life
+title: Beta
+summary: Second test topic sharing anchors with alpha.
+tier: core
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Beta requirements should be…
+    poles: [Never, Always]
+    axes: { civil: 1 }
+  - id: importance
+    type: importance
+    text: How much does beta matter to you?
+  - id: anchor_auto
+    type: likert
+    points: 7
+    text: In beta, a person's own choice should come first.
+    principles: { autonomy: 1 }
+    anchor: { principle: autonomy, context: beta, against: other people's health }
+  - id: anchor_life
+    type: likert
+    points: 7
+    text: Ending a life is wrong even when beta is hard.
+    principles: { life: 1 }
+    anchor: { principle: life, context: beta }
+  - id: ch_con
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Test source
+    scenario: A scenario aimed at the never side.
+    text: Does this change your view?
+    options:
+      - { id: hold, label: No, reaction: hold, principles: { autonomy: 1 } }
+      - { id: rethink, label: Yes, reaction: yield, revise: stance, principles: { duty: 1 } }
+  - id: ch_pro
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Test source
+    scenario: A scenario aimed at the always side.
+    text: Does this change your view?
+    options:
+      - { id: hold, label: No, reaction: hold, principles: { duty: 1 } }
+      - { id: rethink, label: Yes, reaction: yield, revise: stance, principles: { autonomy: 1 } }
+  - id: ch_mid
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Test source
+    scenario: You're torn. How would you vote?
+    text: Your vote?
+    options:
+      - { id: abstain, label: Abstain, reaction: hold, principles: { duty: 0.5 } }
+      - { id: yes, label: Yes, reaction: yield, revise: stance, principles: { autonomy: 0.5 } }
+  - id: check
+    type: reask
+    target: stance
+    text: Where do you land now?

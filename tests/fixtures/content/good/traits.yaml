@@ -1,0 +1,14 @@
+id: traits
+domain: personality
+title: Traits
+summary: Validated-style personality items.
+tier: core
+evidence: validated
+source: Test instrument
+license: Public domain
+instructions: Describe yourself as you generally are now.
+items:
+  - { id: t1, type: likert, points: 5, labels: accuracy, text: Warm item one., axes: { warmth: 1 } }
+  - { id: t2, type: likert, points: 5, labels: accuracy, text: Cold item two., axes: { warmth: -1 } }
+  - { id: t3, type: likert, points: 5, labels: accuracy, text: Warm item three., axes: { warmth: 1 } }
+  - { id: t4, type: likert, points: 5, labels: accuracy, text: Cold item four., axes: { warmth: -1 } }

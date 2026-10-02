@@ -1,0 +1,20 @@
+# expect: E006@20
+id: bad_e006_option
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: c
+    type: choice
+    text: C
+    options:
+      - { id: one, label: One }
+      - { id: two, label: Two }
+  - id: r
+    type: slider
+    steps: 5
+    text: R
+    poles: [A, B]
+    when: c is three

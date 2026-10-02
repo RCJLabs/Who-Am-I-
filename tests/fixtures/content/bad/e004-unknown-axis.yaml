@@ -1,0 +1,14 @@
+# expect: E004@14
+id: bad_e004_axis
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: slider
+    steps: 5
+    text: Q
+    poles: [A, B]
+    axes: { nope: 1 }

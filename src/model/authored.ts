@@ -167,6 +167,7 @@ export const TopicFileSchema = z.strictObject({
   title: z.string().min(1),
   summary: z.string().min(1),
   tier: z.enum(['core', 'extended']),
+  order: z.number().int().optional().describe('Display order within the domain (lower first, default 0)'),
   evidence: z.enum(EVIDENCE).describe('validated instrument, adapted from research, custom, or for fun'),
   source: z.string().min(1).optional().describe('Instrument or source citation'),
   license: z.string().min(1).optional(),

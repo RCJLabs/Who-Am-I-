@@ -26,6 +26,12 @@
         "extended"
       ]
     },
+    "order": {
+      "description": "Display order within the domain (lower first, default 0)",
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
     "evidence": {
       "type": "string",
       "enum": [
