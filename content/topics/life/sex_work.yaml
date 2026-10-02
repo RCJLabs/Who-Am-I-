@@ -198,8 +198,8 @@ items:
     scenario: >-
       In 1999 Sweden made it a crime to pay for sex but not to sell it, treating people who sell sex
       mainly as victims of exploitation. A 2010 government evaluation reported that street-based
-      selling had halved and that the law deterred buyers. Critics say much of the trade moved
-      indoors and online, where it's harder to see.
+      selling had halved, with no sign that it had simply moved online. Critics argue that much of
+      the trade moved indoors and online anyway, where it's harder to see.
     text: Should paying for sex be a crime, even if selling it isn't?
     options:
       - id: consenting
