@@ -1,0 +1,144 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Three statements per foundation: two keyed toward it and one away from it, so agreeing with
+# everything doesn't inflate any foundation. Order is mixed so no foundation runs in a block.
+# Wording avoids naming parties or current controversies.
+id: moral_foundations
+domain: values
+title: Moral foundations
+summary: Which considerations weigh most when you judge right and wrong?
+tier: core
+order: 2
+evidence: custom
+source: >-
+  Inspired by Moral Foundations Theory (Jonathan Haidt, Jesse Graham and colleagues), including the
+  MFQ-2's split of fairness into equality and proportionality, plus liberty; the statements are
+  original.
+instructions: >-
+  Say how much you agree with each statement. Go with your first reaction; there are no right
+  answers.
+items:
+  - id: care_1
+    type: likert
+    points: 5
+    text: Compassion for people who are suffering is one of the most important virtues.
+    principles: { relief_of_suffering: 1 }
+
+  - id: loyalty_1
+    type: likert
+    points: 5
+    text: People should be loyal to their country, even when they disagree with its government.
+    principles: { loyalty: 1 }
+
+  - id: equality_3
+    type: likert
+    points: 5
+    text: Large inequality is fine as long as everyone has a chance to get ahead.
+    principles: { equality: -1 }
+
+  - id: purity_1
+    type: likert
+    points: 5
+    text: Some things are wrong because they're degrading, even if no one is harmed.
+    principles: { purity: 1 }
+
+  - id: liberty_3
+    type: likert
+    points: 5
+    text: People's freedom often has to be limited for the good of society.
+    principles: { liberty: -1 }
+
+  - id: deserts_1
+    type: likert
+    points: 5
+    text: People should be rewarded in proportion to what they contribute.
+    principles: { retribution: 1 }
+
+  - id: authority_1
+    type: likert
+    points: 5
+    text: Teaching children to respect their parents, teachers and elders is essential.
+    principles: { authority: 1 }
+
+  - id: care_3
+    type: likert
+    points: 5
+    text: Too much concern for other people's feelings makes people weak.
+    principles: { relief_of_suffering: -1 }
+
+  - id: equality_1
+    type: likert
+    points: 5
+    text: The world would be better if wealth were spread more equally.
+    principles: { equality: 1 }
+
+  - id: loyalty_3
+    type: likert
+    points: 5
+    text: I don't feel any special duty to my own country or community.
+    principles: { loyalty: -1 }
+
+  - id: purity_2
+    type: likert
+    points: 5
+    text: Some things are sacred and should never be mocked or treated lightly.
+    principles: { purity: 1 }
+
+  - id: deserts_2
+    type: likert
+    points: 5
+    text: It bothers me when people who don't pull their weight get the same as those who do.
+    principles: { retribution: 1 }
+
+  - id: authority_3
+    type: likert
+    points: 5
+    text: Questioning authority matters more than obeying it.
+    principles: { authority: -1 }
+
+  - id: liberty_1
+    type: likert
+    points: 5
+    text: Governments interfere too much in people's everyday lives.
+    principles: { liberty: 1 }
+
+  - id: care_2
+    type: likert
+    points: 5
+    text: When I judge whether something was wrong, the first thing I consider is whether anyone was hurt.
+    principles: { relief_of_suffering: 1 }
+
+  - id: purity_3
+    type: likert
+    points: 5
+    text: If no one is harmed, an act can't be morally wrong, however disgusting it seems.
+    principles: { purity: -1 }
+
+  - id: equality_2
+    type: likert
+    points: 5
+    text: Big differences in how much people have are unfair in themselves.
+    principles: { equality: 1 }
+
+  - id: deserts_3
+    type: likert
+    points: 5
+    text: Making sure everyone has enough matters more than rewarding effort.
+    principles: { retribution: -1 }
+
+  - id: loyalty_2
+    type: likert
+    points: 5
+    text: Turning your back on your own family or group is one of the worst things you can do.
+    principles: { loyalty: 1 }
+
+  - id: authority_2
+    type: likert
+    points: 5
+    text: Society works better when people follow the rules, even ones they disagree with.
+    principles: { authority: 1 }
+
+  - id: liberty_2
+    type: likert
+    points: 5
+    text: I resent anyone, including the government, telling me how to live.
+    principles: { liberty: 1 }

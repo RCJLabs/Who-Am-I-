@@ -1,0 +1,253 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Le Guin's Omelas: happiness for many, bought with one child's suffering. The story is the topic
+# intro; staying is the outcome-weighing answer, so the stance feeds the rules-or-outcomes axis.
+id: omelas
+domain: values
+title: The price of a perfect world
+summary: Would you accept a perfect society built on one person's suffering?
+tier: extended
+order: 9
+evidence: custom
+stance: stance
+importance: importance
+source: Ursula K. Le Guin, "The Ones Who Walk Away from Omelas" (1973)
+instructions: >-
+  In Ursula K. Le Guin's story "The Ones Who Walk Away from Omelas," a city is joyful, free and kind
+  in every way. But its happiness depends on one child, kept alone in a dark basement room,
+  neglected and miserable. Everyone in the city knows. If the child were set free, all of Omelas's
+  happiness would end. Most people, having seen the child, stay. A few quietly walk away and never
+  come back.
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Would you live in Omelas?
+    help: A city of perfect happiness that depends on one child's suffering.
+    poles: [I'd walk away, I'd stay]
+    labels:
+      - I'd walk away, whatever it cost me
+      - I'd walk away
+      - I'd probably leave
+      - Torn / it depends
+      - I'd probably stay
+      - I'd stay
+      - I'd stay without guilt; it's a good bargain
+    axes: { outcomes: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: free_child
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If you could free the child, ending Omelas's happiness for everyone, doing so would be…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { relief_of_suffering: 0.5 }
+
+  - id: thousand
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: If the city's happiness required a thousand suffering children instead of one, staying would be…
+    poles: [Wrong, Acceptable]
+    labels: [Wrong, Probably wrong, Torn, Probably acceptable, Acceptable]
+    principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: for walking away --------------------------------------------------------------
+  - id: ch_our_world
+    type: challenge
+    name: Our own Omelas
+    targets: stance
+    when: stance < 0
+    source: >-
+      Original scenario; child labor estimate from the International Labour Organization and UNICEF,
+      Child Labour: Global Estimates 2024
+    scenario: >-
+      Much of what makes life comfortable in rich countries, from cheap clothes to phones, depends
+      partly on dangerous, poorly paid work far away. About 138 million children were in child labor
+      in 2024, according to the ILO and UNICEF, some of them in supply chains that end on our
+      shelves.
+    text: If you'd walk away from Omelas, should you walk away from this too?
+    options:
+      - id: fixable
+        label: It's different. That suffering isn't required for our comfort, and it can be fixed.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: try
+        label: Yes, and I try to, in what I buy, give and vote for.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: Maybe staying in Omelas isn't so different from how we already live.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_walk_away
+    type: challenge
+    name: What walking away achieves
+    targets: stance
+    when: stance < 0
+    source: Ursula K. Le Guin, "The Ones Who Walk Away from Omelas" (1973)
+    scenario: >-
+      In the story, the people who walk away don't free the child. They simply leave, and the child
+      stays where it is. Readers have long argued over whether walking away is a moral act or just a
+      way of keeping your own hands clean.
+    text: What does walking away actually achieve?
+    options:
+      - id: refuse
+        label: It refuses to share in an injustice. That matters even if it changes nothing.
+        reaction: hold
+        principles: { doing_vs_allowing: 1 }
+      - id: free
+        label: Not enough. I'd stay and work to set the child free.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: Nothing, which makes staying seem less wrong than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_polio
+    type: challenge
+    name: The polio vaccine
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Vaccine-associated paralytic polio, a rare effect of the oral polio vaccine (about one case per
+      2.4 million doses in US data from 1980 to 1992)
+    scenario: >-
+      Societies already accept trades like this. For decades the oral polio vaccine, which helped
+      wipe out polio in much of the world, also caused paralysis in about one person for every 2.4
+      million doses given.
+    text: Is that different from Omelas?
+    options:
+      - id: shared_risk
+        label: Yes. A rare risk everyone shares is different from deliberately making one child suffer.
+        reaction: distinguish
+        principles: { equality: 0.5 }
+      - id: cruelty
+        label: Some trade-offs are acceptable, but never one that requires deliberate cruelty.
+        reaction: hold
+        principles: { doing_vs_allowing: 1 }
+      - id: rethink
+        label: Not really. Accepting a few victims to save many is something we already do.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  # --- Challenges: for staying -------------------------------------------------------------------
+  - id: ch_your_child
+    type: challenge
+    name: If it were your child
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Suppose the child in the dark room were your own son or daughter, chosen by lot.
+    text: Would you still stay, and let it go on?
+    options:
+      - id: impartial
+        label: Yes. My child's suffering doesn't count for more than anyone else's.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: love
+        label: I couldn't, but that's love, not a reason. The bargain would still be right.
+        reaction: distinguish
+        principles: { loyalty: 0.5 }
+      - id: rethink
+        label: No, and that makes me think I couldn't really accept the bargain.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_means
+    type: challenge
+    name: Using a person
+    targets: stance
+    when: stance > 0
+    source: Immanuel Kant, Groundwork of the Metaphysics of Morals (1785)
+    scenario: >-
+      Immanuel Kant argued that it is always wrong to treat a person merely as a means, however good
+      the ends. In Omelas, the child exists only as the price of everyone else's happiness.
+    text: Does that make the bargain wrong, however much happiness it buys?
+    options:
+      - id: too_strict
+        label: Kant's rule is too strict. We sometimes ask people to bear terrible costs for others, like soldiers in wartime.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: outweigh
+        label: No. A city of happy lives outweighs one, however hard that is to say.
+        reaction: hold
+        principles: { collective_welfare: 1 }
+      - id: rethink
+        label: Yes. No one should be used like that.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 0.5, sanctity_of_life: 0.5 }
+
+  - id: ch_james
+    type: challenge
+    name: The hideous bargain
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: William James, "The Moral Philosopher and the Moral Life" (1891), the idea Le Guin built her story on
+    scenario: >-
+      Long before Le Guin, philosopher William James imagined millions kept permanently happy on one
+      condition: that a lost soul far away live a life of lonely torture. He thought nearly everyone
+      would immediately feel how hideous it would be to enjoy happiness bought that way, whatever
+      the numbers.
+    text: Is that feeling a reason, or just a feeling?
+    options:
+      - id: feeling
+        label: Just a feeling. Feelings can mislead us about what's right.
+        reaction: hold
+        principles: { collective_welfare: 1 }
+      - id: caution
+        label: It's a reason to be careful, not a veto. The numbers still count.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: A reason. Some moral feelings track something real.
+        reaction: yield
+        revise: stance
+        principles: { purity: 0.5, doing_vs_allowing: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The city's vote
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Omelas holds a vote on whether to free the child, knowing that the city's happiness would end.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: free
+        label: Free the child
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: keep
+        label: Keep Omelas as it is
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about it, where do you land now?

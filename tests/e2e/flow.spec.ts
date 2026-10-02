@@ -55,6 +55,28 @@ test('the personality short form shows an intro and produces Big Five results', 
   await expect(page.getByTestId('axis-extraversion-position')).toBeVisible();
 });
 
+test('this-or-that choices place you on the values spectrums', async ({ page }) => {
+  await freshStart(page, '#/m/value_tradeoffs');
+  await page.getByTestId('intro-start').click();
+  const { seen, end } = await answerFlow(page, {
+    'value_tradeoffs.freedom': 'choose',
+    'value_tradeoffs.success': 'there',
+    'value_tradeoffs.tradition': 'exciting',
+    'value_tradeoffs.fair_world': 'fairer',
+    'value_tradeoffs.own_way': 'my_way',
+    'value_tradeoffs.career': 'nature',
+    'value_tradeoffs.predictable': 'new_things',
+    'value_tradeoffs.loyal': 'dependable',
+    'value_tradeoffs.original': 'stand_out',
+    'value_tradeoffs.admired': 'understanding',
+  });
+  expect(end).toBe('done');
+  expect(seen).toHaveLength(10);
+  await page.getByTestId('see-results').click();
+  await expect(page.getByTestId('axis-change-position')).toHaveText('Strongly Change');
+  await expect(page.getByTestId('axis-others-position')).toHaveText("Strongly Others' welfare");
+});
+
 test('answering anchors very differently across topics raises a tension card', async ({ page }) => {
   await freshStart(page, '#/m/abortion');
   await answerFlow(page, { 'abortion.anchor_ba': 7 });

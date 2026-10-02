@@ -1,5 +1,7 @@
 name: Communitarian
-topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work]
+topics:
+  [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
+   value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -26,6 +28,7 @@ answers:
   assisted_dying.anchor_ba: 3
   assisted_dying.anchor_sol: 6
   assisted_dying.anchor_pv: 6
+  assisted_dying.anchor_dva: 6
   assisted_dying.ch_rachels: different_act
   assisted_dying.ch_suffering: pressure
   vaccine_mandates.stance: 6
@@ -90,8 +93,75 @@ answers:
   sex_work.anchor_ml: 6
   sex_work.ch_new_zealand: punish_buyers
   sex_work.ch_her_choice: rare
+  value_tradeoffs.freedom: secure
+  value_tradeoffs.success: there
+  value_tradeoffs.tradition: traditions
+  value_tradeoffs.fair_world: fairer
+  value_tradeoffs.own_way: expectations
+  value_tradeoffs.career: nature
+  value_tradeoffs.predictable: stable
+  value_tradeoffs.loyal: dependable
+  value_tradeoffs.original: polite
+  value_tradeoffs.admired: understanding
+  moral_foundations.care_1: 5
+  moral_foundations.loyalty_1: 4
+  moral_foundations.equality_3: 3
+  moral_foundations.purity_1: 4
+  moral_foundations.liberty_3: 5
+  moral_foundations.deserts_1: 4
+  moral_foundations.authority_1: 5
+  moral_foundations.care_3: 2
+  moral_foundations.equality_1: 4
+  moral_foundations.loyalty_3: 1
+  moral_foundations.purity_2: 4
+  moral_foundations.deserts_2: 4
+  moral_foundations.authority_3: 2
+  moral_foundations.liberty_1: 2
+  moral_foundations.care_2: 4
+  moral_foundations.purity_3: 2
+  moral_foundations.equality_2: 3
+  moral_foundations.deserts_3: 3
+  moral_foundations.loyalty_2: 5
+  moral_foundations.authority_2: 5
+  moral_foundations.liberty_2: 2
+  moral_reasoning.approach: people
+  moral_reasoning.out_promise: 4
+  moral_reasoning.imp_stranger: 3
+  moral_reasoning.out_never: 4
+  moral_reasoning.imp_family: 5
+  moral_reasoning.out_harm: 2
+  moral_reasoning.imp_obliged: 4
+  moral_reasoning.out_tool: 4
+  moral_reasoning.imp_equal: 3
+  moral_reasoning.out_lie: 2
+  moral_reasoning.imp_local: 5
+  moral_reasoning.intent: intention
+  moral_reasoning.charity: local
+  strangers.stance: 3
+  strangers.importance: 3
+  strangers.ten_percent: 3
+  strangers.local_first: 2
+  strangers.future: 4
+  strangers.ch_drowning: present
+  strangers.ch_price: fair_share
+  strangers.ch_unger: neither
+  sacrifice.stance: 2
+  sacrifice.importance: 3
+  sacrifice.switch: 4
+  sacrifice.footbridge: 1
+  sacrifice.self_sacrifice: 2
+  sacrifice.anchor_dva: 6
+  sacrifice.ch_jim: die_anyway
+  sacrifice.ch_bomber: side_effect
+  sacrifice.ch_threshold: catastrophe
+  sacrifice.ch_push: own_hands
+  sacrifice.ch_yourself: heroic
+  ring_of_gyges.differently: 2
+  ring_of_gyges.uses: [help, travel]
+  ring_of_gyges.why_good: self_respect
+  ring_of_gyges.ch_glaucon: small_rules
 expect:
-  axes: { civil: "> 0.3", cultural: "< 0" }
+  axes: { civil: "> 0.3", cultural: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -101,7 +171,16 @@ expect:
     paternalism: { civil: "> 0" }
     organ_donation: { civil: "> 0" }
     sex_work: { civil: "> 0" }
+    moral_reasoning: { outcomes: "< 0", impartiality: "< 0" }
+    strangers: { impartiality: "< 0" }
+    sacrifice: { outcomes: "< 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
+  topicPrinciples:
+    moral_foundations:
+      relief_of_suffering: "> 0.3"
+      loyalty: "> 0.5"
+      authority: "> 0.5"
+      liberty: "< -0.3"
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere.
   tensions: []

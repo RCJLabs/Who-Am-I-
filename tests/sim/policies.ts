@@ -116,3 +116,14 @@ export function scriptedPolicy(answers: Record<string, Response>, fallback?: Pol
     throw new Error(`no scripted answer for ${ctx.item.id}`);
   };
 }
+
+/** Persona answers: numbers are scale steps, strings are option ids, lists are multi-select picks. */
+export function personaResponses(answers: Record<string, number | string | string[]>): Record<string, Response> {
+  const out: Record<string, Response> = {};
+  for (const [id, a] of Object.entries(answers)) {
+    if (typeof a === 'number') out[id] = { kind: 'scale', step: a };
+    else if (Array.isArray(a)) out[id] = { kind: 'multi', picks: Object.fromEntries(a.map((o) => [o, true])) };
+    else out[id] = { kind: 'option', option: a };
+  }
+  return out;
+}

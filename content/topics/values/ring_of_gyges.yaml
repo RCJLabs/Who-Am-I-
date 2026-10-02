@@ -1,0 +1,126 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# For fun: Plato's ring of invisibility. Nothing here is scored; answers show up in your results
+# as answers. The multi-select isn't tagged as an interest, so its picks never appear as hobbies.
+id: ring_of_gyges
+domain: values
+title: The ring of invisibility
+summary: What would you do if you could never be caught?
+tier: extended
+order: 10
+evidence: for-fun
+source: Plato, Republic, Book II
+stance: differently
+items:
+  - id: differently
+    type: slider
+    steps: 5
+    text: If you knew you'd never be caught or found out, how differently would you behave day to day?
+    poles: [Exactly the same, Very differently]
+    labels: [Exactly the same, A little differently, Somewhat differently, Quite differently, Very differently]
+
+  - id: uses
+    type: multi
+    text: You find a ring that makes you invisible whenever you like, and no one will ever know. What would you do with it?
+    options:
+      - { id: travel, label: Go places I'm not allowed }
+      - { id: listen, label: Hear what people say about me }
+      - { id: take, label: Take things from people or companies who won't miss them }
+      - { id: prank, label: Play harmless pranks }
+      - { id: expose, label: Expose wrongdoing that no one else can }
+      - { id: help, label: Help people without anyone knowing }
+      - { id: nothing, label: Never use it }
+
+  - id: why_good
+    type: choice
+    shuffle: true
+    text: When you do the right thing, what's mostly behind it?
+    options:
+      - { id: right, label: It's simply the right thing to do }
+      - { id: guilt, label: I'd feel guilty otherwise }
+      - { id: others, label: I care what others would think }
+      - { id: consequences, label: I don't want to face the consequences }
+      - { id: faith, label: My faith asks it of me }
+      - { id: self_respect, label: I want to be someone I can respect }
+
+  - id: ch_glaucon
+    type: challenge
+    name: Glaucon's challenge
+    targets: differently
+    when: differently < 0
+    source: Plato, Republic, Book II
+    scenario: >-
+      In Plato's Republic, Glaucon tells of a shepherd, Gyges, who finds a ring of invisibility. He
+      uses it to seduce the queen, kill the king and take the throne. Anyone with such a ring,
+      Glaucon argued, would do the same: people act justly only for fear of being caught.
+    text: Are you sure you'd be the exception?
+    options:
+      - id: sure
+        label: Yes. I'd still know what I was doing, and that's enough.
+        reaction: hold
+        value: 0
+      - id: small_rules
+        label: Mostly. I might bend small rules, but I wouldn't hurt anyone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Honestly, no. I'd probably be tempted more than I like to admit.
+        reaction: yield
+        revise: differently
+        value: 0
+
+  - id: ch_socrates
+    type: challenge
+    name: Socrates's answer
+    targets: differently
+    when: differently > 0
+    source: Plato, Republic, Books IV and IX
+    scenario: >-
+      In the Republic, Socrates answers Glaucon: doing wrong harms the wrongdoer, throwing their soul
+      into disorder. So the just person is happier, even when no one is watching and even when
+      injustice would go unpunished.
+    text: Would getting away with things actually make you happier?
+    options:
+      - id: probably
+        label: Probably, if I'm honest.
+        reaction: hold
+        value: 0
+      - id: harmless
+        label: Only if I kept to harmless things.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. I'd rather be someone I can respect, seen or unseen.
+        reaction: yield
+        revise: differently
+        value: 0
+
+  - id: ch_online
+    type: challenge
+    name: Behind a screen name
+    targets: differently
+    when: differently == 0
+    source: Original scenario
+    scenario: >-
+      Online, behind anonymous accounts, many people say things they would never say to someone's
+      face. Anonymity is a small version of the ring.
+    text: You said you'd behave somewhat differently. Does the way people act online change your answer?
+    options:
+      - id: same
+        label: No. I'd be about as different as I said.
+        reaction: hold
+        value: 0
+      - id: more
+        label: Yes. I'd probably behave more differently than I said.
+        reaction: yield
+        revise: differently
+        value: 0
+      - id: less
+        label: Yes. Seeing that makes me want to behave the same either way.
+        reaction: yield
+        revise: differently
+        value: 0
+
+  - id: differently_check
+    type: reask
+    target: differently
+    text: Having thought about it, how differently would you really behave?

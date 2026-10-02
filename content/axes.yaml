@@ -39,6 +39,38 @@
   minTopics: 2
   planned: true
 
+# --- Values: what you prioritize, and how you reason about right and wrong ---
+# The first two follow the two main dimensions of Shalom Schwartz's theory of basic values; the
+# last two follow the two dimensions of utilitarian thinking in Kahane et al. (2018).
+- id: change
+  family: values
+  title: Stability or change
+  description: Security, tradition and fitting in, or independence, novelty and excitement?
+  poles: [Stability, Change]
+  minWeight: 2
+  fullWeight: 5
+- id: others
+  family: values
+  title: Getting ahead or looking out for others
+  description: Success, status and influence, or the welfare of other people and the world?
+  poles: [Getting ahead, Others' welfare]
+  minWeight: 2
+  fullWeight: 5
+- id: outcomes
+  family: values
+  title: Rules or outcomes
+  description: Are some things wrong whatever good they would do, or does the outcome decide?
+  poles: [Rules, Outcomes]
+  minWeight: 2
+  fullWeight: 6
+- id: impartiality
+  family: values
+  title: Near or far
+  description: Do the people close to you come first, or does everyone's welfare count the same?
+  poles: [Close ones first, Everyone equally]
+  minWeight: 2
+  fullWeight: 6
+
 # --- Personality (Big Five; raw position on the scale, no population norms) ---
 - id: extraversion
   family: personality

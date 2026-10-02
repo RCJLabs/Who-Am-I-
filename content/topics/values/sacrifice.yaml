@@ -1,0 +1,295 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The trolley family. The stance is the general question; the cases are circumstances, and two
+# targeted challenges probe the classic patterns (lever yes, push no; lever yes, self no).
+id: sacrifice
+domain: values
+title: Sacrificing one to save many
+summary: Is it ever right to kill one person to save several others?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Killing one innocent person to save five others is…
+    poles: [Never right, Right whenever it saves more lives]
+    labels:
+      - Never right, whatever the numbers
+      - Almost never right
+      - Right only in rare, extreme cases
+      - Torn / it depends
+      - Sometimes right, when there's no other way
+      - Usually right, if it saves more lives
+      - Right whenever it saves more lives
+    axes: { outcomes: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Cases -------------------------------------------------------------------------------------
+  - id: switch
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A runaway trolley is about to kill five people on the track ahead. You can pull a lever to switch it onto a side track, where it will kill one person instead. Should you pull the lever?
+    poles: [Definitely not, Definitely yes]
+    labels: [Definitely not, Probably not, Torn, Probably yes, Definitely yes]
+
+  - id: footbridge
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: The trolley is again heading for five people. This time you're on a footbridge above the track, next to a large stranger. Pushing him off would stop the trolley, killing him but saving the five. Should you push him?
+    poles: [Definitely not, Definitely yes]
+    labels: [Definitely not, Probably not, Torn, Probably yes, Definitely yes]
+
+  - id: self_sacrifice
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Suppose the only way to save the five were to throw yourself in front of the trolley. Would you be morally obliged to?
+    poles: [Not obliged at all, Obliged]
+    labels: [Not obliged at all, Probably not obliged, Torn, Probably obliged, Obliged]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_dva
+    type: likert
+    points: 7
+    text: Actively killing someone is worse than letting someone die, even when more people die as a result.
+    principles: { doing_vs_allowing: 1 }
+    anchor: { principle: doing_vs_allowing, context: rescue dilemmas, against: saving more lives }
+
+  # --- Challenges: against sacrificing one -------------------------------------------------------
+  - id: ch_jim
+    type: challenge
+    name: Jim and the villagers
+    targets: stance
+    when: stance < 0
+    source: >-
+      Bernard Williams, in J. J. C. Smart and Bernard Williams, Utilitarianism: For and Against
+      (1973)
+    scenario: >-
+      Jim, a traveler, stumbles into a village where an army captain is about to execute twenty
+      villagers. As an honored guest, the captain says, Jim may shoot one of them himself; if he
+      does, the other nineteen go free. If he refuses, all twenty will be shot.
+    text: Should Jim shoot one villager to save nineteen?
+    options:
+      - id: not_his
+        label: No. If the captain kills them, that's his crime; Jim must not kill an innocent person.
+        reaction: hold
+        principles: { doing_vs_allowing: 1 }
+      - id: die_anyway
+        label: Perhaps here, but only because all twenty die anyway. That's different from killing someone who would otherwise live.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 0.5 }
+      - id: rethink
+        label: Yes. Refusing means twenty die instead of one; the numbers matter more than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+
+  - id: ch_bomber
+    type: challenge
+    name: The strategic bomber
+    targets: stance
+    when: stance < 0
+    source: The strategic bomber, a standard illustration of the doctrine of double effect, which traces back to Thomas Aquinas
+    scenario: >-
+      In a just war, a pilot can destroy a weapons factory and end the war sooner, saving thousands
+      of lives. The strike will also kill some civilians living nearby. The pilot doesn't want their
+      deaths and isn't aiming at them; they're a foreseen side effect.
+    text: Is the strike morally acceptable?
+    options:
+      - id: never
+        label: No. Knowingly killing innocent people is wrong, whether or not it's the aim.
+        reaction: hold
+        principles: { sanctity_of_life: 1 }
+      - id: side_effect
+        label: Yes, but only because their deaths are a side effect, not the goal. Killing one person as a means is different.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think killing one to save more can sometimes be right.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+
+  - id: ch_threshold
+    type: challenge
+    name: A million to one
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Threshold deontology, defended by philosophers such as Michael Moore
+    scenario: >-
+      Suppose killing one innocent person would save not five people but a thousand, or a million.
+    text: Is there any number at which it becomes right?
+    options:
+      - id: no_number
+        label: No. Numbers don't change what killing an innocent person is.
+        reaction: hold
+        principles: { sanctity_of_life: 1, doing_vs_allowing: 0.5 }
+      - id: catastrophe
+        label: At some extreme scale, yes. Moral rules hold until the stakes become catastrophic.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think the numbers matter more than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+
+  # --- Challenges: for sacrificing one -----------------------------------------------------------
+  - id: ch_transplant
+    type: challenge
+    name: The transplant surgeon
+    targets: stance
+    when: stance > 0
+    source: Judith Jarvis Thomson, "The Trolley Problem," Yale Law Journal (1985)
+    scenario: >-
+      A surgeon has five patients who will die without transplants: two need a lung, two a kidney
+      and one a heart. A healthy young man in for a checkup is a perfect match for all five. If the
+      surgeon secretly killed him, the five would live.
+    text: If killing one to save five can be right, should the surgeon do it?
+    options:
+      - id: trust
+        label: No. If doctors might kill patients, no one could trust medicine, and far more people would die.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5, doing_vs_allowing: 0.5 }
+      - id: bullet
+        label: If it truly stayed secret and saved five, it would be right, however hard that is to accept.
+        reaction: hold
+        principles: { doing_vs_allowing: -1 }
+      - id: rethink
+        label: No, and it makes me think killing one to save more is wrong more often than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 1 }
+
+  - id: ch_cabin_boy
+    type: challenge
+    name: The cabin boy
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: R v Dudley and Stephens (1884)
+    scenario: >-
+      In 1884 four sailors were adrift in a lifeboat after their yacht sank. After almost three weeks
+      with barely any food or water, the captain, with another survivor's agreement, killed the
+      17-year-old cabin boy, who was already very ill, and the men survived by eating his body.
+      Rescued days later, the two were convicted of murder: the court held that necessity is no
+      defense. Their death sentences were reduced to six months in prison.
+    text: If his death saved three lives, was killing him right?
+    options:
+      - id: numbers
+        label: Yes. Otherwise all four would probably have died.
+        reaction: hold
+        principles: { doing_vs_allowing: -1 }
+      - id: lottery
+        label: Only if they'd all agreed to draw lots first. Choosing the weakest made it murder.
+        reaction: distinguish
+        principles: { equality: 0.5 }
+      - id: rethink
+        label: No. Choosing someone to die crosses a line, whatever the numbers.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 1 }
+
+  # --- Challenges: patterns across the cases -----------------------------------------------------
+  - id: ch_push
+    type: challenge
+    name: The lever and the footbridge
+    targets: footbridge
+    when: switch > 0 and footbridge < 0
+    source: >-
+      Philippa Foot (1967) and Judith Jarvis Thomson (1976, 1985); brain imaging by Joshua Greene
+      et al., Science (2001)
+    scenario: >-
+      You'd pull the lever but not push the stranger, and most people answer the same way. Yet in
+      both cases one person dies so that five can live. Brain-imaging studies suggest the difference
+      comes partly from an emotional reaction to harming someone up close.
+    text: What's the difference?
+    options:
+      - id: means
+        label: Pushing him uses his death as the way to stop the trolley; switching only redirects a threat.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 0.5 }
+      - id: own_hands
+        label: Pushing someone to his death with my own hands is a different kind of act, and that reaction matters.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 1 }
+      - id: push_too
+        label: No real difference. I should push him too.
+        reaction: yield
+        revise: footbridge
+        principles: { doing_vs_allowing: -0.5 }
+      - id: lever_neither
+        label: No real difference. I shouldn't pull the lever either.
+        reaction: yield
+        revise: switch
+        principles: { doing_vs_allowing: 0.5 }
+
+  - id: ch_yourself
+    type: challenge
+    name: Turning the trolley on yourself
+    targets: switch
+    deep: true
+    when: switch > 0 and self_sacrifice < 0
+    source: Judith Jarvis Thomson, "Turning the Trolley," Philosophy & Public Affairs (2008)
+    scenario: >-
+      You'd switch the trolley onto one person, but you wouldn't be obliged to stop it with your own
+      body. Judith Jarvis Thomson, who made the trolley problem famous, later argued that these two
+      answers don't fit together: if you needn't pay that price yourself, you can't make a stranger
+      pay it for you.
+    text: Does that change your answer about the lever?
+    options:
+      - id: heroic
+        label: No. Sacrificing myself would be heroic and optional; choosing fewer deaths isn't.
+        reaction: distinguish
+        principles: { doing_vs_allowing: -0.5 }
+      - id: numbers
+        label: No. Five lives outweigh one, whoever pays the price.
+        reaction: hold
+        principles: { doing_vs_allowing: -1 }
+      - id: rethink
+        label: Yes. I shouldn't make someone else pay a price I wouldn't have to pay myself.
+        reaction: yield
+        revise: switch
+        principles: { doing_vs_allowing: 0.5, equality: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_car
+    type: challenge
+    name: The self-driving car
+    targets: stance
+    when: stance == 0
+    source: Original scenario; see the Moral Machine experiment, Edmond Awad et al., Nature (2018)
+    scenario: >-
+      A self-driving car's brakes fail. It can stay its course and hit five pedestrians, or swerve
+      and hit one. Engineers have to program the choice in advance.
+    text: You said you're torn. What should the car be programmed to do?
+    options:
+      - id: neither
+        label: I can't choose between them. Both are terrible.
+        reaction: hold
+        value: 0
+      - id: swerve
+        label: Swerve. One death is better than five.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+      - id: stay
+        label: Stay its course. A car shouldn't be programmed to choose whom to kill.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

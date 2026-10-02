@@ -105,6 +105,13 @@ items:
     principles: { protect_vulnerable: 1 }
     anchor: { principle: protect_vulnerable, context: assisted dying, against: the freedom of people who truly want it }
 
+  - id: anchor_dva
+    type: likert
+    points: 7
+    text: Actively ending a patient's life is worse than letting them die by stopping treatment, even when the patient wants to die either way.
+    principles: { doing_vs_allowing: 1 }
+    anchor: { principle: doing_vs_allowing, context: end-of-life care, against: the patient's own wish to die }
+
   # --- Challenges: restrictive side -------------------------------------------------------------
   - id: ch_rachels
     type: challenge

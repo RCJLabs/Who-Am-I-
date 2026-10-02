@@ -39,7 +39,7 @@ and should be fixed or justified.
 | `order` | display order within the domain |
 | `evidence` | `validated`, `adapted`, `custom` or `for-fun` (see below) |
 | `source`, `license` | required in practice for `validated` and `adapted` |
-| `instructions` | shown once before the first item (validated instruments) |
+| `instructions` | shown once before the first item: a validated instrument's instructions, or the story that sets up a thought experiment (give the stance a one-line `help` reminder for people returning later) |
 | `stance` | the item holding the overall position; required if the topic has challenges |
 | `importance` | the importance item; required if the topic has deep items |
 | `sensitive` | adds "Prefer not to say" everywhere and excludes the topic from sharing by default |
@@ -78,7 +78,7 @@ principles: { bodily_autonomy: 1 }
   needs a `value`).
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
-- **In issue topics, only the stance feeds political axes**: weight 1 in core topics, 0.5 in
+- **In topics with a stance, only the stance feeds spectrums**: weight 1 in core topics, 0.5 in
   extended ones, so a deep dive never outweighs a core issue. Circumstances and challenges are
   chosen to probe one side's hard cases (rape, a threat to life, a mass murderer), so answers to
   them lean one way by design. Scored on a spectrum, they'd pull moderates toward one pole: someone
@@ -91,6 +91,15 @@ principles: { bodily_autonomy: 1 }
 by agree/disagree items, phrase roughly half so that agreeing pushes one way and half the other way
 (W101). Sliders between two statements don't have this problem, which is why stances and
 circumstances use them.
+
+**Spectrums and principles.** Spectrums (`axes.yaml`) are positions between two poles: political
+(civil, cultural, economic, diplomatic), values (stability or change, getting ahead or looking out
+for others, rules or outcomes, near or far), personality and taste. Principles
+(`principles.yaml`) are moral considerations a person endorses or rejects. The first seven are the
+moral foundations, which the moral foundations topic measures directly with statements keyed both
+ways; issue topics add to them through challenge options. Questionnaire topics without a stance
+(trade-offs, foundations) may feed spectrums from every item, as long as each spectrum's items are
+balanced (W101, W110).
 
 ## Conditions (`when:`)
 
@@ -194,6 +203,8 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Protecting the vulnerable | {Restriction} to protect vulnerable people {from the harm}, even if that means {who loses which freedom}. |
   | Things money shouldn't buy | Paying someone for {thing} should not be allowed, even if both adults freely agree. |
   | Caution with the irreversible | When it comes to {context}, the risk of a mistake that can never be undone should make us hold back, even if that means {the benefit given up}. |
+  | Doing vs. allowing | Actively {causing a death} is worse than letting {someone die}, even {when the cost of not acting is high}. |
+  | Truth | When it comes to {context}, the truth matters more than comfort, even {when it hurts}. |
 
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of

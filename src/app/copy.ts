@@ -102,6 +102,7 @@ export const copy = {
     empty: 'Answer a few topics and your results will appear here.',
     emptyCta: 'Choose a topic',
     political: 'Political spectrums',
+    values: 'Values',
     personality: 'Personality',
     personalityNote: 'Validated short form (Mini-IPIP). Your raw position on each scale, not a comparison with other people.',
     principles: 'Principles you lean on',

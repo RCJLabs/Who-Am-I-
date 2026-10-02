@@ -1,0 +1,263 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Nozick's experience machine: does anything matter besides how life feels from the inside? The
+# setup is the topic intro; the stance carries a one-line reminder for people returning later.
+id: experience_machine
+domain: values
+title: Happiness and reality
+summary: Would you trade your real life for a perfect simulated one?
+tier: extended
+order: 8
+evidence: custom
+stance: stance
+importance: importance
+instructions: >-
+  Imagine a machine that could give you any experiences you wanted, for the rest of your life.
+  Writing a great novel, falling in love, climbing the highest peaks: it would all feel completely
+  real, and once inside you wouldn't know you were plugged in. Your body would be safely cared for.
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Would you plug in for the rest of your life?
+    help: A machine that gives you any experiences you want, indistinguishable from real life.
+    poles: [Never, Without hesitation]
+    labels:
+      - Never. A fake life is no life at all
+      - No, and I'd advise anyone against it
+      - Tempting, but I'd say no
+      - Torn / it depends
+      - I might well do it
+      - Yes, probably
+      - Without hesitation. Experience is what matters
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: virtual_life
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Spending most of your free time in a virtual world you enjoy more than real life is…
+    poles: [A wasted life, A perfectly fine choice]
+    labels: [A wasted life, Probably a waste, Torn, Probably fine, A perfectly fine choice]
+    principles: { truth: -0.5 }
+
+  - id: forget
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Taking a safe treatment that erased your memory of a painful breakup, forever, would be…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { truth: -0.5 }
+
+  - id: ai_companion
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Choosing an AI companion over human relationships, if it made you happier, would be…
+    poles: [A sad choice, A perfectly fine choice]
+    labels: [A sad choice, Probably sad, Torn, Probably fine, A perfectly fine choice]
+    principles: { truth: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_truth
+    type: likert
+    points: 7
+    text: When it comes to your own life, the truth matters more than comfort, even if an illusion would make you happier.
+    principles: { truth: 1 }
+    anchor: { principle: truth, context: your own life, against: your own happiness }
+
+  # --- Challenges: against plugging in -----------------------------------------------------------
+  - id: ch_reverse
+    type: challenge
+    name: Already plugged in
+    targets: stance
+    when: stance < 0
+    source: >-
+      Felipe De Brigard, "If you like it, does it matter if it's real?," Philosophical Psychology
+      (2010)
+    scenario: >-
+      Now suppose you learned that your whole life so far has been inside such a machine. You can
+      unplug and wake up in your real life, but you don't know what it's like. In a study by
+      philosopher Felipe De Brigard, about half of people said they'd stay plugged in, and most did
+      when told their real life was in a prison.
+    text: Would you unplug?
+    options:
+      - id: unplug
+        label: Yes. I'd rather know the truth, whatever it is.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: fear
+        label: Maybe not, but that would be fear of the unknown, not a reason to plug in to begin with.
+        reaction: distinguish
+        principles: { truth: 0.5 }
+      - id: rethink
+        label: No. If I'd stay plugged in, maybe reality matters less to me than I said.
+        reaction: yield
+        revise: stance
+        principles: { truth: -0.5 }
+
+  - id: ch_last_months
+    type: challenge
+    name: The last months
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A man with terminal cancer has six months left, most of them likely to be painful. The machine
+      would let him spend them, as he experiences it, happily with his family.
+    text: Should he plug in?
+    options:
+      - id: real_time
+        label: No. Those last real months with his family matter, even if they're painful.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: end_of_life
+        label: That's different. He'd be choosing comfort at the very end, not giving up a whole life.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think experience matters more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1, truth: -0.5 }
+
+  - id: ch_pill
+    type: challenge
+    name: The contentment pill
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A safe daily pill would make you feel content and fulfilled whatever happened in your life,
+      without changing anything else about you.
+    text: Would taking it be a good idea?
+    options:
+      - id: no_pill
+        label: No. My feelings should respond to how my life is actually going.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: medicine
+        label: Only for people suffering from something like depression; otherwise no.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think feeling good matters more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5, truth: -0.5 }
+
+  # --- Challenges: for plugging in ---------------------------------------------------------------
+  - id: ch_nozick
+    type: challenge
+    name: Doing, not just seeming
+    targets: stance
+    when: stance > 0
+    source: Robert Nozick, Anarchy, State, and Utopia (1974)
+    scenario: >-
+      Philosopher Robert Nozick, who invented this thought experiment, argued that most of us would
+      refuse to plug in because we want to actually do things, not just have the experience of
+      doing them; to actually be a certain kind of person; and to be in touch with reality.
+    text: Inside the machine, you'd never really achieve, love or learn anything. Does that matter?
+    options:
+      - id: same
+        label: Not to me. If it feels exactly the same, I'd lose nothing I could ever notice.
+        reaction: distinguish
+        principles: { truth: -0.5 }
+      - id: feelings
+        label: Feelings are what make anything matter in the first place.
+        reaction: hold
+        principles: { truth: -1 }
+      - id: rethink
+        label: Yes. Real achievements and relationships matter more than I said.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  - id: ch_loved_ones
+    type: challenge
+    name: The people you love
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Inside the machine, your partner, friends and family would be simulations. The real people who
+      love you would never see you awake again, unless they plugged in too, each into a separate
+      world.
+    text: Would you still plug in?
+    options:
+      - id: cared_for
+        label: Yes, if they'd be looked after and I'd feel just as loved.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: together
+        label: Only if they chose it too. I couldn't just leave them.
+        reaction: distinguish
+        principles: { loyalty: 1 }
+      - id: rethink
+        label: No. Real relationships matter more than I said.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  - id: ch_huxley
+    type: challenge
+    name: Brave new world
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Aldous Huxley, Brave New World (1932)
+    scenario: >-
+      In Aldous Huxley's Brave New World, a drug called soma, endless entertainment and careful
+      conditioning keep everyone content, and almost no one wants anything more.
+    text: Is a contented society like that a good one?
+    options:
+      - id: imposed
+        label: No, because it's imposed on people. Choosing comfort for yourself is different.
+        reaction: distinguish
+        principles: { liberty: 1 }
+      - id: content
+        label: If everyone is truly content, it's hard to say what's missing.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: No, and it makes me think something beyond feeling good matters.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_trial
+    type: challenge
+    name: The trial run
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      You can plug in for one year, then come out and decide whether to go back in for life.
+    text: You said you're torn. Would you try it?
+    options:
+      - id: unsure
+        label: I'd want to know more first.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { truth: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

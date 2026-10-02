@@ -1,5 +1,7 @@
 name: Secular progressive
-topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing]
+topics:
+  [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing,
+   value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, strangers, fairness, omelas]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -27,6 +29,7 @@ answers:
   assisted_dying.anchor_ba: 7
   assisted_dying.anchor_sol: 2
   assisted_dying.anchor_pv: 3
+  assisted_dying.anchor_dva: 2
   assisted_dying.ch_expansion: no_line
   assisted_dying.ch_burden: suffering_required
   assisted_dying.ch_dementia: present_self
@@ -80,8 +83,84 @@ answers:
   gene_editing.anchor_prec: 3
   gene_editing.ch_twins: oversight
   gene_editing.ch_asch: treating
+  value_tradeoffs.freedom: choose
+  value_tradeoffs.success: there
+  value_tradeoffs.tradition: exciting
+  value_tradeoffs.fair_world: fairer
+  value_tradeoffs.own_way: my_way
+  value_tradeoffs.career: nature
+  value_tradeoffs.predictable: new_things
+  value_tradeoffs.loyal: dependable
+  value_tradeoffs.original: polite
+  value_tradeoffs.admired: understanding
+  moral_foundations.care_1: 5
+  moral_foundations.loyalty_1: 2
+  moral_foundations.equality_3: 2
+  moral_foundations.purity_1: 2
+  moral_foundations.liberty_3: 4
+  moral_foundations.deserts_1: 3
+  moral_foundations.authority_1: 3
+  moral_foundations.care_3: 1
+  moral_foundations.equality_1: 5
+  moral_foundations.loyalty_3: 4
+  moral_foundations.purity_2: 2
+  moral_foundations.deserts_2: 2
+  moral_foundations.authority_3: 4
+  moral_foundations.liberty_1: 2
+  moral_foundations.care_2: 5
+  moral_foundations.purity_3: 5
+  moral_foundations.equality_2: 4
+  moral_foundations.deserts_3: 4
+  moral_foundations.loyalty_2: 3
+  moral_foundations.authority_2: 2
+  moral_foundations.liberty_2: 3
+  moral_reasoning.approach: results
+  moral_reasoning.out_promise: 5
+  moral_reasoning.imp_stranger: 5
+  moral_reasoning.out_never: 3
+  moral_reasoning.imp_family: 2
+  moral_reasoning.out_harm: 3
+  moral_reasoning.imp_obliged: 5
+  moral_reasoning.out_tool: 4
+  moral_reasoning.imp_equal: 5
+  moral_reasoning.out_lie: 4
+  moral_reasoning.imp_local: 2
+  moral_reasoning.intent: result
+  moral_reasoning.charity: effective
+  sacrifice.stance: 5
+  sacrifice.importance: 3
+  sacrifice.switch: 5
+  sacrifice.footbridge: 2
+  sacrifice.self_sacrifice: 2
+  sacrifice.anchor_dva: 5
+  sacrifice.ch_transplant: trust
+  sacrifice.ch_cabin_boy: lottery
+  sacrifice.ch_push: means
+  sacrifice.ch_yourself: heroic
+  strangers.stance: 6
+  strangers.importance: 3
+  strangers.ten_percent: 4
+  strangers.local_first: 4
+  strangers.future: 5
+  strangers.ch_saints: room
+  strangers.ch_own_child: special
+  strangers.ch_deaton: proven
+  fairness.stance: 5
+  fairness.importance: 3
+  fairness.veil: support
+  fairness.talent: 4
+  fairness.inheritance: 4
+  fairness.bad_choices: 4
+  fairness.ch_wilt: tax
+  fairness.ch_incentives: worst_off
+  fairness.ch_level_down: priority
+  omelas.stance: 3
+  omelas.importance: 2 # low: deep items are skipped
+  omelas.free_child: 5
+  omelas.ch_our_world: try
+  omelas.ch_walk_away: free
 expect:
-  axes: { cultural: "> 0.6" }
+  axes: { cultural: "> 0.6", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -90,10 +169,24 @@ expect:
     drug_policy: { civil: "< 0", cultural: "> 0" }
     surrogacy: { civil: "< 0" }
     gene_editing: { cultural: "> 0" }
+    moral_reasoning: { outcomes: "> 0", impartiality: "> 0.5" }
+    sacrifice: { outcomes: "> 0" }
+    strangers: { impartiality: "> 0" }
+    fairness: { economic: "< 0" }
+    omelas: { outcomes: "< 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
+  topicPrinciples:
+    moral_foundations:
+      relief_of_suffering: "> 0.6"
+      equality: "> 0.3"
+      retribution: "< 0"
+      loyalty: "< 0"
+      authority: "< 0"
+      purity: "< -0.3"
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
-  # penalty but low on abortion, assisted dying and gene editing.
+  # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
+  # letting die are the same in end-of-life care, but not when pushing a stranger onto the tracks.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -103,3 +196,4 @@ expect:
     - sanctity_of_life|abortion|death_penalty
     - sanctity_of_life|assisted_dying|death_penalty
     - precaution|death_penalty|gene_editing
+    - doing_vs_allowing|assisted_dying|sacrifice
