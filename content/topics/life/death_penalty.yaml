@@ -1,0 +1,305 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance runs from abolition to wide use, so each side's challenges push toward the other. Real
+# cases are described without naming perpetrators.
+id: death_penalty
+domain: life
+title: Death penalty
+summary: Should the state ever execute people for their crimes?
+tier: core
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: The death penalty should be…
+    poles: [Abolished in all cases, Used for many serious crimes]
+    labels:
+      - Abolished in all cases
+      - Used only for crimes against humanity, like genocide
+      - Used only for the most extreme murders, like mass killings
+      - Torn / it depends
+      - Used for the worst murders, like killing a child
+      - Used for any deliberate murder
+      - Used for murder and other grave crimes, like drug trafficking
+    axes: { civil: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: certain_guilt
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For a murder where guilt is certain, such as one caught on video and confirmed by DNA, the death penalty should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  - id: terrorism
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For a terrorist attack that kills many people, the death penalty should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  - id: purpose
+    type: choice
+    shuffle: true
+    text: What should be the main aim of punishing someone who commits murder?
+    options:
+      - id: deserved
+        label: Giving them the punishment they deserve
+        principles: { retribution: 1 }
+      - id: protect
+        label: Protecting the public from them
+        principles: { harm_principle: 1 }
+      - id: deter
+        label: Deterring others from killing
+        principles: { harm_principle: 0.5, collective_welfare: 0.5 }
+      - id: reform
+        label: Helping them change
+        principles: { retribution: -0.5 }
+      - id: victims
+        label: Giving the victim's family a sense of justice
+        principles: { retribution: 0.5 }
+
+  - id: minors
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: For someone who committed murder at 16, the death penalty should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  - id: drug_trade
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: For large-scale drug trafficking where no one was killed, the death penalty should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_sol
+    type: likert
+    points: 7
+    text: Deliberately ending a human life is wrong, even when the person has committed murder.
+    principles: { sanctity_of_life: 1 }
+    anchor: { principle: sanctity_of_life, context: punishing murder, against: justice for the victim }
+
+  - id: anchor_prec
+    type: likert
+    points: 7
+    text: When it comes to the death penalty, the risk of a mistake that can never be undone should make us hold back, even if that means some people don't get the punishment they deserve.
+    principles: { precaution: 1 }
+    anchor: { principle: precaution, context: capital punishment, against: giving the worst crimes the punishment they deserve }
+
+  # --- Challenges: against the death penalty -----------------------------------------------------
+  - id: ch_worst
+    type: challenge
+    name: The worst crime
+    targets: stance
+    when: stance == -1
+    source: The 2011 attacks in Oslo and on Utøya, Norway; the attacker was sentenced in 2012 to 21 years of preventive detention
+    scenario: >-
+      In 2011 a man killed 77 people in Norway, most of them young people at a political youth
+      camp. He had planned the attacks for years, surrendered at the scene and showed no remorse.
+      Norway has no death penalty. He was sentenced to 21 years of preventive detention, which can
+      be extended for as long as he is considered dangerous.
+    text: Should a crime like this be punishable by death?
+    options:
+      - id: never
+        label: No. The state shouldn't kill anyone, whatever they've done.
+        reaction: hold
+        principles: { sanctity_of_life: 1 }
+      - id: no_power
+        label: No. He may deserve to die, but no government should have the power to kill its prisoners.
+        reaction: distinguish
+        principles: { retribution: 0.5, precaution: 0.5 }
+      - id: rethink
+        label: Yes. For crimes like this, death can be the just punishment.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 1 }
+
+  - id: ch_deterrence
+    type: challenge
+    name: Lives saved
+    targets: stance
+    when: stance < 0
+    source: >-
+      Cass Sunstein and Adrian Vermeule, "Is Capital Punishment Morally Required? Acts, Omissions,
+      and Life-Life Tradeoffs," Stanford Law Review (2005)
+    scenario: >-
+      Legal scholars Cass Sunstein and Adrian Vermeule argued that if executions deter murder, a
+      government that refuses to carry them out isn't avoiding killing: it's choosing to let more
+      innocent people be murdered. Whether executions really deter is disputed, so suppose for this
+      question that it were proven: each execution prevents several murders.
+    text: In that case, should the death penalty be used more than you said?
+    options:
+      - id: act_omission
+        label: No. An execution is a deliberate killing; failing to prevent other people's crimes isn't.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 1, sanctity_of_life: 0.5 }
+      - id: means
+        label: No. Killing one person to send a message to others is wrong, whatever it achieves.
+        reaction: hold
+        principles: { sanctity_of_life: 1 }
+      - id: rethink
+        label: Yes. If it really saved innocent lives, it would be justified.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5, collective_welfare: 0.5 }
+
+  - id: ch_kant
+    type: challenge
+    name: The last murderer
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Immanuel Kant, The Metaphysics of Morals (1797)
+    scenario: >-
+      Immanuel Kant argued that punishment isn't for deterring anyone; it's what justice demands.
+      Whoever commits murder must die, he wrote. Even a society about to disband forever should
+      first execute the last murderer in its prisons, so that everyone receives what their deeds
+      deserve.
+    text: Does justice require that murder be punished by death?
+    options:
+      - id: no_mirror
+        label: No. Justice doesn't require answering a killing with another killing.
+        reaction: hold
+        principles: { retribution: -0.5, sanctity_of_life: 0.5 }
+      - id: proportionate
+        label: Murder deserves severe punishment, but life in prison can be proportionate.
+        reaction: distinguish
+        principles: { retribution: 0.5 }
+      - id: rethink
+        label: There's something to it. Some murders deserve death.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 1 }
+
+  # --- Challenges: for the death penalty ---------------------------------------------------------
+  - id: ch_innocent
+    type: challenge
+    name: The innocent on death row
+    targets: stance
+    when: stance > 0
+    source: >-
+      Samuel Gross et al., "Rate of false conviction of criminal defendants who are sentenced to
+      death," PNAS (2014); exoneration count from the Death Penalty Information Center
+    scenario: >-
+      Courts make mistakes. Since 1973, more than 190 people sentenced to death in the United States
+      have later been exonerated, some after decades on death row. A 2014 study estimated that at
+      least 4% of people sentenced to death there were wrongly convicted. A prison sentence can be
+      cut short when an error comes to light; an execution can't be undone.
+    text: Knowing that some innocent people would be executed, should the death penalty still be used?
+    options:
+      - id: safeguards
+        label: Yes. Every punishment risks error; the answer is stronger safeguards, not abolition.
+        reaction: hold
+        principles: { retribution: 0.5, precaution: -0.5 }
+      - id: certainty
+        label: Only where guilt is beyond any doubt, such as with DNA or video evidence.
+        reaction: distinguish
+        principles: { precaution: 0.5, retribution: 0.5 }
+      - id: rethink
+        label: No. The risk of executing an innocent person is too great.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 1 }
+
+  - id: ch_evidence
+    type: challenge
+    name: The deterrence question
+    targets: stance
+    when: stance > 0
+    source: National Research Council, Deterrence and the Death Penalty (2012)
+    scenario: >-
+      Many people support the death penalty because they believe it deters murder. In 2012 a
+      committee of the US National Research Council reviewed decades of research and concluded that
+      the studies can't tell whether the death penalty increases, decreases or has no effect on
+      murder rates.
+    text: If it can't be shown to deter, does that change your view?
+    options:
+      - id: deserved
+        label: No. I support it because some crimes deserve it, not to deter.
+        reaction: distinguish
+        principles: { retribution: 1 }
+      - id: still_deters
+        label: No. Even if studies can't measure it, the threat of death must stop some killers.
+        reaction: hold
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: Yes. Without clear evidence that it saves lives, I'm less sure it's justified.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 0.5, precaution: 0.5 }
+
+  - id: ch_race
+    type: challenge
+    name: McCleskey's numbers
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: McCleskey v. Kemp, 481 U.S. 279 (1987), which considered the Baldus study of Georgia murder cases
+    scenario: >-
+      In 1987 a Black man on Georgia's death row brought the US Supreme Court a study of over 2,000
+      murder cases. People charged with killing white victims were 4.3 times as likely to be
+      sentenced to death as people charged with killing Black victims. The Court assumed the study
+      was valid but upheld his sentence, because he couldn't show that anyone in his own case had
+      intended to discriminate.
+    text: If a punishment falls unequally by race, should it still be used?
+    options:
+      - id: fix_it
+        label: Yes, but the bias must be fixed. It's a flaw in how it's applied, not in the punishment itself.
+        reaction: distinguish
+        principles: { retribution: 0.5, equality: 0.5 }
+      - id: guilt
+        label: Yes. A guilty person isn't less guilty because others escaped the same punishment.
+        reaction: hold
+        principles: { retribution: 1 }
+      - id: rethink
+        label: No. A punishment this final can't be just if it isn't applied equally.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The maximum sentence
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Voters are asked to choose the maximum punishment for the worst murders: the death penalty,
+      or life in prison with no chance of release.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: death
+        label: The death penalty
+        reaction: yield
+        revise: stance
+        principles: { retribution: 0.5 }
+      - id: life
+        label: Life in prison
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

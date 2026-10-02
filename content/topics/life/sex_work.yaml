@@ -1,0 +1,283 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Wording: "selling sex", "paying for sex", "people who sell sex". "Sex work" and "prostitution"
+# each signal a side, so user-facing text avoids both outside the names of laws and studies.
+id: sex_work
+domain: life
+title: Buying and selling sex
+summary: Should paying for sex between adults be legal?
+tier: extended
+order: 8
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Buying and selling sex between consenting adults should be…
+    poles: [A crime for both, Legal like other work]
+    labels:
+      - A crime for both buyer and seller
+      - A crime to buy, but not to sell
+      - Legal between individuals, but brothels and street soliciting banned
+      - Torn / it depends
+      - Legal only in licensed venues
+      - Legal, with health and licensing rules
+      - Legal and treated like any other work
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: together
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting people who sell sex work together in one place, which is safer than working alone, should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+
+  - id: buyer_ban
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Making it a crime to pay for sex, but not to sell it, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { protect_vulnerable: 0.5 }
+
+  - id: advertising
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Websites where people who sell sex can advertise and screen clients should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to selling sex, an adult's right to decide what happens to their own body should come first.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: selling sex, against: protecting people from exploitation }
+
+  - id: anchor_ml
+    type: likert
+    points: 7
+    text: Paying someone for sex should not be allowed, even if both adults freely agree.
+    principles: { market_limits: 1 }
+    anchor: { principle: market_limits, context: selling sex, against: the safety and freedom of people who sell sex }
+
+  # --- Challenges: against legal status ----------------------------------------------------------
+  - id: ch_new_zealand
+    type: challenge
+    name: New Zealand's law
+    targets: stance
+    when: stance < 0
+    source: >-
+      New Zealand's Prostitution Reform Act 2003; Report of the Prostitution Law Review Committee on
+      the Operation of the Prostitution Reform Act 2003 (2008)
+    scenario: >-
+      In 2003 New Zealand made buying and selling sex between adults legal, covered by ordinary
+      employment and health-and-safety law. A government review five years later found the trade
+      hadn't grown, most people selling sex felt they had more rights, and many were more willing
+      to report violence to the police.
+    text: If legal status makes people who sell sex safer, should it still be a crime?
+    options:
+      - id: not_business
+        label: Yes. The law shouldn't treat paying for another person's body as ordinary business.
+        reaction: hold
+        principles: { market_limits: 1 }
+      - id: punish_buyers
+        label: Punish the buyers, not the sellers. That protects them without accepting the trade.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No. Their safety should come first; the law should be less strict than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5, protect_vulnerable: 0.5 }
+
+  - id: ch_her_choice
+    type: challenge
+    name: Her own choice
+    targets: stance
+    when: stance < -0.5
+    source: Original scenario
+    scenario: >-
+      A student works a few hours a week as an independent escort. She chose it over a lower-paid
+      job, screens her clients carefully and says the work suits her. No one pressures her, and she
+      hasn't been harmed.
+    text: Should it be a crime, for her or for her clients?
+    options:
+      - id: others_in_trade
+        label: Yes. Her choice doesn't change what the trade does to everyone else in it.
+        reaction: hold
+        principles: { market_limits: 0.5, protect_vulnerable: 0.5 }
+      - id: rare
+        label: Not for her, but people like her are rare, and the law has to protect the many who aren't so free.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No. Adults who freely choose this shouldn't be treated as criminals.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_nussbaum
+    type: challenge
+    name: Other bodily work
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Martha Nussbaum, "'Whether from Reason or Prejudice': Taking Money for Bodily Services,"
+      Journal of Legal Studies (1998)
+    scenario: >-
+      Philosopher Martha Nussbaum compared selling sex with other jobs where people are paid for the
+      use of their bodies, like factory work, massage or singing in a nightclub. She argued that the
+      stigma against selling sex owes more to prejudice than to anything that truly sets it apart.
+    text: What, if anything, makes paid sex different from other bodily work?
+    options:
+      - id: intimacy
+        label: Sex is uniquely intimate; turning it into a product harms the people involved.
+        reaction: distinguish
+        principles: { market_limits: 1 }
+      - id: coercion
+        label: Far more of this trade involves coercion and trafficking than those other jobs do.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: Maybe nothing. The law should be less strict than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  # --- Challenges: for legal status --------------------------------------------------------------
+  - id: ch_trafficking
+    type: challenge
+    name: Trafficking
+    targets: stance
+    when: stance > 0
+    source: >-
+      Seo-Young Cho, Axel Dreher and Eric Neumayer, "Does Legalized Prostitution Increase Human
+      Trafficking?," World Development (2013)
+    scenario: >-
+      A 2013 study of up to 150 countries found that those where buying and selling sex is legal
+      tend to report larger inflows of human trafficking. The authors suggested that legal markets
+      grow, and some of the extra demand is met by trafficked people. Others point out that
+      trafficking is hard to measure.
+    text: If a legal market draws in trafficking, does that change your view?
+    options:
+      - id: come_forward
+        label: Trafficking stays a serious crime, and legal status makes it easier for victims to come forward.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5, bodily_autonomy: 0.5 }
+      - id: target_it
+        label: No. Fight trafficking directly instead of punishing consenting adults.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: Yes. It makes me want stricter rules than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_sweden
+    type: challenge
+    name: Sweden's approach
+    targets: stance
+    when: stance > 0
+    source: >-
+      Sweden's ban on buying sex (1999); Swedish Government Official Report SOU 2010:49, which
+      evaluated it
+    scenario: >-
+      In 1999 Sweden made it a crime to pay for sex but not to sell it, treating people who sell sex
+      mainly as victims of exploitation. A 2010 government evaluation reported that street-based
+      selling had halved and that the law deterred buyers. Critics say much of the trade moved
+      indoors and online, where it's harder to see.
+    text: Should paying for sex be a crime, even if selling it isn't?
+    options:
+      - id: consenting
+        label: No. Paying a consenting adult for sex shouldn't be a crime.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: riskier
+        label: No. Criminalizing clients still pushes sellers into riskier, more hidden situations.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5, bodily_autonomy: 0.5 }
+      - id: rethink
+        label: Maybe. Punishing buyers rather than sellers seems a fair middle path.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_exit
+    type: challenge
+    name: Wanting out
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Melissa Farley et al., "Prostitution and Trafficking in Nine Countries," Journal of Trauma
+      Practice (2003); other researchers dispute how representative such samples are
+    scenario: >-
+      A 2003 survey of 854 people who sold sex in nine countries found that 89% said they wanted to
+      leave but had no other way to support themselves. Other researchers question whether samples
+      like this represent everyone who sells sex.
+    text: If most people in the trade want out, should the law treat it like any other job?
+    options:
+      - id: alternatives
+        label: Many people in hard jobs want out. The answer is real alternatives, not a ban.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5, bodily_autonomy: 0.5 }
+      - id: respect
+        label: Yes. Their choices still deserve respect, and legal status protects them.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: No. The law should be stricter than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The buyer ban vote
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would make selling sex legal but paying for it a crime, and fund support for
+      people who want to leave the trade.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no_too_strict
+        label: No, it's too strict.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+      - id: no_too_loose
+        label: No, it doesn't go far enough.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

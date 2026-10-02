@@ -36,8 +36,10 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await page.getByTestId('nav-results').click();
   await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
   await expect(page.getByTestId('axis-cultural-position')).toContainText('Tradition');
-  // Bodily autonomy rated low on abortion and assisted dying but high on vaccines, and so on.
-  await expect(page.getByTestId('tension-row')).toHaveCount(3);
+  // The persona's 9 tensions (tests/sim/personas), grouped under their 4 principles.
+  await expect(page.getByTestId('tension-row')).toHaveCount(9);
+  await expect(page.locator('.card.tension')).toHaveCount(4);
+  await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(4);
 });
 
 test('deleting all data really empties the app', async ({ page }) => {

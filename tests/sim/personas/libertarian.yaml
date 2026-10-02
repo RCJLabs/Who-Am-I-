@@ -1,5 +1,5 @@
 name: Libertarian
-topics: [abortion, assisted_dying, vaccine_mandates]
+topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work, surrogacy, gene_editing]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -37,8 +37,80 @@ answers:
   vaccine_mandates.ch_drunk_driving: small_risk
   vaccine_mandates.ch_quarantine: isolation_too
   vaccine_mandates.ch_measles: parents_decide
+  death_penalty.stance: 2 # distrusts the state with the power to kill
+  death_penalty.importance: 2
+  death_penalty.certain_guilt: 3
+  death_penalty.terrorism: 4
+  death_penalty.purpose: protect
+  death_penalty.anchor_sol: 4
+  death_penalty.anchor_prec: 6
+  death_penalty.ch_deterrence: act_omission
+  drug_policy.stance: 7
+  drug_policy.importance: 3
+  drug_policy.cannabis: 5
+  drug_policy.supervised: 5
+  drug_policy.psychedelics: 5
+  drug_policy.public_use: 4
+  drug_policy.anchor_ba: 7
+  drug_policy.anchor_pv: 1
+  drug_policy.ch_oxycontin: still_free
+  drug_policy.ch_addiction: responsible
+  drug_policy.ch_oregon: fentanyl
+  paternalism.stance: 1
+  paternalism.importance: 3
+  paternalism.seatbelts: 2
+  paternalism.helmets: 1
+  paternalism.sugar_tax: 1
+  paternalism.smoking: 1
+  paternalism.gambling: 1
+  paternalism.anchor_ba: 7
+  paternalism.ch_seatbelt: own_risk
+  paternalism.ch_cost: pay_own_way
+  paternalism.ch_bridge: warn
+  organ_donation.stance: 7
+  organ_donation.importance: 2
+  organ_donation.opt_out: 2
+  organ_donation.family_veto: 5
+  organ_donation.anchor_ml: 1
+  organ_donation.ch_debt: options
+  organ_donation.ch_titmuss: more_lives
+  sex_work.stance: 7
+  sex_work.importance: 2
+  sex_work.together: 5
+  sex_work.buyer_ban: 1
+  sex_work.anchor_ba: 7
+  sex_work.anchor_ml: 1
+  sex_work.ch_trafficking: target_it
+  sex_work.ch_sweden: consenting
+  surrogacy.stance: 7
+  surrogacy.importance: 2
+  surrogacy.keep_child: 5
+  surrogacy.anchor_ml: 1
+  surrogacy.ch_baby_m: agreement
+  surrogacy.ch_anderson: freely
+  gene_editing.stance: 7
+  gene_editing.importance: 2
+  gene_editing.somatic: 5
+  gene_editing.screening: 5
+  gene_editing.anchor_prec: 2
+  gene_editing.ch_twins: early_days
+  gene_editing.ch_advantages: already
 expect:
   axes: { civil: "< -0.6", cultural: "> 0.5" }
-  principles: { bodily_autonomy: "> 0.6" }
-  # Consistent: bodily autonomy high everywhere, protecting the vulnerable low everywhere.
-  tensions: []
+  topicAxes:
+    abortion: { cultural: "> 0" }
+    assisted_dying: { cultural: "> 0", civil: "< 0" }
+    vaccine_mandates: { civil: "< 0" }
+    death_penalty: { civil: "< 0" }
+    drug_policy: { civil: "< 0", cultural: "> 0" }
+    paternalism: { civil: "< 0" }
+    organ_donation: { civil: "< 0" }
+    sex_work: { civil: "< 0" }
+    surrogacy: { civil: "< 0" }
+    gene_editing: { cultural: "> 0" }
+  principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
+  # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
+  # (low everywhere). One real split: caution with the irreversible is high on executions but low
+  # on gene editing.
+  tensions:
+    - precaution|death_penalty|gene_editing

@@ -8,6 +8,7 @@ import { parse } from 'yaml';
 import type { Response } from '../../src/model/answers.ts';
 import { isScale, scalePoints, type Bundle, type Target } from '../../src/model/content.ts';
 import { ProfileSchema, type Profile } from '../../src/model/profile.ts';
+import { observe } from '../../src/engine/observe.ts';
 import { buildProfile } from '../../src/engine/profile.ts';
 import { openTensions } from '../../src/engine/tensions.ts';
 import { realBundle } from '../helpers.ts';
@@ -40,7 +41,12 @@ describe('personas (hand-written answers; catch keying mistakes)', () => {
     const persona = parse(readFileSync(join(dir, file), 'utf8')) as {
       topics: string[];
       answers: Record<string, number | string>;
-      expect: { axes?: Record<string, string>; principles?: Record<string, string>; tensions: string[] };
+      expect: {
+        axes?: Record<string, string>;
+        topicAxes?: Record<string, Record<string, string>>;
+        principles?: Record<string, string>;
+        tensions: string[];
+      };
     };
     const answers: Record<string, Response> = {};
     for (const [id, a] of Object.entries(persona.answers)) {
@@ -51,6 +57,15 @@ describe('personas (hand-written answers; catch keying mistakes)', () => {
 
     for (const [axis, rule] of Object.entries(persona.expect.axes ?? {})) check(p.axes[axis]?.score, rule, `axis ${axis}`);
     for (const [pr, rule] of Object.entries(persona.expect.principles ?? {})) check(p.principles[pr]?.score, rule, `principle ${pr}`);
+    // Per topic, so one topic's keying mistake can't hide in a whole-spectrum average.
+    const obs = observe(run.state, { includeSensitive: true });
+    for (const [topic, rules] of Object.entries(persona.expect.topicAxes ?? {})) {
+      for (const [axis, rule] of Object.entries(rules)) {
+        const mine = obs.filter((o) => o.topic === topic && o.target === `axis:${axis}`);
+        const w = mine.reduce((sum, o) => sum + o.w, 0);
+        check(w > 0 ? mine.reduce((sum, o) => sum + o.w * o.x, 0) / w : null, rule, `${topic} on axis ${axis}`);
+      }
+    }
     expect(p.tensions.map((t) => t.key).sort()).toEqual([...persona.expect.tensions].sort());
 
     // Every scripted answer was actually used (catches personas drifting from the content).

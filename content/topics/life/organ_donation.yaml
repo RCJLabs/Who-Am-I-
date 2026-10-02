@@ -1,0 +1,278 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance is about paying living kidney donors; opt-out donation after death is a circumstance.
+# Wording: "donor", "payment"; avoid "organ harvesting", which suggests forced removal.
+id: organ_donation
+domain: life
+title: Organ donation
+summary: Should donating organs be the default, and should living donors be paid?
+tier: extended
+order: 7
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Paying people to donate a kidney while they're alive should be…
+    poles: [Banned, Allowed like any sale]
+    labels:
+      - Banned. Donors shouldn't receive any money
+      - Banned, beyond covering costs like lost wages and travel
+      - Allowed only as non-cash rewards, like health insurance or tax credits
+      - Torn / it depends
+      - Allowed as a fixed payment from the government, with strict screening
+      - Allowed, with prices agreed under strict regulation
+      - Allowed, like any other sale between adults
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: opt_out
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Making everyone an organ donor after death unless they've opted out is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { collective_welfare: 0.5 }
+
+  - id: family_veto
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A registered donor dies, and their family objects to the donation. It should…
+    poles: [Not go ahead, Go ahead anyway]
+    labels: [Not go ahead, Probably not go ahead, Torn, Probably go ahead, Go ahead anyway]
+    principles: { bodily_autonomy: 0.5 }
+
+  - id: priority
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Giving registered donors priority if they ever need an organ themselves is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+    principles: { personal_responsibility: 0.5 }
+
+  - id: lifestyle
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: People whose own heavy drinking damaged their liver should, when waiting for a new one, get…
+    poles: [The same priority as anyone, Lower priority]
+    labels: [The same priority as anyone, Probably the same, Torn, Probably lower, Lower priority]
+    principles: { personal_responsibility: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_ml
+    type: likert
+    points: 7
+    text: Paying someone for a kidney should not be allowed, even if both adults freely agree.
+    principles: { market_limits: 1 }
+    anchor: { principle: market_limits, context: kidney donation, against: the lives of people waiting for a kidney }
+
+  # --- Challenges: against payment -------------------------------------------------------------
+  - id: ch_waiting
+    type: challenge
+    name: The waiting list
+    targets: stance
+    when: stance < 0
+    source: >-
+      US figures from the Organ Procurement and Transplantation Network; Iran's system is described
+      in Ahad Ghods and Shekoufeh Savaj, "Iranian Model of Paid and Regulated Living-Unrelated
+      Kidney Donation," Clinical Journal of the American Society of Nephrology (2006)
+    scenario: >-
+      In the United States alone, about 90,000 people are waiting for a kidney, and each year
+      thousands die or become too sick for a transplant before one arrives. Iran, the only country
+      with a legal system of paying living kidney donors, reported clearing its kidney waiting list
+      by 1999, though critics question how donors there are treated.
+    text: If paying donors would save thousands of lives, should it still be banned?
+    options:
+      - id: not_for_sale
+        label: Yes. Some things shouldn't be for sale, even to save lives.
+        reaction: hold
+        principles: { market_limits: 1 }
+      - id: poor_sellers
+        label: Yes. The sellers would mostly be poor people under financial pressure.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No. Saving those lives matters more; some payment should be allowed.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1, market_limits: -0.5 }
+
+  - id: ch_risky_work
+    type: challenge
+    name: Paid to take risks
+    targets: stance
+    when: stance < 0
+    source: >-
+      Original scenario; donor risk from Abimereki Muzaale et al., "Risk of End-Stage Renal Disease
+      Following Live Kidney Donation," JAMA (2014)
+    scenario: >-
+      People are paid to take serious physical risks all the time: commercial divers, loggers,
+      soldiers, professional fighters. Donating a kidney carries a small risk. One large study found
+      that about 0.3% of donors developed kidney failure within 15 years, more than similar healthy
+      people who didn't donate, but still rare.
+    text: If people can be paid for dangerous work, why not for a kidney?
+    options:
+      - id: body_part
+        label: Selling part of your body is different from being paid for your work.
+        reaction: distinguish
+        principles: { market_limits: 1 }
+      - id: irreversible
+        label: A job can be quit; a kidney, once sold, is gone for good.
+        reaction: distinguish
+        principles: { precaution: 0.5, protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Fair point. Some payment should be allowed.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_everyone_paid
+    type: challenge
+    name: Everyone but the donor
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      In a kidney transplant, the surgeons, nurses, hospital and transplant coordinators are all
+      paid, and the recipient gains years of life. The one person expected to take part for free is
+      the donor, who goes through surgery and takes on its risks.
+    text: Is it fair that everyone is paid except the donor?
+    options:
+      - id: gift
+        label: Yes. Keeping donation a gift is what makes people trust the system.
+        reaction: hold
+        principles: { market_limits: 1 }
+      - id: work_vs_body
+        label: The professionals are paid for their work, not for giving up part of themselves.
+        reaction: distinguish
+        principles: { market_limits: 0.5 }
+      - id: rethink
+        label: No. Donors deserve fair payment too.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5, bodily_autonomy: 0.5 }
+
+  # --- Challenges: for payment -------------------------------------------------------------------
+  - id: ch_debt
+    type: challenge
+    name: Selling to pay debts
+    targets: stance
+    when: stance > 0
+    source: Madhav Goyal et al., "Economic and Health Consequences of Selling a Kidney in India," JAMA (2002)
+    scenario: >-
+      A 2002 study interviewed 305 people in Chennai, India, who had sold a kidney. Nearly all had
+      sold to pay off debts. Years later, most were still in debt, their family income had fallen
+      by about a third, and most said their health had gotten worse.
+    text: Can a choice made under that kind of pressure really be free?
+    options:
+      - id: regulated
+        label: A regulated system with fair pay, screening and follow-up care isn't the same as a black market.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5, protect_vulnerable: 0.5 }
+      - id: options
+        label: Yes. Banning sales doesn't end their poverty; it takes away one of their options.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: It gives me pause. Payment should be more restricted than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_titmuss
+    type: challenge
+    name: The gift relationship
+    targets: stance
+    when: stance > 0
+    source: Richard Titmuss, The Gift Relationship (1970)
+    scenario: >-
+      Sociologist Richard Titmuss compared Britain's unpaid blood donation system with the partly
+      paid American one. He argued that paying for blood drew in donors more likely to carry
+      infections and pushed out people who gave out of goodwill, so the market made the supply
+      worse, not better.
+    text: Could paying for kidneys backfire in a similar way?
+    options:
+      - id: shortage
+        label: Unlike blood, there are nowhere near enough unpaid kidney donors anyway, so there's little to lose.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: more_lives
+        label: Even so, more kidneys overall would save more lives.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: It's a real risk. Payment should be more limited than I said.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 1 }
+
+  - id: ch_where_line
+    type: challenge
+    name: Where's the line?
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      If an adult may sell a kidney to pay a debt, the same reasoning could let them sell part of
+      their liver, an operation with a much higher risk of serious complications for the donor.
+    text: Should that be allowed too?
+    options:
+      - id: low_risk_only
+        label: No. Only low-risk donations like a kidney; riskier sales should stay banned.
+        reaction: distinguish
+        principles: { precaution: 0.5, bodily_autonomy: 0.5 }
+      - id: adults_decide
+        label: Yes. Adults should decide what risks to take with their own bodies.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: It's hard to draw a line, which makes me more cautious about any sales.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The fixed-payment plan
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would pay living kidney donors a fixed sum from a public fund, after strict
+      medical and psychological screening. Kidneys would go to patients in waiting-list order, not
+      to whoever can pay.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

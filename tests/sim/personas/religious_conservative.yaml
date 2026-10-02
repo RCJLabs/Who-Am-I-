@@ -1,7 +1,7 @@
 # Hand-written, independent of the scoring weights: the only check that catches keying mistakes.
 # Answers: numbers are scale steps, strings are option ids. Re-asks keep the previous answer.
 name: Religious conservative
-topics: [abortion, assisted_dying, vaccine_mandates]
+topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, sex_work, surrogacy, gene_editing]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -40,12 +40,79 @@ answers:
   vaccine_mandates.anchor_pv: 3
   vaccine_mandates.ch_drunk_driving: privilege
   vaccine_mandates.ch_quarantine: proven_danger
+  death_penalty.stance: 5
+  death_penalty.importance: 3
+  death_penalty.certain_guilt: 5
+  death_penalty.terrorism: 5
+  death_penalty.purpose: deserved
+  death_penalty.minors: 2
+  death_penalty.drug_trade: 2
+  death_penalty.anchor_sol: 2
+  death_penalty.anchor_prec: 3
+  death_penalty.ch_innocent: certainty
+  death_penalty.ch_evidence: deserved
+  death_penalty.ch_race: guilt
+  drug_policy.stance: 2
+  drug_policy.importance: 3
+  drug_policy.cannabis: 2
+  drug_policy.supervised: 1
+  drug_policy.psychedelics: 3
+  drug_policy.public_use: 1
+  drug_policy.anchor_ba: 3
+  drug_policy.anchor_pv: 6
+  drug_policy.ch_alcohol: per_person
+  drug_policy.ch_portugal: wrong
+  drug_policy.ch_prohibition: fewer_users
+  sex_work.stance: 1
+  sex_work.importance: 2 # low: deep items are skipped
+  sex_work.together: 2
+  sex_work.buyer_ban: 3
+  sex_work.anchor_ba: 2
+  sex_work.anchor_ml: 7
+  sex_work.ch_new_zealand: not_business
+  sex_work.ch_her_choice: others_in_trade
+  surrogacy.stance: 1
+  surrogacy.importance: 2
+  surrogacy.keep_child: 2
+  surrogacy.anchor_ml: 7
+  surrogacy.ch_sister: motherhood
+  gene_editing.stance: 1
+  gene_editing.importance: 3
+  gene_editing.somatic: 4
+  gene_editing.screening: 2
+  gene_editing.sex_choice: 1
+  gene_editing.intelligence: 1
+  gene_editing.anchor_prec: 7
+  gene_editing.ch_huntington: line
+  gene_editing.ch_mitochondria: line
+  gene_editing.ch_savulescu: accept
 expect:
-  axes: { cultural: "< -0.6", civil: "> -0.5" }
-  principles: { sanctity_of_life: "> 0.6" }
-  # Bodily autonomy low on abortion and assisted dying but high on vaccines; protecting the
-  # vulnerable high on assisted dying but low on vaccines.
+  axes: { cultural: "< -0.6", civil: "> 0" }
+  topicAxes:
+    abortion: { cultural: "< 0" }
+    assisted_dying: { cultural: "< 0", civil: "> 0" }
+    vaccine_mandates: { civil: "< 0" }
+    death_penalty: { civil: "> 0" }
+    drug_policy: { civil: "> 0", cultural: "< 0" }
+    sex_work: { civil: "> 0" }
+    surrogacy: { civil: "> 0" }
+    gene_editing: { cultural: "< 0" }
+  principles:
+    sanctity_of_life: "> 0.5"
+    market_limits: "> 0.6"
+    retribution: "> 0.5"
+    natural_order: "> 0.5"
+  # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
+  # protecting the vulnerable high on assisted dying and drugs but low on vaccines; the sanctity of
+  # life high on abortion and assisted dying but low on the death penalty; caution with the
+  # irreversible high on gene editing but low on the death penalty.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
+    - bodily_autonomy|drug_policy|vaccine_mandates
+    - bodily_autonomy|sex_work|vaccine_mandates
     - protect_vulnerable|assisted_dying|vaccine_mandates
+    - protect_vulnerable|drug_policy|vaccine_mandates
+    - sanctity_of_life|abortion|death_penalty
+    - sanctity_of_life|assisted_dying|death_penalty
+    - precaution|death_penalty|gene_editing

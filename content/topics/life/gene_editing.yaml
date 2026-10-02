@@ -1,0 +1,284 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance is about inherited (germline) changes. Editing a patient's own cells and choosing
+# among IVF embryos are circumstances. Avoid "designer babies" and "playing God" outside quotations.
+id: gene_editing
+domain: life
+title: Editing human genes
+summary: Should parents be able to choose or change their children's genes?
+tier: extended
+order: 10
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Editing the genes of human embryos, in ways that would be passed down to future generations, should be…
+    poles: [Banned, Allowed for any trait]
+    labels:
+      - Banned completely, even in research
+      - Banned in people, but allowed in lab research
+      - Banned for now, until it's proven safe
+      - Torn / it depends
+      - Allowed, but only to prevent serious diseases
+      - Allowed to prevent diseases and reduce health risks
+      - Allowed for any trait parents choose
+    axes: { cultural: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: somatic
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Editing the genes in a patient's own blood stem cells to cure a disease like sickle cell anemia, a change that isn't passed on, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+    principles: { relief_of_suffering: 0.5 }
+
+  - id: screening
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Testing IVF embryos and choosing one without a serious inherited disease, like cystic fibrosis, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  - id: sex_choice
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Choosing an IVF embryo's sex for non-medical reasons should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  - id: intelligence
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Choosing among IVF embryos using genetic predictions of intelligence should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_prec
+    type: likert
+    points: 7
+    text: When it comes to editing human embryos, the risk of a mistake that can never be undone should make us hold back, even if that means giving up cures for serious diseases.
+    principles: { precaution: 1 }
+    anchor: { principle: precaution, context: editing human embryos, against: preventing serious inherited diseases }
+
+  # --- Challenges: against editing ---------------------------------------------------------------
+  - id: ch_huntington
+    type: challenge
+    name: Huntington's disease
+    targets: stance
+    when: stance < -0.5
+    source: Original scenario
+    scenario: >-
+      Huntington's disease is inherited: each child of a parent who has it has a 50% chance of
+      getting it. It usually begins in midlife and brings years of decline in movement, thinking
+      and mood before death, and there is no cure. Suppose editing an embryo could safely and
+      reliably remove the mutation, sparing that child and all of their descendants.
+    text: If it were safe and reliable, should parents be allowed to do it?
+    options:
+      - id: line
+        label: No. Changing what future generations inherit is a line we shouldn't cross, even to prevent disease.
+        reaction: hold
+        principles: { natural_order: 1 }
+      - id: screening
+        label: No need. Testing embryos and choosing an unaffected one can already prevent it, without editing anyone.
+        reaction: distinguish
+        principles: { precaution: 1 }
+      - id: rethink
+        label: Yes. Preventing a disease like this should be allowed.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_mitochondria
+    type: challenge
+    name: Mitochondrial donation
+    targets: stance
+    when: stance < 0
+    source: >-
+      The UK's Human Fertilisation and Embryology (Mitochondrial Donation) Regulations 2015; births
+      reported in the New England Journal of Medicine (2025)
+    scenario: >-
+      In 2015 the UK legalized "mitochondrial donation" to prevent severe inherited diseases. The
+      parents' genetic material is moved into a donor's egg that has healthy mitochondria, the
+      cell's energy factories. The change is passed down through daughters to future generations.
+      In 2025 doctors in Newcastle reported that eight children had been born this way.
+    text: Should inherited changes like this be allowed to prevent serious disease?
+    options:
+      - id: different
+        label: Swapping mitochondria is different from editing the genes that shape who a person is.
+        reaction: distinguish
+        principles: { natural_order: 0.5 }
+      - id: line
+        label: No. Even this crosses a line we shouldn't cross.
+        reaction: hold
+        principles: { natural_order: 1, precaution: 0.5 }
+      - id: rethink
+        label: Yes. To prevent serious disease, inherited changes can be acceptable.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_savulescu
+    type: challenge
+    name: The best start
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Julian Savulescu, "Procreative Beneficence: Why We Should Select the Best Children,"
+      Bioethics (2001)
+    scenario: >-
+      Philosopher Julian Savulescu argued that when parents can choose, they have a moral reason to
+      choose the child expected to have the best life, just as they're expected to give their
+      children good food, schooling and medical care after birth.
+    text: If we try to give children every advantage after birth, why not before?
+    options:
+      - id: irreversible
+        label: A child can question their upbringing; their genes can't be undone or refused.
+        reaction: distinguish
+        principles: { precaution: 0.5, natural_order: 0.5 }
+      - id: accept
+        label: Children should be accepted as they come, not designed.
+        reaction: hold
+        principles: { natural_order: 1 }
+      - id: rethink
+        label: It's a fair point. Some genetic choices should be allowed.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5, natural_order: -0.5 }
+
+  # --- Challenges: for editing -------------------------------------------------------------------
+  - id: ch_twins
+    type: challenge
+    name: The edited twins
+    targets: stance
+    when: stance > 0
+    source: He Jiankui's 2018 announcement of gene-edited twins; a Chinese court sentenced him in 2019
+    scenario: >-
+      In 2018 a scientist in China, He Jiankui, announced the birth of twin girls whose embryos he
+      had edited to resist HIV. The edits were imprecise, the girls weren't at real risk of HIV in
+      the first place, and no one knows the long-term effects on them or on any children they have.
+      He was sentenced to three years in prison.
+    text: Does this change your view?
+    options:
+      - id: oversight
+        label: That was reckless and secret. With proper testing and oversight it would be different.
+        reaction: distinguish
+        principles: { precaution: 0.5, relief_of_suffering: 0.5 }
+      - id: early_days
+        label: No. Every new medical technology has early failures.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5, precaution: -0.5 }
+      - id: rethink
+        label: Yes. It shows how much can go wrong; I'm more cautious than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 1 }
+
+  - id: ch_advantages
+    type: challenge
+    name: Buying advantages
+    targets: stance
+    when: stance > 0.5
+    source: >-
+      Original scenario; the concern is discussed in the Nuffield Council on Bioethics report Genome
+      Editing and Human Reproduction (2018)
+    scenario: >-
+      Gene editing would likely be expensive. If wealthy parents could give their children
+      advantages like better health, height or intelligence, those advantages would be built into
+      their bodies and passed on to their own children, which could widen the gaps between families
+      over generations.
+    text: Should parents be able to buy genetic advantages for their children?
+    options:
+      - id: disease_only
+        label: Only to prevent disease. Enhancement is different and should stay banned.
+        reaction: distinguish
+        principles: { equality: 0.5, relief_of_suffering: 0.5 }
+      - id: already
+        label: Yes. Wealthy parents already buy advantages, like private schools; this isn't different in kind.
+        reaction: hold
+        principles: { equality: -0.5 }
+      - id: rethink
+        label: No. It would deepen inequality; I'm more cautious than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_asch
+    type: challenge
+    name: The disability critique
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Adrienne Asch, "Prenatal Diagnosis and Selective Abortion: A Challenge to Practice and
+      Policy," American Journal of Public Health (1999)
+    scenario: >-
+      Disability scholar Adrienne Asch argued that screening out embryos or fetuses with conditions
+      like deafness or Down syndrome sends a message that people living with those conditions
+      shouldn't exist, and pointed out that many disabled people report good lives.
+    text: Does preventing disability through genetics devalue disabled people?
+    options:
+      - id: treating
+        label: No. Preventing a condition isn't a judgment on people who have it, any more than treating an illness is.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1 }
+      - id: parents
+        label: No. Parents should be free to make these choices for their own families.
+        reaction: hold
+        principles: { bodily_autonomy: 0.5 }
+      - id: rethink
+        label: It gives me pause. The limits should be stricter than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The licensing law
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would allow editing embryos only to prevent serious inherited diseases, only
+      when no other option exists, and only with approval from a national licensing body.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no_too_much
+        label: No, it allows too much.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+      - id: no_too_little
+        label: No, it restricts too much.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
