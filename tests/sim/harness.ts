@@ -4,6 +4,16 @@ import type { Bundle, Item, TopicId } from '../../src/model/content.ts';
 import { nextStep, type Step, type TensionCandidate } from '../../src/engine/flow.ts';
 import { mulberry32 } from '../../src/engine/rng.ts';
 import { buildAnswerState, type AnswerState } from '../../src/engine/state.ts';
+import { openTensions } from '../../src/engine/tensions.ts';
+
+/** The real tension detector, as the app wires it. */
+export const engineTensions: TensionSource = (s, resolutions) => {
+  const open = openTensions(s, resolutions);
+  return {
+    candidates: open.map((t) => ({ key: t.key, topics: [t.a.topic, t.b.topic] as const, rank: t.rank })),
+    basis: (key) => open.find((t) => t.key === key)?.basis ?? [],
+  };
+};
 
 export type AskStep = Extract<Step, { kind: 'item' | 'reask' }>;
 

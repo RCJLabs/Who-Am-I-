@@ -68,7 +68,9 @@ export const ProfileSchema = z.object({
   axes: z.record(z.string(), AxisResultSchema),
   principles: z.record(z.string(), PrincipleResultSchema),
   topics: z.record(z.string(), TopicResultSchema),
-  interests: z.record(z.string(), z.number().min(0).max(1)).describe('"topic.option" → 0..1 intensity'),
+  interests: z
+    .record(z.string(), z.number().min(0).max(1))
+    .describe('"topic.item.option" (multi-select pick) or "topic.item" (interest rating) → 0..1 intensity'),
   identity: z
     .record(z.string(), z.union([z.string(), z.array(z.string())]))
     .optional()

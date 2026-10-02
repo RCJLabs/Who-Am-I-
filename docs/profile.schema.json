@@ -317,7 +317,7 @@
         "minimum": 0,
         "maximum": 1
       },
-      "description": "\"topic.option\" → 0..1 intensity"
+      "description": "\"topic.item.option\" (multi-select pick) or \"topic.item\" (interest rating) → 0..1 intensity"
     },
     "identity": {
       "description": "Self-reported, opt-in; present only when sensitive answers are included",
