@@ -1,7 +1,8 @@
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { parse } from 'yaml';
 import { expect, test } from './fixtures.ts';
 import { freshStart } from './helpers.ts';
 
@@ -24,9 +25,13 @@ test('the security policy is in place and the app works offline after the first 
 });
 
 test('a restored backup brings back answers and the tensions they imply', async ({ page }) => {
+  const persona = 'tests/sim/personas/religious_conservative.yaml';
   const dir = mkdtempSync(join(tmpdir(), 'whoami-'));
   const file = join(dir, 'conservative.json');
-  execFileSync('node', ['scripts/persona-backup.ts', 'tests/sim/personas/religious_conservative.yaml', file]);
+  execFileSync('node', ['scripts/persona-backup.ts', persona, file]);
+  // The persona's expected tensions, keyed "principle|topic|topic": one row each, one card per principle.
+  const tensions = (parse(readFileSync(persona, 'utf8')) as { expect: { tensions: string[] } }).expect.tensions;
+  const principles = new Set(tensions.map((key) => key.split('|')[0]));
 
   await freshStart(page, '#/settings');
   await page.getByTestId('backup-file').setInputFiles(file);
@@ -36,10 +41,11 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await page.getByTestId('nav-results').click();
   await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
   await expect(page.getByTestId('axis-cultural-position')).toContainText('Tradition');
-  // The persona's 9 tensions (tests/sim/personas), grouped under their 4 principles.
-  await expect(page.getByTestId('tension-row')).toHaveCount(9);
-  await expect(page.locator('.card.tension')).toHaveCount(4);
-  await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(4);
+  await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
+  await expect(page.locator('.card.tension')).toHaveCount(principles.size);
+  await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(
+    tensions.filter((key) => key.startsWith('bodily_autonomy|')).length,
+  );
 });
 
 test('deleting all data really empties the app', async ({ page }) => {
