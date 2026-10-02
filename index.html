@@ -3,8 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Find out where you stand — personality, values, beliefs and interests. Everything stays on your device." />
+    <meta name="description" content="Find out where you stand: personality, values, beliefs and interests. Everything stays on your device." />
+    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)" />
     <title>Who Am I</title>
+    <style>
+      html { background: #f7f6f3; }
+      @media (prefers-color-scheme: dark) { html { background: #111113; color: #ececf1; } }
+      .splash { min-height: 100dvh; display: grid; place-items: center; font: 600 1.5rem system-ui, sans-serif; opacity: 0.7; }
+    </style>
   </head>
   <body>
     <div id="app"><div class="splash">Who Am I</div></div>

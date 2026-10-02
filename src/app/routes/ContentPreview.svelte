@@ -1,11 +1,12 @@
 <script lang="ts">
   // Read-only content preview: every question, option and challenge (for both sides), for
-  // reviewing content before the interactive app exists. Replaced by the real app shell.
-  import type { Bundle, Effect, Item, OptionEffect, Reaction, Target, Topic } from '../model/content.ts';
-  import { indexBundle } from '../engine/bundle-index.ts';
-  import { describeCond } from '../engine/cond/describe.ts';
+  // reviewing content. Reached from Settings.
+  import type { Effect, Item, OptionEffect, Reaction, Target, Topic } from '../../model/content.ts';
+  import { indexBundle } from '../../engine/bundle-index.ts';
+  import { describeCond } from '../../engine/cond/describe.ts';
+  import { app } from '../context.ts';
 
-  let { bundle }: { bundle: Bundle } = $props();
+  const { bundle } = app();
 
   const version = __APP_VERSION__;
   const ix = $derived(indexBundle(bundle));
@@ -52,12 +53,12 @@
   }
 </script>
 
-<main>
+<div class="page">
   <header>
     <h1>Who Am I</h1>
     <p class="lede">
-      <strong>Content preview.</strong> Every question, including the challenges for <em>both</em> sides (a real
-      person only sees the ones aimed at their answers). The interactive version comes next.
+      <strong>Content preview.</strong> Every question, including the challenges for <em>both</em> sides. In the app,
+      you only see the ones aimed at your answers.
     </p>
     <p class="meta">
       Build {version} · content {bundle.contentVersion} · {bundle.topics.length} topics · {allItems.length} items ·
@@ -165,47 +166,9 @@
       {/each}
     </section>
   {/each}
-</main>
+</div>
 
 <style>
-  :global(:root) {
-    --bg: #fbfaf8;
-    --surface: #ffffff;
-    --text: #1d1d1f;
-    --muted: #6b6b70;
-    --border: #e4e2dd;
-    --accent: #3d5afe;
-    --hold: #2e7d32;
-    --distinguish: #8a6d00;
-    --yield: #b3261e;
-    --quote: #f3f1ec;
-    color-scheme: light dark;
-  }
-  @media (prefers-color-scheme: dark) {
-    :global(:root) {
-      --bg: #121214;
-      --surface: #1c1c1f;
-      --text: #ececee;
-      --muted: #a0a0a8;
-      --border: #303036;
-      --accent: #8c9eff;
-      --hold: #81c784;
-      --distinguish: #e6c35c;
-      --yield: #f28b82;
-      --quote: #26262a;
-    }
-  }
-  :global(body) {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  }
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 24px 16px 64px;
-  }
   h1 {
     margin: 0 0 8px;
     font-size: 1.9rem;
@@ -266,7 +229,7 @@
     margin-top: 0;
   }
   .instructions {
-    background: var(--quote);
+    background: var(--surface-2);
     border-radius: 8px;
     padding: 10px 12px;
   }
@@ -291,10 +254,10 @@
     border-color: currentColor;
   }
   .item[data-role='Challenge'] .role {
-    color: var(--yield);
+    color: var(--danger);
   }
   .item[data-role='Anchor'] .role {
-    color: var(--distinguish);
+    color: var(--warn);
   }
   .key {
     font-size: 0.75rem;
@@ -311,8 +274,8 @@
   blockquote {
     margin: 10px 0 4px;
     padding: 10px 12px;
-    background: var(--quote);
-    border-left: 3px solid var(--yield);
+    background: var(--surface-2);
+    border-left: 3px solid var(--danger);
     border-radius: 0 8px 8px 0;
   }
   .scale,
@@ -336,15 +299,15 @@
     margin-right: 6px;
   }
   .reaction[data-reaction='hold'] {
-    color: var(--hold);
+    color: var(--success);
     border-color: currentColor;
   }
   .reaction[data-reaction='distinguish'] {
-    color: var(--distinguish);
+    color: var(--warn);
     border-color: currentColor;
   }
   .reaction[data-reaction='yield'] {
-    color: var(--yield);
+    color: var(--danger);
     border-color: currentColor;
   }
   .chips {
@@ -354,7 +317,7 @@
   }
   .anchor {
     font-size: 0.875rem;
-    background: var(--quote);
+    background: var(--surface-2);
     border-radius: 8px;
     padding: 8px 10px;
   }
