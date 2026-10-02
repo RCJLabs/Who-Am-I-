@@ -35,7 +35,7 @@ and should be fixed or justified.
 | Field | Notes |
 |---|---|
 | `id`, `domain`, `title`, `summary` | `summary` is one line, shown on the module list |
-| `tier` | `core` (part of the main experience) or `extended` (deep-dive) |
+| `tier` | `core` (part of the main experience) or `extended` (deep dive: listed under "Deep dives", offered after every core topic is done) |
 | `order` | display order within the domain |
 | `evidence` | `validated`, `adapted`, `custom` or `for-fun` (see below) |
 | `source`, `license` | required in practice for `validated` and `adapted` |
@@ -78,7 +78,12 @@ principles: { bodily_autonomy: 1 }
   needs a `value`).
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
-- Keep stances at weight 1 and circumstances around 0.5: the overall view should dominate the axis.
+- **In issue topics, only the stance feeds political axes**: weight 1 in core topics, 0.5 in
+  extended ones, so a deep dive never outweighs a core issue. Circumstances and challenges are
+  chosen to probe one side's hard cases (rape, a threat to life, a mass murderer), so answers to
+  them lean one way by design. Scored on a spectrum, they'd pull moderates toward one pole: someone
+  whose view is "legal only in rare cases, like rape" would land on the permissive side just by
+  answering consistently. They can still carry principle effects. A content test enforces this.
 - **Balanced option sets.** Choice options should be spread symmetrically around 0 on each axis
   they feed (e.g. −1, −0.6, 0, 0.6, 1), so someone picking at random lands in the middle (W110).
 
@@ -127,6 +132,7 @@ A challenge is a thought experiment aimed at **the answer the user actually gave
 ```yaml
 - id: ch_violinist
   type: challenge
+  name: The violinist        # short name shown in results ("The violinist moved you 2 steps")
   targets: stance            # the answer under challenge
   when: stance < 0           # who sees it
   source: Judith Jarvis Thomson, "A Defense of Abortion" (1971)
@@ -178,9 +184,17 @@ Tensions are the "you apply this principle differently here than there" cards. T
 
 - **One principle per anchor**, with a **positive** weight on it, so agreeing always means endorsing
   it (E013). Don't load other principles heavily (W109).
-- **Matched wording across topics.** Reuse the same sentence frame, so the only difference is the
-  context. For bodily autonomy: "When it comes to {context}, {person}'s right to decide what happens
-  to their own body should come first."
+- **Matched wording across topics.** Reuse the principle's sentence frame, so the only difference
+  is the context:
+
+  | Principle | Frame |
+  |---|---|
+  | Bodily autonomy | When it comes to {context}, {person}'s right to decide what happens to their own body should come first. |
+  | Sanctity of life | Deliberately ending a human life is wrong, even {the hardest case in this context}. |
+  | Protecting the vulnerable | {Restriction} to protect vulnerable people {from the harm}, even if that means {who loses which freedom}. |
+  | Things money shouldn't buy | Paying someone for {thing} should not be allowed, even if both adults freely agree. |
+  | Caution with the irreversible | When it comes to {context}, the risk of a mistake that can never be undone should make us hold back, even if that means {the benefit given up}. |
+
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of
   other people*").
@@ -197,6 +211,12 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | abortion legal / illegal | pro-life / pro-choice (labels, not positions) |
 | vaccine requirement | anti-vaxxer, sheeple |
 | assisted dying | death panel, culture of death |
+| people who use drugs, addiction | addict, junkie, war on drugs |
+| laws that protect people from themselves | nanny state |
+| selling sex, paying for sex, people who sell sex | prostitute; "sex work" and "prostitution" outside the names of laws and studies |
+| surrogate, intended parents | rent-a-womb, baby selling |
+| editing embryos, choosing embryos | designer babies, playing God |
+| the death penalty | state-sanctioned murder, judicial murder |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). If a term must appear inside a
 quotation, keep it and justify the warning in review.

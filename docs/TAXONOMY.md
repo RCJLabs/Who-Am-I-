@@ -44,13 +44,13 @@ The full map of what Who Am I covers.
 | Abortion | core | custom | ✅ |
 | Assisted dying | core | custom | ✅ |
 | Vaccine requirements | core | custom | ✅ |
-| Death penalty | core | custom | ◻️ |
-| Drug policy | core | custom | ◻️ |
-| Protecting people from themselves (helmets, seatbelts, sugar taxes) | extended | custom | ◻️ |
-| Organ donation (opt-out, payment) | extended | custom | ◻️ |
-| Sex work | extended | custom | ◻️ |
-| Surrogacy | extended | custom | ◻️ |
-| Gene editing and embryo selection | extended | custom | ◻️ |
+| Death penalty | core | custom | ✅ |
+| Drug policy | core | custom | ✅ |
+| Protecting people from themselves (helmets, seatbelts, sugar taxes) | extended | custom | ✅ |
+| Organ donation (opt-out, payment) | extended | custom | ✅ |
+| Buying and selling sex | extended | custom | ✅ |
+| Surrogacy | extended | custom | ✅ |
+| Editing human genes (embryo editing and selection) | extended | custom | ✅ |
 
 ### Rights & liberties
 | Topic | Tier | Status |
@@ -186,25 +186,35 @@ can surface in both directions.
 
 | Principle | Invoked more by the left in… | Invoked more by the right in… | Anchored now |
 |---|---|---|---|
-| Bodily autonomy | abortion, drug policy, sex work, assisted dying | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements |
-| Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying |
-| Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, sex work | assisted dying, vaccine requirements |
+| Bodily autonomy | abortion, drug policy, selling sex, assisted dying | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex |
+| Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
+| Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy |
+| Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers) | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy |
+| Caution with the irreversible | death penalty, climate, GMOs | gene editing, rapid social change | death penalty, gene editing |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
 | Personal responsibility | | welfare, drugs, abortion | *(effects only)* |
 | Relief of suffering | assisted dying, healthcare | | *(effects only)* |
+| Just deserts | | death penalty, prisons | *(effects only; anchor with criminal justice)* |
+| Equality | taxes, healthcare, affirmative action | | *(effects only; anchor with economics)* |
+| Respect for the natural order | GMOs | gene editing, surrogacy | *(effects only)* |
 | Doing vs. allowing | used in challenges (killing vs. letting die, harming vs. not helping) | | *(effects only)* |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
-abortion and low on vaccine requirements raises a tension, and so does the reverse pattern.
+abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
+sanctity of life rated high on abortion and low on the death penalty raises one, and so does the
+reverse. The personas in `tests/sim/personas` pin these down.
 
 ## Axes
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | *(planned)* |
-| Civil | political | Liberty ↔ Authority | assisted dying, vaccine requirements |
-| Cultural | political | Tradition ↔ Progress | abortion, assisted dying |
+| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy) |
+| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing |
 | Diplomatic | political | National ↔ Global | *(planned)* |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
 | Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
+
+Political axes are fed only by each issue topic's stance, never by its circumstances or challenges
+(see `CONTENT_GUIDE.md`, Effects).

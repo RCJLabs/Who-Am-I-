@@ -179,6 +179,8 @@ export interface ChallengeOption extends Option {
 
 export interface ChallengeItem extends ItemBase {
   type: 'challenge';
+  /** Short display name ("The violinist"). */
+  name?: string;
   targets: ItemId;
   scenario: string;
   source?: string;

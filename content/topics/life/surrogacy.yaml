@@ -1,0 +1,262 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Wording: "surrogate" (the woman who carries the pregnancy) and "intended parents". Avoid
+# "rent a womb", "baby selling" and "birth mother" outside quotations.
+id: surrogacy
+domain: life
+title: Surrogacy
+summary: Should a woman be able to carry a pregnancy for someone else, and be paid for it?
+tier: extended
+order: 9
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Surrogacy, where a woman carries a pregnancy for someone else, should be…
+    poles: [Banned, Allowed with payment]
+    labels:
+      - Banned in all forms
+      - Allowed only unpaid, between family or close friends
+      - Allowed only unpaid, with the surrogate's costs covered
+      - Torn / it depends
+      - Allowed with payment, under strict rules
+      - Allowed with payment and binding contracts
+      - Allowed with payment and no special restrictions
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: keep_child
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If a surrogate decides at the birth that she wants to keep the child, she should…
+    poles: [Be able to keep the child, Have to hand the child over]
+    labels: [Be able to keep the child, Probably keep the child, Torn, Probably hand the child over, Have to hand the child over]
+    principles: { personal_responsibility: 0.5 }
+
+  - id: abroad
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Hiring a surrogate in a poorer country, where it costs much less, is…
+    poles: [Wrong, Acceptable]
+    labels: [Wrong, Probably wrong, Torn, Probably acceptable, Acceptable]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_ml
+    type: likert
+    points: 7
+    text: Paying a woman to carry a pregnancy for someone else should not be allowed, even if both adults freely agree.
+    principles: { market_limits: 1 }
+    anchor: { principle: market_limits, context: surrogacy, against: helping people who can't otherwise have children }
+
+  # --- Challenges: against surrogacy or payment --------------------------------------------------
+  - id: ch_sister
+    type: challenge
+    name: A sister's gift
+    targets: stance
+    when: stance == -1
+    source: Original scenario
+    scenario: >-
+      A woman was born without a uterus. She and her husband have embryos from IVF, made with her
+      own eggs. Her sister, who has children of her own, offers to carry the pregnancy for them,
+      unpaid, simply because she wants to help.
+    text: Should the law stop her?
+    options:
+      - id: motherhood
+        label: Yes. Carrying a child shouldn't be separated from being its mother, even out of love.
+        reaction: hold
+        principles: { natural_order: 1 }
+      - id: door
+        label: Not her in particular, but allowing it opens the door to paid surrogacy.
+        reaction: distinguish
+        principles: { market_limits: 0.5, precaution: 0.5 }
+      - id: rethink
+        label: No. A gift like this should be allowed.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_unpaid
+    type: challenge
+    name: Everyone paid but her
+    targets: stance
+    when: stance > -1 and stance < 0
+    source: Original scenario
+    scenario: >-
+      A surrogate goes through IVF procedures, nine months of pregnancy and childbirth, with real
+      risks to her health and her work. The doctors, lawyers and clinic involved are all paid. In
+      unpaid surrogacy, she is the only one expected to do it for free.
+    text: Why shouldn't she be paid?
+    options:
+      - id: product
+        label: Paying her would turn the child into a product.
+        reaction: distinguish
+        principles: { market_limits: 1 }
+      - id: pressure
+        label: Payment would draw in poor women who need the money more than they want to do it.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: She should be paid fairly for what she does.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5, bodily_autonomy: 0.5 }
+
+  - id: ch_abroad
+    type: challenge
+    name: Pushed abroad
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Original scenario; the "Baby Gammy" case came to light in 2014, and Thailand banned paid
+      surrogacy in 2015
+    scenario: >-
+      When paid surrogacy is banned at home, many people travel to countries with fewer protections.
+      In a case that came to light in 2014, a Thai surrogate gave birth to twins for an Australian
+      couple. The couple took the girl home; the boy, who has Down syndrome, stayed with the
+      surrogate. The case led Thailand to ban paid surrogacy.
+    text: If a ban at home pushes people into riskier arrangements abroad, is a ban still the right answer?
+    options:
+      - id: still_wrong
+        label: Yes. What other countries allow isn't a reason to allow it here.
+        reaction: hold
+        principles: { market_limits: 1 }
+      - id: ban_abroad
+        label: Yes, and it should also be illegal for citizens to arrange it abroad.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No. Regulating it at home would protect surrogates better.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5, bodily_autonomy: 0.5 }
+
+  # --- Challenges: for paid surrogacy ------------------------------------------------------------
+  - id: ch_baby_m
+    type: challenge
+    name: Baby M
+    targets: stance
+    when: stance > 0
+    source: In re Baby M, Supreme Court of New Jersey (1988)
+    scenario: >-
+      In the 1980s a New Jersey woman agreed to carry a child for a couple for $10,000, using her own
+      egg. After the birth she refused to give the baby up. In 1988 the state's Supreme Court struck
+      down the contract, comparing paid surrogacy to selling a child. It gave custody to the father,
+      and visiting rights to her.
+    text: Should a surrogate be able to change her mind and keep the child?
+    options:
+      - id: agreement
+        label: No. She made an agreement, and the intended parents were counting on it.
+        reaction: hold
+        principles: { personal_responsibility: 1 }
+      - id: genetic
+        label: Only if, like her, she's the genetic mother. Most surrogates today carry an embryo that isn't theirs.
+        reaction: distinguish
+        principles: { personal_responsibility: 0.5 }
+      - id: rethink
+        label: Yes. A binding contract over a child goes too far; the rules should be stricter than I said.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 1 }
+
+  - id: ch_anderson
+    type: challenge
+    name: Children as products?
+    targets: stance
+    when: stance > 0
+    source: Elizabeth Anderson, "Is Women's Labor a Commodity?," Philosophy & Public Affairs (1990)
+    scenario: >-
+      Philosopher Elizabeth Anderson argued that paid surrogacy treats children as goods to be
+      ordered and women's pregnancies as a service, with the surrogate expected to suppress any bond
+      with the child she carries because the contract requires it.
+    text: Does paying for surrogacy turn children or women into commodities?
+    options:
+      - id: time_risk
+        label: No. The payment is for her time and risk, not for the child.
+        reaction: distinguish
+        principles: { market_limits: -0.5, bodily_autonomy: 0.5 }
+      - id: freely
+        label: No. Adults can make this arrangement freely, and it brings wanted children into the world.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: There's something to it. Payment should be more limited than I said.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 1 }
+
+  - id: ch_global
+    type: challenge
+    name: Across borders
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      India restricted paid surrogacy for foreigners in 2015 and banned paid surrogacy in the
+      Surrogacy (Regulation) Act 2021; Thailand banned it in 2015
+    scenario: >-
+      When paid surrogacy was open to foreigners in India and Thailand, clinics recruited poor women
+      to carry pregnancies for couples from richer countries, often for a fraction of Western fees.
+      After reports of exploitation, both countries shut it down.
+    text: If paid surrogacy draws in poor women from poorer countries, should it be allowed?
+    options:
+      - id: regulate
+        label: Yes, with fair pay and real protections. The problem is weak rules, not payment.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5, protect_vulnerable: 0.5 }
+      - id: better_option
+        label: Yes. For many of these women, it's a better option than the alternatives.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: It makes me more cautious about paid surrogacy than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The surrogacy bill
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would allow surrogacy with the surrogate's costs covered plus a modest fixed
+      payment, after counseling and medical screening. She would make all medical decisions during
+      the pregnancy.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+      - id: no_too_much
+        label: No, it allows too much.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 0.5 }
+      - id: no_too_little
+        label: No, it restricts too much.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

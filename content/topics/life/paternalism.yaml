@@ -1,0 +1,279 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Laws that protect adults from risks only to themselves. Risks to other people belong to other
+# topics (vaccines, drunk driving); challenges here separate the two.
+id: paternalism
+domain: life
+title: Protecting people from themselves
+summary: Should the law stop adults from taking risks with their own health and safety?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Laws that protect adults from risks only to themselves, like helmet laws or taxes on sugary drinks, are…
+    poles: [Never justified, Often justified]
+    labels:
+      - Never justified. Adults should be free to take their own risks
+      - Justified only to inform people, like warning labels
+      - Justified only for a few big, everyday risks, like seatbelts
+      - Torn / it depends
+      - Justified when the risk is serious and the cost to freedom is small
+      - Often justified, including taxes and bans on harmful products
+      - Justified whenever they'd make people healthier or safer
+    axes: { civil: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: seatbelts
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For adults in cars, wearing a seatbelt should be…
+    poles: [Their own choice, Required by law]
+    labels: [Their own choice, Probably their choice, Torn, Probably required, Required by law]
+
+  - id: helmets
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For adult motorcyclists, wearing a helmet should be…
+    poles: [Their own choice, Required by law]
+    labels: [Their own choice, Probably their choice, Torn, Probably required, Required by law]
+
+  - id: sugar_tax
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A tax on sugary drinks, to reduce obesity and diabetes, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: smoking
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Banning cigarette sales to anyone born after a certain year, so the next generation can never legally buy them, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: gambling
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A legal limit on how much a person can lose gambling online each month is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to risks to their own health, like smoking or riding without a helmet, an adult's right to decide what happens to their own body should come first.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: risks to one's own health, against: protecting people from harms they tend to underestimate }
+
+  # --- Challenges: against these laws -----------------------------------------------------------
+  - id: ch_seatbelt
+    type: challenge
+    name: Seatbelts
+    targets: stance
+    when: stance < -0.5
+    source: Seatbelt effectiveness figure from the US National Highway Traffic Safety Administration
+    scenario: >-
+      Wearing a seatbelt cuts the risk of death in a crash by about 45% for people in the front
+      seat. When seatbelt laws were introduced, many people objected that buckling up was their own
+      business. Today most people buckle up without thinking about it.
+    text: Should wearing a seatbelt be required by law?
+    options:
+      - id: own_risk
+        label: No. It's still my own risk to take.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: others
+        label: Yes, but only because unbelted people can injure others and cost the public money.
+        reaction: distinguish
+        principles: { harm_principle: 1 }
+      - id: rethink
+        label: Yes, and it makes me more open to laws that protect people from themselves.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: -0.5, relief_of_suffering: 0.5 }
+
+  - id: ch_cost
+    type: challenge
+    name: Who pays?
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A motorcyclist riding without a helmet suffers a serious head injury. His years of hospital
+      care and rehabilitation are paid for by public health funds or by other people's insurance
+      premiums.
+    text: If others pay for the consequences of your risks, do they get a say in them?
+    options:
+      - id: pay_own_way
+        label: No. If cost is the problem, make risk-takers pay their own way rather than banning the risk.
+        reaction: distinguish
+        principles: { personal_responsibility: 1 }
+      - id: price_of_liberty
+        label: No. A free society accepts some costs as the price of liberty.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: Yes. That's a fair reason for some of these laws.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  - id: ch_bridge
+    type: challenge
+    name: The unsafe bridge
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: John Stuart Mill, On Liberty (1859), chapter 5
+    scenario: >-
+      Even John Stuart Mill, the great defender of personal liberty, wrote that if someone is about
+      to cross a bridge known to be unsafe and there's no time to warn him, an official may seize
+      him and turn him back: he doesn't want to fall into the river. Many people misjudge everyday
+      risks in a similar way, without knowing it.
+    text: If people misjudge a risk, is it right to stop them, or only to warn them?
+    options:
+      - id: warn
+        label: Only warn them. As Mill said, once someone understands the danger, the choice is theirs.
+        reaction: distinguish
+        principles: { bodily_autonomy: 1 }
+      - id: neither
+        label: Neither. Adults can find out about the risks for themselves.
+        reaction: hold
+        principles: { personal_responsibility: 1 }
+      - id: rethink
+        label: Sometimes stop them. When people predictably misjudge serious risks, the law can step in.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: -0.5, relief_of_suffering: 0.5 }
+
+  # --- Challenges: for these laws ---------------------------------------------------------------
+  - id: ch_free_solo
+    type: challenge
+    name: Free solo
+    targets: stance
+    when: stance > 0
+    source: Alex Honnold's rope-free climb of Freerider on El Capitan, June 3, 2017, shown in the film Free Solo (2018)
+    scenario: >-
+      In 2017 Alex Honnold climbed El Capitan, a 900-meter granite wall in Yosemite, without a rope
+      or any protection. A single slip would have killed him. Climbing without ropes is extremely
+      dangerous, and some of its best-known climbers have died doing it. It endangers no one else,
+      and for those who do it, it can be among the most meaningful things in their lives.
+    text: If the law can protect people from serious risks to themselves, should free solo climbing be banned?
+    options:
+      - id: ban_it
+        label: Yes. If the risk is that high, the law should step in.
+        reaction: hold
+        principles: { bodily_autonomy: -0.5 }
+      - id: meaning
+        label: No. Banning it would take something central from people's lives; a seatbelt or a soda tax costs almost nothing.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5 }
+      - id: rethink
+        label: No, and it makes me think adults should be freer to take their own risks than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_mill
+    type: challenge
+    name: Sovereign over yourself
+    targets: stance
+    when: stance > 0
+    source: John Stuart Mill, On Liberty (1859), chapter 1
+    scenario: >-
+      John Stuart Mill argued that the only legitimate reason to use the law against someone is to
+      prevent harm to others: "Over himself, over his own body and mind, the individual is
+      sovereign." People may be advised, persuaded or warned for their own good, he said, but not
+      forced.
+    text: Is someone's own good ever enough reason to force them?
+    options:
+      - id: neglect
+        label: Yes. Letting people seriously harm themselves when we could prevent it isn't respect; it's neglect.
+        reaction: hold
+        principles: { bodily_autonomy: -0.5, relief_of_suffering: 0.5 }
+      - id: nudges
+        label: Rarely, but taxes and default settings aren't force; people can still choose.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5 }
+      - id: rethink
+        label: Mill has a point. The law should leave adults' own risks to them more than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_regressive
+    type: challenge
+    name: Who pays the tax?
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Hunt Allcott, Benjamin Lockwood and Dmitry Taubinsky, "Should We Tax Sugar-Sweetened
+      Beverages? An Overview of Theory and Evidence," Journal of Economic Perspectives (2019)
+    scenario: >-
+      Taxes on sugary drinks and cigarettes take a bigger share of income from poorer households,
+      who tend to buy more of these products. Supporters reply that poorer households also gain
+      most of the health benefits.
+    text: Is it fair to make poorer people pay more for choices experts consider unhealthy?
+    options:
+      - id: worth_it
+        label: Yes. The health gains for poorer households are worth it.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5, protect_vulnerable: 0.5 }
+      - id: give_back
+        label: Only if the money goes back to those communities, like funding healthy food or sports.
+        reaction: distinguish
+        principles: { equality: 1 }
+      - id: rethink
+        label: No. It makes me more skeptical of these taxes.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5, bodily_autonomy: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The soda tax vote
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would add a tax to sugary drinks and spend the money on sports and healthy
+      meals in schools.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

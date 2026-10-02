@@ -37,7 +37,6 @@ items:
     text: For hospital staff who care for very sick or frail patients, vaccination against flu and similar diseases should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: school
     type: slider
@@ -46,7 +45,6 @@ items:
     text: For children attending public school, long-established vaccines such as measles should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: pandemic
     type: slider
@@ -55,7 +53,6 @@ items:
     text: During a deadly pandemic, a new vaccine for workers at large employers should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: military
     type: slider
@@ -65,7 +62,6 @@ items:
     text: For members of the military, vaccination should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: religious
     type: slider
@@ -75,14 +71,12 @@ items:
     text: People with sincere religious objections to a required vaccine should…
     poles: [Be exempt, Still have to comply]
     labels: [Be exempt, Probably be exempt, Torn, Probably have to comply, Still have to comply]
-    axes: { civil: 0.5 }
 
   - id: penalty
     type: choice
     deep: true
     when: stance > 0
     text: If a vaccine is required, what should happen to people who refuse?
-    axes: { civil: 0.5 }
     options:
       - { id: none, label: Nothing beyond encouragement, value: -1 }
       - { id: testing, label: Regular testing instead, value: -0.5 }
@@ -108,6 +102,7 @@ items:
   # --- Challenges: against requirements ----------------------------------------------------------
   - id: ch_drunk_driving
     type: challenge
+    name: Drunk driving
     targets: stance
     when: stance < 0
     source: >-
@@ -136,6 +131,7 @@ items:
 
   - id: ch_quarantine
     type: challenge
+    name: Forced isolation
     targets: stance
     when: stance < 0
     source: Original scenario; public health laws in many countries allow compulsory isolation of infectious people
@@ -160,6 +156,7 @@ items:
 
   - id: ch_measles
     type: challenge
+    name: The measles classroom
     targets: school
     when: school < 0
     source: Original scenario; the first measles vaccine dose is usually given at 12–15 months (CDC schedule)
@@ -186,6 +183,7 @@ items:
   # --- Challenges: for requirements --------------------------------------------------------------
   - id: ch_blood
     type: challenge
+    name: Required blood donation
     targets: stance
     when: stance > 0
     source: Original scenario
@@ -210,6 +208,7 @@ items:
 
   - id: ch_low_risk
     type: challenge
+    name: Low risk, small benefit
     targets: stance
     when: stance > 0
     source: Original scenario
@@ -236,6 +235,7 @@ items:
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_vote
     type: challenge
+    name: Hospital staff
     targets: stance
     when: stance == 0
     source: Original scenario

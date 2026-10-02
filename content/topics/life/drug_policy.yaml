@@ -1,0 +1,286 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance is about hard drugs; cannabis is a circumstance. Wording: "people who use drugs",
+# "addiction"; avoid "addict", "junkie" and "war on drugs" framing.
+id: drug_policy
+domain: life
+title: Drug policy
+summary: Should using or selling drugs like heroin and cocaine be a crime?
+tier: core
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: For drugs like heroin, cocaine and methamphetamine, the law should…
+    poles: [Punish users and sellers, Allow legal sales to adults]
+    labels:
+      - Punish both users and sellers with prison
+      - Punish sellers with prison, and users with fines or required treatment
+      - Keep selling a crime, but stop punishing users
+      - Torn / it depends
+      - Stop punishing users, and let doctors supply people who are addicted
+      - Allow sales to adults through licensed, tightly regulated outlets
+      - Allow sales to adults, much like alcohol
+    axes: { civil: -1, cultural: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: cannabis
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Selling cannabis to adults for recreational use should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+
+  - id: supervised
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Supervised sites where people can use drugs they bring, with staff on hand to reverse overdoses, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+    principles: { relief_of_suffering: 0.5 }
+
+  - id: psychedelics
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Psychedelics like psilocybin, given under medical supervision to treat depression or PTSD, should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    principles: { relief_of_suffering: 0.5 }
+
+  - id: public_use
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Using drugs openly on the street or in parks should be…
+    poles: [Banned and enforced, Tolerated]
+    labels: [Banned and enforced, Probably banned, Torn, Probably tolerated, Tolerated]
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to taking drugs, an adult's right to decide what happens to their own body should come first, even when the drug is dangerous.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: drug use, against: the harm addiction does to users and their families }
+
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Hard drugs should stay illegal to protect vulnerable people from addiction, even if that means adults who would use them responsibly can't.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: drug use, against: the freedom of adults who would use drugs responsibly }
+
+  # --- Challenges: for prohibition ---------------------------------------------------------------
+  - id: ch_alcohol
+    type: challenge
+    name: Alcohol
+    targets: stance
+    when: stance < 0
+    source: >-
+      David Nutt, Leslie King and Lawrence Phillips, "Drug harms in the UK: a multicriteria
+      decision analysis," The Lancet (2010)
+    scenario: >-
+      In a 2010 study, drug experts scored 20 drugs on the harm they do to users and to other
+      people. Alcohol came out as the most harmful overall, ahead of heroin and crack cocaine,
+      mainly because of the harm drinkers do to others: violence, crashes and broken families. Yet
+      alcohol is legal almost everywhere.
+    text: If alcohol is legal, why should these drugs be crimes?
+    options:
+      - id: per_person
+        label: Heroin and crack do more harm to each person who uses them; alcohol ranks high because so many people drink.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: alcohol_too
+        label: Alcohol should be more restricted too.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5, collective_welfare: 0.5 }
+      - id: rethink
+        label: Fair point. The law on these drugs should be less strict than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_portugal
+    type: challenge
+    name: Portugal's experiment
+    targets: stance
+    when: stance < -0.5
+    source: >-
+      Caitlin Hughes and Alex Stevens, "What Can We Learn from the Portuguese Decriminalization of
+      Illicit Drugs?," British Journal of Criminology (2010)
+    scenario: >-
+      In 2001 Portugal stopped treating possession of small amounts of any drug as a crime. People
+      caught with drugs go before a local panel that can refer them to treatment or impose a fine;
+      selling is still a crime. Over the following years, HIV infections and deaths linked to drug
+      use fell, and drug use didn't rise much.
+    text: Should people who use drugs be treated as patients rather than criminals?
+    options:
+      - id: investment
+        label: Portugal also greatly expanded treatment. Without that, dropping penalties can backfire.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5, collective_welfare: 0.5 }
+      - id: wrong
+        label: No. The law should make clear that using hard drugs is wrong.
+        reaction: hold
+        principles: { personal_responsibility: 1 }
+      - id: rethink
+        label: Yes. Using drugs shouldn't be a crime.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_prohibition
+    type: challenge
+    name: Prohibition
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario, based on US alcohol Prohibition (1920–1933) and fentanyl in the illegal drug supply
+    scenario: >-
+      From 1920 to 1933 the United States banned alcohol. Drinking fell, but gangsters took over
+      the trade, violence rose and people were poisoned by bootleg liquor. Today criminal groups
+      control the illegal drug trade, and in North America street drugs are often laced with
+      fentanyl, which buyers can't detect and which kills tens of thousands of people a year.
+    text: Does banning a drug make people safer, or hand the trade to criminals?
+    options:
+      - id: fewer_users
+        label: A ban still means fewer people use, and that matters most.
+        reaction: hold
+        principles: { protect_vulnerable: 1 }
+      - id: different
+        label: Alcohol was already part of everyday life when it was banned; hard drugs aren't, so a ban works differently.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: It makes me think a regulated supply could be safer than a ban.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5, bodily_autonomy: 0.5 }
+
+  # --- Challenges: for legalization --------------------------------------------------------------
+  - id: ch_oxycontin
+    type: challenge
+    name: The OxyContin lesson
+    targets: stance
+    when: stance > 0
+    source: Purdue Pharma's guilty pleas to federal charges over its marketing of OxyContin (2007 and 2020)
+    scenario: >-
+      Companies that sell drugs legally profit from selling more. In the late 1990s OxyContin, a
+      legal prescription opioid, was promoted to doctors as carrying a low risk of addiction.
+      Prescriptions soared, and the US opioid crisis followed. Its maker, Purdue Pharma, later
+      pleaded guilty to federal crimes over how it marketed the drug.
+    text: If drugs like heroin were sold legally, wouldn't companies do the same?
+    options:
+      - id: strict_rules
+        label: Not with strict rules, like no advertising, plain packaging or state-run shops.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5, collective_welfare: 0.5 }
+      - id: still_free
+        label: Even so, adults should be free to choose, and some will choose badly.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: It makes me more wary of legal sales than I was.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_addiction
+    type: challenge
+    name: Free to stop?
+    targets: stance
+    when: stance > 0
+    source: >-
+      Nora Volkow, George Koob and A. Thomas McLellan, "Neurobiologic Advances from the Brain
+      Disease Model of Addiction," New England Journal of Medicine (2016)
+    scenario: >-
+      Addiction researchers describe how repeated drug use changes the brain's systems for reward
+      and self-control, so that someone who freely chose to try a drug may later find it extremely
+      hard to stop, even when they badly want to.
+    text: If addiction erodes free choice, does the case for letting adults choose still hold?
+    options:
+      - id: responsible
+        label: Yes. Adults are responsible for the choice to start.
+        reaction: hold
+        principles: { personal_responsibility: 1 }
+      - id: help
+        label: Yes. Prison doesn't help people who can't stop; treatment and a safer supply do.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: It gives me pause. The law should be stricter than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_oregon
+    type: challenge
+    name: Oregon's reversal
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Oregon Ballot Measure 110 (2020) and Oregon House Bill 4002 (2024)
+    scenario: >-
+      In 2020 Oregon voters removed criminal penalties for possessing small amounts of any drug and
+      promised more treatment. Treatment was slow to expand, drug use in public became more
+      visible, and overdose deaths rose, though they rose in other states too as fentanyl spread.
+      In 2024 the state made possession a crime again.
+    text: Does Oregon's experience change your view?
+    options:
+      - id: done_badly
+        label: Oregon dropped penalties before treatment was ready. Done properly, it can work.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: fentanyl
+        label: No. Overdoses rose because of fentanyl, not because of the law.
+        reaction: hold
+        principles: { bodily_autonomy: 0.5 }
+      - id: rethink
+        label: Yes. It makes me more cautious about relaxing drug laws.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The possession ballot
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would make possessing small amounts of any drug a minor offense, like a
+      parking ticket, and fund more treatment. Selling would remain a serious crime.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

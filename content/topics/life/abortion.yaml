@@ -38,7 +38,6 @@ items:
     text: If continuing the pregnancy would likely kill the woman, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: rape
     type: slider
@@ -47,7 +46,6 @@ items:
     text: If the pregnancy resulted from rape or incest, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: lethal_anomaly
     type: slider
@@ -56,7 +54,6 @@ items:
     text: If the fetus has a condition that means it will die before or shortly after birth, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: nonlethal_anomaly
     type: slider
@@ -65,7 +62,6 @@ items:
     text: If the fetus has a serious condition that isn't fatal, such as Down syndrome, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: health_risk
     type: slider
@@ -75,7 +71,6 @@ items:
     text: If the pregnancy seriously threatens the woman's health, but not her life, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: finances
     type: slider
@@ -85,7 +80,6 @@ items:
     text: If the woman can't afford to raise a child, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: minors
     type: slider
@@ -95,14 +89,12 @@ items:
     text: A 15-year-old wants an abortion. Should her parents have to agree?
     poles: [Parents must agree, Her decision alone]
     labels: [Parents must agree, Parents should be told, Torn, Her decision with support, Her decision alone]
-    axes: { cultural: 0.25 }
     principles: { bodily_autonomy: 0.5 }
 
   - id: gest
     type: choice
     when: stance >= 0
     text: Up to what point in pregnancy should abortion for any reason be legal?
-    axes: { cultural: 0.5 }
     options:
       - { id: none, label: At no point, value: -1 }
       - { id: six_weeks, label: Up to about 6 weeks (around when cardiac activity can be detected), value: -0.6 }
@@ -128,6 +120,7 @@ items:
   # --- Challenges: restrictive side -------------------------------------------------------------
   - id: ch_ectopic
     type: challenge
+    name: Ectopic pregnancy
     targets: life_risk
     when: life_risk < 0
     source: "Medical background: ACOG Practice Bulletin No. 193, Tubal Ectopic Pregnancy (2018)"
@@ -153,6 +146,7 @@ items:
 
   - id: ch_violinist
     type: challenge
+    name: The violinist
     targets: stance
     when: stance < 0
     source: Judith Jarvis Thomson, "A Defense of Abortion," Philosophy & Public Affairs (1971)
@@ -183,6 +177,7 @@ items:
 
   - id: ch_rape
     type: challenge
+    name: The rape exception
     targets: rape
     when: stance < 0 and rape > 0
     source: Original scenario, based on a common objection to rape exceptions
@@ -213,6 +208,7 @@ items:
 
   - id: ch_ivf
     type: challenge
+    name: The burning IVF clinic
     targets: stance
     deep: true
     when: stance < 0
@@ -239,6 +235,7 @@ items:
   # --- Challenges: permissive side --------------------------------------------------------------
   - id: ch_future
     type: challenge
+    name: A future like ours
     targets: stance
     when: stance > 0
     source: Don Marquis, "Why Abortion Is Immoral," Journal of Philosophy (1989)
@@ -265,6 +262,7 @@ items:
 
   - id: ch_late_term
     type: challenge
+    name: At 34 weeks
     targets: gest
     when: stance > 0 and gest is any
     source: Original scenario
@@ -290,6 +288,7 @@ items:
 
   - id: ch_sex_selection
     type: challenge
+    name: Choosing by sex
     targets: stance
     deep: true
     when: stance > 0
@@ -316,6 +315,7 @@ items:
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_ballot
     type: challenge
+    name: The 15-week ballot
     targets: stance
     when: stance == 0
     source: Original scenario

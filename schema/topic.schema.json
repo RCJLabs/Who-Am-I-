@@ -971,6 +971,11 @@
                 "type": "string",
                 "const": "challenge"
               },
+              "name": {
+                "description": "Short name used in results, e.g. \"The violinist\"",
+                "type": "string",
+                "minLength": 1
+              },
               "targets": {
                 "type": "string",
                 "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)?$",

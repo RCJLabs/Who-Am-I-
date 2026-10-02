@@ -1,5 +1,5 @@
 name: Communitarian
-topics: [abortion, assisted_dying, vaccine_mandates]
+topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -40,8 +40,68 @@ answers:
   vaccine_mandates.anchor_pv: 6
   vaccine_mandates.ch_blood: harm_vs_help
   vaccine_mandates.ch_low_risk: still_yes
+  death_penalty.stance: 3
+  death_penalty.importance: 3
+  death_penalty.certain_guilt: 4
+  death_penalty.terrorism: 4
+  death_penalty.purpose: protect
+  death_penalty.minors: 1
+  death_penalty.drug_trade: 1
+  death_penalty.anchor_sol: 5
+  death_penalty.anchor_prec: 5
+  death_penalty.ch_deterrence: means
+  death_penalty.ch_kant: proportionate
+  drug_policy.stance: 3
+  drug_policy.importance: 3
+  drug_policy.cannabis: 2
+  drug_policy.supervised: 4
+  drug_policy.psychedelics: 4
+  drug_policy.public_use: 1
+  drug_policy.anchor_ba: 3
+  drug_policy.anchor_pv: 6
+  drug_policy.ch_alcohol: per_person
+  drug_policy.ch_prohibition: different
+  paternalism.stance: 5
+  paternalism.importance: 3
+  paternalism.seatbelts: 5
+  paternalism.helmets: 5
+  paternalism.sugar_tax: 4
+  paternalism.smoking: 4
+  paternalism.gambling: 5
+  paternalism.anchor_ba: 3
+  paternalism.ch_free_solo: meaning
+  paternalism.ch_mill: nudges
+  paternalism.ch_regressive: give_back
+  organ_donation.stance: 2
+  organ_donation.importance: 3
+  organ_donation.opt_out: 5
+  organ_donation.family_veto: 4
+  organ_donation.priority: 4
+  organ_donation.lifestyle: 3
+  organ_donation.anchor_ml: 6
+  organ_donation.ch_waiting: poor_sellers
+  organ_donation.ch_risky_work: body_part
+  organ_donation.ch_everyone_paid: gift
+  sex_work.stance: 2
+  sex_work.importance: 2 # low: deep items are skipped
+  sex_work.together: 3
+  sex_work.buyer_ban: 5
+  sex_work.anchor_ba: 3
+  sex_work.anchor_ml: 6
+  sex_work.ch_new_zealand: punish_buyers
+  sex_work.ch_her_choice: rare
 expect:
   axes: { civil: "> 0.3", cultural: "< 0" }
-  principles: { protect_vulnerable: "> 0.5" }
-  # Consistent: moderate on bodily autonomy everywhere, protective everywhere.
+  topicAxes:
+    abortion: { cultural: "< 0" }
+    assisted_dying: { cultural: "< 0", civil: "> 0" }
+    vaccine_mandates: { civil: "> 0" }
+    death_penalty: { civil: "< 0" }
+    drug_policy: { civil: "> 0", cultural: "< 0" }
+    paternalism: { civil: "> 0" }
+    organ_donation: { civil: "> 0" }
+    sex_work: { civil: "> 0" }
+  principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
+  # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
+  # in bodies everywhere.
   tensions: []

@@ -1,5 +1,5 @@
 name: Secular progressive
-topics: [abortion, assisted_dying, vaccine_mandates]
+topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -42,11 +42,64 @@ answers:
   vaccine_mandates.anchor_pv: 7
   vaccine_mandates.ch_blood: harm_vs_help
   vaccine_mandates.ch_low_risk: transmission
+  death_penalty.stance: 1
+  death_penalty.importance: 3
+  death_penalty.certain_guilt: 1
+  death_penalty.terrorism: 2
+  death_penalty.purpose: reform
+  death_penalty.minors: 1
+  death_penalty.drug_trade: 1
+  death_penalty.anchor_sol: 6
+  death_penalty.anchor_prec: 7
+  death_penalty.ch_worst: never
+  death_penalty.ch_deterrence: act_omission
+  death_penalty.ch_kant: no_mirror
+  drug_policy.stance: 5
+  drug_policy.importance: 3
+  drug_policy.cannabis: 5
+  drug_policy.supervised: 5
+  drug_policy.psychedelics: 5
+  drug_policy.public_use: 3
+  drug_policy.anchor_ba: 6
+  drug_policy.anchor_pv: 3
+  drug_policy.ch_oxycontin: strict_rules
+  drug_policy.ch_addiction: help
+  drug_policy.ch_oregon: done_badly
+  surrogacy.stance: 5
+  surrogacy.importance: 2 # low: deep items are skipped
+  surrogacy.keep_child: 3
+  surrogacy.anchor_ml: 3
+  surrogacy.ch_baby_m: genetic
+  surrogacy.ch_anderson: time_risk
+  gene_editing.stance: 5
+  gene_editing.importance: 3
+  gene_editing.somatic: 5
+  gene_editing.screening: 5
+  gene_editing.sex_choice: 2
+  gene_editing.intelligence: 2
+  gene_editing.anchor_prec: 3
+  gene_editing.ch_twins: oversight
+  gene_editing.ch_asch: treating
 expect:
   axes: { cultural: "> 0.6" }
-  principles: { bodily_autonomy: "> 0.3" }
-  # The mirror image of the religious conservative.
+  topicAxes:
+    abortion: { cultural: "> 0" }
+    assisted_dying: { cultural: "> 0", civil: "< 0" }
+    vaccine_mandates: { civil: "> 0" }
+    death_penalty: { civil: "< 0" }
+    drug_policy: { civil: "< 0", cultural: "> 0" }
+    surrogacy: { civil: "< 0" }
+    gene_editing: { cultural: "> 0" }
+  principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
+  # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
+  # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
+  # penalty but low on abortion, assisted dying and gene editing.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
+    - bodily_autonomy|drug_policy|vaccine_mandates
     - protect_vulnerable|assisted_dying|vaccine_mandates
+    - protect_vulnerable|drug_policy|vaccine_mandates
+    - sanctity_of_life|abortion|death_penalty
+    - sanctity_of_life|assisted_dying|death_penalty
+    - precaution|death_penalty|gene_editing
