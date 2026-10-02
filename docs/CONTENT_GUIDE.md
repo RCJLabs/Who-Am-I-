@@ -78,7 +78,12 @@ principles: { bodily_autonomy: 1 }
   needs a `value`).
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
-- Keep stances at weight 1 and circumstances around 0.5: the overall view should dominate the axis.
+- **In issue topics, only the stance feeds political axes**: weight 1 in core topics, 0.5 in
+  extended ones, so a deep dive never outweighs a core issue. Circumstances and challenges are
+  chosen to probe one side's hard cases (rape, a threat to life, a mass murderer), so answers to
+  them lean one way by design. Scored on a spectrum, they'd pull moderates toward one pole: someone
+  whose view is "legal only in rare cases, like rape" would land on the permissive side just by
+  answering consistently. They can still carry principle effects. A content test enforces this.
 - **Balanced option sets.** Choice options should be spread symmetrically around 0 on each axis
   they feed (e.g. −1, −0.6, 0, 0.6, 1), so someone picking at random lands in the middle (W110).
 

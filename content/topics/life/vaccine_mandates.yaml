@@ -37,7 +37,6 @@ items:
     text: For hospital staff who care for very sick or frail patients, vaccination against flu and similar diseases should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: school
     type: slider
@@ -46,7 +45,6 @@ items:
     text: For children attending public school, long-established vaccines such as measles should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: pandemic
     type: slider
@@ -55,7 +53,6 @@ items:
     text: During a deadly pandemic, a new vaccine for workers at large employers should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: military
     type: slider
@@ -65,7 +62,6 @@ items:
     text: For members of the military, vaccination should be…
     poles: [Not required, Required]
     labels: [Not required, Probably not, Torn, Probably required, Required]
-    axes: { civil: 0.5 }
 
   - id: religious
     type: slider
@@ -75,14 +71,12 @@ items:
     text: People with sincere religious objections to a required vaccine should…
     poles: [Be exempt, Still have to comply]
     labels: [Be exempt, Probably be exempt, Torn, Probably have to comply, Still have to comply]
-    axes: { civil: 0.5 }
 
   - id: penalty
     type: choice
     deep: true
     when: stance > 0
     text: If a vaccine is required, what should happen to people who refuse?
-    axes: { civil: 0.5 }
     options:
       - { id: none, label: Nothing beyond encouragement, value: -1 }
       - { id: testing, label: Regular testing instead, value: -0.5 }

@@ -38,7 +38,6 @@ items:
     text: If continuing the pregnancy would likely kill the woman, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: rape
     type: slider
@@ -47,7 +46,6 @@ items:
     text: If the pregnancy resulted from rape or incest, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: lethal_anomaly
     type: slider
@@ -56,7 +54,6 @@ items:
     text: If the fetus has a condition that means it will die before or shortly after birth, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: nonlethal_anomaly
     type: slider
@@ -65,7 +62,6 @@ items:
     text: If the fetus has a serious condition that isn't fatal, such as Down syndrome, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: health_risk
     type: slider
@@ -75,7 +71,6 @@ items:
     text: If the pregnancy seriously threatens the woman's health, but not her life, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: finances
     type: slider
@@ -85,7 +80,6 @@ items:
     text: If the woman can't afford to raise a child, abortion should be…
     poles: [Illegal, Legal]
     labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
-    axes: { cultural: 0.5 }
 
   - id: minors
     type: slider
@@ -95,14 +89,12 @@ items:
     text: A 15-year-old wants an abortion. Should her parents have to agree?
     poles: [Parents must agree, Her decision alone]
     labels: [Parents must agree, Parents should be told, Torn, Her decision with support, Her decision alone]
-    axes: { cultural: 0.25 }
     principles: { bodily_autonomy: 0.5 }
 
   - id: gest
     type: choice
     when: stance >= 0
     text: Up to what point in pregnancy should abortion for any reason be legal?
-    axes: { cultural: 0.5 }
     options:
       - { id: none, label: At no point, value: -1 }
       - { id: six_weeks, label: Up to about 6 weeks (around when cardiac activity can be detected), value: -0.6 }

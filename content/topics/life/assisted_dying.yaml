@@ -47,7 +47,6 @@ items:
     text: A mentally competent adult with six months or less to live asks for medication to end their life. Providing it should be…
     poles: [Not allowed, Allowed]
     labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
-    axes: { cultural: 0.5, civil: -0.25 }
 
   - id: chronic
     type: slider
@@ -56,7 +55,6 @@ items:
     text: A competent adult with severe, incurable suffering that isn't terminal, such as a progressive neurological disease, asks for help to die. This should be…
     poles: [Not allowed, Allowed]
     labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
-    axes: { cultural: 0.5, civil: -0.25 }
 
   - id: psychiatric
     type: slider
@@ -66,7 +64,6 @@ items:
     text: A competent adult whose only condition is depression that hasn't responded to years of treatment asks for help to die. This should be…
     poles: [Not allowed, Allowed]
     labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
-    axes: { cultural: 0.5, civil: -0.25 }
 
   - id: dementia
     type: slider
@@ -76,7 +73,6 @@ items:
     text: A person with early dementia writes that if they stop recognizing their family, they want a doctor to end their life. Honoring that request later should be…
     poles: [Not allowed, Allowed]
     labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
-    axes: { cultural: 0.5 }
 
   - id: minors
     type: slider
@@ -86,7 +82,6 @@ items:
     text: A 16-year-old with a terminal illness asks for assisted dying, and their parents agree. This should be…
     poles: [Not allowed, Allowed]
     labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
-    axes: { cultural: 0.5 }
 
   # --- Anchors -----------------------------------------------------------------------------------
   - id: anchor_ba
