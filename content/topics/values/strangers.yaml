@@ -132,7 +132,7 @@ items:
         reaction: distinguish
         principles: { personal_responsibility: 0.5 }
       - id: first
-        label: The first. Refusing him is unkind, but no more a strict duty than giving is.
+        label: The first. Refusing him is unkind, but helping him is no more a strict duty than giving is.
         reaction: hold
         principles: { liberty: 0.5 }
       - id: rethink

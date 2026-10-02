@@ -85,7 +85,7 @@ items:
         reaction: hold
         principles: { truth: 1 }
       - id: mislead
-        label: I'd mislead him without lying, like saying I saw my friend at the station this morning.
+        label: I'd mislead him without lying, like truthfully saying I saw my friend at the station this morning.
         reaction: distinguish
         principles: { truth: 0.5 }
       - id: rethink
@@ -181,9 +181,9 @@ items:
     when: stance > 0
     source: Original scenario
     scenario: >-
-      A doctor decides not to tell a patient her illness is terminal, believing the truth would only
-      make her last months miserable. Later she finds out, and is angry: she had wanted to put her
-      affairs in order and say her goodbyes.
+      A patient's illness is terminal, but her doctor tells her she will probably recover, believing
+      the truth would only make her last months miserable. Later she finds out, and is angry: she had
+      wanted to put her affairs in order and say her goodbyes.
     text: Was the doctor's lie justified?
     options:
       - id: would_want
