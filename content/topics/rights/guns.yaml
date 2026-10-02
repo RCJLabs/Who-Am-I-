@@ -1,0 +1,299 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# International framing: most countries license guns tightly, so the scale runs from a ban to a
+# right. US figures appear where the research is American and are labeled as such. Wording: "gun
+# owners" and "restrictions on guns"; name the feature (semi-automatic), not "assault weapons".
+id: guns
+domain: rights
+title: Guns
+summary: Should ordinary people be able to own guns, and with what limits?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: For ordinary adults, owning a gun should be…
+    poles: ["Banned, with rare exceptions", "A right, with few limits"]
+    labels:
+      - Banned, except for police, the military and a few jobs that need one
+      - Allowed only for hunting or sport, with a strict license
+      - Allowed for hunting, sport or self-defense, with a strict license and training
+      - Torn / it depends
+      - A right, with a license and background checks
+      - A right, with background checks only
+      - A right, with no license or registration needed
+    axes: { civil: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: handgun_home
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Keeping a handgun at home for self-defense should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+    principles: { liberty: 0.5 }
+
+  - id: semi_auto
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Semi-automatic rifles, which fire once with each pull of the trigger and can hold many rounds, should be…
+    poles: [Banned, Allowed with a license]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed with a license]
+
+  - id: checks
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A background check for every gun sale, including private sales between individuals, should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not required, Torn, Probably required, Required]
+
+  - id: carry
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Carrying a concealed handgun in public, with a permit, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  - id: storage
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring gun owners to keep their guns locked and unloaded at home should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not required, Torn, Probably required, Required]
+    principles: { protect_vulnerable: 0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Guns should be tightly restricted to protect vulnerable people, such as children and people at risk of suicide, even if that means responsible adults can't own them.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: gun ownership, against: the freedom of responsible gun owners }
+
+  - id: anchor_dp
+    type: likert
+    points: 7
+    text: No one should lose their guns because a court fears what they might do, rather than for something they've been proven to have done, even if that means some dangerous people keep their guns for a while.
+    help: Some places let a judge order someone's guns removed for a few weeks, before a full hearing, when family or police say the person is a danger to themselves or others.
+    principles: { due_process: 1 }
+    anchor: { principle: due_process, context: removing someone's guns, against: preventing shootings and suicides }
+
+  # --- Challenges: against gun rights --------------------------------------------------------------
+  - id: ch_australia
+    type: challenge
+    name: Australia's buyback
+    targets: stance
+    when: stance > 0
+    source: >-
+      Simon Chapman, Philip Alpers and Michael Jones, "Association Between Gun Law Reforms and
+      Intentional Firearm Deaths in Australia, 1979-2013," JAMA (2016)
+    scenario: >-
+      After a gunman killed 35 people at Port Arthur in 1996, Australia banned semi-automatic and
+      pump-action long guns, required gun owners to be licensed and every gun registered, and bought
+      back and destroyed more than 650,000 guns. In the 18 years before, the country had 13 mass
+      shootings that killed five or more people; it had none for more than 20 years after.
+      Researchers still debate how much of the wider fall in gun deaths the law caused.
+    text: Should other countries do what Australia did?
+    options:
+      - id: few
+        label: No. Disarming law-abiding people punishes the many for the crimes of a few.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: context
+        label: What worked in Australia, with fewer guns and no tradition of gun rights, wouldn't work the same way everywhere.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. Fewer mass shootings is worth giving up some guns. I'd accept more limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_suicide
+    type: challenge
+    name: A gun in the house
+    targets: stance
+    when: stance > 0
+    source: >-
+      Andrew Anglemyer, Tara Horvath and George Rutherford, Annals of Internal Medicine (2014); US
+      figures from the CDC for 2023
+    scenario: >-
+      A review of 16 studies found that people with a gun at home are about three times as likely to
+      die by suicide as people without one. Suicide attempts with a gun are far more often fatal
+      than those by other methods, and many suicidal crises are brief. In the United States, more
+      than half of all gun deaths are suicides.
+    text: Does that change how freely guns should be available?
+    options:
+      - id: choice
+        label: No. Adults are responsible for their own lives, and people determined to die find other ways.
+        reaction: hold
+        principles: { liberty: 0.5, personal_responsibility: 0.5 }
+      - id: crisis
+        label: It's a reason for safe storage and for removing guns during a crisis, not for keeping them from everyone.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes. Protecting people in a crisis matters more than I allowed for. I'd accept stricter limits.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_dunblane
+    type: challenge
+    name: Dunblane
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: The Dunblane school shooting (1996) and the UK's Firearms (Amendment) Acts of 1997
+    scenario: >-
+      In 1996 a man with legally owned handguns killed 16 children aged five and six, and their
+      teacher, at a primary school in Dunblane, Scotland. A petition started by local families
+      gathered about 750,000 signatures, and the next year the UK banned almost all private
+      handguns. Britain hasn't had a school shooting like it since.
+    text: Was the ban the right response?
+    options:
+      - id: punished
+        label: No. Thousands of law-abiding sport shooters lost their guns because of one man's crime.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: local
+        label: It may have suited Britain, where few people owned guns. That doesn't make it right everywhere.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. Some freedoms aren't worth that risk. I'd accept stricter limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenges: for gun rights ------------------------------------------------------------------
+  - id: ch_remote
+    type: challenge
+    name: An hour from help
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A woman lives alone on a remote farm, an hour's drive from the nearest police station. Her
+      violent former partner has just been released from prison and has threatened to kill her. The
+      police say they can't protect her around the clock.
+    text: Should she be allowed to keep a gun to defend herself?
+    options:
+      - id: risk
+        label: No. A gun in the home makes it more likely that someone in it dies, including her.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: exception
+        label: In a case like hers, with a license and a proven threat, yes. But that's an exception, not a general right.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think self-defense is a stronger reason to own a gun than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_swiss
+    type: challenge
+    name: The Swiss case
+    targets: stance
+    when: stance < 0
+    source: >-
+      Small Arms Survey, civilian firearms estimates for 2017; Thomas Reisch et al., American Journal
+      of Psychiatry (2013)
+    scenario: >-
+      Switzerland has around 28 civilian guns for every 100 people, partly because men who serve in
+      its citizen army have long kept their service rifles at home. Yet it has one of the lowest
+      gun-homicide rates in the world.
+    text: If guns are so dangerous, why isn't Switzerland?
+    options:
+      - id: rules
+        label: Switzerland requires a permit to buy most guns, and many owners were trained in the army. When an army reform cut the guns kept at home, suicides among young men fell.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: still
+        label: Even there, guns are used in many suicides. Fewer guns would still save lives.
+        reaction: hold
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: It suggests culture and training matter more than the number of guns. I'd allow more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_defensive
+    type: challenge
+    name: Guns used in self-defense
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      US estimates from the National Crime Victimization Survey and from Gary Kleck and Marc Gertz,
+      Journal of Criminal Law and Criminology (1995); see RAND's review of research on defensive gun
+      use
+    scenario: >-
+      Guns are also used to stop crimes. In the United States, estimates of how often people use a
+      gun in self-defense range from tens of thousands to more than 2 million times a year, depending
+      on how the survey asks. Researchers disagree about which figure is closest to the truth.
+    text: If guns sometimes prevent crimes, should that count against restricting them?
+    options:
+      - id: outweigh
+        label: No. The harm guns do still outweighs the crimes they prevent.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: licensed
+        label: Self-defense can be allowed under strict licensing. That doesn't require easy access for everyone.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes. The right to defend yourself deserves more weight than I gave it.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_license
+    type: challenge
+    name: A license for every owner
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would require every gun owner to pass a background check and a safety course
+      to get a license, renewed every five years. People who already own guns would have a year to
+      apply.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

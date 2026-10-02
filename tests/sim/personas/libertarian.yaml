@@ -1,7 +1,8 @@
 name: Libertarian
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
-   surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine]
+   surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine,
+   free_speech, guns, surveillance, protest, torture, public_safety]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -164,6 +165,67 @@ answers:
   experience_machine.anchor_truth: 3
   experience_machine.ch_nozick: same
   experience_machine.ch_loved_ones: together
+  free_speech.stance: 1
+  free_speech.importance: 3
+  free_speech.holocaust_denial: 1
+  free_speech.blasphemy: 1
+  free_speech.flag_burning: 1
+  free_speech.platforms: 3 # the platform's freedom too
+  free_speech.campus: 1
+  free_speech.anchor_liberty: 7
+  free_speech.ch_radio: incitement
+  free_speech.ch_pileon: address
+  free_speech.ch_popper: force
+  guns.stance: 7
+  guns.importance: 3
+  guns.handgun_home: 5
+  guns.semi_auto: 5
+  guns.checks: 2
+  guns.carry: 5
+  guns.storage: 1
+  guns.anchor_pv: 1
+  guns.anchor_dp: 7
+  guns.ch_australia: few
+  guns.ch_suicide: choice
+  guns.ch_dunblane: punished
+  surveillance.stance: 1
+  surveillance.importance: 3
+  surveillance.cameras: 1
+  surveillance.encryption: 1
+  surveillance.scanning: 1
+  surveillance.records: 1
+  surveillance.tracking: 2
+  surveillance.anchor_liberty: 7
+  surveillance.ch_locked_phone: everyone
+  surveillance.ch_hidden_abuse: suspects
+  surveillance.ch_machines: chilling
+  protest.stance: 6
+  protest.importance: 2 # low: deep items are skipped
+  protest.road: 3
+  protest.statue: 2
+  protest.buffer: 1
+  protest.anchor_law: 3
+  protest.ch_clinics: same
+  protest.ch_ambulance: price
+  torture.stance: 1
+  torture.importance: 3
+  torture.harsh: 1
+  torture.evidence: 1
+  torture.rendition: 1
+  torture.anchor_dva: 4 # against torture as a state power, not on doing vs. allowing
+  torture.ch_ticking_bomb: never
+  torture.ch_kidnapped: absolute
+  torture.ch_killing: corrupts
+  public_safety.stance: 1
+  public_safety.importance: 3
+  public_safety.pretrial: 2
+  public_safety.after_sentence: 1
+  public_safety.stop_search: 1
+  public_safety.naming: 1
+  public_safety.anchor_dp: 7
+  public_safety.ch_retrial: final
+  public_safety.ch_bail: evidence
+  public_safety.ch_silence: burden
 expect:
   axes: { civil: "< -0.6", cultural: "> 0.5", change: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
@@ -180,6 +242,12 @@ expect:
     moral_reasoning: { outcomes: "< 0", impartiality: "< 0" }
     fairness: { economic: "> 0" }
     honesty: { outcomes: "< 0" }
+    free_speech: { civil: "< 0" }
+    guns: { civil: "< 0" }
+    surveillance: { civil: "< 0" }
+    protest: { civil: "< 0" }
+    torture: { civil: "< 0" }
+    public_safety: { civil: "< 0" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -188,9 +256,15 @@ expect:
       retribution: "> 0.5"
       authority: "< 0"
       purity: "< -0.3"
+    free_speech: { liberty: "> 0.5" }
+    surveillance: { liberty: "> 0.5" }
+    guns: { due_process: "> 0.5" }
+    public_safety: { due_process: "> 0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
-  # on gene editing, and truth matters more in what we tell others than in one's own life.
+  # on gene editing, and truth matters more in what we tell others than in one's own life. The
+  # rights topics add no tensions: liberty and due process high everywhere, and protecting the
+  # vulnerable low on guns as on drugs and vaccines.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty

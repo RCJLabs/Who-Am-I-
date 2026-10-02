@@ -112,13 +112,15 @@ describe('random respondents', () => {
     for (const r of runs.slice(0, 50)) expect(() => ProfileSchema.parse(profileOf(r))).not.toThrow();
   });
 
+  // Each run rebuilds the answer state at every step, so this test's time grows with the square of
+  // the bank's size. It gets its own budget rather than the global 30 s.
   it('terminate without asking any item twice (500 runs)', () => {
     for (let seed = 1000; seed < 1500; seed++) {
       const { transcript } = runRespondent(b, randomPolicy({ skipRate: 0.2 }), { seed, tensions: engineTensions, tensionPolicy: () => null });
       const asked = transcript.filter((t) => t.kind === 'item').map((t) => t.item);
       expect(new Set(asked).size, `seed ${seed}`).toBe(asked.length);
     }
-  });
+  }, 180_000);
 });
 
 describe('ideology bots (pipeline sanity; they use the content weights)', () => {

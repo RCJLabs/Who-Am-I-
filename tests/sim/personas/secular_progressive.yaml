@@ -1,7 +1,8 @@
 name: Secular progressive
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing,
-   value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, strangers, fairness, omelas]
+   value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, strangers, fairness, omelas,
+   free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -159,6 +160,81 @@ answers:
   omelas.free_child: 5
   omelas.ch_our_world: try
   omelas.ch_walk_away: free
+  free_speech.stance: 5 # a crime when clearly meant to stir up hatred
+  free_speech.importance: 3
+  free_speech.holocaust_denial: 4
+  free_speech.blasphemy: 1
+  free_speech.flag_burning: 1 # denial yes, flag no: the denial-and-flag challenge
+  free_speech.platforms: 4
+  free_speech.campus: 3
+  free_speech.anchor_liberty: 3
+  free_speech.ch_skokie: targeted
+  free_speech.ch_blasphemy: people_not_ideas
+  free_speech.ch_mill: not_views
+  free_speech.ch_denial: lie
+  guns.stance: 2
+  guns.importance: 4
+  guns.handgun_home: 1
+  guns.semi_auto: 1
+  guns.checks: 5
+  guns.carry: 1
+  guns.storage: 5
+  guns.anchor_pv: 7
+  guns.anchor_dp: 2 # remove guns first, hear the case later
+  guns.ch_remote: exception
+  guns.ch_swiss: rules
+  guns.ch_defensive: licensed
+  surveillance.stance: 2
+  surveillance.importance: 3
+  surveillance.cameras: 2
+  surveillance.encryption: 2
+  surveillance.scanning: 3
+  surveillance.records: 1
+  surveillance.tracking: 4
+  surveillance.anchor_liberty: 7
+  surveillance.ch_locked_phone: one_phone
+  surveillance.ch_hidden_abuse: narrow
+  surveillance.ch_machines: chilling
+  religious_liberty.stance: 2
+  religious_liberty.importance: 3
+  religious_liberty.wedding: 1
+  religious_liberty.schools: 2
+  religious_liberty.symbols: 5
+  religious_liberty.doctors: 3
+  religious_liberty.registrar: 1
+  religious_liberty.anchor_law: 6 # objectors must obey anti-discrimination law
+  religious_liberty.ch_cake: message
+  religious_liberty.ch_headscarf: no_harm
+  religious_liberty.ch_objectors: killing
+  protest.stance: 5
+  protest.importance: 3
+  protest.road: 4
+  protest.statue: 3
+  protest.buffer: 5
+  protest.advance_ban: 1
+  protest.anchor_law: 2 # but protesters needn't
+  protest.ch_clinics: patients
+  protest.ch_ambulance: let_through
+  protest.ch_crito: arrest
+  torture.stance: 1
+  torture.importance: 3
+  torture.harsh: 1
+  torture.evidence: 1
+  torture.rendition: 1
+  torture.anchor_dva: 6
+  torture.ch_ticking_bomb: never
+  torture.ch_kidnapped: absolute
+  torture.ch_killing: helpless
+  public_safety.stance: 2
+  public_safety.importance: 3
+  public_safety.pretrial: 3
+  public_safety.after_sentence: 1
+  public_safety.stop_search: 1
+  public_safety.naming: 1
+  public_safety.anchor_dp: 6
+  public_safety.ch_retrial: final
+  public_safety.ch_bail: partner
+  public_safety.ch_silence: burden
 expect:
   axes: { cultural: "> 0.6", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5" }
   topicAxes:
@@ -174,6 +250,13 @@ expect:
     strangers: { impartiality: "> 0" }
     fairness: { economic: "< 0" }
     omelas: { outcomes: "< 0" }
+    free_speech: { civil: "> 0" }
+    guns: { civil: "> 0" }
+    surveillance: { civil: "< 0" }
+    religious_liberty: { cultural: "> 0", civil: "> 0" }
+    protest: { civil: "< 0" }
+    torture: { civil: "< 0" }
+    public_safety: { civil: "< 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -183,17 +266,32 @@ expect:
       loyalty: "< 0"
       authority: "< 0"
       purity: "< -0.3"
+    guns: { protect_vulnerable: "> 0.5", due_process: "< 0" }
+    religious_liberty: { obey_law: "> 0.5" }
+    protest: { obey_law: "< 0" }
+    torture: { doing_vs_allowing: "> 0.5" }
+    public_safety: { due_process: "> 0.5" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
   # letting die are the same in end-of-life care, but not when pushing a stranger onto the tracks.
+  # In the rights topics, each new principle flips the other way from the religious conservative:
+  # protecting the vulnerable high on guns, liberty high for private messages but not speech,
+  # obeying the law required of religious objectors but not protesters, due process demanded before
+  # losing freedom but not guns, and doing vs. allowing high for torture.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
     - bodily_autonomy|drug_policy|vaccine_mandates
     - protect_vulnerable|assisted_dying|vaccine_mandates
     - protect_vulnerable|drug_policy|vaccine_mandates
+    - protect_vulnerable|assisted_dying|guns
+    - protect_vulnerable|drug_policy|guns
     - sanctity_of_life|abortion|death_penalty
     - sanctity_of_life|assisted_dying|death_penalty
     - precaution|death_penalty|gene_editing
     - doing_vs_allowing|assisted_dying|sacrifice
+    - doing_vs_allowing|assisted_dying|torture
+    - liberty|free_speech|surveillance
+    - obey_law|protest|religious_liberty
+    - due_process|guns|public_safety

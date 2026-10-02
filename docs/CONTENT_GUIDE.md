@@ -18,8 +18,8 @@ content/
 Each topic file starts with `# yaml-language-server: $schema=../../../schema/topic.schema.json`, so
 editors with the YAML extension autocomplete and validate as you type.
 
-Run `npm run content:lint` before committing. Errors fail the build. Warnings are budgeted in CI
-and should be fixed or justified.
+Run `npm run content:lint` before committing. Errors fail the build. Warnings fail the content
+tests and CI (`--max-warnings 0`), so fix them too.
 
 ## Ids
 
@@ -79,7 +79,8 @@ principles: { bodily_autonomy: 1 }
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
 - **In topics with a stance, only the stance feeds spectrums**: weight 1 in core topics, 0.5 in
-  extended ones, so a deep dive never outweighs a core issue. Circumstances and challenges are
+  extended ones, so a deep dive never outweighs a core issue. A stance that also feeds a second
+  spectrum gives it half the main weight (1 and 0.5 in a core topic, 0.5 and 0.25 in a deep dive). Circumstances and challenges are
   chosen to probe one side's hard cases (rape, a threat to life, a mass murderer), so answers to
   them lean one way by design. Scored on a spectrum, they'd pull moderates toward one pole: someone
   whose view is "legal only in rare cases, like rape" would land on the permissive side just by
@@ -203,8 +204,11 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Protecting the vulnerable | {Restriction} to protect vulnerable people {from the harm}, even if that means {who loses which freedom}. |
   | Things money shouldn't buy | Paying someone for {thing} should not be allowed, even if both adults freely agree. |
   | Caution with the irreversible | When it comes to {context}, the risk of a mistake that can never be undone should make us hold back, even if that means {the benefit given up}. |
-  | Doing vs. allowing | Actively {causing a death} is worse than letting {someone die}, even {when the cost of not acting is high}. |
+  | Doing vs. allowing | Actively {causing a death or harm} is worse than letting {it happen}, even {when the cost of not acting is high}. |
   | Truth | When it comes to {context}, the truth matters more than comfort, even {when it hurts}. |
+  | Liberty | When it comes to {context}, the government should leave people free to {the freedom}, even though some will misuse that freedom to {the harm}. |
+  | Due process | No one should lose {a right} because a court fears what they might do, rather than for something they've been proven to have done, even if that means some dangerous people {keep it} for a while. |
+  | Obeying the law | {Who} should obey {the law} even when {the conflict}, and work for change only through legal means. |
 
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of
@@ -228,9 +232,20 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | surrogate, intended parents | rent-a-womb, baby selling |
 | editing embryos, choosing embryos | designer babies, playing God |
 | the death penalty | state-sanctioned murder, judicial murder |
+| speech that stirs up hatred against a group | "hate speech" in stances and labels (fine in the names of laws) |
+| removing posts, banning accounts | "censorship" for what private platforms do |
+| gun owners, restrictions on guns | gun nuts, gun grabbers |
+| the feature (semi-automatic rifles) | assault weapons, weapons of war |
+| gun deaths, saying whether suicides are included | "gun violence" totals that silently include suicides |
+| monitoring, bulk collection | spying, Big Brother, surveillance state |
+| religious objectors | bigots, license to discriminate |
+| protesters, people who oppose abortion | thugs, eco-terrorists, anti-abortion activists |
+| the method itself (sleep deprivation, stress positions) | enhanced interrogation |
+| people accused, defendants | criminals (before a conviction) |
 
-`content/loaded-terms.txt` lists terms the lint flags (W108). If a term must appear inside a
-quotation, keep it and justify the warning in review.
+`content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
+CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
+The `source` citation isn't checked, so a quoted title can keep its original wording there.
 
 ## Importance and deep items
 
@@ -259,7 +274,7 @@ excluded from shared output by default. Identity items **describe and never scor
 
 ## Review checklist
 
-- [ ] Lint clean (or warnings justified in the PR).
+- [ ] Lint clean: no errors and no warnings.
 - [ ] Stance labels are ordered and mutually exclusive; the middle is a real position.
 - [ ] Each side gets challenges of similar number and strength; each is the strongest version.
 - [ ] A thoughtful person on each side would sign off on how their position is described.

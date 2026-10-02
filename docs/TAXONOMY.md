@@ -53,15 +53,15 @@ The full map of what Who Am I covers.
 | Editing human genes (embryo editing and selection) | extended | custom | ✅ |
 
 ### Rights & liberties
-| Topic | Tier | Status |
-|---|---|---|
-| Free speech (hate speech, moderation, deplatforming) | core | ◻️ |
-| Guns | core | ◻️ |
-| Privacy and surveillance | core | ◻️ |
-| Religious liberty vs. anti-discrimination | extended | ◻️ |
-| Protest and civil disobedience | extended | ◻️ |
-| Torture and interrogation | extended | ◻️ |
-| Due process vs. public safety | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Free speech (hateful speech, platforms, campuses) | core | custom | ✅ | Skokie, the Rwanda media case, Popper's paradox of tolerance |
+| Guns | core | custom | ✅ | Australia's 1996 buyback, guns and suicide, Switzerland, removal before a hearing |
+| Privacy and surveillance | core | custom | ✅ | bulk phone records, the Stasi, encryption and scanning |
+| Faith and equality law (religious liberty vs. anti-discrimination) | extended | custom | ✅ | the Ashers cake, headscarf bans, conscientious objectors |
+| Protest and civil disobedience | extended | custom | ✅ | Birmingham Jail, the Salt March, clinic and tractor blockades |
+| Torture and interrogation | extended | custom | ✅ | the ticking bomb, the Frankfurt kidnapping case, Algeria |
+| Rights of the accused (due process vs. public safety) | extended | custom | ✅ | the Birmingham Six, Blackstone's ratio, double jeopardy |
 
 ### Economics
 | Topic | Tier | Status |
@@ -188,7 +188,7 @@ can surface in both directions.
 |---|---|---|---|
 | Bodily autonomy | abortion, drug policy, selling sex, assisted dying | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex |
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
-| Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy |
+| Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns |
 | Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers) | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy |
 | Caution with the irreversible | death penalty, climate, GMOs | gene editing, rapid social change | death penalty, gene editing |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
@@ -198,25 +198,30 @@ can surface in both directions.
 | Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only; anchor with economics)* |
 | Just deserts | | death penalty, prisons, welfare | *(effects and moral foundations only; anchor with criminal justice)* |
 | Loyalty | | patriotism, national service | *(moral foundations only)* |
-| Respect for authority | | policing, protest, schools | *(moral foundations only)* |
+| Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
-| Liberty | speech, surveillance | taxes, guns, regulation | *(moral foundations only)* |
+| Liberty | surveillance (private messages) | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance |
 | Respect for the natural order | GMOs | gene editing, surrogacy | *(effects only)* |
-| Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger) | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many |
+| Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger); torture | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many, torture |
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
+| Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, rights of the accused |
+| Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
 sanctity of life rated high on abortion and low on the death penalty raises one, and so does the
-reverse. The personas in `tests/sim/personas` pin these down.
+reverse. The rights anchors work the same way: liberty rated high for speech and low for private
+messages, obeying the law required of protesters but not of religious objectors, and due process
+demanded before losing guns but not freedom each raise a tension, and so does each reverse. The
+personas in `tests/sim/personas` pin these down.
 
 ## Axes
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | at half weight: what makes a society fair (shows once a second topic feeds it) |
-| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy) |
-| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing |
+| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
+| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, faith and equality law |
 | Diplomatic | political | National ↔ Global | *(planned)* |
 | Stability or change | values | Stability ↔ Change | what matters most |
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |

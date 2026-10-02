@@ -1,0 +1,276 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance asks how the state should respond to peaceful lawbreaking, which leaves room for the
+# King and Rawls view: disobey, and accept the penalty. Whether to obey at all is the anchor.
+# Each side meets the same tactic used for a cause it may not share (tractor blockades, clinic
+# blockades). Wording: "protesters", never "thugs" or "eco-terrorists".
+id: protest
+domain: rights
+title: Protest and civil disobedience
+summary: When protesters break the law for a cause, how should the state respond?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Peaceful protesters who deliberately break the law to make their point, for example by blocking a road, should be…
+    poles: [Punished more heavily than other lawbreakers, Not prosecuted]
+    labels:
+      - Punished more heavily than other lawbreakers, to deter disruption
+      - Punished like anyone else who breaks the law
+      - Punished, but leniently
+      - Torn / it depends
+      - Given a warning or a small fine at most
+      - Rarely prosecuted, if no one is hurt
+      - Not prosecuted at all
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: road
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Protesters blocking a major road at rush hour for a few hours is…
+    poles: [Never acceptable, Acceptable]
+    labels: [Never acceptable, Rarely acceptable, Torn, Sometimes acceptable, Acceptable]
+    principles: { obey_law: -0.5 }
+
+  - id: statue
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Protesters pulling down a statue of a historical figure they see as a symbol of oppression is…
+    poles: [Never acceptable, Acceptable]
+    labels: [Never acceptable, Rarely acceptable, Torn, Sometimes acceptable, Acceptable]
+    principles: { authority: -0.5 }
+
+  - id: buffer
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Banning all protest, including silent prayer, within 150 meters of an abortion clinic is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { protect_vulnerable: 0.5 }
+
+  - id: advance_ban
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Police banning a peaceful protest in advance because they expect violence from people opposed to it is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { authority: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_law
+    type: likert
+    points: 7
+    text: Protesters should obey the law even when they're protesting a serious injustice, and work for change only through legal means.
+    principles: { obey_law: 1 }
+    anchor: { principle: obey_law, context: protest, against: standing up to injustice }
+
+  # --- Challenges: against punishing protest -------------------------------------------------------
+  - id: ch_birmingham
+    type: challenge
+    name: Letter from Birmingham Jail
+    targets: stance
+    when: stance < 0
+    source: Martin Luther King Jr., "Letter from Birmingham Jail" (1963)
+    scenario: >-
+      In 1963, Martin Luther King Jr. was jailed for leading a march in Birmingham, Alabama, in
+      defiance of a court order. From his cell he wrote that people have a moral duty to disobey
+      unjust laws, but that "one who breaks an unjust law must do so openly, lovingly, and with a
+      willingness to accept the penalty." Many of the laws the civil rights movement broke are now
+      seen as shameful.
+    text: Should protesters like King be punished?
+    options:
+      - id: accept
+        label: Yes, as King himself accepted. Taking the penalty openly is what gave his protest its power.
+        reaction: hold
+        principles: { obey_law: 0.5 }
+      - id: unjust_law
+        label: Breaking an unjust law itself, like segregation, is different from blocking a road to protest something else.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: Not harshly, and it makes me think peaceful protesters deserve more leniency than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_tractors
+    type: challenge
+    name: The tractor blockades
+    targets: stance
+    when: stance < 0
+    source: Original scenario; farmers in several European countries have blocked roads with tractors to protest new rules and taxes
+    scenario: >-
+      Farmers angry about new environmental rules and fuel taxes block motorways and city centers
+      with their tractors for a day, causing hours of delays. Many people sympathize with them, just
+      as many sympathize with other protesters who block roads.
+    text: Should the farmers be punished as you said?
+    options:
+      - id: same
+        label: Yes. The law should treat every blockade the same, whatever the cause.
+        reaction: hold
+        principles: { obey_law: 1 }
+      - id: livelihood
+        label: People defending their own livelihoods are in a different position from activists campaigning for a cause.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Maybe not, and that makes me think I'd punish peaceful protesters less than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_salt
+    type: challenge
+    name: The Salt March
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: The Salt March and the civil disobedience campaign in India (1930)
+    scenario: >-
+      In 1930, Mahatma Gandhi walked for more than three weeks to the sea to make salt, defying
+      British laws that taxed it and banned Indians from producing it. Across India, people followed
+      his example, and by the end of the year more than 60,000 had been arrested. The campaign became
+      a turning point in the struggle for independence.
+    text: Was it right to punish them for breaking the law?
+    options:
+      - id: colonial
+        label: Under colonial rule Indians had no fair way to change the law. In a democracy there is one.
+        reaction: distinguish
+        principles: { obey_law: 0.5 }
+      - id: above_law
+        label: Even a just cause doesn't put people above the law, unjust as that law was.
+        reaction: hold
+        principles: { obey_law: 1 }
+      - id: rethink
+        label: No, and it makes me think civil disobedience deserves more tolerance than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenges: for firmer limits ---------------------------------------------------------------
+  - id: ch_clinics
+    type: challenge
+    name: The clinic blockades
+    targets: stance
+    when: stance > 0
+    source: >-
+      Records of the US clinic blockade campaigns, 1988–1994, which ended after the Freedom of Access
+      to Clinic Entrances Act (1994)
+    scenario: >-
+      In the late 1980s, people who oppose abortion sat down in front of clinic doors across the
+      United States, peacefully blocking patients and staff from entering. Police made more than
+      20,000 arrests at these blockades in 1988 and 1989 alone. The protesters believed they were
+      resisting a grave injustice, as other protesters do.
+    text: Should they have been treated as leniently as you said?
+    options:
+      - id: same
+        label: Yes. Peaceful protest deserves the same leniency, whatever its cause.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: patients
+        label: Blocking people from medical care is different from blocking traffic. It targets particular people's rights.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: No, and it makes me think disruptive protest needs firmer limits than I said, whatever the cause.
+        reaction: yield
+        revise: stance
+        principles: { obey_law: 1 }
+
+  - id: ch_ambulance
+    type: challenge
+    name: The ambulance
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Protesters block a main road at rush hour. An ambulance carrying a man having a heart attack is
+      stuck in the traffic for 20 minutes. He survives, but doctors say the delay damaged his heart.
+    text: Should the protesters face real consequences for what happened?
+    options:
+      - id: let_through
+        label: They should have let the ambulance through. That's a failure in how they protested, not a reason to punish protest.
+        reaction: distinguish
+        principles: { liberty: 0.5 }
+      - id: price
+        label: Some disruption is the price of a free society. Harsh penalties would chill protest far more widely.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: Yes. Disrupting other people's lives has real victims. I'd punish it more than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 1 }
+
+  - id: ch_crito
+    type: challenge
+    name: Socrates in prison
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Plato, Crito
+    scenario: >-
+      Sentenced to death by an Athenian court, Socrates was offered a chance to escape, and refused.
+      Having lived his whole life under Athens's laws and enjoyed their protection, he argued, he
+      must either persuade the city to change them or obey them, even when they turned against him.
+    text: If everyone broke the laws they thought unjust, could any law survive?
+    options:
+      - id: rare
+        label: Most people obey most laws. Civil disobedience is rare, and that's what keeps it powerful.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: arrest
+        label: Peaceful protest that accepts arrest is different from defying the law altogether.
+        reaction: distinguish
+        principles: { obey_law: 0.5 }
+      - id: rethink
+        label: Socrates has a point. Respect for the law matters more than I allowed for.
+        reaction: yield
+        revise: stance
+        principles: { obey_law: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_penalty_vote
+    type: challenge
+    name: A tougher penalty
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise the maximum penalty for deliberately blocking a major road during a
+      protest from a fine to six months in prison.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { obey_law: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

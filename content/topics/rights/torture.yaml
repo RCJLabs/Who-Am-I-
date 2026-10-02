@@ -1,0 +1,273 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The ticking bomb and what follows from it. The stance feeds only the civil axis: support for
+# harsh interrogation tracks a wish to punish the suspect as much as the value of the information
+# (Carlsmith & Sood, 2009), so it isn't a clean measure of rules versus outcomes. Wording: name the
+# method; never "enhanced interrogation". No perpetrators are named.
+id: torture
+domain: rights
+title: Torture and interrogation
+summary: Could torturing a suspect ever be right, if it might save lives?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Torturing a suspect to get information that could save lives is…
+    poles: [Never acceptable, Acceptable whenever it could save lives]
+    labels:
+      - Never acceptable, whatever is at stake
+      - Never acceptable as a rule, though I could understand someone who did it in a desperate moment
+      - Acceptable only in a true emergency, and whoever does it should still face trial
+      - Torn / it depends
+      - Acceptable when many lives are clearly at stake
+      - Acceptable whenever a serious attack is likely
+      - Acceptable whenever it could save lives
+    axes: { civil: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: harsh
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Harsh interrogation short of torture, such as days of sleep deprivation and painful stress positions, to learn about planned attacks is…
+    poles: [Never acceptable, Acceptable]
+    labels: [Never acceptable, Rarely acceptable, Torn, Sometimes acceptable, Acceptable]
+
+  - id: evidence
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Using information obtained by torture as evidence in court should be…
+    poles: [Never allowed, Allowed]
+    labels: [Never allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    principles: { due_process: -0.5 }
+
+  - id: rendition
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Sending a suspect to a country known to torture prisoners, to be questioned there, is…
+    poles: [Never acceptable, Acceptable]
+    labels: [Never acceptable, Rarely acceptable, Torn, Sometimes acceptable, Acceptable]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_dva
+    type: likert
+    points: 7
+    text: Actively torturing a suspect is worse than letting an attack happen, even when more people die as a result.
+    principles: { doing_vs_allowing: 1 }
+    anchor: { principle: doing_vs_allowing, context: interrogation, against: the lives the attack would take }
+
+  # --- Challenges: for allowing it ---------------------------------------------------------------
+  - id: ch_ticking_bomb
+    type: challenge
+    name: The ticking bomb
+    targets: stance
+    when: stance < 0
+    source: >-
+      A long-standing thought experiment; Henry Shue, "Torture," Philosophy & Public Affairs (1978),
+      discussed it and warned that "artificial cases make bad ethics"
+    scenario: >-
+      Police capture a man who has planted a bomb that will kill thousands of people in a city in a
+      few hours. He admits it but won't say where it is, and there's no time to evacuate. Torturing
+      him may be the only way to make him talk in time.
+    text: Would torture be wrong even here?
+    options:
+      - id: never
+        label: Yes. Some things are never permitted, and real cases are never this certain.
+        reaction: hold
+        principles: { doing_vs_allowing: 1 }
+      - id: excuse
+        label: Someone might be forgiven for doing it, but it must stay illegal, and they should still face trial.
+        reaction: distinguish
+        principles: { obey_law: 0.5 }
+      - id: rethink
+        label: No. With thousands of lives at stake it can be justified. It's acceptable more often than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+
+  - id: ch_kidnapped
+    type: challenge
+    name: The kidnapped boy
+    targets: stance
+    when: stance < 0
+    source: >-
+      European Court of Human Rights, Grand Chamber judgment of 1 June 2010, application no.
+      22978/05
+    scenario: >-
+      In 2002, police in Frankfurt arrested a man who had collected the ransom for an 11-year-old
+      boy he had kidnapped. Believing the boy might still be alive, the city's deputy police chief
+      ordered officers to threaten the suspect with intense pain unless he revealed where the boy
+      was. He told them. The boy was already dead. The deputy chief was convicted and given a
+      suspended fine, and the European Court of Human Rights later ruled that the threat alone was
+      inhuman treatment, which no emergency can justify.
+    text: Was the deputy chief wrong to order the threat?
+    options:
+      - id: absolute
+        label: Yes. If police may threaten torture to save a life, the ban on torture means nothing.
+        reaction: hold
+        principles: { doing_vs_allowing: 1 }
+      - id: forgivable
+        label: It was wrong but understandable. A light sentence was right, and so was the trial.
+        reaction: distinguish
+        principles: { obey_law: 0.5 }
+      - id: rethink
+        label: No. To save a child, the threat was justified. I'd allow more than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_killing
+    type: challenge
+    name: Worse than killing?
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      Police may shoot an armed attacker to stop him killing others, and soldiers may kill enemy
+      fighters in war. Yet even inflicting pain on a captured attacker, to stop an attack, is banned
+      without exception.
+    text: If the state may kill an attacker to save lives, why may it never hurt one?
+    options:
+      - id: helpless
+        label: Killing in self-defense stops an attack; torture targets a helpless prisoner. That's different in kind.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: corrupts
+        label: Torture corrupts the people and institutions that use it, in a way that stopping an attack doesn't.
+        reaction: hold
+        principles: { doing_vs_allowing: 0.5 }
+      - id: rethink
+        label: It's a fair point. Torture is less different from killing than I thought.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: -0.5 }
+
+  # --- Challenges: against allowing it -----------------------------------------------------------
+  - id: ch_daughter
+    type: challenge
+    name: The suspect's daughter
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      The man in the ticking-bomb case still won't talk. But he dearly loves his young daughter, and
+      police believe he would reveal the bomb's location to stop her being hurt in front of him.
+    text: If torture is justified to save lives, would hurting the child be justified too?
+    options:
+      - id: guilty
+        label: No. He's responsible for the threat; she's innocent. Torture could only ever be used on the guilty.
+        reaction: distinguish
+        principles: { retribution: 0.5 }
+      - id: numbers
+        label: If enough lives were at stake, even this, however monstrous it feels.
+        reaction: hold
+        principles: { doing_vs_allowing: -1 }
+      - id: rethink
+        label: No, and if I won't follow the logic that far, maybe I should accept torture less than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 1 }
+
+  - id: ch_effective
+    type: challenge
+    name: Does it work?
+    targets: stance
+    when: stance > 0
+    source: >-
+      US Senate Select Committee on Intelligence, Committee Study of the CIA's Detention and
+      Interrogation Program (2014), and the CIA's response
+    scenario: >-
+      After reviewing more than six million pages of CIA records, the US Senate Intelligence
+      Committee concluded in 2014 that the agency's harsh interrogation of terrorism suspects "was not
+      an effective means of acquiring intelligence." The CIA disputed this, saying the interrogations
+      had produced intelligence that helped thwart attacks and save lives. Critics note that people
+      in severe pain will often say whatever they think will make it stop.
+    text: If torture may produce false information, can it still be justified?
+    options:
+      - id: checked
+        label: Yes. Information can be checked, and one true answer could save many lives.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: last_resort
+        label: Only as a last resort, when the answer can be checked quickly, as in a ticking-bomb case.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: No. If it doesn't reliably work, the case for it falls apart. I'd accept it less than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 1 }
+
+  - id: ch_algeria
+    type: challenge
+    name: Where it leads
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Historians of the Algerian War of Independence, e.g. Raphaëlle Branche, La torture et l'armée
+      pendant la guerre d'Algérie (2001)
+    scenario: >-
+      During the 1957 Battle of Algiers, the French army justified torture as a way to stop
+      bombings. Historians have since shown that it became a routine way of questioning people
+      picked up in mass roundups, not just suspects thought to know of an attack.
+    text: Once torture is allowed for emergencies, can it be kept to them?
+    options:
+      - id: rules
+        label: Yes, with strict rules and a judge's approval for each case.
+        reaction: hold
+        principles: { obey_law: 0.5 }
+      - id: colonial
+        label: That was a colonial war with no democratic oversight. A democracy can do better.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Probably not. The risk of it spreading makes me accept it less than I said.
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_warrant_vote
+    type: challenge
+    name: Torture warrants
+    targets: stance
+    when: stance == 0
+    source: Modeled on Alan Dershowitz's proposal in Why Terrorism Works (2002)
+    scenario: >-
+      A proposed law would let a senior judge authorize torture in a ticking-bomb case, so that it
+      happens openly and under the law rather than in secret. Without a warrant, torture would stay
+      a serious crime.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { doing_vs_allowing: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

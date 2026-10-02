@@ -1,7 +1,8 @@
 name: Communitarian
 topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
-   value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges]
+   value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges,
+   free_speech, guns, surveillance, religious_liberty, protest, public_safety]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -160,6 +161,69 @@ answers:
   ring_of_gyges.uses: [help, travel]
   ring_of_gyges.why_good: self_respect
   ring_of_gyges.ch_glaucon: small_rules
+  free_speech.stance: 5
+  free_speech.importance: 3
+  free_speech.holocaust_denial: 4
+  free_speech.blasphemy: 4
+  free_speech.flag_burning: 4
+  free_speech.platforms: 4
+  free_speech.campus: 3
+  free_speech.anchor_liberty: 3
+  free_speech.ch_skokie: survivors
+  free_speech.ch_blasphemy: courts
+  free_speech.ch_mill: harm_now
+  guns.stance: 2
+  guns.importance: 3
+  guns.handgun_home: 2
+  guns.semi_auto: 1
+  guns.checks: 5
+  guns.carry: 1
+  guns.storage: 5
+  guns.anchor_pv: 6
+  guns.anchor_dp: 4
+  guns.ch_remote: exception
+  guns.ch_swiss: still
+  guns.ch_defensive: outweigh
+  surveillance.stance: 5
+  surveillance.importance: 3
+  surveillance.cameras: 4
+  surveillance.encryption: 4
+  surveillance.scanning: 5
+  surveillance.records: 3
+  surveillance.tracking: 5
+  surveillance.anchor_liberty: 3
+  surveillance.ch_phone_records: design
+  surveillance.ch_stasi: democracy
+  surveillance.ch_contact_tracing: serious
+  religious_liberty.stance: 4 # torn: the middle challenge
+  religious_liberty.importance: 3
+  religious_liberty.wedding: 3
+  religious_liberty.schools: 4
+  religious_liberty.symbols: 3
+  religious_liberty.doctors: 4
+  religious_liberty.registrar: 3
+  religious_liberty.anchor_law: 5
+  religious_liberty.ch_wedding_vote: abstain
+  protest.stance: 2
+  protest.importance: 3
+  protest.road: 2
+  protest.statue: 1
+  protest.buffer: 4
+  protest.advance_ban: 4
+  protest.anchor_law: 5
+  protest.ch_birmingham: accept
+  protest.ch_tractors: same
+  protest.ch_salt: above_law
+  public_safety.stance: 5
+  public_safety.importance: 3
+  public_safety.pretrial: 4
+  public_safety.after_sentence: 4
+  public_safety.stop_search: 3
+  public_safety.naming: 2
+  public_safety.anchor_dp: 4
+  public_safety.ch_birmingham_six: both_cost
+  public_safety.ch_blackstone: depends
+  public_safety.ch_prediction: reviews
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
@@ -174,6 +238,11 @@ expect:
     moral_reasoning: { outcomes: "< 0", impartiality: "< 0" }
     strangers: { impartiality: "< 0" }
     sacrifice: { outcomes: "< 0" }
+    free_speech: { civil: "> 0" }
+    guns: { civil: "> 0" }
+    surveillance: { civil: "> 0" }
+    protest: { civil: "> 0" }
+    public_safety: { civil: "> 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -181,6 +250,10 @@ expect:
       loyalty: "> 0.5"
       authority: "> 0.5"
       liberty: "< -0.3"
+    guns: { protect_vulnerable: "> 0.5" }
+    protest: { obey_law: "> 0.5" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
-  # in bodies everywhere.
+  # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
+  # liberty equally modest for speech and private messages, the law binding on protesters and
+  # religious objectors alike, and due process weighed the same for guns and freedom.
   tensions: []

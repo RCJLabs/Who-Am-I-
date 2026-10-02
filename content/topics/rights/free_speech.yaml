@@ -1,0 +1,345 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The stance is about the law. Platforms, campuses and symbols are circumstances, chosen so that
+# restricting speech is the left-leaning answer on some and the right-leaning answer on others.
+# Wording: "speech that stirs up hatred" rather than "hate speech" in anything the user answers.
+id: free_speech
+domain: rights
+title: Free speech
+summary: Should the law ever punish people for what they say, and who decides what's too hateful?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Speech that stirs up hatred against a group, for example because of their race or religion, should be…
+    poles: ["Legal, short of threats", A crime]
+    labels:
+      - Legal, however hateful, unless it threatens someone or incites violence
+      - Legal, with a few narrow exceptions like denying a genocide
+      - Mostly legal; the law should step in only in extreme cases
+      - Torn / it depends
+      - A crime when it's clearly meant to stir up hatred
+      - A crime, even when it wasn't meant to stir up hatred
+      - A crime, along with speech that insults or demeans a group
+    axes: { civil: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: holocaust_denial
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Denying that the Holocaust happened should be…
+    poles: [Legal, A crime]
+    labels: [Legal, Probably legal, Torn, Probably a crime, A crime]
+    principles: { liberty: -0.5 }
+
+  - id: blasphemy
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Mocking or insulting a religion, its prophets or its holy books should be…
+    poles: [Legal, A crime]
+    labels: [Legal, Probably legal, Torn, Probably a crime, A crime]
+    principles: { purity: 0.5 }
+
+  - id: flag_burning
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Burning your country's flag as a protest should be…
+    poles: [Legal, A crime]
+    labels: [Legal, Probably legal, Torn, Probably a crime, A crime]
+    principles: { loyalty: 0.5 }
+
+  - id: platforms
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Social media companies removing posts or banning accounts for hateful content that the law allows is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: campus
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A university cancelling a talk by an invited speaker because many students consider the speaker's views hateful is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_liberty
+    type: likert
+    points: 7
+    text: When it comes to speech, the government should leave people free to say what they believe, even though some will misuse that freedom to spread hatred.
+    principles: { liberty: 1 }
+    anchor: { principle: liberty, context: speech, against: protecting people from hatred }
+
+  # --- Challenges: against making it a crime -------------------------------------------------------
+  - id: ch_skokie
+    type: challenge
+    name: The march on Skokie
+    targets: stance
+    when: stance > 0
+    source: >-
+      The Skokie cases (1977–78), including Collin v. Smith in the US Court of Appeals; Aryeh Neier,
+      Defending My Enemy (1979)
+    scenario: >-
+      In 1977 a small neo-Nazi group announced a march through Skokie, Illinois, a town where many
+      Holocaust survivors lived. The American Civil Liberties Union defended the group's right to
+      march. Its director, Aryeh Neier, had fled Nazi Germany as a child; he argued that powers to
+      ban a hateful march could be used to ban civil rights marches too. The courts sided with the
+      group, which in the end held its rally in Chicago instead.
+    text: Should the law have let them march?
+    options:
+      - id: survivors
+        label: No. A town of Holocaust survivors shouldn't have to endure a Nazi march.
+        reaction: hold
+        principles: { protect_vulnerable: 1 }
+      - id: targeted
+        label: A march chosen to torment survivors in their own streets is intimidation, not just hateful opinion.
+        reaction: distinguish
+        principles: { harm_principle: 1 }
+      - id: rethink
+        label: Yes. A power to ban their march could be turned against causes I support. Less should be a crime than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_blasphemy
+    type: challenge
+    name: Who decides what's hateful
+    targets: stance
+    when: stance > 0
+    source: >-
+      US Commission on International Religious Freedom, Violating Rights: Enforcing the World's
+      Blasphemy Laws (2020)
+    scenario: >-
+      About 84 countries have laws against insulting religion. A 2020 review of how they're enforced
+      found that members of religious minorities are disproportionately the ones accused and
+      punished.
+    text: If the law punishes speech for being hateful, who decides what counts, and what stops the definition from growing?
+    options:
+      - id: courts
+        label: Clear laws and independent courts can draw the line, as many democracies already do.
+        reaction: hold
+        principles: { authority: 0.5 }
+      - id: people_not_ideas
+        label: Protecting people from hatred is different from protecting beliefs from criticism. Blasphemy laws protect ideas.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: It makes me warier of giving any government that power. Less should be a crime than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_mill
+    type: challenge
+    name: The silenced opinion
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: John Stuart Mill, On Liberty (1859), chapter 2
+    scenario: >-
+      John Stuart Mill argued that silencing an opinion is wrong even when it's false: if it's true,
+      we lose the truth; if it's false, we lose the clearer understanding that comes from having to
+      answer it. Many views once condemned as dangerous or offensive, from atheism to arguments for
+      gay rights, later became mainstream.
+    text: Could laws against hateful speech silence something later generations will see as right?
+    options:
+      - id: not_views
+        label: Attacking people for who they are isn't a viewpoint that needs protecting. Arguments about ideas still would be.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: harm_now
+        label: Maybe, but the harm hateful speech does now is real, and it outweighs a distant risk.
+        reaction: hold
+        principles: { harm_principle: 1 }
+      - id: rethink
+        label: It's possible, and that makes me want the law to step in less than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenges: for making it a crime -----------------------------------------------------------
+  - id: ch_radio
+    type: challenge
+    name: The radio station
+    targets: stance
+    when: stance < 0
+    source: >-
+      International Criminal Tribunal for Rwanda, the "Media case" (judgment 2003, appeal judgment
+      2007)
+    scenario: >-
+      In the months before Rwanda's 1994 genocide, a popular radio station repeatedly called Tutsi
+      "cockroaches" and warned listeners that they were a threat. Once the killing began, it
+      broadcast the names of people to be hunted down. Hundreds of thousands of people were
+      murdered, and a UN tribunal later convicted people behind the station of inciting genocide.
+    text: Long before the killing began, would it have been right for the law to stop those broadcasts?
+    options:
+      - id: incitement
+        label: Only once they called for violence. Before that, the answer is to argue back, not to ban.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: extreme
+        label: Rwanda shows why incitement must be illegal, which I already accept. Most hateful speech is nothing like it.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: Yes. Dehumanizing speech can prepare the ground for violence. The law should step in earlier than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_pileon
+    type: challenge
+    name: The pile-on
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A woman from a religious minority posts online about her faith. Within days, thousands of
+      strangers flood her accounts with messages saying people like her don't belong in the country
+      and should be driven out. Some share her home address. None of the messages is a direct
+      threat.
+    text: Should any of it be a crime?
+    options:
+      - id: address
+        label: Only sharing her address, if it amounts to a threat. Insults, however vile, should stay legal.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: harassment
+        label: Hounding one person like that is harassment, which is different from hateful opinions in general.
+        reaction: distinguish
+        principles: { harm_principle: 1 }
+      - id: rethink
+        label: Yes, and it makes me think the law should do more against hatred than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_popper
+    type: challenge
+    name: The paradox of tolerance
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Karl Popper, The Open Society and Its Enemies (1945), volume 1, note 4 to chapter 7
+    scenario: >-
+      Philosopher Karl Popper warned that unlimited tolerance leads to the disappearance of
+      tolerance: a society that tolerates those who would destroy tolerance will be destroyed by
+      them. He added that suppressing intolerant views would be unwise as long as they can be
+      answered by argument and kept in check by public opinion.
+    text: Does a tolerant society have the right to silence the intolerant?
+    options:
+      - id: force
+        label: Only when they turn from argument to force. Until then, answer them, as Popper himself said.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: movements
+        label: Banning movements that plan to destroy democracy is different from punishing what individuals say.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: Yes. Tolerating intolerance is more dangerous than I allowed for.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5, collective_welfare: 0.5 }
+
+  # --- Challenges: patterns across the circumstances ------------------------------------------------
+  - id: ch_symbols
+    type: challenge
+    name: The flag and the faith
+    targets: flag_burning
+    deep: true
+    when: flag_burning > 0 and blasphemy < 0
+    source: Original scenario
+    scenario: >-
+      You'd make burning the national flag a crime, but not mocking a religion. Both are symbols
+      that many people hold sacred, and attacking either can wound them deeply.
+    text: What's the difference?
+    options:
+      - id: shared_home
+        label: The flag stands for the whole country; a religion is a set of beliefs that has to stay open to criticism.
+        reaction: distinguish
+        principles: { loyalty: 0.5 }
+      - id: flag_too
+        label: No real difference. Burning the flag should be legal too.
+        reaction: yield
+        revise: flag_burning
+        principles: { liberty: 0.5 }
+      - id: religion_too
+        label: No real difference. Mocking a religion should be a crime too.
+        reaction: yield
+        revise: blasphemy
+        principles: { purity: 0.5 }
+
+  - id: ch_denial
+    type: challenge
+    name: Denial and the flag
+    targets: holocaust_denial
+    deep: true
+    when: holocaust_denial > 0 and flag_burning < 0
+    source: Original scenario
+    scenario: >-
+      You'd make denying the Holocaust a crime, but not burning the national flag. Both deeply
+      offend many people, and neither directly threatens anyone.
+    text: What's the difference?
+    options:
+      - id: lie
+        label: Denying a genocide is a lie that wounds its survivors and feeds hatred; burning a flag is a political protest.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: denial_too
+        label: No real difference. Denying the Holocaust should be legal too.
+        reaction: yield
+        revise: holocaust_denial
+        principles: { liberty: 0.5 }
+      - id: flag_too
+        label: No real difference. Burning the flag should be a crime too.
+        reaction: yield
+        revise: flag_burning
+        principles: { loyalty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A law against stirring up hatred
+    targets: stance
+    when: stance == 0
+    source: Original scenario, modeled on the UK's offenses of stirring up racial or religious hatred
+    scenario: >-
+      A proposed law would make it a crime to use threatening words intended to stir up hatred
+      against people because of their race or religion. Discussing, criticizing or joking about
+      religions would be explicitly protected.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
