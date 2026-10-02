@@ -55,7 +55,8 @@ describe('topic navigation', () => {
     log.add('beta.stance', scale(4));
     let s = buildAnswerState(b, log.events);
     expect(activeTopic(s)?.id).toBe('beta');
-    expect(nextTopic(b, s, 'beta')?.id).toBe('gamma');
+    // gamma comes next in order, but it's a deep dive: core topics are offered first.
+    expect(nextTopic(b, s, 'beta')?.id).toBe('traits');
     expect(nextTopic(b, s)?.id).toBe('alpha');
     for (const id of ['beta.importance', 'beta.anchor_auto', 'beta.anchor_life']) log.add(id, skip);
     log.add('beta.ch_mid', pick('abstain'));

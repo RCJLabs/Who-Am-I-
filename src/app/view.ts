@@ -28,14 +28,16 @@ export function activeTopic(s: AnswerState, o: FlowOptions = {}): Topic | null {
   return null;
 }
 
-/** The first unfinished topic after `after` (wrapping around), or null if all are finished. */
+/**
+ * The first unfinished topic after `after` (wrapping around), core topics before deep dives, or
+ * null if all are finished.
+ */
 export function nextTopic(b: Bundle, s: AnswerState, after?: TopicId, o: FlowOptions = {}): Topic | null {
   const start = after ? b.topics.findIndex((t) => t.id === after) + 1 : 0;
-  for (let k = 0; k < b.topics.length; k++) {
-    const t = b.topics[(start + k) % b.topics.length]!;
-    if (t.id !== after && !topicStatus(s, t, o).complete) return t;
-  }
-  return null;
+  const open = Array.from({ length: b.topics.length }, (_, k) => b.topics[(start + k) % b.topics.length]!).filter(
+    (t) => t.id !== after && !topicStatus(s, t, o).complete,
+  );
+  return open.find((t) => t.tier === 'core') ?? open[0] ?? null;
 }
 
 /** Display text for an answer. */

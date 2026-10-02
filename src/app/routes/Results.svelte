@@ -21,6 +21,12 @@
   const tasteScored = $derived(taste.filter((a) => profile.axes[a.id]?.score !== null));
   const positions = $derived(bundle.topics.filter((t) => t.stance && profile.topics[t.id]?.stance !== null && profile.topics[t.id] !== undefined));
   const tensions = $derived([...answers.tensions].sort((a, b) => Number(a.status !== 'open') - Number(b.status !== 'open') || b.rank - a.rank));
+  /** One card per principle, in the order of each principle's most pressing tension. */
+  const tensionGroups = $derived.by(() => {
+    const groups = new Map<string, typeof tensions>();
+    for (const t of tensions) groups.set(t.principle, [...(groups.get(t.principle) ?? []), t]);
+    return [...groups].map(([principle, items]) => ({ principle, items }));
+  });
   const principles = $derived(Object.values(bundle.principles).filter((p) => profile.principles[p.id]?.score !== null));
 
   /** Multi-select picks, strongest first, with their labels. */
@@ -106,18 +112,21 @@
 
     <section class="section">
       <p class="section-title">{copy.results.tensions}</p>
-      {#if tensions.length}
-        {#each tensions as t (t.key)}
-          {@const pr = bundle.principles[t.principle]}
-          <div class="card tension" data-testid="tension-row">
-            <p class="tension-title">
-              <strong>{pr?.label}</strong>:
-              {answers.state.ix.topics.get(t.a.topic)?.title} vs. {answers.state.ix.topics.get(t.b.topic)?.title}
-            </p>
-            <p class="small muted">
-              {t.status === 'open' ? copy.results.status.open : copy.results.status[t.resolution?.kind ?? 'acknowledged']}
-            </p>
-            <a class="btn" href={to.tension(t.key)}>{copy.results.revisit}</a>
+      {#if tensionGroups.length}
+        {#each tensionGroups as g (g.principle)}
+          <div class="card tension">
+            <p class="tension-title"><strong>{bundle.principles[g.principle]?.label}</strong></p>
+            {#each g.items as t (t.key)}
+              <div class="pair" data-testid="tension-row">
+                <span class="pair-text">
+                  {answers.state.ix.topics.get(t.a.topic)?.title} vs. {answers.state.ix.topics.get(t.b.topic)?.title}
+                  <span class="small muted">
+                    {t.status === 'open' ? copy.results.status.open : copy.results.status[t.resolution?.kind ?? 'acknowledged']}
+                  </span>
+                </span>
+                <a class="btn" href={to.tension(t.key)}>{copy.results.revisit}</a>
+              </div>
+            {/each}
           </div>
         {/each}
       {:else}
@@ -211,8 +220,20 @@
   .tension-title {
     margin: 0 0 4px;
   }
-  .tension p.small {
-    margin-bottom: 10px;
+  .pair {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+  .pair + .pair {
+    border-top: 1px solid var(--border);
+  }
+  .pair-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
   .enjoy-title {
     margin-top: 16px;

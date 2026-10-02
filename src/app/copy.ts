@@ -34,6 +34,7 @@ export const copy = {
     left: (n: number) => `${n} left`,
     done: 'Done',
     sensitive: 'Sensitive: never shared unless you choose to',
+    deepDives: 'Deep dives',
     comingSoon: 'Coming soon',
     comingSoonNote: 'These areas are planned and will be added over time.',
   },

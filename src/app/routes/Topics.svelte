@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Topic } from '../../model/content.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { to } from '../routes.ts';
@@ -9,11 +10,37 @@
   const { bundle, answers, settings } = app();
   const opts = $derived({ alwaysDeep: settings.alwaysDeep });
   const groups = $derived(
-    bundle.domains.map((domain) => ({ domain, topics: bundle.topics.filter((t) => t.domain === domain.id) })),
+    bundle.domains.map((domain) => {
+      const topics = bundle.topics.filter((t) => t.domain === domain.id);
+      return { domain, core: topics.filter((t) => t.tier === 'core'), deep: topics.filter((t) => t.tier === 'extended') };
+    }),
   );
-  const withTopics = $derived(groups.filter((g) => g.topics.length));
-  const planned = $derived(groups.filter((g) => !g.topics.length));
+  const withTopics = $derived(groups.filter((g) => g.core.length || g.deep.length));
+  const planned = $derived(groups.filter((g) => !g.core.length && !g.deep.length));
 </script>
+
+{#snippet row(topic: Topic)}
+  {@const st = topicStatus(answers.state, topic, opts)}
+  <a class="card row" href={to.flow(topic.id)} data-testid="topic-{topic.id}">
+    <span class="main">
+      <span class="title">
+        {topic.title}
+        {#if topic.sensitive}<span title={copy.topics.sensitive}><Icon name="lock" size={14} label={copy.topics.sensitive} /></span>{/if}
+      </span>
+      <span class="muted small">{topic.summary}</span>
+      <span class="meta"><EvidenceBadge evidence={topic.evidence} /></span>
+    </span>
+    <span class="status">
+      {#if st.complete}
+        <span class="chip success"><Icon name="check" size={14} /> {copy.topics.done}</span>
+      {:else if st.started}
+        <span class="chip accent">{copy.topics.left(st.remaining)}</span>
+      {:else}
+        <span class="chip">{copy.topics.start}</span>
+      {/if}
+    </span>
+  </a>
+{/snippet}
 
 <div class="page">
   <h1>{copy.topics.title}</h1>
@@ -23,28 +50,11 @@
     <section class="section">
       <h2 class="domain">{g.domain.title}</h2>
       <p class="muted small">{g.domain.blurb}</p>
-      {#each g.topics as topic (topic.id)}
-        {@const st = topicStatus(answers.state, topic, opts)}
-        <a class="card row" href={to.flow(topic.id)} data-testid="topic-{topic.id}">
-          <span class="main">
-            <span class="title">
-              {topic.title}
-              {#if topic.sensitive}<span title={copy.topics.sensitive}><Icon name="lock" size={14} label={copy.topics.sensitive} /></span>{/if}
-            </span>
-            <span class="muted small">{topic.summary}</span>
-            <span class="meta"><EvidenceBadge evidence={topic.evidence} /></span>
-          </span>
-          <span class="status">
-            {#if st.complete}
-              <span class="chip success"><Icon name="check" size={14} /> {copy.topics.done}</span>
-            {:else if st.started}
-              <span class="chip accent">{copy.topics.left(st.remaining)}</span>
-            {:else}
-              <span class="chip">{copy.topics.start}</span>
-            {/if}
-          </span>
-        </a>
-      {/each}
+      {#each g.core as topic (topic.id)}{@render row(topic)}{/each}
+      {#if g.deep.length}
+        <h3 class="deep" data-testid="deep-dives-{g.domain.id}">{copy.topics.deepDives}</h3>
+        {#each g.deep as topic (topic.id)}{@render row(topic)}{/each}
+      {/if}
     </section>
   {/each}
 
@@ -62,6 +72,11 @@
 <style>
   .domain {
     margin-bottom: 2px;
+  }
+  .deep {
+    margin: 20px 0 0;
+    font-size: 0.9rem;
+    color: var(--muted);
   }
   .row {
     display: flex;
