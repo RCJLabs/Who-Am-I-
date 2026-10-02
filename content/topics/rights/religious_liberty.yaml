@@ -1,0 +1,281 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Faith against anti-discrimination law. Challenges on each side use the case that the other side
+# finds hardest: the mirror-image cake and the headscarf for "the law applies to all"; a racial
+# refusal and every faith's claims for "make room". Wording: "religious objectors", never "bigots"
+# or "license to discriminate".
+id: religious_liberty
+domain: rights
+title: Religious liberty vs. anti-discrimination
+summary: When faith and equality laws collide, which should give way?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When someone's religious beliefs conflict with anti-discrimination law, the law should…
+    poles: [Apply to them like everyone else, Make broad room for their beliefs]
+    labels:
+      - Apply to them exactly like everyone else
+      - Apply, with exceptions only for places of worship and clergy
+      - Apply, with a few narrow exceptions
+      - Torn / it depends
+      - Make room for sincere beliefs, unless others are seriously harmed
+      - Make broad room for religious beliefs
+      - Never force anyone to act against their faith
+    axes: { cultural: -0.5, civil: -0.25 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: wedding
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A wedding photographer refusing, for religious reasons, to work at a same-sex wedding should be…
+    poles: [Illegal, Allowed]
+    labels: [Illegal, Probably illegal, Torn, Probably allowed, Allowed]
+    principles: { equality: -0.5 }
+
+  - id: schools
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Religious schools hiring only teachers who share their faith should be…
+    poles: [Illegal, Allowed]
+    labels: [Illegal, Probably illegal, Torn, Probably allowed, Allowed]
+
+  - id: symbols
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Public employees such as teachers and police officers wearing religious symbols at work, like a headscarf, turban or cross, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+    principles: { liberty: 0.5 }
+
+  - id: doctors
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A doctor refusing, for religious reasons, to perform abortions should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  - id: registrar
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A government official refusing, for religious reasons, to register same-sex marriages, when a colleague could do it instead, should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_law
+    type: likert
+    points: 7
+    text: Religious objectors should obey anti-discrimination law even when it conflicts with their faith, and work for change only through legal means.
+    principles: { obey_law: 1 }
+    anchor: { principle: obey_law, context: religious objections to anti-discrimination law, against: the person's faith and conscience }
+
+  # --- Challenges: for making room ---------------------------------------------------------------
+  - id: ch_cake
+    type: challenge
+    name: The other cake
+    targets: stance
+    when: stance < 0
+    source: Lee v Ashers Baking Company Ltd and others, UK Supreme Court (2018)
+    scenario: >-
+      A Christian-owned bakery in Northern Ireland refused to decorate a cake with the slogan
+      "Support Gay Marriage" for a gay customer. The UK Supreme Court ruled unanimously that this
+      wasn't discrimination: the bakers objected to the message, not the customer, and no one can be
+      forced to promote a belief they reject.
+    text: Should a gay baker be free to refuse a cake with a message against same-sex marriage?
+    options:
+      - id: any_order
+        label: No. A business open to the public should make any lawful product a customer orders.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: message
+        label: Refusing a message is different from refusing a person. Both bakers may refuse messages, but not customers.
+        reaction: distinguish
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: Yes, and religious bakers deserve the same room. The law should make more room for belief than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_headscarf
+    type: challenge
+    name: The teacher's headscarf
+    targets: stance
+    when: stance < 0
+    source: >-
+      France's rules on the religious neutrality of public servants; Quebec's Act respecting the
+      laicity of the State (2019)
+    scenario: >-
+      France bars most public servants from wearing religious symbols at work, and Quebec bars
+      teachers and police officers, so that the state appears neutral. The rule applies to every
+      religion alike, but it falls hardest on Muslim women who wear a headscarf and Sikh men who
+      wear a turban.
+    text: If the same rules should apply to everyone whatever their faith, is this fair?
+    options:
+      - id: neutral
+        label: Yes. People who act for the state should look neutral, whatever their faith.
+        reaction: hold
+        principles: { authority: 0.5 }
+      - id: no_harm
+        label: Anti-discrimination law protects people from being harmed; a headscarf harms no one. That's the difference.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: No, and it makes me think the law should make more room for faith than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_objectors
+    type: challenge
+    name: Conscientious objectors
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Britain's Military Service Act 1916 and its conscience clause; records of the Imperial War Museums
+    scenario: >-
+      When Britain introduced conscription in 1916, about 16,000 men refused to fight, many for
+      religious reasons. Nearly 6,000 were sent to prison, and at least 70 died as a result. Today,
+      democracies that still conscript usually let objectors do civilian service instead.
+    text: Should the law make room for conscience when it conflicts with a duty everyone else must perform?
+    options:
+      - id: killing
+        label: Refusing to kill is different from refusing to serve customers. The objector harms no one by staying out.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rare
+        label: Even then, exemptions should be rare and come with real duties in return.
+        reaction: hold
+        principles: { obey_law: 0.5 }
+      - id: rethink
+        label: Yes, and the same respect for conscience should reach further than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenges: for applying the law to all ----------------------------------------------------
+  - id: ch_restaurant
+    type: challenge
+    name: The restaurant owner
+    targets: stance
+    when: stance > 0
+    source: Newman v. Piggie Park Enterprises, US Supreme Court (1968)
+    scenario: >-
+      In the 1960s, a restaurant owner in South Carolina refused to serve Black customers on equal
+      terms, arguing that his religious beliefs required him to oppose any mixing of the races. The
+      courts rejected his claim, and the US Supreme Court ruled against him in 1968.
+    text: If sincere faith can justify refusing some customers, what stops it from justifying this?
+    options:
+      - id: ceremony
+        label: Refusing to take part in a ceremony is different from refusing to serve a person at all.
+        reaction: distinguish
+        principles: { liberty: 0.5 }
+      - id: courts
+        label: Courts can tell beliefs central to a faith from prejudice dressed up as faith.
+        reaction: hold
+        principles: { authority: 0.5 }
+      - id: rethink
+        label: It makes me think exemptions should be much narrower than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_transfusion
+    type: challenge
+    name: The blood transfusion
+    targets: stance
+    when: stance > 0
+    source: Original scenario; courts in many countries authorize transfusions for children of Jehovah's Witnesses
+    scenario: >-
+      A young girl needs a blood transfusion to survive. Her parents, Jehovah's Witnesses, refuse on
+      religious grounds. In many countries, courts routinely let doctors give the transfusion anyway.
+    text: Should the parents' faith decide?
+    options:
+      - id: child
+        label: Adults may refuse treatment for themselves, but not stake a child's life on their faith.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: parents
+        label: Parents have the right to raise their children by their faith, even in this.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: No, and it makes me think faith should give way to the law more often than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_every_faith
+    type: challenge
+    name: Every faith's exemptions
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Original scenario; refusing to carry a passenger's assistance dog is an offense for UK taxi drivers under the Equality Act 2010
+    scenario: >-
+      A taxi driver refuses to carry a blind passenger with a guide dog, saying his religious
+      beliefs forbid him to have a dog in his car.
+    text: Should his beliefs get the same room as the religious objections you find easiest to accept?
+    options:
+      - id: disability
+        label: A blind passenger has no easy alternative. Exemptions should never leave someone stranded.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: same_room
+        label: Yes. Every faith deserves the same room, as long as people can get the service elsewhere.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: rethink
+        label: Applying it to every faith makes me want narrower exemptions than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_wedding_vote
+    type: challenge
+    name: A narrow exemption
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would let businesses decline to provide services for wedding ceremonies that
+      conflict with their faith, as long as another provider is readily available. Refusing anyone
+      service because of who they are would stay illegal.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -1,0 +1,275 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Due process against public safety, before trial and after it. The topic id avoids repeating the
+# principle's id in tension keys. Wording: "people accused" and "defendants", never "criminals"
+# before a conviction; no perpetrators are named.
+id: public_safety
+domain: rights
+title: Due process vs. public safety
+summary: When protecting the public clashes with the rights of people accused of crimes, which should win?
+tier: extended
+order: 7
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When protecting the public conflicts with the rights of people accused of crimes, the law should lean toward…
+    poles: [The rights of the accused, Public safety]
+    labels:
+      - The rights of the accused, always
+      - The rights of the accused, in nearly all cases
+      - The rights of the accused, except in extreme cases like terrorism
+      - Torn / it depends
+      - Public safety, in serious cases like violent crime
+      - Public safety, in most cases
+      - Public safety, always
+    axes: { civil: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: pretrial
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Keeping someone charged with a violent crime in jail until their trial, because a judge thinks they may be dangerous, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { due_process: -0.5 }
+
+  - id: after_sentence
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Keeping someone locked up after their prison sentence ends, because experts judge them likely to commit another violent crime, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { due_process: -0.5 }
+
+  - id: stop_search
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Police stopping and searching people in high-crime areas without suspecting them of anything specific is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { liberty: -0.5 }
+
+  - id: naming
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Publishing the names of people arrested for serious crimes, before they're charged, should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_dp
+    type: likert
+    points: 7
+    text: No one should lose their freedom because a court fears what they might do, rather than for something they've been proven to have done, even if that means some dangerous people stay free for a while.
+    principles: { due_process: 1 }
+    anchor: { principle: due_process, context: locking people up before trial or after their sentence, against: protecting the public from violent crime }
+
+  # --- Challenges: for the rights of the accused ---------------------------------------------------
+  - id: ch_birmingham_six
+    type: challenge
+    name: The Birmingham Six
+    targets: stance
+    when: stance > 0
+    source: The Birmingham Six case; their convictions were quashed by the Court of Appeal in 1991
+    scenario: >-
+      In 1974, bombs in two pubs in Birmingham, England, killed 21 people. Under intense public
+      pressure, six men were convicted the next year and sentenced to life. They said their
+      confessions had been beaten out of them, and the forensic tests used against them were later
+      discredited. They spent 16 years in prison before the Court of Appeal quashed their
+      convictions in 1991.
+    text: When the pressure to protect the public is strongest, can the system be trusted to get it right?
+    options:
+      - id: reform
+        label: Their case shows the need for better evidence and oversight, not for weaker protection of the public.
+        reaction: distinguish
+        principles: { authority: 0.5 }
+      - id: both_cost
+        label: Mistakes like that are tragic, but letting dangerous people go free costs lives too.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: No. Pressure for quick results is exactly when rights matter most. I'd lean further toward the accused than I said.
+        reaction: yield
+        revise: stance
+        principles: { due_process: 1 }
+
+  - id: ch_blackstone
+    type: challenge
+    name: Ten guilty, one innocent
+    targets: stance
+    when: stance > 0
+    source: William Blackstone, Commentaries on the Laws of England (1765–1769)
+    scenario: >-
+      The English jurist William Blackstone wrote that "it is better that ten guilty persons escape
+      than that one innocent suffer." Benjamin Franklin later put the ratio at a hundred to one.
+    text: How many guilty people going free is worth sparing one innocent person?
+    options:
+      - id: fewer
+        label: Fewer than ten. Every guilty person set free may go on to harm someone else.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: depends
+        label: It depends on the crime. The more dangerous the offense, the less risk I'd accept.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: At least ten. Punishing the innocent is a worse wrong than I allowed for.
+        reaction: yield
+        revise: stance
+        principles: { due_process: 1 }
+
+  - id: ch_prediction
+    type: challenge
+    name: Locked up for what you might do
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Seena Fazel et al., "Use of risk assessment instruments to predict violence and antisocial
+      behaviour in 73 samples involving 24 827 people," BMJ (2012)
+    scenario: >-
+      A man has served his full sentence for a series of violent assaults, and experts judge that he
+      is likely to attack again. Some countries let courts keep such people locked up after their
+      sentence ends. But predictions are often wrong: in a review of studies covering about 25,000
+      people, only about four in ten of those flagged as likely to be violent went on to be.
+    text: Is it right to keep him locked up for what he might do?
+    options:
+      - id: risk
+        label: Yes, if the risk is high. The public shouldn't have to wait for the next victim.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: reviews
+        label: Only with regular reviews and treatment, so that it's protection and not extra punishment.
+        reaction: distinguish
+        principles: { due_process: 0.5 }
+      - id: rethink
+        label: No. Locking people up for crimes they haven't committed goes too far. I'd lean further toward the accused than I said.
+        reaction: yield
+        revise: stance
+        principles: { due_process: 1 }
+
+  # --- Challenges: for public safety ---------------------------------------------------------------
+  - id: ch_retrial
+    type: challenge
+    name: The second trial
+    targets: stance
+    when: stance < 0
+    source: The Stephen Lawrence case; Criminal Justice Act 2003 (England and Wales), Part 10
+    scenario: >-
+      In 1993, Stephen Lawrence, a Black teenager, was murdered in a racist attack in London, and
+      the suspects went free. A public inquiry recommended allowing a second trial for murder when
+      compelling new evidence appears, and in 2005 England and Wales changed the law. In 2012, after
+      new forensic evidence emerged, two men were convicted of his murder; one of them had been
+      acquitted of it in 1996.
+    text: Should people acquitted of serious crimes ever be tried again?
+    options:
+      - id: final
+        label: No. Without a final verdict, the state can keep putting people on trial until it wins.
+        reaction: hold
+        principles: { due_process: 1 }
+      - id: narrow
+        label: Only for the gravest crimes, with strong new evidence and a court's approval, as the new law requires.
+        reaction: distinguish
+        principles: { retribution: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think justice for victims should weigh more than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 1 }
+
+  - id: ch_bail
+    type: challenge
+    name: Released before trial
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A man charged with seriously assaulting his former partner is released until his trial,
+      because he hasn't been convicted of anything. A week later he goes to her home and kills her.
+    text: Should he have been held in jail until his trial?
+    options:
+      - id: evidence
+        label: Not without stronger evidence that he was dangerous. Most people released before trial don't commit new crimes.
+        reaction: hold
+        principles: { due_process: 1 }
+      - id: partner
+        label: Violence against a partner, especially with threats, is exactly the kind of case where holding someone is justified.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think public safety should weigh more than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_silence
+    type: challenge
+    name: The right to silence
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Criminal Justice and Public Order Act 1994 (England and Wales), sections 34 to 37
+    scenario: >-
+      Until 1994, juries in England and Wales couldn't be invited to read anything into a suspect's
+      refusal to answer police questions. Police and ministers argued that hardened criminals
+      exploited this while ordinary suspects talked, and the law was changed so that courts can
+      draw conclusions from silence a defendant can't explain.
+    text: Should staying silent ever count against a suspect?
+    options:
+      - id: burden
+        label: No. Innocent people stay silent for many reasons, and the burden of proof belongs to the state.
+        reaction: hold
+        principles: { due_process: 1 }
+      - id: later_story
+        label: Only when a defendant later relies on an explanation they could have given at the start.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. If innocent people usually explain themselves, silence can fairly count for something. I'd lean further toward public safety than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_bail_vote
+    type: challenge
+    name: A tougher bail law
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would require judges to keep anyone charged with a serious violent crime in
+      jail until trial, unless the defendant can show they're not a danger.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { due_process: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

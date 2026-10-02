@@ -39,6 +39,12 @@
 - id: harm_principle
   label: Preventing harm to others
   definition: The state may limit people's freedom to stop them from harming others.
+- id: due_process
+  label: Due process
+  definition: No one should lose their rights until a fair process has proven they did wrong, even if that lets some dangerous people go free.
+- id: obey_law
+  label: Obeying the law
+  definition: Laws should be obeyed even by people who think they're unjust, and changed only through legal means.
 - id: collective_welfare
   label: Collective welfare
   definition: Individuals should accept burdens for the good of the community.

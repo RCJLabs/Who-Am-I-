@@ -1,0 +1,290 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Wording: "monitoring" and "bulk collection", not "spying" or "Big Brother". The stance is about
+# government powers; encryption, scanning, cameras and tracking are circumstances.
+id: surveillance
+domain: rights
+title: Privacy and surveillance
+summary: How much should governments be able to watch, to keep people safe?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: To fight serious crime and terrorism, the government's power to monitor phones and internet use should be…
+    poles: [Warrants for named suspects only, As broad as needed]
+    labels:
+      - Only with a judge's warrant for a named suspect, never in bulk
+      - Mostly warrants, under strict independent oversight
+      - Warrants, plus narrow powers for emergencies
+      - Torn / it depends
+      - Broad enough to collect some data in bulk, with oversight
+      - Broad, including records of everyone's calls and internet use
+      - As broad as needed to stop attacks
+    axes: { civil: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: cameras
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Police using facial-recognition cameras in busy public places to look for wanted suspects should be…
+    poles: [Banned, Allowed]
+    labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
+
+  - id: encryption
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring messaging apps to build in a way for police to read encrypted messages, with a warrant, should be…
+    poles: [Not allowed, Required]
+    labels: [Not allowed, Probably not, Torn, Probably required, Required]
+
+  - id: scanning
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring messaging apps to scan private messages automatically for known child-abuse images should be…
+    poles: [Not allowed, Required]
+    labels: [Not allowed, Probably not, Torn, Probably required, Required]
+    principles: { protect_vulnerable: 0.5 }
+
+  - id: records
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring internet providers to keep a record of the websites every customer visits for a year, in case police need it, should be…
+    poles: [Not allowed, Required]
+    labels: [Not allowed, Probably not, Torn, Probably required, Required]
+    principles: { liberty: -0.5 }
+
+  - id: tracking
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: During a deadly pandemic, using people's phone locations to trace who they've been near should be…
+    poles: [Not allowed, Required]
+    labels: [Not allowed, Probably not, Torn, Probably required, Required]
+    principles: { collective_welfare: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_liberty
+    type: likert
+    points: 7
+    text: When it comes to private messages, the government should leave people free to keep them private, even though some will misuse that freedom to plan crimes.
+    principles: { liberty: 1 }
+    anchor: { principle: liberty, context: private messages, against: catching criminals and preventing attacks }
+
+  # --- Challenges: against broad monitoring --------------------------------------------------------
+  - id: ch_phone_records
+    type: challenge
+    name: Every call on record
+    targets: stance
+    when: stance > 0
+    source: >-
+      US Privacy and Civil Liberties Oversight Board, Report on the Telephone Records Program
+      Conducted under Section 215 of the USA PATRIOT Act (January 2014)
+    scenario: >-
+      For years the US National Security Agency secretly collected records of millions of
+      Americans' phone calls: who called whom, when and for how long. After the program was revealed
+      in 2013, an independent government board reviewed it, including classified material, and
+      could not find a single case in which it had made a concrete difference to a terrorism
+      investigation.
+    text: Does that change your view of collecting everyone's data?
+    options:
+      - id: unseen
+        label: No. One program's record doesn't settle it, and attacks that are prevented are hard to see.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: design
+        label: That program was badly designed. Better-targeted bulk collection can still help.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: Yes. Collecting everyone's data without clear results isn't worth the loss of privacy.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_stasi
+    type: challenge
+    name: The Stasi files
+    targets: stance
+    when: stance > 0
+    source: >-
+      The records of East Germany's Ministry for State Security (the Stasi), opened to the people they
+      described in 1992
+    scenario: >-
+      East Germany's secret police kept files on millions of its own citizens, built from phone taps,
+      opened mail and a vast network of informers that included neighbors, colleagues and sometimes
+      spouses. After Germany reunited, people could read their own files, and many learned who had
+      been informing on them.
+    text: Powers built under good governments can pass to bad ones. Should that limit what any government may collect?
+    options:
+      - id: democracy
+        label: A democracy with courts, a free press and elections is nothing like a dictatorship.
+        reaction: distinguish
+        principles: { authority: 0.5 }
+      - id: threat
+        label: Safeguards can be made strong enough, and the threat from crime and terrorism is real now.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: Yes. What's collected today could be misused tomorrow. I'd allow less than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_contact_tracing
+    type: challenge
+    name: The contact-tracing app
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Statements by Singapore's government to Parliament (January and February 2021)
+    scenario: >-
+      During the COVID-19 pandemic, Singapore asked residents to use a contact-tracing app, and
+      officials said the data would be used only to fight the virus. In January 2021, the government
+      acknowledged that police could also use it in criminal investigations. A law passed the next
+      month limited that to seven kinds of serious crime, such as murder and rape.
+    text: Once data exists, can any promise about how it's used be trusted?
+    options:
+      - id: law
+        label: Yes, if the limits are written into law, as Singapore then did.
+        reaction: hold
+        principles: { authority: 0.5 }
+      - id: serious
+        label: Using it to solve murders is a reasonable trade-off, as long as the rules are public.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: No. The safest data is data that's never collected. I'd allow less monitoring than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenges: for broader powers --------------------------------------------------------------
+  - id: ch_locked_phone
+    type: challenge
+    name: The locked phone
+    targets: stance
+    when: stance < 0
+    source: Original scenario, after the 2016 dispute between Apple and the FBI over an attacker's iPhone
+    scenario: >-
+      Two attackers kill 14 people. Police find one attacker's phone, which may hold evidence of
+      accomplices or further plans, but it's encrypted. A court orders the phone's maker to help
+      unlock it. The company refuses, saying a tool to break into one phone could be used against
+      everyone's.
+    text: Should the company be made to help?
+    options:
+      - id: everyone
+        label: No. A way into one phone is a way into everyone's, and criminals and hostile governments would find it.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: one_phone
+        label: Help with one phone under a court order, yes. A general back door for police, no.
+        reaction: distinguish
+        principles: { due_process: 0.5 }
+      - id: rethink
+        label: Yes, and it makes me think police need more access to digital evidence than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  - id: ch_hidden_abuse
+    type: challenge
+    name: What encryption hides
+    targets: stance
+    when: stance < 0
+    source: National Center for Missing & Exploited Children, CyberTipline reports for 2023 and 2024
+    scenario: >-
+      Tech companies' automated scanning flags millions of suspected child-abuse images every year.
+      In 2024, after one large company switched on end-to-end encryption by default, so that even it
+      could no longer see users' messages, it reported almost 7 million fewer incidents than the year
+      before. The US clearinghouse that receives the reports said encryption was almost entirely the
+      reason.
+    text: Should messaging apps be required to scan for abuse images, even in private messages?
+    options:
+      - id: suspects
+        label: No. Scanning everyone's messages treats everyone as a suspect, and the tools could be turned to other uses.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: narrow
+        label: Matching messages against known abuse images is narrower than reading them. I could accept that one step.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes. Protecting children outweighs some loss of privacy. I'd allow more monitoring than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_machines
+    type: challenge
+    name: Only machines are looking
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Original scenario; for the debate, see Daniel Solove, "'I've Got Nothing to Hide' and Other
+      Misunderstandings of Privacy," San Diego Law Review (2007)
+    scenario: >-
+      Suppose messages were scanned only by computers, looking for clear signs of planned attacks or
+      child abuse. No person would read anything unless the system flagged it, and a judge would have
+      to approve each look.
+    text: If no human reads your messages without a judge's approval, what's lost?
+    options:
+      - id: chilling
+        label: Knowing you're being scanned changes what people say and search for, even if no one reads it.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: errors
+        label: Systems like that flag innocent people, and the rules about what gets flagged can quietly grow.
+        reaction: distinguish
+        principles: { due_process: 0.5 }
+      - id: rethink
+        label: Not much. With those safeguards, I could accept more monitoring than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_cameras_vote
+    type: challenge
+    name: Cameras on the main street
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A city proposes facial-recognition cameras on its main shopping streets. They would check faces
+      against a list of people wanted for serious crimes and delete everyone else's images at once.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
