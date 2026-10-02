@@ -1,0 +1,52 @@
+name: Secular progressive
+topics: [abortion, assisted_dying, vaccine_mandates]
+answers:
+  abortion.stance: 7
+  abortion.importance: 4
+  abortion.life_risk: 5
+  abortion.rape: 5
+  abortion.lethal_anomaly: 5
+  abortion.nonlethal_anomaly: 5
+  abortion.health_risk: 5
+  abortion.finances: 5
+  abortion.minors: 4
+  abortion.gest: any
+  abortion.anchor_ba: 7
+  abortion.anchor_sol: 1
+  abortion.ch_future: body
+  abortion.ch_late_term: rare
+  abortion.ch_sex_selection: culture
+  assisted_dying.stance: 6
+  assisted_dying.importance: 3
+  assisted_dying.withdraw: 5
+  assisted_dying.terminal: 5
+  assisted_dying.chronic: 5
+  assisted_dying.psychiatric: 4
+  assisted_dying.dementia: 4
+  assisted_dying.minors: 3
+  assisted_dying.anchor_ba: 7
+  assisted_dying.anchor_sol: 2
+  assisted_dying.anchor_pv: 3
+  assisted_dying.ch_expansion: no_line
+  assisted_dying.ch_burden: suffering_required
+  assisted_dying.ch_dementia: present_self
+  vaccine_mandates.stance: 6
+  vaccine_mandates.importance: 4
+  vaccine_mandates.hospital: 5
+  vaccine_mandates.school: 5
+  vaccine_mandates.pandemic: 5
+  vaccine_mandates.military: 5
+  vaccine_mandates.religious: 4
+  vaccine_mandates.penalty: testing
+  vaccine_mandates.anchor_ba: 2
+  vaccine_mandates.anchor_pv: 7
+  vaccine_mandates.ch_blood: harm_vs_help
+  vaccine_mandates.ch_low_risk: transmission
+expect:
+  axes: { cultural: "> 0.6" }
+  principles: { bodily_autonomy: "> 0.3" }
+  # The mirror image of the religious conservative.
+  tensions:
+    - bodily_autonomy|abortion|vaccine_mandates
+    - bodily_autonomy|assisted_dying|vaccine_mandates
+    - protect_vulnerable|assisted_dying|vaccine_mandates

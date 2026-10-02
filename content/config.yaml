@@ -1,0 +1,12 @@
+# Engine tuning. These are starting values, to be tuned against simulations and real use.
+deepMinImportance: 0.5 # "Not at all" and "A little" skip deep items
+tension:
+  minGap: 1.0 # about 3 steps apart on a 7-point scale
+  minAnchorWeight: 1
+principleDefaults:
+  minWeight: 1
+  fullWeight: 4
+  minTopics: 1
+display:
+  mixedSpread: 0.6
+  mixedScore: 0.3

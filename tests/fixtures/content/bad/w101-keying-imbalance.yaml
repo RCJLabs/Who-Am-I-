@@ -1,0 +1,11 @@
+# expect: W101@axes:1
+id: bad_w101
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - { id: a, type: likert, points: 5, text: A, axes: { social: 1 } }
+  - { id: b, type: likert, points: 5, text: B, axes: { social: 1 } }
+  - { id: c, type: likert, points: 5, text: C, axes: { social: 1 } }

@@ -1,0 +1,48 @@
+# expect: E008@8
+id: bad_e008_deep
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 5
+    text: Stance?
+    poles: [No, Yes]
+    axes: { social: 1 }
+  - { id: importance, type: importance, text: How much? }
+  - id: ch_con
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Test
+    scenario: S
+    text: T
+    options:
+      - { id: hold, label: H, reaction: hold, principles: { life: 1 } }
+      - { id: rethink, label: Y, reaction: yield, revise: stance, principles: { autonomy: 1 } }
+  - id: ch_pro
+    type: challenge
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Test
+    scenario: S
+    text: T
+    options:
+      - { id: hold, label: H, reaction: hold, principles: { autonomy: 1 } }
+      - { id: rethink, label: Y, reaction: yield, revise: stance, principles: { life: 1 } }
+  - id: ch_mid
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Test
+    scenario: S
+    text: T
+    options:
+      - { id: hold, label: H, reaction: hold, principles: { duty: 1 } }
+      - { id: rethink, label: Y, reaction: yield, revise: stance, principles: { duty: -1 } }

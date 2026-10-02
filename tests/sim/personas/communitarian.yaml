@@ -1,0 +1,47 @@
+name: Communitarian
+topics: [abortion, assisted_dying, vaccine_mandates]
+answers:
+  abortion.stance: 3
+  abortion.importance: 3
+  abortion.life_risk: 5
+  abortion.rape: 4
+  abortion.lethal_anomaly: 4
+  abortion.nonlethal_anomaly: 2
+  abortion.health_risk: 4
+  abortion.finances: 2
+  abortion.minors: 2
+  abortion.anchor_ba: 3
+  abortion.anchor_sol: 6
+  abortion.ch_violinist: killing
+  abortion.ch_rape: harm
+  abortion.ch_ivf: child_suffering
+  assisted_dying.stance: 2
+  assisted_dying.importance: 3
+  assisted_dying.withdraw: 4
+  assisted_dying.terminal: 3
+  assisted_dying.chronic: 2
+  assisted_dying.psychiatric: 1
+  assisted_dying.dementia: 2
+  assisted_dying.minors: 1
+  assisted_dying.anchor_ba: 3
+  assisted_dying.anchor_sol: 6
+  assisted_dying.anchor_pv: 6
+  assisted_dying.ch_rachels: different_act
+  assisted_dying.ch_suffering: pressure
+  vaccine_mandates.stance: 6
+  vaccine_mandates.importance: 4
+  vaccine_mandates.hospital: 5
+  vaccine_mandates.school: 5
+  vaccine_mandates.pandemic: 4
+  vaccine_mandates.military: 5
+  vaccine_mandates.religious: 4
+  vaccine_mandates.penalty: exclusion
+  vaccine_mandates.anchor_ba: 3
+  vaccine_mandates.anchor_pv: 6
+  vaccine_mandates.ch_blood: harm_vs_help
+  vaccine_mandates.ch_low_risk: still_yes
+expect:
+  axes: { civil: "> 0.3", cultural: "< 0" }
+  principles: { protect_vulnerable: "> 0.5" }
+  # Consistent: moderate on bodily autonomy everywhere, protective everywhere.
+  tensions: []

@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Items are verbatim from the Mini-IPIP. Do not edit wording, order or keying: that would make it
+# a different, unvalidated instrument. Scores are raw positions on the scale (no population norms).
+id: mini_ipip
+domain: personality
+title: Big Five (short form)
+summary: Twenty quick statements that estimate the Big Five personality traits.
+tier: core
+evidence: validated
+source: >-
+  Mini-IPIP. Donnellan, Oswald, Baird & Lucas (2006), Psychological Assessment 18(2), 192–203.
+  Items from the International Personality Item Pool (ipip.ori.org).
+license: Public domain (International Personality Item Pool)
+instructions: >-
+  Describe yourself as you generally are now, not as you wish to be in the future. Describe
+  yourself as you honestly see yourself, in relation to other people you know of the same sex as
+  you are, and roughly your same age.
+items:
+  - { id: e1, type: likert, points: 5, labels: accuracy, text: Am the life of the party., axes: { extraversion: 1 } }
+  - { id: a1, type: likert, points: 5, labels: accuracy, text: Sympathize with others' feelings., axes: { agreeableness: 1 } }
+  - { id: c1, type: likert, points: 5, labels: accuracy, text: Get chores done right away., axes: { conscientiousness: 1 } }
+  - { id: n1, type: likert, points: 5, labels: accuracy, text: Have frequent mood swings., axes: { neuroticism: 1 } }
+  - { id: i1, type: likert, points: 5, labels: accuracy, text: Have a vivid imagination., axes: { openness: 1 } }
+  - { id: e2, type: likert, points: 5, labels: accuracy, text: Don't talk a lot., axes: { extraversion: -1 } }
+  - { id: a2, type: likert, points: 5, labels: accuracy, text: Am not interested in other people's problems., axes: { agreeableness: -1 } }
+  - { id: c2, type: likert, points: 5, labels: accuracy, text: Often forget to put things back in their proper place., axes: { conscientiousness: -1 } }
+  - { id: n2, type: likert, points: 5, labels: accuracy, text: Am relaxed most of the time., axes: { neuroticism: -1 } }
+  - { id: i2, type: likert, points: 5, labels: accuracy, text: Am not interested in abstract ideas., axes: { openness: -1 } }
+  - { id: e3, type: likert, points: 5, labels: accuracy, text: Talk to a lot of different people at parties., axes: { extraversion: 1 } }
+  - { id: a3, type: likert, points: 5, labels: accuracy, text: Feel others' emotions., axes: { agreeableness: 1 } }
+  - { id: c3, type: likert, points: 5, labels: accuracy, text: Like order., axes: { conscientiousness: 1 } }
+  - { id: n3, type: likert, points: 5, labels: accuracy, text: Get upset easily., axes: { neuroticism: 1 } }
+  - { id: i3, type: likert, points: 5, labels: accuracy, text: Have difficulty understanding abstract ideas., axes: { openness: -1 } }
+  - { id: e4, type: likert, points: 5, labels: accuracy, text: Keep in the background., axes: { extraversion: -1 } }
+  - { id: a4, type: likert, points: 5, labels: accuracy, text: Am not really interested in others., axes: { agreeableness: -1 } }
+  - { id: c4, type: likert, points: 5, labels: accuracy, text: Make a mess of things., axes: { conscientiousness: -1 } }
+  - { id: n4, type: likert, points: 5, labels: accuracy, text: Seldom feel blue., axes: { neuroticism: -1 } }
+  - { id: i4, type: likert, points: 5, labels: accuracy, text: Do not have a good imagination., axes: { openness: -1 } }

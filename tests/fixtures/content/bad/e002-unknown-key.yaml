@@ -1,0 +1,14 @@
+# expect: E002@11
+id: bad_e002_key
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: slider
+    txt: Typo
+    text: Fine
+    steps: 5
+    poles: [A, B]

@@ -1,0 +1,13 @@
+- id: life
+  title: Life
+  blurb: Test domain.
+- id: personality
+  title: Personality
+  blurb: Test domain.
+- id: interests
+  title: Interests
+  blurb: Test domain.
+- id: identity
+  title: Identity
+  blurb: Test domain.
+  sensitive: true

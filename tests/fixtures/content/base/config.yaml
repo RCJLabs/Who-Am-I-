@@ -1,0 +1,11 @@
+deepMinImportance: 0.5
+tension:
+  minGap: 1.0
+  minAnchorWeight: 1
+principleDefaults:
+  minWeight: 1
+  fullWeight: 3
+  minTopics: 1
+display:
+  mixedSpread: 0.6
+  mixedScore: 0.3

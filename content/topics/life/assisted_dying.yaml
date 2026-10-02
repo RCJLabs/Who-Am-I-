@@ -1,0 +1,273 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Covers euthanasia (a doctor administers) and assisted suicide (the patient takes medication a
+# doctor provides) under the plain-language name "assisted dying".
+id: assisted_dying
+domain: life
+title: Assisted dying
+summary: Should doctors be allowed to help people end their lives?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Medical help to die, for adults who ask for it, should be…
+    poles: [Never allowed, Allowed for any competent adult]
+    labels:
+      - Never allowed
+      - Allowed only in very rare, extreme cases
+      - Allowed only for the terminally ill in their last weeks
+      - Torn / it depends
+      - Allowed for anyone with a terminal illness
+      - Allowed for serious incurable suffering, even if not terminal
+      - Allowed for any competent adult who asks
+    axes: { cultural: 1, civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: withdraw
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A competent patient on life support asks doctors to switch it off, knowing they will die. Doing so should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    principles: { bodily_autonomy: 0.5 }
+
+  - id: terminal
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A mentally competent adult with six months or less to live asks for medication to end their life. Providing it should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    axes: { cultural: 0.5, civil: -0.25 }
+
+  - id: chronic
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A competent adult with severe, incurable suffering that isn't terminal, such as a progressive neurological disease, asks for help to die. This should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    axes: { cultural: 0.5, civil: -0.25 }
+
+  - id: psychiatric
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A competent adult whose only condition is depression that hasn't responded to years of treatment asks for help to die. This should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    axes: { cultural: 0.5, civil: -0.25 }
+
+  - id: dementia
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A person with early dementia writes that if they stop recognizing their family, they want a doctor to end their life. Honoring that request later should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    axes: { cultural: 0.5 }
+
+  - id: minors
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A 16-year-old with a terminal illness asks for assisted dying, and their parents agree. This should be…
+    poles: [Not allowed, Allowed]
+    labels: [Not allowed, Probably not allowed, Torn, Probably allowed, Allowed]
+    axes: { cultural: 0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to ending one's own life with medical help, a competent adult's right to decide what happens to their own body should come first.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: assisted dying, against: protecting people from a decision they can't undo }
+
+  - id: anchor_sol
+    type: likert
+    points: 7
+    text: Deliberately ending a human life is wrong, even when the person asks for it and is suffering.
+    principles: { sanctity_of_life: 1 }
+    anchor: { principle: sanctity_of_life, context: assisted dying, against: the person's own wishes }
+
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Assisted dying should stay restricted to protect vulnerable people from being pressured into it, even if that means some people who truly want it can't have it.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: assisted dying, against: the freedom of people who truly want it }
+
+  # --- Challenges: restrictive side -------------------------------------------------------------
+  - id: ch_rachels
+    type: challenge
+    targets: stance
+    when: stance < 0 and withdraw > 0
+    source: James Rachels, "Active and Passive Euthanasia," New England Journal of Medicine (1975)
+    scenario: >-
+      You'd let a patient refuse life support and die, but not let a doctor help them die.
+      Philosopher James Rachels argued that if the patient's wish and the outcome are the same, the
+      method shouldn't make the moral difference, and that letting someone die slowly can cause
+      more suffering than helping them die quickly.
+    text: Is there a real moral difference?
+    options:
+      - id: different_act
+        label: Yes. Refusing treatment means no one may force anything on your body; asking a doctor to end your life is a different act.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 1, bodily_autonomy: 0.5 }
+      - id: never_kill
+        label: Yes. Doctors must never intentionally cause death, whatever the patient wants.
+        reaction: hold
+        principles: { sanctity_of_life: 1, doing_vs_allowing: 0.5 }
+      - id: rethink
+        label: No, and that makes me more open to assisted dying.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1, doing_vs_allowing: -0.5 }
+
+  - id: ch_suffering
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A woman with terminal cancer is mentally clear and has weeks to live. Her pain can't be fully
+      controlled without sedating her into unconsciousness. She has asked, repeatedly and
+      consistently, for help to die now, while she can still say goodbye.
+    text: Should the law stop her doctor from helping her?
+    options:
+      - id: palliative
+        label: Yes. Palliative sedation can relieve her suffering without deliberately ending her life.
+        reaction: distinguish
+        principles: { sanctity_of_life: 1, doing_vs_allowing: 0.5 }
+      - id: pressure
+        label: Yes. Exceptions, however compassionate, put pressure on vulnerable people.
+        reaction: hold
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No. In a case like this, the law should allow it.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1, bodily_autonomy: 0.5 }
+
+  # --- Challenges: permissive side --------------------------------------------------------------
+  - id: ch_expansion
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Canada's Criminal Code s. 241.2, enacted in 2016 (Bill C-14) and amended in 2021 (Bill C-7)
+    scenario: >-
+      Canada legalized medical assistance in dying in 2016 for adults whose natural death was
+      "reasonably foreseeable." In 2021 it extended eligibility to people with serious incurable
+      conditions who were not dying. Supporters saw fairness; critics saw the line moving once it
+      had been drawn.
+    text: Does the risk of the line moving change your view?
+    options:
+      - id: safeguards
+        label: No. Clear rules and strict safeguards can hold the line where it belongs.
+        reaction: hold
+        principles: { bodily_autonomy: 0.5, protect_vulnerable: 0.5 }
+      - id: no_line
+        label: No. If someone's suffering is real and incurable, being terminally ill shouldn't matter.
+        reaction: distinguish
+        principles: { bodily_autonomy: 1, relief_of_suffering: 0.5 }
+      - id: rethink
+        label: Yes. It makes me more cautious than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_burden
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Original scenario; "burden on family" is a frequently reported concern in Oregon Death with Dignity Act annual reports
+    scenario: >-
+      An 80-year-old woman with a terminal illness, who is not in severe pain, asks for assisted
+      dying because she doesn't want to be a burden on her children. She is mentally competent.
+      In Oregon, which allows assisted dying for the terminally ill, patients frequently report
+      this concern.
+    text: Should her request be granted?
+    options:
+      - id: her_reasons
+        label: Yes. Her reasons are hers to weigh.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: suffering_required
+        label: Only if there's also real suffering. Not wanting to be a burden alone shouldn't qualify.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5, relief_of_suffering: 0.5 }
+      - id: rethink
+        label: This worries me. The law should be stricter than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 1 }
+
+  - id: ch_dementia
+    type: challenge
+    targets: dementia
+    deep: true
+    when: dementia > 0
+    source: Based on a 2016 Dutch case, reviewed by the Supreme Court of the Netherlands in 2020
+    scenario: >-
+      Years ago, a woman with early dementia wrote that she wanted to die once she could no longer
+      recognize her family. Now she doesn't recognize them, but she seems content, and she pulls
+      away when the doctor approaches.
+    text: Should her earlier written request be carried out?
+    options:
+      - id: honor
+        label: Yes. Her earlier, competent self made the decision, and it should be respected.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: present_self
+        label: No. The person in front of us now doesn't want it.
+        reaction: distinguish
+        principles: { protect_vulnerable: 1 }
+      - id: rethink
+        label: No, and advance requests like hers shouldn't be honored at all.
+        reaction: yield
+        revise: dementia
+        principles: { protect_vulnerable: 1, sanctity_of_life: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Original scenario, modeled on laws like Oregon's Death with Dignity Act
+    scenario: >-
+      A proposed law would allow assisted dying for adults with six months or less to live, if two
+      doctors confirm the diagnosis and the person's competence, after a waiting period.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

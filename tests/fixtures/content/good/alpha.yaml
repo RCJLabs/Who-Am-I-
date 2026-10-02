@@ -1,0 +1,120 @@
+id: alpha
+domain: life
+title: Alpha
+summary: Test topic with challenges on both sides.
+tier: core
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Alpha should be…
+    poles: [Banned, Allowed]
+    axes: { social: 1 }
+  - id: importance
+    type: importance
+    text: How much does alpha matter to you?
+  - id: circ
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: In case C, alpha should be…
+    poles: [Banned, Allowed]
+    axes: { social: 0.5 }
+  - id: circ_deep
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: In rare case D, alpha should be…
+    poles: [Banned, Allowed]
+    axes: { social: 0.5 }
+  - id: limit
+    type: choice
+    when: stance >= 0
+    text: Up to what point?
+    axes: { social: 0.5 }
+    options:
+      - { id: none, label: Never, value: -1 }
+      - { id: some, label: Sometimes, value: 0 }
+      - { id: any, label: Always, value: 1 }
+  - id: anchor_auto
+    type: likert
+    points: 7
+    text: In alpha, a person's own choice should come first.
+    principles: { autonomy: 1 }
+    anchor: { principle: autonomy, context: alpha, against: a dependent's life }
+  - id: anchor_life
+    type: likert
+    points: 7
+    text: Ending a life is wrong even when alpha is hard.
+    principles: { life: 1 }
+    anchor: { principle: life, context: alpha }
+  - id: ch_con
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Test source
+    scenario: A scenario aimed at the banned side.
+    text: Does this change your view?
+    options:
+      - { id: hold, label: No, reaction: hold, principles: { life: 1 } }
+      - { id: differ, label: Different case, reaction: distinguish, principles: { duty: 1 } }
+      - { id: rethink, label: Yes, reaction: yield, revise: stance, principles: { autonomy: 1 } }
+  - id: ch_circ
+    type: challenge
+    targets: circ
+    when: stance < 0 and circ > 0
+    source: Test source
+    scenario: Banned overall but allowed in case C?
+    text: Why the exception?
+    options:
+      - { id: differ, label: Because, reaction: distinguish, principles: { duty: 1 } }
+      - { id: drop, label: Drop it, reaction: yield, revise: circ, principles: { life: 1 } }
+  - id: ch_pro
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Test source
+    scenario: A scenario aimed at the allowed side.
+    text: Does this change your view?
+    options:
+      - { id: hold, label: No, reaction: hold, principles: { autonomy: 1 } }
+      - { id: rethink, label: Yes, reaction: yield, revise: stance, principles: { life: 1 } }
+  - id: ch_limit
+    type: challenge
+    targets: limit
+    when: stance > 0 and limit is any
+    source: Test source
+    scenario: Even at the very end?
+    text: Still always?
+    options:
+      - { id: hold, label: Yes, reaction: hold, principles: { autonomy: 1 } }
+      - { id: rethink, label: No, reaction: yield, revise: limit, principles: { life: 0.5 } }
+  - id: ch_deep
+    type: challenge
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Test source
+    scenario: A deep-dive scenario.
+    text: And now?
+    options:
+      - { id: hold, label: Same, reaction: hold, principles: { autonomy: 0.5 } }
+      - { id: rethink, label: Changed, reaction: yield, revise: stance, principles: { life: 0.5 } }
+  - id: ch_mid
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Test source
+    scenario: You're torn. How would you vote?
+    text: Your vote?
+    options:
+      - { id: abstain, label: Abstain, reaction: hold, principles: { duty: 0.5 } }
+      - { id: yes, label: Yes, reaction: yield, revise: stance, principles: { autonomy: 0.5 } }
+  - id: check
+    type: reask
+    target: stance
+    text: Where do you land now?

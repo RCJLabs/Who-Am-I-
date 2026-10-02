@@ -1,0 +1,13 @@
+# expect: W108@12
+id: bad_w108
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: slider
+    steps: 5
+    text: What would an anti-vaxxer say?
+    poles: [A, B]

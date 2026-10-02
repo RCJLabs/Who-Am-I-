@@ -1,0 +1,20 @@
+{
+  "//": "Engine and model are pure: no DOM, no Node. Any use of window/document/fs fails typecheck here.",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "types": [],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/model/**/*.ts", "src/engine/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}

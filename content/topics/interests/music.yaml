@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+id: music
+domain: interests
+title: Music
+summary: What you listen to, and how.
+tier: core
+order: 1
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much does music matter in your life?
+    poles: [Not much, It's part of who I am]
+
+  - id: genres
+    type: multi
+    intensity: true
+    text: Which kinds of music do you enjoy? Tap the ones you like, then rate how much.
+    options:
+      - { id: pop, label: Pop }
+      - { id: rock, label: Rock }
+      - { id: hiphop, label: Hip-hop / rap }
+      - { id: rnb, label: R&B / soul }
+      - { id: electronic, label: Electronic / dance }
+      - { id: country, label: Country }
+      - { id: folk, label: Folk / acoustic }
+      - { id: indie, label: Indie / alternative }
+      - { id: metal, label: Metal }
+      - { id: punk, label: Punk }
+      - { id: jazz, label: Jazz }
+      - { id: blues, label: Blues }
+      - { id: classical, label: Classical }
+      - { id: latin, label: Latin }
+      - { id: reggae, label: Reggae }
+      - { id: asian_pop, label: K-pop / J-pop }
+      - { id: scores, label: Film & game scores }
+      - { id: traditional, label: World / traditional }
+
+  - id: discovery
+    type: slider
+    steps: 5
+    text: When you put music on, you mostly play…
+    poles: [Favorites I already love, Things I haven't heard]
+    axes: { novelty: 1 }
+
+  - id: taste
+    type: slider
+    steps: 5
+    text: Your taste is mostly…
+    poles: [What's popular, Off the beaten path]
+    axes: { mainstream: 1 }
+
+  - id: era
+    type: slider
+    steps: 5
+    text: Most of what you listen to is…
+    poles: [From decades ago, From the last few years]
+
+  - id: hook
+    type: slider
+    steps: 5
+    text: What grabs you first in a song?
+    poles: [The lyrics, The sound]
+
+  - id: listening
+    type: choice
+    shuffle: true
+    text: How do you most often listen?
+    options:
+      - { id: playlists, label: Streaming playlists or radio }
+      - { id: albums, label: "Whole albums, start to finish" }
+      - { id: live, label: Live shows }
+      - { id: background, label: In the background while doing other things }
+
+  - id: live_shows
+    type: rating
+    tags: [interest]
+    text: How often do you go to see live music?
+    poles: [Never, All the time]
+
+  - id: plays
+    type: choice
+    text: Do you play an instrument or sing?
+    options:
+      - { id: no, label: "No" }
+      - { id: used_to, label: I used to }
+      - { id: casual, label: "Yes, for fun" }
+      - { id: serious, label: "Yes, seriously" }

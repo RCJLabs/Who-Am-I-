@@ -1,0 +1,38 @@
+- id: social
+  family: political
+  title: Social
+  description: Test axis.
+  poles: [Tradition, Progress]
+  minWeight: 1
+  fullWeight: 4
+  minTopics: 1
+- id: civil
+  family: political
+  title: Civil
+  description: Test axis.
+  poles: [Liberty, Authority]
+  minWeight: 1
+  fullWeight: 4
+  minTopics: 1
+- id: warmth
+  family: personality
+  title: Warmth
+  description: Test trait.
+  poles: [Cool, Warm]
+  minWeight: 3
+  fullWeight: 4
+- id: novelty
+  family: taste
+  title: Novelty
+  description: Test taste.
+  poles: [Familiar, Novel]
+  minWeight: 1
+  fullWeight: 2
+- id: future
+  family: political
+  title: Future
+  description: Planned axis.
+  poles: [Low, High]
+  minWeight: 1
+  fullWeight: 2
+  planned: true

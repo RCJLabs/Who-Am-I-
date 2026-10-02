@@ -1,0 +1,44 @@
+- id: personality
+  title: Personality
+  blurb: How you tend to think, feel and act.
+- id: values
+  title: Values & Morality
+  blurb: What matters most to you, and how you decide right from wrong.
+- id: life
+  title: Life & Bodily Autonomy
+  blurb: Who decides about life, death and your own body.
+- id: rights
+  title: Rights & Liberties
+  blurb: Speech, guns, privacy, religion and protest.
+- id: economics
+  title: Economics
+  blurb: Taxes, markets, welfare and work.
+- id: society
+  title: Society
+  blurb: Immigration, identity, policing and justice.
+- id: environment
+  title: Environment, Science & Tech
+  blurb: Climate, energy, animals and technology.
+- id: governance
+  title: Governance & the World
+  blurb: How power should be organized, at home and abroad.
+- id: worldview
+  title: Religion & Worldview
+  blurb: God, meaning, free will and what's real.
+  sensitive: true
+- id: epistemics
+  title: How You Know
+  blurb: Whom you trust and how you change your mind.
+- id: relationships
+  title: Relationships & Family
+  blurb: Love, partnership, family and friendship.
+- id: lifestyle
+  title: Lifestyle & Money
+  blurb: Work, money, health and how you spend your days.
+- id: interests
+  title: Interests & Taste
+  blurb: Music, sports, culture and what you do for fun.
+- id: identity
+  title: Identity
+  blurb: Optional. Gender, sexuality and background, in your own words. Never scored.
+  sensitive: true

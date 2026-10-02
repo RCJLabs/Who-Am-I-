@@ -1,0 +1,265 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Wording: "requirement" rather than "mandate" in user-facing text; no labels for either camp.
+id: vaccine_mandates
+domain: life
+title: Vaccine requirements
+summary: Should vaccination ever be required by law, schools or employers?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Requiring people to be vaccinated should be…
+    poles: [Never required, Required for everyone]
+    labels:
+      - Never required. It's always a personal choice
+      - Required only in extreme emergencies
+      - Required only for a few high-risk jobs, like hospital staff
+      - Torn / it depends
+      - Required for school and high-risk jobs
+      - Required for most public activities during serious outbreaks
+      - Required for everyone, with penalties for refusing
+    axes: { civil: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: hospital
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For hospital staff who care for very sick or frail patients, vaccination against flu and similar diseases should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not, Torn, Probably required, Required]
+    axes: { civil: 0.5 }
+
+  - id: school
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For children attending public school, long-established vaccines such as measles should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not, Torn, Probably required, Required]
+    axes: { civil: 0.5 }
+
+  - id: pandemic
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: During a deadly pandemic, a new vaccine for workers at large employers should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not, Torn, Probably required, Required]
+    axes: { civil: 0.5 }
+
+  - id: military
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: For members of the military, vaccination should be…
+    poles: [Not required, Required]
+    labels: [Not required, Probably not, Torn, Probably required, Required]
+    axes: { civil: 0.5 }
+
+  - id: religious
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: People with sincere religious objections to a required vaccine should…
+    poles: [Be exempt, Still have to comply]
+    labels: [Be exempt, Probably be exempt, Torn, Probably have to comply, Still have to comply]
+    axes: { civil: 0.5 }
+
+  - id: penalty
+    type: choice
+    deep: true
+    when: stance > 0
+    text: If a vaccine is required, what should happen to people who refuse?
+    axes: { civil: 0.5 }
+    options:
+      - { id: none, label: Nothing beyond encouragement, value: -1 }
+      - { id: testing, label: Regular testing instead, value: -0.5 }
+      - { id: exclusion, label: Exclusion from some venues and events, value: 0 }
+      - { id: fines, label: Fines, value: 0.5 }
+      - { id: job, label: Losing jobs where they put others at risk, value: 1 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to vaccination, a person's right to decide what happens to their own body should come first, even during a serious outbreak.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: vaccination, against: the health of other people }
+
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Vaccination should be required to protect vulnerable people who can't be vaccinated themselves, even if that means some people who truly object have to comply.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: vaccination, against: the freedom of people who object }
+
+  # --- Challenges: against requirements ----------------------------------------------------------
+  - id: ch_drunk_driving
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: >-
+      John Stuart Mill, On Liberty (1859): "The only purpose for which power can be rightfully
+      exercised over any member of a civilized community, against his will, is to prevent harm to others."
+    scenario: >-
+      The law stops people from driving drunk, not because of the risk to themselves, but because
+      they might kill someone else. Mill's harm principle says preventing harm to others is exactly
+      when the state may limit freedom. An unvaccinated person with a contagious disease can also
+      infect people who never chose that risk.
+    text: If the state can ban drunk driving, why not require a vaccine?
+    options:
+      - id: privilege
+        label: Driving on public roads is a privilege; my own body is not.
+        reaction: distinguish
+        principles: { bodily_autonomy: 1 }
+      - id: small_risk
+        label: The risk from one unvaccinated person is small and indirect, unlike a drunk driver's.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: Fair point. When the risk to others is serious, a requirement can be justified.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 1, collective_welfare: 0.5 }
+
+  - id: ch_quarantine
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Original scenario; public health laws in many countries allow compulsory isolation of infectious people
+    scenario: >-
+      During an outbreak of a deadly, contagious disease, public health laws in many countries let
+      authorities isolate an infected person against their will.
+    text: If forced isolation can be justified, why not a vaccine that prevents the infection in the first place?
+    options:
+      - id: isolation_too
+        label: Forced isolation shouldn't be allowed either.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: proven_danger
+        label: Isolation restricts someone who is proven to be a danger; a vaccine requirement changes a healthy person's body.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5, harm_principle: 0.5 }
+      - id: rethink
+        label: It's a fair comparison. A requirement can be justified in a serious outbreak.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 1 }
+
+  - id: ch_measles
+    type: challenge
+    targets: school
+    when: school < 0
+    source: Original scenario; the first measles vaccine dose is usually given at 12–15 months (CDC schedule)
+    scenario: >-
+      Measles is one of the most contagious diseases known. Babies usually can't get their first
+      measles shot until around their first birthday, and some children can't be vaccinated because
+      of cancer treatment. In a classroom, they depend on the people around them being vaccinated.
+    text: Should unvaccinated children without a medical reason be kept out of school during a measles outbreak?
+    options:
+      - id: parents_decide
+        label: No. Parents, not the state, should make medical decisions for their children.
+        reaction: hold
+        principles: { bodily_autonomy: 0.5, personal_responsibility: 0.5 }
+      - id: outbreak_only
+        label: Yes, during an outbreak, but not as a standing requirement.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: rethink
+        label: Yes, and school vaccine requirements make sense more generally.
+        reaction: yield
+        revise: school
+        principles: { protect_vulnerable: 1 }
+
+  # --- Challenges: for requirements --------------------------------------------------------------
+  - id: ch_blood
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Blood shortages cost lives, and giving blood is quick, safe and nearly painless for healthy
+      adults. A law could require every healthy adult to donate once a year.
+    text: If protecting others can justify a required vaccine, should blood donation be required too?
+    options:
+      - id: consistent
+        label: Yes. If it saves lives at little cost, that's consistent.
+        reaction: hold
+        principles: { collective_welfare: 1 }
+      - id: harm_vs_help
+        label: No. Vaccines stop you from harming others; not donating blood harms no one, it just doesn't help.
+        reaction: distinguish
+        principles: { harm_principle: 1, doing_vs_allowing: 1 }
+      - id: rethink
+        label: No, and that makes me less comfortable with vaccine requirements.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_low_risk
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      Suppose a new vaccine mainly protects older people. For a healthy 20-year-old the personal
+      benefit is small, and serious side effects, while rare, do occur. The vaccine only partly
+      reduces the chance of passing the virus on.
+    text: Should healthy young adults still be required to take it?
+    options:
+      - id: still_yes
+        label: Yes. Partial protection for others still matters, and the risks are small.
+        reaction: hold
+        principles: { collective_welfare: 1 }
+      - id: transmission
+        label: Only if it substantially reduces transmission. Otherwise it should be their choice.
+        reaction: distinguish
+        principles: { harm_principle: 1 }
+      - id: rethink
+        label: No, and this makes me more skeptical of broad requirements.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would require hospital and care-home staff to be vaccinated against a new,
+      deadly pandemic disease, with exemptions only for medical reasons.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

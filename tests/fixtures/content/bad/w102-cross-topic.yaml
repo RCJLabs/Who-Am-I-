@@ -1,0 +1,14 @@
+# expect: W102@14
+id: bad_w102
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: slider
+    steps: 5
+    text: Q
+    poles: [A, B]
+    when: alpha.stance > 0

@@ -1,0 +1,51 @@
+# Hand-written, independent of the scoring weights: the only check that catches keying mistakes.
+# Answers: numbers are scale steps, strings are option ids. Re-asks keep the previous answer.
+name: Religious conservative
+topics: [abortion, assisted_dying, vaccine_mandates]
+answers:
+  abortion.stance: 2
+  abortion.importance: 4
+  abortion.life_risk: 5
+  abortion.rape: 2
+  abortion.lethal_anomaly: 2
+  abortion.nonlethal_anomaly: 1
+  abortion.health_risk: 2
+  abortion.finances: 1
+  abortion.minors: 1
+  abortion.anchor_ba: 2
+  abortion.anchor_sol: 7
+  abortion.ch_violinist: responsibility
+  abortion.ch_ivf: child_suffering
+  assisted_dying.stance: 1
+  assisted_dying.importance: 4
+  assisted_dying.withdraw: 4
+  assisted_dying.terminal: 1
+  assisted_dying.chronic: 1
+  assisted_dying.psychiatric: 1
+  assisted_dying.dementia: 1
+  assisted_dying.minors: 1
+  assisted_dying.anchor_ba: 2
+  assisted_dying.anchor_sol: 7
+  assisted_dying.anchor_pv: 7
+  assisted_dying.ch_rachels: never_kill
+  assisted_dying.ch_suffering: palliative
+  vaccine_mandates.stance: 2
+  vaccine_mandates.importance: 3
+  vaccine_mandates.hospital: 3
+  vaccine_mandates.school: 3
+  vaccine_mandates.pandemic: 1
+  vaccine_mandates.military: 4
+  vaccine_mandates.religious: 1
+  vaccine_mandates.anchor_ba: 6
+  vaccine_mandates.anchor_pv: 3
+  vaccine_mandates.ch_drunk_driving: privilege
+  vaccine_mandates.ch_quarantine: proven_danger
+expect:
+  axes: { cultural: "< -0.6", civil: "> -0.5" }
+  principles: { sanctity_of_life: "> 0.6" }
+  # Bodily autonomy low on abortion and assisted dying but high on vaccines; protecting the
+  # vulnerable high on assisted dying but low on vaccines.
+  tensions:
+    - bodily_autonomy|abortion|vaccine_mandates
+    - bodily_autonomy|assisted_dying|vaccine_mandates
+    - protect_vulnerable|assisted_dying|vaccine_mandates

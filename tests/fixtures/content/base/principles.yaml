@@ -1,0 +1,9 @@
+- id: autonomy
+  label: Autonomy
+  definition: Test principle.
+- id: life
+  label: Life
+  definition: Test principle.
+- id: duty
+  label: Duty
+  definition: Test principle.
