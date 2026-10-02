@@ -47,7 +47,7 @@ describe('good fixtures', () => {
   });
 
   it('orders topics by domain, then order, then id', () => {
-    expect(bundle!.topics.map((t) => t.id)).toEqual(['alpha', 'beta', 'traits', 'tunes']);
+    expect(bundle!.topics.map((t) => t.id)).toEqual(['alpha', 'beta', 'gamma', 'traits', 'tunes']);
   });
 
   it('produces a stable content version', () => {

@@ -1,0 +1,14 @@
+id: gamma
+domain: life
+title: Gamma
+summary: Sensitive topic.
+tier: extended
+evidence: custom
+sensitive: true
+items:
+  - id: belief
+    type: slider
+    steps: 5
+    text: Gamma belief?
+    poles: [Low, High]
+    axes: { social: 1 }
