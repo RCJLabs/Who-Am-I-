@@ -8,6 +8,7 @@ items:
   - id: genres
     type: multi
     intensity: true
+    tags: [interest]
     text: Which do you enjoy?
     options:
       - { id: jazz, label: Jazz }

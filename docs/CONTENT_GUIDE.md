@@ -54,7 +54,7 @@ and should be fixed or justified.
 | `importance` | "how much does this matter to you" | 4 points; gates deep items |
 | `choice` | one of several options | `shuffle: true` for unordered options |
 | `pair` | this-or-that trade-offs (values) | optional slightly/strongly |
-| `multi` | pick several (genres, sports) | `intensity: true` rates each pick 1–5 |
+| `multi` | pick several (genres, sports) | `intensity: true` rates each pick 1–5; tag `interest` to appear in interests |
 | `challenge` | a thought experiment aimed at an answer | see below |
 | `reask` | "where do you land now?" | due automatically after a challenge to its target |
 

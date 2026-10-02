@@ -100,7 +100,7 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
     for (const it of t.items) {
       const r = s.values.get(it.id);
       if (!r) continue;
-      if (r.kind === 'multi' && t.domain !== 'identity') {
+      if (r.kind === 'multi' && it.tags.includes('interest') && t.domain !== 'identity') {
         for (const [opt, v] of r.picks) interests[`${it.id}.${opt}`] = r4(v);
       } else if (it.type === 'rating' && it.tags.includes('interest') && r.kind === 'scale') {
         interests[it.id] = r4((r.v + 1) / 2);
