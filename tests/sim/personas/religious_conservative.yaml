@@ -366,6 +366,7 @@ expect:
     public_safety: { due_process: "< 0" }
     healthcare: { market_limits: "< 0" }
     welfare: { retribution: "> 0.5" }
+    trade: { loyalty: "> 0.3" }
     inheritance: { retribution: "< 0" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the

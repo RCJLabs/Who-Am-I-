@@ -362,8 +362,11 @@ expect:
     protest: { obey_law: "< 0" }
     torture: { doing_vs_allowing: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
-    healthcare: { market_limits: "> 0.5" }
-    welfare: { retribution: "< 0" }
+    taxes: { equality: "> 0.5" }
+    healthcare: { market_limits: "> 0.5", equality: "> 0.5", liberty: "< 0" }
+    welfare: { retribution: "< 0", liberty: "> 0.5" }
+    unions: { liberty: "< 0" }
+    housing: { liberty: "< -0.5" }
     inheritance: { retribution: "> 0.5" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death

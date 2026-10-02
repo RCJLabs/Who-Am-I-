@@ -351,8 +351,13 @@ expect:
     surveillance: { liberty: "> 0.5" }
     guns: { due_process: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
-    healthcare: { market_limits: "< -0.5" }
-    welfare: { retribution: "> 0.5" }
+    taxes: { equality: "< -0.5" }
+    healthcare: { market_limits: "< -0.5", liberty: "> 0.5" }
+    welfare: { retribution: "> 0.5", liberty: "> 0.5" }
+    regulation: { liberty: "> 0.5" }
+    unions: { liberty: "> 0.5" }
+    trade: { loyalty: "< -0.5" }
+    housing: { liberty: "> 0.5" }
     inheritance: { retribution: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
