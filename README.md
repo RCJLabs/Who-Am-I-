@@ -18,7 +18,15 @@ npm run content:lint   # lint and compile the question content
 npm test               # unit tests, lint fixtures, simulated respondents
 npm run check          # svelte-check + TypeScript (app, engine, node)
 npm run build          # production build into dist/
+npm run test:e2e       # browser tests against the build (run `npm run build` first)
 npm run schemas        # regenerate JSON Schemas after changing src/model
+```
+
+Extras:
+
+```sh
+node scripts/persona-backup.ts tests/sim/personas/libertarian.yaml out.json   # a test persona as an importable backup
+node scripts/gen-icons.ts                                                     # re-render app icons after a design change
 ```
 
 ## Layout

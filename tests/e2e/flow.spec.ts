@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.ts';
 import { answerFlow, freshStart } from './helpers.ts';
 
 test('a challenge can move you, the other side then challenges you, and results remember it', async ({ page }) => {
