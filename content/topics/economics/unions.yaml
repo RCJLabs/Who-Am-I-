@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
-# Unions' legal power, from strikes to bargaining. Each side meets a case its allies find hard:
-# police unions and the winter of 1978–79 for the pro-union side; the Triangle fire and the
-# Nordic countries, which have strong unions but no legal minimum wage, for the other.
+# The legal powers that let unions bargain for workers. Each side meets a case its allies find
+# hard: police unions and the winter of 1978–79 for the pro-union side; the Triangle fire and the
+# Nordic countries, which have strong unions but no national minimum wage set by law, for the other.
 id: unions
 domain: economics
 title: Unions
-summary: How much power should workers have to bargain together and go on strike?
+summary: How much legal power should unions have to bargain for workers?
 tier: extended
 order: 6
 evidence: custom
@@ -15,16 +15,16 @@ items:
   - id: stance
     type: slider
     steps: 7
-    text: The power of unions to bargain for workers and go on strike should be…
-    poles: [Sharply limited by law, Strongly protected by law]
+    text: The law should give unions…
+    poles: [No special powers, Strong powers to bargain for workers]
     labels:
-      - Sharply limited; unions do more harm than good
-      - Limited, especially strikes in essential services
-      - Somewhat limited
+      - No special powers; employers shouldn't have to deal with them
+      - Few powers, with strikes tightly restricted
+      - Some powers, with firm limits on strikes
       - Torn / it depends
-      - Protected, with fair limits
-      - Strongly protected, so workers can organize without pressure from employers
-      - Strongly protected, with most workers covered by union agreements
+      - Real powers, including the right to strike within fair limits
+      - Strong powers, so workers can organize without pressure from employers
+      - Strong powers, so that union agreements cover most workers
     axes: { economic: -0.5 }
 
   - id: importance
@@ -54,7 +54,7 @@ items:
     steps: 5
     deep: true
     tags: [circumstance]
-    text: Setting pay for a whole industry through bargaining between unions and employers, as much of northern Europe does, is…
+    text: Setting minimum pay for a whole industry through bargaining between unions and groups of employers is…
     poles: [A bad idea, A good idea]
     labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
 
@@ -108,7 +108,7 @@ items:
     text: Do strong unions protect workers, or only some of them?
     options:
       - id: industry_wide
-        label: Unions that bargain for whole industries, as in the Nordic countries, cover outsiders too.
+        label: Unions that bargain for whole industries cover outsiders too.
         reaction: distinguish
         principles: { equality: 0.5 }
       - id: most_gain
@@ -207,15 +207,15 @@ items:
 
   - id: ch_nordic
     type: challenge
-    name: No legal minimum wage
+    name: No minimum wage law
     targets: stance
     deep: true
     when: stance < 0
     source: International Labour Organization and OECD reports on wage setting in the Nordic countries
     scenario: >-
-      Denmark, Sweden, Norway, Finland and Iceland have no legal minimum wage at all. Instead,
-      agreements between unions and employers set pay for 70% to 90% of workers, and these countries
-      are among the richest in the world.
+      Denmark, Sweden, Norway, Finland and Iceland have no national minimum wage set by law.
+      Instead, agreements between unions and employers set pay for 70% to 90% of workers, and these
+      countries are among the richest in the world.
     text: Could strong unions be an alternative to government setting wages?
     options:
       - id: high_trust

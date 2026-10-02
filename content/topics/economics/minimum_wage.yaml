@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # The evidence on jobs is genuinely contested, so each side's challenges include studies that cut
-# against it. Yields toward a higher minimum record equality; toward a lower one, liberty.
+# against it. Stance steps are levels relative to typical pay, not reasons, so they stay ordered.
+# Yields toward a higher minimum record equality; toward a lower one, liberty.
 id: minimum_wage
 domain: economics
 title: Minimum wage
@@ -15,15 +16,18 @@ items:
     type: slider
     steps: 7
     text: A legal minimum wage should be…
-    poles: [Abolished, "High, even if it costs some jobs"]
+    help: >-
+      Typical pay here means the median hourly wage of full-time workers: half earn more and half
+      earn less. If typical pay is $24 an hour, half of it is $12.
+    poles: [Abolished, Two-thirds of typical pay or more]
     labels:
-      - Abolished; pay should be agreed freely
-      - Kept low, so it doesn't cost jobs
-      - Modest, rising with prices
+      - Abolished
+      - About a third of typical pay
+      - About 40% of typical pay
       - Torn / it depends
-      - Raised to a wage people can live on
-      - High, at about two-thirds of the typical wage
-      - High, even if it costs some jobs
+      - About half of typical pay
+      - About 60% of typical pay
+      - Two-thirds of typical pay or more
     axes: { economic: -1 }
 
   - id: importance
@@ -218,13 +222,13 @@ items:
     text: Should taxpayers top up the wages employers choose to pay?
     options:
       - id: benefits
-        label: Yes. Targeted benefits help people in need without the risk to jobs that a high minimum brings.
-        reaction: distinguish
-        principles: { collective_welfare: 0.5 }
-      - id: costs
-        label: The answer is lower taxes and cheaper housing, not forcing wages up.
+        label: Yes. Benefits aimed at people in need help them without the risk to jobs that a high minimum brings.
         reaction: hold
-        principles: { liberty: 0.5 }
+        principles: { relief_of_suffering: 0.5 }
+      - id: costs
+        label: Her real problem is the cost of housing. Bringing that down would help more than forcing wages up.
+        reaction: distinguish
+        value: 0
       - id: rethink
         label: No. Employers should pay a wage people can live on. The minimum should be higher than I said.
         reaction: yield

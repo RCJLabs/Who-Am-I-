@@ -1,0 +1,266 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How far taxes should be used to move money from richer to poorer people. values/fairness asks
+# what a fair distribution is, so this topic avoids its cases (the veil, Wilt Chamberlain, the
+# camping trip). No anchor: a "people deserve what they earn" anchor here would only restate the
+# stance, so just deserts is anchored in welfare and inheritance instead.
+id: taxes
+domain: economics
+title: Taxes and redistribution
+summary: How far should taxes be used to move money from richer to poorer people?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Taxes and benefits should move money from richer to poorer people…
+    poles: [Not at all, A great deal]
+    labels:
+      - Not at all; it's wrong in principle
+      - Only enough to keep people out of destitution
+      - Some, with taxes kept low
+      - Torn / it depends
+      - A fair amount, with higher taxes on the well-off
+      - A lot, to make incomes much more equal
+      - A great deal, to make incomes far more equal
+    axes: { economic: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: top_rate
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A tax rate of more than 50% on the highest incomes is…
+    poles: [Too high, Fair]
+    labels: [Too high, Probably too high, Torn, Probably fair, Fair]
+    principles: { equality: 0.5 }
+
+  - id: wealth_tax
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A yearly tax of 1% to 2% on fortunes worth more than $50 million is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { equality: 0.5 }
+
+  - id: flat_tax
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A flat tax, where everyone pays the same share of their income, is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+    principles: { equality: -0.5 }
+
+  - id: corporate
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Taxes on company profits should be…
+    poles: [Much lower, Much higher]
+    labels: [Much lower, Somewhat lower, About right, Somewhat higher, Much higher]
+
+  # --- Challenges: for more redistribution --------------------------------------------------------
+  - id: ch_ownership
+    type: challenge
+    name: The myth of ownership
+    targets: stance
+    when: stance < 0
+    source: >-
+      Liam Murphy and Thomas Nagel, The Myth of Ownership: Taxes and Justice (2002)
+    scenario: >-
+      Philosophers Liam Murphy and Thomas Nagel argued that your income before tax isn't a natural
+      starting point. What you earn depends on property rights, contracts, courts and money itself,
+      which exist only within a legal system that taxes pay for. So taxes don't take away what was
+      already yours; they're part of the rules that decide what's yours in the first place.
+    text: Does that change how you see taxes?
+    options:
+      - id: market_value
+        label: No. The market decides what my work is worth, and taxes still take part of it.
+        reaction: hold
+        principles: { retribution: 0.5 }
+      - id: shared_costs
+        label: Taxes for the institutions everyone uses are fair. Taking more to give to others is different.
+        reaction: distinguish
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: Yes. If income depends on shared institutions, sharing more of it seems fairer than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_extra_dollar
+    type: challenge
+    name: The last dollar and the first
+    targets: stance
+    when: stance < 0
+    source: Arthur Pigou, The Economics of Welfare (1920), on diminishing marginal utility
+    scenario: >-
+      An extra $1,000 can mean the rent paid or a winter coat for a child in a family earning $20,000
+      a year. To a family earning $2 million, it barely registers. Economists since Arthur Pigou have
+      argued that moving money from the second family to the first does far more good than harm.
+    text: If money matters less the more you have, should taxes take that into account?
+    options:
+      - id: more_needed
+        label: Doing more good isn't enough. Taking from one family to give to another needs more justification than that.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: targeted
+        label: Help the struggling family directly, but there's no need to make incomes more equal.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: rethink
+        label: Yes. It makes me want more redistribution than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_public_research
+    type: challenge
+    name: Who built the smartphone
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Mariana Mazzucato, The Entrepreneurial State (2013)
+    scenario: >-
+      Economist Mariana Mazzucato points out that the internet, GPS and the technology behind voice
+      assistants all grew out of research paid for by governments. Companies that became hugely
+      profitable built on that taxpayer-funded work.
+    text: Do people who profit from public investment owe more back?
+    options:
+      - id: real_work
+        label: No. Companies already pay taxes, and turning research into products people want is real work that deserves its reward.
+        reaction: hold
+        principles: { retribution: 0.5 }
+      - id: royalties
+        label: Governments should get a return on research they fund, like a share of the profits. That's different from taxing people's incomes more.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. Success built on shared investment should be shared more than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5, collective_welfare: 0.5 }
+
+  # --- Challenges: for less redistribution --------------------------------------------------------
+  - id: ch_france
+    type: challenge
+    name: France's 75% tax
+    targets: stance
+    when: stance > 0
+    source: French Finance Ministry figures, as reported in December 2014
+    scenario: >-
+      In 2012 France's new government promised a 75% tax on incomes above €1 million a year. After
+      France's constitutional court struck down the first version, it became a tax paid by employers on
+      salaries above €1 million. It raised €260 million in its first year and €160 million in its
+      second, a tiny share of France's tax revenue, and was dropped in 2015.
+    text: If very high top rates raise so little, are they worth having?
+    options:
+      - id: design
+        label: That tax was badly designed and temporary. A well-designed top rate can raise real money.
+        reaction: distinguish
+        value: 0
+      - id: limit_extremes
+        label: Yes. Limiting extreme incomes matters even if it raises little.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: rethink
+        label: No, and it makes me think taxing the rich achieves less than I assumed.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_wealth_taxes
+    type: challenge
+    name: The disappearing wealth taxes
+    targets: stance
+    when: stance > 0
+    source: OECD, The Role and Design of Net Wealth Taxes in the OECD (2018)
+    scenario: >-
+      In 1990, 12 countries in the OECD, a group of mostly rich democracies, taxed people's total
+      wealth every year. By 2017 only 4 still did. Governments that scrapped these taxes pointed to
+      the little money they raised, their high cost to run and wealthy people moving their money
+      abroad.
+    text: If wealth taxes keep disappointing in practice, should they still be tried?
+    options:
+      - id: loopholes
+        label: Yes. They failed because of loopholes and competition between countries. Better-designed, coordinated taxes could work.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: other_ways
+        label: Maybe not, but other taxes, on inheritances and investment gains, can do the same job.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Maybe not. It makes me more cautious about taxing the rich heavily than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_forced_labor
+    type: challenge
+    name: Forced labor?
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Robert Nozick, Anarchy, State, and Utopia (1974)
+    scenario: >-
+      Philosopher Robert Nozick wrote that "taxation of earnings from labor is on a par with forced
+      labor." Taking what someone earns in some of their working hours, he argued, is like making
+      them work those hours for someone else.
+    text: Is taxing earnings to help others like forcing people to work for them?
+    options:
+      - id: choice
+        label: No. Unlike forced laborers, people still choose whether, where and how much to work.
+        reaction: distinguish
+        value: 0
+      - id: need
+        label: Even if it were, helping people in need would justify it.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: There's something to it. I'd use less of people's earnings for redistribution than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Childcare for a higher top rate
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise the tax rate on income above $200,000 a year by 5 percentage points
+      and use the money to make childcare free for working parents.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -1,0 +1,274 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Who pays for healthcare. Insurance everyone must buy, with help for those who can't afford it
+# (as in Switzerland and the Netherlands), sits on the market side of the middle. The anchor is
+# the things-money-shouldn't-buy frame, applied to paying for faster treatment. Lifestyle cases
+# like smoking are left to life/paternalism.
+id: healthcare
+domain: economics
+title: Paying for healthcare
+summary: Should healthcare be paid for by each person, or by everyone through taxes?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Healthcare should be paid for mainly by…
+    poles: [Each person, Government alone]
+    labels:
+      - Each person, through savings or insurance they choose to buy
+      - Each person, with government covering only the poor and the elderly
+      - Insurance everyone must buy, with government help for people who can't afford it
+      - Torn / it depends
+      - Government, for everyone, with private insurance allowed on top
+      - Government, for everyone, with private insurance only for extras
+      - Government alone, with no private healthcare
+    axes: { economic: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: pre_existing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting insurers charge more to people who are already ill is…
+    poles: [Wrong, Fair]
+    labels: [Wrong, Probably wrong, Torn, Probably fair, Fair]
+    principles: { equality: -0.5 }
+
+  - id: user_fees
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Charging a small fee for each visit to a doctor, so that people don't use care they don't need, is…
+    poles: [Wrong, Sensible]
+    labels: [Wrong, Probably wrong, Torn, Probably sensible, Sensible]
+
+  - id: mandate
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring everyone to have health insurance, and fining those who don't, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { liberty: -0.5 }
+
+  - id: drug_prices
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Governments capping the prices of medicines, even if drug companies then develop fewer new ones, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_ml
+    type: likert
+    points: 7
+    text: Paying a doctor for faster treatment should not be allowed, even if both adults freely agree.
+    principles: { market_limits: 1 }
+    anchor: { principle: market_limits, context: medical treatment, against: patients' freedom to pay for quicker care }
+
+  # --- Challenges: for paying collectively ---------------------------------------------------------
+  - id: ch_spending
+    type: challenge
+    name: Paying more, living less
+    targets: stance
+    when: stance < 0
+    source: Peterson-KFF Health System Tracker, from OECD health statistics
+    scenario: >-
+      The United States relies on private health insurance more than any other rich country. It
+      spends about $13,400 per person a year on healthcare, about 1.8 times as much as other wealthy
+      countries on average. Yet Americans live about four years less: 78.4 years on average, against
+      82.7 in those countries.
+    text: Is relying on private insurance giving Americans good value?
+    options:
+      - id: innovation
+        label: Much of that money pays for choice, and for new treatments the whole world ends up using.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: not_free
+        label: American healthcare is tangled in regulation and far from a free market. That's where the waste comes from.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No, and it makes me think healthcare should be paid for collectively more than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_bill
+    type: challenge
+    name: The bill
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      In a country where health insurance is voluntary, a self-employed man goes without it to save
+      money. Then he has a heart attack. The hospital treats him, as the law requires in an
+      emergency, but sends him a bill for $80,000, and he has to sell his home to pay it.
+    text: Should falling ill ever cost someone their home?
+    options:
+      - id: choice
+        label: He chose to go without insurance. Others shouldn't have to pay for that choice.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: catastrophic
+        label: Cover for disasters like this should be required, but everyday care can still be paid for privately.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think healthcare should be paid for collectively more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_arrow
+    type: challenge
+    name: Not like other markets
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Kenneth Arrow, "Uncertainty and the Welfare Economics of Medical Care," American Economic Review (1963)
+    scenario: >-
+      Economist Kenneth Arrow argued in 1963 that healthcare can't work like an ordinary market. You
+      can't predict when you'll need it or how much it will cost, you can't easily judge whether the
+      treatment you're sold is the right one, and when you need it most you're in no position to shop
+      around.
+    text: Can healthcare be bought and sold like other things?
+    options:
+      - id: markets_adapt
+        label: Mostly, yes. Insurance deals with the unpredictability, and reviews and reputations help people judge quality.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: routine
+        label: Emergencies are different, but routine care, like glasses or check-ups, can be bought like anything else.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No, and it makes me think healthcare should be paid for collectively more than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: for paying individually ---------------------------------------------------------
+  - id: ch_waiting
+    type: challenge
+    name: The waiting list
+    targets: stance
+    when: stance > 0
+    source: NHS England, Consultant-led Referral to Treatment Waiting Times (September 2023)
+    scenario: >-
+      England's National Health Service is free for everyone and paid for by taxes. In September
+      2023, 7.77 million cases were waiting for planned hospital treatment, roughly one for every
+      seven people in England.
+    text: Is a free system that makes people wait better than one where they pay?
+    options:
+      - id: wait_better
+        label: Yes. Waiting is better than going without care because you can't pay.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: funding
+        label: The waits come from underfunding and poor management, not from paying for care through taxes.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think people should pay their own way more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_nice
+    type: challenge
+    name: Worth the cost?
+    targets: stance
+    when: stance > 0
+    source: National Institute for Health and Care Excellence (NICE), methods for evaluating health technologies
+    scenario: >-
+      In England, an agency called NICE decides which new treatments the NHS will pay for. It
+      generally turns down treatments that cost more than about £25,000 to £35,000 for each year of
+      healthy life they add. So some cancer drugs that could give patients extra months of life
+      aren't paid for.
+    text: Should a government agency decide which treatments are worth paying for?
+    options:
+      - id: rationing
+        label: Every system rations care. Better to do it openly, using evidence, than by who can pay.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: top_up
+        label: Someone has to decide, but patients should be free to pay for what the public system won't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. Patients and their doctors should decide. I'd rely on private insurance more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_chaoulli
+    type: challenge
+    name: Access to a waiting list
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Chaoulli v. Quebec (Attorney General), 2005 SCC 35
+    scenario: >-
+      In 2005 a Quebec doctor and a patient who had waited about a year for a hip replacement won a
+      case at Canada's Supreme Court against the province's ban on private insurance for care the
+      public system covers. "Access to a waiting list is not access to health care," the Chief
+      Justice wrote.
+    text: Should people be free to pay for treatment the public system makes them wait for?
+    options:
+      - id: two_tier
+        label: No. If the well-off can pay to skip the queue, the public system loses their support and many of its doctors.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: fix_waits
+        label: The answer is shorter waits in the public system, not a private one alongside it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me think private care should play a bigger part than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Free at the doctor's
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would make all visits to the doctor and all prescriptions free, paid for by a
+      rise of 1 percentage point in income tax.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

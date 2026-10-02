@@ -12,7 +12,6 @@
   minWeight: 1.5
   fullWeight: 6
   minTopics: 2
-  planned: true
 - id: civil
   family: political
   title: Civil

@@ -1,0 +1,273 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Government regulation of business in general; climate and the environment get their own topics.
+# Thalidomide and Sam Peltzman's study of the drug rules passed after it face opposite sides, so
+# each side meets the strongest case about the same rules. Yields toward more regulation record
+# preventing harm to others; toward less, liberty.
+id: regulation
+domain: economics
+title: Regulating business
+summary: Does government regulation of business protect people, or hold everyone back?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Government regulation of business generally…
+    poles: [Does more harm than good, Is essential to protect people]
+    labels:
+      - Does far more harm than good
+      - Does more harm than good, beyond basic safety rules
+      - Goes too far in many areas
+      - Torn / it depends
+      - Is mostly needed, with some gaps to fill
+      - Is essential, and business needs closer watching
+      - Is essential to protect people, and should be much stronger
+    axes: { economic: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: licensing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring a government license for jobs like hairdressing or interior design is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { liberty: -0.5 }
+
+  - id: price_rises
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Banning steep price rises on essentials like bottled water and fuel during an emergency is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: untested_drugs
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting seriously ill patients take drugs that haven't finished safety testing is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: break_up
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Breaking up the largest technology companies is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Challenges: for regulation ------------------------------------------------------------------
+  - id: ch_thalidomide
+    type: challenge
+    name: Thalidomide
+    targets: stance
+    when: stance < 0
+    source: US Food and Drug Administration history; Frances Kelsey's review of thalidomide (1960–1962)
+    scenario: >-
+      In the late 1950s and early 1960s, thalidomide was sold in dozens of countries, including to
+      pregnant women for morning sickness. It caused severe birth defects in thousands of babies. In
+      the US, a government reviewer, Frances Kelsey, refused to approve it in 1960 because the
+      evidence of its safety was too thin, and the country was largely spared.
+    text: Can buyers protect themselves from dangers no one can see?
+    options:
+      - id: costs_too
+        label: Thalidomide was a tragedy, but slow approvals cost lives too. Doctors and courts can catch most dangers.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: medicine
+        label: Medicines need strict testing. Most other businesses don't need that kind of control.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think regulation matters more than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_standard_oil
+    type: challenge
+    name: Standard Oil
+    targets: stance
+    when: stance < 0
+    source: Standard Oil Co. of New Jersey v. United States, 221 U.S. 1 (1911)
+    scenario: >-
+      By the 1880s, Standard Oil refined about 90% of America's oil. It used its size to win secret
+      discounts from railroads that its rivals couldn't get, and drove many of them out of business
+      or bought them up. In 1911 the US Supreme Court ordered it broken up.
+    text: Without government, what stops one company from taking over a market?
+    options:
+      - id: competition
+        label: New rivals and new technology. Monopolies rarely last unless government protects them.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: monopoly
+        label: Breaking up monopolies is one thing. Regulating how ordinary businesses run is another.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not enough. It makes me think government should watch business more closely than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_self_check
+    type: challenge
+    name: Checking their own work
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      US House Committee on Transportation and Infrastructure, Final Committee Report: The Design,
+      Development and Certification of the Boeing 737 MAX (September 2020)
+    scenario: >-
+      Two crashes of Boeing's new 737 MAX airliner, in Indonesia in 2018 and Ethiopia in 2019, killed
+      346 people. US regulators had let Boeing's own employees do much of the work of certifying the
+      plane as safe. A committee of the US Congress later faulted both the company and the regulator.
+    text: Should companies be trusted to check their own safety?
+    options:
+      - id: incentives
+        label: Mostly, yes. Flying is extremely safe, and companies have every reason to avoid disasters like these.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: aviation
+        label: Aviation is a special case, where one mistake can kill hundreds. Most industries aren't like that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think regulation should be stronger than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  # --- Challenges: against regulation --------------------------------------------------------------
+  - id: ch_licensing
+    type: challenge
+    name: A license to work
+    targets: stance
+    when: stance > 0
+    source: >-
+      The White House, Occupational Licensing: A Framework for Policymakers (2015); Morris Kleiner's
+      research on occupational licensing
+    scenario: >-
+      In the early 1950s, about 1 in 20 American workers needed a government license to do their
+      job. By 2008 about 1 in 4 did, from hairdressers to, in Louisiana, florists. Most studies find
+      that licensing raises prices and makes it harder for people to start in a trade, without
+      clearly improving the quality of the work.
+    text: Do rules like these protect the public, or the people already in the trade?
+    options:
+      - id: protect
+        label: The public. Licenses guard against bad work. Some go too far, but the principle is sound.
+        reaction: hold
+        principles: { harm_principle: 0.5 }
+      - id: fix_these
+        label: Bad licensing rules are a reason to fix those rules, not to cut regulation in general.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Too often, the people in the trade. It makes me want less regulation than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_capture
+    type: challenge
+    name: Who the rules serve
+    targets: stance
+    when: stance > 0
+    source: >-
+      George Stigler, "The Theory of Economic Regulation," Bell Journal of Economics and Management
+      Science (1971)
+    scenario: >-
+      In 1971 economist George Stigler argued that "as a rule, regulation is acquired by the industry
+      and is designed and operated primarily for its benefit." Big companies can afford to shape the
+      rules and to pay the costs of following them, which keeps smaller rivals out.
+    text: Does regulation end up protecting the companies it's meant to control?
+    options:
+      - id: independent
+        label: Sometimes. The answer is independent regulators with real power, not fewer rules.
+        reaction: hold
+        principles: { harm_principle: 0.5 }
+      - id: some_industries
+        label: That's true in some industries, but not of basic rules on safety and pollution.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Too often, yes. It makes me want less regulation than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_unseen
+    type: challenge
+    name: The drugs that never came
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Sam Peltzman, "An Evaluation of Consumer Protection Legislation: The 1962 Drug Amendments,"
+      Journal of Political Economy (1973)
+    scenario: >-
+      In 1962, after a morning-sickness drug called thalidomide caused severe birth defects in
+      thousands of babies, the US began requiring drug companies to prove that new medicines work,
+      not just that they're safe. Economist Sam Peltzman found that the number of new drugs
+      introduced each year then fell from about 40 to about 16. He argued that the harm from drugs
+      delayed or never developed outweighed the harm the rules prevented.
+    text: Do strict rules cost lives that no one sees?
+    options:
+      - id: worth_it
+        label: Some delay is the price of safety. Approving drugs too fast costs lives too.
+        reaction: hold
+        principles: { harm_principle: 0.5 }
+      - id: fast_track
+        label: Rules should be quicker for drugs that treat deadly diseases, and strict for the rest.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes, and it makes me want less regulation than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Two out for one in
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would require the government to scrap two existing rules on business for every
+      new one it introduces.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
