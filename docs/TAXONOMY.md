@@ -58,10 +58,10 @@ The full map of what Who Am I covers.
 | Free speech (hateful speech, platforms, campuses) | core | custom | ✅ | Skokie, the Rwanda media case, Popper's paradox of tolerance |
 | Guns | core | custom | ✅ | Australia's 1996 buyback, guns and suicide, Switzerland, removal before a hearing |
 | Privacy and surveillance | core | custom | ✅ | bulk phone records, the Stasi, encryption and scanning |
-| Religious liberty vs. anti-discrimination | extended | custom | ✅ | the Ashers cake, headscarf bans, conscientious objectors |
+| Faith and equality law (religious liberty vs. anti-discrimination) | extended | custom | ✅ | the Ashers cake, headscarf bans, conscientious objectors |
 | Protest and civil disobedience | extended | custom | ✅ | Birmingham Jail, the Salt March, clinic and tractor blockades |
 | Torture and interrogation | extended | custom | ✅ | the ticking bomb, the Frankfurt kidnapping case, Algeria |
-| Due process vs. public safety | extended | custom | ✅ | the Birmingham Six, Blackstone's ratio, double jeopardy |
+| Rights of the accused (due process vs. public safety) | extended | custom | ✅ | the Birmingham Six, Blackstone's ratio, double jeopardy |
 
 ### Economics
 | Topic | Tier | Status |
@@ -204,8 +204,8 @@ can surface in both directions.
 | Respect for the natural order | GMOs | gene editing, surrogacy | *(effects only)* |
 | Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger); torture | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many, torture |
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
-| Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, due process vs. public safety |
-| Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | religious liberty, protest |
+| Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, rights of the accused |
+| Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -220,8 +220,8 @@ personas in `tests/sim/personas` pin these down.
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | at half weight: what makes a society fair (shows once a second topic feeds it) |
-| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, due process vs. public safety); at quarter weight: religious liberty |
-| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, religious liberty |
+| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
+| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, faith and equality law |
 | Diplomatic | political | National ↔ Global | *(planned)* |
 | Stability or change | values | Stability ↔ Change | what matters most |
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
