@@ -1,0 +1,264 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# The evidence on jobs is genuinely contested, so each side's challenges include studies that cut
+# against it. Yields toward a higher minimum record equality; toward a lower one, liberty.
+id: minimum_wage
+domain: economics
+title: Minimum wage
+summary: Should the law set a minimum wage, and how high?
+tier: core
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: A legal minimum wage should be…
+    poles: [Abolished, "High, even if it costs some jobs"]
+    labels:
+      - Abolished; pay should be agreed freely
+      - Kept low, so it doesn't cost jobs
+      - Modest, rising with prices
+      - Torn / it depends
+      - Raised to a wage people can live on
+      - High, at about two-thirds of the typical wage
+      - High, even if it costs some jobs
+    axes: { economic: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: youth
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A lower minimum wage for workers under 21 is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  - id: regional
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A lower minimum wage in regions where living costs are lower is…
+    poles: [Unfair, Sensible]
+    labels: [Unfair, Probably unfair, Torn, Probably sensible, Sensible]
+
+  - id: gig
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring delivery apps to pay riders at least the minimum wage for all the time they're logged in and available is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: small_business
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting very small businesses pay less than the minimum wage is…
+    poles: [Unfair, Sensible]
+    labels: [Unfair, Probably unfair, Torn, Probably sensible, Sensible]
+
+  # --- Challenges: against a high minimum ---------------------------------------------------------
+  - id: ch_cbo
+    type: challenge
+    name: The jobs trade-off
+    targets: stance
+    when: stance > 0
+    source: >-
+      US Congressional Budget Office, The Effects on Employment and Family Income of Increasing the
+      Federal Minimum Wage (July 2019)
+    scenario: >-
+      In 2019 the US Congressional Budget Office estimated that raising the federal minimum wage to
+      $15 an hour by 2025 would raise pay for 17 million workers and lift 1.3 million people out of
+      poverty, but would most likely cost 1.3 million jobs. It put the likely job losses anywhere
+      from almost none to 3.7 million.
+    text: Is a raise for many worth the jobs of some?
+    options:
+      - id: worth_it
+        label: Yes. Higher pay for millions outweighs the risk to some jobs, which may never be lost.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: careful
+        label: Set carefully, region by region, the losses can be kept small.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. Losing a job is far worse than getting a smaller raise. The minimum should be lower than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_seattle
+    type: challenge
+    name: Seattle's experiment
+    targets: stance
+    when: stance > 0
+    source: >-
+      Ekaterina Jardim et al., NBER Working Paper 23532 (2017); Michael Reich et al., UC Berkeley
+      Institute for Research on Labor and Employment (2017)
+    scenario: >-
+      When Seattle raised its minimum wage to $13 an hour in 2016, two research teams studied the
+      results and reached opposite conclusions. A University of Washington team found that employers
+      cut low-wage workers' hours so much that their pay fell by about $125 a month on average. A
+      Berkeley team found no job losses in the city's restaurants.
+    text: When experts disagree this much, how high should the minimum go?
+    options:
+      - id: anyway
+        label: Raise it anyway. The evidence of harm is mixed, while the harm of low pay is certain.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: steps
+        label: Raise it step by step and watch the evidence, as countries with expert pay commissions do.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Uncertainty like that is a reason for caution. It should be lower than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_first_job
+    type: challenge
+    name: The first rung
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      A 17-year-old with no work experience can't find a job: employers say she isn't worth the
+      minimum wage yet. Without a first job, she can't gain the experience that would make her worth
+      more.
+    text: Does a high minimum wage shut out people like her?
+    options:
+      - id: youth_rate
+        label: That's what a lower rate for young workers is for. The adult minimum can still be high.
+        reaction: distinguish
+        value: 0
+      - id: training
+        label: Training and apprenticeships are the answer, not lower pay.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: Yes. It should be lower than I said, so newcomers can get a start.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for a higher minimum -----------------------------------------------------------
+  - id: ch_new_jersey
+    type: challenge
+    name: New Jersey's fast-food restaurants
+    targets: stance
+    when: stance < 0
+    source: David Card and Alan Krueger, American Economic Review (1994)
+    scenario: >-
+      In 1992 New Jersey raised its minimum wage to $5.05 an hour, while neighboring Pennsylvania
+      kept it at $4.25. Economists David Card and Alan Krueger surveyed 410 fast-food restaurants on
+      both sides of the border and found no sign that New Jersey lost jobs. Card later shared the
+      Nobel Prize in economics, partly for this work.
+    text: If a higher minimum didn't cost jobs, what's the case against it?
+    options:
+      - id: modest
+        label: One modest rise in one industry doesn't show that big rises are safe.
+        reaction: distinguish
+        value: 0
+      - id: freedom
+        label: Even if it costs no jobs, the state shouldn't decide what people may agree to be paid.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: Not much, and it makes me think the minimum should be higher than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_two_thirds
+    type: challenge
+    name: Two-thirds of the typical wage
+    targets: stance
+    when: stance < 0
+    source: UK Low Pay Commission reports, 2016–2025
+    scenario: >-
+      Since 2016 the UK has raised its minimum wage for adults far faster than typical pay, until in
+      2024 it reached two-thirds of the typical wage. The independent commission that recommends the
+      rate has found little evidence that this cost jobs.
+    text: Does that change your view?
+    options:
+      - id: boom
+        label: It happened while employers were hiring strongly. In a downturn the story could be different.
+        reaction: distinguish
+        value: 0
+      - id: prices
+        label: No. Even without job losses, someone pays, through higher prices or thinner profits.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: Yes. A higher minimum looks safer than I thought.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_full_time
+    type: challenge
+    name: Working full time, still short
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      A woman works 40 hours a week at the minimum wage and still can't cover rent and food without
+      government benefits. Taxpayers make up the difference between her pay and what she needs.
+    text: Should taxpayers top up the wages employers choose to pay?
+    options:
+      - id: benefits
+        label: Yes. Targeted benefits help people in need without the risk to jobs that a high minimum brings.
+        reaction: distinguish
+        principles: { collective_welfare: 0.5 }
+      - id: costs
+        label: The answer is lower taxes and cheaper housing, not forcing wages up.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: No. Employers should pay a wage people can live on. The minimum should be higher than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A steady rise
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise the minimum wage by 10% a year for three years, then link it to
+      typical pay so that it keeps pace.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

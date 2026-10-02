@@ -1,0 +1,265 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Unions' legal power, from strikes to bargaining. Each side meets a case its allies find hard:
+# police unions and the winter of 1978–79 for the pro-union side; the Triangle fire and the
+# Nordic countries, which have strong unions but no legal minimum wage, for the other.
+id: unions
+domain: economics
+title: Unions
+summary: How much power should workers have to bargain together and go on strike?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: The power of unions to bargain for workers and go on strike should be…
+    poles: [Sharply limited by law, Strongly protected by law]
+    labels:
+      - Sharply limited; unions do more harm than good
+      - Limited, especially strikes in essential services
+      - Somewhat limited
+      - Torn / it depends
+      - Protected, with fair limits
+      - Strongly protected, so workers can organize without pressure from employers
+      - Strongly protected, with most workers covered by union agreements
+    axes: { economic: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: essential
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Banning strikes by nurses, firefighters and other essential workers is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: agency_fee
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring workers covered by a union contract to pay the union a fee, even if they don't join, is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+    principles: { liberty: -0.5 }
+
+  - id: sectoral
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Setting pay for a whole industry through bargaining between unions and employers, as much of northern Europe does, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: board_seats
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring large companies to give workers seats on their boards, as Germany does, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Challenges: against strong unions ----------------------------------------------------------
+  - id: ch_winter
+    type: challenge
+    name: The winter of discontent
+    targets: stance
+    when: stance > 0
+    source: Strikes in Britain, winter 1978–79
+    scenario: >-
+      In the winter of 1978–79, waves of strikes swept Britain. Uncollected rubbish piled up in
+      London's Leicester Square, and in Liverpool striking gravediggers left the dead unburied while
+      the council stored bodies in a factory. Public anger helped elect a government that went on to
+      curb union power sharply.
+    text: Should unions have the power to do that?
+    options:
+      - id: essential_only
+        label: Strikes in essential services can be limited without weakening unions everywhere else.
+        reaction: distinguish
+        value: 0
+      - id: leverage
+        label: Yes. The power to strike is what makes bargaining work, even when it's painful.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: rethink
+        label: No. Union power needs firmer limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_outsiders
+    type: challenge
+    name: Insiders and outsiders
+    targets: stance
+    when: stance > 0
+    source: Assar Lindbeck and Dennis Snower, The Insider-Outsider Theory of Employment and Unemployment (1988)
+    scenario: >-
+      Economists Assar Lindbeck and Dennis Snower argued that strong unions can raise pay for people
+      who already have jobs while making it harder for the unemployed, often young people and
+      newcomers, to get hired at all.
+    text: Do strong unions protect workers, or only some of them?
+    options:
+      - id: industry_wide
+        label: Unions that bargain for whole industries, as in the Nordic countries, cover outsiders too.
+        reaction: distinguish
+        principles: { equality: 0.5 }
+      - id: most_gain
+        label: Most workers still gain, and outsiders gain too once they're hired.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: rethink
+        label: Only some of them. I'd give unions less power than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_police
+    type: challenge
+    name: Police unions
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Dhammika Dharmapala, Richard McAdams and John Rappaport, "Collective Bargaining Rights and
+      Police Misconduct: Evidence from Florida" (2019)
+    scenario: >-
+      After a 2003 court ruling gave Florida's sheriffs' deputies the right to bargain collectively,
+      cases of violent misconduct by deputies rose by about 40% compared with city police officers,
+      who weren't affected. The researchers point to contract rules that make it harder to
+      discipline officers.
+    text: Should unions be able to shield their members from discipline like this?
+    options:
+      - id: police_different
+        label: Police carry weapons and power over citizens, so their unions need special limits.
+        reaction: distinguish
+        principles: { protect_vulnerable: 0.5 }
+      - id: fair_process
+        label: Workers need protection from unfair discipline. The fix is better oversight, not weaker unions.
+        reaction: hold
+        principles: { due_process: 0.5 }
+      - id: rethink
+        label: No, and it makes me warier of strong union protections in general.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for strong unions --------------------------------------------------------------
+  - id: ch_triangle
+    type: challenge
+    name: The Triangle fire
+    targets: stance
+    when: stance < 0
+    source: The Triangle Shirtwaist Factory fire, New York (1911)
+    scenario: >-
+      In 1911 a fire swept through a garment factory in New York. Managers had locked some of the
+      doors, and 146 workers, most of them young immigrant women, died. Two years earlier, workers
+      in the industry had struck for better and safer conditions, and the factory's owners had
+      refused to recognize their union. The fire led New York to pass dozens of new safety laws.
+    text: Without strong unions, who stands up for workers like them?
+    options:
+      - id: laws
+        label: Safety laws and inspectors do that now. Unions aren't needed for it.
+        reaction: distinguish
+        value: 0
+      - id: free_bargaining
+        label: Workers can bargain together if they choose, but the law shouldn't tip the scales.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: It's a reason to protect unions more than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_inequality
+    type: challenge
+    name: Unions and inequality
+    targets: stance
+    when: stance < 0
+    source: Bruce Western and Jake Rosenfeld, American Sociological Review (2011)
+    scenario: >-
+      Between 1973 and 2007, the share of men in American private-sector jobs who belonged to a union
+      fell from 34% to 8%. Sociologists Bruce Western and Jake Rosenfeld estimated that this decline
+      explains a fifth to a third of the rise in wage inequality over the same years.
+    text: If weaker unions mean wider gaps in pay, should the law protect them more?
+    options:
+      - id: other_causes
+        label: Inequality has many causes; technology and trade matter more.
+        reaction: distinguish
+        value: 0
+      - id: fair_outcome
+        label: Gaps that come from free bargaining aren't unfair.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: Yes. Stronger unions would be worth it. I'd protect them more than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_nordic
+    type: challenge
+    name: No legal minimum wage
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: International Labour Organization and OECD reports on wage setting in the Nordic countries
+    scenario: >-
+      Denmark, Sweden, Norway, Finland and Iceland have no legal minimum wage at all. Instead,
+      agreements between unions and employers set pay for 70% to 90% of workers, and these countries
+      are among the richest in the world.
+    text: Could strong unions be an alternative to government setting wages?
+    options:
+      - id: high_trust
+        label: That works in small, high-trust countries with a long history of cooperation. It can't simply be copied.
+        reaction: distinguish
+        value: 0
+      - id: voluntary
+        label: Even so, unions shouldn't get legal privileges. It should all be voluntary.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: Yes, and it makes me more open to strong unions than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Recognizing a union
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would require employers to recognize a union once a majority of their workers
+      sign up to join it, without a separate secret-ballot election.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
