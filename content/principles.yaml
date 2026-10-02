@@ -1,5 +1,32 @@
 # Moral principles. Answers record how strongly each is endorsed per topic; anchor items
-# (matched wording across topics) are what the tension detector compares.
+# (matched wording across topics) are what the tension detector compares. Listed in display order.
+
+# --- Moral foundations: the moral_foundations topic measures these directly. After Moral
+# Foundations Theory (Haidt, Graham and colleagues; MFQ-2 splits fairness into equality and
+# proportionality), plus liberty. Issue topics feed them too.
+- id: relief_of_suffering
+  label: Care
+  definition: Preventing suffering and caring for people in need should come first.
+- id: equality
+  label: Equality
+  definition: People should be treated equally, and gaps in wealth and opportunity should be narrowed.
+- id: retribution
+  label: Just deserts
+  definition: People should get what they deserve, with rewards that match their effort and punishment that matches their wrongdoing.
+- id: loyalty
+  label: Loyalty
+  definition: People should stand by their family, community and country, even when it's costly.
+- id: authority
+  label: Respect for authority
+  definition: Legitimate authority, tradition and social order deserve respect.
+- id: purity
+  label: Purity
+  definition: Some things are degrading or sacred, whether or not anyone is harmed.
+- id: liberty
+  label: Liberty
+  definition: People should be free to run their own lives, without being controlled by governments or others.
+
+# --- Principles invoked by particular issues and dilemmas ---
 - id: bodily_autonomy
   label: Bodily autonomy
   definition: People have the right to decide what happens to their own bodies.
@@ -15,27 +42,21 @@
 - id: collective_welfare
   label: Collective welfare
   definition: Individuals should accept burdens for the good of the community.
-- id: relief_of_suffering
-  label: Relief of suffering
-  definition: Reducing suffering should come first.
 - id: personal_responsibility
   label: Personal responsibility
   definition: People take on obligations through their voluntary choices.
 - id: doing_vs_allowing
   label: Doing vs. allowing
   definition: Actively causing harm is worse than failing to prevent it.
-- id: retribution
-  label: Just deserts
-  definition: People who do serious wrong deserve punishment in proportion to what they did.
 - id: market_limits
   label: Things money shouldn't buy
   definition: Some things shouldn't be bought and sold, even between consenting adults.
 - id: precaution
   label: Caution with the irreversible
   definition: When a mistake can't be undone, hold back, even at the cost of real benefits.
-- id: equality
-  label: Equality
-  definition: People should be treated equally, and gaps in wealth and opportunity should be narrowed.
 - id: natural_order
   label: Respect for the natural order
   definition: Some things about human life and nature shouldn't be engineered or altered, even for good ends.
+- id: truth
+  label: Truth
+  definition: Truth matters in itself, so we shouldn't deceive others, or ourselves, even for comfort.

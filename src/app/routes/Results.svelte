@@ -13,6 +13,7 @@
   const feeders = axisFeeders(bundle);
   const axes = Object.values(bundle.axes);
   const political = axes.filter((a) => a.family === 'political');
+  const values = axes.filter((a) => a.family === 'values');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
 
@@ -84,6 +85,27 @@
         {/each}
       </div>
     </section>
+
+    {#if values.length}
+      <section class="section">
+        <p class="section-title">{copy.results.values}</p>
+        <div class="card">
+          {#each values as a (a.id)}
+            {@const sc = profile.axes[a.id]!}
+            <SpectrumBar
+              title={a.title}
+              poles={a.poles}
+              score={sc.score}
+              confidence={sc.confidence}
+              description={a.description}
+              mixed={isMixed(sc, bundle)}
+              feeders={feeders.get(a.id) ?? []}
+              testid="axis-{a.id}"
+            />
+          {/each}
+        </div>
+      </section>
+    {/if}
 
     {#if positions.length}
       <section class="section">

@@ -43,7 +43,12 @@ export async function answerFlow(page: Page, script: Script, max = 80): Promise<
 
     if (typeof answer === 'number') await page.getByTestId(`scale-${key}-${answer}`).click();
     else if (answer === 'skip' || answer === 'unsure' || answer === 'keep') await page.getByTestId(`${answer}-${key}`).click();
-    else await page.getByTestId(`opt-${key}-${answer}`).click();
+    else {
+      const type = await question.getAttribute('data-type');
+      await page.getByTestId(`opt-${key}-${answer}`).click();
+      // This-or-that questions then ask "slightly or strongly"; scripts mean strongly.
+      if (type === 'pair') await page.getByTestId(`strength-${key}-2`).click();
+    }
 
     // Each question is keyed, so the answered one leaves the page before the next appears.
     if (answered) await page.waitForFunction((el) => !el.isConnected, answered);

@@ -13,11 +13,11 @@ import { buildProfile } from '../../src/engine/profile.ts';
 import { openTensions } from '../../src/engine/tensions.ts';
 import { realBundle } from '../helpers.ts';
 import { engineTensions, runRespondent, type Policy, type RunResult } from './harness.ts';
-import { constantPolicy, ideologyPolicy, randomAnswer, randomPolicy, scriptedPolicy } from './policies.ts';
+import { constantPolicy, ideologyPolicy, personaResponses, randomAnswer, randomPolicy, scriptedPolicy } from './policies.ts';
 
 const b: Bundle = realBundle();
 const issueTopics = b.topics.filter((t) => t.stance).map((t) => t.id);
-const spectrumAxes = Object.values(b.axes).filter((a) => a.family === 'political' || a.family === 'taste');
+const spectrumAxes = Object.values(b.axes).filter((a) => a.family === 'political' || a.family === 'values' || a.family === 'taste');
 
 function profileOf(run: RunResult): Profile {
   return buildProfile(run.state, { includeSensitive: true, appVersion: 'sim', now: '2026-01-01T00:00:00.000Z', resolutions: run.resolutions });
@@ -40,31 +40,32 @@ describe('personas (hand-written answers; catch keying mistakes)', () => {
   it.each(files)('%s', (file) => {
     const persona = parse(readFileSync(join(dir, file), 'utf8')) as {
       topics: string[];
-      answers: Record<string, number | string>;
+      answers: Record<string, number | string | string[]>;
       expect: {
         axes?: Record<string, string>;
         topicAxes?: Record<string, Record<string, string>>;
         principles?: Record<string, string>;
+        topicPrinciples?: Record<string, Record<string, string>>;
         tensions: string[];
       };
     };
-    const answers: Record<string, Response> = {};
-    for (const [id, a] of Object.entries(persona.answers)) {
-      answers[id] = typeof a === 'number' ? { kind: 'scale', step: a } : { kind: 'option', option: a };
-    }
-    const run = runRespondent(b, scriptedPolicy(answers), { topics: persona.topics, tensions: engineTensions, tensionPolicy: () => null });
+    const run = runRespondent(b, scriptedPolicy(personaResponses(persona.answers)), { topics: persona.topics, tensions: engineTensions, tensionPolicy: () => null });
     const p = profileOf(run);
 
     for (const [axis, rule] of Object.entries(persona.expect.axes ?? {})) check(p.axes[axis]?.score, rule, `axis ${axis}`);
     for (const [pr, rule] of Object.entries(persona.expect.principles ?? {})) check(p.principles[pr]?.score, rule, `principle ${pr}`);
-    // Per topic, so one topic's keying mistake can't hide in a whole-spectrum average.
+    // Per topic, so one topic's keying mistake can't hide in a profile-wide average.
     const obs = observe(run.state, { includeSensitive: true });
+    const topicScore = (topic: string, target: string): number | null => {
+      const mine = obs.filter((o) => o.topic === topic && o.target === target);
+      const w = mine.reduce((sum, o) => sum + o.w, 0);
+      return w > 0 ? mine.reduce((sum, o) => sum + o.w * o.x, 0) / w : null;
+    };
     for (const [topic, rules] of Object.entries(persona.expect.topicAxes ?? {})) {
-      for (const [axis, rule] of Object.entries(rules)) {
-        const mine = obs.filter((o) => o.topic === topic && o.target === `axis:${axis}`);
-        const w = mine.reduce((sum, o) => sum + o.w, 0);
-        check(w > 0 ? mine.reduce((sum, o) => sum + o.w * o.x, 0) / w : null, rule, `${topic} on axis ${axis}`);
-      }
+      for (const [axis, rule] of Object.entries(rules)) check(topicScore(topic, `axis:${axis}`), rule, `${topic} on axis ${axis}`);
+    }
+    for (const [topic, rules] of Object.entries(persona.expect.topicPrinciples ?? {})) {
+      for (const [pr, rule] of Object.entries(rules)) check(topicScore(topic, `principle:${pr}`), rule, `${topic} on principle ${pr}`);
     }
     expect(p.tensions.map((t) => t.key).sort()).toEqual([...persona.expect.tensions].sort());
 
@@ -128,6 +129,10 @@ describe('ideology bots (pipeline sanity; they use the content weights)', () => 
     ['axis:civil', -1],
     ['axis:novelty', 1],
     ['axis:mainstream', -1],
+    ['axis:change', 1],
+    ['axis:others', -1],
+    ['axis:outcomes', 1],
+    ['axis:impartiality', -1],
   ] as [Target, number][])('%s toward %i lands on that side', (target, dir) => {
     const run = runRespondent(b, ideologyPolicy({ [target]: dir }, 'hold'));
     const score = profileOf(run).axes[target.slice(5)]!.score!;
@@ -151,10 +156,21 @@ describe('tensions on real content', () => {
 });
 
 describe('challenge behavior on real content', () => {
+  // The ideology bot answers a stance from its effects, so it only takes a side on stances that
+  // feed a spectrum. Stances with no spectrum are covered by the pinned-extremes test below.
+  const toward = (dir: number): Partial<Record<Target, number>> =>
+    Object.fromEntries(spectrumAxes.filter((a) => a.family !== 'taste').map((a) => [`axis:${a.id}`, dir]));
+  const scoredStance = (id: string): boolean => {
+    const t = b.topics.find((x) => x.id === id)!;
+    const stance = t.items.find((i) => i.id === t.stance)!;
+    return 'effects' in stance && stance.effects.some((e) => e.target.startsWith('axis:'));
+  };
+  const sidedTopics = issueTopics.filter(scoredStance);
+
   it('a respondent who always reconsiders gets every move credited to the right challenge', () => {
-    const run = runRespondent(b, ideologyPolicy({ 'axis:cultural': 1, 'axis:civil': 1 }, 'yield'), { topics: issueTopics });
+    const run = runRespondent(b, ideologyPolicy(toward(1), 'yield'), { topics: sidedTopics });
     const p = profileOf(run);
-    for (const id of issueTopics) {
+    for (const id of sidedTopics) {
       const c = p.topics[id]!.challenges;
       expect(c.asked, id).toBeGreaterThan(0);
       for (const m of c.moves) expect(m.source.startsWith(`${id}.`), m.source).toBe(true);
@@ -163,10 +179,11 @@ describe('challenge behavior on real content', () => {
   });
 
   it('a respondent who always holds never moves', () => {
-    const run = runRespondent(b, ideologyPolicy({ 'axis:cultural': -1, 'axis:civil': -1 }, 'hold'), { topics: issueTopics });
+    const run = runRespondent(b, ideologyPolicy(toward(-1), 'hold'), { topics: sidedTopics });
     const p = profileOf(run);
-    for (const id of issueTopics) {
+    for (const id of sidedTopics) {
       const c = p.topics[id]!.challenges;
+      expect(c.asked, id).toBeGreaterThan(0);
       expect(c.moved, id).toBe(0);
       expect(c.held + c.distinguished, id).toBe(c.asked);
     }

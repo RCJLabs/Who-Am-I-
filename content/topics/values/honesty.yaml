@@ -1,0 +1,260 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# From Kant's absolute ban on lying to purely consequence-based views. Each side's challenges are
+# aimed at the steps they actually fit (e.g. the murderer at the door only at "always wrong").
+id: honesty
+domain: values
+title: Lying and honesty
+summary: Is lying ever right? When, and to whom?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Lying is…
+    poles: [Always wrong, Only the results matter]
+    labels:
+      - Always wrong, even to save a life
+      - Wrong, except to prevent serious harm
+      - Usually wrong, though small, kind lies are fine
+      - Torn / it depends
+      - Fine when it spares someone pain
+      - Fine whenever it does more good than harm
+      - Not wrong in itself; only the results matter
+    axes: { outcomes: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: gift
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A friend gives you a gift you dislike and asks if you like it. Saying you love it is…
+    poles: [Wrong, Fine]
+    labels: [Wrong, Probably wrong, Torn, Probably fine, Fine]
+    principles: { truth: -0.5 }
+
+  - id: secret
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Someone asks you directly about a secret a close friend trusted you with. Lying to protect it is…
+    poles: [Wrong, Fine]
+    labels: [Wrong, Probably wrong, Torn, Probably fine, Fine]
+    principles: { loyalty: 0.5, truth: -0.5 }
+
+  - id: resume
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Exaggerating your experience on a job application, when you're sure you could do the job, is…
+    poles: [Wrong, Fine]
+    labels: [Wrong, Probably wrong, Torn, Probably fine, Fine]
+    principles: { truth: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_truth
+    type: likert
+    points: 7
+    text: When it comes to what we tell other people, the truth matters more than comfort, even when it hurts them.
+    principles: { truth: 1 }
+    anchor: { principle: truth, context: what we tell others, against: sparing people pain }
+
+  # --- Challenges: against lying ---------------------------------------------------------------
+  - id: ch_murderer
+    type: challenge
+    name: The murderer at the door
+    targets: stance
+    when: stance == -1
+    source: Immanuel Kant, "On a Supposed Right to Lie from Philanthropy" (1797)
+    scenario: >-
+      A friend is hiding in your house from a man who wants to kill him. The man knocks and asks
+      whether your friend is inside. Immanuel Kant argued that even here you must not lie: the duty
+      to tell the truth holds whatever the consequences.
+    text: Should you lie to him?
+    options:
+      - id: no_lie
+        label: No. I'd refuse to answer or try to stop him, but I wouldn't lie.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: mislead
+        label: I'd mislead him without lying, like truthfully saying I saw my friend at the station this morning.
+        reaction: distinguish
+        principles: { truth: 0.5 }
+      - id: rethink
+        label: Yes. Saving a life matters more than telling the truth.
+        reaction: yield
+        revise: stance
+        principles: { truth: -0.5, sanctity_of_life: 0.5 }
+
+  - id: ch_undercover
+    type: challenge
+    name: The undercover officer
+    targets: stance
+    when: stance < 0
+    source: Original scenario
+    scenario: >-
+      An undercover police officer spends two years pretending to be a gang member, lying to everyone
+      around him every day, and gathers the evidence to shut down a ring that traffics people.
+    text: Was his lying wrong?
+    options:
+      - id: still_wrong
+        label: Yes. Even for a good cause, deceiving people like that is wrong.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: criminals
+        label: That's different. Deceiving criminals to stop serious crimes isn't like lying in everyday life.
+        reaction: distinguish
+        principles: { harm_principle: 0.5 }
+      - id: rethink
+        label: No, and it makes me think lying is acceptable more often than I said.
+        reaction: yield
+        revise: stance
+        principles: { truth: -0.5 }
+
+  - id: ch_dementia
+    type: challenge
+    name: The same news every day
+    targets: stance
+    deep: true
+    when: stance < -0.5
+    source: Original scenario; "therapeutic fibbing" is debated in dementia care
+    scenario: >-
+      Your father has advanced dementia. Every day he asks where your mother is, and every time you
+      tell him she died, he grieves as if hearing it for the first time. Some caregivers say instead
+      that she's out shopping and will be back later.
+    text: Should you keep telling him the truth?
+    options:
+      - id: truth
+        label: Yes. He deserves the truth, even when it hurts.
+        reaction: hold
+        principles: { truth: 1 }
+      - id: redirect
+        label: I'd gently change the subject without lying, like asking him to tell me about her.
+        reaction: distinguish
+        principles: { truth: 0.5, relief_of_suffering: 0.5 }
+      - id: rethink
+        label: No. A kind lie is better than making him grieve again and again.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1, truth: -0.5 }
+
+  # --- Challenges: for lying when it helps -------------------------------------------------------
+  - id: ch_trust
+    type: challenge
+    name: Trust
+    targets: stance
+    when: stance > 0
+    source: >-
+      Sissela Bok, Lying: Moral Choice in Public and Private Life (1978)
+    scenario: >-
+      If everyone lied whenever they judged it would do more good than harm, no one could trust what
+      anyone said. Philosopher Sissela Bok argued that liars routinely overestimate the good their
+      lies do and underestimate the damage to trust.
+    text: Does that change your view?
+    options:
+      - id: judgment
+        label: No. Most people can tell a harmless lie from a harmful one.
+        reaction: distinguish
+        principles: { truth: -0.5 }
+      - id: results
+        label: No. Lost trust is one more result to weigh, and sometimes the lie is still worth it.
+        reaction: hold
+        principles: { truth: -0.5 }
+      - id: rethink
+        label: Yes. Honesty should carry more weight than I said.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  - id: ch_diagnosis
+    type: challenge
+    name: The kind diagnosis
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      A patient's illness is terminal, but her doctor tells her she will probably recover, believing
+      the truth would only make her last months miserable. Later she finds out, and is angry: she had
+      wanted to put her affairs in order and say her goodbyes.
+    text: Was the doctor's lie justified?
+    options:
+      - id: would_want
+        label: Lies are only acceptable when the person would want them, and this one wasn't.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5, truth: 0.5 }
+      - id: reasonable
+        label: It was a reasonable call. Sometimes the truth does more harm than good.
+        reaction: hold
+        principles: { truth: -0.5, relief_of_suffering: 0.5 }
+      - id: rethink
+        label: No. People have a right to the truth about their own lives, more than I allowed for.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  - id: ch_noble_lie
+    type: challenge
+    name: The noble lie
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Plato, Republic, Book III
+    scenario: >-
+      In Plato's Republic, Socrates proposes a "noble lie": rulers would teach citizens a myth that
+      people are born with different metals in their souls, gold, silver, or iron and bronze, so
+      that everyone accepts their place and society stays harmonious.
+    text: Is it right for leaders to deceive the public for the public's own good?
+    options:
+      - id: sometimes
+        label: Sometimes, like keeping some secrets in a crisis to prevent panic.
+        reaction: hold
+        principles: { truth: -0.5 }
+      - id: different
+        label: No. A kind lie between friends is different from leaders deceiving citizens.
+        reaction: distinguish
+        principles: { truth: 0.5, liberty: 0.5 }
+      - id: rethink
+        label: No, and it makes me trust well-meant lies less in general.
+        reaction: yield
+        revise: stance
+        principles: { truth: 1 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_novel
+    type: challenge
+    name: The friend's novel
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A close friend asks your honest opinion of the novel she spent five years writing. You think
+      it's poor, and she's about to quit her job to write full time.
+    text: You said it depends. What do you tell her?
+    options:
+      - id: gentle
+        label: Something true but gentle, without giving a verdict.
+        reaction: hold
+        value: 0
+      - id: truth
+        label: The truth, kindly. She deserves it before she quits.
+        reaction: yield
+        revise: stance
+        principles: { truth: 0.5 }
+      - id: praise
+        label: That it's good. She's happy, and I might be wrong.
+        reaction: yield
+        revise: stance
+        principles: { truth: -0.5, relief_of_suffering: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

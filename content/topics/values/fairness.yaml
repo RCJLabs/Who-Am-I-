@@ -1,0 +1,270 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Distributive justice, from desert and entitlement (Nozick) to the veil of ignorance (Rawls) and
+# equality. The stance feeds the economic axis at deep-dive weight.
+id: fairness
+domain: values
+title: What makes a society fair
+summary: If you didn't know who you'd be, what kind of society would you choose?
+tier: extended
+order: 7
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: In a fair society, big differences in wealth are…
+    poles: [Fine if fairly earned, Unfair]
+    labels:
+      - Fine, however large, if people earned them fairly
+      - Mostly fine; people are entitled to what they earn
+      - Fine, as long as no one falls below a decent minimum
+      - Torn / it depends
+      - Acceptable only if they also help the worst-off
+      - Mostly unfair; they should be much smaller
+      - Unfair; wealth should be shared nearly equally
+    axes: { economic: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: veil
+    type: choice
+    text: Imagine choosing the rules for a society before you know who you'll be in it, rich or poor, talented or not, healthy or sick. Which would you pick?
+    options:
+      - id: rewards
+        label: Big rewards for success, with a basic safety net
+        principles: { retribution: 1 }
+      - id: support
+        label: Moderate rewards, with strong support for the worst-off
+        principles: { relief_of_suffering: 0.5, equality: 0.5 }
+      - id: equal
+        label: Nearly equal living standards for everyone
+        principles: { equality: 1 }
+
+  - id: talent
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Earning far more than others because you were born with rare talents is…
+    poles: [Fair, Unfair]
+    labels: [Fair, Mostly fair, Torn, Mostly unfair, Unfair]
+    principles: { equality: 0.5 }
+
+  - id: inheritance
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Inheriting a fortune you did nothing to earn is…
+    poles: [Fair, Unfair]
+    labels: [Fair, Mostly fair, Torn, Mostly unfair, Unfair]
+    principles: { equality: 0.5 }
+
+  - id: bad_choices
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Compared with someone who became poor through bad luck, someone who became poor through their own bad choices should get…
+    poles: [Much less help, The same help]
+    labels: [Much less help, Somewhat less help, Torn, Nearly the same help, The same help]
+    principles: { retribution: -0.5 }
+
+  # --- Challenges: for inequality ----------------------------------------------------------------
+  - id: ch_veil
+    type: challenge
+    name: The veil of ignorance
+    targets: stance
+    when: stance < 0
+    source: John Rawls, A Theory of Justice (1971)
+    scenario: >-
+      Philosopher John Rawls asked what rules you'd choose for a society if you didn't know who you
+      would be in it: rich or poor, talented or not, healthy or sick. Behind this "veil of
+      ignorance," he argued, you'd allow inequalities only when they benefit the worst-off, in case
+      the worst-off turned out to be you.
+    text: Behind the veil, would you still choose your answer?
+    options:
+      - id: gamble
+        label: Yes. I'd take my chances on a society that rewards effort and success.
+        reaction: hold
+        principles: { retribution: 1 }
+      - id: choices
+        label: Yes. The veil hides what matters most, that people earn their place through their choices.
+        reaction: distinguish
+        principles: { personal_responsibility: 1 }
+      - id: rethink
+        label: No. Not knowing who I'd be, I'd want more protection for the worst-off.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_birthplace
+    type: challenge
+    name: The birth lottery
+    targets: stance
+    when: stance < 0
+    source: >-
+      Branko Milanović, "Global Inequality of Opportunity: How Much of Our Income Is Determined by
+      Where We Live?," Review of Economics and Statistics (2015)
+    scenario: >-
+      Economist Branko Milanović found that more than half of the differences in income between
+      people around the world are explained by which country they live in, and nearly everyone
+      lives in the country where they were born.
+    text: If where you're born matters that much, how much of anyone's wealth is truly earned?
+    options:
+      - id: within
+        label: Within a country, effort and choices still make a big difference, and that's what my view is about.
+        reaction: distinguish
+        principles: { retribution: 0.5, personal_responsibility: 0.5 }
+      - id: rules
+        label: Luck is part of life. Fairness is about fair rules, not equal results.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: Less than I assumed. Big gaps are harder to defend than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  - id: ch_camping
+    type: challenge
+    name: The camping trip
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: G. A. Cohen, Why Not Socialism? (2009)
+    scenario: >-
+      On a camping trip, friends pool their food and gear. If one camper insisted on keeping the best
+      of the fish he caught unless the others paid him, everyone would find it ugly. Philosopher
+      G. A. Cohen asked why we accept across a whole society what we'd reject among friends.
+    text: Is a society different from a camping trip in a way that matters?
+    options:
+      - id: scale
+        label: Yes. Among millions of strangers, rewards for effort are what make an economy work.
+        reaction: distinguish
+        principles: { retribution: 0.5 }
+      - id: strangers
+        label: Yes. Friends share by choice; strangers have no claim on what I earn.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: rethink
+        label: Not as much as I thought. We should share more than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 1 }
+
+  # --- Challenges: for equality ------------------------------------------------------------------
+  - id: ch_wilt
+    type: challenge
+    name: Wilt Chamberlain
+    targets: stance
+    when: stance > 0
+    source: Robert Nozick, Anarchy, State, and Utopia (1974)
+    scenario: >-
+      Start with whatever distribution of wealth you think is fair. Now a million fans each happily
+      pay 25 cents extra to watch basketball star Wilt Chamberlain play, and he ends up far richer
+      than anyone else. Philosopher Robert Nozick pointed out that every step was voluntary.
+    text: Has anything unfair happened?
+    options:
+      - id: tax
+        label: Not in the deal itself, but a fair society can still tax his gains to help others.
+        reaction: distinguish
+        principles: { equality: 0.5 }
+      - id: gaps
+        label: Yes. Gaps that large undermine people's equal standing, however they arose.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: rethink
+        label: No. If every step was free and fair, so is the result.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 1 }
+
+  - id: ch_incentives
+    type: challenge
+    name: Incentives
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      If surgeons, engineers and inventors earned no more than anyone else, fewer people might put in
+      the years of training and take the risks those careers require, and everyone, including the
+      poorest, could end up worse off.
+    text: Does the need for incentives change your view?
+    options:
+      - id: worst_off
+        label: That's why some inequality can be fair, but only when it ends up helping the worst-off.
+        reaction: distinguish
+        principles: { equality: 0.5, relief_of_suffering: 0.5 }
+      - id: meaning
+        label: No. People work hard for meaning, status and pride, not just money.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: rethink
+        label: Yes. Rewarding effort and talent matters more than I said.
+        reaction: yield
+        revise: stance
+        principles: { retribution: 1 }
+
+  - id: ch_level_down
+    type: challenge
+    name: Leveling down
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Derek Parfit, "Equality or Priority?" (1995)
+    scenario: >-
+      Suppose a disaster ruined everyone who was better off, without helping anyone who was worse
+      off. Society would be more equal. Philosopher Derek Parfit argued that if equality matters in
+      itself, we'd have to say this made things better in at least one way.
+    text: Would it?
+    options:
+      - id: priority
+        label: No. What matters is helping the worst-off, not equality for its own sake.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1 }
+      - id: one_way
+        label: In one way, yes, though it would be worse overall.
+        reaction: hold
+        principles: { equality: 1 }
+      - id: rethink
+        label: No, and that makes me think equality matters less than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: -0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_two_societies
+    type: challenge
+    name: Two societies
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after John Rawls
+    scenario: >-
+      In society A, the average income is high, but the poorest fifth live in real hardship. In
+      society B, the average is somewhat lower, but no one lives in hardship. You don't know who
+      you'd be.
+    text: You said you're torn. Which would you choose to be born into?
+    options:
+      - id: unsure
+        label: I can't choose without knowing more.
+        reaction: hold
+        value: 0
+      - id: society_a
+        label: Society A
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: society_b
+        label: Society B
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5, relief_of_suffering: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

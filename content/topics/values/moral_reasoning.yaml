@@ -1,0 +1,103 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Two dimensions, after Kahane et al. (2018): whether doing harm can be right for a better outcome
+# (outcomes), and whether everyone's welfare counts equally (impartiality). Each has three
+# statements keyed one way and two the other, plus a this-or-that question.
+id: moral_reasoning
+domain: values
+title: Rules or outcomes
+summary: Are some things off-limits whatever good they'd do, and do strangers count as much as your own?
+tier: core
+order: 3
+evidence: custom
+source: >-
+  Inspired by the two-dimensional model of utilitarian thinking in Guy Kahane et al., "Beyond
+  Sacrificial Harm," Psychological Review (2018); the questions are original.
+instructions: >-
+  Say how much you agree with each statement, or pick the option closer to your view. There are no
+  right answers.
+items:
+  - id: approach
+    type: choice
+    shuffle: true
+    text: When you face a hard moral choice, which question do you mostly ask yourself?
+    axes: { outcomes: 1 }
+    options:
+      - { id: results, label: Which choice will lead to the best results?, value: 1 }
+      - { id: duty, label: "What are my duties, and what rules apply?", value: -1 }
+      - { id: character, label: What would a good person do?, value: 0 }
+      - { id: faith, label: What does my faith or tradition teach?, value: 0 }
+      - { id: people, label: What would the people I care about think?, value: 0 }
+
+  - id: out_promise
+    type: likert
+    points: 5
+    text: If breaking a promise would prevent something terrible for many people, you should break it.
+    axes: { outcomes: 1 }
+
+  - id: imp_stranger
+    type: likert
+    points: 5
+    text: A stranger's suffering on the other side of the world matters as much as a neighbor's.
+    axes: { impartiality: 1 }
+
+  - id: out_never
+    type: likert
+    points: 5
+    text: Some things are wrong no matter how much good they would do.
+    axes: { outcomes: -1 }
+
+  - id: imp_family
+    type: likert
+    points: 5
+    text: It's right to put your own family and community first, even if you could do more good elsewhere.
+    axes: { impartiality: -1 }
+
+  - id: out_harm
+    type: likert
+    points: 5
+    text: Sometimes it's right to harm one innocent person to save many others.
+    axes: { outcomes: 1 }
+
+  - id: imp_obliged
+    type: likert
+    points: 5
+    text: If you can prevent something terrible at little cost to yourself, you're obliged to, whoever it helps.
+    axes: { impartiality: 1 }
+
+  - id: out_tool
+    type: likert
+    points: 5
+    text: Using a person merely as a tool is wrong, even to achieve something good.
+    axes: { outcomes: -1 }
+
+  - id: imp_equal
+    type: likert
+    points: 5
+    text: Everyone's well-being counts equally, wherever and whenever they live.
+    axes: { impartiality: 1 }
+
+  - id: out_lie
+    type: likert
+    points: 5
+    text: Telling a lie is fine if it leads to a much better outcome.
+    axes: { outcomes: 1 }
+
+  - id: imp_local
+    type: likert
+    points: 5
+    text: Helping people in your own community should come before helping people far away who are worse off.
+    axes: { impartiality: -1 }
+
+  - id: intent
+    type: pair
+    text: When judging an action, which matters more?
+    options:
+      - { id: intention, label: The intention behind it, axes: { outcomes: -1 } }
+      - { id: result, label: What it actually leads to, axes: { outcomes: 1 } }
+
+  - id: charity
+    type: pair
+    text: You have money to give. Which would you choose?
+    options:
+      - { id: effective, label: A charity far away that does ten times more good per dollar, axes: { impartiality: 1 } }
+      - { id: local, label: A local charity you know and trust, axes: { impartiality: -1 } }

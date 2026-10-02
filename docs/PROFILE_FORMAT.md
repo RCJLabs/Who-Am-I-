@@ -35,7 +35,7 @@ The profile is the app's public output: what results screens render, and what th
 | `principles[id]` | same, plus `byTopic` (endorsement per topic) and `consistency` (anchors only; `null` with < 2 topics) |
 | `topics[id]` | `stance` (current), `initialStance` (first answer), `stanceLabel`, `importance` (0…1), `complete`, `circumstances`, `challenges` |
 | `topics[id].challenges` | counts of challenges asked, `held`, `distinguished` and `moved`, plus `moves` (`source`, `delta`, `steps`) |
-| `interests` | `topic.item.option` (multi-select picks) or `topic.item` (interest ratings) → 0…1 |
+| `interests` | `topic.item.option` (picks on multi-selects tagged `interest`) or `topic.item` (ratings tagged `interest`) → 0…1 |
 | `tensions[]` | `principle`, the two `topics`, `gap`, and `status`: `open`, `distinguished`, `revised` or `acknowledged` |
 | `evidence[topic]` | `validated`, `adapted`, `custom` or `for-fun` |
 | `completeness` | `answered` items; `orphaned` stored answers that no longer match the content |

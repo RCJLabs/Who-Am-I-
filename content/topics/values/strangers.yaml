@@ -1,0 +1,253 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Obligations to distant strangers, after Singer and his critics. "Far away" is the point: the
+# stance feeds the near-or-far axis.
+id: strangers
+domain: values
+title: Helping strangers
+summary: How much do we owe people in need whom we'll never meet?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Helping people in desperate need far away, when you could afford to, is…
+    poles: [Entirely optional, As much a duty as a rescue]
+    labels:
+      - Entirely optional, a personal choice
+      - Optional, though admirable
+      - A mild duty, for people who can easily afford it
+      - Torn / it depends
+      - A real duty for anyone comfortably off
+      - A strong duty, even at real cost to my lifestyle
+      - As much a duty as saving a child drowning in front of me
+    axes: { impartiality: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: ten_percent
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: For someone with a comfortable income, giving 10% of it to effective charities is…
+    poles: [Not expected at all, Morally required]
+    labels: [Not expected at all, A nice extra, Torn, Expected, Morally required]
+    principles: { relief_of_suffering: 0.5 }
+
+  - id: local_first
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A donation would do ten times more good overseas than at a local charity you know. Giving locally anyway is…
+    poles: [Perfectly fine, Hard to justify]
+    labels: [Perfectly fine, Mostly fine, Torn, Questionable, Hard to justify]
+    principles: { loyalty: -0.5 }
+
+  - id: future
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Giving up some comfort now to protect people who will live a century from now is…
+    poles: [Not our duty, Our duty]
+    labels: [Not our duty, Probably not our duty, Torn, Probably our duty, Our duty]
+    principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: against a duty to help --------------------------------------------------------
+  - id: ch_drowning
+    type: challenge
+    name: The drowning child
+    targets: stance
+    when: stance < 0
+    source: Peter Singer, "Famine, Affluence, and Morality," Philosophy & Public Affairs (1972)
+    scenario: >-
+      On your way to work you pass a shallow pond where a small child is drowning. Wading in would
+      ruin your expensive shoes and make you late. Almost everyone agrees you must save the child.
+      Philosopher Peter Singer argued that distance makes no moral difference: if you can save a
+      child's life far away for the price of those shoes, you must do that too.
+    text: Is there a real difference between the two?
+    options:
+      - id: present
+        label: Yes. The child in the pond is right in front of me, and I may be the only one who can help.
+        reaction: distinguish
+        principles: { personal_responsibility: 0.5 }
+      - id: not_everything
+        label: Yes. I'd save the child, but I'm not obliged to fix every problem I could pay to help with.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: No real difference. I should do much more for strangers than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_price
+    type: challenge
+    name: The price of a life
+    targets: stance
+    when: stance < 0
+    source: Cost-effectiveness estimates from GiveWell, a charity evaluator
+    scenario: >-
+      GiveWell, a charity evaluator, estimates that its top charities, such as those providing
+      malaria nets, save a life for roughly every $3,000 to $8,000 donated. That's about the cost of
+      a family vacation.
+    text: Knowing that, is spending the money on a vacation still fine?
+    options:
+      - id: mine
+        label: Yes. It's my money, and how much I give is my choice.
+        reaction: hold
+        principles: { liberty: 1 }
+      - id: fair_share
+        label: Yes, if I already give a fair share. I'm not obliged to give everything.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: rethink
+        label: It makes me think I'm obliged to give more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  - id: ch_unger
+    type: challenge
+    name: The leather seats
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Peter Unger, Living High and Letting Die (1996)
+    scenario: >-
+      Philosopher Peter Unger compared two cases. In one, you refuse to drive a bleeding stranger to
+      hospital because his blood would ruin your vintage car's leather seats, and he loses his leg.
+      In the other, you throw away a charity's letter asking for $100 that would save the lives of
+      thirty children. Most people find the first monstrous and the second normal.
+    text: Which judgment should give way?
+    options:
+      - id: neither
+        label: Neither. Being the only one who can help, face to face, really does change the duty.
+        reaction: distinguish
+        principles: { personal_responsibility: 0.5 }
+      - id: first
+        label: The first. Refusing him is unkind, but helping him is no more a strict duty than giving is.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: rethink
+        label: The second. Ignoring the letter is worse than it feels; I should give more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 1 }
+
+  # --- Challenges: for a strong duty -------------------------------------------------------------
+  - id: ch_saints
+    type: challenge
+    name: Moral saints
+    targets: stance
+    when: stance > 0
+    source: Susan Wolf, "Moral Saints," Journal of Philosophy (1982)
+    scenario: >-
+      If you must keep giving until giving more would cost you as much as it helps others, there's
+      little room left for your own projects: an instrument, a craft, a career you love. Philosopher
+      Susan Wolf argued that a life devoted entirely to doing the most good would be strangely
+      impoverished.
+    text: Does morality leave room for a life of your own?
+    options:
+      - id: room
+        label: Yes. The duty is to give a lot, not everything; there's still room for a full life.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: price
+        label: Some sacrifice is the price of taking others' suffering seriously.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: Yes, and it makes me think helping strangers is more optional than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_own_child
+    type: challenge
+    name: Your own child
+    targets: stance
+    when: stance > 0
+    source: Original scenario
+    scenario: >-
+      You've saved enough to pay for your child's university education. The same money could instead
+      protect thousands of children abroad from malaria, likely saving several lives.
+    text: Should you give the money away?
+    options:
+      - id: special
+        label: No. Parents have special duties to their own children that strangers' needs don't override.
+        reaction: distinguish
+        principles: { loyalty: 1 }
+      - id: lives
+        label: In principle, yes. A life matters more than a degree.
+        reaction: hold
+        principles: { relief_of_suffering: 1, equality: 0.5 }
+      - id: rethink
+        label: No, and it makes me think duties to my own come first more than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 1 }
+
+  - id: ch_deaton
+    type: challenge
+    name: When aid backfires
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Angus Deaton, The Great Escape (2013)
+    scenario: >-
+      Economist Angus Deaton, a Nobel laureate, argued that large flows of foreign aid can weaken poor
+      countries by making their governments answer to donors instead of their own citizens.
+    text: If giving can do harm, is it still a duty?
+    options:
+      - id: proven
+        label: Yes, but only to programs with strong evidence, like malaria nets or vaccines.
+        reaction: distinguish
+        principles: { relief_of_suffering: 0.5 }
+      - id: imperfect
+        label: Yes. Imperfect help is far better than none.
+        reaction: hold
+        principles: { relief_of_suffering: 1 }
+      - id: rethink
+        label: It makes me less sure it's a duty at all.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_pledge
+    type: challenge
+    name: The 10% pledge
+    targets: stance
+    when: stance == 0
+    source: Modeled on the Giving What We Can pledge (2009)
+    scenario: >-
+      A public pledge asks people to give 10% of their income to the most effective charities they
+      can find, for the rest of their working lives.
+    text: You said you're torn. If you could afford it, would you sign?
+    options:
+      - id: unsure
+        label: I'd need to think about it more.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

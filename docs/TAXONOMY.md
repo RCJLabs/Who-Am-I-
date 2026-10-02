@@ -27,16 +27,16 @@ The full map of what Who Am I covers.
 ### Values & morality
 | Topic | Tier | Evidence | Status | Notes |
 |---|---|---|---|---|
-| Value trade-offs (this-or-that) | core | custom | ◻️ | Schwartz-inspired; PVQ license unverified |
-| Moral foundations | core | custom | ◻️ | care, equality, proportionality, loyalty, authority, purity, liberty; MFQ-2 license unverified |
-| Rules, consequences or character | core | custom | ◻️ | |
-| Sacrificing one to save many | extended | custom | ◻️ | trolley, footbridge, transplant surgeon |
-| Honesty | extended | custom | ◻️ | murderer at the door, white lies |
-| Obligations to strangers | extended | custom | ◻️ | drowning child, effective giving |
-| Fairness | extended | custom | ◻️ | veil of ignorance |
-| Happiness and reality | extended | custom | ◻️ | experience machine |
-| The price of utopia | extended | custom | ◻️ | Omelas |
-| Being good when no one is watching | extended | for-fun | ◻️ | Ring of Gyges |
+| What matters most (value trade-offs) | core | custom | ✅ | this-or-that pairs on Schwartz's two main dimensions; original items |
+| Moral foundations | core | custom | ✅ | care, equality, proportionality, loyalty, authority, purity, liberty; original items, MFQ-2 license unverified |
+| Rules or outcomes | core | custom | ✅ | after Kahane et al.'s two dimensions (2018); original items |
+| Sacrificing one to save many | extended | custom | ✅ | trolley, footbridge, transplant surgeon, the cabin boy |
+| Lying and honesty | extended | custom | ✅ | murderer at the door, white lies, the noble lie |
+| Helping strangers | extended | custom | ✅ | drowning child, effective giving |
+| What makes a society fair | extended | custom | ✅ | veil of ignorance, Wilt Chamberlain |
+| Happiness and reality | extended | custom | ✅ | experience machine |
+| The price of a perfect world | extended | custom | ✅ | Omelas |
+| The ring of invisibility | extended | for-fun | ✅ | Ring of Gyges |
 
 ### Life & bodily autonomy
 | Topic | Tier | Evidence | Status |
@@ -194,11 +194,16 @@ can surface in both directions.
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
 | Personal responsibility | | welfare, drugs, abortion | *(effects only)* |
-| Relief of suffering | assisted dying, healthcare | | *(effects only)* |
-| Just deserts | | death penalty, prisons | *(effects only; anchor with criminal justice)* |
-| Equality | taxes, healthcare, affirmative action | | *(effects only; anchor with economics)* |
+| Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
+| Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only; anchor with economics)* |
+| Just deserts | | death penalty, prisons, welfare | *(effects and moral foundations only; anchor with criminal justice)* |
+| Loyalty | | patriotism, national service | *(moral foundations only)* |
+| Respect for authority | | policing, protest, schools | *(moral foundations only)* |
+| Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
+| Liberty | speech, surveillance | taxes, guns, regulation | *(moral foundations only)* |
 | Respect for the natural order | GMOs | gene editing, surrogacy | *(effects only)* |
-| Doing vs. allowing | used in challenges (killing vs. letting die, harming vs. not helping) | | *(effects only)* |
+| Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger) | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many |
+| Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -209,12 +214,17 @@ reverse. The personas in `tests/sim/personas` pin these down.
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
-| Economic | political | Equality ↔ Markets | *(planned)* |
+| Economic | political | Equality ↔ Markets | at half weight: what makes a society fair (shows once a second topic feeds it) |
 | Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy) |
 | Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing |
 | Diplomatic | political | National ↔ Global | *(planned)* |
+| Stability or change | values | Stability ↔ Change | what matters most |
+| Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
+| Rules or outcomes | values | Rules ↔ Outcomes | rules or outcomes; at half weight: sacrificing one, lying and honesty, the price of a perfect world |
+| Near or far | values | Close ones first ↔ Everyone equally | rules or outcomes; at half weight: helping strangers |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
 | Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
 
-Political axes are fed only by each issue topic's stance, never by its circumstances or challenges
-(see `CONTENT_GUIDE.md`, Effects).
+In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges
+(see `CONTENT_GUIDE.md`, Effects). The moral foundations are principles, not spectrums: the moral
+foundations topic measures them directly, and issue topics add to them.

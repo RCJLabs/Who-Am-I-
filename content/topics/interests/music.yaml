@@ -16,6 +16,7 @@ items:
   - id: genres
     type: multi
     intensity: true
+    tags: [interest]
     text: Which kinds of music do you enjoy? Tap the ones you like, then rate how much.
     options:
       - { id: pop, label: Pop }

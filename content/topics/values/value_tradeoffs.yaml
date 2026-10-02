@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Each pair sets two things people value against each other across one of Schwartz's two main
+# dimensions. The side that scores higher alternates, so always picking left or right lands in
+# the middle.
+id: value_tradeoffs
+domain: values
+title: What matters most
+summary: Quick this-or-that choices between things most people want.
+tier: core
+order: 1
+evidence: custom
+source: Inspired by Shalom Schwartz's theory of basic human values; the questions are original.
+instructions: >-
+  Each question pairs two things most people want. Pick the one that matters more to you, then say
+  whether it's slightly or strongly. There are no right answers.
+items:
+  - id: freedom
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: choose, label: Freedom to make my own choices, axes: { change: 1 } }
+      - { id: secure, label: Living somewhere safe and secure, axes: { change: -1 } }
+
+  - id: success
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: recognized, label: Being successful and recognized for it, axes: { others: -1 } }
+      - { id: there, label: Being there for the people around me, axes: { others: 1 } }
+
+  - id: tradition
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: traditions, label: Keeping the traditions I was raised with, axes: { change: -1 } }
+      - { id: exciting, label: An exciting life full of new experiences, axes: { change: 1 } }
+
+  - id: fair_world
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: fairer, label: A fairer world for everyone, axes: { others: 1 } }
+      - { id: money, label: Having money and influence, axes: { others: -1 } }
+
+  - id: own_way
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: my_way, label: Doing things my own way, axes: { change: 1 } }
+      - { id: expectations, label: Following the rules and meeting expectations, axes: { change: -1 } }
+
+  - id: career
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: ahead, label: Getting ahead in my career, axes: { others: -1 } }
+      - { id: nature, label: Protecting nature and the environment, axes: { others: 1 } }
+
+  - id: predictable
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: stable, label: "A stable, predictable life", axes: { change: -1 } }
+      - { id: new_things, label: "Trying new things, even risky ones", axes: { change: 1 } }
+
+  - id: loyal
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: dependable, label: Being loyal and dependable to friends, axes: { others: 1 } }
+      - { id: in_charge, label: Being in charge of people and decisions, axes: { others: -1 } }
+
+  - id: original
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: stand_out, label: Standing out and being original, axes: { change: 1 } }
+      - { id: polite, label: Being polite and not upsetting anyone, axes: { change: -1 } }
+
+  - id: admired
+    type: pair
+    text: Which matters more to you?
+    options:
+      - { id: admired, label: Being admired by others, axes: { others: -1 } }
+      - { id: understanding, label: Understanding people who are different from me, axes: { others: 1 } }

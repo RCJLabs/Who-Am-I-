@@ -1,5 +1,7 @@
 name: Libertarian
-topics: [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work, surrogacy, gene_editing]
+topics:
+  [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
+   surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -22,6 +24,7 @@ answers:
   assisted_dying.anchor_ba: 7
   assisted_dying.anchor_sol: 2
   assisted_dying.anchor_pv: 2
+  assisted_dying.anchor_dva: 2
   assisted_dying.ch_expansion: no_line
   assisted_dying.ch_burden: her_reasons
   assisted_dying.ch_dementia: honor
@@ -95,8 +98,74 @@ answers:
   gene_editing.anchor_prec: 2
   gene_editing.ch_twins: early_days
   gene_editing.ch_advantages: already
+  value_tradeoffs.freedom: choose
+  value_tradeoffs.success: recognized
+  value_tradeoffs.tradition: exciting
+  value_tradeoffs.fair_world: fairer
+  value_tradeoffs.own_way: my_way
+  value_tradeoffs.career: ahead
+  value_tradeoffs.predictable: new_things
+  value_tradeoffs.loyal: dependable
+  value_tradeoffs.original: stand_out
+  value_tradeoffs.admired: understanding
+  moral_foundations.care_1: 4
+  moral_foundations.loyalty_1: 2
+  moral_foundations.equality_3: 5
+  moral_foundations.purity_1: 1
+  moral_foundations.liberty_3: 1
+  moral_foundations.deserts_1: 5
+  moral_foundations.authority_1: 3
+  moral_foundations.care_3: 3
+  moral_foundations.equality_1: 1
+  moral_foundations.loyalty_3: 4
+  moral_foundations.purity_2: 2
+  moral_foundations.deserts_2: 5
+  moral_foundations.authority_3: 5
+  moral_foundations.liberty_1: 5
+  moral_foundations.care_2: 4
+  moral_foundations.purity_3: 5
+  moral_foundations.equality_2: 1
+  moral_foundations.deserts_3: 1
+  moral_foundations.loyalty_2: 2
+  moral_foundations.authority_2: 2
+  moral_foundations.liberty_2: 5
+  moral_reasoning.approach: duty
+  moral_reasoning.out_promise: 3
+  moral_reasoning.imp_stranger: 2
+  moral_reasoning.out_never: 4
+  moral_reasoning.imp_family: 4
+  moral_reasoning.out_harm: 2
+  moral_reasoning.imp_obliged: 2
+  moral_reasoning.out_tool: 5
+  moral_reasoning.imp_equal: 3
+  moral_reasoning.out_lie: 2
+  moral_reasoning.imp_local: 3
+  moral_reasoning.intent: intention
+  moral_reasoning.charity: local
+  fairness.stance: 1
+  fairness.importance: 3
+  fairness.veil: rewards
+  fairness.talent: 1
+  fairness.inheritance: 1
+  fairness.bad_choices: 2
+  fairness.ch_veil: gamble
+  fairness.ch_birthplace: rules
+  fairness.ch_camping: strangers
+  honesty.stance: 3
+  honesty.importance: 2 # low: deep items are skipped
+  honesty.gift: 4
+  honesty.secret: 4
+  honesty.anchor_truth: 6
+  honesty.ch_undercover: criminals
+  experience_machine.stance: 5
+  experience_machine.importance: 2
+  experience_machine.virtual_life: 4
+  experience_machine.forget: 4
+  experience_machine.anchor_truth: 3
+  experience_machine.ch_nozick: same
+  experience_machine.ch_loved_ones: together
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", change: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -108,9 +177,20 @@ expect:
     sex_work: { civil: "< 0" }
     surrogacy: { civil: "< 0" }
     gene_editing: { cultural: "> 0" }
+    moral_reasoning: { outcomes: "< 0", impartiality: "< 0" }
+    fairness: { economic: "> 0" }
+    honesty: { outcomes: "< 0" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
+  topicPrinciples:
+    moral_foundations:
+      liberty: "> 0.6"
+      equality: "< -0.5"
+      retribution: "> 0.5"
+      authority: "< 0"
+      purity: "< -0.3"
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
-  # (low everywhere). One real split: caution with the irreversible is high on executions but low
-  # on gene editing.
+  # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
+  # on gene editing, and truth matters more in what we tell others than in one's own life.
   tensions:
     - precaution|death_penalty|gene_editing
+    - truth|experience_machine|honesty
