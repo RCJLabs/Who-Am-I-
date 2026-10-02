@@ -1,0 +1,1139 @@
+{
+  "title": "Who Am I topic file",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "core",
+        "extended"
+      ]
+    },
+    "evidence": {
+      "type": "string",
+      "enum": [
+        "validated",
+        "adapted",
+        "custom",
+        "for-fun"
+      ],
+      "description": "validated instrument, adapted from research, custom, or for fun"
+    },
+    "source": {
+      "description": "Instrument or source citation",
+      "type": "string",
+      "minLength": 1
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "instructions": {
+      "description": "Shown once before the first item",
+      "type": "string",
+      "minLength": 1
+    },
+    "sensitive": {
+      "type": "boolean"
+    },
+    "stance": {
+      "description": "Item holding the overall position; challenges are checked against it",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "importance": {
+      "description": "Importance item; low importance skips deep items",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "items": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "axes": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "principles": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "anchor": {
+                "type": "object",
+                "properties": {
+                  "principle": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$",
+                    "description": "The single principle this item probes"
+                  },
+                  "context": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Short phrase naming the context, e.g. \"continuing a pregnancy\""
+                  },
+                  "against": {
+                    "description": "The competing interest in this context, used to suggest a relevant difference on tension cards",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "principle",
+                  "context"
+                ],
+                "additionalProperties": false,
+                "description": "Marks a matched-wording probe of one principle; the only items the tension detector compares"
+              },
+              "type": {
+                "type": "string",
+                "const": "likert"
+              },
+              "points": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 5
+                  },
+                  {
+                    "type": "number",
+                    "const": 7
+                  }
+                ]
+              },
+              "labels": {
+                "description": "agree (default), accuracy (IPIP), or explicit labels",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "agree"
+                  },
+                  {
+                    "type": "string",
+                    "const": "accuracy"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "points"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "axes": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "principles": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "anchor": {
+                "type": "object",
+                "properties": {
+                  "principle": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$",
+                    "description": "The single principle this item probes"
+                  },
+                  "context": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Short phrase naming the context, e.g. \"continuing a pregnancy\""
+                  },
+                  "against": {
+                    "description": "The competing interest in this context, used to suggest a relevant difference on tension cards",
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "principle",
+                  "context"
+                ],
+                "additionalProperties": false,
+                "description": "Marks a matched-wording probe of one principle; the only items the tension detector compares"
+              },
+              "type": {
+                "type": "string",
+                "const": "slider"
+              },
+              "steps": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 5
+                  },
+                  {
+                    "type": "number",
+                    "const": 7
+                  },
+                  {
+                    "type": "number",
+                    "const": 9
+                  },
+                  {
+                    "type": "number",
+                    "const": 11
+                  }
+                ]
+              },
+              "poles": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ],
+                "additionalItems": false,
+                "minItems": 2,
+                "maxItems": 2,
+                "description": "[left end, right end]"
+              },
+              "labels": {
+                "description": "One label per step",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "steps",
+              "poles"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "axes": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "principles": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "type": {
+                "type": "string",
+                "const": "rating"
+              },
+              "points": {
+                "type": "number",
+                "const": 5
+              },
+              "poles": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ],
+                "additionalItems": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "labels": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "poles"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "importance"
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "axes": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "principles": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+              },
+              "type": {
+                "type": "string",
+                "const": "choice"
+              },
+              "options": {
+                "minItems": 2,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "description": "Position used by conditions and item-level effects",
+                      "type": "number",
+                      "minimum": -1,
+                      "maximum": 1
+                    },
+                    "axes": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "number"
+                      },
+                      "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                    },
+                    "principles": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "number"
+                      },
+                      "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "shuffle": {
+                "description": "Randomize option order per user (for unordered options)",
+                "type": "boolean"
+              },
+              "weight": {
+                "description": "Weight of option positions (default 1)",
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "options"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "pair"
+              },
+              "options": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "value": {
+                        "description": "Position used by conditions and item-level effects",
+                        "type": "number",
+                        "minimum": -1,
+                        "maximum": 1
+                      },
+                      "axes": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_]*$"
+                        },
+                        "additionalProperties": {
+                          "type": "number"
+                        },
+                        "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                      },
+                      "principles": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_]*$"
+                        },
+                        "additionalProperties": {
+                          "type": "number"
+                        },
+                        "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "value": {
+                        "description": "Position used by conditions and item-level effects",
+                        "type": "number",
+                        "minimum": -1,
+                        "maximum": 1
+                      },
+                      "axes": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_]*$"
+                        },
+                        "additionalProperties": {
+                          "type": "number"
+                        },
+                        "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                      },
+                      "principles": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_]*$"
+                        },
+                        "additionalProperties": {
+                          "type": "number"
+                        },
+                        "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  }
+                ],
+                "additionalItems": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "strength": {
+                "description": "Ask \"slightly / strongly\" (default true)",
+                "type": "boolean"
+              },
+              "weight": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "options"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "multi"
+              },
+              "options": {
+                "minItems": 2,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "intensity": {
+                "description": "Rate each pick 1–5",
+                "type": "boolean"
+              },
+              "max": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "options"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "challenge"
+              },
+              "targets": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)?$",
+                "description": "The earlier answer this challenge is aimed at"
+              },
+              "scenario": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "description": "Citation for the argument or thought experiment",
+                "type": "string",
+                "minLength": 1
+              },
+              "options": {
+                "minItems": 2,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "description": "Position used by conditions and item-level effects",
+                      "type": "number",
+                      "minimum": -1,
+                      "maximum": 1
+                    },
+                    "axes": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "number"
+                      },
+                      "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                    },
+                    "principles": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "number"
+                      },
+                      "description": "On scale items: weights (sign = which way agreeing pushes). On options: positions in [-1, 1]. A target that is not listed means \"no information\"."
+                    },
+                    "reaction": {
+                      "type": "string",
+                      "enum": [
+                        "hold",
+                        "distinguish",
+                        "yield"
+                      ],
+                      "description": "hold: keeps the view; distinguish: names a relevant difference; yield: reconsiders"
+                    },
+                    "revise": {
+                      "description": "Re-ask this earlier item immediately",
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)?$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "reaction"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "weight": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "targets",
+              "scenario",
+              "options"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question or statement shown to the user"
+              },
+              "help": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tags": {
+                "description": "Free tags, e.g. circumstance",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              },
+              "when": {
+                "description": "Show only when this condition is true, e.g. \"stance < 0 and rape > 0\". Refs must be earlier items.",
+                "type": "string",
+                "minLength": 1
+              },
+              "deep": {
+                "description": "Skipped when the user says the topic matters little to them",
+                "type": "boolean"
+              },
+              "sticky": {
+                "description": "Keep scoring the answer even if the item later becomes hidden (default: true for challenges)",
+                "type": "boolean"
+              },
+              "unsure": {
+                "description": "Offer \"No opinion / not sure\" (default true)",
+                "type": "boolean"
+              },
+              "sensitive": {
+                "description": "Adds \"Prefer not to say\"; inherited from the topic",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "reask"
+              },
+              "target": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)?$",
+                "description": "Re-asked when a challenge aimed at it was answered after the latest answer to it"
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "target"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "id",
+    "domain",
+    "title",
+    "summary",
+    "tier",
+    "evidence",
+    "items"
+  ],
+  "additionalProperties": false
+}
