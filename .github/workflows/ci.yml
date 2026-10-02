@@ -23,6 +23,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Content lint
+        run: node scripts/content-lint.ts --format github --max-warnings 0
+      - name: Generated schemas are current
+        run: node scripts/gen-schemas.ts --check
       - run: npm run check
       - run: npm test
       - run: npm run build

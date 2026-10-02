@@ -1,0 +1,54 @@
+# Privacy policy (draft)
+
+*Draft for review before public release. The final version is shown in the app's About screen
+and linked from the Google Play listing.*
+
+**Who Am I does not collect your data.** Your answers never leave your device unless you choose
+to export or share them.
+
+## What the app stores, and where
+
+- Your answers, your reasons if you add any, and your settings are stored **only on your device**,
+  in your browser's storage for this site (or the Android app's storage, which is the same thing).
+- There is no account, no server and no database of users. We, the developers, cannot see your
+  answers.
+
+## What the app sends over the network
+
+- The app downloads its own code and questions from its website so it can work offline.
+- It sends **nothing about you or your answers** to anyone. No analytics, no advertising, no
+  tracking, no third-party services. The app's security policy technically blocks it from
+  contacting other servers.
+  <!-- TODO before release: the Content Security Policy lands with the app shell; verify it. -->
+
+
+## Exporting and sharing
+
+- **Export** creates a file with your answers, so you can back them up or move to another device.
+  Where that file goes is up to you.
+- **Sharing** (when available) creates a code or image of the results *you* choose. Sensitive
+  topics (religion and worldview, and identity) are left out by default and only included if you
+  turn them on.
+
+## Deleting your data
+
+Settings → **Delete all data** erases everything immediately. Clearing your browser's site data,
+or uninstalling the Android app, also erases it. There is no copy anywhere else.
+
+## Sensitive topics
+
+Some questions touch on religion, sexuality, gender identity, health and political views. They are
+optional, every question can be skipped, and sensitive questions offer "Prefer not to say".
+Identity questions are only ever shown back to you; they are never used to score anything.
+
+## Age
+
+Who Am I is intended for adults (18+).
+
+## Changes
+
+If this policy changes, the new version will appear in the app with its date.
+
+## Contact
+
+*(Add a contact address before release.)*

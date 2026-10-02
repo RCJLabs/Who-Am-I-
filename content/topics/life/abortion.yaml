@@ -1,0 +1,350 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Wording: "woman" and "fetus" (or "embryo" where accurate). Avoid movement labels and "mother",
+# "unborn child", "clump of cells". Every stance gets challenges aimed at it.
+id: abortion
+domain: life
+title: Abortion
+summary: When, if ever, should ending a pregnancy be legal?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Overall, abortion should be…
+    poles: [Illegal in all cases, Legal in all cases]
+    labels:
+      - Illegal in all cases
+      - Illegal except to save the woman's life
+      - Legal only in rare cases, like rape or serious health risk
+      - Torn / it depends
+      - Legal early in pregnancy, restricted later
+      - Legal in most cases
+      - Legal in all cases
+    axes: { cultural: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: life_risk
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If continuing the pregnancy would likely kill the woman, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: rape
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If the pregnancy resulted from rape or incest, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: lethal_anomaly
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If the fetus has a condition that means it will die before or shortly after birth, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: nonlethal_anomaly
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: If the fetus has a serious condition that isn't fatal, such as Down syndrome, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: health_risk
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: If the pregnancy seriously threatens the woman's health, but not her life, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: finances
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: If the woman can't afford to raise a child, abortion should be…
+    poles: [Illegal, Legal]
+    labels: [Illegal, Probably illegal, Torn, Probably legal, Legal]
+    axes: { cultural: 0.5 }
+
+  - id: minors
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A 15-year-old wants an abortion. Should her parents have to agree?
+    poles: [Parents must agree, Her decision alone]
+    labels: [Parents must agree, Parents should be told, Torn, Her decision with support, Her decision alone]
+    axes: { cultural: 0.25 }
+    principles: { bodily_autonomy: 0.5 }
+
+  - id: gest
+    type: choice
+    when: stance >= 0
+    text: Up to what point in pregnancy should abortion for any reason be legal?
+    axes: { cultural: 0.5 }
+    options:
+      - { id: none, label: At no point, value: -1 }
+      - { id: six_weeks, label: Up to about 6 weeks (around when cardiac activity can be detected), value: -0.6 }
+      - { id: fifteen_weeks, label: Up to about 12–15 weeks (the first trimester or a little after), value: 0 }
+      - { id: viability, label: Until the fetus could survive outside the womb (about 24 weeks), value: 0.6 }
+      - { id: any, label: At any point in pregnancy, value: 1 }
+
+  # --- Anchors: matched wording across topics (compared by the tension detector) ---------------
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to pregnancy, a woman's right to decide what happens to her own body should come first.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: pregnancy, against: the life of the fetus }
+
+  - id: anchor_sol
+    type: likert
+    points: 7
+    text: Deliberately ending a human life is wrong, even before birth and even when continuing the pregnancy is very hard.
+    principles: { sanctity_of_life: 1 }
+    anchor: { principle: sanctity_of_life, context: pregnancy, against: the hardship of continuing the pregnancy }
+
+  # --- Challenges: restrictive side -------------------------------------------------------------
+  - id: ch_ectopic
+    type: challenge
+    targets: life_risk
+    when: life_risk < 0
+    source: "Medical background: ACOG Practice Bulletin No. 193, Tubal Ectopic Pregnancy (2018)"
+    scenario: >-
+      In an ectopic pregnancy the embryo implants outside the uterus, usually in a fallopian tube.
+      It cannot survive, and without treatment the tube can rupture and the woman can die. Standard
+      treatment ends the pregnancy.
+    text: You said abortion should be illegal even to save the woman's life. Should treating an ectopic pregnancy be illegal?
+    options:
+      - id: not_abortion
+        label: No, but that isn't really abortion. The aim is to save her, and the embryo can't survive anyway.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 1, sanctity_of_life: 0.5 }
+      - id: illegal
+        label: Yes. If it ends the pregnancy, it should be illegal.
+        reaction: hold
+        principles: { sanctity_of_life: 1 }
+      - id: rethink
+        label: No, and abortion should be allowed whenever the woman's life is at stake.
+        reaction: yield
+        revise: life_risk
+        principles: { relief_of_suffering: 0.5, sanctity_of_life: -0.5 }
+
+  - id: ch_violinist
+    type: challenge
+    targets: stance
+    when: stance < 0
+    source: Judith Jarvis Thomson, "A Defense of Abortion," Philosophy & Public Affairs (1971)
+    scenario: >-
+      You wake up in a hospital bed. Overnight, without your consent, your circulatory system was
+      connected to a famous violinist's, because only your blood can keep him alive while his kidneys
+      recover. If you disconnect before nine months pass, he dies. He is unquestionably a person with
+      a right to life.
+    text: Should the law require you to stay connected?
+    options:
+      - id: stay
+        label: Yes. His right to life outweighs nine months of my bodily freedom.
+        reaction: hold
+        principles: { sanctity_of_life: 1, bodily_autonomy: -0.5 }
+      - id: responsibility
+        label: No, but pregnancy is usually different. Sex is a choice that can create a dependent life.
+        reaction: distinguish
+        principles: { personal_responsibility: 1, sanctity_of_life: 0.5 }
+      - id: killing
+        label: No, but unplugging lets him die, while abortion actively ends a life.
+        reaction: distinguish
+        principles: { doing_vs_allowing: 1, sanctity_of_life: 0.5 }
+      - id: rethink
+        label: No, and it makes me think abortion should be legal in more cases than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_rape
+    type: challenge
+    targets: rape
+    when: stance < 0 and rape > 0
+    source: Original scenario, based on a common objection to rape exceptions
+    scenario: >-
+      You'd restrict abortion in general but allow it after rape or incest. If the fetus has a full
+      right to life, that right doesn't depend on how the pregnancy began: a fetus conceived through
+      rape is no less human than any other.
+    text: What best explains the exception for you?
+    options:
+      - id: consent
+        label: She didn't consent to sex, so she never took on responsibility for the pregnancy.
+        reaction: distinguish
+        principles: { personal_responsibility: 1, bodily_autonomy: 0.5 }
+      - id: harm
+        label: Forcing a rape victim to carry the pregnancy adds a grave harm that outweighs the fetus's claim.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1 }
+      - id: drop_exception
+        label: On reflection, abortion should be illegal in this case too.
+        reaction: yield
+        revise: rape
+        principles: { sanctity_of_life: 1 }
+      - id: less_strict
+        label: On reflection, my overall view is less restrictive than I said.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 1 }
+
+  - id: ch_ivf
+    type: challenge
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: The "burning IVF clinic" thought experiment, widely discussed in debates about embryo status
+    scenario: >-
+      A fire breaks out in a fertility clinic. You can carry out either a frightened five-year-old
+      child or a container holding 1,000 frozen human embryos. Not both.
+    text: Which do you save, and what does that mean for your view?
+    options:
+      - id: embryos
+        label: The embryos. A thousand human lives outweigh one.
+        reaction: hold
+        principles: { sanctity_of_life: 1 }
+      - id: child_suffering
+        label: The child, because of the child's terror and pain, not because the embryos matter less.
+        reaction: distinguish
+        principles: { relief_of_suffering: 1, sanctity_of_life: 0.5 }
+      - id: child_status
+        label: The child, and it suggests I don't think an embryo counts the same as a born person.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: -0.5 }
+
+  # --- Challenges: permissive side --------------------------------------------------------------
+  - id: ch_future
+    type: challenge
+    targets: stance
+    when: stance > 0
+    source: Don Marquis, "Why Abortion Is Immoral," Journal of Philosophy (1989)
+    scenario: >-
+      Philosopher Don Marquis argued that killing an adult is wrong mainly because it takes away
+      their future: all the experiences, projects and relationships they would have had. A fetus has
+      that same kind of future. So, he concluded, abortion is seriously wrong for the same reason
+      killing an adult is.
+    text: Does this argument change your view?
+    options:
+      - id: conscious
+        label: No. A future only matters to someone who already exists as a conscious being who can value it.
+        reaction: distinguish
+        principles: { sanctity_of_life: -0.5 }
+      - id: body
+        label: No. Even if the fetus has that future, a woman isn't obliged to sustain it with her body.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rethink
+        label: It gives me pause. Abortion should be more restricted than I said.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 1 }
+
+  - id: ch_late_term
+    type: challenge
+    targets: gest
+    when: stance > 0 and gest is any
+    source: Original scenario
+    scenario: >-
+      At 34 weeks a healthy fetus would very likely survive if delivered now. Suppose the pregnancy
+      is healthy and the woman no longer wants to be pregnant. Doctors could induce an early
+      delivery, or end the pregnancy.
+    text: You said abortion for any reason should be legal at any point. Here, should ending the pregnancy rather than delivering be legal?
+    options:
+      - id: her_choice
+        label: Yes. It's her decision at every stage.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: rare
+        label: Cases like this are vanishingly rare; the law shouldn't be built around them.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5 }
+      - id: viability
+        label: No. Once it could survive on its own, ending its life is different.
+        reaction: yield
+        revise: gest
+        principles: { sanctity_of_life: 1 }
+
+  - id: ch_sex_selection
+    type: challenge
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Original scenario; sex-selective abortion is documented in several countries with strong son preference
+    scenario: >-
+      In places with a strong preference for sons, some parents end pregnancies after learning the
+      fetus is female. Demographers estimate this has led to millions fewer girls being born.
+    text: If abortion is otherwise legal, should abortion for this reason be legal too?
+    options:
+      - id: no_policing
+        label: Yes. The law shouldn't police a woman's reasons.
+        reaction: hold
+        principles: { bodily_autonomy: 1 }
+      - id: culture
+        label: Fight the preference, not the choice. A ban would mean interrogating women about their motives.
+        reaction: distinguish
+        principles: { bodily_autonomy: 0.5 }
+      - id: rethink
+        label: No. If a reason can be wrong, the fetus's interests matter more than I said.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 0.5, protect_vulnerable: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_ballot
+    type: challenge
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A ballot measure would make abortion legal for any reason up to 15 weeks. After that, it
+      would be allowed only to protect the woman's life or health, or for a fatal fetal condition.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: no_too_much
+        label: No, it allows too much.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 0.5 }
+      - id: no_too_little
+        label: No, it restricts too much.
+        reaction: yield
+        revise: stance
+        principles: { bodily_autonomy: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
