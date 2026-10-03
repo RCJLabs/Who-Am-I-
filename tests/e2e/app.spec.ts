@@ -69,6 +69,12 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(
     tensions.filter((key) => key.startsWith('bodily_autonomy|')).length,
   );
+
+  // On a fresh start, the answered domains load before anything is shown: nothing goes missing.
+  await page.reload();
+  await page.getByTestId('show-all-tensions').click();
+  await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
+  await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
 });
 
 test('deleting all data really empties the app', async ({ page }) => {

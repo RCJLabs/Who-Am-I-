@@ -13,7 +13,8 @@
   const { content, answers, settings } = app();
 
   let persisted = $state<boolean | null>(null);
-  let pending = $state<Backup | null>(null);
+  // Raw, not deep state: its events go to IndexedDB, which can't store Svelte's proxies.
+  let pending = $state.raw<Backup | null>(null);
   let restoreOpen = $state(false);
   let deleteOpen = $state(false);
   let fileInput: HTMLInputElement | undefined = $state();

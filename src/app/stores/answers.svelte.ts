@@ -78,7 +78,9 @@ export class AnswersStore {
     await this.persist(() => db.putResolution(full));
   }
 
-  async importBackup(b: Backup, mode: 'merge' | 'replace'): Promise<void> {
+  async importBackup(backup: Backup, mode: 'merge' | 'replace'): Promise<void> {
+    // A plain copy: a reactive proxy can't be stored in IndexedDB, and the write would fail.
+    const b = $state.snapshot(backup) as Backup;
     await this.content.ensureForItems(b.events.map((e) => e.item));
     const events = mode === 'merge' ? mergeById(this.events, b.events) : mergeById([], b.events);
     const resolutions = mode === 'merge' ? mergeById(this.resolutions, b.resolutions) : mergeById([], b.resolutions);
