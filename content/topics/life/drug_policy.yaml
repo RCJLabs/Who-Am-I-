@@ -94,8 +94,8 @@ items:
     scenario: >-
       In a 2010 study, drug experts scored 20 drugs on the harm they do to users and to other
       people. Alcohol came out as the most harmful overall, ahead of heroin and crack cocaine,
-      mainly because of the harm drinkers do to others: violence, crashes and broken families. Yet
-      alcohol is legal almost everywhere.
+      mainly because of the harm drinkers do to others: violence, crashes and harm to their
+      families. Yet alcohol is legal almost everywhere.
     text: If alcohol is legal, why should these drugs be crimes?
     options:
       - id: per_person

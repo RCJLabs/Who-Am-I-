@@ -1,0 +1,270 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What you should do when a close relative has committed a serious crime, from hiding them to
+# reporting them as you would anyone else. The real dispute, and the law, is about family, so the
+# friend version is a follow-up item. Crimes against family members stay out of the ladder; they
+# come up only through France's exception, without detail. "Report" and "give evidence", never
+# "snitch". Feeds no spectrum: loyalty to kin is strong in family-obligation cultures across
+# politics. The anchor is loyalty, in one frame with its other anchors (people should stand by
+# their family, coworkers or country even against their own judgment): a relative's crime here,
+# a strike in unions (invoked more on the left), a war in war (more on the right).
+id: family_crime
+domain: relationships
+title: Family and the law
+summary: When a close relative has committed a serious crime, should you report them?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When a close family member has committed a serious crime, like a hit-and-run that badly hurt someone, you should…
+    help: This is about what's right to do, not what the law requires.
+    poles: [Protect them, Report them as you would anyone]
+    labels:
+      - Protect them, even by hiding them from the police
+      - Keep it to yourself, and refuse to give evidence against them
+      - Urge them to turn themselves in, but never report them yourself
+      - Torn / it depends
+      - Give them a chance to turn themselves in, then report them if they don't
+      - Report them, but stand by them through the trial and after
+      - Report them, as you would anyone else
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  - id: friend
+    type: choice
+    text: Would your answer be different for a close friend?
+    options:
+      - { id: more, label: "Yes, I'd be readier to report a friend" }
+      - { id: same, label: "No, it would be the same" }
+      - { id: less, label: "Yes, I'd be less ready to report a friend" }
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: testify
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting people refuse to give evidence against their spouse, parent or child in a criminal trial is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { loyalty: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_loyal
+    type: likert
+    points: 7
+    text: When it comes to a close relative who has committed a serious crime, people should stand by their family and not report them, even though their relative is in the wrong.
+    principles: { loyalty: 1 }
+    anchor: { principle: loyalty, context: a close relative who has committed a serious crime, against: justice for the people they harmed }
+
+  # --- Challenges: for reporting -----------------------------------------------------------------
+  - id: ch_unabomber
+    type: challenge
+    name: The Unabomber's brother
+    targets: stance
+    when: stance < 0
+    source: >-
+      United States v. Kaczynski (1998); David Kaczynski, Every Last Tie: The Story of the Unabomber
+      and His Family (2016)
+    scenario: >-
+      From 1978 to 1995, a bomber killed three people and injured 23 with bombs he mailed or
+      planted. In 1995 newspapers published his manifesto, and David Kaczynski recognized the ideas
+      and phrasing of his brother Ted. After months of agonizing, he went to the FBI, which arrested
+      Ted in 1996. Prosecutors sought the death penalty, and in 1998 Ted pleaded guilty in return
+      for life in prison without parole. David gave most of the reward money to the victims and
+      their families.
+    text: If keeping quiet about a brother could cost more lives, should family loyalty give way?
+    options:
+      - id: someone_else
+        label: Even then, it should be someone else who turns him in. A brother shouldn't have to be the one.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: still_killing
+        label: He might have killed again. Stopping more harm is different from reporting a crime that's over.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should give way more than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_except_children
+    type: challenge
+    name: Except for children
+    targets: stance
+    when: stance < 0
+    source: French Penal Code, article 434-1
+    scenario: >-
+      In France, anyone who knows of a serious crime that could still be prevented or limited, or
+      whose author is likely to strike again, must tell the authorities. Close relatives and spouses
+      are exempt, except when the crime was committed against a child.
+    text: If even a law that respects family loyalty makes an exception for crimes against children, where should loyalty stop?
+    options:
+      - id: protect_child
+        label: Protecting the child comes first, but that can be done without handing a relative to the police.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: danger
+        label: A child in danger is different. In my answer the crime was over, and no one else was at risk.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should give way more than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_fugitive
+    type: challenge
+    name: The fugitive's brother
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      William M. Bulger, testimony to a federal grand jury (2001), reported by The Boston Globe
+      (December 3, 2002); United States v. James J. Bulger (2013)
+    scenario: >-
+      In January 1995 James "Whitey" Bulger, the leader of a Boston gang, fled before he could be
+      arrested. His brother William, a leading Massachusetts politician, took a phone call from him
+      soon after and didn't tell investigators. Questioned by a grand jury in 2001, he said: "I do
+      have an honest loyalty to my brother, and I care about him," and that he hoped never to help
+      anyone against him. His brother was caught in 2011, and in 2013 he was convicted of crimes
+      including 11 murders.
+    text: If loyalty can mean not helping to catch a brother wanted for murder, how far should it go?
+    options:
+      - id: not_hiding
+        label: Not helping to catch him isn't the same as hiding him. A brother shouldn't be the one to hand him over.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: should_urge
+        label: He should at least have urged his brother to turn himself in. That's what I'd do.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should give way more than I said.
+        reaction: yield
+        revise: stance
+        principles: { deserved_punishment: 0.5 }
+
+  # --- Challenges: for protecting family ---------------------------------------------------------
+  - id: ch_sheep_thief
+    type: challenge
+    name: The sheep thief
+    targets: stance
+    when: stance > 0
+    source: Confucius, Analects 13.18
+    scenario: >-
+      In the Analects, a local governor tells Confucius of a man in his district so upright that
+      when his father stole a sheep, he testified against him. Confucius replies that where he comes
+      from, uprightness is different: fathers cover for their sons and sons for their fathers, and
+      uprightness lies in that. For centuries afterward, Chinese law let close relatives conceal one
+      another's crimes.
+    text: Is a family that would turn in its own members more upright, or less?
+    options:
+      - id: same_rules
+        label: More. Uprightness means the same rules for everyone, family included.
+        reaction: hold
+        principles: { deserved_punishment: 0.5 }
+      - id: serious_harm
+        label: A stolen sheep isn't a person badly hurt. When someone is harmed, the victim's claim comes first.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_deportation
+    type: challenge
+    name: A conviction and a deportation
+    targets: stance
+    when: stance > 0
+    source: Immigration and Nationality Act, 8 U.S.C. §§ 1101(a)(43)(G), 1101(a)(48)(B), 1182(a)(9)(A), 1227(a)(2), 1229b(a)(3)
+    scenario: >-
+      In the United States, many convictions make a noncitizen deportable. Even a theft with a
+      one-year sentence, suspended, counts as an "aggravated felony" under immigration law. Someone
+      who has lived in the country legally for decades can then be deported, in most cases with no
+      chance to ask a judge to weigh their family ties, and is usually barred from ever returning.
+    text: If reporting a relative could get them sent away from their family for good, should you report them as you would anyone else?
+    options:
+      - id: answer_for_it
+        label: The law's harshness isn't the victim's fault. A serious crime still has to be answered for.
+        reaction: hold
+        principles: { deserved_punishment: 0.5 }
+      - id: change_law
+        label: That's a reason to change immigration law, not to keep serious crimes from the police.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_law_excuses
+    type: challenge
+    name: What the law excuses
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      German Criminal Code, section 258(6); French Penal Code, article 434-6; Criminal Procedure Law
+      of the People's Republic of China (2012), article 188 (article 193 since 2018)
+    scenario: >-
+      Germany doesn't punish people for helping a relative escape prosecution. France exempts close
+      relatives from its offense of hiding a criminal. And since 2013, Chinese courts can't force a
+      defendant's spouse, parents or children to appear in court to testify against them.
+    text: If many legal systems make exceptions for close relatives, should anyone be expected to report their own family?
+    options:
+      - id: excused_not_right
+        label: Not punishing relatives isn't the same as saying they did right. Reporting is still what justice asks.
+        reaction: hold
+        principles: { deserved_punishment: 0.5 }
+      - id: law_vs_conscience
+        label: I'd never punish a relative for staying silent either. What I should do myself is a different question.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Family loyalty should count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Your brother's hit-and-run
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Your brother tells you he hit a cyclist with his car last night and drove off. The cyclist is
+      in hospital with serious injuries. Your brother is ashamed, but he won't go to the police.
+    text: You said you're torn. Do you tell the police?
+    options:
+      - id: cant_say
+        label: I can't say without being there.
+        reaction: hold
+        value: 0
+      - id: tell
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { deserved_punishment: 0.5 }
+      - id: dont_tell
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

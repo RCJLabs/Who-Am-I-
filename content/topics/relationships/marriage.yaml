@@ -1,0 +1,294 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What civil law should require before a marriage can end, from no divorce at all (legal
+# separation only) to divorce whenever either spouse decides. About law, not faith rules or anyone's
+# own marriage; abuse is a ground at every step that allows divorce. Wording: "without blame"
+# ("no-fault" only as the legal term). Feeds the cultural spectrum at half weight although it's
+# core: a ladder built on fault comes from Western Christian law, and observant Jews and Muslims
+# whose faiths allow divorce on their own terms don't fit its tradition end. The anchor is liberty
+# (free to end a marriage; invoked here more on the left, on speech more on the right). Cases are
+# aimed rather than flattering: those at the restrictive steps show what fault rules cost, those
+# at the easy steps what easy exit can cost children and the spouse who wanted to stay. Outcome
+# evidence says "on average" and names what it can't rule out.
+id: marriage
+domain: relationships
+title: Marriage and divorce
+summary: What should the law require before a marriage can end?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to ending a marriage, the law should…
+    help: >-
+      This is about civil law. Some faiths have their own rules: Catholic teaching doesn't recognize
+      divorce, though it can declare that a marriage was never valid, while Jewish and Islamic law
+      allow divorce on their own terms.
+    poles: [Not allow divorce, Allow it whenever either spouse decides]
+    labels:
+      - Not allow divorce, only legal separation
+      - Allow it only for serious wrongs, like abuse, adultery or desertion
+      - Allow it for serious wrongs, or by agreement; if only one spouse wants out, only after years apart
+      - Torn / it depends
+      - Allow it without blame after about a year's wait, with counseling offered when there are children
+      - Allow it without blame after a few months' wait, whether one or both spouses want it
+      - Allow it quickly whenever either spouse decides the marriage is over, with nothing to prove to a court
+    axes: { cultural: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: cohabiting
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Giving unmarried couples who have lived together for years some of the rights married couples have when they split up, such as a share of the home, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: covenant
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting couples choose a stricter form of marriage, with counseling before the wedding and fewer grounds for divorce ("covenant marriage", offered in three US states), is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: affair_suits
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting someone sue the person their spouse had an affair with, for the harm done to the marriage, as North Carolina still does, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_lib
+    type: likert
+    points: 7
+    text: When it comes to divorce, the government should leave people free to end their marriage, even though some will misuse that freedom to walk out on a marriage that could have been saved.
+    principles: { liberty: 1 }
+    anchor: { principle: liberty, context: divorce, against: the interests of the children and the spouse who wanted to stay }
+
+  # --- Challenges: for easier divorce ------------------------------------------------------------
+  - id: ch_easier_to_leave
+    type: challenge
+    name: Easier to leave
+    targets: stance
+    when: stance < 0
+    source: >-
+      Betsey Stevenson and Justin Wolfers, "Bargaining in the Shadow of the Law: Divorce Laws and
+      Family Distress," Quarterly Journal of Economics (2006)
+    scenario: >-
+      Starting with California in 1969, most US states changed their laws so that one spouse could
+      end a marriage without proving the other at fault and without the other's agreement.
+      Economists Betsey Stevenson and Justin Wolfers compared states by when they made the change.
+      In the years after it, suicide among women fell by 8 to 16 percent, with no clear change for
+      men, and the authors estimated that domestic violence fell by roughly 30 percent.
+    text: If letting one spouse leave without the other's agreement protects people in bad marriages, should the law require a reason?
+    options:
+      - id: promise
+        label: Yes. A marriage is a promise, and a law that lets one spouse break it at will makes every marriage less secure.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: prove_abuse
+        label: That's a reason to make abuse easy to prove, not to let marriages end at one spouse's word.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should let people leave more easily than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_staged_affair
+    type: challenge
+    name: The staged affair
+    targets: stance
+    when: stance < 0
+    source: >-
+      Nelson Manfred Blake, The Road to Reno: A History of Divorce in the United States (1962); New
+      York's Divorce Reform Law (1966)
+    scenario: >-
+      Until 1967, adultery was the only ground for divorce in New York. Couples who both wanted out
+      often staged it: a woman paid to pose with the husband in a hotel room, a photographer to
+      catch them, and judges granting divorces on evidence many knew was invented. Couples who could
+      afford it went to Nevada instead, living there for six weeks to qualify for a divorce under
+      its looser law.
+    text: If strict grounds lead couples to deceive the courts rather than stay married, what are they achieving?
+    options:
+      - id: meant_to_last
+        label: They still made people think twice, and they said that marriage is meant to last.
+        reaction: hold
+        principles: { authority: 0.5 }
+      - id: one_ground
+        label: That shows New York's rule was too narrow, not that the law should stop asking for a reason.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should let people leave more easily than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_contested
+    type: challenge
+    name: The contested divorce
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Owens v Owens [2018] UKSC 41; Divorce, Dissolution and Separation Act 2020
+    scenario: >-
+      In 2015 Tini Owens, married for 37 years, left her husband and asked an English court for a
+      divorce, citing his behavior toward her. He contested it, and the judge found that her
+      complaints were the kind of thing to be expected in a marriage. In 2018 the UK Supreme Court
+      upheld the ruling with reluctance, saying it was for Parliament to change the law. She had to
+      stay married until the couple had lived apart for five years. Parliament later passed a law
+      allowing divorce without blame, in force since 2022.
+    text: Should the law be able to keep someone married against their will for years?
+    options:
+      - id: both_promised
+        label: Yes, when nothing serious went wrong and the other spouse wants to keep the marriage. Both made the promise.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: shorter_wait
+        label: Five years was too long. A law like mine, with a shorter wait when one spouse objects, would have freed her sooner.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should let people leave more easily than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for making divorce harder -----------------------------------------------------
+  - id: ch_low_conflict
+    type: challenge
+    name: Low-conflict marriages
+    targets: stance
+    when: stance > 0
+    source: >-
+      Paul R. Amato and Alan Booth, A Generation at Risk: Growing Up in an Era of Family Upheaval
+      (1997)
+    scenario: >-
+      Sociologists Paul Amato and Alan Booth followed a national sample of married people in the US
+      from 1980, and later interviewed their grown children. Children whose parents left
+      high-conflict marriages did better as young adults, on average, than children whose parents
+      stayed in such marriages. But children whose parents ended marriages with little open conflict
+      did worse than children whose parents stayed in theirs. The authors estimated that fewer than
+      a third of divorces involving children end high-conflict marriages. Families that divorce can
+      differ in other ways too, which no study of this kind fully rules out.
+    text: If most divorces end low-conflict marriages, whose children on average did better when their parents stayed together, should the law make those divorces harder?
+    options:
+      - id: unbearable
+        label: No. Adults shouldn't need a court's permission to leave, and a marriage that looks calm to researchers can still be unbearable.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: support
+        label: Offer those parents counseling and support, without legal barriers.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should make divorce harder when there are children than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_second_thoughts
+    type: challenge
+    name: Second thoughts
+    targets: stance
+    when: stance > 0
+    source: >-
+      William J. Doherty, Brian J. Willoughby and Bruce Peterson, "Interest in Marital
+      Reconciliation Among Divorcing Parents," Family Court Review (2011)
+    scenario: >-
+      Researchers surveyed about 2,500 divorcing parents in Minnesota who were taking a parenting
+      class the court required. About one in four said they believed their marriage could still be
+      saved with hard work. Parents whose spouse had started the divorce were far more open to
+      reconciling, and in only about one couple in ten were both open to help with it.
+    text: If many people going through a divorce think their marriage could still be saved, should the law slow it down?
+    options:
+      - id: their_decision
+        label: No. A legal wait won't save a marriage one spouse has decided to leave, and that decision belongs to them.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: offer_help
+        label: Offer help with reconciling to couples who want it, without making everyone wait.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should slow divorce down more than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_raised_under
+    type: challenge
+    name: Raised under easy divorce
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Jonathan Gruber, "Is Making Divorce Easier Bad for Children? The Long-Run Implications of
+      Unilateral Divorce," Journal of Labor Economics (2004)
+    scenario: >-
+      Economist Jonathan Gruber used the same changes in state laws to study children. Adults who
+      had grown up in states after they let one spouse end a marriage alone had, on average, less
+      education and lower family incomes than those who hadn't, and they married earlier and
+      separated more often. The study compares places, not families: it shows how the laws affected
+      children on average, not what any one divorce did.
+    text: If easier divorce frees some adults but leaves children, on average, worse off later in life, whose interests should come first?
+    options:
+      - id: unhappy_homes
+        label: Children suffer in unhappy homes too. The law can't keep parents together for their sake.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: support_children
+        label: The answer is more support for children whose parents live apart, not marriages held together by law.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should make divorce harder when there are children than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Children under 16
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would stop one spouse ending a marriage with children under 16 without the
+      other's agreement, unless there had been abuse, adultery or desertion, or the couple had lived
+      apart for two years.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

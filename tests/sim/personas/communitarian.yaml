@@ -8,7 +8,8 @@ topics:
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
-   trust, changing_mind, official_accounts, settled, supernatural]
+   trust, changing_mind, official_accounts, settled, supernatural,
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -571,6 +572,43 @@ answers:
   supernatural.religion: some
   supernatural.experiences: [presence]
   supernatural.understanding: not_sure
+  unions.anchor_loyal: 5 # stand by coworkers, country and family alike: no tension
+  war.anchor_loyal: 5
+  taxes.anchor_grat: 6 # a debt to society as to parents
+  transgender.anchor_parents: 3 # parents' say about the same on blockers as on discipline
+  marriage.stance: 4 # torn: the middle challenge
+  marriage.importance: 3
+  marriage.cohabiting: 4
+  marriage.covenant: 4
+  marriage.affair_suits: 2
+  marriage.anchor_lib: 3 # as for speech and private messages
+  marriage.ch_vote: abstain
+  aging_parents.stance: 6 # live with family or care at home
+  aging_parents.importance: 3
+  aging_parents.support_laws: 4
+  aging_parents.carer_pay: 5
+  aging_parents.anchor_grat: 6
+  aging_parents.ch_care_insurance: stays_responsible
+  aging_parents.ch_carers: share_fairly
+  aging_parents.ch_parent_who_left: in_general
+  aging_parents.ch_bill: share_cost
+  physical_punishment.stance: 4 # torn: the middle challenge
+  physical_punishment.importance: 2 # low: deep items are skipped
+  physical_punishment.moral: 3
+  physical_punishment.school: 2
+  physical_punishment.anchor_pv: 4 # close to assisted dying, drugs, vaccines and guns
+  physical_punishment.anchor_parents: 4
+  physical_punishment.ch_vote: abstain
+  family_crime.stance: 4 # torn: the middle challenge
+  family_crime.importance: 3
+  family_crime.friend: more
+  family_crime.testify: 5
+  family_crime.anchor_loyal: 5
+  family_crime.ch_vote: cant_say
+  birth_rates.stance: 4 # torn: the middle challenge
+  birth_rates.importance: 2
+  birth_rates.immigration: 3
+  birth_rates.ch_vote: abstain
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -619,7 +657,7 @@ expect:
     protest: { obey_law: "> 0.5" }
     healthcare: { market_limits: "> 0.5" }
     democracy: { authority: "< 0", protect_vulnerable: "> 0.3" }
-    war: { collective_welfare: "> 0.5" }
+    war: { collective_welfare: "> 0.5", loyalty: "> 0" }
     experts: { expertise: "> 0.3" }
     policing: { equal_treatment: "> 0" }
     transgender: { precaution: "> 0" }
@@ -632,12 +670,15 @@ expect:
     gm_food: { market_limits: "> 0.3" }
     ai: { precaution: "> 0.3", retribution: "> 0.3" }
     nature: { subsidiarity: "> 0.2" }
-    taxes: { future_generations: "> 0.2" }
+    taxes: { future_generations: "> 0.2", gratitude: "> 0.5" }
     trade: { animal_welfare: "> 0.2" }
     strangers: { future_generations: "> 0.3" }
     free_will: { deserved_punishment: "< 0.1" }
     trust: { independent_checks: "< 0" }
     official_accounts: { independent_checks: "< 0" }
+    marriage: { liberty: "< 0" }
+    aging_parents: { gratitude: "> 0.5" }
+    family_crime: { loyalty: "> 0.3" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -653,4 +694,6 @@ expect:
   # In worldview as well: deserved punishment, deference to experts and belief that fits the
   # evidence each weigh about the same wherever they come up.
   # In how you know too: independent checking weighs the same for news reports and police.
+  # In relationships too: liberty, loyalty, gratitude, parents' say and protecting the vulnerable
+  # weigh about the same in each topic.
   tensions: []

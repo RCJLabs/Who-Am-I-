@@ -1,0 +1,328 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What the law should say about parents smacking their children, from leaving it to parents to
+# prosecuting it like any assault. "Smack" is defined in the stem (an open hand, on the bottom or
+# hand); never "violence" for a smack, never "abuse" for all physical punishment. The upper steps
+# describe bans as their supporters do (the same protection as adults, met mostly with parenting
+# support), and hold options give parents' own reasons. Feeds no spectrum: on the civil spectrum a
+# ban would score as authoritarian, and on the cultural one answers would sort people by race and
+# country of origin as much as by tradition. Two anchors: protecting the vulnerable (matched to the
+# guns anchor; invoked here more on the left) and parents' say (how children are disciplined;
+# invoked here more on the right, and on treatment for transgender under-18s more on the left). The
+# moral item and the qualities list get "Prefer not to say": one can reveal what a parent does, the
+# other faith. The qualities list follows the World Values Survey, adding respect for parents and
+# elders and loyalty to family; it's unscored.
+id: physical_punishment
+domain: relationships
+title: Physical punishment
+summary: Should the law let parents physically punish their children?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to parents smacking a child as punishment (an open-handed smack on the bottom or hand), the law should…
+    help: >-
+      For example, Canada allows it within limits like those in step 2; Germany and Japan ban it in
+      family law without adding penalties; Wales treats it as assault but in practice offers parents
+      support rather than prosecution.
+    poles: [Leave it to parents, Prosecute it like any assault]
+    labels:
+      - Leave it to parents, with no limits beyond the laws against abuse
+      - "Allow it within set limits: an open hand, never the head, no marks, not babies or teenagers"
+      - Allow it within such limits, but discourage it through campaigns and parenting advice
+      - Torn / it depends
+      - Declare it wrong in family law, without making it a crime
+      - Treat it as assault, but answer most cases with parenting support rather than prosecution
+      - Treat it as assault and prosecute it like any other
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: moral
+    type: slider
+    steps: 5
+    sensitive: true
+    tags: [circumstance]
+    text: Leaving the law aside, an occasional open-handed smack to discipline a young child is…
+    poles: [Wrong, Acceptable]
+    labels: [Wrong, Probably wrong, Torn, Probably acceptable, Acceptable]
+
+  - id: school
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Allowing school staff to physically punish pupils, for example by paddling, as some US states still do, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: homeschool
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring parents who homeschool to register their children and have their progress checked each year is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { parents_say: -0.5 }
+
+  - id: qualities
+    type: multi
+    deep: true
+    sensitive: true
+    max: 5
+    text: Which of these qualities are especially important for children to learn at home? Choose up to five.
+    options:
+      - { id: manners, label: Good manners }
+      - { id: independence, label: Independence }
+      - { id: hard_work, label: Hard work }
+      - { id: responsibility, label: A sense of responsibility }
+      - { id: imagination, label: Imagination }
+      - { id: tolerance, label: Tolerance and respect for other people }
+      - { id: thrift, label: "Thrift, saving money and things" }
+      - { id: determination, label: Determination and perseverance }
+      - { id: faith, label: Religious faith }
+      - { id: unselfishness, label: Unselfishness }
+      - { id: obedience, label: Obedience }
+      - { id: respect_elders, label: Respect for parents and elders }
+      - { id: family_loyalty, label: Loyalty to family }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Smacking should be against the law to protect children from harm, even if that means loving parents can't give even a rare, calm smack.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: smacking children, against: the freedom of parents who would smack rarely and calmly }
+
+  - id: anchor_parents
+    type: likert
+    points: 7
+    text: When it comes to how children are disciplined, parents, not the state, should decide, even when some parents will decide wrongly.
+    principles: { parents_say: 1 }
+    anchor: { principle: parents_say, context: how children are disciplined, against: protecting children from harsh punishment }
+
+  # --- Challenges: for a ban ---------------------------------------------------------------------
+  - id: ch_studies
+    type: challenge
+    name: Sixty-nine studies
+    targets: stance
+    when: stance < 0
+    source: >-
+      Anja Heilmann et al., "Physical punishment and child outcomes: a narrative review of
+      prospective studies," The Lancet (2021)
+    scenario: >-
+      In 2021 researchers reviewed 69 studies that followed children over time. Physical punishment
+      consistently predicted more behavior problems later, such as aggression, and none of the
+      studies found that it predicted better outcomes. Following children over time lets studies
+      account for how they behaved to begin with, though not for every difference between families.
+    text: If smacking doesn't improve children's behavior, and may make it worse, should the law allow it?
+    options:
+      - id: rare_calm
+        label: That review counts everything short of severe assault as physical punishment. It doesn't show that a rare, calm smack within limits does harm.
+        reaction: hold
+        principles: { parents_say: 0.5 }
+      - id: advise
+        label: That's a reason to advise parents against it, not to make it a crime.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should do more to discourage smacking than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_sweden
+    type: challenge
+    name: Sweden since 1979
+    targets: stance
+    when: stance < 0
+    source: >-
+      Joan E. Durrant, "Evaluating the success of Sweden's corporal punishment ban," Child Abuse &
+      Neglect (1999); Julian V. Roberts, "Changing public attitudes towards corporal punishment: the
+      effects of statutory reform in Sweden," Child Abuse & Neglect (2000); Sweden, Parental Code
+      (1979 amendment)
+    scenario: >-
+      In 1979 Sweden became the first country to ban all physical punishment of children. The ban
+      carried no penalty of its own and came with a public campaign, including messages printed on
+      milk cartons. Attitudes were already shifting: in 1965, 53% of Swedes agreed that a child
+      sometimes had to be physically punished, and by 1981, 26% did. In 1994, 11% said they favored
+      even mild physical punishment.
+    text: If a ban can set a standard without punishing parents, should the law still allow smacking?
+    options:
+      - id: not_the_state
+        label: Using the law to change how parents think is the problem. How to raise children is for parents to decide.
+        reaction: hold
+        principles: { parents_say: 0.5 }
+      - id: persuasion
+        label: Attitudes were changing before the ban. Persuasion can do that work without the law.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should do more to discourage smacking than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_abuse
+    type: challenge
+    name: Where abuse begins
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Canadian Incidence Study of Reported Child Abuse and Neglect (2003); Joan E. Durrant, Nico
+      Trocmé, Barbara Fallon, Cheryl Milne and Tara Black, "Protection of Children From Physical
+      Maltreatment in Canada: An Evaluation of the Supreme Court's Definition of Reasonable Force,"
+      Journal of Aggression, Maltreatment & Trauma (2009)
+    scenario: >-
+      In Canada, a national study of cases reported to child-protection services in 2003 found that
+      about three-quarters of the physical abuse that caseworkers confirmed had happened while a
+      parent was punishing a child.
+    text: If most confirmed physical abuse happens during punishment, can the law draw a safe line?
+    options:
+      - id: already_crime
+        label: Abuse is already a crime. Banning smacks won't stop parents who are already breaking the law.
+        reaction: hold
+        principles: { parents_say: 0.5 }
+      - id: clear_limits
+        label: Clear limits, like never the head and never with an object, are the right way to separate punishment from abuse.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should do more to discourage smacking than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: for leaving it to parents -----------------------------------------------------
+  - id: ch_normal
+    type: challenge
+    name: Where it's normal
+    targets: stance
+    when: stance > 0
+    source: >-
+      Jennifer E. Lansford et al., "Physical Discipline and Children's Adjustment: Cultural
+      Normativeness as a Moderator," Child Development (2005)
+    scenario: >-
+      A 2005 study of mothers and children in China, India, Italy, Kenya, the Philippines and
+      Thailand found that physical punishment was linked to more aggression and anxiety in children
+      in every country. But the link was weaker where physical punishment was common and seen as
+      normal, and stronger where it was rare.
+    text: If the harm depends partly on whether smacking is normal where a child grows up, should the law forbid it outright?
+    options:
+      - id: still_harm
+        label: It was still linked to more aggression and anxiety everywhere. Less harm is still harm.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: same_protection
+        label: My view rests on children having the same protection from being hit as adults, not on how much harm a smack does.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave parents more room than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  - id: ch_backup
+    type: challenge
+    name: A backup to time-out
+    targets: stance
+    when: stance > 0
+    source: >-
+      Robert E. Larzelere and Brett R. Kuhn, "Comparing Child Outcomes of Physical Punishment and
+      Alternative Disciplinary Tactics: A Meta-Analysis," Clinical Child and Family Psychology
+      Review (2005)
+    scenario: >-
+      In 2005 psychologists Robert Larzelere and Brett Kuhn pooled 26 studies comparing physical
+      punishment with other ways of disciplining children. When smacking was used with children aged
+      2 to 6 mainly as a backup, for example when a child refused to stay in time-out, it reduced
+      defiance or antisocial behavior more than 10 of 13 other methods. Typical use did about as
+      well as the alternatives, while overly severe use, or relying on it as the main method,
+      compared badly.
+    text: If a smack used as a backup can work better than most alternatives with young children, should the law forbid it?
+    options:
+      - id: no_benefit
+        label: Other reviews find no benefit, and there are backups to time-out that don't involve hitting.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: standard
+        label: A ban doesn't need prosecutions. Its job is to set a standard, with support for parents who struggle.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave parents more room than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  - id: ch_nz_vote
+    type: challenge
+    name: New Zealand's vote
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Crimes (Substituted Section 59) Amendment Act 2007 (New Zealand); New Zealand
+      citizens-initiated referendum on child discipline (2009)
+    scenario: >-
+      In 2007 New Zealand's Parliament voted 113 to 8 to remove the legal defense that let parents
+      use reasonable force to correct a child, while letting police decide not to prosecute minor
+      cases. In a referendum in 2009, 87% of voters answered no to the question "Should a smack as
+      part of good parental correction be a criminal offence in New Zealand?", on a turnout of 56%.
+      The referendum didn't bind Parliament, and the law stayed. Supporters of the law said the
+      question was loaded.
+    text: If most voters reject making a smack a crime, should the law do it anyway?
+    options:
+      - id: not_a_vote
+        label: Children's protection from being hit shouldn't depend on a popular vote.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: crime_question
+        label: The question asked about crime. Few people want parents prosecuted, and the law lets police leave minor cases alone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave parents more room than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The Welsh model
+    targets: stance
+    when: stance == 0
+    source: Children (Abolition of Defence of Reasonable Punishment) (Wales) Act 2020
+    scenario: >-
+      A proposed law would remove parents' legal defense of "reasonable punishment", so that a smack
+      could count as assault, as in Wales since 2022. Minor cases would rarely be prosecuted, and
+      parents could be offered parenting support instead.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
