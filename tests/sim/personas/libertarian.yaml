@@ -9,7 +9,8 @@ topics:
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
    trust, changing_mind, official_accounts, settled, supernatural,
-   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates,
+   work, saving, health, gambling, social_media]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -635,6 +636,45 @@ answers:
   birth_rates.ivf: 1
   birth_rates.ch_quebec: family_decision
   birth_rates.ch_workers: adapt
+  work.stance: 3 # a large place, with room for the rest
+  work.importance: 2 # low: deep items are skipped
+  work.four_day: 1
+  work.anchor_cw: 2 # no duty to work, and none to share others' care costs
+  work.anchor_lib: 7 # free to agree hours, to gamble, to speak and to divorce alike
+  work.ch_long_hours: chosen_work
+  work.ch_munitions: not_output
+  saving.stance: 2
+  saving.importance: 3
+  saving.borrowing: 2
+  saving.lending: 2
+  saving.card_cap: 1
+  saving.ch_unspent: for_children
+  saving.ch_rich_fool: not_hoarding
+  saving.ch_regret: small_choices
+  health.stance: 2
+  health.importance: 3
+  health.surcharge: 5
+  health.weight_drugs: 1
+  health.wellness: 4
+  health.anchor_cw: 1
+  health.ch_whitehall: measured_better
+  health.ch_moving: new_habits
+  health.ch_twins: other_habits
+  gambling.stance: 7 # legal like other products for adults
+  gambling.importance: 2
+  gambling.lotteries: 1
+  gambling.anchor_lib: 7
+  gambling.ch_bankruptcies: adults_choose
+  gambling.ch_few_accounts: other_products
+  social_media.stance: 1 # families and teenagers decide
+  social_media.importance: 3
+  social_media.school_phones: 3
+  social_media.age_checks: 1
+  social_media.anchor_pv: 1 # no bans to protect people, here as on guns, drugs and smacking
+  social_media.anchor_parents: 7 # parents decide, here as on discipline and blockers
+  social_media.ch_colleges: families_manage
+  social_media.ch_slides: helped_more
+  social_media.ch_advisory: correlation
 expect:
   axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "< -0.3", revising: "> 0.6", intuition: "> 0.6" }
   topicAxes:
@@ -679,6 +719,7 @@ expect:
     afterlife: { beyond_nature: "< -0.5" }
     changing_mind: { revising: "> 0.6", intuition: "> 0.6" }
     marriage: { cultural: "> 0" }
+    gambling: { civil: "< -0.5" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -728,6 +769,10 @@ expect:
     aging_parents: { gratitude: "< -0.5", personal_responsibility: "> 0.3" }
     physical_punishment: { parents_say: "> 0.5", protect_vulnerable: "< -0.5" }
     birth_rates: { liberty: "> 0.3" }
+    work: { liberty: "> 0.5", collective_welfare: "< -0.5" }
+    health: { collective_welfare: "< -0.5", personal_responsibility: "> 0.5" }
+    gambling: { liberty: "> 0.5" }
+    social_media: { parents_say: "> 0.5", protect_vulnerable: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
@@ -748,6 +793,8 @@ expect:
   # In relationships: free to end a marriage, as to speak; no ban to protect children from smacking,
   # as none on guns or drugs; loyalty overrides judgment neither in a strike nor in a war; no
   # unchosen debts, to parents or to society; and parents decide on discipline and blockers alike.
+  # In lifestyle: no duty to work and none to share care costs; free to agree hours and to gamble,
+  # as to speak and to divorce; and parents decide on social media, as on discipline and blockers.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty

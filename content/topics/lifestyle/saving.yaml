@@ -1,0 +1,272 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What people should do with money once the bills are paid, from saving nearly all of it to
+# spending it on living well now. A personal value: "once the bills are paid" and the help text let
+# people on low incomes answer without being graded, and no item asks about the user's own money.
+# Each end gives its holders' reason (never being at the mercy of a boss, a lender or bad luck; no
+# one knowing how much time they'll have). Putting money into a business or farm counts as saving;
+# giving is asked in Helping strangers. Feeds no spectrum and has no anchor: what people can save
+# tracks income, health and family duties as much as values. Cases bear on saving and spending
+# themselves, not on income: retirees' unspent savings, the parable of the rich fool and long-run
+# regret against saving; savings and peace of mind, people's own wish to save more, and how much of
+# retirement wealth comes from saving against spending.
+id: saving
+domain: lifestyle
+title: Saving or spending
+summary: Once the bills are paid, should people save their money or enjoy it now?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: As a rule, once the bills are paid, people should…
+    help: >-
+      Answer for people who have something left after essentials. Putting money back into a
+      business or farm counts as saving. Giving to charity is asked in Helping strangers.
+    poles: [Save nearly all of it, Spend it on living well now]
+    labels:
+      - Save or invest nearly all of it and live well below their means, so they're never at the mercy of a boss, a lender or bad luck
+      - Save most of it, and spend carefully on things that last
+      - Put a steady share aside first, such as a tenth or a fifth, and enjoy the rest
+      - Torn / it depends
+      - Keep a cushion for emergencies, and enjoy most of it now
+      - Spend most of it on living well now, saving only for big costs they know are coming
+      - "Spend it on living well now: no one knows how much time they'll have to enjoy it"
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: borrowing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Borrowing to buy things you want now, like a car, furniture or a holiday, instead of saving up first, is…
+    poles: [Unwise, Sensible]
+    labels: [Unwise, Probably unwise, Torn, Probably sensible, Sensible]
+
+  - id: lending
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Lending money to relatives who ask is…
+    poles: [Best avoided, A duty]
+    labels: [Best avoided, Probably best avoided, Torn, Probably a duty, A duty]
+
+  - id: card_cap
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A law capping interest on credit cards at 10% a year is…
+    help: In the US, average credit-card interest has been above 20% a year.
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Challenges: for spending more -------------------------------------------------------------
+  - id: ch_unspent
+    type: challenge
+    name: The money left unspent
+    targets: stance
+    when: stance < 0
+    source: >-
+      Sudipto Banerjee, "Asset Decumulation or Asset Preservation? What Guides Retirement
+      Spending?," EBRI Issue Brief 447 (2018)
+    scenario: >-
+      A 2018 study followed American retirees' savings. Those who retired with at least $500,000,
+      not counting their home, had spent a median of about 12% of it 18 years later, and about a
+      third of all the retirees studied had more than when they retired. Some of that is caution
+      about the cost of care in old age.
+    text: If many savers never spend what they saved, how much should people put away?
+    options:
+      - id: for_children
+        label: What's left goes to children and grandchildren. That's part of what it was for.
+        reaction: hold
+        value: 0
+      - id: care_costs
+        label: They kept it for the cost of care in old age, which can be ruinous. That isn't waste.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should enjoy more of their money now than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_rich_fool
+    type: challenge
+    name: The rich fool
+    targets: stance
+    when: stance < 0
+    source: Luke 12:16–21
+    scenario: >-
+      In a parable in Luke's Gospel, a rich man has a bumper harvest and plans to tear down his
+      barns and build bigger ones, so he can store it all and take life easy for many years. God
+      calls him a fool: that very night he will die, and someone else will have what he stored up.
+    text: If no one knows how much time they have, how much should people store up?
+    options:
+      - id: joseph
+        label: The parable is about greed and forgetting God, not saving. Joseph stored grain for seven lean years and saved Egypt.
+        reaction: distinguish
+        value: 0
+      - id: not_hoarding
+        label: Saving isn't hoarding. It's how a family stays safe from a boss, a lender or bad luck.
+        reaction: hold
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should enjoy more of their money now than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_regret
+    type: challenge
+    name: Regrets that grow
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Ran Kivetz and Anat Keinan, "Repenting Hyperopia: An Analysis of Self-Control Regrets,"
+      Journal of Consumer Research (2006)
+    scenario: >-
+      In studies by Ran Kivetz and Anat Keinan, people looking back on choices from long ago
+      regretted working or saving instead of enjoying themselves more than the reverse. In the
+      short run, they felt more guilt about indulging.
+    text: If people come to regret too much self-denial more than too little, should they save as much as you said?
+    options:
+      - id: worse_regret
+        label: Regretting a missed treat is small next to the regret of being broke in old age.
+        reaction: hold
+        value: 0
+      - id: small_choices
+        label: Those were looking back on small treats and lost holidays. Security for a family is a different kind of choice.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should enjoy more of their money now than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for saving more ---------------------------------------------------------------
+  - id: ch_cash_on_hand
+    type: challenge
+    name: Money in the bank
+    targets: stance
+    when: stance > 0
+    source: >-
+      Peter M. Ruberton, Joe Gladstone and Sonja Lyubomirsky, "How Your Bank Balance Buys
+      Happiness: The Importance of 'Cash on Hand' to Life Satisfaction," Emotion (2016)
+    scenario: >-
+      In a study of 585 British bank customers, how much money people had in their bank accounts
+      predicted how satisfied they were with their lives, mostly because they worried less about
+      money. That held even after accounting for their income, investments, spending and debt.
+    text: If savings bring a peace of mind that spending doesn't, should people spend most of what they have left?
+    options:
+      - id: young_years
+        label: Peace of mind is worth something, but so are the years when you're young and well enough to enjoy things.
+        reaction: hold
+        value: 0
+      - id: cushion
+        label: A cushion for emergencies gives that peace of mind. It needn't be most of what's left.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should save more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_save_tomorrow
+    type: challenge
+    name: Save more tomorrow
+    targets: stance
+    when: stance > 0
+    source: >-
+      Richard H. Thaler and Shlomo Benartzi, "Save More Tomorrow: Using Behavioral Economics to
+      Increase Employee Saving," Journal of Political Economy (2004)
+    scenario: >-
+      Economists Richard Thaler and Shlomo Benartzi offered workers at one company the chance to
+      commit part of their future pay raises to retirement savings. Most of those offered it signed
+      up, and their saving rate rose from 3.5% of pay to 13.6% over about three and a half years.
+    text: If people save far more once it's made easy, do they really want to spend as much now as they do?
+    options:
+      - id: still_room
+        label: Saving more for retirement still leaves room to enjoy the rest now.
+        reaction: hold
+        value: 0
+      - id: retirement
+        label: That's saving for retirement, which I'd do too. My point is about what's left after that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should save more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_same_earnings
+    type: challenge
+    name: Same earnings, different wealth
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Steven F. Venti and David A. Wise, "Choice, Chance, and Wealth Dispersion at Retirement," in
+      Aging Issues in the United States and Japan (2001)
+    scenario: >-
+      Economists Steven Venti and David Wise compared American households that had earned about the
+      same over their working lives. By retirement, some had many times the wealth of others, and
+      the gap came mostly from how much they had chosen to save, not from bad luck such as poor
+      health, or from inheritances.
+    text: If saving decides so much of how people fare in old age, should they spend most of what they have left now?
+    options:
+      - id: years_now
+        label: Old age isn't guaranteed, and money saved can't buy back the years when you were young.
+        reaction: hold
+        value: 0
+      - id: pensions
+        label: A pension and a cushion can cover old age. That's different from saving most of what's left.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People should save more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The windfall
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      You unexpectedly receive about three months' pay, after tax, and you have no debts.
+    text: You said you're torn. What do you do with it?
+    options:
+      - id: split
+        label: Split it.
+        reaction: hold
+        value: 0
+      - id: save
+        label: Put it all into savings or investments
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: spend
+        label: Spend it now on something your family will enjoy, like a trip to see relatives or something you've long wanted
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

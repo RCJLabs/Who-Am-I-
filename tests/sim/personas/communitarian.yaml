@@ -9,7 +9,8 @@ topics:
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
    trust, changing_mind, official_accounts, settled, supernatural,
-   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates,
+   work, saving, health, gambling, social_media]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -609,6 +610,41 @@ answers:
   birth_rates.importance: 2
   birth_rates.immigration: 3
   birth_rates.ch_vote: abstain
+  work.stance: 3
+  work.importance: 3
+  work.four_day: 4
+  work.trade: 4
+  work.own_work: job
+  work.anchor_cw: 6 # a duty to work and to share care costs alike: no tension
+  work.anchor_lib: 3
+  work.ch_long_hours: chosen_work
+  work.ch_munitions: factory
+  work.ch_keynes: retirement
+  work.ch_thirty_five: flexible
+  saving.stance: 4 # torn: the middle challenge
+  saving.importance: 2
+  saving.borrowing: 2
+  saving.ch_vote: split
+  health.stance: 4 # torn: the middle challenge
+  health.importance: 3
+  health.surcharge: 3
+  health.weight_drugs: 4
+  health.wellness: 2
+  health.anchor_cw: 6
+  health.ch_vote: no_bet
+  gambling.stance: 2
+  gambling.importance: 2
+  gambling.lotteries: 3
+  gambling.anchor_lib: 2 # close to speech, private messages, divorce and hours
+  gambling.ch_norway: fewer_harmed
+  gambling.ch_how_many: not_all
+  social_media.stance: 4 # torn: the middle challenge
+  social_media.importance: 3
+  social_media.school_phones: 5
+  social_media.age_checks: 3
+  social_media.anchor_pv: 5
+  social_media.anchor_parents: 4
+  social_media.ch_vote: abstain
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -646,6 +682,7 @@ expect:
     prisons: { civil: "> 0" }
     climate: { economic: "< 0" }
     afterlife: { beyond_nature: "> 0.2" }
+    gambling: { civil: "> 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -679,6 +716,9 @@ expect:
     marriage: { liberty: "< 0" }
     aging_parents: { gratitude: "> 0.5" }
     family_crime: { loyalty: "> 0.3" }
+    work: { collective_welfare: "> 0.5" }
+    health: { collective_welfare: "> 0.5" }
+    gambling: { liberty: "< -0.3" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -696,4 +736,6 @@ expect:
   # In how you know too: independent checking weighs the same for news reports and police.
   # In relationships too: liberty, loyalty, gratitude, parents' say and protecting the vulnerable
   # weigh about the same in each topic.
+  # In lifestyle too: collective welfare, liberty, protecting the vulnerable and parents' say weigh
+  # about the same in each topic.
   tensions: []

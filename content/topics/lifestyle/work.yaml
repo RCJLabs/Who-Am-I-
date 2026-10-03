@@ -1,0 +1,352 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much of a good life should go to paid work, from building life around it to needing as
+# little as possible. A personal value, asked about people in general: the help text sets aside
+# anyone who can't work, is caring for someone or has retired. Work means earning a living in a
+# job, a trade, a farm or a business, so the ladder avoids office words ("career", "balance") and
+# gives the hard-working end its holders' reasons (purpose, a family's security), not just amounts.
+# The four-day week is a circumstance with a deep case each way; the stance feeds no spectrum,
+# since how much people can work tracks health, caring duties and income as much as values. Two
+# anchors: collective welfare (people able to work should, even if they could afford not to;
+# invoked more on the right, and on sharing health costs more on the left) and liberty (employers
+# and workers free to agree hours; invoked more on the right, and on divorce and private messages
+# more on the left). The one item about the user's own work is sensitive and unscored.
+id: work
+domain: lifestyle
+title: Work and the good life
+summary: How much of a good life should go to work?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: For most people, a good life…
+    help: >-
+      Work here means earning a living, in a job, a trade, a farm or a business. Answer for people
+      in general, not for anyone who can't work, is caring for someone or has retired. If you work
+      hard now so you'll need less paid work later, answer for what you're aiming at.
+    poles: [Is built around work, Needs as little paid work as possible]
+    labels:
+      - "Is built around their work: doing it well and providing through it is where most of their purpose and self-respect come from"
+      - Gives work first call on their time and energy in the working years, to give their family security and a better start
+      - Gives work a large place, with room kept for family, faith and rest
+      - Torn / it depends
+      - Gives work its due, but finds most of its meaning in family, friends, faith or interests outside it
+      - Keeps paid work to what a decent living needs, and gives the rest of their time to other things
+      - "Needs as little paid work as possible: once the basics are covered, time is worth more than money"
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: four_day
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A law cutting the standard full-time week to four days, with no cut in pay, is…
+    help: Laws on working hours usually don't cover farmers or the self-employed.
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: trade
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: For a young person who could do either, learning a skilled trade instead of going to university is…
+    poles: [A worse choice, A better choice]
+    labels: [A worse choice, Probably a worse choice, Just as good, Probably a better choice, A better choice]
+
+  - id: own_work
+    type: choice
+    deep: true
+    sensitive: true
+    text: What is your own work to you, mostly?
+    options:
+      - { id: job, label: "A job: mainly a way to earn a living" }
+      - { id: career, label: "A career: a path I want to keep advancing in" }
+      - { id: calling, label: "A calling: work I'd want to do even if it paid less" }
+      - { id: not_working, label: "I'm not in paid work right now" }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_cw
+    type: likert
+    points: 7
+    text: When it comes to work, people who are able to work should do so for the good of the community, even if they could afford not to.
+    principles: { collective_welfare: 1 }
+    anchor: { principle: collective_welfare, context: work, against: people's freedom to stop working when they can afford to }
+
+  - id: anchor_lib
+    type: likert
+    points: 7
+    text: When it comes to working hours, the government should leave employers and workers free to agree how long people work, even though some will misuse that freedom to push people into dangerously long hours.
+    principles: { liberty: 1 }
+    anchor: { principle: liberty, context: working hours, against: workers' health and time off }
+
+  # --- Challenges: for less work -----------------------------------------------------------------
+  - id: ch_long_hours
+    type: challenge
+    name: Long hours
+    targets: stance
+    when: stance < 0
+    source: >-
+      Frank Pega et al., "Global, regional, and national burdens of ischemic heart disease and
+      stroke attributable to exposure to long working hours for 194 countries, 2000–2016,"
+      Environment International (2021)
+    scenario: >-
+      In 2021 the World Health Organization and the International Labour Organization estimated
+      that working 55 hours a week or more caused about 745,000 deaths from stroke and heart disease
+      in 2016. Compared with working 35 to 40 hours, it went with a 35% higher risk of stroke and a
+      17% higher risk of dying of heart disease. The estimate is modeled from observational studies.
+    text: If very long hours can cost people their health, should a good life be built around work?
+    options:
+      - id: chosen_work
+        label: That's mostly about people pushed into long hours by employers. Choosing to work hard on your own farm or business is different.
+        reaction: distinguish
+        value: 0
+      - id: worth_it
+        label: Hard work has always had costs. Providing for a family is worth them.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: rethink
+        label: It gives me pause. A good life needs less work than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_munitions
+    type: challenge
+    name: The munitions workers
+    targets: stance
+    when: stance < 0
+    source: John Pencavel, "The Productivity of Working Hours," Economic Journal (2015)
+    scenario: >-
+      Economist John Pencavel studied British munitions workers during the First World War, whose
+      hours and output were carefully recorded. Up to about 50 hours a week, output rose in step
+      with hours. Beyond that it rose much more slowly, so very long weeks added little.
+    text: If extra hours add little past a point, does giving work first call on your time pay off?
+    options:
+      - id: not_output
+        label: Work isn't only output. Showing up and seeing a job through matters in itself.
+        reaction: hold
+        value: 0
+      - id: factory
+        label: That was factory work under strain. Work you own and care about is different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. A good life needs less work than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_keynes
+    type: challenge
+    name: The fifteen-hour week
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: John Maynard Keynes, "Economic Possibilities for our Grandchildren" (1930)
+    scenario: >-
+      In 1930 the economist John Maynard Keynes predicted that within a century people would be four
+      to eight times richer, and could live well working "three-hour shifts or a fifteen-hour week".
+      The wealth came. Most full-time workers in rich countries still work 35 to 40 hours a week.
+    text: If people are far richer than their grandparents, why should a good life still be built around work?
+    options:
+      - id: retirement
+        label: The extra free time came, as longer retirements and holidays. People chose that, and saved for it.
+        reaction: hold
+        value: 0
+      - id: wants_grow
+        label: People want more than they used to, and work is how they get it, for themselves and their families.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. A good life needs less work than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for more work -----------------------------------------------------------------
+  - id: ch_lottery
+    type: challenge
+    name: The lottery winners
+    targets: stance
+    when: stance > 0
+    source: >-
+      David Cesarini, Erik Lindqvist, Matthew Notowidigdo and Robert Östling, "The Effect of Wealth
+      on Individual and Household Labor Supply: Evidence from Swedish Lotteries," American Economic
+      Review (2017); Bengt Furåker and Anna Hedenus, "Gambling Windfall Decisions: Lottery Winners
+      and Employment Behavior," UNLV Gaming Research & Review Journal (2009)
+    scenario: >-
+      Economists studied Swedish lottery players whose prizes were large enough to change their
+      lives. Winners cut their earnings only a little, by about 1% of the prize a year, and in a
+      survey of large winners fewer than one in eight quit their jobs.
+    text: If even people who could stop working mostly keep going, how small should work be in a good life?
+    options:
+      - id: habit
+        label: People keep working out of habit and fear. That isn't the same as needing it for a good life.
+        reaction: hold
+        value: 0
+      - id: different_work
+        label: Many winners changed how they worked, not whether. Less paid work doesn't mean doing nothing.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Work matters to a good life more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_keep_working
+    type: challenge
+    name: If you were rich
+    targets: stance
+    when: stance > 0
+    source: >-
+      Nancy C. Morse and Robert S. Weiss, "The Function and Meaning of Work and the Job," American
+      Sociological Review (1955); General Social Survey (1973–2024)
+    scenario: >-
+      In 1955, 80% of employed American men said they would keep working even if they inherited
+      enough to live comfortably without it. The General Social Survey has asked the same question
+      since the 1970s, and most working Americans still say they would carry on.
+    text: If most people say they'd keep working without the money, is paid work only a means to an end?
+    options:
+      - id: what_they_say
+        label: What people say in a survey isn't what they'd do, and many would work differently.
+        reaction: hold
+        value: 0
+      - id: chosen_work
+        label: They'd keep working at something they chose. That's different from needing paid work.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Work matters to a good life more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_industry
+    type: challenge
+    name: The boys who worked
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      George E. Vaillant and Caroline O. Vaillant, "Natural History of Male Psychological Health,
+      X: Work as a Predictor of Positive Mental Health," American Journal of Psychiatry (1981)
+    scenario: >-
+      Researchers followed 456 men from inner-city Boston from age 14 to 47. How hard-working they
+      had been as boys, in part-time jobs, chores and school, predicted their mental health and close
+      relationships as adults better than their family's class, their childhood problems or their
+      IQ.
+    text: If the capacity to work hard goes with a good life this closely, should work count for more in it?
+    options:
+      - id: childhood
+        label: That's about what boys learned, not about how much adults should work.
+        reaction: distinguish
+        value: 0
+      - id: other_effort
+        label: The same effort can go into family, community or a craft, not only paid work.
+        reaction: hold
+        value: 0
+      - id: rethink
+        label: It gives me pause. Work matters to a good life more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: aimed at the four-day week ----------------------------------------------------
+  - id: ch_thirty_five
+    type: challenge
+    name: France's 35 hours
+    targets: four_day
+    deep: true
+    when: four_day > 0
+    source: >-
+      Marcello Estevão and Filipa Sá, "The 35-hour workweek in France: Straightjacket or welfare
+      improvement?," Economic Policy (2008)
+    scenario: >-
+      France cut its standard working week from 39 hours to 35, in large firms in 2000 and in small
+      ones in 2002, partly to spread work around and create jobs. Comparing workers the law covered
+      with those it didn't, economists found no measurable gain in employment.
+    text: If shorter hours by law didn't create jobs, is a four-day week by law a good idea?
+    options:
+      - id: time_off
+        label: Creating jobs isn't the point. People get their time back, and that matters in itself.
+        reaction: hold
+        value: 0
+      - id: flexible
+        label: France did it all at once. A four-day week can be phased in, industry by industry.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. I'm less sure about a four-day week by law than I said.
+        reaction: yield
+        revise: four_day
+        principles: { liberty: 0.5 }
+
+  - id: ch_pilot
+    type: challenge
+    name: The four-day pilots
+    targets: four_day
+    deep: true
+    when: four_day < 0
+    source: >-
+      Autonomy, "The results are in: The UK's four-day week pilot" (2023); Wen Fan, Juliet B. Schor
+      et al., "Four-day workweek and well-being," Nature Human Behaviour (2025)
+    scenario: >-
+      In 2022, 61 British companies tried a four-day week with no cut in pay. Revenue held steady,
+      and a year later 54 of them were still doing it. A larger study of 141 organizations in six
+      countries, compared with similar companies that didn't change, found that burnout fell and job
+      satisfaction and health improved. The companies volunteered, and most were small office firms.
+    text: If firms that tried it mostly kept it, and workers were healthier, is a four-day week by law a bad idea?
+    options:
+      - id: volunteers
+        label: Firms that volunteered were the ones it suited. A law would force it on everyone else.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: by_choice
+        label: Let firms choose it, as these did. That's different from a law.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. I'm more open to a four-day week by law than I said.
+        reaction: yield
+        revise: four_day
+        principles: { collective_welfare: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The inheritance
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A relative leaves you enough to live on modestly for the rest of your life without working.
+    text: You said you're torn. What would you do?
+    options:
+      - id: depends
+        label: It would depend on the work I had then.
+        reaction: hold
+        value: 0
+      - id: keep_working
+        label: Keep working as I do now
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: stop
+        label: Stop paid work, or keep only a little, and give the time to family, faith or interests
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

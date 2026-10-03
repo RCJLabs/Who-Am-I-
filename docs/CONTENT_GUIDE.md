@@ -231,6 +231,7 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Loyalty | When it comes to {context}, people should stand by {their family, coworkers or country} and {what that means here}, even {when they think it's in the wrong}. |
   | Debts of gratitude | When it comes to {context}, {who} owe something back to {who gave}, even though they never agreed to that debt. |
   | Parents' say | When it comes to {context}, parents, not the state, should decide, even when some parents will decide wrongly. |
+  | Collective welfare | When it comes to {context}, {who} should {accept a burden} for the good of the community, even if {the cost}. |
 
 - **Rewards and punishment are separate principles.** Someone can hold that rewards should be
   earned without holding that punishment should match wrongdoing, so just deserts
@@ -332,6 +333,17 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | care homes, carers; caring for a parent as work | caring for a parent as a burden; dumped in a home, warehousing the elderly |
 | report, give evidence | snitch |
 | low or falling birth rates; policies to raise the birth rate | demographic winter, population collapse, overpopulation |
+| people who work long hours, naming the hours; people who want to work less | workaholics, hustle culture, rat race, wage slaves; lazy, work-shy, idlers, quiet quitting |
+| people who save most of what they have; people who spend most of it | misers, cheapskates, tightwads; spendthrifts, YOLO, "living beyond their means" |
+| high-interest lenders, naming the rate | loan sharks, predatory lenders, debt traps |
+| common chronic illnesses; the habits by name (smoking, drinking, diet, exercise) | lifestyle diseases, self-inflicted; junk food, clean eating |
+| people with a higher body weight, naming the measure; weight-loss drugs by name | the obese, obesity epidemic, couch potatoes, letting themselves go; fat jabs, the easy way out |
+| tobacco and food companies; taxes on tobacco, alcohol or sugary drinks | big tobacco, big soda; sin taxes; health fascism, food police |
+| disabled people, people with disabilities, wheelchair users | the disabled, wheelchair-bound, handicapped, special needs |
+| people who drink; people with a drinking problem | drunks, alcoholics as a noun, substance abuse; killjoys, wowsers, puritanical |
+| people who bet; people harmed by gambling; people with a gambling disorder | problem gamblers, degenerate gamblers, gambling addicts; "a tax on stupidity"; "responsible gambling" (the industry's term), predatory gambling |
+| under-16s; heavy use, naming how long and how often | screen addiction, iPad kids, brain rot, digital heroin; moral panic, technopanic, kids these days |
+| people in rural areas or in cities, naming the place | rednecks, hicks, flyover country, white trash; city slickers, coastal elites, latte liberals, real America |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
@@ -398,7 +410,8 @@ which side doubts which institution moves with who holds power:
 
 A single item can be sensitive in a topic that isn't (`sensitive: true` on the item). In physical
 punishment, the moral question can reveal what a parent does and the qualities list can reveal
-faith, so both get "Prefer not to say".
+faith, so both get "Prefer not to say". In work and the good life, what your own work is to you
+can reveal being out of work, so it does too.
 
 In Relationships & family, the sides are traditional and progressive views of family, and also
 individualist and family-obligation cultures, which don't line up with left and right. Duties to
@@ -418,6 +431,30 @@ aging parents is sensitive: estrangement and abuse.
   support, not prosecuting parents; divorce at either spouse's word is courts not judging reasons,
   not whim; owing parents nothing special still owes what the relationship calls for. Hold options
   give parents' own reasons ("a rare, calm smack within limits").
+
+In Lifestyle & money, the sides are work, thrift and responsibility (small business owners, trades
+and farmers, working-class and immigrant strivers, religious abstainers, libertarians) and
+wellbeing and circumstance (public health, people who want shorter hours, people with chronic
+illness or disability, harm reduction, parents and teenagers). Answers track income, health and
+caring duties as much as values, so no topic but gambling feeds a spectrum.
+
+- **People in general, never the user's own life.** Stems say "for most people" and "as a rule,
+  once the bills are paid", and help texts set aside anyone who can't work, is caring for someone,
+  has retired or has nothing left after essentials. Nothing asks about the user's own health,
+  weight, savings, debt, drinking or betting.
+- **Health is a belief about evidence, never blame.** The stance asks how much of the difference
+  between people comes down to choices, for common illnesses, and its help text says many
+  illnesses have nothing to do with anyone's choices. Body weight is never called a choice.
+  Personal responsibility has no anchor here: its frame would make illness something people answer
+  for.
+- **Each end in its holders' words.** The hard-working end gives purpose and a family's security,
+  not just hours; the saving end, never being at the mercy of a boss, a lender or bad luck;
+  gambling's ban end, money taken without anything earned and losses that fall on families; its
+  legal end, adults deciding how to spend their own money. Work ladders avoid office words
+  ("career", "balance"), so they fit trades, farms and small businesses.
+- **Numbers, not one person's ruin.** Gambling cases give rates and shares, never one person's
+  losses. Screens stay about social media and phones, and no case involves AI assistants or AI
+  companies: the writer has a stake.
 
 ## Review checklist
 

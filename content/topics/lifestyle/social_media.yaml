@@ -1,0 +1,281 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether the law should open or close social media accounts to under-16s, from leaving it to
+# families and teenagers to closing accounts even with a parent's consent. Steps 1-3 differ by how
+# much the law asks of platforms; step 5 lets parents decide; step 6 is Florida's rule; step 7 is
+# Australia's law and Britain's planned one. Phones at school and age checks for every user are
+# circumstances, since many people back one and not the other. Feeds no spectrum: a law to protect
+# children would score as authority on the civil spectrum, as a smacking ban would, and both
+# parties back limits. Two anchors: protecting the vulnerable, with the cost to teenagers named,
+# and parents' say (invoked by the right on discipline and by the left on treatment for
+# transgender under-18s; many on both sides back age limits here). "Under-16s" and "heavy use",
+# never "iPad kids" or "screen addiction"; the help text gives teenagers' own views. No case
+# involves AI chatbots or AI companies.
+id: social_media
+domain: lifestyle
+title: Under-16s and social media
+summary: Should social media be open to under-16s, or closed to them by law?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Social media accounts for under-16s should be…
+    help: >-
+      In a 2025 survey, 74% of American teenagers said social media helps them feel connected to
+      their friends, and 48% said it mostly harms people their age. Phones at school come up
+      separately.
+    poles: [Open to under-16s, Closed to under-16s]
+    labels:
+      - Open to them, with no special laws; families and teenagers decide how to use it
+      - Open to them, with laws requiring platforms to give parents tools to set limits
+      - Open to them, with laws making platforms safer for them, such as private accounts by default, no targeted ads, and no endless feeds or night-time alerts
+      - Torn / it depends
+      - Open only with a parent's consent, checked by the platform
+      - Closed to under-14s, and open at 14 and 15 only with a parent's consent
+      - Closed to everyone under 16, even with a parent's consent
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: school_phones
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Keeping pupils' phones locked away for the whole school day is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: age_checks
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring every social media user, adults included, to prove their age, for example with ID or a face scan, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_pv
+    type: likert
+    points: 7
+    text: Social media should be closed to under-16s to protect them from harm, even if that means teenagers who use it well, to keep up with friends or find support, lose it.
+    principles: { protect_vulnerable: 1 }
+    anchor: { principle: protect_vulnerable, context: social media for under-16s, against: the freedom of teenagers who use it well }
+
+  - id: anchor_parents
+    type: likert
+    points: 7
+    text: When it comes to whether their under-16s use social media, parents, not the state, should decide, even when some parents will decide wrongly.
+    principles: { parents_say: 1 }
+    anchor: { principle: parents_say, context: whether under-16s use social media, against: protecting teenagers from harm online }
+
+  # --- Challenges: for limits --------------------------------------------------------------------
+  - id: ch_colleges
+    type: challenge
+    name: Facebook at college
+    targets: stance
+    when: stance < 0
+    source: >-
+      Luca Braghieri, Ro'ee Levy and Alexey Makarin, "Social Media and Mental Health," American
+      Economic Review (2022)
+    scenario: >-
+      When Facebook first spread across American colleges, from 2004 to 2006, it arrived at
+      different colleges at different times. Comparing students before and after it arrived,
+      economists found it raised reports of severe depression by 7% and of anxiety disorders by 20%.
+    text: If social media's arrival made young people's mental health worse, should it stay open to under-16s?
+    options:
+      - id: families_manage
+        label: Families can manage the risks better than a law can. Teenagers differ, and parents know their own.
+        reaction: hold
+        principles: { parents_say: 0.5 }
+      - id: safer_design
+        label: That was early Facebook, at college. Making platforms safer for teenagers deals with today's risks.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s need more protection from social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_slides
+    type: challenge
+    name: Instagram's own slides
+    targets: stance
+    when: stance < 0
+    source: >-
+      "Facebook Knows Instagram Is Toxic for Teen Girls, Company Documents Show," Wall Street
+      Journal (September 14, 2021)
+    scenario: >-
+      In 2021 the Wall Street Journal published internal research from Instagram's owner. A 2020
+      slide said: "Thirty-two percent of teen girls said that when they felt bad about their bodies,
+      Instagram made them feel worse." The company replied that on 11 of 12 issues it studied, more
+      teenage girls said Instagram helped than hurt.
+    text: If the company's own research found it made some girls feel worse, should under-16s have open access?
+    options:
+      - id: helped_more
+        label: Most girls said it helped more than it hurt. Parents can watch for the ones it harms.
+        reaction: hold
+        principles: { parents_say: 0.5 }
+      - id: fix_design
+        label: Then make the company change the design. Closing it to everyone isn't the answer.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s need more protection from social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_advisory
+    type: challenge
+    name: The Surgeon General's warning
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: US Surgeon General, "Social Media and Youth Mental Health" (advisory, 2023)
+    scenario: >-
+      In 2023 the US Surgeon General warned that up to 95% of 13- to 17-year-olds use social media,
+      more than a third "almost constantly", and that those who spend more than three hours a day on
+      it face double the risk of symptoms of depression and anxiety. "We cannot conclude social
+      media is sufficiently safe for children and adolescents," the advisory said.
+    text: If the country's top doctor says it can't be called safe, should under-16s use it freely?
+    options:
+      - id: correlation
+        label: A link with heavy use isn't proof that social media causes the harm.
+        reaction: hold
+        value: 0
+      - id: heavy_use
+        label: Then limit heavy use and unsafe design. Light use isn't what the warning is about.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s need more protection from social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: for access --------------------------------------------------------------------
+  - id: ch_academies
+    type: challenge
+    name: The National Academies' review
+    targets: stance
+    when: stance > 0
+    source: >-
+      National Academies of Sciences, Engineering, and Medicine, "Social Media and Adolescent
+      Health" (2023)
+    scenario: >-
+      In 2023 a committee of the US National Academies of Sciences reviewed the research and found
+      that it "did not support the conclusion that social media causes changes in adolescent health
+      at the population level", while noting that some young people are harmed.
+    text: If the evidence doesn't show social media harming teenagers as a whole, should the law close it to them?
+    options:
+      - id: some_harmed
+        label: Waiting for proof while some are harmed is too slow. Harm to some is enough.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: not_only_health
+        label: Health isn't the only risk. Under-16s also meet strangers, scams and pressures that a parent can screen.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s should have more access to social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  - id: ch_australia
+    type: challenge
+    name: Australia's ban
+    targets: stance
+    when: stance > 0
+    source: >-
+      Online Safety Amendment (Social Media Minimum Age) Act 2024 (Australia); follow-up study of
+      Australian adolescents, BMJ (2026)
+    scenario: >-
+      Since December 2025, Australia has required platforms to close the accounts of everyone under
+      16, with fines of up to A$49.5 million, and about 4.7 million accounts were removed. In a study
+      of 408 young Australians three months later, more than 85% of those under 16 were still using
+      the platforms, most on their own accounts.
+    text: If most teenagers get around a ban, is closing social media to them worth the cost?
+    options:
+      - id: norms
+        label: Laws take time to bite, and a ban sets a norm that helps parents say no.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: enforcement
+        label: That's about how well it's enforced, not about whether it's right.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s should have more access to social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  - id: ch_support
+    type: challenge
+    name: Where they find support
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      The Trevor Project, "2024 U.S. National Survey on the Mental Health of LGBTQ+ Young People"
+      (2024)
+    scenario: >-
+      In a 2024 survey of more than 18,000 LGBTQ+ people aged 13 to 24 in the US, online spaces were
+      the most common place where they felt affirmed, and those with affirming spaces were less
+      likely to report attempting suicide. The survey recruited its sample online.
+    text: If some teenagers find their main support online, should the law close it to them?
+    options:
+      - id: safer_places
+        label: Support can be found in safer places than social media feeds, and a ban protects far more teenagers than it cuts off.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: messaging_open
+        label: Messaging and support services can stay open. Closing feeds needn't cut teenagers off.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Under-16s should have more access to social media than I said.
+        reaction: yield
+        revise: stance
+        principles: { parents_say: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The age-16 law
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would close social media accounts to everyone under 16, even with a parent's
+      consent. Every new user, adults included, would have to pass an age check.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

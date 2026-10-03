@@ -9,7 +9,8 @@ topics:
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
    trust, changing_mind, official_accounts, settled, supernatural,
-   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates,
+   work, saving, health, gambling, social_media]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -657,6 +658,46 @@ answers:
   birth_rates.immigration: 5
   birth_rates.ch_quebec: not_worth_it
   birth_rates.ch_workers: adapt
+  work.stance: 5 # work its due; meaning mostly outside it
+  work.importance: 3
+  work.four_day: 5
+  work.trade: 3
+  work.own_work: career
+  work.anchor_cw: 3 # no duty to work when you can afford not to...
+  work.anchor_lib: 2 # hours aren't for employers and workers alone to settle, unlike divorce or private messages
+  work.ch_lottery: different_work
+  work.ch_keep_working: chosen_work
+  work.ch_industry: other_effort
+  work.ch_thirty_five: time_off
+  saving.stance: 5 # a cushion, then enjoy most of it
+  saving.importance: 2 # low: deep items are skipped
+  saving.borrowing: 3
+  saving.ch_cash_on_hand: cushion
+  saving.ch_save_tomorrow: retirement
+  health.stance: 6 # mostly what people don't choose
+  health.importance: 4
+  health.surcharge: 1
+  health.weight_drugs: 5
+  health.wellness: 1
+  health.anchor_cw: 7 # ...but everyone should share the cost of care
+  health.ch_prevention: coaching
+  health.ch_quitting: started_young
+  health.ch_supermarkets: tastes
+  gambling.stance: 3 # legal online with firm loss limits and no ads
+  gambling.importance: 2
+  gambling.lotteries: 2
+  gambling.anchor_lib: 3 # not free to bet as freely as to divorce
+  gambling.ch_norway: ads_matter
+  gambling.ch_how_many: not_all
+  social_media.stance: 6
+  social_media.importance: 3
+  social_media.school_phones: 5
+  social_media.age_checks: 3
+  social_media.anchor_pv: 5 # as protective as on guns and vaccines
+  social_media.anchor_parents: 4
+  social_media.ch_academies: some_harmed
+  social_media.ch_australia: norms
+  social_media.ch_support: messaging_open
 expect:
   axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5", beyond_nature: "< -0.6", revising: "> 0.6", intuition: "< -0.6" }
   topicAxes:
@@ -701,6 +742,7 @@ expect:
     afterlife: { beyond_nature: "< -0.9" }
     changing_mind: { revising: "> 0.6", intuition: "< -0.6" }
     marriage: { cultural: "> 0" }
+    gambling: { civil: "> 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0", deserved_punishment: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -752,6 +794,10 @@ expect:
     physical_punishment: { protect_vulnerable: "> 0.3", parents_say: "< -0.5" }
     family_crime: { loyalty: "< -0.3", deserved_punishment: "> 0.3" }
     birth_rates: { liberty: "> 0.3" }
+    work: { collective_welfare: "< 0", liberty: "< -0.5" }
+    health: { collective_welfare: "> 0.5", personal_responsibility: "< -0.5" }
+    gambling: { liberty: "< 0" }
+    social_media: { protect_vulnerable: "> 0.3" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -787,6 +833,9 @@ expect:
   # coworkers in a strike but not by their country in a war, or by family against justice; a debt
   # of gratitude to society but hardly to parents; and parents decide on blockers their child's
   # doctors recommend, but not on discipline.
+  # In lifestyle: everyone should share the cost of care, but no one has a duty to work if they can
+  # afford not to; and free to divorce and to keep messages private, but not to agree working hours
+  # or to gamble freely.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -838,3 +887,8 @@ expect:
     - loyalty|family_crime|unions
     - gratitude|aging_parents|taxes
     - parents_say|physical_punishment|transgender
+    - collective_welfare|health|work
+    - liberty|gambling|marriage
+    - liberty|gambling|surveillance
+    - liberty|marriage|work
+    - liberty|surveillance|work

@@ -1,0 +1,289 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much of the difference in risk of common chronic illnesses comes down to people's own
+# choices, from almost all of it to almost none. A belief about evidence, asked about people in
+# general: the help text says it isn't about blame, many illnesses have nothing to do with choices,
+# and the app never asks about the user's health. Both ends are in their holders' words: how people
+# live decides their health; even the habits that matter are shaped by circumstances. Body weight is
+# never called a choice. Feeds no spectrum. The anchor is collective welfare (sharing everyone's
+# care costs; invoked more on the left, and on working when you could afford not to more on the
+# right). Personal responsibility gets no anchor: its frame would call illness a wrong, and whether
+# a habit is chosen is what the stance asks. Cases at the choices end: the Whitehall civil
+# servants, Moving to Opportunity, twins raised apart. At the circumstances end: the Diabetes
+# Prevention Program, quitting smoking, supermarkets and diets.
+id: health
+domain: lifestyle
+title: "Health: choices and circumstances"
+summary: How much of the difference in people's health comes down to their own choices?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: >-
+      For common illnesses like heart disease, type 2 diabetes and many cancers, how much of the
+      difference in risk between people comes down to their own choices, like whether they smoke or
+      drink, what they eat and how active they are?
+    help: >-
+      This is about evidence for people in general, not blame, and not about any one person or
+      illness. Many illnesses have nothing to do with anyone's choices, and the app never asks
+      about your own health.
+    poles: [Almost entirely their choices, Almost entirely what they don't choose]
+    labels:
+      - "Almost entirely their choices: apart from accidents and inherited illness, how people live decides their health"
+      - "Mostly their choices: circumstances make healthy living harder for some, but choices make most of the difference"
+      - Somewhat more their choices than their circumstances
+      - Torn / it depends on the illness and the person
+      - Somewhat more their circumstances than their choices
+      - "Mostly what they don't choose: genes, money, work and surroundings matter more, and they shape many choices too"
+      - "Almost entirely what they don't choose: even the habits that matter are mostly shaped by circumstances"
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: surcharge
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Health insurers charging people who smoke more than people who don't is…
+    help: US law lets insurers charge people who smoke up to 50% more; some states forbid it.
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+    principles: { personal_responsibility: 0.5 }
+
+  - id: weight_drugs
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Public health insurance paying for weight-loss drugs, like Wegovy and Zepbound, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: wellness
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Employers charging higher health premiums to workers who don't take part in workplace wellness programs is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_cw
+    type: likert
+    points: 7
+    text: When it comes to health insurance, people should share the cost of everyone's care for the good of the community, even if that means healthy people pay far more than they'll ever use.
+    principles: { collective_welfare: 1 }
+    anchor: { principle: collective_welfare, context: health insurance, against: healthy people paying only for their own care }
+
+  # --- Challenges: for circumstances -------------------------------------------------------------
+  - id: ch_whitehall
+    type: challenge
+    name: The civil servants
+    targets: stance
+    when: stance < 0
+    source: >-
+      Michael Marmot et al., "Employment grade and coronary heart disease in British civil
+      servants," Journal of Epidemiology and Community Health (1978)
+    scenario: >-
+      A study of 17,530 British civil servants, all in steady office jobs and all with free health
+      care, found that men in the lowest grades had about three and a half times the death rate from
+      heart disease of men in the highest. Smoking, blood pressure, cholesterol and other known
+      risks explained only part of the gap.
+    text: If people's rank at work predicts their heart disease beyond their habits, how much of the difference comes down to choices?
+    options:
+      - id: measured_better
+        label: A later study of civil servants that measured habits more often found they explained most of the gap.
+        reaction: hold
+        value: 0
+      - id: within_grades
+        label: Within every grade, people who smoked and didn't exercise did worse. Circumstances shift the odds; choices still decide most.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Circumstances matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_moving
+    type: challenge
+    name: Moving to opportunity
+    targets: stance
+    when: stance < 0
+    source: >-
+      Jens Ludwig et al., "Neighborhoods, Obesity, and Diabetes: A Randomized Social Experiment,"
+      New England Journal of Medicine (2011)
+    scenario: >-
+      In the 1990s, families in public housing in five US cities were offered, by lottery, vouchers
+      to move to lower-poverty neighborhoods. Ten to fifteen years later, the women who had been
+      offered the vouchers had lower rates of severe obesity and diabetes than those who hadn't,
+      though nothing in the program aimed at their diet or exercise.
+    text: If moving to a different neighborhood changed people's health without any program to change their habits, how much comes down to choice?
+    options:
+      - id: new_habits
+        label: The move may well have changed their habits. Choices made in a new place are still choices.
+        reaction: hold
+        value: 0
+      - id: easier
+        label: A better neighborhood made healthy choices easier, as I said. People still had to make them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Circumstances matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_twins
+    type: challenge
+    name: Twins raised apart
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Albert J. Stunkard et al., "The Body-Mass Index of Twins Who Have Been Reared Apart," New
+      England Journal of Medicine (1990)
+    scenario: >-
+      A study of Swedish twins found that identical twins raised in separate homes ended up with very
+      similar body weights for their height: the correlation was 0.70 for men and 0.66 for women. The
+      homes they grew up in made little difference.
+    text: If body weight runs this strongly in the genes, how much of the risk that comes with it is a choice?
+    options:
+      - id: same_genes
+        label: People's genes were the same in 1980, when far fewer were heavy. What changed is how people live.
+        reaction: hold
+        value: 0
+      - id: other_habits
+        label: Genes may set the range for weight, but smoking, drinking and exercise are choices whatever your weight.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Circumstances matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for choices -------------------------------------------------------------------
+  - id: ch_prevention
+    type: challenge
+    name: The prevention program
+    targets: stance
+    when: stance > 0
+    source: >-
+      Diabetes Prevention Program Research Group, "Reduction in the Incidence of Type 2 Diabetes with
+      Lifestyle Intervention or Metformin," New England Journal of Medicine (2002)
+    scenario: >-
+      In a trial of 3,234 American adults at high risk of diabetes, a program that helped people
+      lose about 7% of their weight and exercise 150 minutes a week cut new cases of type 2 diabetes
+      by 58% over about three years, compared with a placebo.
+    text: If changing habits can cut diabetes by more than half, how much of the risk is out of people's hands?
+    options:
+      - id: coaching
+        label: The program gave people coaching and support most can't get. That's a circumstance too.
+        reaction: hold
+        value: 0
+      - id: shaped
+        label: It shows habits matter, which I don't deny. My point is how much circumstances shape them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People's own choices matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_quitting
+    type: challenge
+    name: Quitting before forty
+    targets: stance
+    when: stance > 0
+    source: >-
+      Prabhat Jha et al., "21st-Century Hazards of Smoking and Benefits of Cessation in the United
+      States," New England Journal of Medicine (2013)
+    scenario: >-
+      A study of more than 200,000 Americans found that people who smoke lose at least ten years of
+      life on average, and that those who quit before 40 avoid about 90% of the extra risk of dying.
+    text: If quitting smoking can win back most of those years, how much of health comes down to choices?
+    options:
+      - id: started_young
+        label: Nearly nine in ten adults who smoke started by 18, and smoking is far more common among people who are poor or distressed.
+        reaction: hold
+        value: 0
+      - id: one_habit
+        label: Smoking is one habit with a huge effect. For most illnesses, no single habit matters that much.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People's own choices matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_supermarkets
+    type: challenge
+    name: Supermarkets and diets
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Hunt Allcott, Rebecca Diamond, Jean-Pierre Dubé, Jessie Handbury, Ilya Rahkovsky and Molly
+      Schnell, "Food Deserts and the Causes of Nutritional Inequality," Quarterly Journal of
+      Economics (2019)
+    scenario: >-
+      Economists studied what American households buy. When a new supermarket opened nearby,
+      low-income families' diets barely changed. Giving poorer households the same stores and prices
+      as richer ones would close only about a tenth of the gap in how healthily they eat; the rest
+      came from what people chose to buy.
+    text: If diets differ mainly because of what people choose, not what's on offer, how much is out of their hands?
+    options:
+      - id: tastes
+        label: What people choose to eat is shaped by what they grew up with, their time and their stress. Those aren't free choices.
+        reaction: hold
+        value: 0
+      - id: not_only_food
+        label: Food is one part of health. Work, stress and pollution aren't on a shop's shelves.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People's own choices matter more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The bet
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Picture two ways a 30-year-old's life could go better: never smoking, eating well and staying
+      active; or having an income in the top fifth rather than the bottom fifth.
+    text: You said you're torn. Which would you bet adds more years of life, on average?
+    options:
+      - id: no_bet
+        label: I wouldn't bet. The two are too tangled.
+        reaction: hold
+        value: 0
+      - id: habits
+        label: The habits
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: income
+        label: The income
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

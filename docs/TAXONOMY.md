@@ -160,16 +160,23 @@ family, but also individualist and family-obligation cultures, which don't line 
 right.
 
 ### Lifestyle & money
-| Topic | Tier | Status |
-|---|---|---|
-| Work and ambition | core | ◻️ |
-| Money habits and risk | core | ◻️ |
-| Health and fitness | core | ◻️ |
-| Food and diet | extended | ◻️ |
-| Alcohol, cannabis and other substances (sensitive items) | extended | ◻️ |
-| City or country | extended | ◻️ |
-| Screens and technology | extended | ◻️ |
-| Travel and adventure | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Work and the good life (how much of a good life should go to paid work; a four-day week by law and a trade instead of university as circumstances; what your own work is to you as an unscored, sensitive item) | core | custom | ✅ | long hours and heart disease, Pencavel's munitions workers, Keynes's fifteen-hour week; Swedish lottery winners, working without the money, the boys who worked; France's 35 hours and the four-day pilots |
+| Saving or spending (what to do with money once the bills are paid; borrowing to buy now, lending to relatives and a cap on card interest as circumstances) | core | custom | ✅ | retirees' unspent savings, the rich fool (Luke 12), regrets that grow; money in the bank, Save More Tomorrow, same earnings and different wealth |
+| Health: choices and circumstances (how much of the difference in risk of common chronic illnesses comes down to people's choices; insurers charging people who smoke more, public insurance paying for weight-loss drugs and wellness-program charges as circumstances) | core | custom | ✅ | the Whitehall civil servants, Moving to Opportunity, twins raised apart; the Diabetes Prevention Program, quitting before 40, supermarkets and diets |
+| Gambling (betting on sports and casino games; state lotteries and checks on heavy losers as circumstances) | extended | custom | ✅ | bankruptcies after the betting apps, Patterns of Play, bets instead of savings; Norway's monopoly, how many are harmed, Italy's ad ban |
+| Under-16s and social media (what the law should allow; phones at school and age checks for every user as circumstances) | extended | custom | ✅ | Facebook at US colleges, Instagram's own slides, the Surgeon General's advisory; the National Academies' review, Australia's ban, where LGBTQ+ young people find support |
+
+The design review replaced most of the planned list. Food and diet, city or country, and travel
+are habits, not positions, and scoring them would grade people: food and travel belong in
+Interests, city or country in Identity, and morning or night in Personality's chronotype. Drinking
+was cut: a stance on how much is safe would press on people in recovery and on religious
+abstainers, and the law on alcohol is in drug policy. Money habits became saving or spending (risk
+tolerance is a planned Personality topic), health and fitness became how much of health comes down
+to choices, and screens became under-16s and social media. Gambling is new. No item asks about the
+user's own health, weight, savings, debt, drinking or betting; the one personal item, what your
+own work is to you, is sensitive and includes "I'm not in paid work right now".
 
 ### Interests & taste
 | Topic | Tier | Evidence | Status |
@@ -206,11 +213,11 @@ can surface in both directions.
 |---|---|---|---|
 | Bodily autonomy | abortion, drug policy, selling sex, assisted dying, adults' medical transition | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex, transgender people and the law |
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
-| Protecting the vulnerable | vaccine requirements, guns, hate speech, smacking children | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns, physical punishment (smacking children) |
+| Protecting the vulnerable | vaccine requirements, guns, hate speech, smacking children | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns, physical punishment (smacking children), under-16s and social media (backed across politics) |
 | Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers), paying for quicker medical treatment | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy, paying for healthcare |
 | Caution with the irreversible | death penalty, climate, GMOs, nuclear power | gene editing, treatment for under-18s who want to transition, rapid social change | death penalty, gene editing, transgender people and the law, nuclear power; artificial intelligence (the most powerful systems), which isn't a left–right split |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
-| Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
+| Collective welfare | taxes, sharing health costs, climate | working when one could afford not to (also religious and working-class traditions), national service | health: choices and circumstances (health insurance), work and the good life (work) |
 | Personal responsibility (no one answers for choices they didn't make) | people brought into a country as children | reparations, welfare, drugs | immigration (people brought as children), reparations (wrongs done generations ago) |
 | Debts of gratitude | what people who've done well owe the society that educated them | what grown children owe their parents (also family-obligation cultures, across politics) | duties to aging parents (aging parents), taxes and redistribution (people who've done well) |
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
@@ -221,7 +228,7 @@ can surface in both directions.
 | Loyalty | strikes | war, patriotism, national service, trade, foreign aid | unions (a strike at their workplace), war and military intervention (a war their country is fighting), family and the law (a close relative who has committed a serious crime; family-obligation cultures, across politics) |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(effects and moral foundations only)* |
-| Liberty | surveillance (private messages), divorce | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance, marriage and divorce (divorce) |
+| Liberty | surveillance (private messages), divorce | speech (laws against hateful speech), taxes, guns, regulation, working hours, gambling (libertarians; religious conservatives reject it there) | free speech, privacy and surveillance, marriage and divorce (divorce), work and the good life (working hours), gambling |
 | Respect for the natural order | GMOs | gene editing, surrogacy | genetically modified food (the genes of crops), editing human genes (the genes of embryos) |
 | Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger); torture | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many, torture |
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
@@ -229,7 +236,7 @@ can surface in both directions.
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 | National self-government | military intervention and regime change | international courts and treaties, immigration | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes), immigration (who may settle) |
 | Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates, wind and solar farms | local or central control (what schools teach), minimum wage (local minimum wages), nature and building (wind and solar farms) |
-| Parents' say | medical treatment for transgender under-18s when their doctors recommend it | discipline, homeschooling, what schools teach | physical punishment (how children are disciplined), transgender people and the law (blockers and hormones for under-18s whose doctors recommend them) |
+| Parents' say | medical treatment for transgender under-18s when their doctors recommend it | discipline, homeschooling, what schools teach | physical punishment (how children are disciplined), transgender people and the law (blockers and hormones for under-18s whose doctors recommend them), under-16s and social media (whether they use it; invoked across politics) |
 | Deference to experts | vaccine requirements, climate, teaching evolution | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists), God and religion (biologists on teaching evolution) |
 | Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
 | Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
@@ -265,15 +272,19 @@ will. So do the relationships anchors: liberty to end a marriage but not to say 
 children protected from smacking but people not protected from being pressured into assisted
 dying; standing by one's country in a war but not by coworkers in a strike, with family set
 against either; a debt of gratitude to parents but not to society; and parents deciding on
-discipline but not on blockers their child's doctors recommend, each with its reverse. The
-personas in `tests/sim/personas` pin these down.
+discipline but not on blockers their child's doctors recommend, each with its reverse. So do the
+lifestyle anchors: everyone's health costs shared but no duty to work for people who could afford
+not to; liberty to end a marriage or keep messages private but not to bet or to agree long working
+hours; under-16s kept off social media but guns left to their owners; and parents deciding about
+social media but not about blockers, each with its reverse. The personas in `tests/sim/personas`
+pin these down.
 
 ## Axes
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage, climate change (how far and how fast to cut emissions); at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
-| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance, policing; at half weight: prisons and sentencing, assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
+| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance, policing; at half weight: prisons and sentencing, assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused, gambling); at quarter weight: faith and equality law |
 | Cultural | political | Tradition ↔ Progress | abortion, assisted dying, same-sex relationships and marriage, transgender people and the law; at half weight: drug policy, gene editing, faith and equality law, gender roles, and marriage and divorce, though it's core, since a ladder built on fault fits some faiths' traditions and not others (race in admissions and reparations feed no spectrum: treating everyone the same regardless of race isn't the tradition end) |
 | Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid, immigration (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
 | Stability or change | values | Stability ↔ Change | what matters most |
@@ -294,6 +305,9 @@ you know only changing your mind feeds spectrums: whose word to take, official a
 or open split each side by institution. In Relationships only marriage and divorce feeds a spectrum:
 on the civil spectrum a ban on smacking would score as authoritarian, and on the cultural one
 answers would sort people by race and country of origin as much as by tradition; duties to
-parents, family and the law and birth rates each draw people from both sides. The moral
-foundations are principles, not spectrums: the moral foundations topic measures them directly, and
-issue topics add to them.
+parents, family and the law and birth rates each draw people from both sides. In Lifestyle only
+gambling feeds a spectrum, the civil one at half weight, with the legal end at liberty: work,
+saving and health would track income, health and caring duties as much as values, and limits on
+social media for under-16s would score as authority, as a smacking ban would, though both sides
+back them. The moral foundations are principles, not spectrums: the moral foundations topic
+measures them directly, and issue topics add to them.
