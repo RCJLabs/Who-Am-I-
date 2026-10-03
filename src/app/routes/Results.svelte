@@ -22,6 +22,7 @@
   const axes = Object.values(content.bundle.axes);
   const political = axes.filter((a) => a.family === 'political');
   const values = axes.filter((a) => a.family === 'values');
+  const worldview = axes.filter((a) => a.family === 'worldview');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
   const economicAxis = content.bundle.axes['economic'];
@@ -31,6 +32,8 @@
   const answeredTopics = $derived(Object.values(profile.topics).length);
   const personalityScored = $derived(personality.some((a) => profile.axes[a.id]?.score !== null));
   const tasteScored = $derived(taste.filter((a) => profile.axes[a.id]?.score !== null));
+  // Sensitive: shown once answered, never as a "not yet" nudge toward questions about religion.
+  const worldviewScored = $derived(worldview.filter((a) => profile.axes[a.id]?.score !== null));
 
   // Overview
   const econ = $derived(profile.axes['economic']?.score ?? null);
@@ -183,6 +186,15 @@
         <h2 class="section-title" id="values-title">{copy.results.values}</h2>
         <div class="card rows">
           {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
+        </div>
+      </section>
+    {/if}
+
+    {#if worldviewScored.length}
+      <section class="section" aria-labelledby="worldview-title">
+        <h2 class="section-title" id="worldview-title">{copy.results.worldview}</h2>
+        <div class="card rows">
+          {#each worldviewScored as a (a.id)}{@render spectrum(a, true)}{/each}
         </div>
       </section>
     {/if}

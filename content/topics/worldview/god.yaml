@@ -1,0 +1,313 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether there is a God or a higher power, and what part religion plays in your life. Like
+# everything in this domain it's sensitive: every item offers "Prefer not to say", and nothing here
+# is shared unless you choose. The ladder measures how convinced you are, in the same words on both
+# sides; "Undecided" includes thinking it can't be known. Feeds the worldview spectrum at full
+# weight. Science and faith is an item here rather than a topic of its own, with room for rereading
+# a teaching as well as keeping or dropping it. Two anchors: belief that fits the evidence, which
+# nonbelievers tend to invoke here (in free will, skeptics do, while others keep free will as a
+# useful belief), and deference to biologists on teaching evolution, which secular people tend to
+# invoke here (conservatives do on GM food's safety). Practices, the kind of God, and the label
+# items describe and are never scored.
+id: god
+domain: worldview
+title: God and religion
+summary: Is there a God or a higher power, and what part does religion play in your life?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to God or a higher power, you're…
+    help: >-
+      By God or a higher power we mean a mind or power beyond the natural world. Undecided includes
+      thinking it can't be known.
+    poles: [Convinced there is none, Convinced there is one]
+    labels:
+      - Convinced there is none
+      - Fairly sure there is none
+      - Leaning toward none
+      - Undecided
+      - Leaning toward one
+      - Fairly sure there is one
+      - Convinced there is one
+    axes: { beyond_nature: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Describing your view (never scored) -------------------------------------------------------
+  - id: kind
+    type: multi
+    when: stance >= 0
+    text: Which comes closest to what you believe in? Choose any that fit.
+    options:
+      - { id: personal, label: A personal God who knows and cares about each of us }
+      - { id: many_forms, label: One God in many forms }
+      - { id: many, label: Many gods }
+      - { id: reality, label: A divine reality that isn't a person }
+      - { id: nature, label: "Nature itself, or the universe as a whole" }
+      - { id: unsure, label: "Something, but I'm not sure what" }
+
+  - id: label
+    type: choice
+    when: stance <= 0
+    text: If you use a word for your view, which comes closest?
+    options:
+      - { id: atheist, label: Atheist }
+      - { id: agnostic, label: Agnostic }
+      - { id: humanist, label: Humanist }
+      - { id: spiritual, label: Spiritual but not religious }
+      - { id: none, label: I don't use a word for it }
+
+  - id: practice
+    type: multi
+    text: Which of these are a regular part of your life? Choose any that fit.
+    options:
+      - { id: pray, label: Praying on my own }
+      - { id: services, label: Going to religious services }
+      - { id: meditate, label: Meditating }
+      - { id: observe, label: "Keeping religious practices, like fasting, food laws or a day of rest" }
+      - { id: scripture, label: Reading or studying scripture }
+      - { id: none, label: None of these }
+
+  - id: science
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: When a well-established scientific finding seems to conflict with a religious teaching, the teaching should…
+    poles: [Give way, Stand]
+    labels:
+      - Be dropped, and the clash counts against the religion
+      - Be read again in light of the science
+      - Torn / it depends
+      - Be read again where possible, though core teachings, like creation or miracles, stand
+      - Stand, read as it always has been
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_evidence
+    type: likert
+    points: 7
+    text: When it comes to God, people should believe only what the evidence supports, even if faith would give them hope and strength.
+    principles: { evidence: 1 }
+    anchor: { principle: evidence, context: belief in God, against: the hope and strength faith can give }
+
+  - id: anchor_exp
+    type: likert
+    points: 7
+    text: When it comes to what schools teach about how species, including humans, evolved, governments should follow what biologists recommend, even when most voters disagree.
+    help: >-
+      Scientific bodies such as the US National Academy of Sciences and the Royal Society recommend
+      teaching evolution as the accepted account of how species, including humans, came about.
+    principles: { expertise: 1 }
+    anchor: { principle: expertise, context: teaching evolution, against: parents' wish that children be taught in line with their faith }
+
+  # --- Challenges: for believing ---------------------------------------------------------------
+  - id: ch_six_numbers
+    type: challenge
+    name: The six numbers
+    targets: stance
+    when: stance < 0
+    source: Martin Rees, Just Six Numbers (1999)
+    scenario: >-
+      The astronomer Martin Rees picked out six numbers, such as the strength of the force that binds
+      atomic nuclei, that had to fall within narrow ranges for stars, chemistry and life to exist.
+      Change some of them by a small fraction and the universe would be lifeless. Rees himself
+      suspects there are many universes, and we find ourselves in one where life is possible.
+    text: If the universe looks set up for life, is a mind behind it the best explanation?
+    options:
+      - id: many
+        label: Rees's own answer is enough. Among countless universes, we'd only find ourselves in one that allows life.
+        reaction: hold
+        value: 0
+      - id: law
+        label: A deeper law of physics may show the numbers couldn't have been otherwise.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. A mind behind it seems more likely than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_why_anything
+    type: challenge
+    name: Why anything at all
+    targets: stance
+    when: stance < 0
+    source: >-
+      G. W. Leibniz, "The Principles of Nature and Grace" (1714); Bertrand Russell and Frederick
+      Copleston, debate on the existence of God, BBC (1948)
+    scenario: >-
+      The philosopher Leibniz asked why there is something rather than nothing, and argued that the
+      answer must lie in something that exists of necessity, which he called God. In a 1948 radio
+      debate with the philosopher and priest Frederick Copleston, Bertrand Russell replied that
+      "the universe is just there, and that's all."
+    text: Does the existence of anything at all need an explanation beyond the universe?
+    options:
+      - id: brute
+        label: Russell was right. Some facts just are, and the universe may be one of them.
+        reaction: hold
+        value: 0
+      - id: nothing
+        label: The question assumes nothing is what we should expect. We have no reason to think so.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Something beyond the universe seems more likely than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_presence
+    type: challenge
+    name: A presence
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      David Hay and Gordon Heald, "Religion is good for you," New Society (1987); William Alston,
+      Perceiving God (1991)
+    scenario: >-
+      In a 1987 survey, 48% of British adults said that at some time they'd been aware of a presence
+      or a power, whether they called it God or not, different from their everyday selves. The
+      philosopher William Alston argued that we trust our senses without outside proof, and that
+      experiences like these deserve the same trust unless there's reason to doubt them.
+    text: If so many people report experiencing something beyond themselves, should that count as evidence?
+    options:
+      - id: brain
+        label: Experiences like these can be explained by how the brain works, with nothing beyond it.
+        reaction: hold
+        value: 0
+      - id: unchecked
+        label: Our senses can be checked against each other and against other people. These experiences can't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. These experiences count for more than I allowed.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: against believing ----------------------------------------------------------
+  - id: ch_tsunami
+    type: challenge
+    name: The tsunami
+    targets: stance
+    when: stance > 0
+    source: >-
+      William Rowe, "The Problem of Evil and Some Varieties of Atheism," American Philosophical
+      Quarterly (1979); reporting on the 2004 Indian Ocean tsunami
+    scenario: >-
+      On December 26, 2004, an earthquake under the Indian Ocean set off a tsunami that left about
+      228,000 people dead or missing in 14 countries, many of them children. The philosopher William
+      Rowe argued that terrible suffering that no greater good seems to need is evidence that there
+      is no all-powerful, all-loving God.
+    text: If an all-powerful, loving God exists, why would suffering like this happen?
+    options:
+      - id: reasons
+        label: God may have reasons we can't see, as a small child can't see a parent's.
+        reaction: hold
+        value: 0
+      - id: laws
+        label: A world with stable natural laws, where our choices matter, can't be free of disasters.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. It makes a loving God harder to believe in than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_born_into
+    type: challenge
+    name: Born into it
+    targets: stance
+    when: stance > 0
+    source: >-
+      John Stuart Mill, On Liberty (1859); Pew Research Center, "Around the World, Many People Are
+      Leaving Their Childhood Religions" (2025)
+    scenario: >-
+      John Stuart Mill noted that "the same causes which make him a Churchman in London, would have
+      made him a Buddhist or a Confucian in Pekin." In a 2025 survey, more than 95% of adults in
+      India, Israel, Nigeria and Thailand still had the religion they were raised in.
+    text: If belief mostly follows where people are born, how much should your own upbringing's answer count?
+    options:
+      - id: examined
+        label: Where a belief comes from doesn't settle whether it's true. I've examined mine.
+        reaction: hold
+        value: 0
+      - id: both_ways
+        label: Upbringing shapes nonbelief too. In Czechia most people have no religion; next door, most Poles are Catholic.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. My belief may owe more to where I was born than I thought.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_seeker
+    type: challenge
+    name: The sincere seeker
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: J. L. Schellenberg, Divine Hiddenness and Human Reason (1993)
+    scenario: >-
+      The philosopher J. L. Schellenberg argued that a perfectly loving God would make sure that
+      anyone open to a relationship with God could at least believe God exists. Yet many people
+      search sincerely for years and find nothing.
+    text: If a loving God wanted to be known, why would sincere seekers fail to find God?
+    options:
+      - id: freedom
+        label: God may hold back so that people can come freely, rather than be overwhelmed into belief.
+        reaction: hold
+        value: 0
+      - id: practice
+        label: Many traditions teach that God is found through prayer, practice and community, not through argument alone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. God's hiddenness counts against belief more than I allowed.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Ten years
+    targets: stance
+    when: stance == 0
+    source: After Blaise Pascal, Pensées (1670), and William James, "The Will to Believe" (1896)
+    scenario: >-
+      Suppose you had to spend the next ten years living as if one answer were true: praying,
+      keeping a faith's practices and joining its community, or living as if this world is all
+      there is.
+    text: You said you're undecided. Which would you choose?
+    options:
+      - id: neither
+        label: Neither. I wouldn't let a bet decide something like this.
+        reaction: hold
+        value: 0
+      - id: god
+        label: Live as if there's a God
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: none
+        label: Live as if there's none
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

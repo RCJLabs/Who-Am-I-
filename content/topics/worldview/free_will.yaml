@@ -1,0 +1,269 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether people truly deserve blame or praise for what they choose. The ladder is about desert,
+# not about which theory of free will is true, so compatibilists and believers in a choice not
+# fixed by prior causes can both sit at 5–7; the theory is a separate, unscored item, with answers
+# matching the PhilPapers survey's categories. Feeds no spectrum: free will splits believers (many
+# hold that God ordains choices and people still answer for them) as well as nonbelievers. Two
+# anchors: deserved punishment for crimes shaped by a brutal childhood (believers in desert invoke
+# it here; skeptics do for police officers who kill unlawfully, in society/policing), and belief
+# that fits the evidence, which skeptics invoke here (nonbelievers tend to in god, while some of
+# them keep free will as a useful belief).
+id: free_will
+domain: worldview
+title: Free will
+summary: Do people truly deserve blame or praise for what they choose?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Do people truly deserve blame or praise for what they choose?
+    help: >-
+      People who doubt free will still think we can hold each other to account and keep dangerous
+      people from doing harm. The question is whether anyone deserves blame or praise in the deepest
+      sense.
+    poles: [No one truly deserves it, People fully deserve it]
+    labels:
+      - No. Every choice comes from causes, or chance, that we didn't choose
+      - Very little. Genes, upbringing and circumstance do most of the choosing
+      - Some, but less than we usually assume
+      - Torn / it depends
+      - Mostly, though a hard past can lessen it a good deal
+      - Yes. Adults of sound mind deserve it, and a hard past lessens it only a little
+      - Fully, whatever shaped them
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  - id: theory
+    type: choice
+    text: If every choice were fully caused by earlier events, could people still have free will?
+    options:
+      - { id: compatible, label: "Yes, as long as they act on their own reasons" }
+      - { id: none, label: "No, and since our choices are caused, we don't have it" }
+      - { id: uncaused, label: "No, but our choices aren't fully caused, so we do have it" }
+      - { id: unsure, label: Not sure }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_desert
+    type: likert
+    points: 7
+    text: When it comes to crimes by people whose brutal childhood shaped who they became, people who do serious wrong should be punished as they deserve, even when their past made it far harder for them to do right.
+    principles: { deserved_punishment: 1 }
+    anchor: { principle: deserved_punishment, context: crimes shaped by a brutal childhood, against: mercy for a past they didn't choose }
+
+  - id: anchor_evidence
+    type: likert
+    points: 7
+    text: When it comes to whether our choices are really up to us, people should believe only what the evidence supports, even if believing in free will helps people take responsibility for their lives.
+    principles: { evidence: 1 }
+    anchor: { principle: evidence, context: free will, against: the good that believing in free will can do }
+
+  # --- Challenges: for deserving blame -----------------------------------------------------------
+  - id: ch_device
+    type: challenge
+    name: The device that never acted
+    targets: stance
+    when: stance < 0
+    source: >-
+      Harry Frankfurt, "Alternate Possibilities and Moral Responsibility," Journal of Philosophy
+      (1969)
+    scenario: >-
+      A scientist has secretly placed a device in Jones's brain. If Jones were about to decide
+      against committing a crime, the device would make him decide to commit it. But Jones decides
+      to commit it entirely on his own, and the device never acts. The philosopher Harry Frankfurt
+      argued that Jones is to blame, even though he couldn't have done otherwise.
+    text: If someone can deserve blame without being able to do otherwise, does it matter that our choices have causes?
+    options:
+      - id: source
+        label: Jones still didn't choose the character his decision came from. That's what matters.
+        reaction: hold
+        value: 0
+      - id: answerable
+        label: He's answerable for it, but that doesn't mean he deserves to suffer for it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People may deserve more blame than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_signal
+    type: challenge
+    name: The signal before the choice
+    targets: stance
+    when: stance < 0
+    source: >-
+      Aaron Schurger, Jacobo Sitt and Stanislas Dehaene, "An accumulator model for spontaneous
+      neural activity prior to self-initiated movement," PNAS (2012); Uri Maoz et al., "Neural
+      precursors of decisions that matter," eLife (2019)
+    scenario: >-
+      In the 1980s, Benjamin Libet found a build-up of brain activity before people were aware of
+      deciding to move a wrist, and many took it to show that the brain decides before we do. Later
+      work suggested the build-up may be ordinary background activity rather than a decision, and a
+      2019 study found no sign of it when people made choices that mattered to them, like which
+      charity would get a donation.
+    text: If the brain research doesn't show what it was said to, how strong is the case against free will?
+    options:
+      - id: anyway
+        label: The case never rested on those experiments. Every choice still has causes we didn't choose.
+        reaction: hold
+        value: 0
+      - id: chance
+        label: If our choices aren't fully caused, the rest is chance, and no one deserves blame for chance.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The case against free will is weaker than I thought.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_resentment
+    type: challenge
+    name: Resentment and gratitude
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: P. F. Strawson, "Freedom and Resentment," Proceedings of the British Academy (1962)
+    scenario: >-
+      The philosopher P. F. Strawson argued that resentment, gratitude and forgiveness are part of
+      having relationships with other people at all. Even if every choice has causes, he thought,
+      we couldn't give these feelings up, and no theory could show that we should.
+    text: Could you really stop resenting someone who betrayed you, or thanking someone who helped you, because their choices had causes?
+    options:
+      - id: train
+        label: Feelings can change. We can keep the relationships and let go of the blame.
+        reaction: hold
+        value: 0
+      - id: deserved
+        label: That we can't help feeling it doesn't make it deserved.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Blame and gratitude may be more fitting than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: against deserving blame -------------------------------------------------------
+  - id: ch_tumor
+    type: challenge
+    name: The tumor
+    targets: stance
+    when: stance > 0
+    source: >-
+      Jeffrey Burns and Russell Swerdlow, "Right Orbitofrontal Tumor With Pedophilia Symptom and
+      Constructional Apraxia Sign," Archives of Neurology (2003)
+    scenario: >-
+      In 2000, a 40-year-old teacher in Virginia began to have sexual urges toward children that he
+      had never had before. Doctors found a large tumor at the front of his brain. Once it was
+      removed, the urges went away. When they came back, so had the tumor.
+    text: If a change in the brain can produce wrongdoing, how much of anyone's wrongdoing is truly their own?
+    options:
+      - id: acting
+        label: Having urges isn't the same as acting on them. Acting on them was still a choice.
+        reaction: hold
+        value: 0
+      - id: illness
+        label: A tumor is an illness, and the law already treats it as one. Ordinary choices aren't like that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Our brains shape our choices more than blame allows for.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_plum
+    type: challenge
+    name: Professor Plum
+    targets: stance
+    when: stance > 0
+    source: Derk Pereboom, Living Without Free Will (2001)
+    scenario: >-
+      The philosopher Derk Pereboom imagined a man, Plum, whose reasoning had been programmed by
+      scientists so that he would decide, for his own reasons, to kill. Most people say Plum isn't
+      to blame. Pereboom then asked what changes if the programming is done instead by genes and
+      upbringing, as everyone's is.
+    text: If Plum isn't to blame, what makes the rest of us different?
+    options:
+      - id: reasons
+        label: Plum acted on his own reasons, so he is to blame, and so are we.
+        reaction: hold
+        value: 0
+      - id: other_people
+        label: Being steered by other people is different from being shaped by nature and ordinary life.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Blame may be less deserved than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_basic
+    type: challenge
+    name: The basic argument
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Galen Strawson, "The Impossibility of Moral Responsibility," Philosophical Studies (1994)
+    scenario: >-
+      The philosopher Galen Strawson argued that you do what you do because of the way you are. To
+      be truly responsible for what you do, you'd have to be responsible for the way you are. But
+      no one can make themselves from scratch, so no one is truly responsible.
+    text: If no one made themselves, can anyone deserve blame in the deepest sense?
+    options:
+      - id: enough
+        label: We don't have to make ourselves from scratch. Acting on our own reasons is enough.
+        reaction: hold
+        value: 0
+      - id: practical
+        label: Philosophy can ask for that, but families and courts can't work that way.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. People may deserve less blame than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The sentence
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      You're on a jury that also decides the sentence. A man has been convicted of armed robbery.
+      Experts testify that he grew up with severe abuse, which made it far harder for him to control
+      his anger. The law lets you give the full sentence or a reduced one.
+    text: You said you're torn. Which would you choose?
+    options:
+      - id: more_facts
+        label: I'd need to know more before deciding.
+        reaction: hold
+        value: 0
+      - id: full
+        label: The full sentence
+        reaction: yield
+        revise: stance
+        principles: { deserved_punishment: 0.5 }
+      - id: reduced
+        label: A reduced sentence
+        reaction: yield
+        revise: stance
+        principles: { deserved_punishment: -0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

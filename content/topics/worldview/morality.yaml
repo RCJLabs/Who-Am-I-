@@ -1,0 +1,319 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether some things are right or wrong for everyone, whatever they or their culture believe. The
+# ladder separates the view that moral claims are never true (step 1) from the view that each
+# culture or person sets right and wrong (step 2), and ranks realist views by how much they say
+# holds for everyone. Feeds no spectrum: many nonbelievers are moral realists and some believers
+# aren't, so it would misplace both. Where morality comes from is a separate item, with homes for
+# believers (God's will or nature, human nature) and for nonbelieving realists (facts about
+# well-being, basic truths like those of mathematics). A pair of challenges targets "Without God,
+# nothing would be truly right or wrong": Euthyphro for those who agree, and Anscombe's argument
+# for realists who disagree. No anchor.
+id: morality
+domain: worldview
+title: Right and wrong
+summary: Are some things right or wrong for everyone, whatever they or their culture believe?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Are some things right or wrong for everyone, whatever they or their culture believe?
+    help: >-
+      This asks whether moral claims can be true for everyone, not how much you care about right and
+      wrong. People anywhere on this scale can live very moral lives.
+    poles: [No moral truths, One right answer nearly always]
+    labels:
+      - No. Nothing is really right or wrong, and moral claims are never true
+      - No. Each culture or person decides right and wrong, and no view is truer than another
+      - Mostly not. A few rules are found everywhere, but they rest on shared needs, not truths that bind everyone
+      - Torn / it depends
+      - Yes, a few, like cruelty for its own sake, though much varies by culture
+      - Yes, many. Most serious moral questions have answers that hold for everyone
+      - Yes. Nearly every moral question has one right answer, for everyone, everywhere
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  - id: source
+    type: multi
+    text: Where do you think right and wrong ultimately come from? Choose any that fit.
+    options:
+      - { id: god, label: God's will or nature }
+      - { id: reason, label: Reason }
+      - { id: nature, label: Human nature and what helps people flourish }
+      - { id: wellbeing, label: Facts about well-being and suffering }
+      - { id: basic, label: "Basic truths, like those of mathematics" }
+      - { id: culture, label: Culture and upbringing }
+      - { id: feeling, label: Human feelings }
+      - { id: evolution, label: Evolution }
+
+  - id: god_basis
+    type: likert
+    points: 5
+    text: Without God, nothing would be truly right or wrong.
+    help: >-
+      This is about what makes things right or wrong, not about whether people who don't believe in
+      God can be good.
+
+  # --- Challenges: for moral truths --------------------------------------------------------------
+  - id: ch_petition
+    type: challenge
+    name: The first petition
+    targets: stance
+    when: stance < 0
+    source: >-
+      The Germantown Quaker Petition Against Slavery (1688); James Rachels, The Elements of Moral
+      Philosophy (1986)
+    scenario: >-
+      In 1688, four Quakers in Germantown, Pennsylvania, wrote one of the first protests against
+      slavery in the American colonies, at a time when their own community accepted it. If right
+      and wrong are whatever a culture approves, the philosopher James Rachels pointed out, then
+      people who opposed slavery were wrong until most people agreed with them.
+    text: Were the petitioners wrong, because most people around them disagreed?
+    options:
+      - id: shared
+        label: They were right by standards nearly everyone now shares. That's what moral progress is.
+        reaction: hold
+        value: 0
+      - id: inside
+        label: They were holding their own culture to its other values, like treating others as you'd want to be treated.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Some things may be wrong whatever a culture approves.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_local_law
+    type: challenge
+    name: Whatever the local law
+    targets: stance
+    when: stance < 0
+    source: Charter of the International Military Tribunal (1945), Article 6(c)
+    scenario: >-
+      After the Second World War, the charter for the Nuremberg trials made crimes against
+      humanity punishable "whether or not in violation of the domestic law of the country where
+      perpetrated." Leaders were tried for acts their own state had made legal.
+    text: If some acts are crimes even where they're legal, is there a right and wrong beyond any one culture?
+    options:
+      - id: agreement
+        label: The nations involved agreed on shared standards. That's a human agreement, not a moral truth.
+        reaction: hold
+        value: 0
+      - id: law
+        label: Law can reach across borders without any moral claim being true for everyone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Some things may be wrong for everyone, whatever the law says.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_anthropologists
+    type: challenge
+    name: The anthropologists' statement
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      American Anthropological Association, "Statement on Human Rights" (1947) and "Declaration on
+      Anthropology and Human Rights" (1999)
+    scenario: >-
+      In 1947, the American Anthropological Association warned the United Nations that a declaration
+      of rights would impose one culture's values on others, since standards are relative to the
+      culture they come from, and it urged respect for every culture. In 1999, the association
+      adopted a declaration supporting human rights for all people.
+    text: Isn't respect for every culture itself a value meant to hold for everyone?
+    options:
+      - id: ours
+        label: Respect for other cultures is our value. We can live by it without claiming it binds everyone.
+        reaction: hold
+        value: 0
+      - id: humility
+        label: Doubting that any culture has the final word is humility, not a claim about moral truth.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Some values may hold for everyone after all.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: against moral truths ----------------------------------------------------------
+  - id: ch_honor
+    type: challenge
+    name: Honor and insult
+    targets: stance
+    when: stance > 0
+    source: >-
+      Richard Nisbett and Dov Cohen, Culture of Honor (1996); John Doris and Alexandra Plakias, "How
+      to Argue about Disagreement" (2008)
+    scenario: >-
+      In experiments at the University of Michigan in the 1990s, young men raised in the American
+      South reacted to an insult with more anger, and more readiness for violence, than men raised
+      in the North. The philosophers John Doris and Alexandra Plakias argued that differences like
+      these don't come from disagreeing about the facts, so they may never be settled. Others dispute
+      that reading.
+    text: If people raised in different places disagree about right and wrong while agreeing on the facts, is there one right answer?
+    options:
+      - id: mistaken
+        label: Disagreement doesn't show there's no answer. People have disagreed about science too.
+        reaction: hold
+        value: 0
+      - id: same_values
+        label: They share the same values, like defending one's family, and differ in how to apply them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Less may hold for everyone than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_survival
+    type: challenge
+    name: Shaped for survival
+    targets: stance
+    when: stance > 0
+    source: Sharon Street, "A Darwinian Dilemma for Realist Theories of Value," Philosophical Studies (2006)
+    scenario: >-
+      The philosopher Sharon Street argued that evolution shaped our moral beliefs, like caring for
+      our children and returning favors, because they helped our ancestors survive, not because they
+      were true. If moral truths existed, she argued, it would be a coincidence for our beliefs to
+      match them.
+    text: If evolution shaped our sense of right and wrong to help us survive, why trust it to find the truth?
+    options:
+      - id: eyes
+        label: Evolution shaped our eyes to help us survive too, and we still trust them to show what's there.
+        reaction: hold
+        value: 0
+      - id: reason
+        label: Evolution also gave us reason, and reason can test and correct the instincts.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Less may hold for everyone than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_strange
+    type: challenge
+    name: Too strange to exist
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: 'J. L. Mackie, Ethics: Inventing Right and Wrong (1977)'
+    scenario: >-
+      The philosopher J. L. Mackie argued that a moral fact would be unlike anything else we know: a
+      fact that by itself tells everyone what to do. Such facts, he wrote, would be "of a very
+      strange sort, utterly different from anything else in the universe," and we'd need some
+      special sense to detect them.
+    text: If moral facts would be so unlike everything else, is it more likely that there are none?
+    options:
+      - id: like_math
+        label: Truths of logic and mathematics are unlike physical facts too, and we don't doubt them.
+        reaction: hold
+        value: 0
+      - id: natural
+        label: Moral facts are facts about well-being and suffering, which aren't strange at all.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Less may hold for everyone than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: aimed at where morality comes from --------------------------------------------
+  - id: ch_euthyphro
+    type: challenge
+    name: Euthyphro's question
+    targets: god_basis
+    when: god_basis > 0
+    source: Plato, Euthyphro (about 399 BC); Robert Adams, Finite and Infinite Goods (1999)
+    scenario: >-
+      In Plato's Euthyphro, Socrates asks whether something is holy because the gods love it, or the
+      gods love it because it's holy. Later philosophers asked the same of God and goodness. If
+      something is good only because God commands it, then cruelty would have been good had God
+      commanded it. If God commands it because it's good, goodness doesn't depend on God.
+    text: Does right and wrong depend on God, or does God command what's already right?
+    options:
+      - id: nature
+        label: Neither. Goodness is God's own nature, so it isn't arbitrary, and it doesn't stand apart from God.
+        reaction: hold
+        value: 0
+      - id: caricature
+        label: My tradition never taught that goodness is whatever God happens to command.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Right and wrong may depend on God less than I said.
+        reaction: yield
+        revise: god_basis
+        value: 0
+
+  - id: ch_lawgiver
+    type: challenge
+    name: A law without a lawgiver
+    targets: god_basis
+    when: god_basis < 0 and stance > 0
+    source: G. E. M. Anscombe, "Modern Moral Philosophy," Philosophy (1958)
+    scenario: >-
+      In 1958, the philosopher Elizabeth Anscombe argued that the idea of a moral "ought" that binds
+      everyone made sense within a belief in God as lawgiver, and lived on without it like "the
+      notion 'criminal'" after criminal law and courts had been "abolished and forgotten."
+    text: If right and wrong hold for everyone, what makes them binding without a lawgiver?
+    options:
+      - id: basic
+        label: Some truths are basic, like those of mathematics, and need nothing behind them.
+        reaction: hold
+        value: 0
+      - id: reasons
+        label: What's good for people gives everyone reasons to act. That's all binding needs to mean.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Moral truths may need God more than I said.
+        reaction: yield
+        revise: god_basis
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Two thoughtful people
+    targets: stance
+    when: stance == 0
+    source: After Max Kölbel, "Faultless Disagreement," Proceedings of the Aristotelian Society (2004)
+    scenario: >-
+      Two thoughtful people know all the same facts about how farm animals are raised and what they
+      feel. One thinks eating meat is wrong. The other thinks it's fine.
+    text: You said you're torn. Must one of them be mistaken?
+    options:
+      - id: cant_say
+        label: I can't say.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: Yes, one of them is mistaken
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: no
+        label: No, neither has to be
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

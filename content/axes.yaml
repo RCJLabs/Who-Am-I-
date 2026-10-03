@@ -72,6 +72,18 @@
   minWeight: 2
   fullWeight: 6
 
+# --- Worldview (sensitive: like its topics, never shared unless you choose) ---
+# Fed by God and religion at full weight and life after death at half. Not by free will, right and
+# wrong, or personal identity: each splits believers and nonbelievers alike.
+- id: beyond_nature
+  family: worldview
+  title: The natural world or more
+  description: Is the natural world all there is, or is there also God, a higher power, or life after death? It reflects beliefs, not how moral, spiritual or religious you are.
+  poles: [Only the natural world, More than the natural world]
+  minWeight: 1
+  fullWeight: 1.5
+  minTopics: 1
+
 # --- Personality (Big Five; raw position on the scale, no population norms) ---
 - id: extraversion
   family: personality
