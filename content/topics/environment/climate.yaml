@@ -165,7 +165,8 @@ items:
     scenario: >-
       A 2020 study checked 17 projections of global warming from climate models published between
       1970 and 2007 against the warming that followed. Most matched it closely, especially after
-      allowing for differences between the emissions the models assumed and those that happened.
+      allowing for differences between what the models assumed, such as future emissions, and what
+      actually happened.
     text: If the models got the warming right, should their warnings about what comes next count for more?
     options:
       - id: richer
@@ -190,13 +191,14 @@ items:
     when: stance > 0
     source: >-
       Department of Finance Canada, "Removing the consumer carbon price, effective April 1, 2025";
-      Parliamentary Budget Officer, updated analysis of the federal fuel charge (October 2024)
+      Parliamentary Budget Officer, updated analysis of the federal fuel charge (October 2024); Bill
+      C-4, Parliament of Canada (2026)
     scenario: >-
-      From 2019 Canada taxed the carbon in fuel and paid most of the money back to households. By the
-      budget officer's estimate, counting only the tax and the payments, most households got back
-      more than they paid; counting the tax's drag on wages and investment income too, most came out
-      slightly behind. It stayed unpopular. In 2025 the new prime minister set it to zero as one of
-      his first acts, and in 2026 Parliament repealed it.
+      From 2019 Canada taxed the carbon in fuel and paid most of the money back to households. The
+      budget officer projected that in 2030, counting only the tax and the payments, most households
+      would get back more than they paid; counting the tax's drag on wages and investment income
+      too, most would come out slightly behind. It stayed unpopular. In 2025 the new prime minister
+      set it to zero as one of his first acts, and in 2026 Parliament repealed it.
     text: If even a tax with the money paid back couldn't keep public support, can deep cuts last?
     options:
       - id: lead

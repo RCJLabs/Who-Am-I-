@@ -201,7 +201,7 @@ items:
 
   - id: ch_sow_stalls
     type: challenge
-    name: Going it alone
+    name: Ahead of the EU
     targets: stance
     when: stance > 0
     source: >-
@@ -269,7 +269,7 @@ items:
       way, and before its large trial with 30,000 volunteers. The monkeys were protected against the
       virus, with no sign of the vaccine making the disease worse, a danger seen with some earlier
       vaccines.
-    text: Can new medicines be made safe for people without testing them on animals first?
+    text: Can new medicines be made safe for people without testing them on animals?
     options:
       - id: alternatives
         label: Tests on human cells and computer models keep improving. We should use them instead.

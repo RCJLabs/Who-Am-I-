@@ -192,7 +192,7 @@ items:
     when: stance > 0
     source: >-
       World Nuclear Association, "Fukushima Daiichi Accident"; Japan's Ministry of Economy, Trade
-      and Industry, estimate of accident costs (2016)
+      and Industry, estimates of accident costs (2016, revised 2023)
     scenario: >-
       After the 2011 tsunami wrecked the Fukushima Daiichi plant, about 160,000 people left their
       homes, and some towns stayed closed for years. Radiation is officially linked to one death,

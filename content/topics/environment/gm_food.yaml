@@ -177,8 +177,9 @@ items:
     when: stance > 0
     source: >-
       Kevin Bradley, University of Missouri, survey of dicamba injury to soybeans (2017); National
-      Family Farm Coalition v. EPA, 9th Circuit (2020); Center for Biological Diversity v. EPA,
-      US District Court for Arizona (2024)
+      Family Farm Coalition v. EPA, 9th Circuit (2020); Center for Biological Diversity v. EPA, US
+      District Court for Arizona (2024); US Environmental Protection Agency, registration of dicamba
+      for use over crops (2026)
     scenario: >-
       GM soybeans and cotton were engineered to survive the weedkiller dicamba, so farmers could
       spray it over their crops. In 2017 it drifted onto neighboring farms and damaged about 3.6
