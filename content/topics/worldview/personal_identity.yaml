@@ -53,17 +53,18 @@ items:
     when: stance < 0
     source: Derek Parfit, Reasons and Persons (1984)
     scenario: >-
-      Suppose surgeons replaced your cells with exact copies one at a time, over a year, while you
-      went about your life. The philosopher Derek Parfit pointed out that no single replacement would
-      end your life, yet by the end every cell would be new, just as on Mars.
-    text: If no single step would end your life, why would doing them all at once?
+      The philosopher Derek Parfit imagined a range of operations in which surgeons replace some of
+      your cells with exact copies: in one, a single cell; in others, a tenth of them, then half; in
+      the last, all of them. No one step along the range seems to make the difference between
+      surviving and dying, yet in the last case every cell is new, just as on Mars.
+    text: If no one step along the range would end your life, why would the last one?
     options:
       - id: continuity
-        label: Gradual change keeps one continuous life going. Being destroyed and rebuilt doesn't.
+        label: Somewhere along the range is a point where I'd die, even if no one can say exactly where.
         reaction: hold
         value: 0
       - id: not_cells
-        label: What makes me me isn't my cells at all, so neither case settles it.
+        label: What makes me me isn't my cells at all, so the range doesn't settle it.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -82,8 +83,9 @@ items:
       Pinto et al., "Split brain: divided perception but undivided consciousness," Brain (2017)
     scenario: >-
       To treat severe epilepsy, some patients had the connection between the two halves of the brain
-      cut. In experiments, each half could seem to know things the other didn't, as if one person had
-      become two. A 2017 study disputed this, finding the patients' awareness still unified.
+      cut. In experiments, each half could seem to know things the other didn't, as if one person
+      had become two. A 2017 study disputed this, finding evidence that the patients' awareness was
+      still unified.
     text: If a person can seem to split in two, is being the same person all or nothing?
     options:
       - id: one
@@ -137,7 +139,7 @@ items:
     source: Derek Parfit, Reasons and Persons (1984)
     scenario: >-
       A new model of the machine builds the copy on Mars but leaves you on Earth, with a damaged
-      heart that will kill you in a few days. You can talk to your copy on Mars by video. The
+      heart that will kill you in a few days. You can even talk to your copy on Mars. The
       philosopher Derek Parfit called this the branch line.
     text: If the copy is you, why would you still face your own death on Earth?
     options:
