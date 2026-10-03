@@ -3,7 +3,7 @@
 // clear reason, the expectation), not the engine.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import type { Response } from '../../src/model/answers.ts';
 import { isScale, scalePoints, type Bundle, type Target } from '../../src/model/content.ts';
@@ -12,7 +12,7 @@ import { observe } from '../../src/engine/observe.ts';
 import { buildProfile } from '../../src/engine/profile.ts';
 import { openTensions } from '../../src/engine/tensions.ts';
 import { realBundle } from '../helpers.ts';
-import { engineTensions, runRespondent, type Policy, type RunResult } from './harness.ts';
+import { engineTensions, runRespondent, type Policy, type RunResult, type TensionPolicy } from './harness.ts';
 import { constantPolicy, ideologyPolicy, personaResponses, randomAnswer, randomPolicy, scriptedPolicy } from './policies.ts';
 
 const b: Bundle = realBundle();
@@ -89,7 +89,11 @@ describe('acquiescence (agreeing or disagreeing with everything)', () => {
 });
 
 describe('random respondents', () => {
-  const runs = Array.from({ length: 1000 }, (_, i) => runRespondent(b, randomPolicy({ skipRate: 0.1 }), { seed: i + 1 }));
+  // Built once for the three tests below, in a hook so it runs (and is timed) only when they do.
+  let runs: RunResult[] = [];
+  beforeAll(() => {
+    runs = Array.from({ length: 1000 }, (_, i) => runRespondent(b, randomPolicy({ skipRate: 0.1 }), { seed: i + 1 }));
+  }, 120_000);
 
   it('center on every spectrum axis (mean within 4 standard errors of 0)', () => {
     const profiles = runs.map(profileOf);
@@ -113,8 +117,7 @@ describe('random respondents', () => {
     for (const r of runs.slice(0, 50)) expect(() => ProfileSchema.parse(profileOf(r))).not.toThrow();
   });
 
-  // Each run rebuilds the answer state at every step, so this test's time grows with the square of
-  // the bank's size. It gets its own budget rather than the global 30 s.
+  // 500 runs through the whole bank: its own budget rather than the global 30 s.
   it('terminate without asking any item twice (500 runs)', () => {
     for (let seed = 1000; seed < 1500; seed++) {
       const { transcript } = runRespondent(b, randomPolicy({ skipRate: 0.2 }), { seed, tensions: engineTensions, tensionPolicy: () => null });
@@ -148,12 +151,29 @@ describe('ideology bots (pipeline sanity; they use the content weights)', () => 
   });
 });
 
+describe('harness', () => {
+  // The default path builds each step's flow state from the current topic's events and asks for
+  // tensions only at a topic's end. It must give exactly the runs of the reference loop, which
+  // rebuilds everything and asks for tensions at every step, as the app does.
+  it('gives the same runs as rebuilding everything at every step, tensions included', () => {
+    const tensionPolicy: TensionPolicy = ({ rng }) => (rng() < 0.5 ? { kind: 'acknowledged' } : null);
+    for (let seed = 7; seed <= 500; seed += 25) {
+      const run = (reference: boolean) =>
+        runRespondent(b, randomPolicy({ skipRate: 0.2 }), { seed, tensions: engineTensions, tensionPolicy, reference });
+      const fast = run(false);
+      const ref = run(true);
+      expect(fast.transcript, `seed ${seed}`).toEqual(ref.transcript);
+      expect(fast.events, `seed ${seed}`).toEqual(ref.events);
+      expect(fast.resolutions, `seed ${seed}`).toEqual(ref.resolutions);
+    }
+  }, 120_000);
+});
+
 describe('tensions on real content', () => {
   const anchorsAt = (step: number): Policy => (ctx) =>
     ctx.item.anchor ? { kind: 'scale', step } : randomAnswer(ctx.item, ctx.rng);
 
-  // 150 runs through the whole bank. Like the termination test, its time grows with the square of
-  // the bank's size (about 20 s locally with four domains), so it gets its own budget.
+  // 150 runs through the whole bank, with the tension detector at every topic's end: its own budget.
   it('never fire when anchors are answered consistently, however erratic everything else is', () => {
     for (let seed = 1; seed <= 50; seed++) {
       for (const step of [1, 4, 7]) {

@@ -1,0 +1,307 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How many people your country should let settle each year. The ladder is about legal admissions
+# only: legal status, deportation and asylum rules are circumstances, so someone who wants more
+# legal immigration and strict enforcement has a step to pick. Feeds the diplomatic spectrum at
+# full weight (more immigration is the global end). Two anchors: self-government (who may settle,
+# where the right tends to invoke it) and personal responsibility (people brought as children,
+# where the left does). Yields toward more immigration record liberty, equality or care; toward
+# fewer, loyalty to fellow citizens or the community's cohesion.
+id: immigration
+domain: society
+title: Immigration
+summary: How many people should your country let settle each year?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Compared with now, the number of people your country lets settle each year should be…
+    help: >-
+      This is about legal immigration. If you'd keep it about where it is, choose Torn / it
+      depends.
+    poles: [Far lower, Far higher]
+    labels:
+      - Close to zero, at least for a while
+      - Much lower
+      - Somewhat lower
+      - Torn / it depends
+      - Somewhat higher
+      - Much higher
+      - Much higher, with few limits on who may come
+    axes: { diplomatic: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: children
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting people brought into the country as children without legal permission, who have grown up there, stay and become citizens is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { personal_responsibility: 0.5 }
+
+  - id: deport
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Deporting someone who has lived in the country for ten years without legal permission, with no criminal record, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { obey_law: 0.5 }
+
+  - id: skills
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Choosing immigrants mainly for the skills the country needs, rather than for their family ties, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: asylum_abroad
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Sending people who ask for asylum to another country to have their claims decided there is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { protect_vulnerable: -0.5 }
+
+  - id: local_refusal
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Cities refusing to help national authorities find and deport people living there without legal permission is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { subsidiarity: 0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_sov
+    type: likert
+    points: 7
+    text: When it comes to who may settle in a country, each country should be left to decide for itself, without other countries or international bodies stepping in, even when it turns away people fleeing war or persecution.
+    principles: { sovereignty: 1 }
+    anchor: { principle: sovereignty, context: who may settle in a country, against: the safety of people fleeing war or persecution }
+
+  - id: anchor_resp
+    type: likert
+    points: 7
+    text: When it comes to people brought into a country as children without legal permission, no one should be made to pay for a wrong they didn't commit themselves, even if letting them stay encourages others to come without permission.
+    principles: { personal_responsibility: 1 }
+    anchor: { principle: personal_responsibility, context: people brought into a country as children, against: discouraging others from coming without permission }
+
+  # --- Challenges: for more immigration ----------------------------------------------------------
+  - id: ch_bracero
+    type: challenge
+    name: The farmworkers who left
+    targets: stance
+    when: stance < 0
+    source: >-
+      Michael Clemens, Ethan Lewis and Hannah Postel, "Immigration Restrictions as Active Labor
+      Market Policy: Evidence from the Mexican Bracero Exclusion," American Economic Review (2018)
+    scenario: >-
+      Until 1964, a US program let in Mexican farmworkers, more than 400,000 a year at its peak. When
+      the program ended, researchers later found, wages and jobs for American farmworkers didn't
+      measurably rise. Farms switched to machines or to other crops instead.
+    text: If letting in fewer workers didn't help the workers it was meant to protect, what's the case for cutting numbers?
+    options:
+      - id: decide
+        label: Wages aren't the only question. A country should decide for itself how many people join it.
+        reaction: hold
+        principles: { sovereignty: 0.5 }
+      - id: farm_work
+        label: That was seasonal farm work. It says little about immigration in general.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not much of one. It makes me more open to immigration than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_prison_rates
+    type: challenge
+    name: Who goes to prison
+    targets: stance
+    when: stance < 0
+    source: >-
+      Ran Abramitzky, Leah Boustan, Elisa Jácome, Santiago Pérez and Juan David Torres,
+      "Law-Abiding Immigrants: The Incarceration Gap between Immigrants and the US-Born, 1870–2020,"
+      American Economic Review: Insights (2024)
+    scenario: >-
+      A study of US census records going back to 1870 found that immigrants have long been less
+      likely to be in prison or jail than people born in the US. Today young immigrant men are about
+      60% less likely to be in prison or jail than young men born in the US, and about 30% less
+      likely than young white men born in the US.
+    text: Does that change how you see the risks of immigration?
+    options:
+      - id: absorb
+        label: No. My concern isn't crime; it's how fast communities can take in newcomers.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: elsewhere
+        label: Figures from the US may not hold in other countries.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me more open to immigration than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_st_louis
+    type: challenge
+    name: The St. Louis
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: United States Holocaust Memorial Museum, "Voyage of the St. Louis"
+    scenario: >-
+      In 1939 the ship St. Louis sailed from Germany carrying 937 passengers, almost all of them
+      Jewish refugees. Cuba, the US and Canada turned them away, and the ship returned to Europe.
+      254 of its passengers later died in the Holocaust.
+    text: When a country turns people away, who bears the cost?
+    options:
+      - id: own_people
+        label: A country can't take in everyone in need. Its first duty is to its own people.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: refugees
+        label: People fleeing persecution are a special case. My limit is on other immigration.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: They do, and it makes me more open to immigration than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenges: for less immigration ----------------------------------------------------------
+  - id: ch_trust
+    type: challenge
+    name: Diversity and trust
+    targets: stance
+    when: stance > 0
+    source: >-
+      Robert Putnam, "E Pluribus Unum: Diversity and Community in the Twenty-first Century,"
+      Scandinavian Political Studies (2007); Peter Thisted Dinesen, Merlin Schaeffer and Kim Mannemar
+      Sønderskov, "Ethnic Diversity and Social Trust: A Narrative and Meta-Analytical Review," Annual
+      Review of Political Science (2020)
+    scenario: >-
+      Political scientist Robert Putnam found that in more diverse US communities, people trusted
+      their neighbors less, at least in the short run, including neighbors of their own background.
+      A 2020 review of the research found the link is real but small, and strongest for trust in
+      neighbors.
+    text: Should the effect of rapid change on communities limit how many people come?
+    options:
+      - id: welcome
+        label: No. People shouldn't be kept out because their new neighbors are slow to trust them.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: settle_in
+        label: The answer is helping people settle in, like language classes, not lower numbers.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want fewer immigrants than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_canada
+    type: challenge
+    name: Canada changes course
+    targets: stance
+    when: stance > 0
+    source: >-
+      Statistics Canada, population estimates (2024); Immigration, Refugees and Citizenship Canada,
+      2025–2027 Immigration Levels Plan (October 2024)
+    scenario: >-
+      Canada, long known for welcoming immigrants, grew by more than a million people in 2023, a
+      record, mostly through temporary residents such as students and workers. With housing costs
+      soaring, in 2024 the government cut its target for new permanent residents in 2025 from
+      500,000 to 395,000.
+    text: If even Canada decided it was letting people in faster than it could house them, should other countries be more careful?
+    options:
+      - id: build
+        label: No. The answer is to build more homes, not to turn people away.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: temporary
+        label: The surge in temporary students and workers was the problem, not permanent immigration.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want fewer immigrants than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_brain_drain
+    type: challenge
+    name: The nurses who leave
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: World Health Organization, Health Workforce Support and Safeguards List (2023)
+    scenario: >-
+      In 2023 the World Health Organization listed 55 countries, most of them in Africa, whose
+      shortages of doctors and nurses are so severe that other countries shouldn't actively recruit
+      from them. Many rich countries' health services rely on staff recruited from abroad.
+    text: When rich countries welcome skilled immigrants, do they take what poorer countries need?
+    options:
+      - id: move
+        label: People have the right to move for a better life, whatever their job.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: recruit_elsewhere
+        label: Then recruit less from those countries and more from others, not fewer overall.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Sometimes, and it makes me want fewer immigrants than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A tenth more
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise the number of people your country lets settle each year by about
+      a tenth, choosing them mainly for skills the country needs.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -1,0 +1,285 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether the government should take a side on how parents divide paid work and childcare. Board
+# quotas are about the workplace, not the family, so they're a circumstance with a challenge of
+# their own. Feeds the cultural spectrum at half weight (encouraging traditional roles is the
+# tradition end). The anchor is the same rules whatever someone's sex (company boards, where the
+# right tends to invoke it). Yields toward equal sharing record equality; toward leaving it to
+# families, liberty.
+id: gender_roles
+domain: society
+title: Gender roles
+summary: How should parents divide paid work and childcare, and should the government take a side?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to how parents divide paid work and childcare, the government should…
+    poles: [Encourage traditional roles, Require equal sharing]
+    labels:
+      - Encourage the traditional pattern, with the father as main earner and the mother at home with young children
+      - Support families where one parent stays home, for example by taxing couples as a unit
+      - Stay neutral and leave it to each couple
+      - Torn / it depends
+      - Help both parents work, for example with affordable childcare and leave either parent can take
+      - Encourage fathers to share, for example with leave reserved for each parent that's lost if unused
+      - Require equal sharing, for example with equal leave that each parent must take
+    axes: { cultural: 0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: board_quota
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A law requiring company boards to be at least 40% women is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { equal_treatment: -0.5 }
+
+  - id: home_care
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Paying parents who care for their young children at home, as an alternative to subsidized daycare, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: pay_gap
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring large employers to publish the pay gap between their male and female staff is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: combat
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Women serving in front-line combat roles, if they meet the same physical standards as men, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { equal_treatment: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_same
+    type: likert
+    points: 7
+    text: When it comes to choosing company board members, everyone should be treated by the same rules, whatever their sex, even when that means boards stay mostly male.
+    principles: { equal_treatment: 1 }
+    anchor: { principle: equal_treatment, context: choosing company board members, against: getting more women into top jobs }
+
+  # --- Challenges: for more equal sharing --------------------------------------------------------
+  - id: ch_child_penalty
+    type: challenge
+    name: The child penalty
+    targets: stance
+    when: stance < 0
+    source: >-
+      Henrik Kleven, Camille Landais and Jakob Egholt Søgaard, "Children and Gender Inequality:
+      Evidence from Denmark," American Economic Journal: Applied Economics (2019); "Does Biology
+      Drive Child Penalties? Evidence from Biological and Adoptive Families," American Economic
+      Review: Insights (2021)
+    scenario: >-
+      In Denmark, women's earnings fall by about 20% after their first child and never fully
+      recover, while men's barely change. In the long run the fall is about the same for mothers who
+      adopt, so pregnancy and breastfeeding don't explain it.
+    text: If the gap comes from how couples divide the work, not from biology, should the government try to change it?
+    options:
+      - id: their_choice
+        label: No. How couples divide the work is their choice, and many choose it gladly.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: real_choice
+        label: Make sure it's a real choice, with childcare and leave available, but don't push either way.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want the government to do more for equal sharing than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_daddy_weeks
+    type: challenge
+    name: Weeks for fathers
+    targets: stance
+    when: stance < 0
+    source: >-
+      Ankita Patnaik, "Reserving Time for Daddy: The Consequences of Fathers' Quotas," Journal of
+      Labor Economics (2019)
+    scenario: >-
+      In 2006 the Canadian province of Quebec reserved five weeks of paid leave for fathers, lost if
+      unused. The share of fathers taking leave jumped, and years later those fathers were doing more
+      of the housework.
+    text: If a small nudge changes how families share the work, should governments give it?
+    options:
+      - id: no_nudge
+        label: No. Each family should decide without the government nudging.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: offer
+        label: Offer leave to fathers, yes; reserving it is a step too far.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want the government to do more for equal sharing than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_fertility
+    type: challenge
+    name: Where fathers help
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Matthias Doepke, Anne Hannusch, Fabian Kindermann and Michèle Tertilt, "The Economics of
+      Fertility: A New Era," NBER Working Paper 29948 (2022)
+    scenario: >-
+      In rich countries today, birth rates tend to be higher where more women work and fathers do
+      more of the childcare. In 1980 it was the reverse: countries where more women worked had fewer
+      births.
+    text: If more equal families have more children, is the traditional pattern the best way to support families?
+    options:
+      - id: commitment
+        label: Families thrive on commitment and clear roles, whatever the averages say.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: both_kinds
+        label: Support working parents and stay-at-home parents alike.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want the government to do more for equal sharing than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: for leaving it to families ----------------------------------------------------
+  - id: ch_paradox
+    type: challenge
+    name: The welfare-state paradox
+    targets: stance
+    when: stance > 0
+    source: >-
+      Hadas Mandel and Moshe Semyonov, "A Welfare State Paradox: State Interventions and Women's
+      Employment Opportunities in 22 Countries," American Journal of Sociology (2006)
+    scenario: >-
+      A study of 22 countries found that those with the most generous family policies, like long
+      paid leave, had more women in work but fewer women in management and high-paying jobs.
+    text: Can policies meant to help mothers end up holding them back at work?
+    options:
+      - id: design_better
+        label: Then design them better, with leave for fathers too. The goal is still right.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: mothers_only
+        label: Long leave for mothers alone backfires. Equal leave for both parents doesn't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want the government to do less here than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_six_months
+    type: challenge
+    name: Six months each
+    targets: stance
+    when: stance > 0
+    source: Iceland, Act on Maternity/Paternity Leave and Parental Leave No. 144/2020
+    scenario: >-
+      In 2021 Iceland gave each parent six months of paid leave, of which only six weeks can be
+      passed to the other parent. Critics, including some mothers, said it made it harder for
+      mothers to stay home through months of breastfeeding.
+    text: Should the law decide how parents share their leave?
+    options:
+      - id: otherwise
+        label: Yes. Without rules, mothers end up taking most of it, and pay for it at work.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: some_reserved
+        label: Reserve some leave for each parent, but let families split the rest.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want the government to do less here than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: aimed at board quotas ----------------------------------------------------------
+  - id: ch_board_quota
+    type: challenge
+    name: After the quota
+    targets: board_quota
+    deep: true
+    when: board_quota > 0
+    source: >-
+      Marianne Bertrand, Sandra Black, Sissel Jensen and Adriana Lleras-Muney, "Breaking the Glass
+      Ceiling? The Effect of Board Quotas on Female Labour Market Outcomes in Norway," Review of
+      Economic Studies (2019)
+    scenario: >-
+      In the 2000s Norway required the boards of public limited companies to be at least 40% women
+      (formally, at least 40% of each sex). The women appointed were better qualified than the
+      women on boards before them and the pay gap on boards shrank, but researchers found no
+      measurable gain for women working lower down in those companies.
+    text: If quotas change the boardroom but little else, are they worth it?
+    options:
+      - id: top_jobs
+        label: Yes. Getting women into the top jobs matters in itself.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: not_enough
+        label: Keep the quota, but it isn't enough on its own.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me less keen on board quotas than I said.
+        reaction: yield
+        revise: board_quota
+        principles: { equal_treatment: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Three months each
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would give each parent three months of paid leave that can't be passed to the
+      other, plus six months the couple can share as they choose.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

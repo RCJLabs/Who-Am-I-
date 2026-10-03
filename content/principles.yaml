@@ -10,9 +10,11 @@
 - id: equality
   label: Equality
   definition: People should be treated equally, and gaps in wealth and opportunity should be narrowed.
+# Rewards only. Someone can hold that rewards should be earned without holding that punishment
+# should match wrongdoing, so punishment is its own principle (deserved_punishment).
 - id: retribution
   label: Just deserts
-  definition: People should get what they deserve, with rewards that match their effort and punishment that matches their wrongdoing.
+  definition: People should get what they deserve, with rewards that match their effort.
 - id: loyalty
   label: Loyalty
   definition: People should stand by their family, community and country, even when it's costly.
@@ -42,9 +44,17 @@
 - id: due_process
   label: Due process
   definition: No one should lose their rights until a fair process has proven they did wrong, even if that lets some dangerous people go free.
+- id: deserved_punishment
+  label: Deserved punishment
+  definition: People who do serious wrong should be punished as they deserve, whatever else the punishment achieves.
 - id: obey_law
   label: Obeying the law
   definition: Laws should be obeyed even by people who think they're unjust, and changed only through legal means.
+# Separate from equality, whose definition also covers narrowing gaps: in race-conscious admissions
+# the two collide.
+- id: equal_treatment
+  label: Same rules for everyone
+  definition: Everyone should be treated by the same rules, whatever group they belong to, even when that leaves gaps between groups.
 - id: sovereignty
   label: National self-government
   definition: Each country should run its own affairs, without other countries or international bodies stepping in, even when it runs them badly.
@@ -59,7 +69,7 @@
   definition: Individuals should accept burdens for the good of the community.
 - id: personal_responsibility
   label: Personal responsibility
-  definition: People take on obligations through their voluntary choices.
+  definition: People take on obligations through their own voluntary choices, and don't answer for choices they didn't make.
 - id: doing_vs_allowing
   label: Doing vs. allowing
   definition: Actively causing harm is worse than failing to prevent it.
