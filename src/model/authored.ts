@@ -179,7 +179,7 @@ export const TopicFileSchema = z.strictObject({
   items: z.array(AuthoredItemSchema).min(1),
 });
 
-export const AXIS_FAMILIES = ['political', 'personality', 'values', 'worldview', 'taste'] as const;
+export const AXIS_FAMILIES = ['political', 'personality', 'values', 'thinking', 'worldview', 'taste'] as const;
 
 export const AxisDefSchema = z.strictObject({
   id: Id,

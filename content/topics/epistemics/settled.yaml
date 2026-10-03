@@ -1,0 +1,257 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much of a hearing dissent should get, in the news, at universities and on major platforms, on
+# questions most specialists consider settled: open debate (a settled question can still be wrong)
+# against "balance as bias" (equal airtime misleads people about where the evidence stands). About
+# editors' and platforms' choices, not law: speech law is in rights/free_speech. Of the stem's two
+# examples, climate is doubted more on the right; doubt about GM food spans both parties in US
+# polls, though organized opposition has historically leaned left. Feeds no spectrum and has no anchor. Cases are
+# balanced by which side they flatter, with most flattering neither.
+id: settled
+domain: epistemics
+title: Settled or open
+summary: When most specialists consider a question settled, how much of a hearing should dissenters get?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: >-
+      When most specialists consider a question settled, like whether the climate is warming or
+      genetically modified food is safe to eat, how much of a hearing should people who dissent get
+      in the news, at universities and on major platforms?
+    help: This is about the choices of editors, universities and platforms, not about what the law should allow.
+    poles: [A full hearing, None]
+    labels:
+      - A full hearing, as an equal side. Settled questions can still be wrong
+      - A regular hearing, clearly labeled as a minority view
+      - Some hearing, when they make serious arguments
+      - Torn / it depends on the question
+      - A hearing only when they bring new evidence
+      - Very little. Equal airtime misleads people about where the evidence stands
+      - None. Spreading their views does real harm
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Challenges: for treating it as settled ----------------------------------------------------
+  - id: ch_balance
+    type: challenge
+    name: Balance as bias
+    targets: stance
+    when: stance < 0
+    source: >-
+      Maxwell T. Boykoff and Jules M. Boykoff, "Balance as bias: global warming and the US prestige
+      press," Global Environmental Change (2004)
+    scenario: >-
+      Researchers Maxwell and Jules Boykoff studied coverage of climate change in four leading US
+      newspapers from 1988 to 2002. Just over half of the articles gave roughly equal attention to
+      the view that humans were warming the climate and the view that they weren't, at a time when
+      the main scientific reviews increasingly backed the first.
+    text: If equal time leaves readers thinking specialists are split when they aren't, is that a fair hearing?
+    options:
+      - id: readers
+        label: Readers can weigh the case themselves. Hearing the other side is how the majority gets tested.
+        reaction: hold
+        value: 0
+      - id: label
+        label: The fix is to say which view is the minority's, not to cut it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve less of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_rats
+    type: challenge
+    name: The rats and the embargo
+    targets: stance
+    when: stance < 0
+    source: >-
+      Gilles-Éric Séralini et al., "Long term toxicity of a Roundup herbicide and a Roundup-tolerant
+      genetically modified maize," Food and Chemical Toxicology (2012), retracted 2013; European
+      Food Safety Authority, final review (2012)
+    scenario: >-
+      In 2012 a French team published a study reporting more tumors in rats fed genetically modified
+      maize. The authors gave journalists the paper early only if they agreed not to consult other
+      scientists before reporting, and photos of rats with large tumors ran around the world. Citing
+      the study, Kenya banned imports of genetically modified food that year. Europe's food-safety
+      agency found the study too flawed to support its conclusions, and in 2013 the journal
+      retracted it, calling its results inconclusive; the authors republished it elsewhere in 2014.
+      Kenya's government moved to lift its ban in 2022, but court cases held that up for years.
+    text: When a disputed study gets a worldwide hearing before other specialists can check it, who pays?
+    options:
+      - id: open
+        label: Open debate is how the study's flaws were found so quickly. The hearing worked.
+        reaction: hold
+        value: 0
+      - id: embargo
+        label: The problem was the embargo, which blocked checking. A fair hearing includes the critics.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve less of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_aids_panel
+    type: challenge
+    name: The AIDS panel
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Pride Chigwedere et al., "Estimating the Lost Benefits of Antiretroviral Drug Use in South
+      Africa," Journal of Acquired Immune Deficiency Syndromes (2008)
+    scenario: >-
+      In 2000 South Africa's president set up an advisory panel on AIDS in which scientists who
+      doubted that HIV causes AIDS sat alongside mainstream researchers. For years the government
+      was slow to provide drugs that treat HIV; in 2002 the Constitutional Court ordered it to make
+      widely available a drug that cuts the risk of mothers passing the virus to their babies. A
+      Harvard study later estimated that more than 330,000 lives were lost between 2000 and 2005
+      because the drugs weren't provided sooner.
+    text: When dissenters on a settled question get an equal hearing where decisions are made, what can it cost?
+    options:
+      - id: decision
+        label: The failure was the government's decision, not the debate. Hearing dissenters didn't force anyone to follow them.
+        reaction: hold
+        value: 0
+      - id: government
+        label: A government panel isn't the news or a university. Policy can follow the majority while debate stays open.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve less of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for keeping it open -----------------------------------------------------------
+  - id: ch_quasicrystals
+    type: challenge
+    name: The impossible crystal
+    targets: stance
+    when: stance > 0
+    source: >-
+      Dan Shechtman, Ilan Blech, Denis Gratias and John Cahn, "Metallic Phase with Long-Range
+      Orientational Order and No Translational Symmetry," Physical Review Letters (1984); the Nobel
+      Prize in Chemistry (2011)
+    scenario: >-
+      In 1982 the Israeli scientist Dan Shechtman saw a pattern in a metal alloy that textbooks said
+      no crystal could have. Colleagues told him he must be mistaken, the head of his research group
+      asked him to leave, and a physics journal turned down his first paper, saying it wouldn't
+      interest its readers. Other laboratories soon found the same patterns, and in 2011 he won the
+      Nobel Prize in Chemistry for discovering quasicrystals.
+    text: If a finding that specialists called impossible can turn out right, how much of a hearing should dissenters get?
+    options:
+      - id: heard
+        label: His finding was published and confirmed by others within a few years. That's dissent getting the hearing it deserved.
+        reaction: hold
+        value: 0
+      - id: one_measurement
+        label: A lab result can be checked by anyone who repeats the experiment. Most settled questions in the news can't be checked that directly.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve more of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_takedown
+    type: challenge
+    name: The takedown email
+    targets: stance
+    when: stance > 0
+    source: >-
+      Email from Francis Collins to Anthony Fauci and others, October 8, 2020, released under the
+      Freedom of Information Act; the Great Barrington Declaration (2020)
+    scenario: >-
+      In October 2020 three professors, at Harvard, Stanford and Oxford, published the Great
+      Barrington Declaration, arguing that people at low risk of dying from COVID-19 should resume
+      normal life, building immunity through infection, while the most vulnerable were protected.
+      Days later the director of the US National Institutes of Health emailed colleagues that the
+      proposal needed "a quick and devastating published take down." Most public-health specialists
+      opposed the proposal, and whether it was right is still disputed.
+    text: If leading officials call within days for a "devastating" takedown of a dissenting view, is the question really settled?
+    options:
+      - id: answered
+        label: The proposal was answered in public, and most specialists still rejected it. Settled doesn't mean unanimous.
+        reaction: hold
+        value: 0
+      - id: crisis
+        label: That was a rushed fight in a crisis, not how science usually treats dissent.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve more of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_semmelweis
+    type: challenge
+    name: Wash your hands
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Ignaz Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever (1861)
+    scenario: >-
+      In 1847 the Hungarian doctor Ignaz Semmelweis found that deaths from fever among new mothers
+      on his ward in Vienna fell sharply once doctors washed their hands in a chlorine solution.
+      Most doctors rejected his findings, and many hospitals ignored them for decades. He died in an
+      asylum in 1865, before germ theory explained why handwashing worked.
+    text: If treating a question as settled can keep a true idea from a hearing for decades, how much of a hearing should dissenters get?
+    options:
+      - id: then_and_now
+        label: Medicine then had nothing like today's trials. Dissent with good evidence gets heard far faster now.
+        reaction: hold
+        value: 0
+      - id: data
+        label: Semmelweis had data. Dissenters who bring new evidence deserve a hearing; most don't bring any.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Dissenters may deserve more of a hearing than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The broadcaster's program
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A national broadcaster is making a program about a health question that most specialists
+      consider settled. A specialist who disputes the majority view has asked to take part.
+    text: You said you're torn. Should she be included?
+    options:
+      - id: depends
+        label: It depends on what new evidence she brings.
+        reaction: hold
+        value: 0
+      - id: include
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: exclude
+        label: "No"
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

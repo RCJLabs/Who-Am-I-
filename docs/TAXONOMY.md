@@ -127,15 +127,19 @@ its own. The supernatural moved to How you know, since it doesn't split believer
 nonbelievers.
 
 ### How you know
-| Topic | Tier | Status |
-|---|---|---|
-| Trust in institutions (science, media, government, courts) | core | ◻️ |
-| The supernatural (ghosts, psychic powers, astrology), unscored | extended | ◻️ |
-| Changing your mind | core | ◻️ |
-| Intuition vs. evidence | extended | ◻️ |
-| Where you get your news | extended | ◻️ |
-| Experts vs. common sense | extended | ◻️ |
-| Official explanations and skepticism | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Whose word to take (when most specialists agree but some dissent; trust in each institution, news sources and how you check a claim as unscored items) | core | custom | ✅ | the polio boycott, Pauling and vitamin C, doubt for sale; drifting continents, the manipulated Alzheimer's images, the stomach-ulcer bacteria |
+| Changing your mind (this-or-that: steady or flexible, intuition or analysis) | core | custom | ✅ | after research on open-minded thinking and on intuitive and analytic thinking; original items |
+| Official accounts (sensitive) | extended | custom | ✅ | the Post Office's Horizon system, the virus's origin, Hillsborough; TWA Flight 800, Building 7, the Kennedy acoustics |
+| Settled or open (how much of a hearing dissent should get on questions most specialists consider settled) | extended | custom | ✅ | balance as bias, the GM-rat study's embargo, South Africa's AIDS panel; the impossible crystal, the takedown email, Semmelweis |
+| Spirits and signs (sensitive; described, never scored or challenged) | extended | custom | ✅ | beliefs, practices and experiences, and whether they're part of your religion |
+
+The design review cut three planned topics: experts vs. common sense (the policy side is
+governance's Experts or voters, the personal side is Whose word to take), where you get your news
+(an item in Whose word to take) and intuition vs. evidence (a spectrum in Changing your mind). Both
+reviewers proposed Settled or open. Trust and doubt split by institution, and which side doubts
+which institution moves with who holds power, so no stance names a single agency.
 
 ### Relationships & family
 | Topic | Tier | Status |
@@ -219,7 +223,8 @@ can surface in both directions.
 | Deference to experts | vaccine requirements, climate, teaching evolution | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists), God and religion (biologists on teaching evolution) |
 | Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
 | Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
-| Belief that fits the evidence | *(not a left–right split: nonbelievers tend to invoke it about God, and people who doubt free will about free will; some nonbelievers keep free will as a useful belief)* | | God and religion (belief in God), free will (whether our choices are up to us) |
+| Belief that fits the evidence | *(not a left–right split: nonbelievers tend to invoke it about God, and people who doubt free will about free will; some nonbelievers keep free will as a useful belief; some on the wellness left and on the right set it aside for remedies like homeopathy)* | | God and religion (belief in God), free will (whether our choices are up to us), whose word to take (remedies like homeopathy) |
+| Independent checking | what police say after an officer shoots someone | a major news outlet's report built on anonymous sources | official accounts (police after a shooting), whose word to take (a news report built on anonymous sources); which side invokes it where can shift with who holds power, as trust in vaccine regulators did by 2026 |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -243,8 +248,10 @@ not minimum wages, each raise a tension in either direction. So do the worldview
 the sides are believers and nonbelievers as much as left and right: deserved punishment for crimes
 shaped by a brutal childhood but not for officers who kill unlawfully, biologists followed on
 teaching evolution but not food-safety scientists or economists, and belief that fits the evidence
-about God but not about free will, or the reverse. The personas in `tests/sim/personas` pin these
-down.
+about God but not about free will, or the reverse. So do the how-you-know anchors: independent
+checks demanded of police after a shooting but not of a news report built on anonymous sources,
+or the reverse, and evidence demanded of remedies like homeopathy but not of belief in God or free
+will. The personas in `tests/sim/personas` pin these down.
 
 ## Axes
 
@@ -258,13 +265,16 @@ down.
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
 | Rules or outcomes | values | Rules ↔ Outcomes | rules or outcomes; at half weight: sacrificing one, lying and honesty, the price of a perfect world |
 | Near or far | values | Close ones first ↔ Everyone equally | rules or outcomes; at half weight: helping strangers |
+| Steady or flexible | thinking | Steady ↔ Flexible | changing your mind (four this-or-that pairs) |
+| Intuition or analysis | thinking | Intuition ↔ Analysis | changing your mind (four this-or-that pairs; which you lean on when the two conflict, not a type) |
 | The natural world or more | worldview | Only the natural world ↔ More than the natural world | God and religion; at half weight, life after death, whose ladder runs the other way so tapping one end everywhere doesn't push the spectrum (free will, right and wrong and personal identity feed nothing: each splits believers and nonbelievers alike) |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
 | Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
 
-In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges
-(see `CONTENT_GUIDE.md`, Effects). Animals, nuclear power, GM food, artificial intelligence, and
-nature and building feed no spectrum: each splits both sides. Traditionalists back strict
-animal-welfare rules as well as progressives do, for example, since close confinement is the newer
-practice. The moral foundations are principles, not spectrums: the moral foundations topic measures
-them directly, and issue topics add to them.
+In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges (see
+`CONTENT_GUIDE.md`, Effects). Animals, nuclear power, GM food, artificial intelligence, and nature
+and building feed no spectrum: each splits both sides. Traditionalists back strict animal-welfare
+rules as well as progressives do, for example, since close confinement is the newer practice. In How
+you know only changing your mind feeds spectrums: whose word to take, official accounts and settled
+or open split each side by institution. The moral foundations are principles, not spectrums: the
+moral foundations topic measures them directly, and issue topics add to them.

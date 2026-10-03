@@ -1,0 +1,340 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whose word to take when specialists mostly agree but some dissent: the novice's problem (Goldman
+# 2001), between "take nobody's word for it" (the Royal Society's motto) and epistemic dependence
+# (Hardwig 1985). The stance names no agency or party: trust in any one institution now moves with
+# whoever runs it, so the per-institution items are unscored descriptions. Feeds no spectrum. Two
+# anchors: independent checking on a news outlet's report built on anonymous sources (doubted
+# more on the right, a gap Gallup has found since 2004; trust in vaccine regulators, the first
+# draft's context, no longer split clearly by party by 2026, and polls disagreed on which side
+# trusted them more; the police context, doubted more on the left, is in official_accounts), and belief that fits the evidence on remedies like homeopathy (set
+# aside by some on the wellness left and on the right; studies disagree on which side favors
+# alternative medicine more). Cases are balanced by which side they flatter.
+id: trust
+domain: epistemics
+title: Whose word to take
+summary: When most specialists agree but some dissent, do you go with the majority or your own reading?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: >-
+      On questions specialists study, like whether a medicine is safe or what caused a plane crash,
+      when most of them agree but some dissent, you go with…
+    help: >-
+      Specialists: scientists, doctors, engineers and others who study a question for a living.
+      This is about what you believe, not what governments should do.
+    poles: [My own reading, The majority]
+    labels:
+      - My own reading, always. How many agree counts for little
+      - My own reading, in most cases
+      - My own reading, unless the majority is overwhelming
+      - Torn / it depends on the field
+      - The majority, unless the dissenters' case looks strong to me
+      - The majority, unless there's a specific reason to doubt them, like money at stake or a poor record
+      - The majority, always. Together they know far more than I could find out
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Describing your view (never scored) -------------------------------------------------------
+  - id: trusted
+    type: multi
+    text: Which of these do you mostly trust to tell the public the truth? Choose any that fit.
+    options: &institutions
+      - { id: scientists, label: Scientists }
+      - { id: doctors, label: Doctors }
+      - { id: health_agencies, label: Public-health agencies }
+      - { id: drug_companies, label: Drug companies }
+      - { id: major_news, label: Major news outlets }
+      - { id: independent_news, label: Smaller independent outlets }
+      - { id: government, label: The national government }
+      - { id: courts, label: Courts }
+      - { id: police, label: The police }
+      - { id: military, label: The military }
+      - { id: intelligence, label: Intelligence agencies }
+      - { id: religious_leaders, label: Religious leaders }
+      - { id: big_business, label: Big business }
+      - { id: small_business, label: Small business }
+      - { id: tech_companies, label: Large technology companies }
+      - { id: unions, label: Labor unions }
+      - { id: universities, label: Universities }
+      - { id: international, label: "International bodies, like the UN" }
+
+  - id: distrusted
+    type: multi
+    text: And which do you mostly distrust? Choose any that fit.
+    options: *institutions
+
+  - id: news
+    type: multi
+    text: Where do you get most of your news? Choose any that fit.
+    options:
+      - { id: tv, label: TV }
+      - { id: papers, label: Newspapers and news sites }
+      - { id: radio, label: Radio }
+      - { id: social, label: Social media }
+      - { id: podcasts, label: Podcasts and video channels }
+      - { id: independent, label: Independent journalists and newsletters }
+      - { id: documents, label: Original documents and data }
+      - { id: people, label: Friends and family }
+      - { id: leaders, label: Religious or community leaders }
+      - { id: ai, label: AI assistants }
+      - { id: rarely, label: I rarely follow the news }
+
+  - id: checking
+    type: multi
+    text: When you come across a surprising claim that matters to you, what do you usually do? Choose any that fit.
+    options:
+      - { id: arguments, label: Look at the arguments myself }
+      - { id: others_agree, label: See whether other specialists agree }
+      - { id: source, label: Check who's behind the source }
+      - { id: who_gains, label: Ask who gains if people believe it }
+      - { id: record, label: Check the source's track record }
+      - { id: documents, label: Look for the original documents or data }
+      - { id: disagree, label: See what people who disagree say }
+      - { id: official, label: Check major outlets or official sources }
+      - { id: ask, label: Ask someone I trust }
+      - { id: assume_false, label: Assume it's probably false }
+      - { id: let_go, label: Let it go }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_check
+    type: likert
+    points: 7
+    text: When it comes to a major news outlet's report built on anonymous sources, people should hold off believing it until someone independent has checked it, even if that means doubting reporters who are telling the truth.
+    help: Anonymous sources are people a report relies on without naming them, often because they aren't allowed to speak publicly or could lose their jobs. Readers have to take the outlet's word for who they are.
+    principles: { independent_checks: 1 }
+    anchor: { principle: independent_checks, context: a major news outlet's report built on anonymous sources, against: trust in reporters who are telling the truth }
+
+  - id: anchor_evidence
+    type: likert
+    points: 7
+    text: When it comes to remedies like homeopathy, people should believe only what the evidence supports, even if believing in them seems to help some people.
+    principles: { evidence: 1 }
+    anchor: { principle: evidence, context: remedies like homeopathy, against: the good that believing in them seems to do }
+
+  # --- Challenges: for the majority --------------------------------------------------------------
+  - id: ch_polio
+    type: challenge
+    name: The polio boycott
+    targets: stance
+    when: stance < 0
+    source: >-
+      Ayodele Samuel Jegede, "What Led to the Nigerian Boycott of the Polio Vaccination Campaign?"
+      PLoS Medicine (2007); Pfizer's 2009 settlement with Kano State over its 1996 trial of Trovan
+    scenario: >-
+      In 2003, political and religious leaders in northern Nigeria urged families to refuse polio
+      vaccine, warning that it could cause infertility or carry HIV. Many had reason to distrust
+      outsiders: during a meningitis epidemic in Kano in 1996, a drug company had tested an
+      experimental antibiotic on sick children, and it later settled with the state over the trial.
+      Kano stopped polio vaccination for about a year. Polio cases rose, and the virus spread from
+      Nigeria to about 20 countries that had been free of it.
+    text: If people with real reasons for distrust still got this so wrong, how much should the specialists' agreement count?
+    options:
+      - id: checking
+        label: Judging for yourself means checking the evidence. Following rumors isn't that.
+        reaction: hold
+        value: 0
+      - id: earned
+        label: Their distrust was earned. Specialists have to earn trust before their agreement counts.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve more weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_pauling
+    type: challenge
+    name: Two Nobel Prizes and vitamin C
+    targets: stance
+    when: stance < 0
+    source: >-
+      Linus Pauling, Vitamin C and the Common Cold (1970); Edward Creagan et al., "Failure of
+      high-dose vitamin C (ascorbic acid) therapy to benefit patients with advanced cancer: a
+      controlled trial," New England Journal of Medicine (1979); Charles Moertel et al., "High-dose
+      vitamin C versus placebo in the treatment of patients with advanced cancer who have had no
+      prior chemotherapy," New England Journal of Medicine (1985)
+    scenario: >-
+      Linus Pauling won two Nobel Prizes, one for chemistry and one for peace. Reading the evidence
+      for himself, he became convinced that large doses of vitamin C could prevent colds and help
+      treat cancer, and millions of people followed his advice. Most specialists disagreed.
+      Controlled trials at the Mayo Clinic, published in 1979 and 1985, found no benefit from large
+      doses of vitamin C taken by mouth for patients with advanced cancer.
+    text: If even a brilliant scientist reading the evidence for himself can be wrong where most specialists are right, how far should your own reading count?
+    options:
+      - id: weigh
+        label: Majorities are sometimes wrong too. I still have to weigh the arguments.
+        reaction: hold
+        value: 0
+      - id: own_field
+        label: He was outside his own field. Judging for yourself means knowing what you can judge.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve more weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_doubt
+    type: challenge
+    name: Doubt for sale
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Brown & Williamson, "Smoking and Health Proposal" (1969); United States v. Philip Morris USA
+      Inc., 449 F. Supp. 2d 1 (D.D.C. 2006)
+    scenario: >-
+      In 1969 a memo at a tobacco company stated, "Doubt is our product." For decades the industry
+      paid for research and scientists that disputed the link between smoking and disease, long
+      after most specialists considered it settled. In 2006 a US federal judge ruled that the major
+      tobacco companies had deceived the public about the dangers of smoking for decades.
+    text: If dissent can be paid for, should the majority's agreement count for more than you said?
+    options:
+      - id: follow_money
+        label: That's a reason to ask who pays for the research, on every side. Majorities can be paid for too.
+        reaction: hold
+        value: 0
+      - id: independent
+        label: Paid dissent is one thing. Independent dissenters are another.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve more weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for your own reading ----------------------------------------------------------
+  - id: ch_drift
+    type: challenge
+    name: Drifting continents
+    targets: stance
+    when: stance > 0
+    source: >-
+      Alfred Wegener, The Origin of Continents and Oceans (1915); Harry Hess, "History of Ocean
+      Basins" (1962)
+    scenario: >-
+      In 1912 the German scientist Alfred Wegener proposed that the continents had once been joined
+      and had drifted apart. Most geologists rejected the idea for decades, partly because he
+      couldn't explain what moved them. In the 1960s, studies of the ocean floor showed it
+      spreading, and moving continents, explained by plate tectonics, became the basis of modern
+      geology. Wegener had died on an expedition in Greenland in 1930.
+    text: If most specialists can reject a true idea for fifty years, how much should their agreement count?
+    options:
+      - id: new_evidence
+        label: They changed their minds when the evidence came in. That's what a majority should do.
+        reaction: hold
+        value: 0
+      - id: rare
+        label: Cases like this are remembered because they're rare. Most ideas the majority rejects stay rejected.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve less weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_alzheimers
+    type: challenge
+    name: The manipulated images
+    targets: stance
+    when: stance > 0
+    source: >-
+      Sylvain Lesné et al., "A specific amyloid-β protein assembly in the brain impairs memory,"
+      Nature (2006), retracted 2024; Charles Piller, "Blots on a field?" Science (2022)
+    scenario: >-
+      In 2006 the journal Nature published a study reporting that one form of a protein linked to
+      Alzheimer's disease seemed to cause memory loss in rats. It became one of the most cited
+      papers in the field. In 2022 a neuroscientist reported signs that images in it had been
+      manipulated, and in 2024 it was retracted.
+    text: If a study with manipulated images can be cited thousands of times over sixteen years, how much should you rely on what most specialists accept?
+    options:
+      - id: many_studies
+        label: One flawed study doesn't overturn a field. What specialists accept rests on many studies, not one.
+        reaction: hold
+        value: 0
+      - id: caught
+        label: Most studies aren't like this, and another scientist caught this one. That's the checks working.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve less weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_ulcers
+    type: challenge
+    name: Bacteria in the stomach
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Barry Marshall and J. Robin Warren, "Unidentified curved bacilli in the stomach of patients
+      with gastritis and peptic ulceration," The Lancet (1984); the Nobel Prize in Physiology or
+      Medicine (2005)
+    scenario: >-
+      In the early 1980s two Australian doctors, Barry Marshall and Robin Warren, argued that most
+      stomach ulcers were caused by bacteria, not mainly by stress and too much stomach acid. Most
+      specialists were skeptical. In 1984 Marshall drank a culture of the bacteria and fell ill.
+      Within about a decade the bacterial cause was widely accepted, ulcers were being cured with
+      antibiotics, and in 2005 the two won the Nobel Prize.
+    text: If the dissenters were right and the majority wrong, why go with the majority?
+    options:
+      - id: system
+        label: The majority changed its mind once the evidence was in. That's the system working.
+        reaction: hold
+        value: 0
+      - id: remembered
+        label: We remember the dissenters who turned out right. Most dissenters don't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The majority's agreement may deserve less weight than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The new drug
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Your country's medicines regulator approves a new drug for a condition you have that is slowly
+      getting worse. Most specialists back it, but several, including two at a leading hospital, say
+      the trials were too short to judge its long-term safety. Your doctor says it's your call.
+    text: You said you're torn. What would you do?
+    options:
+      - id: more
+        label: I'd need to know more first.
+        reaction: hold
+        value: 0
+      - id: start
+        label: Start it now
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: wait
+        label: Wait a year or two for more evidence
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

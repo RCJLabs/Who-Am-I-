@@ -451,3 +451,72 @@ meat puppet
 clanker
 clankers
 glorified autocomplete
+conspiracy theorist
+conspiracy theorists
+conspiracist
+conspiracists
+conspiracy nut
+conspiracy nuts
+tinfoil hat
+truther
+truthers
+crank
+cranks
+quack
+quacks
+quackery
+crackpot
+crackpots
+kook
+kooks
+flat-earther
+flat-earthers
+magical thinking
+just asking questions
+do your own research
+npc
+npcs
+normie
+normies
+red pill
+redpilled
+shill
+shills
+useful idiot
+useful idiots
+covidiot
+covidiots
+scamdemic
+clot shot
+died suddenly
+legacy media
+mainstream media
+msm
+lamestream
+regime media
+fake news
+misinformation
+disinformation
+malinformation
+infodemic
+gaslighting
+settled science
+sound science
+junk science
+official narrative
+rabbit hole
+dunning-kruger
+kool-aid
+ministry of truth
+enemy of the people
+psyop
+psyops
+paranoid
+fringe
+denier
+deniers
+gullible
+credulous
+occult
+new age
+paranormal

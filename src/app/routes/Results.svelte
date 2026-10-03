@@ -22,6 +22,7 @@
   const axes = Object.values(content.bundle.axes);
   const political = axes.filter((a) => a.family === 'political');
   const values = axes.filter((a) => a.family === 'values');
+  const thinking = axes.filter((a) => a.family === 'thinking');
   const worldview = axes.filter((a) => a.family === 'worldview');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
@@ -186,6 +187,15 @@
         <h2 class="section-title" id="values-title">{copy.results.values}</h2>
         <div class="card rows">
           {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
+        </div>
+      </section>
+    {/if}
+
+    {#if thinking.length}
+      <section class="section" aria-labelledby="thinking-title">
+        <h2 class="section-title" id="thinking-title">{copy.results.thinking}</h2>
+        <div class="card rows">
+          {#each thinking as a (a.id)}{@render spectrum(a, true)}{/each}
         </div>
       </section>
     {/if}

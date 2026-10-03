@@ -7,7 +7,8 @@ topics:
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
-   god, free_will, morality, afterlife, personal_identity]
+   god, free_will, morality, afterlife, personal_identity,
+   trust, changing_mind, official_accounts, settled, supernatural]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -551,8 +552,49 @@ answers:
   personal_identity.ch_branch: different
   personal_identity.ch_torture: wouldnt
   personal_identity.ch_two: malfunction
+  trust.stance: 2 # own reading, in most cases
+  trust.importance: 2
+  trust.trusted: [small_business, courts]
+  trust.distrusted: [government, intelligence, health_agencies, international, major_news, unions]
+  trust.news: [independent, documents, podcasts]
+  trust.checking: [arguments, documents, disagree, who_gains]
+  trust.anchor_check: 6 # independent checks for anonymous sources in the news...
+  trust.anchor_evidence: 7 # remedies should follow the evidence, unlike belief in free will
+  trust.ch_polio: checking
+  trust.ch_pauling: own_field
+  changing_mind.strong_argument: loosen
+  changing_mind.peer: less_sure
+  changing_mind.admire: evidence
+  changing_mind.old_views: scrutiny
+  changing_mind.numbers: numbers
+  changing_mind.hiring: test
+  changing_mind.offers: weigh
+  changing_mind.honest: check
+  changing_mind.changed: [politics]
+  official_accounts.stance: 6 # the critics, in most cases
+  official_accounts.importance: 3
+  official_accounts.anchor_check: 6 # ...and for police after a shooting: no tension
+  official_accounts.ch_twa800: steered
+  official_accounts.ch_wtc7: same_government
+  official_accounts.ch_acoustics: withheld
+  settled.stance: 1 # a full hearing
+  settled.importance: 3
+  settled.ch_balance: readers
+  settled.ch_rats: open
+  settled.ch_aids_panel: government
+  supernatural.spirits_dead: dont
+  supernatural.contact: dont
+  supernatural.other_spirits: dont
+  supernatural.foresight: dont
+  supernatural.astrology: dont
+  supernatural.evil_eye: dont
+  supernatural.holy_objects: dont
+  supernatural.charms: dont
+  supernatural.practices: [none]
+  supernatural.religion: none_held
+  supernatural.experiences: [none]
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "< -0.3" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "< -0.3", revising: "> 0.6", intuition: "> 0.6" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -593,6 +635,7 @@ expect:
     climate: { economic: "> 0.5" }
     god: { beyond_nature: "< -0.2" }
     afterlife: { beyond_nature: "< -0.5" }
+    changing_mind: { revising: "> 0.6", intuition: "> 0.6" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -636,6 +679,8 @@ expect:
     gene_editing: { natural_order: "< -0.5" }
     god: { evidence: "> 0.5" }
     free_will: { deserved_punishment: "> 0.9", evidence: "< -0.5" }
+    trust: { independent_checks: "> 0.5", evidence: "> 0.9" }
+    official_accounts: { independent_checks: "> 0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
@@ -651,6 +696,8 @@ expect:
   # In worldview: belief that fits the evidence about God, but belief in free will kept for the
   # good it does; and biologists followed on teaching evolution more than public-health experts on
   # school vaccines.
+  # In how you know: evidence for remedies like homeopathy, though belief in free will is kept for
+  # the good it does; independent checks for news reports and police alike.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty
@@ -664,3 +711,4 @@ expect:
     - precaution|ai|death_penalty
     - evidence|free_will|god
     - expertise|god|vaccine_mandates
+    - evidence|free_will|trust

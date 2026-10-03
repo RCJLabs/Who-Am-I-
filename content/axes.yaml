@@ -84,6 +84,24 @@
   fullWeight: 1.5
   minTopics: 1
 
+# --- How you think: fed only by the changing-your-mind pairs, four each ---
+# These describe how people see themselves. The record of how they answered challenges is shown
+# separately, and isn't compared with these.
+- id: revising
+  family: thinking
+  title: Steady or flexible
+  description: When a view of yours meets a strong challenge, do you hold it while you check, or loosen your grip right away?
+  poles: [Steady, Flexible]
+  minWeight: 2
+  fullWeight: 4
+- id: intuition
+  family: thinking
+  title: Intuition or analysis
+  description: When judgment from experience and careful analysis point different ways, which do you lean on?
+  poles: [Intuition, Analysis]
+  minWeight: 2
+  fullWeight: 4
+
 # --- Personality (Big Five; raw position on the scale, no population norms) ---
 - id: extraversion
   family: personality
