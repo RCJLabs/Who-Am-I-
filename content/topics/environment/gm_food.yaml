@@ -91,8 +91,9 @@ items:
       Philippine Court of Appeals, decision on Golden Rice and Bt eggplant (April 2024); World Health
       Organization, on vitamin A deficiency
     scenario: >-
-      Golden Rice is engineered to provide vitamin A, the lack of which blinds hundreds of thousands
-      of young children a year in poor countries, many of whom die within a year. In 2021 the
+      Golden Rice is engineered to make beta-carotene, which the body turns into vitamin A. Lack of
+      vitamin A blinds hundreds of thousands of young children a year in poor countries, and many of
+      them die within a year. In 2021 the
       Philippines became the first country to approve it for planting. In 2024 an appeals court
       halted it, citing uncertain risks to health and the environment.
     text: When a crop could save children's sight, should uncertain risks keep it out of the fields?
@@ -149,9 +150,9 @@ items:
       Dennis Gonsalves, "Control of papaya ringspot virus in papaya: a case study," Annual Review of
       Phytopathology (1998)
     scenario: >-
-      In the 1990s a virus was destroying Hawaii's papaya trees. Scientists at Cornell University and
-      the University of Hawaii engineered a papaya that resists it. Planted from 1998, it saved the
-      islands' papaya farms.
+      In the 1990s a virus was destroying Hawaii's papaya trees. Scientists at Cornell University,
+      the University of Hawaii and the US Department of Agriculture engineered a papaya that resists
+      it. Planted from 1998, it saved the islands' papaya farms.
     text: If public scientists can use genetic modification to save a crop, what's the case against it?
     options:
       - id: unnatural
@@ -182,7 +183,8 @@ items:
       GM soybeans and cotton were engineered to survive the weedkiller dicamba, so farmers could
       spray it over their crops. In 2017 it drifted onto neighboring farms and damaged about 3.6
       million acres of soybeans that hadn't been engineered to resist it. Courts struck down the
-      weedkiller's approval for this use in 2020 and again in 2024.
+      weedkiller's approval for this use in 2020 and again in 2024. In 2026 the EPA approved it
+      again, and farm and environmental groups sued once more.
     text: When one farm's GM crop harms its neighbors, should it still be treated like any other crop?
     options:
       - id: free_to_farm
@@ -206,9 +208,10 @@ items:
     when: stance > 0
     source: In re Genetically Modified Rice Litigation; Bayer CropScience settlement with US rice farmers (2011)
     scenario: >-
-      In 2006 a GM rice that had never been approved for sale turned up in American long-grain rice.
-      Europe and Japan blocked imports and prices fell. In 2011 Bayer agreed to pay up to $750
-      million to rice farmers, most of whom had never grown it.
+      In 2006 a GM rice that had only been grown in field trials turned up in American long-grain
+      rice. Japan suspended imports, Europe demanded tests on shipments, and prices fell. In 2011
+      Bayer agreed to pay up to $750 million to about 11,000 US rice farmers, none of whom had chosen
+      to grow it.
     text: If GM crops can't be kept apart from other crops, should farmers who don't want them have more say?
     options:
       - id: company_paid
@@ -243,7 +246,7 @@ items:
         reaction: hold
         principles: { retribution: 0.5 }
       - id: not_special
-        label: Patents cover conventional seed varieties too. That's not a reason to treat GM crops differently.
+        label: In the US, patents cover conventional seed varieties too. That's not a reason to treat GM crops differently.
         reaction: distinguish
         value: 0
       - id: rethink

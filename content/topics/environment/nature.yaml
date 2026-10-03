@@ -112,10 +112,11 @@ items:
       Cape Wind Associates, project history; reporting on the developer ending the project (December
       2017)
     scenario: >-
-      In 2001 a developer proposed 130 wind turbines in Nantucket Sound, off Cape Cod in
-      Massachusetts. Opponents, including waterfront homeowners, fishermen and a Native American
-      tribe, fought it for 16 years in courts and reviews over the views, birds and fishing grounds.
-      The developer gave up in 2017, and the turbines were never built.
+      In 2001 a developer proposed 170 wind turbines in Nantucket Sound, off Cape Cod in
+      Massachusetts, later cut to 130. Opponents, including waterfront homeowners, fishermen and two
+      Wampanoag tribes, fought it for 16 years in courts and reviews over the views, birds, fishing
+      grounds and tribal sacred sites. After utilities canceled its power contracts in 2015, the
+      developer gave up in 2017, and the turbines were never built.
     text: When reviews and lawsuits can hold up a wind farm for 16 years, is the balance right?
     options:
       - id: right_call
@@ -142,10 +143,11 @@ items:
       Tennessee Valley Authority v. Hill, 437 U.S. 153 (1978); US Fish and Wildlife Service, removal
       of the snail darter from the endangered species list (2022)
     scenario: >-
-      In 1978 the US Supreme Court halted the nearly finished Tellico Dam in Tennessee to protect a
-      small fish, the snail darter, under the Endangered Species Act. Congress then exempted the dam,
-      which was finished in 1979. The fish was later found in other rivers, and in 2022 it was taken
-      off the endangered list.
+      In 1978 the US Supreme Court upheld an order stopping the nearly finished Tellico Dam in
+      Tennessee to protect a small fish, the snail darter, under the Endangered Species Act. Congress
+      then exempted the dam, which was finished in 1979. Biologists had moved some of the fish to
+      other rivers, more were later found elsewhere, and in 2022 it was declared recovered and taken
+      off the endangered species list.
     text: If the fish survived anyway, was stopping the dam the right call?
     options:
       - id: law_worked

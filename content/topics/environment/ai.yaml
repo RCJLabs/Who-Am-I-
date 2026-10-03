@@ -127,10 +127,10 @@ items:
       Paul Berg et al., "Summary Statement of the Asilomar Conference on Recombinant DNA Molecules,"
       Proceedings of the National Academy of Sciences (1975)
     scenario: >-
-      In 1974 biologists who had learned to move genes between organisms paused some experiments over
-      fears of creating dangerous germs. At Asilomar, California, in 1975 they agreed safety rules,
-      which became US government guidelines in 1976. The biotechnology industry grew up under those
-      rules.
+      In 1974 biologists who had learned to move genes between organisms paused some experiments
+      over fears of creating dangerous germs. At Asilomar, California, in 1975 they agreed safety
+      rules, which were the basis for US government guidelines in 1976. The biotechnology industry
+      grew up under those rules.
     text: If safety rules didn't stop biotechnology from booming, would they stop AI?
     options:
       - id: rivals
@@ -153,7 +153,7 @@ items:
     targets: stance
     deep: true
     when: stance < 0
-    source: Katja Grace et al., "Thousands of AI Authors on the Future of AI" (2024)
+    source: Katja Grace et al., "Thousands of AI Authors on the Future of AI," Journal of Artificial Intelligence Research (2025)
     scenario: >-
       In a 2023 survey of 2,778 researchers who had published at leading AI conferences, the median
       answer put a 5% chance on advanced AI eventually causing outcomes as bad as human extinction.
@@ -208,12 +208,14 @@ items:
     name: The rulebook on hold
     targets: stance
     when: stance > 0
-    source: European Commission, "Digital Omnibus" proposals (November 19, 2025)
+    source: >-
+      European Commission, "Digital Omnibus" proposals (November 19, 2025), and the amending
+      regulation that took effect in July 2026
     scenario: >-
       In 2024 the European Union passed the world's first broad law on AI. In 2025 the European
-      Commission itself proposed delaying its strictest rules, for AI used in decisions like hiring
-      and lending, from August 2026 to as late as December 2027, saying businesses needed more time
-      and clearer standards.
+      Commission itself proposed delaying its main rules for high-risk AI, such as AI used in hiring
+      and lending, saying businesses needed more time and clearer standards. In 2026 EU lawmakers
+      agreed, pushing those rules back from August 2026 to December 2027.
     text: If even the EU found its rules hard to put into practice, should governments go slower?
     options:
       - id: still_needed
