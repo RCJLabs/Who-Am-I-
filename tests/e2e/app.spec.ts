@@ -39,8 +39,14 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await expect(page.getByText('Backup restored.')).toBeVisible();
 
   await page.getByTestId('nav-results').click();
+  await expect(page.getByTestId('political-map')).toContainText('Economic: Markets');
+  await expect(page.getByTestId('challenge-bar')).toBeVisible();
+  await expect(page.getByTestId('principle-chart')).toBeVisible();
   await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
   await expect(page.getByTestId('axis-cultural-position')).toContainText('Tradition');
+  // The most pressing tension cards show first; the rest are one tap away.
+  await expect(page.locator('.card.tension')).toHaveCount(Math.min(3, principles.size));
+  await page.getByTestId('show-all-tensions').click();
   await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
   await expect(page.locator('.card.tension')).toHaveCount(principles.size);
   await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(

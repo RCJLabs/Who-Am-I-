@@ -4,9 +4,17 @@
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { to } from '../routes.ts';
-  import { axisFeeders } from '../view.ts';
-  import SpectrumBar from '../components/results/SpectrumBar.svelte';
+  import { axisFeeders, challengeTotals, positionLabel, positionsByDomain, rankedPrinciples, strongestLeanings } from '../view.ts';
+  import ChallengeBar from '../components/results/ChallengeBar.svelte';
+  import PoliticalMap from '../components/results/PoliticalMap.svelte';
+  import PrincipleChart from '../components/results/PrincipleChart.svelte';
+  import SpectrumRow from '../components/results/SpectrumRow.svelte';
   import Icon from '../components/Icon.svelte';
+
+  /** Tension cards shown before "Show all". */
+  const TENSION_GROUPS_SHOWN = 3;
+  /** Up to this many positions, every domain starts open. */
+  const POSITIONS_OPEN = 6;
 
   const { bundle, answers } = app();
   const profile = $derived(answers.profile);
@@ -16,19 +24,43 @@
   const values = axes.filter((a) => a.family === 'values');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
+  const economicAxis = bundle.axes['economic'];
+  const civilAxis = bundle.axes['civil'];
 
   const hasAny = $derived(answers.events.length > 0);
+  const answeredTopics = $derived(Object.values(profile.topics).length);
   const personalityScored = $derived(personality.some((a) => profile.axes[a.id]?.score !== null));
   const tasteScored = $derived(taste.filter((a) => profile.axes[a.id]?.score !== null));
-  const positions = $derived(bundle.topics.filter((t) => t.stance && profile.topics[t.id]?.stance !== null && profile.topics[t.id] !== undefined));
+
+  // Overview
+  const econ = $derived(profile.axes['economic']?.score ?? null);
+  const civil = $derived(profile.axes['civil']?.score ?? null);
+  const mapLow = $derived(Math.min(profile.axes['economic']?.confidence ?? 0, profile.axes['civil']?.confidence ?? 0) < 0.5);
+  const leanings = $derived(strongestLeanings([...political, ...values], profile.axes));
+  const ranked = $derived(rankedPrinciples(Object.values(bundle.principles), profile.principles));
+  const leanMost = $derived(ranked.filter((r) => r.score >= 0.4).slice(0, 3));
+  const totals = $derived(challengeTotals(profile.topics));
+
+  // Tensions: one card per principle, most pressing first; open before resolved.
   const tensions = $derived([...answers.tensions].sort((a, b) => Number(a.status !== 'open') - Number(b.status !== 'open') || b.rank - a.rank));
-  /** One card per principle, in the order of each principle's most pressing tension. */
   const tensionGroups = $derived.by(() => {
     const groups = new Map<string, typeof tensions>();
     for (const t of tensions) groups.set(t.principle, [...(groups.get(t.principle) ?? []), t]);
     return [...groups].map(([principle, items]) => ({ principle, items }));
   });
-  const principles = $derived(Object.values(bundle.principles).filter((p) => profile.principles[p.id]?.score !== null));
+  const openTensions = $derived(tensions.filter((t) => t.status === 'open'));
+  let showAllTensions = $state(false);
+  const shownGroups = $derived(showAllTensions ? tensionGroups : tensionGroups.slice(0, TENSION_GROUPS_SHOWN));
+  const pairLabel = (a: string, b: string) => `${topicTitle(a)} vs. ${topicTitle(b)}`;
+  const openByPrinciple = $derived.by(() => {
+    const m = new Map<string, { key: string; label: string }[]>();
+    for (const t of openTensions) m.set(t.principle, [...(m.get(t.principle) ?? []), { key: t.key, label: pairLabel(t.a.topic, t.b.topic) }]);
+    return m;
+  });
+
+  // Positions, grouped by domain.
+  const positionGroups = $derived(positionsByDomain(bundle, profile.topics));
+  const positionCount = $derived(positionGroups.reduce((n, g) => n + g.topics.length, 0));
 
   /** Multi-select picks, strongest first, with their labels. */
   const enjoys = $derived.by(() => {
@@ -43,6 +75,10 @@
     return out.sort((a, b) => b.v - a.v);
   });
 
+  function topicTitle(id: string): string {
+    return answers.state.ix.topics.get(id)?.title ?? id;
+  }
+
   function sourceName(id: string): string {
     const item = answers.state.ix.items.get(id);
     if (item?.type === 'challenge') return item.name ?? item.text;
@@ -54,7 +90,26 @@
     if (stance.type === 'slider' || stance.type === 'rating') return delta > 0 ? stance.poles[1] : stance.poles[0];
     return delta > 0 ? 'agree' : 'disagree';
   }
+
+  function scrollToId(id: string): void {
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
 </script>
+
+{#snippet spectrum(a: (typeof axes)[number], withMixed: boolean)}
+  {@const sc = profile.axes[a.id]!}
+  <SpectrumRow
+    title={a.title}
+    poles={a.poles}
+    score={sc.score}
+    confidence={sc.confidence}
+    description={a.description}
+    mixed={withMixed && isMixed(sc, bundle)}
+    feeders={feeders.get(a.id) ?? []}
+    testid="axis-{a.id}"
+  />
+{/snippet}
 
 <div class="page">
   <h1>{copy.results.title}</h1>
@@ -65,127 +120,127 @@
       <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
     </div>
   {:else}
-    <p class="muted small">{copy.results.selfReport}</p>
+    <p class="muted small">{copy.results.selfReport} {copy.results.basedOn(answeredTopics, bundle.topics.length)}</p>
 
-    <section class="section">
-      <p class="section-title">{copy.results.political}</p>
-      <div class="card">
-        {#each political as a (a.id)}
-          {@const sc = profile.axes[a.id]!}
-          <SpectrumBar
-            title={a.title}
-            poles={a.poles}
-            score={sc.score}
-            confidence={sc.confidence}
-            description={a.description}
-            mixed={isMixed(sc, bundle)}
-            feeders={feeders.get(a.id) ?? []}
-            testid="axis-{a.id}"
-          />
-        {/each}
+    {#if (econ !== null && civil !== null) || leanings.length || leanMost.length || totals.asked}
+      <section class="section" aria-labelledby="overview-title">
+        <h2 class="section-title" id="overview-title">{copy.results.overview}</h2>
+        <div class="card overview">
+          {#if econ !== null && civil !== null && economicAxis && civilAxis}
+            <PoliticalMap
+              x={econ}
+              y={civil}
+              xPoles={economicAxis.poles}
+              yPoles={civilAxis.poles}
+              caption="{economicAxis.title}: {positionLabel(econ, economicAxis.poles)} · {civilAxis.title}: {positionLabel(civil, civilAxis.poles)}{mapLow ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}"
+              low={mapLow}
+            />
+          {:else if econ !== null || civil !== null}
+            <p class="small muted">{copy.results.mapNeeds}</p>
+          {/if}
+          {#if leanings.length || leanMost.length}
+            <dl class="highlights">
+              {#if leanings.length}
+                <div>
+                  <dt>{copy.results.clearest}</dt>
+                  <dd class="leanings" data-testid="clearest">
+                    {#each leanings as l (l.axis)}<span class="chip lean" title={l.title}>{l.label}</span>{/each}
+                  </dd>
+                </div>
+              {/if}
+              {#if leanMost.length}
+                <div>
+                  <dt>{copy.results.leanMost}</dt>
+                  <dd>{leanMost.map((r) => r.principle.label).join(', ')}</dd>
+                </div>
+              {/if}
+            </dl>
+          {/if}
+          {#if openTensions.length}
+            <button type="button" class="jump" onclick={() => scrollToId('tensions')}>
+              {copy.results.pullApart(openTensions.length)}
+              <Icon name="right" size={16} />
+            </button>
+          {/if}
+        </div>
+        {#if totals.asked}
+          <div class="card">
+            <ChallengeBar {totals} />
+          </div>
+        {/if}
+      </section>
+    {/if}
+
+    <section class="section" aria-labelledby="political-title">
+      <h2 class="section-title" id="political-title">{copy.results.political}</h2>
+      <div class="card rows">
+        {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
       </div>
     </section>
 
     {#if values.length}
-      <section class="section">
-        <p class="section-title">{copy.results.values}</p>
-        <div class="card">
-          {#each values as a (a.id)}
-            {@const sc = profile.axes[a.id]!}
-            <SpectrumBar
-              title={a.title}
-              poles={a.poles}
-              score={sc.score}
-              confidence={sc.confidence}
-              description={a.description}
-              mixed={isMixed(sc, bundle)}
-              feeders={feeders.get(a.id) ?? []}
-              testid="axis-{a.id}"
-            />
-          {/each}
+      <section class="section" aria-labelledby="values-title">
+        <h2 class="section-title" id="values-title">{copy.results.values}</h2>
+        <div class="card rows">
+          {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
         </div>
       </section>
     {/if}
 
-    {#if positions.length}
-      <section class="section">
-        <p class="section-title">{copy.results.topics}</p>
-        {#each positions as t (t.id)}
-          {@const r = profile.topics[t.id]!}
-          {@const stance = t.stance ? answers.state.ix.items.get(t.stance) : undefined}
-          <a class="card topic" href={to.topicResults(t.id)} data-testid="position-{t.id}">
-            <span class="topic-head">
-              <strong>{t.title}</strong>
-              <Icon name="right" size={18} />
-            </span>
-            <span class="stance">{r.stanceLabel ?? ''}</span>
-            {#if r.challenges.asked}
-              <span class="small muted">{copy.results.challengesSummary(r.challenges.asked, r.challenges.held, r.challenges.distinguished, r.challenges.moved)}</span>
-            {/if}
-            {#each r.challenges.moves as m, i (i)}
-              {#if m.steps}
-                <span class="small moved" data-testid="moved-{t.id}">{copy.results.movedLine(sourceName(m.source), m.steps, toward(stance, m.delta))}</span>
-              {/if}
-            {/each}
-          </a>
-        {/each}
-      </section>
-    {/if}
-
-    <section class="section">
-      <p class="section-title">{copy.results.tensions}</p>
+    <section class="section" id="tensions" aria-labelledby="tensions-title">
+      <h2 class="section-title" id="tensions-title">{copy.results.tensions}</h2>
       {#if tensionGroups.length}
-        {#each tensionGroups as g (g.principle)}
+        <p class="muted small">{copy.results.tensionsCount(tensions.length, tensionGroups.length)}</p>
+        {#each shownGroups as g (g.principle)}
           <div class="card tension">
             <p class="tension-title"><strong>{bundle.principles[g.principle]?.label}</strong></p>
             {#each g.items as t (t.key)}
-              <div class="pair" data-testid="tension-row">
+              <a class="pair" href={to.tension(t.key)} data-testid="tension-row">
                 <span class="pair-text">
-                  {answers.state.ix.topics.get(t.a.topic)?.title} vs. {answers.state.ix.topics.get(t.b.topic)?.title}
-                  <span class="small muted">
-                    {t.status === 'open' ? copy.results.status.open : copy.results.status[t.resolution?.kind ?? 'acknowledged']}
-                  </span>
+                  <span>{pairLabel(t.a.topic, t.b.topic)}</span>
+                  {#if t.status !== 'open'}
+                    <span class="small resolved">{copy.results.status[t.resolution?.kind ?? 'acknowledged']}</span>
+                  {/if}
                 </span>
-                <a class="btn" href={to.tension(t.key)}>{copy.results.revisit}</a>
-              </div>
+                <Icon name="right" size={18} />
+              </a>
             {/each}
           </div>
         {/each}
+        {#if tensionGroups.length > TENSION_GROUPS_SHOWN}
+          <button
+            type="button"
+            class="btn ghost more"
+            data-testid="show-all-tensions"
+            aria-expanded={showAllTensions}
+            onclick={() => (showAllTensions = !showAllTensions)}
+          >
+            {showAllTensions ? copy.results.showFewer : copy.results.showAll(tensionGroups.length)}
+          </button>
+        {/if}
       {:else}
         <p class="muted small">{copy.results.tensionsEmpty}</p>
       {/if}
     </section>
 
-    {#if principles.length}
-      <section class="section">
-        <p class="section-title">{copy.results.principles}</p>
+    {#if ranked.length}
+      <section class="section" aria-labelledby="principles-title">
+        <h2 class="section-title" id="principles-title">{copy.results.principles}</h2>
         <p class="muted small">{copy.results.principlesNote}</p>
         <div class="card">
-          {#each principles as p (p.id)}
-            {@const sc = profile.principles[p.id]!}
-            <SpectrumBar
-              title={p.label}
-              poles={['Rejects', 'Endorses']}
-              score={sc.score}
-              confidence={sc.confidence}
-              description={sc.consistency !== null ? `${p.definition} ${copy.results.consistency(sc.consistency)}.` : p.definition}
-            />
-          {/each}
+          <PrincipleChart rows={ranked} {topicTitle} tensions={openByPrinciple} />
         </div>
       </section>
     {/if}
 
-    <section class="section">
-      <p class="section-title">{copy.results.personality}</p>
+    <section class="section" aria-labelledby="personality-title">
+      <h2 class="section-title" id="personality-title">{copy.results.personality}</h2>
       <p class="muted small">{copy.results.personalityNote}</p>
-      <div class="card">
+      <div class="card" class:rows={personalityScored}>
         {#if personalityScored}
-          {#each personality as a (a.id)}
-            {@const sc = profile.axes[a.id]!}
-            <SpectrumBar title={a.title} poles={a.poles} score={sc.score} confidence={sc.confidence} description={a.description} feeders={feeders.get(a.id) ?? []} testid="axis-{a.id}" />
-          {/each}
+          {#each personality as a (a.id)}{@render spectrum(a, false)}{/each}
         {:else}
-          <p class="small muted">
+          <p class="small muted flush">
             {copy.results.notEnough}
             {#each feeders.get('extraversion') ?? [] as t (t.id)}<a href={to.flow(t.id)}>{t.title}</a>{/each}
           </p>
@@ -193,14 +248,47 @@
       </div>
     </section>
 
+    {#if positionGroups.length}
+      <section class="section" aria-labelledby="positions-title">
+        <h2 class="section-title" id="positions-title">{copy.results.topics}</h2>
+        {#each positionGroups as g (g.domain.id)}
+          {@const moved = g.topics.reduce((n, t) => n + (profile.topics[t.id]?.challenges.moved ?? 0), 0)}
+          <details class="card domain" open={positionCount <= POSITIONS_OPEN}>
+            <summary>
+              <span class="domain-head">
+                <strong>{g.domain.title}</strong>
+                <span class="chev" aria-hidden="true"></span>
+              </span>
+              <span class="small muted">
+                {copy.results.topicCount(g.topics.length)}{moved ? ` · ${copy.results.reconsideredCount(moved)}` : ''}
+              </span>
+            </summary>
+            {#each g.topics as t (t.id)}
+              {@const r = profile.topics[t.id]!}
+              {@const stance = t.stance ? answers.state.ix.items.get(t.stance) : undefined}
+              <a class="position" href={to.topicResults(t.id)} data-testid="position-{t.id}">
+                <span class="position-text">
+                  <span class="position-title">{t.title}</span>
+                  <span class="stance">{r.stanceLabel ?? ''}</span>
+                  {#each r.challenges.moves as m, i (i)}
+                    {#if m.steps}
+                      <span class="small moved" data-testid="moved-{t.id}">{copy.results.movedLine(sourceName(m.source), m.steps, toward(stance, m.delta))}</span>
+                    {/if}
+                  {/each}
+                </span>
+                <Icon name="right" size={18} />
+              </a>
+            {/each}
+          </details>
+        {/each}
+      </section>
+    {/if}
+
     {#if tasteScored.length || enjoys.length}
-      <section class="section">
-        <p class="section-title">{copy.results.taste}</p>
-        <div class="card">
-          {#each tasteScored as a (a.id)}
-            {@const sc = profile.axes[a.id]!}
-            <SpectrumBar title={a.title} poles={a.poles} score={sc.score} confidence={sc.confidence} description={a.description} />
-          {/each}
+      <section class="section" aria-labelledby="taste-title">
+        <h2 class="section-title" id="taste-title">{copy.results.taste}</h2>
+        <div class="card rows">
+          {#each tasteScored as a (a.id)}{@render spectrum(a, false)}{/each}
           {#if enjoys.length}
             <h3 class="enjoy-title">{copy.results.interests}</h3>
             <div class="chips">
@@ -216,31 +304,60 @@
 </div>
 
 <style>
-  .topic {
+  .rows {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .overview {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    color: inherit;
-    text-decoration: none;
-    margin-top: 10px;
+    gap: 16px;
   }
-  .topic-head {
+  .highlights {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .highlights dt {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .highlights dd {
+    margin: 2px 0 0;
+    font-weight: 650;
+  }
+  .leanings {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-  .stance {
+  .lean {
+    font-size: 0.85rem;
+    color: var(--accent);
+    border-color: currentColor;
+  }
+  .flush {
+    margin: 0;
+  }
+  .jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    align-self: flex-start;
+    text-align: left;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
     font-weight: 600;
     color: var(--accent);
-  }
-  .moved {
-    color: var(--text);
+    cursor: pointer;
   }
   .tension {
     margin-top: 10px;
   }
   .tension-title {
-    margin: 0 0 4px;
+    margin: 0 0 2px;
   }
   .pair {
     display: flex;
@@ -248,6 +365,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
+    min-height: 48px;
+    color: inherit;
+    text-decoration: none;
   }
   .pair + .pair {
     border-top: 1px solid var(--border);
@@ -256,6 +376,70 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+  }
+  .resolved {
+    color: var(--success);
+  }
+  .more {
+    margin-top: 6px;
+  }
+  .domain {
+    padding: 0 16px;
+  }
+  .domain + .domain {
+    margin-top: 10px;
+  }
+  .domain summary {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 0;
+    list-style: none;
+    cursor: pointer;
+  }
+  .domain summary::-webkit-details-marker {
+    display: none;
+  }
+  .domain-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .chev {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.15s;
+  }
+  .domain[open] .chev {
+    transform: translateY(1px) rotate(-135deg);
+  }
+  .position {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    color: inherit;
+    text-decoration: none;
+  }
+  .position-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .position-title {
+    font-weight: 650;
+  }
+  .stance {
+    color: var(--accent);
+  }
+  .moved {
+    color: var(--text);
   }
   .enjoy-title {
     margin-top: 16px;
