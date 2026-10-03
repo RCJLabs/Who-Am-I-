@@ -94,3 +94,9 @@
 - id: truth
   label: Truth
   definition: Truth matters in itself, so we shouldn't deceive others, or ourselves, even for comfort.
+# Clifford ("it is wrong always, everywhere, and for anyone, to believe anything upon insufficient
+# evidence") against James's "will to believe". Nonbelievers tend to invoke it about God; skeptics
+# do about free will, where some nonbelievers keep the belief for the good it does.
+- id: evidence
+  label: Belief that fits the evidence
+  definition: We should believe things only as far as the evidence supports them, even when believing more would help us.

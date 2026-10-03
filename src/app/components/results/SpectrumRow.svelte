@@ -101,6 +101,8 @@
     font-weight: 650;
     color: var(--accent);
     text-align: right;
+    /* A long label wraps rather than squeezing the title, which has no width of its own. */
+    max-width: 55%;
   }
   .pos.none {
     font-weight: 500;

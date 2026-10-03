@@ -357,3 +357,97 @@ decel
 decels
 safetyist
 safetyists
+sky fairy
+sky fairies
+sky daddy
+imaginary friend
+fairy tale
+fairy tales
+bronze age myths
+flying spaghetti monster
+superstition
+superstitions
+superstitious
+woo
+mumbo jumbo
+pseudoscience
+debunked
+cult
+cults
+cultist
+cultists
+brainwashed
+indoctrination
+indoctrinated
+delusion
+deluded
+blind faith
+fundamentalist
+fundamentalists
+fundie
+fundies
+bible-thumper
+bible-thumpers
+bible-basher
+holy roller
+holy rollers
+jesus freak
+god-botherer
+god squad
+god of the gaps
+faith-head
+faith-heads
+religion of peace
+war on christmas
+theocrat
+theocrats
+christian nationalist
+christian nationalists
+islamist
+islamists
+islamophobe
+mohammedan
+moslem
+moslems
+idol worship
+idolater
+idolaters
+heathen
+heathens
+infidel
+infidels
+kafir
+apostate
+heretic
+heretics
+godless
+unbeliever
+unbelievers
+unsaved
+god-hater
+militant atheist
+militant atheists
+militant secularism
+new atheist
+new atheists
+angry atheist
+atheism is a religion
+no atheists in foxholes
+scientism
+faith in science
+darwinist
+darwinists
+darwinism
+evolutionist
+evolutionists
+creation science
+nones
+nihilist
+nihilists
+ghost in the machine
+meat robot
+moist robot
+meat puppet
+clanker
+clankers
+glorified autocomplete

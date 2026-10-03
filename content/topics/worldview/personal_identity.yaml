@@ -1,0 +1,246 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What makes you the same person over time, asked through Derek Parfit's teleporter. The ladder
+# ranks how much of what matters in surviving you'd keep, from death to travel; step 6 is Parfit's
+# own view (and a secular Buddhist one): as good as surviving, though "is it me?" may have no
+# answer. An unscored item asks what keeps someone the same person, with a home for the soul.
+# Feeds no spectrum and has no anchor. Cases follow the philosophical literature; most cells in the
+# brain last a lifetime, so nothing here says the body is replaced every few years.
+id: personal_identity
+domain: worldview
+title: What makes you you
+summary: If a machine rebuilt you somewhere else, would it still be you?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: >-
+      A machine scans you, destroys your body, and builds an exact copy on Mars from new material,
+      with all your memories and personality. For you, stepping into it would be…
+    poles: [Death, Travel]
+    labels:
+      - Death. Someone new would wake up with my memories
+      - Close to death. Something of me would carry on, but not me
+      - Worse than surviving, though not death
+      - Torn / I can't tell
+      - Nearly as good as surviving
+      - As good as surviving, though "is it me?" may have no answer
+      - Travel. The person on Mars would simply be me
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  - id: same_person
+    type: choice
+    text: What do you think keeps someone the same person over a lifetime?
+    options:
+      - { id: body, label: The same body and brain }
+      - { id: mind, label: The same memories and personality }
+      - { id: soul, label: The same soul }
+      - { id: none, label: Nothing fixed. A self is a changing stream }
+      - { id: unsure, label: Not sure }
+
+  # --- Challenges: for travel --------------------------------------------------------------------
+  - id: ch_one_cell
+    type: challenge
+    name: From a few cells to all
+    targets: stance
+    when: stance < 0
+    source: Derek Parfit, Reasons and Persons (1984)
+    scenario: >-
+      The philosopher Derek Parfit imagined a range of operations in which surgeons replace some of
+      your cells with exact copies: one in a hundred in the first, then half, then nearly all, and
+      in the last, every cell. No one step along the range seems to make the difference between
+      surviving and dying, yet in the last case every cell is new, just as on Mars.
+    text: If no one step along the range would end your life, why would the last one?
+    options:
+      - id: continuity
+        label: Somewhere along the range is a point where I'd die, even if no one can say exactly where.
+        reaction: hold
+        value: 0
+      - id: not_cells
+        label: What makes me me isn't my cells at all, so the range doesn't settle it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The machine may be closer to travel than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_split_brain
+    type: challenge
+    name: Split brain
+    targets: stance
+    when: stance < 0
+    source: >-
+      Roger Sperry and Michael Gazzaniga, studies of split-brain patients (from the 1960s); Yair
+      Pinto et al., "Split brain: divided perception but undivided consciousness," Brain (2017)
+    scenario: >-
+      To treat severe epilepsy, some patients had the connection between the two halves of the brain
+      cut. In experiments, each half could seem to know things the other didn't, as if one person
+      had become two. A 2017 study disputed this, finding evidence that the patients' awareness was
+      still unified.
+    text: If a person can seem to split in two, is being the same person all or nothing?
+    options:
+      - id: one
+        label: The patients are still one person, as the newer study suggests.
+        reaction: hold
+        value: 0
+      - id: unusual
+        label: Surgery on a damaged brain tells us little about an ordinary life.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Being the same person may matter less than I thought.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_no_one
+    type: challenge
+    name: No one inside
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: David Hume, A Treatise of Human Nature (1739); the Buddha's teaching of not-self
+    scenario: >-
+      The philosopher David Hume wrote that whenever he looked inward, he found only particular
+      perceptions, like heat, love or pain, and never a self that had them. The Buddha had taught
+      something similar long before: what we call a self is a changing stream, not a thing that
+      lasts.
+    text: If there's no lasting self, is there anything for the machine to destroy?
+    options:
+      - id: not_found
+        label: Not finding a self by looking inward doesn't mean there isn't one.
+        reaction: hold
+        value: 0
+      - id: cut_off
+        label: Even a stream can be cut off. Destroying my body ends this one.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The machine may be closer to travel than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for death ---------------------------------------------------------------------
+  - id: ch_branch
+    type: challenge
+    name: The branch line
+    targets: stance
+    when: stance > 0
+    source: Derek Parfit, Reasons and Persons (1984)
+    scenario: >-
+      A new model of the machine builds the copy on Mars but leaves you on Earth, with a damaged
+      heart that will kill you in a few days. You can even talk to your copy on Mars. The
+      philosopher Derek Parfit called this the branch line.
+    text: If the copy is you, why would you still face your own death on Earth?
+    options:
+      - id: carries_on
+        label: What matters is that my life carries on, and on Mars it would.
+        reaction: hold
+        value: 0
+      - id: different
+        label: That's a different machine. With the ordinary one, no one is left behind to die.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The machine may be closer to death than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_torture
+    type: challenge
+    name: Tomorrow's pain
+    targets: stance
+    when: stance > 0
+    source: Bernard Williams, "The Self and the Future," Philosophical Review (1970)
+    scenario: >-
+      You're told that tomorrow you'll be tortured, but that first all your memories and your
+      character will be wiped and replaced with someone else's. The philosopher Bernard Williams
+      argued that you'd still dread it, because it would still be you in pain. If so, memories and
+      character aren't what make you you.
+    text: If you'd still dread the pain without your memories, are your memories really what make you you?
+    options:
+      - id: wouldnt
+        label: I wouldn't dread it in the same way. Without my memories, it wouldn't really be me.
+        reaction: hold
+        value: 0
+      - id: habit
+        label: Dread follows the body out of habit. That doesn't show what makes me me.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The machine may be closer to death than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_two
+    type: challenge
+    name: Two on Mars
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      David Wiggins, Identity and Spatio-Temporal Continuity (1967); Derek Parfit, Reasons and
+      Persons (1984)
+    scenario: >-
+      Suppose the machine malfunctions and builds two copies on Mars, each with all your memories.
+      They can't both be you, since from that moment they're two different people. Yet each has as
+      good a claim as the other.
+    text: If two copies would have equal claims to be you, can either one really be you?
+    options:
+      - id: what_matters
+        label: Neither would be me strictly speaking, but both would carry on my life, and that's what matters.
+        reaction: hold
+        value: 0
+      - id: malfunction
+        label: That's a malfunction. When there's only one copy, it's me.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The machine may be closer to death than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The job on Mars
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after Derek Parfit's teleporter (1984)
+    scenario: >-
+      You're offered a job on Mars. You can fly, which takes six months and carries a 1% risk of
+      dying on the way, or use the machine, which has never failed.
+    text: You said you're torn. How would you go?
+    options:
+      - id: stay
+        label: I'd stay home.
+        reaction: hold
+        value: 0
+      - id: machine
+        label: The machine
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: fly
+        label: The flight
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

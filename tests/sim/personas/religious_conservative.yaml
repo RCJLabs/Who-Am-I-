@@ -9,7 +9,8 @@ topics:
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
-   climate, animals, nuclear, gm_food, ai, nature]
+   climate, animals, nuclear, gm_food, ai, nature,
+   god, free_will, morality, afterlife, personal_identity]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -524,8 +525,46 @@ answers:
   nature.anchor_loc: 7 # local say over wind farms, but not over minimum wages
   nature.ch_bat_tunnel: irreplaceable
   nature.ch_cape_wind: right_call
+  god.stance: 7
+  god.importance: 4
+  god.kind: [personal]
+  god.practice: [pray, services, scripture]
+  god.science: 4 # reread where possible, but core teachings stand
+  god.anchor_evidence: 2 # faith needn't wait on evidence about God...
+  god.anchor_exp: 2 # not biologists on teaching evolution, though economists on rents
+  god.ch_tsunami: reasons
+  god.ch_born_into: examined
+  god.ch_seeker: freedom
+  free_will.stance: 6
+  free_will.importance: 3
+  free_will.theory: uncaused
+  free_will.anchor_desert: 7 # a brutal childhood excuses nothing, unlike an officer's lapse
+  free_will.anchor_evidence: 6 # ...but belief about free will should follow the evidence
+  free_will.ch_tumor: acting
+  free_will.ch_plum: other_people
+  free_will.ch_basic: enough
+  morality.stance: 7
+  morality.importance: 4
+  morality.source: [god, reason, nature]
+  morality.god_basis: 5
+  morality.ch_honor: same_values
+  morality.ch_survival: eyes
+  morality.ch_strange: like_math
+  morality.ch_euthyphro: nature
+  afterlife.stance: 1 # convinced the dead go on
+  afterlife.importance: 4
+  afterlife.form: [soul, raised]
+  afterlife.ch_images: one_kind
+  afterlife.ch_fading: raised
+  afterlife.ch_dying_brain: person
+  personal_identity.stance: 1 # the machine would be death
+  personal_identity.importance: 3
+  personal_identity.same_person: soul
+  personal_identity.ch_one_cell: not_cells
+  personal_identity.ch_split_brain: one
+  personal_identity.ch_no_one: not_found
 expect:
-  axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0" }
+  axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "> 0.9" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -564,6 +603,8 @@ expect:
     gender_roles: { cultural: "< 0" }
     prisons: { civil: "> 0" }
     climate: { economic: "> 0" }
+    god: { beyond_nature: "> 0.9" }
+    afterlife: { beyond_nature: "> 0.9" }
   principles:
     sanctity_of_life: "> 0.5"
     market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
@@ -606,6 +647,8 @@ expect:
     nature: { natural_order: "> 0.3", subsidiarity: "> 0.5" }
     taxes: { future_generations: "> 0.3" }
     gene_editing: { natural_order: "> 0.5" }
+    god: { evidence: "< -0.5", expertise: "< -0.5" }
+    free_will: { deserved_punishment: "> 0.9", evidence: "> 0.5" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the
   # sanctity of life high on abortion and assisted dying but low on the death penalty; caution with
@@ -628,6 +671,9 @@ expect:
   # children's genes aren't ours to engineer, though crops' may be; no special caution about nuclear
   # power, unlike embryos, under-18s' treatment or AI; and local say over wind farms, though not over
   # minimum wages.
+  # In worldview: deserved punishment for crimes shaped by a brutal childhood, though officers who
+  # kill unlawfully get leeway; belief that fits the evidence about free will, but not about God;
+  # and biologists aren't followed on teaching evolution, though economists are on rents.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -668,3 +714,6 @@ expect:
     - precaution|ai|nuclear
     - natural_order|gene_editing|gm_food
     - subsidiarity|minimum_wage|nature
+    - deserved_punishment|free_will|policing
+    - expertise|god|housing
+    - evidence|free_will|god

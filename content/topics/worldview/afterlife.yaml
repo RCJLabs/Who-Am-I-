@@ -1,0 +1,257 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether a person goes on in some form after death: right away, raised later, or reborn. Separate
+# from God and religion, since many Buddhists and religiously unaffiliated people believe in
+# rebirth without God, and some believers in God don't expect an afterlife. Feeds the worldview
+# spectrum at half weight. The ladder runs from yes to no, the opposite way to God and religion's,
+# so someone who taps the same end everywhere isn't pushed to one end of the spectrum. No anchor.
+id: afterlife
+domain: worldview
+title: Life after death
+summary: When a person dies, do they go on in some form?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When a person dies, do they go on in some form, whether right away, raised later, or reborn?
+    help: Undecided includes thinking it can't be known.
+    poles: [Something goes on, Experience ends for good]
+    labels:
+      - Convinced they do
+      - Fairly sure they do
+      - Leaning toward yes
+      - Undecided
+      - Leaning toward not
+      - Fairly sure not
+      - Convinced not. Their experience ends for good
+    axes: { beyond_nature: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  - id: form
+    type: multi
+    when: stance <= 0
+    text: If something goes on, what do you think it's like? Choose any that fit.
+    options:
+      - { id: soul, label: The soul lives on }
+      - { id: raised, label: The dead are raised at the end of time }
+      - { id: reborn, label: Rebirth into another life }
+      - { id: united, label: Union with God or ultimate reality }
+      - { id: unknown, label: I don't know }
+
+  # --- Challenges: for going on ------------------------------------------------------------------
+  - id: ch_heart_stopped
+    type: challenge
+    name: While the heart had stopped
+    targets: stance
+    when: stance > 0
+    source: >-
+      Pim van Lommel et al., "Near-death experience in survivors of cardiac arrest: a prospective
+      study in the Netherlands," The Lancet (2001)
+    scenario: >-
+      A Dutch study interviewed 344 people soon after they were revived from cardiac arrest.
+      Sixty-two of them, about 18 percent, reported a near-death experience from while they were
+      unconscious, such as watching from above, moving toward a light, or meeting relatives who had
+      died. Whether someone had one wasn't linked to how long their heart had stopped or to the
+      drugs they were given. In smaller follow-ups two and eight years later, they had changed more
+      than other survivors, for example fearing death less.
+    text: If people report clear experiences from while they were unconscious, could the mind go on without the body?
+    options:
+      - id: dying_brain
+        label: A brain short of oxygen can produce vivid experiences. The study recorded reports, not where they came from.
+        reaction: hold
+        value: 0
+      - id: came_back
+        label: These people came back, so their brains never fully died. It tells us nothing about death itself.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Something may go on after all.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_children
+    type: challenge
+    name: Children who remember
+    targets: stance
+    when: stance > 0
+    source: >-
+      Ian Stevenson, Twenty Cases Suggestive of Reincarnation (1966); Jim Tucker, Return to Life
+      (2013)
+    scenario: >-
+      The psychiatrist Ian Stevenson and colleagues at the University of Virginia have recorded more
+      than 2,500 cases of young children who described memories of a past life, and in many the
+      details were said to match a real person who had died. Critics say the cases rest on families'
+      accounts, which can be shaped after the fact.
+    text: If some children seem to describe lives they had no way to know about, what explains it?
+    options:
+      - id: accounts
+        label: The cases rest on families' memories, which can be shaped by belief. That isn't good enough evidence.
+        reaction: hold
+        value: 0
+      - id: mystery
+        label: Even if a few cases are hard to explain, that's a mystery, not proof that anyone survives death.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Something may go on after all.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_justice
+    type: challenge
+    name: Unfinished justice
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Immanuel Kant, Critique of Practical Reason (1788)
+    scenario: >-
+      Many people who did great harm have died comfortably and unpunished, while many good people
+      suffered all their lives. The philosopher Immanuel Kant argued that morality aims at a highest
+      good: being fully good, and being happy in proportion to that goodness. No one becomes fully
+      good in one lifetime, and here goodness often goes unrewarded. So he held that we must hope
+      this life isn't the whole story. He saw this as a reasonable hope, not a proof.
+    text: If justice is never done in this life, is it done anywhere?
+    options:
+      - id: unfair
+        label: The world isn't fair. Hoping it will be doesn't make it so.
+        reaction: hold
+        value: 0
+      - id: own_sake
+        label: Doing right is worth it for its own sake. Morality doesn't need a reckoning to make sense.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. This life may not be the whole story.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: against going on --------------------------------------------------------------
+  - id: ch_images
+    type: challenge
+    name: The hidden images
+    targets: stance
+    when: stance < 0
+    source: >-
+      Sam Parnia et al., "AWARE—AWAreness during REsuscitation—A prospective study," Resuscitation
+      (2014); Sam Parnia et al., "AWAreness during REsuscitation - II: A multi-center study of
+      consciousness and awareness in cardiac arrest," Resuscitation (2023)
+    scenario: >-
+      Two studies tested reports of watching from above during resuscitation. They placed pictures
+      where they could be seen only from above. No survivor has named one. But in the first study,
+      the two patients who said they saw or heard their resuscitation were in rooms without
+      pictures. One of them, a man of 57, described people and sounds that the records confirmed. In
+      the second study, one of 28 survivors recalled words played through headphones.
+    text: So far, no one has named a hidden picture. What does that tell us about reports of watching from above?
+    options:
+      - id: few
+        label: Very few patients had such experiences at all, so a handful of tests can't settle it.
+        reaction: hold
+        value: 0
+      - id: one_kind
+        label: Tests built around one kind of report can't settle what happens at death.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Going on after death is harder to believe than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_fading
+    type: challenge
+    name: The mind fades with the brain
+    targets: stance
+    when: stance < 0
+    source: >-
+      Bruce Miller et al., "Neuroanatomy of the self: evidence from patients with frontotemporal
+      dementia," Neurology (2001); Bertrand Russell, "Do We Survive Death?" (1936)
+    scenario: >-
+      Damage to the brain can change who someone is while they're still alive. In a 2001 study of 72
+      people with a dementia that affects the front and sides of the brain, seven changed their
+      political, social or religious values. Bertrand Russell argued that if the mind depends this
+      much on the brain in life, it's hard to see how it could go on once the brain is gone.
+    text: If the brain can change who we are while we're alive, what could go on once it's gone?
+    options:
+      - id: instrument
+        label: The brain may be how the self acts in this life, not what the self is.
+        reaction: hold
+        value: 0
+      - id: raised
+        label: My hope isn't that the mind floats free, but that the whole person is raised.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Going on after death is harder to believe than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_dying_brain
+    type: challenge
+    name: The dying brain
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Gang Xu et al., "Surge of neurophysiological coupling and connectivity of gamma oscillations in
+      the dying human brain," PNAS (2023)
+    scenario: >-
+      When life support was withdrawn from four patients in a coma, two showed a sudden surge of a
+      kind of brain activity some scientists link to conscious experience. The researchers suggested
+      it might explain near-death experiences. But the study was very small, and the patients died,
+      so no one could ask what, if anything, they experienced.
+    text: If the dying brain might produce these experiences on its own, does anything point beyond it?
+    options:
+      - id: person
+        label: Explaining the experiences doesn't explain away the person who has them.
+        reaction: hold
+        value: 0
+      - id: not_based
+        label: My belief doesn't rest on near-death experiences, so this doesn't touch it.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Going on after death is harder to believe than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Your best guess
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: Suppose you had to give one answer, and it would be recorded as your best guess.
+    text: You said you're undecided. Does something of a person go on after death?
+    options:
+      - id: wont_guess
+        label: I won't guess. It can't be known.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: Yes, something goes on
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: no
+        label: No, it ends
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

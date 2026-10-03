@@ -103,6 +103,7 @@ export const copy = {
     emptyCta: 'Choose a topic',
     political: 'Political spectrums',
     values: 'Values',
+    worldview: 'Worldview',
     personality: 'Personality',
     personalityNote: 'Validated short form (Mini-IPIP). Your raw position on each scale, not a comparison with other people.',
     principles: 'Principles you lean on',

@@ -6,7 +6,8 @@ topics:
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
-   climate, animals, nuclear, gm_food, ai, nature]
+   climate, animals, nuclear, gm_food, ai, nature,
+   god, free_will, morality, afterlife, personal_identity]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -515,8 +516,43 @@ answers:
   nature.ch_birds: better_design
   nature.ch_aral: different_era
   nature.ch_bristol_bay: jobs_too
+  god.stance: 3
+  god.importance: 2
+  god.label: agnostic
+  god.practice: [none]
+  god.science: 2
+  god.anchor_evidence: 6 # belief about God should follow the evidence...
+  god.anchor_exp: 4 # biologists more than public-health experts on school vaccines
+  god.ch_six_numbers: law
+  god.ch_why_anything: brute
+  free_will.stance: 7
+  free_will.importance: 4
+  free_will.theory: compatible
+  free_will.anchor_desert: 7
+  free_will.anchor_evidence: 2 # ...but believing in free will is worth it for its own good
+  free_will.ch_tumor: illness
+  free_will.ch_plum: reasons
+  free_will.ch_basic: practical
+  morality.stance: 6
+  morality.importance: 3
+  morality.source: [reason, basic]
+  morality.god_basis: 1
+  morality.ch_honor: mistaken
+  morality.ch_survival: reason
+  morality.ch_strange: natural
+  morality.ch_lawgiver: basic
+  afterlife.stance: 6
+  afterlife.importance: 1
+  afterlife.ch_heart_stopped: came_back
+  afterlife.ch_children: accounts
+  personal_identity.stance: 7 # travel
+  personal_identity.importance: 3
+  personal_identity.same_person: mind
+  personal_identity.ch_branch: different
+  personal_identity.ch_torture: wouldnt
+  personal_identity.ch_two: malfunction
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "< -0.3" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -555,6 +591,8 @@ expect:
     gender_roles: { cultural: "< 0" }
     prisons: { civil: "< 0" }
     climate: { economic: "> 0.5" }
+    god: { beyond_nature: "< -0.2" }
+    afterlife: { beyond_nature: "< -0.5" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -596,6 +634,8 @@ expect:
     ai: { precaution: "< -0.3", retribution: "< 0", subsidiarity: "> 0.3", liberty: "> 0.3" }
     nature: { subsidiarity: "> 0.5", collective_welfare: "> 0.3" }
     gene_editing: { natural_order: "< -0.5" }
+    god: { evidence: "> 0.5" }
+    free_will: { deserved_punishment: "> 0.9", evidence: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
@@ -608,6 +648,9 @@ expect:
   # Society adds none: the same rules for everyone in all four places, deserved punishment and
   # personal responsibility weighed alike in both, and bodily autonomy high for transition too.
   # Open to immigration but not to aid or international bodies, so the diplomatic score is mixed.
+  # In worldview: belief that fits the evidence about God, but belief in free will kept for the
+  # good it does; and biologists followed on teaching evolution more than public-health experts on
+  # school vaccines.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty
@@ -619,3 +662,5 @@ expect:
     - expertise|gm_food|vaccine_mandates
     - precaution|death_penalty|nuclear
     - precaution|ai|death_penalty
+    - evidence|free_will|god
+    - expertise|god|vaccine_mandates
