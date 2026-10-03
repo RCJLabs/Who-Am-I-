@@ -98,11 +98,11 @@ items:
     text: If people's rank at work predicts their heart disease beyond their habits, how much of the difference comes down to choices?
     options:
       - id: measured_better
-        label: A later study of civil servants that measured habits repeatedly found they explained most of the gap in deaths overall, if less for heart disease.
+        label: A later study of civil servants that measured habits repeatedly found they explained most of the gap in deaths overall, if less for heart disease and stroke.
         reaction: hold
         value: 0
       - id: within_grades
-        label: Within every grade, people who smoked did worse. Circumstances shift the odds; choices still decide most.
+        label: Lower grades smoked more and exercised less in their free time. Circumstances shift the odds; choices still decide most.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -181,7 +181,7 @@ items:
     scenario: >-
       In a trial of 3,234 American adults at high risk of diabetes, a program aiming for a 7% weight
       loss and 150 minutes of exercise a week cut new cases of type 2 diabetes by 58% over about
-      three years, compared with a placebo.
+      three years, compared with a placebo group.
     text: If changing habits can cut diabetes by more than half, how much of the risk is out of people's hands?
     options:
       - id: coaching
@@ -212,7 +212,7 @@ items:
     text: If quitting smoking can win back most of those years, how much of health comes down to choices?
     options:
       - id: started_young
-        label: Nearly nine in ten adults who smoke started by 18, and smoking is far more common among people who are poor or distressed.
+        label: Nearly nine in ten adults who smoke daily first tried it by 18, and smoking is far more common among people who are poor or distressed.
         reaction: hold
         value: 0
       - id: one_habit
@@ -239,7 +239,7 @@ items:
       Economists studied what American households buy. When a new supermarket opened nearby,
       low-income families' diets barely changed. Giving poorer households the same products and
       prices as richer ones would close only about a tenth of the gap in how healthily they eat; the
-      rest came from differences in what people want to buy.
+      rest comes from differences in what people want to buy.
     text: If diets differ mainly because of what people want to buy, not what's on offer, how much is out of their hands?
     options:
       - id: tastes

@@ -78,7 +78,8 @@ items:
       After the US Supreme Court let states legalize sports betting in 2018, many allowed it on
       phones. Economists compared the credit records of about 7 million Americans in states that did
       and states that didn't. Within a few years of online betting arriving, more people had gone
-      bankrupt or had debts sent to collection agencies, mostly people already close to the edge.
+      bankrupt and more debt had gone to collection agencies, mostly among people already close to
+      the edge.
     text: If legal online betting goes with more people going broke, should it be legal and advertised?
     options:
       - id: adults_choose
@@ -105,17 +106,17 @@ items:
       Summary Report," for GambleAware (2022)
     scenario: >-
       A study of 139,152 British online gambling accounts found that the 5% of accounts that lost
-      the most supplied most of the companies' gambling revenue: at least 70% of it for each type of
-      gambling. More than twice as many accounts used for casino games, slots and bingo were in the
-      most deprived fifth of areas as in the least deprived.
-    text: If gambling companies earn most of their money from a small share of heavy losers, should it be sold like other products?
+      the most supplied most of the companies' gambling revenue: at least 70% of it in each of
+      betting, casino games and slots. More than twice as many accounts used for casino games, slots
+      and bingo were in the most deprived fifth of areas as in the least deprived.
+    text: If gambling companies earn most of their money from a small share of people who lose heavily, should it be legal and advertised?
     options:
       - id: other_products
         label: Plenty of products earn most from heavy users. That doesn't make it the law's job to protect adults from their choices.
         reaction: hold
         principles: { liberty: 0.5 }
       - id: target_heavy
-        label: Then target the heaviest losers with checks and limits. Most people who bet aren't among them.
+        label: Then put checks and limits on the people who lose the most. Most people who bet aren't among them.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -138,7 +139,7 @@ items:
       Using the bank and card records of about 184,000 American households, economists found that
       when a state legalized online sports betting, households there put about a fifth less into
       investment accounts, and those with little savings ran up more overdrafts and card debt.
-    text: If betting money comes out of what families would have invested, should it be legal and advertised?
+    text: If some betting money comes out of what families would have invested, should it be legal and advertised?
     options:
       - id: their_money
         label: How families spend their own money is their business, whether on betting or anything else.
@@ -199,11 +200,11 @@ items:
     text: If most people who bet aren't harmed, should the law restrict all of them to protect the few?
     options:
       - id: families_too
-        label: People with a gambling disorder often harm their families too, and companies earn much of their money from the heaviest losers.
+        label: People with a gambling disorder often harm their families too, and companies earn much of their money from those who lose the most.
         reaction: hold
         principles: { protect_vulnerable: 0.5 }
       - id: not_all
-        label: I wouldn't stop everyone, only the advertising and easy online access that draw people in.
+        label: I wouldn't stop anyone betting, only the advertising and easy online access that draw people in.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -224,7 +225,7 @@ items:
       football shirts and in stadiums. Italy's top football league says the ban costs it up to about
       €100 million a year, foreign betting sites still reach Italians online, and the government has
       been considering relaxing it.
-    text: If a full ban on gambling ads is hard to enforce and costly, should the law ban them?
+    text: If a near-total ban on gambling ads is hard to enforce and costly, should the law ban them?
     options:
       - id: still_less
         label: Fewer ads still means fewer people drawn in. Football clubs can find other sponsors.

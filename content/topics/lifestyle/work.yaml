@@ -282,7 +282,7 @@ items:
         reaction: hold
         value: 0
       - id: flexible
-        label: France set one rule for every industry. A four-day week can be phased in, industry by industry.
+        label: France set one legal week for nearly every industry. A four-day week can be phased in, industry by industry.
         reaction: distinguish
         value: 0
       - id: rethink

@@ -116,9 +116,9 @@ items:
     scenario: >-
       In 2021 the Wall Street Journal published internal research from Instagram's owner. A 2020
       slide said: "Thirty-two percent of teen girls said that when they felt bad about their bodies,
-      Instagram made them feel worse." The company replied that on 11 of the 12 issues the slide
-      covered, more of the teenage girls who struggled with each said Instagram made things better
-      than worse. Body image was the exception.
+      Instagram made them feel worse." The company replied that on 11 of 12 issues in that research,
+      more of the teenage girls who struggled with each said Instagram made things better than
+      worse. Body image was the exception.
     text: If the company's own research found it made some girls feel worse, should under-16s have open access?
     options:
       - id: helped_more
@@ -155,7 +155,7 @@ items:
         reaction: hold
         value: 0
       - id: heavy_use
-        label: Then limit heavy use and unsafe design. Light use isn't what the warning is about.
+        label: Then limit heavy use, harmful content and unsafe design. Those are the risks the warning names.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -204,7 +204,7 @@ items:
       social media use: observational study," BMJ (2026)
     scenario: >-
       Since December 2025, Australia has required platforms to close the accounts of everyone under
-      16, with fines that now reach about A$109 million, and in the first weeks about 4.7 million
+      16, with maximum fines now of about A$109 million, and in the first weeks about 4.7 million
       accounts were closed or restricted. In a study of 408 young Australians three months later,
       more than 85% of those under 16 were still using the platforms, most on their own accounts.
     text: If most teenagers get around a ban, are legal limits on their access worth the cost?
@@ -236,8 +236,8 @@ items:
     scenario: >-
       In a 2024 survey of more than 18,000 LGBTQ+ people aged 13 to 24 in the US, online spaces were
       the most common place where they felt affirmed. The 7% who felt safe and understood nowhere
-      online reported attempting suicide more often, about 14% against 11%. The survey recruited its
-      sample through social media ads.
+      online were more likely to report a suicide attempt in the past year: 14%, against 11% of the
+      rest. The survey recruited its sample through social media ads.
     text: If some teenagers find their main support online, should the law limit their access to it?
     options:
       - id: safer_places
