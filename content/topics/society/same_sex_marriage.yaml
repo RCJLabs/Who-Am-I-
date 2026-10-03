@@ -89,10 +89,10 @@ items:
     when: stance < 0
     source: United States v. Windsor, 570 U.S. 744 (2013)
     scenario: >-
-      Edith Windsor and Thea Spyer were a couple for about 40 years and married in Canada in 2007.
-      When Spyer died, US federal law didn't recognize their marriage, so Windsor owed $363,053 in
-      estate tax that a woman married to a man wouldn't have owed.
-    text: Should the law treat a partnership of 40 years as if the two were strangers?
+      Edith Windsor and Thea Spyer were a couple for more than 40 years and married in Canada in
+      2007. When Spyer died, US federal law didn't recognize their marriage, so Windsor owed $363,053
+      in estate tax that a woman married to a man wouldn't have owed.
+    text: Should the law treat a partnership of more than 40 years as if the two were strangers?
     options:
       - id: purpose
         label: Marriage law has a purpose beyond the couple, tying children to their mother and father.
@@ -115,10 +115,10 @@ items:
     when: stance < 0
     source: Loving v. Virginia, 388 U.S. 1 (1967)
     scenario: >-
-      Until 1967, Virginia banned marriage between Black and white people, arguing that the ban
-      applied equally to both races. The US Supreme Court unanimously struck it down. Forty years
-      later, Mildred Loving, whose marriage was at the center of the case, publicly supported the
-      freedom of same-sex couples to marry.
+      Until 1967, Virginia banned marriage between white people and people of other races, arguing
+      that the ban applied equally to white and non-white people. The US Supreme Court unanimously
+      struck it down, calling the freedom to marry one of the vital personal rights essential to the
+      pursuit of happiness.
     text: Is limiting marriage by sex different from limiting it by race?
     options:
       - id: what_marriage_is
@@ -145,7 +145,7 @@ items:
     scenario: >-
       In 1952 the British mathematician Alan Turing, who had helped break German codes in the Second
       World War, was convicted of gross indecency for a relationship with another man and agreed to
-      hormone injections to avoid prison. He died two years later. In 2013 he was pardoned.
+      hormone treatment to avoid prison. He died two years later. In 2013 he was pardoned.
     text: Should consenting adults ever be punished for a relationship?
     options:
       - id: standards
@@ -172,10 +172,11 @@ items:
       Hernandez v. Robles, 7 N.Y.3d 338 (2006); Sherif Girgis, Ryan Anderson and Robert George,
       What Is Marriage? Man and Woman: A Defense (2012)
     scenario: >-
-      In 2006 New York's highest court ruled that lawmakers could rationally conclude that children
-      do best, other things being equal, with a mother and a father, and so keep marriage for them.
-      Some philosophers argue that marriage exists mainly to unite children with the man and woman
-      who made them.
+      In 2006 New York's highest court ruled that the state could limit marriage to a man and a
+      woman. Its lead opinion said lawmakers could rationally believe that, other things being equal,
+      children do better with both a mother and a father. Some philosophers argue that marriage is by
+      nature the union of a man and a woman, a bond fulfilled by having and raising children
+      together.
     text: Is marriage mainly about the couple, or about the children they may have?
     options:
       - id: couple
@@ -202,9 +203,9 @@ items:
       Massachusetts, domestic partnership ordinance (2020)
     scenario: >-
       Dissenting from the 2015 US Supreme Court ruling that required same-sex marriage, the Chief
-      Justice wrote that its reasoning would apply with equal force to marriages of more than two
-      people. In 2020 Somerville, Massachusetts, became the first US city to recognize partnerships
-      of three or more adults.
+      Justice wrote that much of its reasoning would apply with equal force to marriages of more
+      than two people. In 2020 Somerville, Massachusetts, became the first US city to recognize
+      partnerships of three or more adults.
     text: If marriage is about love and commitment, why limit it to two people?
     options:
       - id: equal_spouses
@@ -230,8 +231,8 @@ items:
     source: Mahmoud v. Taylor, US Supreme Court (2025)
     scenario: >-
       In 2025 the US Supreme Court ruled, 6 to 3, that parents in a Maryland school district could
-      take their young children out of lessons using storybooks with same-sex couples, because the
-      lessons burdened their religious freedom.
+      take their young children out of lessons using storybooks with LGBTQ characters, including
+      same-sex couples, because the lessons burdened their religious freedom.
     text: Should schools teach about same-sex families even when parents object?
     options:
       - id: classmates
@@ -257,10 +258,10 @@ items:
     when: therapy_ban > 0
     source: Chiles v. Salazar, US Supreme Court (2026)
     scenario: >-
-      Colorado banned licensed counselors from trying to change a minor's sexual orientation,
-      including through talk alone. In 2026 the US Supreme Court ruled, 8 to 1, that because the
-      ban limits what counselors may say, it must meet the strictest test the Constitution sets for
-      limits on speech.
+      Colorado banned licensed counselors from trying to change a minor's sexual orientation or
+      gender identity, including through talk alone. In 2026 the US Supreme Court ruled, 8 to 1,
+      that because the ban lets counselors voice some views but not others, it must meet the
+      strictest test the Constitution sets for limits on speech.
     text: Should the law decide what a counselor may say to a young person who asks for help?
     options:
       - id: harm

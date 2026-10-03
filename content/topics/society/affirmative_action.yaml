@@ -90,10 +90,10 @@ items:
       Zachary Bleemer, "Affirmative Action, Mismatch, and Economic Mobility after California's
       Proposition 209," Quarterly Journal of Economics (2022)
     scenario: >-
-      In 1996 California banned considering race in admissions to its public universities. A later
-      study found that afterwards, Black and Hispanic applicants went to less selective campuses and
-      earned fewer degrees, including in science and engineering, and their later wages were about
-      5% lower, a fall driven by Hispanic applicants.
+      In 1996 California voters banned considering race in admissions to the state's public
+      universities, starting in 1998. A later study found that afterwards, Black and Hispanic
+      applicants went to less selective campuses and earned fewer degrees, including in science and
+      engineering, and their later wages were about 5% lower, a fall driven by Hispanic applicants.
     text: If the ban held back the very students it was meant to treat fairly, was it right?
     options:
       - id: same_rules
@@ -120,9 +120,9 @@ items:
       (Northern Ireland) Act 2000
     scenario: >-
       When Northern Ireland reformed its police after decades of conflict, about 8% of officers came
-      from a Catholic background. From 2001 to 2011 it hired recruits from Catholic and Protestant
-      backgrounds in equal numbers, and the Catholic share rose to about 30%, helping build trust in
-      the new service.
+      from a Catholic background. From 2001 to 2011 it hired recruits from Catholic and non-Catholic
+      backgrounds in equal numbers, and the Catholic share rose to about 30%. The aim was a police
+      service that both communities could trust.
     text: Can taking group membership into account be right when an institution needs everyone's trust?
     options:
       - id: individuals
@@ -204,10 +204,10 @@ items:
     when: stance > 0
     source: Ricci v. DeStefano, 557 U.S. 557 (2009)
     scenario: >-
-      In 2003 New Haven, Connecticut, threw out the results of a promotion exam for firefighters
-      because no Black candidates scored high enough to be promoted. Firefighters who had passed,
-      most of them white and one Hispanic, sued, and in 2009 the US Supreme Court ruled that the
-      city had discriminated against them.
+      In 2004 New Haven, Connecticut, threw out the results of its 2003 promotion exams for
+      firefighters because no Black candidates scored high enough to be promoted. Firefighters who
+      had passed, all of them white but one Hispanic, sued, and in 2009 the US Supreme Court ruled
+      that the city had discriminated against them.
     text: Is it fair to set aside results because of who passed?
     options:
       - id: wrong_test
@@ -230,10 +230,11 @@ items:
     targets: stance
     deep: true
     when: stance > 0
-    source: University of Brasília admissions under its racial quota, 2007, as reported in the Brazilian press
+    source: Folha de S.Paulo, "UnB recua e aceita outro gêmeo nas cotas" (June 2007)
     scenario: >-
-      In 2007 the University of Brasília's panel for its racial quota, judging applicants partly from
-      photographs, classified one of a pair of identical twins as Black and the other as not.
+      In 2007 the University of Brasília's panel for its racial quota, judging applicants from
+      photographs, classified one of a pair of identical twins as Black and the other as not. The
+      university reversed the decision on appeal.
     text: Who should decide which group a person belongs to?
     options:
       - id: one_mistake

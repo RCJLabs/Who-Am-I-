@@ -86,12 +86,14 @@ items:
     name: Texas changes course
     targets: stance
     when: stance < 0
-    source: Council of State Governments Justice Center, Justice Reinvestment in Texas (2009)
+    source: >-
+      Council of State Governments Justice Center, Justice Reinvestment in Texas (2009); The Texas
+      Tribune on the closing of the Central Unit (August 2011)
     scenario: >-
       In 2007, facing a forecast that it would need about 17,000 more prison beds, Texas spent
       $241 million on treatment, probation and parole programs instead of building new prisons. Its
-      prison population stopped growing, crime kept falling, and in 2011 it closed a prison for the
-      first time in its history.
+      prison population stopped growing, crime kept falling, and in 2011 it closed a prison without
+      replacing it, something it hadn't done in more than a century.
     text: If Texas could slow its prisons' growth without more crime, why rely on long sentences?
     options:
       - id: dangerous
@@ -115,8 +117,9 @@ items:
     when: stance < 0
     source: US Sentencing Commission, The Effects of Aging on Recidivism Among Federal Offenders (2017)
     scenario: >-
-      A US study followed people released from federal prison. Of those released before age 21,
-      67.6% were arrested again within eight years, against 13.4% of those released at 65 or older.
+      A US study followed federal offenders who left prison or began probation in 2005. Of those
+      under 21 at the time, 67.6% were arrested again within eight years, against 13.4% of those 65
+      or older.
     text: If people grow out of crime, what do the last years of a long sentence achieve?
     options:
       - id: justice
@@ -203,7 +206,8 @@ items:
     scenario: >-
       A study in Norway compared similar defendants who did and didn't go to prison, depending on
       which judge they happened to get. Those sent to prison were 29 percentage points less likely to
-      reoffend within five years, and more likely to find work, helped by training inside.
+      reoffend within five years. Among those who'd been out of work, more found jobs afterward,
+      helped by training inside; among those who'd had jobs, fewer kept working.
     text: If prison itself can turn lives around, should courts avoid it?
     options:
       - id: norway_only
@@ -226,10 +230,13 @@ items:
     targets: stance
     deep: true
     when: stance > 0
-    source: Spain, Organic Law 1/2004 on Comprehensive Protection Measures against Gender Violence, article 44.5
+    source: >-
+      Spain, Organic Law 1/2004 on Comprehensive Protection Measures against Gender Violence (article
+      44.5) and Organic Law 1/2025
     scenario: >-
-      Spain's 2004 law on violence against women bans mediation in those cases, on the grounds that
-      a victim can't negotiate as an equal with the person who abused her.
+      Spain's 2004 law on violence against women by their partners or former partners banned
+      mediation in those cases, and the ban still stands. Supporters of the ban say a victim can't
+      negotiate as an equal with the person who abused her.
     text: Can alternatives that bring offenders and victims together put victims at risk?
     options:
       - id: special_rules

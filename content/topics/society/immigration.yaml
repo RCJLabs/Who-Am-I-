@@ -110,8 +110,8 @@ items:
       Michael Clemens, Ethan Lewis and Hannah Postel, "Immigration Restrictions as Active Labor
       Market Policy: Evidence from the Mexican Bracero Exclusion," American Economic Review (2018)
     scenario: >-
-      Until 1964, the US let in hundreds of thousands of Mexican farmworkers a year. When the
-      program ended, researchers later found, wages and jobs for American farmworkers didn't
+      Until 1964, a US program let in Mexican farmworkers, more than 400,000 a year at its peak. When
+      the program ended, researchers later found, wages and jobs for American farmworkers didn't
       measurably rise. Farms switched to machines or to other crops instead.
     text: If letting in fewer workers didn't help the workers it was meant to protect, what's the case for cutting numbers?
     options:
@@ -140,9 +140,9 @@ items:
       American Economic Review: Insights (2024)
     scenario: >-
       A study of US census records going back to 1870 found that immigrants have long been less
-      likely to be in prison than people born in the US. Today young immigrant men are about 60%
-      less likely to be in prison than young men born in the US, and about 30% less likely than
-      young white men born in the US.
+      likely to be in prison or jail than people born in the US. Today young immigrant men are about
+      60% less likely to be in prison or jail than young men born in the US, and about 30% less
+      likely than young white men born in the US.
     text: Does that change how you see the risks of immigration?
     options:
       - id: absorb
@@ -169,7 +169,7 @@ items:
     scenario: >-
       In 1939 the ship St. Louis sailed from Germany carrying 937 passengers, almost all of them
       Jewish refugees. Cuba, the US and Canada turned them away, and the ship returned to Europe.
-      254 of its passengers were later killed in the Holocaust.
+      254 of its passengers later died in the Holocaust.
     text: When a country turns people away, who bears the cost?
     options:
       - id: own_people
@@ -195,7 +195,8 @@ items:
     source: >-
       Robert Putnam, "E Pluribus Unum: Diversity and Community in the Twenty-first Century,"
       Scandinavian Political Studies (2007); Peter Thisted Dinesen, Merlin Schaeffer and Kim Mannemar
-      Sønderskov, "Ethnic Diversity and Social Trust," Annual Review of Political Science (2020)
+      Sønderskov, "Ethnic Diversity and Social Trust: A Narrative and Meta-Analytical Review," Annual
+      Review of Political Science (2020)
     scenario: >-
       Political scientist Robert Putnam found that in more diverse US communities, people trusted
       their neighbors less, at least in the short run, including neighbors of their own background.
@@ -229,7 +230,7 @@ items:
       Canada, long known for welcoming immigrants, grew by more than a million people in 2023, a
       record, mostly through temporary residents such as students and workers. With housing costs
       soaring, in 2024 the government cut its target for new permanent residents in 2025 from
-      485,000 to 395,000.
+      500,000 to 395,000.
     text: If even Canada decided it was letting people in faster than it could house them, should other countries be more careful?
     options:
       - id: build

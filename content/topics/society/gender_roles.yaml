@@ -91,8 +91,8 @@ items:
       Review: Insights (2021)
     scenario: >-
       In Denmark, women's earnings fall by about 20% after their first child and never fully
-      recover, while men's barely change. The fall is about the same for mothers who adopt, so
-      pregnancy and breastfeeding don't explain it.
+      recover, while men's barely change. In the long run the fall is about the same for mothers who
+      adopt, so pregnancy and breastfeeding don't explain it.
     text: If the gap comes from how couples divide the work, not from biology, should the government try to change it?
     options:
       - id: their_choice
@@ -120,7 +120,7 @@ items:
     scenario: >-
       In 2006 the Canadian province of Quebec reserved five weeks of paid leave for fathers, lost if
       unused. The share of fathers taking leave jumped, and years later those fathers were doing more
-      of the housework and childcare.
+      of the housework.
     text: If a small nudge changes how families share the work, should governments give it?
     options:
       - id: no_nudge
@@ -147,8 +147,9 @@ items:
       Matthias Doepke, Anne Hannusch, Fabian Kindermann and Michèle Tertilt, "The Economics of
       Fertility: A New Era," NBER Working Paper 29948 (2022)
     scenario: >-
-      In rich countries today, birth rates tend to be higher where fathers do more of the childcare
-      and where mothers can combine work and family. Fifty years ago the pattern was the reverse.
+      In rich countries today, birth rates tend to be higher where more women work and fathers do
+      more of the childcare. In 1980 it was the reverse: countries where more women worked had fewer
+      births.
     text: If more equal families have more children, is the traditional pattern the best way to support families?
     options:
       - id: commitment
@@ -231,9 +232,10 @@ items:
       Ceiling? The Effect of Board Quotas on Female Labour Market Outcomes in Norway," Review of
       Economic Studies (2019)
     scenario: >-
-      In the 2000s Norway required company boards to be 40% women. The women appointed were as
-      qualified as the men and the pay gap on boards shrank, but researchers found no measurable gain
-      for women working lower down in those companies.
+      In the 2000s Norway required the boards of public limited companies to be at least 40% women.
+      The women appointed were better qualified than the women on boards before them and the pay gap
+      on boards shrank, but researchers found no measurable gain for women working lower down in
+      those companies.
     text: If quotas change the boardroom but little else, are they worth it?
     options:
       - id: top_jobs

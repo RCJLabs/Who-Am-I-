@@ -21,6 +21,7 @@ items:
     type: slider
     steps: 7
     text: Compared with now, the police in your area should get…
+    help: If you'd keep their money and powers about where they are, choose Torn / it depends.
     poles: [Far less, Far more]
     labels:
       - "Far less: most of what police do should be handed to other services"
@@ -108,8 +109,8 @@ items:
       Aaron Chalfin, Benjamin Hansen, Emily Weisburst and Morgan Williams Jr., "Police Force Size
       and Civilian Race," American Economic Review: Insights (2022)
     scenario: >-
-      A study of large US cities over nearly four decades found that each additional police officer
-      prevented about 0.06 to 0.1 homicides a year, and the benefit per person was about twice as
+      A study of large US cities over nearly four decades found that every ten additional police
+      officers prevented about one homicide a year, and the benefit per person was about twice as
       large for Black residents. Larger forces also made more arrests for minor offenses, and those
       fell most heavily on Black residents.
     text: If more police save lives, most of all in Black communities, is cutting police the right answer?
@@ -166,7 +167,7 @@ items:
       Research in Crime and Delinquency (2001)
     scenario: >-
       In 1996 Boston police, working with community leaders and outreach workers, told gang members
-      that any killing would bring a crackdown on their whole group, while offering help to anyone
+      that violence would bring a crackdown on their whole group, while offering help to anyone
       who wanted out. Youth homicides in the city fell by about 63%.
     text: Doesn't cutting violence take focused police work, not less of it?
     options:
@@ -222,9 +223,9 @@ items:
     source: US Department of Justice, Civil Rights Division, Investigation of the Ferguson Police Department (2015)
     scenario: >-
       In 2015 the US Justice Department found that the city of Ferguson, Missouri, had pressed its
-      police to raise money through fines and fees. Its court took in about $2.5 million in 2013,
-      and the investigators found that many stops and arrests were driven by revenue rather than
-      public safety.
+      police to raise money through fines and fees. Its court took in about $2.5 million in the
+      2013 fiscal year, and the investigators found that many stops and arrests were driven by
+      revenue rather than public safety.
     text: Do police powers always get used for the purposes they're given?
     options:
       - id: oversight
@@ -252,8 +253,8 @@ items:
       its effects on violence, crime, and fear," Proceedings of the National Academy of Sciences
       (2018)
     scenario: >-
-      In a Philadelphia experiment, cleaning up and planting hundreds of vacant lots cut gun violence
-      around them by 29% in the poorest neighborhoods.
+      In a Philadelphia experiment, cleaning up and planting vacant lots cut gun violence around them
+      by 29% in neighborhoods below the poverty line.
     text: If simple changes to places can prevent violence, how much of safety is about police at all?
     options:
       - id: still_officers

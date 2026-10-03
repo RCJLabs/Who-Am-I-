@@ -3,7 +3,8 @@
 # how a change of legal sex is gained (surgery, diagnosis, declaration) and where it applies; medical
 # treatment for under-18s is a circumstance, and the evidence about it (the Cass Review, Skrmetti)
 # challenges that circumstance, not the ladder. Wording: "sex at birth", "transgender women who went
-# through male puberty"; no slogans from either side. Feeds the cultural spectrum at full weight.
+# through male puberty", "gender dysphoria" (the diagnosis, as health services and courts on both
+# sides name it); no slogans from either side. Feeds the cultural spectrum at full weight.
 # Two anchors: caution with the irreversible (treatment for under-18s, where the right tends to
 # invoke it) and bodily autonomy (adults' medical transition, where the left does). Yields toward
 # recognition record liberty; toward sex at birth, protecting the vulnerable or the natural order.
@@ -50,7 +51,7 @@ items:
     type: slider
     steps: 5
     tags: [circumstance]
-    text: Prescribing puberty blockers to under-18s with severe distress about their sex, outside a research study, is…
+    text: Prescribing puberty blockers to under-18s diagnosed with gender dysphoria, outside a research study, is…
     poles: [Wrong, Right]
     labels: [Wrong, Probably wrong, Torn, Probably right, Right]
     principles: { precaution: -0.5 }
@@ -214,7 +215,7 @@ items:
     targets: stance
     when: stance > 0.5
     source: >-
-      Timothy Roberts, Jeremy Smalley and Dale Ahrendt, "Effect of gender affirming hormones on
+      Timothy Roberts, Joshua Smalley and Dale Ahrendt, "Effect of gender affirming hormones on
       athletic performance in transwomen and transmen," British Journal of Sports Medicine (2021)
     scenario: >-
       A study of transgender members of the US Air Force found that after two years of hormone
@@ -242,7 +243,9 @@ items:
     targets: stance
     deep: true
     when: stance > 0.5
-    source: Scottish Prison Service, review of the management of transgender prisoners (2023)
+    source: >-
+      Scottish Prison Service, urgent case review (February 2023) and Policy for the Management of
+      Transgender People in Custody (December 2023)
     scenario: >-
       In 2023 a person in Scotland convicted of raping two women, who had begun living as a woman
       after being charged, was first sent to a women's prison. After a public outcry the person was
@@ -273,10 +276,10 @@ items:
       Hilary Cass, Independent Review of Gender Identity Services for Children and Young People:
       Final Report (April 2024); NHS England, clinical policy on puberty blockers (March 2024)
     scenario: >-
-      In 2024 an independent review for England's health service found that the evidence that
-      puberty blockers help young people with distress about their sex was very weak. England
-      stopped prescribing them routinely outside research. Sweden (2022) and Finland (2020) had
-      already restricted their use.
+      In March 2024 England's health service stopped prescribing puberty blockers routinely outside
+      research. The next month an independent review it had commissioned found that the evidence
+      that they help young people with gender dysphoria was remarkably weak. Sweden (2022) and
+      Finland (2020) had already restricted their use.
     text: Should doctors keep prescribing them outside research studies?
     options:
       - id: harms_of_waiting

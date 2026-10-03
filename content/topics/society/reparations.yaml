@@ -86,8 +86,8 @@ items:
     source: Civil Liberties Act of 1988 (Public Law 100-383)
     scenario: >-
       During the Second World War, the US government forced about 120,000 people of Japanese
-      descent, most of them US citizens, into camps. In 1988 Congress formally apologized and paid
-      $20,000 to each of about 82,000 survivors.
+      descent, most of them US citizens, into camps. In 1988 Congress formally apologized and
+      promised $20,000 to each survivor. Payments to about 82,000 people began in 1990.
     text: If a government can owe a debt for one past wrong, why not for slavery and segregation?
     options:
       - id: living_victims
@@ -113,9 +113,10 @@ items:
       Daniel Aaronson, Daniel Hartley and Bhashkar Mazumder, "The Effects of the 1930s HOLC
       'Redlining' Maps," American Economic Journal: Economic Policy (2021)
     scenario: >-
-      In the 1930s a US government agency drew maps of cities that marked mostly Black neighborhoods
-      as hazardous for lending. Decades later, areas marked in red still had lower home ownership and
-      house values than similar areas just outside the lines.
+      In the 1930s a US government agency drew maps of cities that marked many neighborhoods,
+      including almost every Black neighborhood, as hazardous for lending. Decades later, researchers
+      found, areas marked in red still had lower home ownership and house values than similar areas
+      just outside the lines.
     text: If a government policy from living memory still shapes people's wealth, is it really in the past?
     options:
       - id: by_need
@@ -139,8 +140,8 @@ items:
     deep: true
     when: stance < 0
     source: >-
-      Slavery Abolition Act 1833; Full Fact, "The Slavery Abolition Act loan" (2018), on the
-      Treasury's statement about the debt
+      Slavery Abolition Act 1833; HM Treasury, response to a freedom of information request about
+      the Slavery Abolition Act loan (2018)
     scenario: >-
       When Britain abolished slavery in 1833, it paid £20 million, about 40% of the government's
       yearly budget, to compensate slave owners, and nothing to the people who had been enslaved.
@@ -168,11 +169,13 @@ items:
     name: The size of the bill
     targets: stance
     when: stance > 0
-    source: William Darity Jr. and A. Kirsten Mullen, From Here to Equality (2020) and later estimates
+    source: >-
+      William Darity Jr., A. Kirsten Mullen and Marvin Slaughter, "The Cumulative Costs of Racism
+      and the Bill for Black Reparations," Journal of Economic Perspectives (2022)
     scenario: >-
       Economist William Darity and writer Kirsten Mullen, leading advocates of reparations in the
-      US, have estimated that closing the racial wealth gap would cost about $14 trillion, roughly
-      $350,000 for each eligible person.
+      US, estimated with a co-author in 2022 that closing the racial wealth gap would cost about
+      $14 trillion, roughly $350,000 for each eligible person.
     text: Is a bill that large realistic, or fair to taxpayers with no link to slavery?
     options:
       - id: size_of_wrong
@@ -197,8 +200,9 @@ items:
     source: In re African-American Slave Descendants Litigation, 471 F.3d 754 (7th Cir. 2006)
     scenario: >-
       When descendants of enslaved people sued companies that had profited from slavery, a federal
-      appeals court dismissed the case in 2006. It ruled that descent alone didn't show that any
-      particular person alive today had been injured by those companies.
+      appeals court upheld the dismissal of their claims for slavery's harms in 2006. It ruled that
+      descent alone didn't show that any particular person alive today had been injured by those
+      companies.
     text: Can a wrong done to people long dead give their descendants a claim today?
     options:
       - id: passed_down
