@@ -77,16 +77,16 @@ The full map of what Who Am I covers.
 | Inheritance and great wealth | extended | custom | ✅ | Carnegie, Florence 1427–2011, the UK's inheritance tax |
 
 ### Society
-| Topic | Tier | Status |
-|---|---|---|
-| Immigration | core | ◻️ |
-| Policing and criminal justice | core | ◻️ |
-| Same-sex marriage and LGBTQ rights | core | ◻️ |
-| Transgender policy (sports, youth medical care, facilities) | core | ◻️ |
-| Race-conscious policy (affirmative action) | extended | ◻️ |
-| Gender roles and feminism | extended | ◻️ |
-| Reparations | extended | ◻️ |
-| Prisons: punishment or rehabilitation | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Immigration (legal admissions; status, deportation and asylum as circumstances) | core | custom | ✅ | the Bracero exclusion, incarceration rates, the St. Louis, diversity and trust, Canada's cut, the WHO safeguards list |
+| Policing (size, with powers only at the top step) | core | custom | ✅ | officers and homicides, residents' wishes in 2020, Operation Ceasefire, Denver's health responders, Ferguson, Philadelphia's vacant lots |
+| Same-sex relationships and marriage | core | custom | ✅ | Windsor, Loving, Turing; what marriage is for, why only two, the storybooks; the talk-therapy ruling |
+| Transgender people and the law (how legal sex changes, and where it applies; treatment for under-18s as a circumstance) | core | custom | ✅ | Goodwin, the changing room, men's prisons; women's groups, running after hormones, the prison transfer; the Cass Review and Skrmetti |
+| Race in admissions and hiring | extended | custom | ✅ | Prop 209's effects, Northern Ireland's 50:50 recruiting, legacies; Harvard's personal ratings, the firefighters' exam, the Brasília twins |
+| Gender roles (how parents divide work and childcare; board quotas as a circumstance) | extended | custom | ✅ | the child penalty, Quebec's fathers' weeks, fertility and fathers; the welfare-state paradox, Iceland's leave, Norway's board quota |
+| Reparations | extended | custom | ✅ | the internment payments, redlining, Britain's 1833 compensation; the size of the bill, proving the injury, Waldron |
+| Prisons and sentencing | extended | custom | ✅ | Texas's reinvestment, aging out of crime, restorative justice; Italy's pardon, Norway's prisons, Spain's mediation ban |
 
 ### Environment, science & tech
 | Topic | Tier | Status |
@@ -186,18 +186,19 @@ can surface in both directions.
 
 | Principle | Invoked more by the left in… | Invoked more by the right in… | Anchored now |
 |---|---|---|---|
-| Bodily autonomy | abortion, drug policy, selling sex, assisted dying | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex |
+| Bodily autonomy | abortion, drug policy, selling sex, assisted dying, adults' medical transition | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex, transgender people and the law |
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
 | Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns |
 | Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers), paying for quicker medical treatment | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy, paying for healthcare |
-| Caution with the irreversible | death penalty, climate, GMOs | gene editing, rapid social change | death penalty, gene editing |
+| Caution with the irreversible | death penalty, climate, GMOs | gene editing, treatment for under-18s who want to transition, rapid social change | death penalty, gene editing, transgender people and the law |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
-| Personal responsibility | | welfare, drugs, abortion | *(effects only)* |
+| Personal responsibility (no one answers for choices they didn't make) | people brought into a country as children | reparations, welfare, drugs | immigration (people brought as children), reparations (wrongs done generations ago) |
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
-| Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only)* |
+| Equality (narrowing gaps) | taxes, healthcare, race in admissions | | *(effects and moral foundations only)* |
+| Same rules for everyone | police stops, marriage | university admissions, company boards | policing (whom police stop), same-sex relationships and marriage (who may marry), race in admissions (admissions), gender roles (company boards) |
 | Just deserts (rewards) | inheritance (heirs didn't earn it) | support for people who could work | welfare and basic income, inheritance |
-| Deserved punishment | | death penalty, prisons | *(effects only: death penalty, rights of the accused, torture)* |
+| Deserved punishment | police officers who kill without legal justification | death penalty, prisons | policing (officers who kill without legal justification), prisons and sentencing (violent crime); effects in death penalty, rights of the accused, torture |
 | Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
@@ -207,7 +208,7 @@ can surface in both directions.
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
 | Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, rights of the accused |
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
-| National self-government | military intervention and regime change | international courts and treaties | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes) |
+| National self-government | military intervention and regime change | international courts and treaties, immigration | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes), immigration (who may settle) |
 | Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates | local or central control (what schools teach), minimum wage (local minimum wages) |
 | Deference to experts | vaccine requirements, climate | rent limits, minimum wages (economists' warnings) | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits) |
 
@@ -221,7 +222,11 @@ do the economics anchors: just deserts demanded of people who could work but not
 money allowed to buy quicker medical treatment but not sex or surrogacy, each raise a tension in
 either direction. So do the governance anchors: outsiders kept from deciding who rules a country
 but allowed to try its soldiers, schools left to local communities but not minimum wages, and
-economists followed on rents but not public-health experts on school vaccines. The personas in
+economists followed on rents but not public-health experts on school vaccines. And so do the society
+anchors: the same rules whatever someone's race or sex demanded for admissions and boards but not
+police stops or marriage, deserved punishment for violent crime but not for officers who kill
+unlawfully, and no one paying for wrongs done generations ago while people brought as children
+are made to leave. The personas in
 `tests/sim/personas` pin these down.
 
 ## Axes
@@ -229,9 +234,9 @@ economists followed on rents but not public-health experts on school vaccines. T
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage; at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
-| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
-| Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, faith and equality law |
-| Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
+| Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance, policing; at half weight: prisons and sentencing, assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
+| Cultural | political | Tradition ↔ Progress | abortion, assisted dying, same-sex relationships and marriage, transgender people and the law; at half weight: drug policy, gene editing, faith and equality law, gender roles (race in admissions and reparations feed no spectrum: treating everyone the same regardless of race isn't the tradition end) |
+| Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid, immigration (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
 | Stability or change | values | Stability ↔ Change | what matters most |
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
 | Rules or outcomes | values | Rules ↔ Outcomes | rules or outcomes; at half weight: sacrificing one, lying and honesty, the price of a perfect world |

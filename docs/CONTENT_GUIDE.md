@@ -173,6 +173,11 @@ A challenge is a thought experiment aimed at **the answer the user actually gave
    are dignified ("It gives me pause…", "On reflection…"), never "I was wrong".
 6. **Give options effects.** Choosing an option records something (W106). Use `value: 0` for an
    intentional neutral like "I'd leave it blank".
+7. **Aim each case at the answer it bears on.** A case has to be able to move the answer it
+   targets, or "reconsider" has nowhere to go. Evidence about one part of a topic often bears on a
+   circumstance rather than the stance: medical evidence about puberty blockers says nothing about
+   legal recognition of transgender adults. Target that circumstance instead, as abortion's rape
+   exception does (`targets: rape`, `when: stance < 0 and rape > 0`).
 
 After the challenges, end the topic with a `reask` of the stance ("Having thought about these
 cases, where do you land now?"). Results report shifts as **self-reported reconsideration**, not
@@ -213,6 +218,9 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | National self-government | When it comes to {context}, each country should be left to decide for itself, without other countries or international bodies stepping in, even when {the worst case}. |
   | Deciding locally | When it comes to {context}, decisions should be left to local communities, even when {the cost}. |
   | Deference to experts | When it comes to {context}, governments should follow what {which experts} recommend, even when most voters disagree. |
+  | Same rules for everyone | When it comes to {context}, everyone should be treated by the same rules, whatever their {race or sex}, even when {the cost}. |
+  | Deserved punishment | When it comes to {context}, people who do serious wrong should be punished as they deserve, even {when the cost}. |
+  | Personal responsibility | When it comes to {context}, no one should be made to pay for a wrong they didn't commit themselves, even {when the cost}. |
 
 - **Rewards and punishment are separate principles.** Someone can hold that rewards should be
   earned without holding that punishment should match wrongdoing, so just deserts
@@ -271,6 +279,16 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | officials, regulators, civil servants | unelected bureaucrats, the deep state, so-called experts |
 | international bodies, shared international rules | globalists, new world order |
 | putting your own country first, in plain words | "America First" and other campaign slogans |
+| people living in the country without legal permission | illegal aliens, illegals; "illegal immigrants" and "undocumented immigrants" (each side's term) |
+| sponsoring relatives; few limits on immigration | chain migration; open borders |
+| moving money from police to other services; excessive force | defund the police; police brutality |
+| the number of people in prison; people with convictions | mass incarceration; ex-cons, career criminals |
+| same-sex marriage; gay and lesbian people; sexual orientation | marriage equality, traditional marriage; homosexuals as a noun, sexual preference |
+| sex at birth; transgender women who went through male puberty | biological males, assigned male at birth (each side's term) |
+| puberty blockers and hormones, medical transition | gender-affirming care, sex change, mutilation |
+| considering race; reserved places; naming the groups | racial preferences, reverse discrimination; catch-all labels |
+| the policy itself (leave reserved for each parent, board quotas) | "equal outcomes" as a label for the other side's view |
+| treating everyone equally now; descendants of enslaved people | "doing nothing"; white guilt, victim mentality |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
