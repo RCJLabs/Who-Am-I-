@@ -593,7 +593,7 @@ expect:
     animals: { animal_welfare: "< -0.5", natural_order: "< -0.5" }
     nuclear: { precaution: "< -0.5" }
     gm_food: { market_limits: "< -0.5", natural_order: "< -0.5", retribution: "> 0.3" }
-    ai: { precaution: "< -0.3", retribution: "< 0", subsidiarity: "> 0.3" }
+    ai: { precaution: "< -0.3", retribution: "< 0", subsidiarity: "> 0.3", liberty: "> 0.3" }
     nature: { subsidiarity: "> 0.5", collective_welfare: "> 0.3" }
     gene_editing: { natural_order: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets

@@ -606,7 +606,7 @@ expect:
     reparations: { personal_responsibility: "< -0.5", equality: "> 0.3" }
     prisons: { deserved_punishment: "< 0", liberty: "> 0.3" }
     climate: { future_generations: "> 0.5", liberty: "< -0.5", expertise: "> 0.5", natural_order: "> 0.3" }
-    animals: { animal_welfare: "> 0.3", natural_order: "< -0.5" }
+    animals: { animal_welfare: "> 0.45", natural_order: "< -0.5" }
     nuclear: { precaution: "> 0.3" }
     gm_food: { market_limits: "> 0.5", precaution: "> 0.3" }
     ai: { precaution: "> 0.3", retribution: "> 0.5" }
