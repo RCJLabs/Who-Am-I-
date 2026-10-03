@@ -12,7 +12,8 @@ topics:
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
    trust, changing_mind, official_accounts, settled, supernatural,
-   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates,
+   work, saving, health, gambling, social_media]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -654,6 +655,51 @@ answers:
   birth_rates.ch_korea: worse_without
   birth_rates.ch_hungary: real_gain
   birth_rates.ch_targets: shrinking
+  work.stance: 2 # first call on time and energy, for the family's security
+  work.importance: 4
+  work.four_day: 2
+  work.trade: 4
+  work.own_work: calling
+  work.anchor_cw: 6 # people able to work should, even if they could afford not to...
+  work.anchor_lib: 5 # employers and workers free to agree hours, though not free to end a marriage or gamble
+  work.ch_long_hours: worth_it
+  work.ch_munitions: factory
+  work.ch_keynes: wants_grow
+  work.ch_pilot: volunteers
+  saving.stance: 2 # save most, spend carefully on things that last
+  saving.importance: 3
+  saving.borrowing: 1
+  saving.lending: 4
+  saving.card_cap: 4
+  saving.ch_unspent: for_children
+  saving.ch_rich_fool: joseph
+  saving.ch_regret: worse_regret
+  health.stance: 2 # mostly people's own choices
+  health.importance: 3
+  health.surcharge: 4
+  health.weight_drugs: 2
+  health.wellness: 3
+  health.anchor_cw: 3 # ...but healthy people shouldn't have to carry everyone's care costs
+  health.ch_whitehall: within_grades
+  health.ch_moving: easier
+  health.ch_twins: same_genes
+  gambling.stance: 1 # banned
+  gambling.importance: 3
+  gambling.lotteries: 1
+  gambling.checks: 4
+  gambling.anchor_lib: 2 # not free to bet, though free to speak
+  gambling.ch_norway: fewer_harmed
+  gambling.ch_how_many: families_too
+  gambling.ch_italy: still_less
+  social_media.stance: 6 # closed under 14, consent at 14 and 15
+  social_media.importance: 3
+  social_media.school_phones: 5
+  social_media.age_checks: 4
+  social_media.anchor_pv: 5 # protect teenagers from social media, though not children from smacking
+  social_media.anchor_parents: 5
+  social_media.ch_academies: not_only_health
+  social_media.ch_australia: enforcement
+  social_media.ch_support: safer_places
 expect:
   axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "> 0.9", revising: "< -0.6", intuition: "> 0.6" }
   topicAxes:
@@ -698,6 +744,7 @@ expect:
     afterlife: { beyond_nature: "> 0.9" }
     changing_mind: { revising: "< -0.6", intuition: "> 0.6" }
     marriage: { cultural: "< 0" }
+    gambling: { civil: "> 0.5" }
   principles:
     sanctity_of_life: "> 0.5"
     market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
@@ -750,6 +797,10 @@ expect:
     family_crime: { deserved_punishment: "> 0.3" }
     birth_rates: { collective_welfare: "> 0.3" }
     unions: { loyalty: "< -0.5" }
+    work: { collective_welfare: "> 0.5", liberty: "> 0" }
+    health: { collective_welfare: "< 0", personal_responsibility: "> 0.3" }
+    gambling: { liberty: "< -0.5", protect_vulnerable: "> 0.3" }
+    social_media: { protect_vulnerable: "> 0.3", parents_say: "> 0" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the
   # sanctity of life high on abortion and assisted dying but low on the death penalty; caution with
@@ -782,6 +833,10 @@ expect:
   # but not by coworkers in a strike, or by family against justice; a debt of gratitude to parents
   # but not to society; and parents decide on discipline, but not on blockers their child's doctors
   # recommend.
+  # In lifestyle: a duty to work for the community, but not to share everyone's care costs; free
+  # to speak and to agree working hours, but not to gamble or end a marriage; teenagers protected
+  # from social media, though not children from smacking or people from guns; and parents decide on
+  # discipline and social media, but not on blockers.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -834,3 +889,10 @@ expect:
     - loyalty|family_crime|war
     - gratitude|aging_parents|taxes
     - parents_say|physical_punishment|transgender
+    - collective_welfare|health|work
+    - liberty|free_speech|gambling
+    - liberty|gambling|work
+    - liberty|marriage|work
+    - parents_say|social_media|transgender
+    - protect_vulnerable|guns|social_media
+    - protect_vulnerable|physical_punishment|social_media

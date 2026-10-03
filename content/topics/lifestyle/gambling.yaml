@@ -1,0 +1,274 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What the law should allow for betting on sports and casino games, from banning it to treating it
+# like other products for adults. Step 1 gives religious opponents' own reasons (money taken without
+# anything earned or made, losses that fall on families); step 7 gives the libertarian's (adults
+# decide how to spend their own money). Steps 5-7 differ by advertising and sign-up offers, the
+# live dispute in Australia, Britain, Italy and the US. Lotteries are a circumstance, since every
+# side has its own objection to a government selling them. Feeds the civil spectrum at half weight,
+# as paternalism does: the legal end is the liberty pole. The anchor is liberty (free to bet their
+# own money; invoked by libertarians, rejected here by religious conservatives and the public-health
+# left). "People harmed by gambling" and "people who bet", never "problem gamblers"; no case tells
+# one person's story of ruin.
+id: gambling
+domain: lifestyle
+title: Gambling
+summary: Should betting on sports and casino games be legal, and advertised?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Betting on sports and casino games, in person or online, should be…
+    help: State lotteries come up separately.
+    poles: [Banned, Legal like other products for adults]
+    labels:
+      - "Banned: it takes money without anything earned or made in return, and the losses fall hardest on families"
+      - Allowed only in person, at a few licensed casinos, racetracks or betting shops, with no online betting and no advertising
+      - Legal online, with firm limits on how much anyone can lose, and no advertising
+      - Torn / it depends
+      - Legal online and advertised, but not during live sport, with no sign-up offers like free bets, and checks on people who lose large sums
+      - Legal online and advertised, with age checks, warnings and tools for people to set their own limits
+      - "Legal like other products for adults: adults decide how to spend their own money, with only an age limit"
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: lotteries
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: State-run lotteries, advertised by the government to raise money for public services, are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: checks
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring betting companies to check the finances of customers who lose more than a set amount in a month is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_lib
+    type: likert
+    points: 7
+    text: When it comes to gambling, the government should leave people free to bet their own money, even though some will misuse that freedom to lose money they and their families need.
+    principles: { liberty: 1 }
+    anchor: { principle: liberty, context: gambling, against: the families of people who lose money they need }
+
+  # --- Challenges: for limits --------------------------------------------------------------------
+  - id: ch_bankruptcies
+    type: challenge
+    name: After the apps arrived
+    targets: stance
+    when: stance > 0
+    source: >-
+      Brett Hollenbeck, Poet Larsen and Davide Proserpio, "The Financial Consequences of Legalized
+      Sports Gambling," Management Science (2026)
+    scenario: >-
+      After the US Supreme Court let states legalize sports betting in 2018, many allowed it on
+      phones. Economists compared the credit records of about 7 million Americans in states that did
+      and states that didn't. Within a few years of online betting arriving, more people had gone
+      bankrupt and more debt had gone to collection agencies, mostly among people already close to
+      the edge.
+    text: If legal online betting goes with more people going broke, should it be legal and advertised?
+    options:
+      - id: adults_choose
+        label: Adults are responsible for their own money. Most people who bet do it for fun and within their means.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: limits_help
+        label: That's an argument for tools and checks for people at risk, not for keeping betting from everyone else.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Gambling should face tighter limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_few_accounts
+    type: challenge
+    name: Where the money comes from
+    targets: stance
+    when: stance > 0
+    source: >-
+      NatCen Social Research and the University of Liverpool, "Patterns of Play: Extended Executive
+      Summary Report," for GambleAware (2022)
+    scenario: >-
+      A study of 139,152 British online gambling accounts found that the 5% of accounts that lost
+      the most supplied most of the companies' gambling revenue: at least 70% of it in each of
+      betting, casino games and slots. More than twice as many accounts used for casino games, slots
+      and bingo were in the most deprived fifth of areas as in the least deprived.
+    text: If gambling companies earn most of their money from a small share of people who lose heavily, should it be legal and advertised?
+    options:
+      - id: other_products
+        label: Plenty of products earn most from heavy users. That doesn't make it the law's job to protect adults from their choices.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: target_heavy
+        label: Then put checks and limits on the people who lose the most. Most people who bet aren't among them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Gambling should face tighter limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_savings
+    type: challenge
+    name: Bets instead of savings
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Scott R. Baker, Justin Balthrop, Mark J. Johnson, Jason D. Kotter and Kevin Pisciotta,
+      "Gambling Away Stability: Sports Betting's Impact on Vulnerable Households," Journal of
+      Financial Economics (2026)
+    scenario: >-
+      Using the bank and card records of about 184,000 American households, economists found that
+      when a state legalized online sports betting, households there put about a fifth less into
+      investment accounts, and those with little savings ran up more overdrafts and card debt.
+    text: If some betting money comes out of what families would have invested, should it be legal and advertised?
+    options:
+      - id: their_money
+        label: How families spend their own money is their business, whether on betting or anything else.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: before_too
+        label: People bet before it was legal, offshore and with bookies. Legal betting can at least be checked.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Gambling should face tighter limits than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: for freedom to bet ------------------------------------------------------------
+  - id: ch_norway
+    type: challenge
+    name: Norway's monopoly
+    targets: stance
+    when: stance < 0
+    source: >-
+      Norwegian Gaming Authority (Lotteritilsynet), responsibility and channelling report for 2024
+      (2025)
+    scenario: >-
+      Norway lets only two state-licensed monopolies offer betting and casino games, with a monthly
+      limit on how much anyone can lose. It blocks payments to unlicensed gambling sites and, since
+      2025, the sites themselves. Even so, unlicensed foreign sites took an estimated 22% to 28% of
+      what Norwegians spent on the riskiest games in 2024.
+    text: If people find ways to bet whatever the law says, does banning or tightly limiting it protect them?
+    options:
+      - id: fewer_harmed
+        label: Fewer people bet, and fewer are harmed, even if some get around the rules.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: ads_matter
+        label: My concern is advertising, and Norway shows ads can be curbed even when some betting gets around the rules.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave people freer to bet than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_how_many
+    type: challenge
+    name: How many are harmed
+    targets: stance
+    when: stance < 0
+    source: >-
+      National Council on Problem Gambling (US), prevalence estimates; Gambling Commission, Gambling
+      Survey for Great Britain (2025 report, 2026)
+    scenario: >-
+      About 1% of American adults are estimated to have severe gambling problems, and another 2% to
+      3% milder ones. A 2025 survey in Great Britain, using a newer method, found about 2.4% of
+      adults with signs of problem gambling. Most people who bet show no signs of harm.
+    text: If most people who bet aren't harmed, should the law restrict all of them to protect the few?
+    options:
+      - id: families_too
+        label: People with a gambling disorder often harm their families too, and companies earn much of their money from those who lose the most.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: not_all
+        label: I wouldn't stop anyone betting, only the advertising and easy online access that draw people in.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave people freer to bet than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_italy
+    type: challenge
+    name: Italy's ad ban
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Italy, Decree-Law 87/2018 ("Dignity Decree"), article 9
+    scenario: >-
+      Since 2019, Italy has banned almost all gambling advertising and sponsorship, including on
+      football shirts and in stadiums. Italy's top football league says the ban costs it up to about
+      €100 million a year, foreign betting sites still reach Italians online, and the government has
+      been considering relaxing it.
+    text: If a near-total ban on gambling ads is hard to enforce and costly, should the law ban them?
+    options:
+      - id: still_less
+        label: Fewer ads still means fewer people drawn in. Football clubs can find other sponsors.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: partial
+        label: Then limit the ads, as in step 5, rather than ban them all.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. The law should leave people freer to bet than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Ads during the game
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after the betting-ad limits Australia passed in August 2026
+    scenario: >-
+      A proposed law would allow no more than three betting ads an hour on TV before 8:30pm, none
+      during live sport before 8:30pm, and none on team shirts or in stadiums.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
