@@ -100,10 +100,10 @@ items:
     targets: stance
     when: stance < 0
     source: >-
-      AARP Public Policy Institute, "Valuing the Invaluable: 2023 Update" (2023); AARP and National
-      Alliance for Caregiving, "Caregiving in the U.S. 2020" (2020); Brenda C. Spillman et al.,
-      "Informal Caregiving for Older Americans: An Analysis of the 2011 National Study of
-      Caregiving" (US Department of Health and Human Services, 2014)
+      AARP Public Policy Institute, "Valuing the Invaluable 2023 Update: Strengthening Supports for
+      Family Caregivers" (2023); AARP and National Alliance for Caregiving, "Caregiving in the U.S.
+      2020" (2020); Brenda C. Spillman et al., "Informal Caregiving for Older Americans: An Analysis
+      of the 2011 National Study of Caregiving" (US Department of Health and Human Services, 2014)
     scenario: >-
       In 2021 about 38 million people in the US gave unpaid care to an adult relative or friend who
       needed help with daily life, most often a parent or a spouse. AARP valued the work at about

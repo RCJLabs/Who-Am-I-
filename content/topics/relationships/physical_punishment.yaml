@@ -124,7 +124,7 @@ items:
     text: If smacking doesn't improve children's behavior, and may make it worse, should the law allow it?
     options:
       - id: rare_calm
-        label: Those studies lump all physical punishment together, from a rare smack to frequent hitting. They don't show that a rare, calm smack within limits does harm.
+        label: That review counts everything short of severe assault as physical punishment. It doesn't show that a rare, calm smack within limits does harm.
         reaction: hold
         principles: { parents_say: 0.5 }
       - id: advise
@@ -177,7 +177,7 @@ items:
     when: stance < 0
     source: >-
       Canadian Incidence Study of Reported Child Abuse and Neglect (2003); Joan E. Durrant, Nico
-      Trocmé, Barbara Fallon, Corinne Milne and Tara Black, "Protection of Children From Physical
+      Trocmé, Barbara Fallon, Cheryl Milne and Tara Black, "Protection of Children From Physical
       Maltreatment in Canada: An Evaluation of the Supreme Court's Definition of Reasonable Force,"
       Journal of Aggression, Maltreatment & Trauma (2009)
     scenario: >-
@@ -243,7 +243,7 @@ items:
       In 2005 psychologists Robert Larzelere and Brett Kuhn pooled 26 studies comparing physical
       punishment with other ways of disciplining children. When smacking was used with children aged
       2 to 6 mainly as a backup, for example when a child refused to stay in time-out, it reduced
-      defiance and antisocial behavior more than 10 of 13 other methods. Typical use did about as
+      defiance or antisocial behavior more than 10 of 13 other methods. Typical use did about as
       well as the alternatives, while overly severe use, or relying on it as the main method,
       compared badly.
     text: If a smack used as a backup can work better than most alternatives with young children, should the law forbid it?
@@ -303,8 +303,8 @@ items:
     source: Children (Abolition of Defence of Reasonable Punishment) (Wales) Act 2020
     scenario: >-
       A proposed law would remove parents' legal defense of "reasonable punishment", so that a smack
-      could count as assault, as in Wales since 2022. Minor cases would usually be answered with
-      parenting support rather than prosecution.
+      could count as assault, as in Wales since 2022. Minor cases would rarely be prosecuted, and
+      parents could be offered parenting support instead.
     text: You said you're torn. How would you vote?
     options:
       - id: abstain

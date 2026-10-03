@@ -25,8 +25,8 @@ items:
     text: When it comes to ending a marriage, the law should…
     help: >-
       This is about civil law. Some faiths have their own rules: Catholic teaching doesn't recognize
-      divorce, though it can declare a marriage invalid, while Jewish and Islamic law allow divorce
-      on their own terms.
+      divorce, though it can declare that a marriage was never valid, while Jewish and Islamic law
+      allow divorce on their own terms.
     poles: [Not allow divorce, Allow it whenever either spouse decides]
     labels:
       - Not allow divorce, only legal separation
