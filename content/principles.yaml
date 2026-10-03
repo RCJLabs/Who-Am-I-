@@ -10,9 +10,11 @@
 - id: equality
   label: Equality
   definition: People should be treated equally, and gaps in wealth and opportunity should be narrowed.
+# Rewards only. Someone can hold that rewards should be earned without holding that punishment
+# should match wrongdoing, so punishment is its own principle (deserved_punishment).
 - id: retribution
   label: Just deserts
-  definition: People should get what they deserve, with rewards that match their effort and punishment that matches their wrongdoing.
+  definition: People should get what they deserve, with rewards that match their effort.
 - id: loyalty
   label: Loyalty
   definition: People should stand by their family, community and country, even when it's costly.
@@ -42,6 +44,9 @@
 - id: due_process
   label: Due process
   definition: No one should lose their rights until a fair process has proven they did wrong, even if that lets some dangerous people go free.
+- id: deserved_punishment
+  label: Deserved punishment
+  definition: People who do serious wrong should be punished as they deserve, whatever else the punishment achieves.
 - id: obey_law
   label: Obeying the law
   definition: Laws should be obeyed even by people who think they're unjust, and changed only through legal means.

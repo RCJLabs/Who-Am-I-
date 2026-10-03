@@ -54,7 +54,7 @@ items:
     options:
       - id: deserved
         label: Giving them the punishment they deserve
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
       - id: protect
         label: Protecting the public from them
         principles: { harm_principle: 1 }
@@ -63,10 +63,10 @@ items:
         principles: { harm_principle: 0.5, collective_welfare: 0.5 }
       - id: reform
         label: Helping them change
-        principles: { retribution: -0.5 }
+        principles: { deserved_punishment: -0.5 }
       - id: victims
         label: Giving the victim's family a sense of justice
-        principles: { retribution: 0.5 }
+        principles: { deserved_punishment: 0.5 }
 
   - id: minors
     type: slider
@@ -122,12 +122,12 @@ items:
       - id: no_power
         label: No. He may deserve to die, but no government should have the power to kill its prisoners.
         reaction: distinguish
-        principles: { retribution: 0.5, precaution: 0.5 }
+        principles: { deserved_punishment: 0.5, precaution: 0.5 }
       - id: rethink
         label: Yes. For crimes like this, death can be the just punishment.
         reaction: yield
         revise: stance
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
 
   - id: ch_deterrence
     type: challenge
@@ -175,16 +175,16 @@ items:
       - id: no_mirror
         label: No. Justice doesn't require answering a killing with another killing.
         reaction: hold
-        principles: { retribution: -0.5, sanctity_of_life: 0.5 }
+        principles: { deserved_punishment: -0.5, sanctity_of_life: 0.5 }
       - id: proportionate
         label: Murder deserves severe punishment, but life in prison can be proportionate.
         reaction: distinguish
-        principles: { retribution: 0.5 }
+        principles: { deserved_punishment: 0.5 }
       - id: rethink
         label: There's something to it. Some murders deserve death.
         reaction: yield
         revise: stance
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
 
   # --- Challenges: for the death penalty ---------------------------------------------------------
   - id: ch_innocent
@@ -205,11 +205,11 @@ items:
       - id: safeguards
         label: Yes. Every punishment risks error; the answer is stronger safeguards, not abolition.
         reaction: hold
-        principles: { retribution: 0.5, precaution: -0.5 }
+        principles: { deserved_punishment: 0.5, precaution: -0.5 }
       - id: certainty
         label: Only where guilt is beyond any doubt, such as with DNA or video evidence.
         reaction: distinguish
-        principles: { precaution: 0.5, retribution: 0.5 }
+        principles: { precaution: 0.5, deserved_punishment: 0.5 }
       - id: rethink
         label: No. The risk of executing an innocent person is too great.
         reaction: yield
@@ -232,7 +232,7 @@ items:
       - id: deserved
         label: No. I support it because some crimes deserve it, not to deter.
         reaction: distinguish
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
       - id: still_deters
         label: No. Even if studies can't measure it, the threat of death must stop some killers.
         reaction: hold
@@ -261,11 +261,11 @@ items:
       - id: fix_it
         label: Yes, but the bias must be fixed. It's a flaw in how it's applied, not in the punishment itself.
         reaction: distinguish
-        principles: { retribution: 0.5, equality: 0.5 }
+        principles: { deserved_punishment: 0.5, equality: 0.5 }
       - id: guilt
         label: Yes. A guilty person isn't less guilty because others escaped the same punishment.
         reaction: hold
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
       - id: rethink
         label: No. A punishment this final can't be just if it isn't applied equally.
         reaction: yield
@@ -292,7 +292,7 @@ items:
         label: The death penalty
         reaction: yield
         revise: stance
-        principles: { retribution: 0.5 }
+        principles: { deserved_punishment: 0.5 }
       - id: life
         label: Life in prison
         reaction: yield

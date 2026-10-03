@@ -169,7 +169,7 @@ items:
       - id: guilty
         label: No. He's responsible for the threat; she's innocent. Torture could only ever be used on the guilty.
         reaction: distinguish
-        principles: { retribution: 0.5 }
+        principles: { deserved_punishment: 0.5 }
       - id: numbers
         label: If enough lives were at stake, even this, however monstrous it feels.
         reaction: hold

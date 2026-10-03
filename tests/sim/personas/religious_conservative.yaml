@@ -414,7 +414,7 @@ expect:
   principles:
     sanctity_of_life: "> 0.5"
     market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
-    retribution: "> 0.5"
+    deserved_punishment: "> 0.5" # the death penalty and justice for victims
     natural_order: "> 0.5"
   topicPrinciples:
     moral_foundations:

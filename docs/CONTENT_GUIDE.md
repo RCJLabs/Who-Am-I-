@@ -214,10 +214,11 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Deciding locally | When it comes to {context}, decisions should be left to local communities, even when {the cost}. |
   | Deference to experts | When it comes to {context}, governments should follow what {which experts} recommend, even when most voters disagree. |
 
-- **Just deserts anchors cover rewards only.** The principle also covers punishment, but someone
-  can hold that rewards should be earned without holding that punishment should match wrongdoing.
-  A future punishment anchor (in policing or prisons) needs its own principle, or the tension
-  detector would compare the two as if they were the same claim.
+- **Rewards and punishment are separate principles.** Someone can hold that rewards should be
+  earned without holding that punishment should match wrongdoing, so just deserts
+  (`retribution`) covers rewards only and deserved punishment (`deserved_punishment`) covers
+  punishment. Key an option to the one it's about; one principle for both would let the tension
+  detector compare the two as if they were the same claim.
 - **Deference anchors name the experts and say what they advise.** "Experts" means different
   people on vaccines and on rents, so an issue topic's anchor names them (public-health experts,
   economists) and its help text states their usual advice. Only the general anchor in experts or

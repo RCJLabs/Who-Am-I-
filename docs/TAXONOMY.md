@@ -196,7 +196,8 @@ can surface in both directions.
 | Personal responsibility | | welfare, drugs, abortion | *(effects only)* |
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
 | Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only)* |
-| Just deserts | inheritance (heirs didn't earn it) | support for people who could work, death penalty, prisons | welfare and basic income, inheritance (rewards only: punishment needs its own principle) |
+| Just deserts (rewards) | inheritance (heirs didn't earn it) | support for people who could work | welfare and basic income, inheritance |
+| Deserved punishment | | death penalty, prisons | *(effects only: death penalty, rights of the accused, torture)* |
 | Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |

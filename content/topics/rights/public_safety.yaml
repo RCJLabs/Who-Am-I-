@@ -182,12 +182,12 @@ items:
       - id: narrow
         label: Only for the gravest crimes, with strong new evidence and a court's approval, as the new law requires.
         reaction: distinguish
-        principles: { retribution: 0.5 }
+        principles: { deserved_punishment: 0.5 }
       - id: rethink
         label: Yes, and it makes me think justice for victims should weigh more than I said.
         reaction: yield
         revise: stance
-        principles: { retribution: 1 }
+        principles: { deserved_punishment: 1 }
 
   - id: ch_bail
     type: challenge

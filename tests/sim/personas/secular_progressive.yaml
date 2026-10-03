@@ -411,7 +411,7 @@ expect:
     inheritance: { economic: "< 0" }
     cooperation: { diplomatic: "> 0" }
     foreign_aid: { diplomatic: "> 0" }
-  principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
+  principles: { bodily_autonomy: "> 0.3", retribution: "< 0", deserved_punishment: "< 0" }
   topicPrinciples:
     moral_foundations:
       relief_of_suffering: "> 0.6"
