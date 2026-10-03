@@ -519,7 +519,7 @@ expect:
     policing: { equal_treatment: "> 0.5", due_process: "> 0.5", liberty: "> 0.5" }
     same_sex_marriage: { equal_treatment: "> 0.5", protect_vulnerable: "< 0" }
     transgender: { bodily_autonomy: "> 0.5" }
-    affirmative_action: { equal_treatment: "> 0.5" }
+    affirmative_action: { equal_treatment: "> 0.6" }
     gender_roles: { equal_treatment: "> 0.5" }
     reparations: { personal_responsibility: "> 0.5" }
     prisons: { deserved_punishment: "< 0", liberty: "> 0.3" }
