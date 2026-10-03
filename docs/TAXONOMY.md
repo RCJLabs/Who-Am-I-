@@ -129,7 +129,7 @@ nonbelievers.
 ### How you know
 | Topic | Tier | Evidence | Status | Notes |
 |---|---|---|---|---|
-| Whose word to take (when most specialists agree but some dissent; trust in each institution, news sources and how you check a claim as unscored items) | core | custom | ✅ | the polio boycott, Pauling and vitamin C, doubt for sale; drifting continents, the doctored Alzheimer's images, the stomach-ulcer bacteria |
+| Whose word to take (when most specialists agree but some dissent; trust in each institution, news sources and how you check a claim as unscored items) | core | custom | ✅ | the polio boycott, Pauling and vitamin C, doubt for sale; drifting continents, the manipulated Alzheimer's images, the stomach-ulcer bacteria |
 | Changing your mind (this-or-that: steady or flexible, intuition or analysis) | core | custom | ✅ | after research on open-minded thinking and on intuitive and analytic thinking; original items |
 | Official accounts (sensitive) | extended | custom | ✅ | the Post Office's Horizon system, the virus's origin, Hillsborough; TWA Flight 800, Building 7, the Kennedy acoustics |
 | Settled or open (how much of a hearing dissent should get on questions most specialists consider settled) | extended | custom | ✅ | balance as bias, the GM-rat study's embargo, South Africa's AIDS panel; the impossible crystal, the takedown email, Semmelweis |

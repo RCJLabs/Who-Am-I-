@@ -4,9 +4,9 @@
 # (Hardwig 1985). The stance names no agency or party: trust in any one institution now moves with
 # whoever runs it, so the per-institution items are unscored descriptions. Feeds no spectrum. Two
 # anchors: independent checking on a news outlet's report built on anonymous sources (doubted
-# more on the right, a gap that has held for a decade; trust in vaccine regulators, the first
-# draft's context, was about even by party by 2026; the police context, doubted more on the left,
-# is in official_accounts), and belief that fits the evidence on remedies like homeopathy (set
+# more on the right, a gap Gallup has found since 2004; trust in vaccine regulators, the first
+# draft's context, no longer split clearly by party by 2026, and polls disagreed on which side
+# trusted them more; the police context, doubted more on the left, is in official_accounts), and belief that fits the evidence on remedies like homeopathy (set
 # aside by some on the wellness left and on the right; studies disagree on which side favors
 # alternative medicine more). Cases are balanced by which side they flatter.
 id: trust
@@ -108,7 +108,7 @@ items:
     type: likert
     points: 7
     text: When it comes to a major news outlet's report built on anonymous sources, people should hold off believing it until someone independent has checked it, even if that means doubting reporters who are telling the truth.
-    help: Anonymous sources are people a report relies on without naming them, often because they could lose their jobs for speaking.
+    help: Anonymous sources are people a report relies on without naming them, often because they aren't allowed to speak publicly or could lose their jobs. Readers have to take the outlet's word for who they are.
     principles: { independent_checks: 1 }
     anchor: { principle: independent_checks, context: a major news outlet's report built on anonymous sources, against: trust in reporters who are telling the truth }
 
@@ -158,16 +158,16 @@ items:
     when: stance < 0
     source: >-
       Linus Pauling, Vitamin C and the Common Cold (1970); Edward Creagan et al., "Failure of
-      high-dose vitamin C (ascorbic acid) therapy to benefit patients with advanced cancer," New
-      England Journal of Medicine (1979); Charles Moertel et al., "High-dose vitamin C versus
-      placebo in the treatment of patients with advanced cancer who have had no prior chemotherapy,"
-      New England Journal of Medicine (1985)
+      high-dose vitamin C (ascorbic acid) therapy to benefit patients with advanced cancer: a
+      controlled trial," New England Journal of Medicine (1979); Charles Moertel et al., "High-dose
+      vitamin C versus placebo in the treatment of patients with advanced cancer who have had no
+      prior chemotherapy," New England Journal of Medicine (1985)
     scenario: >-
       Linus Pauling won two Nobel Prizes, one for chemistry and one for peace. Reading the evidence
       for himself, he became convinced that large doses of vitamin C could prevent colds and help
       treat cancer, and millions of people followed his advice. Most specialists disagreed.
-      Controlled trials at the Mayo Clinic, published in 1979 and 1985, found that large doses of
-      vitamin C taken by mouth did nothing for patients with advanced cancer.
+      Controlled trials at the Mayo Clinic, published in 1979 and 1985, found no benefit from large
+      doses of vitamin C taken by mouth for patients with advanced cancer.
     text: If even a brilliant scientist reading the evidence for himself can be wrong where most specialists are right, how far should your own reading count?
     options:
       - id: weigh
@@ -265,7 +265,7 @@ items:
         reaction: hold
         value: 0
       - id: caught
-        label: Studies like this are rare, and another scientist caught this one. That's the checks working.
+        label: Most studies aren't like this, and another scientist caught this one. That's the checks working.
         reaction: distinguish
         value: 0
       - id: rethink
