@@ -186,7 +186,7 @@ items:
     name: A conviction and a deportation
     targets: stance
     when: stance > 0
-    source: Immigration and Nationality Act, 8 U.S.C. §§ 1101(a)(43)(G) and (a)(48)(B), 1229b(a)(3), 1182(a)(9)(A)
+    source: Immigration and Nationality Act, 8 U.S.C. §§ 1101(a)(43)(G), 1101(a)(48)(B), 1182(a)(9)(A), 1227(a)(2), 1229b(a)(3)
     scenario: >-
       In the United States, many convictions make a noncitizen deportable. Even a theft with a
       one-year sentence, suspended, counts as an "aggravated felony" under immigration law. Someone
@@ -221,7 +221,7 @@ items:
       Germany doesn't punish people for helping a relative escape prosecution. France exempts close
       relatives from its offense of hiding a criminal. And since 2013, Chinese courts can't force a
       defendant's spouse, parents or children to appear in court to testify against them.
-    text: If many legal systems spare relatives from acting against one another, should anyone be expected to report their own family?
+    text: If many legal systems make exceptions for close relatives, should anyone be expected to report their own family?
     options:
       - id: excused_not_right
         label: Not punishing relatives isn't the same as saying they did right. Reporting is still what justice asks.

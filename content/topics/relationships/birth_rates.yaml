@@ -150,8 +150,8 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      Statistics Korea, Birth Statistics (2023–2025); South Korea's Basic Plans for Low Fertility
-      and Aging Society (2006–2025)
+      Statistics Korea (since October 2025, the Ministry of Data and Statistics), Birth Statistics
+      (2023–2025); South Korea's Basic Plans for Low Fertility and Aging Society (2006–2025)
     scenario: >-
       From 2006, South Korea's government spent more than 300 trillion won (over $200 billion) on
       plans to raise its birth rate, including payments, housing help and childcare. The fertility
