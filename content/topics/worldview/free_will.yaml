@@ -101,8 +101,9 @@ items:
     when: stance < 0
     source: >-
       Aaron Schurger, Jacobo Sitt and Stanislas Dehaene, "An accumulator model for spontaneous
-      neural activity prior to self-initiated movement," PNAS (2012); Uri Maoz et al., "Neural
-      precursors of decisions that matter," eLife (2019)
+      neural activity prior to self-initiated movement," PNAS (2012); Uri Maoz, Gideon Yaffe,
+      Christof Koch and Liad Mudrik, "Neural precursors of decisions that matter—an ERP study of
+      deliberate and arbitrary choice," eLife (2019)
     scenario: >-
       In the 1980s, Benjamin Libet found a build-up of brain activity before people were aware of
       deciding to move a wrist, and many took it to show that the brain decides before we do. Later
@@ -172,7 +173,7 @@ items:
         reaction: hold
         value: 0
       - id: illness
-        label: A tumor is an illness, and the law already treats it as one. Ordinary choices aren't like that.
+        label: A tumor is an illness, and the law can excuse what illness causes. Ordinary choices aren't like that.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -190,8 +191,8 @@ items:
     scenario: >-
       The philosopher Derk Pereboom imagined a man, Plum, whose reasoning had been programmed by
       scientists so that he would decide, for his own reasons, to kill. Most people say Plum isn't
-      to blame. Pereboom then asked what changes if the programming is done instead by genes and
-      upbringing, as everyone's is.
+      to blame. Pereboom then asked what changes if genes and upbringing do the programming instead,
+      as they would for everyone if every choice has causes.
     text: If Plum isn't to blame, what makes the rest of us different?
     options:
       - id: reasons
@@ -245,7 +246,7 @@ items:
     scenario: >-
       You're on a jury that also decides the sentence. A man has been convicted of armed robbery.
       Experts testify that he grew up with severe abuse, which made it far harder for him to control
-      his anger. The law lets you give the full sentence or a reduced one.
+      his impulses. The law lets you give the full sentence or a reduced one.
     text: You said you're torn. Which would you choose?
     options:
       - id: more_facts

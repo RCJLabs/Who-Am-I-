@@ -70,10 +70,10 @@ items:
       The Germantown Quaker Petition Against Slavery (1688); James Rachels, The Elements of Moral
       Philosophy (1986)
     scenario: >-
-      In 1688, four Quakers in Germantown, Pennsylvania, wrote one of the first protests against
-      slavery in the American colonies, at a time when their own community accepted it. If right
-      and wrong are whatever a culture approves, the philosopher James Rachels pointed out, then
-      people who opposed slavery were wrong until most people agreed with them.
+      In 1688, four men in Germantown, Pennsylvania, sent their Quaker meeting one of the first
+      protests against slavery in the American colonies, at a time when their own community accepted
+      it. If right and wrong are whatever a culture approves, the philosopher James Rachels pointed
+      out, then people who opposed slavery were wrong until most people agreed with them.
     text: Were the petitioners wrong, because most people around them disagreed?
     options:
       - id: shared
@@ -126,10 +126,10 @@ items:
       American Anthropological Association, "Statement on Human Rights" (1947) and "Declaration on
       Anthropology and Human Rights" (1999)
     scenario: >-
-      In 1947, the American Anthropological Association warned the United Nations that a declaration
-      of rights would impose one culture's values on others, since standards are relative to the
-      culture they come from, and it urged respect for every culture. In 1999, the association
-      adopted a declaration supporting human rights for all people.
+      In 1947, the American Anthropological Association's board warned the United Nations that a
+      declaration of rights could impose one culture's values on others, since standards are
+      relative to the culture they come from, and it urged respect for every culture. In 1999, the
+      association adopted a declaration supporting human rights for all people.
     text: Isn't respect for every culture itself a value meant to hold for everyone?
     options:
       - id: ours
@@ -154,7 +154,7 @@ items:
     when: stance > 0
     source: >-
       Richard Nisbett and Dov Cohen, Culture of Honor (1996); John Doris and Alexandra Plakias, "How
-      to Argue about Disagreement" (2008)
+      to Argue about Disagreement: Evaluative Diversity and Moral Realism" (2008)
     scenario: >-
       In experiments at the University of Michigan in the 1990s, young men raised in the American
       South reacted to an insult with more anger, and more readiness for violence, than men raised
@@ -184,11 +184,12 @@ items:
     when: stance > 0
     source: Sharon Street, "A Darwinian Dilemma for Realist Theories of Value," Philosophical Studies (2006)
     scenario: >-
-      The philosopher Sharon Street argued that evolution shaped our moral beliefs, like caring for
-      our children and returning favors, because they helped our ancestors survive, not because they
-      were true. If moral truths existed, she argued, it would be a coincidence for our beliefs to
+      The philosopher Sharon Street argued that evolution shaped our moral beliefs, like that we
+      should care for our children and return favors, because they helped our ancestors survive and
+      have children, not because they were true. If there were moral truths that held whatever
+      anyone believed or valued, she argued, it would be a lucky coincidence for our beliefs to
       match them.
-    text: If evolution shaped our sense of right and wrong to help us survive, why trust it to find the truth?
+    text: If evolution shaped our sense of right and wrong, why trust it to find the truth?
     options:
       - id: eyes
         label: Evolution shaped our eyes to help us survive too, and we still trust them to show what's there.
@@ -235,7 +236,7 @@ items:
   # --- Challenges: aimed at where morality comes from --------------------------------------------
   - id: ch_euthyphro
     type: challenge
-    name: Euthyphro's question
+    name: The Euthyphro question
     targets: god_basis
     when: god_basis > 0
     source: Plato, Euthyphro (about 399 BC); Robert Adams, Finite and Infinite Goods (1999)
@@ -250,7 +251,7 @@ items:
         label: Neither. Goodness is God's own nature, so it isn't arbitrary, and it doesn't stand apart from God.
         reaction: hold
         value: 0
-      - id: caricature
+      - id: not_taught
         label: My tradition never taught that goodness is whatever God happens to command.
         reaction: distinguish
         value: 0

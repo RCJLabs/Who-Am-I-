@@ -51,7 +51,6 @@ items:
       - { id: many_forms, label: One God in many forms }
       - { id: many, label: Many gods }
       - { id: reality, label: A divine reality that isn't a person }
-      - { id: nature, label: "Nature itself, or the universe as a whole" }
       - { id: unsure, label: "Something, but I'm not sure what" }
 
   - id: label
@@ -115,10 +114,10 @@ items:
     when: stance < 0
     source: Martin Rees, Just Six Numbers (1999)
     scenario: >-
-      The astronomer Martin Rees picked out six numbers, such as the strength of the force that binds
-      atomic nuclei, that had to fall within narrow ranges for stars, chemistry and life to exist.
-      Change some of them by a small fraction and the universe would be lifeless. Rees himself
-      suspects there are many universes, and we find ourselves in one where life is possible.
+      The astronomer Martin Rees picked out six numbers, such as how firmly atomic nuclei hold
+      together, that had to fall within narrow ranges for stars, chemistry and life to exist. Change
+      some of them by a small fraction and the universe would be lifeless. Rees himself suspects
+      there are many universes, and we find ourselves in one where life is possible.
     text: If the universe looks set up for life, is a mind behind it the best explanation?
     options:
       - id: many
@@ -174,10 +173,10 @@ items:
       David Hay and Gordon Heald, "Religion is good for you," New Society (1987); William Alston,
       Perceiving God (1991)
     scenario: >-
-      In a 1987 survey, 48% of British adults said that at some time they'd been aware of a presence
-      or a power, whether they called it God or not, different from their everyday selves. The
-      philosopher William Alston argued that we trust our senses without outside proof, and that
-      experiences like these deserve the same trust unless there's reason to doubt them.
+      In a 1987 survey, 48% of British adults said they'd had at least one of several kinds of
+      spiritual experience, and 27% said they'd been aware of the presence of God. The philosopher
+      William Alston argued that we trust our senses without outside proof, and that experiences
+      like these deserve the same trust unless there's reason to doubt them.
     text: If so many people report experiencing something beyond themselves, should that count as evidence?
     options:
       - id: brain
@@ -185,7 +184,7 @@ items:
         reaction: hold
         value: 0
       - id: unchecked
-        label: Our senses can be checked against each other and against other people. These experiences can't.
+        label: Our senses can be checked against each other and against other people. These experiences can't be checked in the same way.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -234,8 +233,8 @@ items:
       Leaving Their Childhood Religions" (2025)
     scenario: >-
       John Stuart Mill noted that "the same causes which make him a Churchman in London, would have
-      made him a Buddhist or a Confucian in Pekin." In a 2025 survey, more than 95% of adults in
-      India, Israel, Nigeria and Thailand still had the religion they were raised in.
+      made him a Buddhist or a Confucian in Pekin." In a survey published in 2025, 95% or more of
+      adults in India, Israel, Nigeria and Thailand still had the religion they were raised in.
     text: If belief mostly follows where people are born, how much should your own upbringing's answer count?
     options:
       - id: examined
@@ -261,8 +260,8 @@ items:
     source: J. L. Schellenberg, Divine Hiddenness and Human Reason (1993)
     scenario: >-
       The philosopher J. L. Schellenberg argued that a perfectly loving God would make sure that
-      anyone open to a relationship with God could at least believe God exists. Yet many people
-      search sincerely for years and find nothing.
+      anyone open to a relationship with God could at least believe God exists. Yet many people say
+      they have searched sincerely for years and found nothing.
     text: If a loving God wanted to be known, why would sincere seekers fail to find God?
     options:
       - id: freedom
