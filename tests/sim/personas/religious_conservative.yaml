@@ -7,7 +7,8 @@ topics:
    value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, honesty, experience_machine, omelas,
    free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
-   democracy, war, cooperation, foreign_aid, local_control, experts]
+   democracy, war, cooperation, foreign_aid, local_control, experts,
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -378,6 +379,90 @@ answers:
   experts.anchor_exp: 2 # wary of deferring to experts in general...
   experts.ch_central_banks: choose
   experts.ch_brennan: equal
+  immigration.stance: 3
+  immigration.importance: 3
+  immigration.children: 3
+  immigration.deport: 4
+  immigration.skills: 4
+  immigration.asylum_abroad: 4
+  immigration.local_refusal: 1
+  immigration.anchor_sov: 7 # each country decides who settles, though outsiders may act against a dictatorship
+  immigration.anchor_resp: 3 # people brought as children may still have to leave...
+  immigration.ch_bracero: decide
+  immigration.ch_prison_rates: absorb
+  immigration.ch_st_louis: refugees
+  policing.stance: 6
+  policing.importance: 3
+  policing.crisis_teams: 3
+  policing.sue_officers: 2
+  policing.minor_offenses: 4
+  policing.no_knock: 4
+  policing.forfeiture: 3
+  policing.anchor_same: 3 # police may take race into account...
+  policing.anchor_pun: 3 # ...and officers who kill unlawfully deserve some leeway
+  policing.ch_star: free_officers
+  policing.ch_ferguson: oversight
+  policing.ch_lots: still_officers
+  same_sex_marriage.stance: 3
+  same_sex_marriage.importance: 4
+  same_sex_marriage.courts: 1
+  same_sex_marriage.therapy_ban: 2
+  same_sex_marriage.blood: 3
+  same_sex_marriage.more_than_two: 1
+  same_sex_marriage.anchor_same: 2 # marriage keeps different rules by sex...
+  same_sex_marriage.ch_windsor: partnerships
+  same_sex_marriage.ch_loving: what_marriage_is
+  transgender.stance: 2
+  transgender.importance: 4
+  transgender.sport: 1
+  transgender.youth_meds: 1
+  transgender.prisons: 1
+  transgender.school_parents: 1
+  transgender.toilets: 5
+  transgender.anchor_prec: 7 # caution with the irreversible for under-18s...
+  transgender.anchor_ba: 2 # ...and adults' medical transition isn't theirs alone to decide
+  transgender.ch_goodwin: pension_only
+  transgender.ch_changing_room: clear_rules
+  transgender.ch_mens_prison: women_first
+  transgender.ch_skrmetti: protect_children
+  affirmative_action.stance: 1
+  affirmative_action.importance: 3
+  affirmative_action.legacy: 2
+  affirmative_action.income: 4
+  affirmative_action.interview_rule: 2
+  affirmative_action.scholarships: 1
+  affirmative_action.anchor_same: 7 # ...but admissions blind to race
+  affirmative_action.ch_prop_209: same_rules
+  affirmative_action.ch_fifty_fifty: after_conflict
+  affirmative_action.ch_legacies: end_them
+  gender_roles.stance: 2
+  gender_roles.importance: 3
+  gender_roles.board_quota: 1
+  gender_roles.home_care: 5
+  gender_roles.pay_gap: 2
+  gender_roles.combat: 2
+  gender_roles.anchor_same: 7 # ...and boards blind to sex
+  gender_roles.ch_child_penalty: their_choice
+  gender_roles.ch_daddy_weeks: no_nudge
+  gender_roles.ch_fertility: commitment
+  reparations.stance: 2
+  reparations.importance: 2 # low: deep items are skipped
+  reparations.universities: 3
+  reparations.descent: 3
+  reparations.museums: 2
+  reparations.anchor_resp: 7 # ...but no one pays for wrongs done generations ago
+  reparations.ch_internment: living_victims
+  reparations.ch_redlining: by_need
+  prisons.stance: 2
+  prisons.importance: 3
+  prisons.minimums: 5
+  prisons.second_look: 2
+  prisons.victim_choice: 2
+  prisons.comfort: 1
+  prisons.anchor_pun: 7 # ...but violent crime is punished as it deserves
+  prisons.ch_texas: dangerous
+  prisons.ch_aging_out: justice
+  prisons.ch_restorative: deserve_prison
 expect:
   axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0" }
   topicAxes:
@@ -411,6 +496,12 @@ expect:
     inheritance: { economic: "> 0" }
     cooperation: { diplomatic: "< 0" }
     foreign_aid: { diplomatic: "> 0" }
+    immigration: { diplomatic: "< 0" }
+    policing: { civil: "> 0" }
+    same_sex_marriage: { cultural: "< 0" }
+    transgender: { cultural: "< 0" }
+    gender_roles: { cultural: "< 0" }
+    prisons: { civil: "> 0" }
   principles:
     sanctity_of_life: "> 0.5"
     market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
@@ -437,6 +528,14 @@ expect:
     cooperation: { sovereignty: "> 0.5" }
     local_control: { subsidiarity: "> 0.3" }
     experts: { expertise: "< 0", equality: "> 0.3" }
+    immigration: { sovereignty: "> 0.5", personal_responsibility: "< 0" }
+    policing: { equal_treatment: "< 0", protect_vulnerable: "> 0.3" }
+    same_sex_marriage: { natural_order: "> 0.3", equal_treatment: "< 0" }
+    transgender: { precaution: "> 0.5", bodily_autonomy: "< 0" }
+    affirmative_action: { equal_treatment: "> 0.5" }
+    gender_roles: { equal_treatment: "> 0.5", liberty: "> 0.3" }
+    reparations: { personal_responsibility: "> 0.5" }
+    prisons: { deserved_punishment: "> 0.5" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the
   # sanctity of life high on abortion and assisted dying but low on the death penalty; caution with
@@ -449,6 +548,11 @@ expect:
   # In governance: outsiders may step in against a dictatorship, but no one may try a country's
   # own soldiers; school curricula are for local communities, but minimum wages aren't; and
   # economists should decide on rents, but not experts in general or doctors on school vaccines.
+  # In society: the same rules whatever someone's race or sex for admissions and boards, but not for
+  # police stops or marriage; deserved punishment for violent crime but leeway for officers who kill
+  # unlawfully; no one pays for wrongs done generations ago, but people brought as children may have
+  # to leave; each country decides who settles; caution with the irreversible for under-18s, though not
+  # for executions; and bodily autonomy for vaccines but not for adults' medical transition.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -473,3 +577,12 @@ expect:
     - subsidiarity|local_control|minimum_wage
     - expertise|experts|housing
     - expertise|housing|vaccine_mandates
+    - sovereignty|immigration|war
+    - personal_responsibility|immigration|reparations
+    - equal_treatment|affirmative_action|policing
+    - equal_treatment|affirmative_action|same_sex_marriage
+    - equal_treatment|gender_roles|policing
+    - equal_treatment|gender_roles|same_sex_marriage
+    - deserved_punishment|policing|prisons
+    - precaution|death_penalty|transgender
+    - bodily_autonomy|transgender|vaccine_mandates

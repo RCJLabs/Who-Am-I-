@@ -4,7 +4,8 @@ topics:
    value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges,
    free_speech, guns, surveillance, religious_liberty, protest, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
-   democracy, war, cooperation, foreign_aid, local_control, experts]
+   democracy, war, cooperation, foreign_aid, local_control, experts,
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -358,6 +359,86 @@ answers:
   experts.anchor_exp: 5
   experts.ch_tetlock: still_know
   experts.ch_eugenics: learned
+  immigration.stance: 4 # torn: the middle vote
+  immigration.importance: 3
+  immigration.children: 4
+  immigration.deport: 3
+  immigration.skills: 4
+  immigration.asylum_abroad: 3
+  immigration.local_refusal: 2
+  immigration.anchor_sov: 4
+  immigration.anchor_resp: 4
+  immigration.ch_vote: "yes"
+  policing.stance: 5
+  policing.importance: 3
+  policing.crisis_teams: 5
+  policing.sue_officers: 4
+  policing.minor_offenses: 4
+  policing.no_knock: 2
+  policing.forfeiture: 2
+  policing.anchor_same: 5
+  policing.anchor_pun: 5
+  policing.ch_star: both
+  policing.ch_ferguson: officers_not_powers
+  policing.ch_lots: do_both
+  same_sex_marriage.stance: 3
+  same_sex_marriage.importance: 3
+  same_sex_marriage.courts: 2
+  same_sex_marriage.therapy_ban: 4
+  same_sex_marriage.blood: 4
+  same_sex_marriage.more_than_two: 1
+  same_sex_marriage.anchor_same: 5
+  same_sex_marriage.ch_windsor: partnerships
+  same_sex_marriage.ch_loving: some_recognition
+  same_sex_marriage.ch_talk_therapy: physical
+  transgender.stance: 3
+  transgender.importance: 3
+  transgender.sport: 2
+  transgender.youth_meds: 2
+  transgender.prisons: 2
+  transgender.school_parents: 1
+  transgender.toilets: 4
+  transgender.anchor_prec: 5
+  transgender.anchor_ba: 3
+  transgender.ch_changing_room: private_rooms
+  transgender.ch_mens_prison: separate_units
+  transgender.ch_skrmetti: hormones_only
+  affirmative_action.stance: 3
+  affirmative_action.importance: 3
+  affirmative_action.legacy: 2
+  affirmative_action.income: 5
+  affirmative_action.interview_rule: 3
+  affirmative_action.scholarships: 2
+  affirmative_action.anchor_same: 5
+  affirmative_action.ch_prop_209: disadvantage
+  affirmative_action.ch_fifty_fifty: after_conflict
+  affirmative_action.ch_legacies: class
+  gender_roles.stance: 5
+  gender_roles.importance: 3
+  gender_roles.board_quota: 3
+  gender_roles.home_care: 4
+  gender_roles.pay_gap: 4
+  gender_roles.combat: 3
+  gender_roles.anchor_same: 5
+  gender_roles.ch_paradox: mothers_only
+  gender_roles.ch_six_months: some_reserved
+  reparations.stance: 4 # torn: the middle vote
+  reparations.importance: 2
+  reparations.universities: 4
+  reparations.descent: 4
+  reparations.museums: 4
+  reparations.anchor_resp: 4
+  reparations.ch_vote: abstain
+  prisons.stance: 3
+  prisons.importance: 3
+  prisons.minimums: 3
+  prisons.second_look: 4
+  prisons.victim_choice: 4
+  prisons.comfort: 2
+  prisons.anchor_pun: 5
+  prisons.ch_texas: low_level
+  prisons.ch_aging_out: older_prisoners
+  prisons.ch_restorative: addition
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -388,6 +469,11 @@ expect:
     inheritance: { economic: "> 0" }
     cooperation: { diplomatic: "> 0" }
     foreign_aid: { diplomatic: "> 0" }
+    policing: { civil: "> 0" }
+    same_sex_marriage: { cultural: "< 0" }
+    transgender: { cultural: "< 0" }
+    gender_roles: { cultural: "> 0" }
+    prisons: { civil: "> 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -401,6 +487,10 @@ expect:
     democracy: { authority: "< 0", protect_vulnerable: "> 0.3" }
     war: { collective_welfare: "> 0.5" }
     experts: { expertise: "> 0.3" }
+    policing: { equal_treatment: "> 0" }
+    transgender: { precaution: "> 0" }
+    affirmative_action: { equality: "> 0.3" }
+    prisons: { deserved_punishment: "> 0" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -409,4 +499,6 @@ expect:
   # about the same for people who could work and for heirs.
   # In governance too: national self-government, deciding locally and deferring to experts each
   # weigh about the same wherever they come up.
+  # In society too: the same rules for everyone, deserved punishment, personal responsibility and
+  # self-government each weigh about the same wherever they come up.
   tensions: []

@@ -4,7 +4,8 @@ topics:
    surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine,
    free_speech, guns, surveillance, protest, torture, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
-   democracy, war, cooperation, foreign_aid, local_control, experts]
+   democracy, war, cooperation, foreign_aid, local_control, experts,
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -372,8 +373,85 @@ answers:
   experts.ch_central_banks: technical
   experts.ch_brennan: inform
   experts.ch_fluoride: choice
+  immigration.stance: 6
+  immigration.importance: 3
+  immigration.children: 5
+  immigration.deport: 2
+  immigration.skills: 4
+  immigration.asylum_abroad: 2
+  immigration.local_refusal: 4
+  immigration.anchor_sov: 5
+  immigration.anchor_resp: 7
+  immigration.ch_trust: welcome
+  immigration.ch_canada: build
+  immigration.ch_brain_drain: move
+  policing.stance: 3
+  policing.importance: 3
+  policing.crisis_teams: 5
+  policing.sue_officers: 5
+  policing.minor_offenses: 2
+  policing.no_knock: 1
+  policing.forfeiture: 1
+  policing.anchor_same: 7
+  policing.anchor_pun: 7
+  policing.ch_officers: serious_crime
+  policing.ch_residents: change_role
+  policing.ch_ceasefire: fewer_officers
+  same_sex_marriage.stance: 6
+  same_sex_marriage.importance: 3
+  same_sex_marriage.courts: 3
+  same_sex_marriage.therapy_ban: 2
+  same_sex_marriage.blood: 5
+  same_sex_marriage.more_than_two: 5
+  same_sex_marriage.anchor_same: 7
+  same_sex_marriage.ch_purpose: couple
+  same_sex_marriage.ch_two: separate
+  transgender.stance: 5
+  transgender.importance: 2 # low: deep items are skipped
+  transgender.sport: 2
+  transgender.youth_meds: 3
+  transgender.prisons: 2
+  transgender.anchor_prec: 4
+  transgender.anchor_ba: 7
+  transgender.ch_womens_groups: private_groups
+  affirmative_action.stance: 1
+  affirmative_action.importance: 3
+  affirmative_action.legacy: 1
+  affirmative_action.income: 3
+  affirmative_action.interview_rule: 1
+  affirmative_action.scholarships: 1
+  affirmative_action.anchor_same: 7
+  affirmative_action.ch_prop_209: same_rules
+  affirmative_action.ch_fifty_fifty: individuals
+  affirmative_action.ch_legacies: end_them
+  gender_roles.stance: 3
+  gender_roles.importance: 2
+  gender_roles.board_quota: 1
+  gender_roles.home_care: 2
+  gender_roles.pay_gap: 1
+  gender_roles.anchor_same: 7
+  gender_roles.ch_child_penalty: their_choice
+  gender_roles.ch_daddy_weeks: no_nudge
+  reparations.stance: 3
+  reparations.importance: 2
+  reparations.universities: 4
+  reparations.descent: 4
+  reparations.museums: 4
+  reparations.anchor_resp: 7
+  reparations.ch_internment: living_victims
+  reparations.ch_redlining: neighborhoods
+  prisons.stance: 5
+  prisons.importance: 3
+  prisons.minimums: 1
+  prisons.second_look: 5
+  prisons.victim_choice: 5
+  prisons.comfort: 3
+  prisons.anchor_pun: 5
+  prisons.ch_pardon: repeat_offenders
+  prisons.ch_norway: norway_only
+  prisons.ch_mediation: abuse_cases
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< -0.5" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -405,6 +483,12 @@ expect:
     inheritance: { economic: "> 0" }
     cooperation: { diplomatic: "< 0" }
     foreign_aid: { diplomatic: "< 0" }
+    immigration: { diplomatic: "> 0" }
+    policing: { civil: "< 0" }
+    same_sex_marriage: { cultural: "> 0" }
+    transgender: { cultural: "> 0" }
+    gender_roles: { cultural: "< 0" }
+    prisons: { civil: "< 0" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -431,6 +515,14 @@ expect:
     foreign_aid: { loyalty: "> 0.3" }
     local_control: { subsidiarity: "> 0.5", equality: "< 0" }
     experts: { expertise: "< 0" }
+    immigration: { personal_responsibility: "> 0.5", sovereignty: "> 0" }
+    policing: { equal_treatment: "> 0.5", due_process: "> 0.5", liberty: "> 0.5" }
+    same_sex_marriage: { equal_treatment: "> 0.5", protect_vulnerable: "< 0" }
+    transgender: { bodily_autonomy: "> 0.5" }
+    affirmative_action: { equal_treatment: "> 0.5" }
+    gender_roles: { equal_treatment: "> 0.5" }
+    reparations: { personal_responsibility: "> 0.5" }
+    prisons: { deserved_punishment: "< 0", liberty: "> 0.3" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
@@ -440,6 +532,9 @@ expect:
   # Governance adds two, both on deferring to experts: economists should decide on rents, but
   # not experts in general or doctors on school vaccines. National self-government and deciding
   # locally stay high everywhere.
+  # Society adds none: the same rules for everyone in all four places, deserved punishment and
+  # personal responsibility weighed alike in both, and bodily autonomy high for transition too.
+  # Open to immigration but not to aid or international bodies, so the diplomatic score is mixed.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty
