@@ -87,7 +87,8 @@ items:
     scenario: >-
       During the Second World War, the US government forced about 120,000 people of Japanese
       descent, most of them US citizens, into camps. In 1988 Congress formally apologized and
-      promised $20,000 to each survivor. Payments to about 82,000 people began in 1990.
+      promised $20,000 to each survivor. Payments began in 1990 and eventually reached about 82,000
+      people.
     text: If a government can owe a debt for one past wrong, why not for slavery and segregation?
     options:
       - id: living_victims
@@ -111,7 +112,9 @@ items:
     when: stance < 0
     source: >-
       Daniel Aaronson, Daniel Hartley and Bhashkar Mazumder, "The Effects of the 1930s HOLC
-      'Redlining' Maps," American Economic Journal: Economic Policy (2021)
+      'Redlining' Maps," American Economic Journal: Economic Policy (2021); Price Fishback et al.,
+      "The HOLC Maps: How Race and Poverty Influenced Real Estate Professionals' Evaluation of
+      Lending Risk in the 1930s," Journal of Economic History (2023)
     scenario: >-
       In the 1930s a US government agency drew maps of cities that marked many neighborhoods,
       including almost every Black neighborhood, as hazardous for lending. Decades later, researchers

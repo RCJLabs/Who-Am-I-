@@ -232,10 +232,10 @@ items:
       Ceiling? The Effect of Board Quotas on Female Labour Market Outcomes in Norway," Review of
       Economic Studies (2019)
     scenario: >-
-      In the 2000s Norway required the boards of public limited companies to be at least 40% women.
-      The women appointed were better qualified than the women on boards before them and the pay gap
-      on boards shrank, but researchers found no measurable gain for women working lower down in
-      those companies.
+      In the 2000s Norway required the boards of public limited companies to be at least 40% women
+      (formally, at least 40% of each sex). The women appointed were better qualified than the
+      women on boards before them and the pay gap on boards shrank, but researchers found no
+      measurable gain for women working lower down in those companies.
     text: If quotas change the boardroom but little else, are they worth it?
     options:
       - id: top_jobs

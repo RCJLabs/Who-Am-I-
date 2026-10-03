@@ -205,9 +205,9 @@ items:
     source: Ricci v. DeStefano, 557 U.S. 557 (2009)
     scenario: >-
       In 2004 New Haven, Connecticut, threw out the results of its 2003 promotion exams for
-      firefighters because no Black candidates scored high enough to be promoted. Firefighters who
-      had passed, all of them white but one Hispanic, sued, and in 2009 the US Supreme Court ruled
-      that the city had discriminated against them.
+      firefighters because no Black candidates scored high enough to be promoted. Seventeen white
+      firefighters and one Hispanic firefighter who had passed sued, and in 2009 the US Supreme Court
+      ruled, 5 to 4, that the city had discriminated against them.
     text: Is it fair to set aside results because of who passed?
     options:
       - id: wrong_test

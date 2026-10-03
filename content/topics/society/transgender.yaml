@@ -244,8 +244,8 @@ items:
     deep: true
     when: stance > 0.5
     source: >-
-      Scottish Prison Service, urgent case review (February 2023) and Policy for the Management of
-      Transgender People in Custody (December 2023)
+      Scottish Prison Service, urgent case review (findings released February 2023) and Policy for
+      the Management of Transgender People in Custody (December 2023)
     scenario: >-
       In 2023 a person in Scotland convicted of raping two women, who had begun living as a woman
       after being charged, was first sent to a women's prison. After a public outcry the person was

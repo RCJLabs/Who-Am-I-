@@ -88,7 +88,7 @@ items:
     when: stance < 0
     source: >-
       Council of State Governments Justice Center, Justice Reinvestment in Texas (2009); The Texas
-      Tribune on the closing of the Central Unit (August 2011)
+      Tribune (August 2011) and the Houston Chronicle on the closing of the Central Unit
     scenario: >-
       In 2007, facing a forecast that it would need about 17,000 more prison beds, Texas spent
       $241 million on treatment, probation and parole programs instead of building new prisons. Its
@@ -206,8 +206,9 @@ items:
     scenario: >-
       A study in Norway compared similar defendants who did and didn't go to prison, depending on
       which judge they happened to get. Those sent to prison were 29 percentage points less likely to
-      reoffend within five years. Among those who'd been out of work, more found jobs afterward,
-      helped by training inside; among those who'd had jobs, fewer kept working.
+      reoffend within five years. The drop came from people who'd been out of work, more of whom
+      found jobs afterward, helped by training inside. People who'd had jobs were less likely to
+      keep working.
     text: If prison itself can turn lives around, should courts avoid it?
     options:
       - id: norway_only
