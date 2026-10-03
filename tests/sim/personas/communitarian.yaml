@@ -6,7 +6,8 @@ topics:
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
-   climate, animals, nuclear, gm_food, ai, nature]
+   climate, animals, nuclear, gm_food, ai, nature,
+   god, free_will, morality, afterlife, personal_identity]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -500,6 +501,38 @@ answers:
   nature.ch_bat_tunnel: poor_planning
   nature.ch_cape_wind: process
   nature.ch_snail_darter: lucky
+  god.stance: 4 # undecided: the middle challenge
+  god.importance: 3
+  god.kind: [unsure]
+  god.label: none
+  god.practice: [services]
+  god.science: 3
+  god.anchor_evidence: 4
+  god.anchor_exp: 4
+  god.ch_vote: neither
+  free_will.stance: 4 # torn: the middle challenge
+  free_will.importance: 3
+  free_will.theory: unsure
+  free_will.anchor_desert: 5
+  free_will.anchor_evidence: 4
+  free_will.ch_vote: reduced
+  morality.stance: 5
+  morality.importance: 3
+  morality.source: [culture, reason, god]
+  morality.god_basis: 3
+  morality.ch_honor: same_values
+  morality.ch_survival: eyes
+  morality.ch_strange: like_math
+  afterlife.stance: 3 # leaning toward going on
+  afterlife.importance: 3
+  afterlife.form: [unknown]
+  afterlife.ch_images: few
+  afterlife.ch_fading: instrument
+  afterlife.ch_dying_brain: not_based
+  personal_identity.stance: 4 # torn: the middle challenge
+  personal_identity.importance: 2
+  personal_identity.same_person: body
+  personal_identity.ch_vote: stay
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -536,6 +569,7 @@ expect:
     gender_roles: { cultural: "> 0" }
     prisons: { civil: "> 0" }
     climate: { economic: "< 0" }
+    afterlife: { beyond_nature: "> 0.2" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -563,6 +597,7 @@ expect:
     taxes: { future_generations: "> 0.2" }
     trade: { animal_welfare: "> 0.2" }
     strangers: { future_generations: "> 0.3" }
+    free_will: { deserved_punishment: "< 0.1" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -575,4 +610,6 @@ expect:
   # self-government each weigh about the same wherever they come up.
   # In environment too: future generations, animal welfare, caution with the irreversible, deference
   # to experts and deciding locally each weigh about the same wherever they come up.
+  # In worldview as well: deserved punishment, deference to experts and belief that fits the
+  # evidence each weigh about the same wherever they come up.
   tensions: []
