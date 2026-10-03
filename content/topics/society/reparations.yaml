@@ -1,0 +1,275 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What a government owes for its past wrongs. The ladder separates apology, living victims,
+# programs for descendants, and payments, because each is a position people actually hold (the 1988
+# payments to interned Japanese Americans went to living victims). No spectrum: "treat everyone the
+# same now" isn't the tradition end, and the question divides people within each side. The anchor is
+# personal responsibility (paying for wrongs done generations ago, where the right tends to invoke
+# it); the left invokes it in immigration (people brought as children). Yields toward repair record
+# equality; toward treating everyone the same now, personal responsibility.
+id: reparations
+domain: society
+title: Reparations
+summary: What, if anything, does a government owe for historical wrongs like slavery?
+tier: extended
+order: 7
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: For past wrongs by the state, such as slavery and legal segregation, the government today should…
+    poles: [Treat everyone equally now, Pay descendants]
+    labels:
+      - Treat everyone equally now, with no apology or payment for the past
+      - Formally apologize, without payments
+      - Compensate victims who are still alive, but not their descendants
+      - Torn / it depends
+      - Fund programs, like scholarships and housing grants, for descendants and their communities
+      - Make direct payments to descendants
+      - Pay descendants enough to close today's wealth gap between groups
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: universities
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Universities that profited from slavery funding scholarships for descendants of the people they enslaved is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: descent
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Basing any payments on proven descent from enslaved people, rather than on race, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: museums
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Museums returning objects taken during colonial wars to the countries they came from is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: colonial
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Former colonial powers paying compensation to the countries they once ruled is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { personal_responsibility: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_resp
+    type: likert
+    points: 7
+    text: When it comes to wrongs done generations ago, like slavery, no one should be made to pay for a wrong they didn't commit themselves, even when the victims' descendants are still worse off because of it.
+    principles: { personal_responsibility: 1 }
+    anchor: { principle: personal_responsibility, context: wrongs done generations ago, against: repairing harms still felt today }
+
+  # --- Challenges: for repair --------------------------------------------------------------------
+  - id: ch_internment
+    type: challenge
+    name: The internment camps
+    targets: stance
+    when: stance < 0
+    source: Civil Liberties Act of 1988 (Public Law 100-383)
+    scenario: >-
+      During the Second World War, the US government forced about 120,000 people of Japanese
+      descent, most of them US citizens, into camps. In 1988 Congress formally apologized and paid
+      $20,000 to each of about 82,000 survivors.
+    text: If a government can owe a debt for one past wrong, why not for slavery and segregation?
+    options:
+      - id: living_victims
+        label: Those payments went to living victims. The victims and perpetrators of slavery are long gone.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: segregation_victims
+        label: Living victims of segregation should be compensated too. Descendants are a different matter.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to repairing past wrongs than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_redlining
+    type: challenge
+    name: The red lines
+    targets: stance
+    when: stance < 0
+    source: >-
+      Daniel Aaronson, Daniel Hartley and Bhashkar Mazumder, "The Effects of the 1930s HOLC
+      'Redlining' Maps," American Economic Journal: Economic Policy (2021)
+    scenario: >-
+      In the 1930s a US government agency drew maps of cities that marked mostly Black neighborhoods
+      as hazardous for lending. Decades later, areas marked in red still had lower home ownership and
+      house values than similar areas just outside the lines.
+    text: If a government policy from living memory still shapes people's wealth, is it really in the past?
+    options:
+      - id: by_need
+        label: Today's taxpayers didn't draw those lines. Help people by need, not by history.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: neighborhoods
+        label: Invest in those neighborhoods, with help open to everyone who lives there.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me more open to repairing past wrongs than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_owners_paid
+    type: challenge
+    name: Paying the owners
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Slavery Abolition Act 1833; Full Fact, "The Slavery Abolition Act loan" (2018), on the
+      Treasury's statement about the debt
+    scenario: >-
+      When Britain abolished slavery in 1833, it paid £20 million, about 40% of the government's
+      yearly budget, to compensate slave owners, and nothing to the people who had been enslaved.
+      Much of the money was borrowed, and the last bonds from refinancing that debt were redeemed in
+      2015.
+    text: If taxpayers helped pay the owners into this century, why not the descendants of the enslaved?
+    options:
+      - id: history
+        label: Both are history now. Today's government should treat everyone the same.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: apology
+        label: A wrong on that scale deserves an apology, not payments from people alive today.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to repairing past wrongs than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenges: for treating everyone the same now --------------------------------------------
+  - id: ch_scale
+    type: challenge
+    name: The size of the bill
+    targets: stance
+    when: stance > 0
+    source: William Darity Jr. and A. Kirsten Mullen, From Here to Equality (2020) and later estimates
+    scenario: >-
+      Economist William Darity and writer Kirsten Mullen, leading advocates of reparations in the
+      US, have estimated that closing the racial wealth gap would cost about $14 trillion, roughly
+      $350,000 for each eligible person.
+    text: Is a bill that large realistic, or fair to taxpayers with no link to slavery?
+    options:
+      - id: size_of_wrong
+        label: Yes. The size of the debt reflects the size of the wrong.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: start_smaller
+        label: Start with programs and living victims, and build from there.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want a smaller response than I said.
+        reaction: yield
+        revise: stance
+        principles: { personal_responsibility: 0.5 }
+
+  - id: ch_proof
+    type: challenge
+    name: Proving the injury
+    targets: stance
+    when: stance > 0
+    source: In re African-American Slave Descendants Litigation, 471 F.3d 754 (7th Cir. 2006)
+    scenario: >-
+      When descendants of enslaved people sued companies that had profited from slavery, a federal
+      appeals court dismissed the case in 2006. It ruled that descent alone didn't show that any
+      particular person alive today had been injured by those companies.
+    text: Can a wrong done to people long dead give their descendants a claim today?
+    options:
+      - id: passed_down
+        label: Yes. The harm was passed down through generations, in wealth and opportunity.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: legislatures
+        label: Courts aren't the place for this. Elected lawmakers are.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not easily. It makes me want a smaller response than I said.
+        reaction: yield
+        revise: stance
+        principles: { personal_responsibility: 0.5 }
+
+  - id: ch_superseded
+    type: challenge
+    name: When injustice fades
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Jeremy Waldron, "Superseding Historic Injustice," Ethics (1992)
+    scenario: >-
+      Philosopher Jeremy Waldron, a liberal, argued that as circumstances change over generations,
+      claims arising from old injustices can fade, while the duty to make present conditions fair
+      remains.
+    text: Is the duty to repair a past wrong different from the duty to fix present unfairness?
+    options:
+      - id: legacy
+        label: No. Present unfairness is the past wrong's legacy, and naming it matters.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: fix_present
+        label: Fix present unfairness for everyone who suffers it, whatever their ancestry.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want a smaller response than I said.
+        reaction: yield
+        revise: stance
+        principles: { personal_responsibility: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The housing grants
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after a local program in the US
+    scenario: >-
+      A proposed law would give housing grants to people who suffered housing discrimination by the
+      government between 1919 and 1969, or to their descendants.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { personal_responsibility: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

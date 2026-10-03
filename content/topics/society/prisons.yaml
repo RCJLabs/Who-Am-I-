@@ -1,0 +1,279 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much courts should rely on prison for crimes like burglary and assault. The death penalty's
+# "aim of punishment" choice already asks what punishment is for, so this topic asks how much to
+# use prison, with a step for short but certain terms, the center-right reform position. Feeds the
+# civil spectrum at half weight, reverse-keyed (long sentences are the authority end). The anchor is
+# deserved punishment (violent crime, where the right tends to invoke it); the left invokes it in
+# policing (officers who kill without legal justification). Yields toward less prison record liberty;
+# toward more, protecting the vulnerable.
+id: prisons
+domain: society
+title: Prisons and sentencing
+summary: Should courts rely on prison, or on alternatives, for crimes like burglary and assault?
+tier: extended
+order: 8
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: For crimes like burglary and assault causing injury, courts should…
+    poles: [Rely on long prison sentences, Rely on alternatives to prison]
+    labels:
+      - Give long sentences, with mandatory minimums for repeat offenders
+      - Send most offenders to prison, for longer than now
+      - Give short but certain prison terms, with alternatives for first offenders
+      - Torn / it depends
+      - Use alternatives for most first-time offenders, and prison for repeat or violent ones
+      - Use alternatives by default, keeping prison for people who are dangerous
+      - Replace prison with treatment, community programs and repairing the harm
+    axes: { civil: -0.5 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: minimums
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A mandatory minimum prison sentence for a third serious offense is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { deserved_punishment: 0.5 }
+
+  - id: second_look
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting people who have served 20 years of a sentence ask a judge to shorten it is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { deserved_punishment: -0.5 }
+
+  - id: victim_choice
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting a burglary victim choose a meeting with the offender and repayment instead of a prison sentence is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: comfort
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Prisons designed to be as much like ordinary life as possible, as in Norway, are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { deserved_punishment: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_pun
+    type: likert
+    points: 7
+    text: When it comes to violent crime, people who do serious wrong should be punished as they deserve, even if a shorter sentence with rehabilitation would prevent more crime later.
+    principles: { deserved_punishment: 1 }
+    anchor: { principle: deserved_punishment, context: violent crime, against: preventing more crime later }
+
+  # --- Challenges: for less prison ---------------------------------------------------------------
+  - id: ch_texas
+    type: challenge
+    name: Texas changes course
+    targets: stance
+    when: stance < 0
+    source: Council of State Governments Justice Center, Justice Reinvestment in Texas (2009)
+    scenario: >-
+      In 2007, facing a forecast that it would need about 17,000 more prison beds, Texas spent
+      $241 million on treatment, probation and parole programs instead of building new prisons. Its
+      prison population stopped growing, crime kept falling, and in 2011 it closed a prison for the
+      first time in its history.
+    text: If Texas could slow its prisons' growth without more crime, why rely on long sentences?
+    options:
+      - id: dangerous
+        label: Crime fell for many reasons. Long sentences keep dangerous people off the streets.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: low_level
+        label: Treatment for drug and low-level offenses, yes. Long sentences for violence.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want courts to rely less on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_aging_out
+    type: challenge
+    name: Growing out of crime
+    targets: stance
+    when: stance < 0
+    source: US Sentencing Commission, The Effects of Aging on Recidivism Among Federal Offenders (2017)
+    scenario: >-
+      A US study followed people released from federal prison. Of those released before age 21,
+      67.6% were arrested again within eight years, against 13.4% of those released at 65 or older.
+    text: If people grow out of crime, what do the last years of a long sentence achieve?
+    options:
+      - id: justice
+        label: Justice. A serious crime deserves a serious sentence, whatever happens later.
+        reaction: hold
+        principles: { deserved_punishment: 0.5 }
+      - id: older_prisoners
+        label: Let older prisoners ask for release, but keep long sentences for violence.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not much. It makes me want courts to rely less on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_restorative
+    type: challenge
+    name: Facing the victim
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Heather Strang, Lawrence Sherman, Evan Mayo-Wilson, Daniel Woods and Barak Ariel, "Restorative
+      Justice Conferencing (RJC) Using Face-to-Face Meetings of Offenders and Victims," Campbell
+      Systematic Reviews (2013)
+    scenario: >-
+      A review of ten trials found that meetings between offenders and their victims, held alongside
+      or instead of ordinary punishment, modestly cut reoffending, and that victims who took part
+      were more satisfied than victims whose cases went through court alone.
+    text: If victims prefer it and it cuts reoffending, should more cases be handled this way?
+    options:
+      - id: deserve_prison
+        label: Some crimes deserve prison, whatever the victim prefers.
+        reaction: hold
+        principles: { deserved_punishment: 0.5 }
+      - id: addition
+        label: As an addition to sentences, yes. As a replacement, no.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want courts to rely less on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for more prison ---------------------------------------------------------------
+  - id: ch_pardon
+    type: challenge
+    name: The mass pardon
+    targets: stance
+    when: stance > 0
+    source: >-
+      Paolo Buonanno and Steven Raphael, "Incarceration and Incapacitation: Evidence from the 2006
+      Italian Collective Pardon," American Economic Review (2013)
+    scenario: >-
+      In 2006 Italy released about a third of its prisoners at once in a collective pardon, and crime
+      rose. Researchers estimated that each year a person had been kept in prison had prevented
+      between about 14 and 46 crimes.
+    text: If prison stops that much crime, can alternatives keep people as safe?
+    options:
+      - id: sudden_release
+        label: Releasing people overnight without support says little about planned alternatives.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: repeat_offenders
+        label: Keep prison for repeat offenders, and use alternatives for the rest.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Maybe not. It makes me want courts to rely more on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_norway
+    type: challenge
+    name: Prison that works
+    targets: stance
+    when: stance > 0
+    source: >-
+      Manudeep Bhuller, Gordon Dahl, Katrine Løken and Magne Mogstad, "Incarceration, Recidivism, and
+      Employment," Journal of Political Economy (2020)
+    scenario: >-
+      A study in Norway compared similar defendants who did and didn't go to prison, depending on
+      which judge they happened to get. Those sent to prison were 29 percentage points less likely to
+      reoffend within five years, and more likely to find work, helped by training inside.
+    text: If prison itself can turn lives around, should courts avoid it?
+    options:
+      - id: norway_only
+        label: Norway's prisons are built to rehabilitate. Most prisons aren't.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: better_prisons
+        label: Then make prisons more like Norway's, and still use them less.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want courts to rely more on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_mediation
+    type: challenge
+    name: When mediation is banned
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Spain, Organic Law 1/2004 on Comprehensive Protection Measures against Gender Violence, article 44.5
+    scenario: >-
+      Spain's 2004 law on violence against women bans mediation in those cases, on the grounds that
+      a victim can't negotiate as an equal with the person who abused her.
+    text: Can alternatives that bring offenders and victims together put victims at risk?
+    options:
+      - id: special_rules
+        label: Some cases need special rules, but alternatives still work for most crimes.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: abuse_cases
+        label: Keep mediation out of abuse cases, and use it elsewhere.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want courts to rely more on prison than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Shorter sentences, more police
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would shorten sentences for property crimes like burglary and shoplifting, and
+      spend the savings on more police and on support for victims.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { deserved_punishment: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

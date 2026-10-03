@@ -50,6 +50,11 @@
 - id: obey_law
   label: Obeying the law
   definition: Laws should be obeyed even by people who think they're unjust, and changed only through legal means.
+# Separate from equality, whose definition also covers narrowing gaps: in race-conscious admissions
+# the two collide.
+- id: equal_treatment
+  label: Same rules for everyone
+  definition: Everyone should be treated by the same rules, whatever group they belong to, even when that leaves gaps between groups.
 - id: sovereignty
   label: National self-government
   definition: Each country should run its own affairs, without other countries or international bodies stepping in, even when it runs them badly.
@@ -64,7 +69,7 @@
   definition: Individuals should accept burdens for the good of the community.
 - id: personal_responsibility
   label: Personal responsibility
-  definition: People take on obligations through their voluntary choices.
+  definition: People take on obligations through their own voluntary choices, and don't answer for choices they didn't make.
 - id: doing_vs_allowing
   label: Doing vs. allowing
   definition: Actively causing harm is worse than failing to prevent it.

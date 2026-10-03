@@ -1,0 +1,303 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much money and power police should have. Size and powers are separate questions (many people
+# want steady budgets but tighter limits, or more officers and the same powers), so only the top
+# step adds powers; the rest are circumstances. Feeds the civil spectrum at full weight (more police
+# is the authority end). Two anchors, both where the left tends to invoke the principle: the same
+# rules whatever someone's race (whom police stop) and deserved punishment (officers who kill
+# without legal justification); the matching anchors where the right invokes them are in
+# affirmative_action and prisons. Yields toward fewer police record liberty; toward more, protecting
+# the vulnerable.
+id: policing
+domain: society
+title: Policing
+summary: Should police get more money and power, or less?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Compared with now, the police in your area should get…
+    poles: [Far less, Far more]
+    labels:
+      - "Far less: most of what police do should be handed to other services"
+      - Much less, with the money moved to health, housing and violence prevention
+      - Somewhat less, with some calls handed to other services
+      - Torn / it depends
+      - Somewhat more, mainly to hire officers
+      - Much more, with many more officers
+      - Much more, with more officers and wider powers to stop, search and detain
+    axes: { civil: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: crisis_teams
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Sending unarmed health workers instead of police to calls about people in a mental-health crisis is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: sue_officers
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Making it easier to sue police officers personally when they violate someone's rights is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { equal_treatment: 0.5 }
+
+  - id: minor_offenses
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Police arresting or fining people for minor offenses, like dodging fares, to keep public spaces orderly is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { authority: 0.5 }
+
+  - id: no_knock
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Police entering homes without knocking to carry out search warrants, so evidence can't be destroyed, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { liberty: -0.5 }
+
+  - id: forfeiture
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Police seizing cash or property suspected of links to crime, without convicting the owner, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { due_process: -0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_same
+    type: likert
+    points: 7
+    text: When it comes to whom police stop and search, everyone should be treated by the same rules, whatever their race, even if taking race into account would help police find more weapons.
+    principles: { equal_treatment: 1 }
+    anchor: { principle: equal_treatment, context: whom police stop and search, against: finding more weapons and catching more crime }
+
+  - id: anchor_pun
+    type: likert
+    points: 7
+    text: When it comes to police officers who kill someone without legal justification, people who do serious wrong should be punished as they deserve, even when that makes it harder to recruit and keep officers.
+    principles: { deserved_punishment: 1 }
+    anchor: { principle: deserved_punishment, context: police officers who kill without legal justification, against: recruiting and keeping enough officers }
+
+  # --- Challenges: for more police ---------------------------------------------------------------
+  - id: ch_officers
+    type: challenge
+    name: More officers, fewer killings
+    targets: stance
+    when: stance < 0
+    source: >-
+      Aaron Chalfin, Benjamin Hansen, Emily Weisburst and Morgan Williams Jr., "Police Force Size
+      and Civilian Race," American Economic Review: Insights (2022)
+    scenario: >-
+      A study of large US cities over nearly four decades found that each additional police officer
+      prevented about 0.06 to 0.1 homicides a year, and the benefit per person was about twice as
+      large for Black residents. Larger forces also made more arrests for minor offenses, and those
+      fell most heavily on Black residents.
+    text: If more police save lives, most of all in Black communities, is cutting police the right answer?
+    options:
+      - id: other_ways
+        label: Lives can be saved in other ways, without the arrests for minor offenses that come with more police.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: serious_crime
+        label: Hire officers to tackle serious violence, but stop arresting people for minor offenses.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Maybe not. It makes me want more police than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_residents
+    type: challenge
+    name: What residents want
+    targets: stance
+    when: stance < 0
+    source: Gallup, "Black Americans Want Police to Retain Local Presence" (August 2020)
+    scenario: >-
+      In a Gallup poll taken in mid-2020, weeks after nationwide protests over police killings,
+      81% of Black Americans said they wanted police to spend the same amount of time (61%) or more
+      time (20%) in their area.
+    text: Shouldn't the people most affected by crime have the most say on policing?
+    options:
+      - id: presence
+        label: Wanting police around isn't the same as wanting more spent on them. How they police matters more.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: change_role
+        label: Keep police in those areas, but change what they do there.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more police than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_ceasefire
+    type: challenge
+    name: Operation Ceasefire
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Anthony Braga, David Kennedy, Elin Waring and Anne Morrison Piehl, "Problem-Oriented Policing,
+      Deterrence, and Youth Violence: An Evaluation of Boston's Operation Ceasefire," Journal of
+      Research in Crime and Delinquency (2001)
+    scenario: >-
+      In 1996 Boston police, working with community leaders and outreach workers, told gang members
+      that any killing would bring a crackdown on their whole group, while offering help to anyone
+      who wanted out. Youth homicides in the city fell by about 63%.
+    text: Doesn't cutting violence take focused police work, not less of it?
+    options:
+      - id: fewer_officers
+        label: Focused work like that can be done with fewer officers, not more.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: community
+        label: It worked because communities and outreach workers led it. Fund them, not bigger police forces.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more police than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: for fewer police --------------------------------------------------------------
+  - id: ch_star
+    type: challenge
+    name: Health workers, not officers
+    targets: stance
+    when: stance > 0
+    source: >-
+      Thomas Dee and Jaymes Pyne, "A community response approach to mental health and substance
+      abuse crises reduced crime," Science Advances (2022)
+    scenario: >-
+      In 2020 Denver began sending a medic and a mental-health worker, instead of police, to some
+      calls about mental-health crises, drug use and homelessness. Where the program ran, reports of
+      minor crimes fell by about a third, partly because health workers don't file crime reports,
+      and violent crime didn't rise.
+    text: If other services can handle some calls better, why spend more on police?
+    options:
+      - id: free_officers
+        label: Programs like that free officers for serious crime. We still need more of them.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: both
+        label: Fund both, crisis teams for those calls and police for crime.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Fair point. It makes me want less spent on police than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_ferguson
+    type: challenge
+    name: Policing for revenue
+    targets: stance
+    when: stance > 0
+    source: US Department of Justice, Civil Rights Division, Investigation of the Ferguson Police Department (2015)
+    scenario: >-
+      In 2015 the US Justice Department found that the city of Ferguson, Missouri, had pressed its
+      police to raise money through fines and fees. Its court took in about $2.5 million in 2013,
+      and the investigators found that many stops and arrests were driven by revenue rather than
+      public safety.
+    text: Do police powers always get used for the purposes they're given?
+    options:
+      - id: oversight
+        label: That was one city's failure. The answer is oversight, not fewer police.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: officers_not_powers
+        label: More officers, yes. Wider powers, no.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No, and it makes me want less spent on police than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_lots
+    type: challenge
+    name: Cleaning up empty lots
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Charles Branas et al., "Citywide cluster randomized trial to restore blighted vacant land and
+      its effects on violence, crime, and fear," Proceedings of the National Academy of Sciences
+      (2018)
+    scenario: >-
+      In a Philadelphia experiment, cleaning up and planting hundreds of vacant lots cut gun violence
+      around them by 29% in the poorest neighborhoods.
+    text: If simple changes to places can prevent violence, how much of safety is about police at all?
+    options:
+      - id: still_officers
+        label: Both matter, but where violence is high, people need officers too.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: do_both
+        label: Do both, and judge each by what it achieves.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Less than I thought. It makes me want less spent on police than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A city's budget
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed city budget would hire 10% more police officers to focus on violent crime, and set
+      up unarmed health teams to answer calls about mental health, homelessness and drugs.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

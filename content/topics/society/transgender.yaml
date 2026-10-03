@@ -1,0 +1,353 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Where the law separates men and women, how it should treat transgender people. The ladder covers
+# how a change of legal sex is gained (surgery, diagnosis, declaration) and where it applies; medical
+# treatment for under-18s is a circumstance, and the evidence about it (the Cass Review, Skrmetti)
+# challenges that circumstance, not the ladder. Wording: "sex at birth", "transgender women who went
+# through male puberty"; no slogans from either side. Feeds the cultural spectrum at full weight.
+# Two anchors: caution with the irreversible (treatment for under-18s, where the right tends to
+# invoke it) and bodily autonomy (adults' medical transition, where the left does). Yields toward
+# recognition record liberty; toward sex at birth, protecting the vulnerable or the natural order.
+id: transgender
+domain: society
+title: Transgender people and the law
+summary: Where the law separates men and women, how should it treat transgender people?
+tier: core
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Where the law separates men and women, transgender people should be treated…
+    help: For example on birth certificates and passports, and in sport, prisons, changing rooms and toilets.
+    poles: [By sex at birth everywhere, By gender identity everywhere]
+    labels:
+      - By their sex at birth everywhere, with no way to change their legal sex
+      - By their sex at birth, though adults who've had surgery may change their legal sex
+      - By a new legal sex after a medical diagnosis and years living that way, but by sex at birth in sport, prisons and other single-sex spaces
+      - Torn / it depends
+      - By a new legal sex on their own declaration, but by sex at birth in sport, prisons and other single-sex spaces
+      - By their gender identity on their own declaration, with sport and prisons decided case by case
+      - By their gender identity on their own declaration, in every area, including sport and prisons
+    axes: { cultural: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: sport
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Transgender women who went through male puberty competing in women's sport is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  - id: youth_meds
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Prescribing puberty blockers to under-18s with severe distress about their sex, outside a research study, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { precaution: -0.5 }
+
+  - id: prisons
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Holding a transgender woman who hasn't had genital surgery in a women's prison is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: school_parents
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A school using a pupil's new name and pronouns without telling the parents is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { authority: -0.5 }
+
+  - id: toilets
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring everyone to use the toilets and changing rooms of their sex at birth is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_prec
+    type: likert
+    points: 7
+    text: When it comes to puberty blockers and hormones for under-18s who want to transition, the risk of a mistake that can never be undone should make us hold back, even if that means some young people go through a distressing puberty whose changes can't be undone either.
+    principles: { precaution: 1 }
+    anchor: { principle: precaution, context: puberty blockers and hormones for under-18s, against: sparing young people a puberty they find distressing }
+
+  - id: anchor_ba
+    type: likert
+    points: 7
+    text: When it comes to medical transition, an adult's right to decide what happens to their own body should come first.
+    principles: { bodily_autonomy: 1 }
+    anchor: { principle: bodily_autonomy, context: medical transition for adults, against: protecting people from a decision they may regret }
+
+  # --- Challenges: for recognition ---------------------------------------------------------------
+  - id: ch_goodwin
+    type: challenge
+    name: The pension at 60
+    targets: stance
+    when: stance < -0.5
+    source: Christine Goodwin v. United Kingdom, European Court of Human Rights, Grand Chamber, no. 28957/95 (2002)
+    scenario: >-
+      Christine Goodwin, a transgender woman who'd had surgery paid for by the NHS, couldn't draw her
+      state pension at 60 as other women could, and her National Insurance number revealed her
+      history to employers. In 2002 the European Court of Human Rights ruled unanimously that this
+      violated her rights, and Britain created a way to change legal sex in 2004.
+    text: Should someone in her position be able to change their legal sex?
+    options:
+      - id: privacy
+        label: Her records can be kept private without changing her legal sex.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: pension_only
+        label: Protect her pension and privacy, but keep sex at birth for single-sex spaces.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want the law to recognize transgender people more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_changing_room
+    type: challenge
+    name: The changing room
+    targets: stance
+    when: stance < 0
+    source: >-
+      Original scenario, based on guidance on single-sex spaces after For Women Scotland v The
+      Scottish Ministers (UK Supreme Court, 2025)
+    scenario: >-
+      A transgender man has taken testosterone for ten years and has a beard. Under rules that go
+      only by sex at birth, he has to use the women's changing room at his gym.
+    text: Do rules that go only by sex at birth protect women's privacy here?
+    options:
+      - id: clear_rules
+        label: Clear rules based on sex at birth work best, even if some cases are awkward.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: private_rooms
+        label: Rare cases like his can be handled with private changing rooms.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want the law to recognize transgender people more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_mens_prison
+    type: challenge
+    name: In the men's prison
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Valerie Jenness, Cheryl Maxson, Kristy Matsuda and Jennifer Sumner, Violence in California
+      Correctional Facilities: An Empirical Examination of Sexual Assault (2007)
+    scenario: >-
+      A 2007 study for the state of California interviewed 39 transgender women held in men's
+      prisons. 59% said they had been sexually assaulted in prison, against 4.4% of a random sample
+      of other prisoners.
+    text: Is holding transgender women in men's prisons safe?
+    options:
+      - id: women_first
+        label: Women prisoners' safety comes first. Protect transgender women some other way.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: separate_units
+        label: Separate units for transgender prisoners would protect everyone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want the law to recognize transgender people more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for sex at birth --------------------------------------------------------------
+  - id: ch_womens_groups
+    type: challenge
+    name: Who counts as a woman in law
+    targets: stance
+    when: stance > 0
+    source: For Women Scotland Ltd v The Scottish Ministers [2025] UKSC 16
+    scenario: >-
+      In 2025 the UK Supreme Court ruled that "sex" in Britain's Equality Act means sex at birth.
+      Part of its reasoning: otherwise, an association for women only, such as a lesbian group,
+      could have to admit members born male who hold a certificate recognizing them as women.
+    text: Should groups for women be able to limit membership by sex at birth?
+    options:
+      - id: legal_change
+        label: No. A legal change of sex should count everywhere, or it means little.
+        reaction: hold
+        principles: { equal_treatment: 0.5 }
+      - id: private_groups
+        label: Private groups like that, yes. Public services, no.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more areas kept to sex at birth than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_running
+    type: challenge
+    name: After two years of hormones
+    targets: stance
+    when: stance > 0.5
+    source: >-
+      Timothy Roberts, Jeremy Smalley and Dale Ahrendt, "Effect of gender affirming hormones on
+      athletic performance in transwomen and transmen," British Journal of Sports Medicine (2021)
+    scenario: >-
+      A study of transgender members of the US Air Force found that after two years of hormone
+      treatment, transgender women's advantage over other women in push-ups and sit-ups had
+      disappeared, but they still ran 1.5 miles about 12% faster.
+    text: Is it fair for women to compete against athletes who went through male puberty?
+    options:
+      - id: inclusion
+        label: Sport has always had natural differences between athletes. Including everyone matters more.
+        reaction: hold
+        principles: { equal_treatment: 0.5 }
+      - id: elite
+        label: Fair in everyday sport; elite women's events can have their own rules.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want sport kept to sex at birth more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_prison_transfer
+    type: challenge
+    name: The prison transfer
+    targets: stance
+    deep: true
+    when: stance > 0.5
+    source: Scottish Prison Service, review of the management of transgender prisoners (2023)
+    scenario: >-
+      In 2023 a person in Scotland convicted of raping two women, who had begun living as a woman
+      after being charged, was first sent to a women's prison. After a public outcry the person was
+      moved, and Scotland changed its rules on where transgender prisoners are held.
+    text: Should a person's declared gender decide where they're held, whatever their crimes?
+    options:
+      - id: rare
+        label: Rare cases shouldn't set the rules for everyone else.
+        reaction: hold
+        principles: { equal_treatment: 0.5 }
+      - id: by_risk
+        label: Place prisoners by risk, not by declaration alone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want prisons kept to sex at birth more than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: aimed at treatment for under-18s ----------------------------------------------
+  - id: ch_cass
+    type: challenge
+    name: The Cass Review
+    targets: youth_meds
+    when: youth_meds > 0
+    source: >-
+      Hilary Cass, Independent Review of Gender Identity Services for Children and Young People:
+      Final Report (April 2024); NHS England, clinical policy on puberty blockers (March 2024)
+    scenario: >-
+      In 2024 an independent review for England's health service found that the evidence that
+      puberty blockers help young people with distress about their sex was very weak. England
+      stopped prescribing them routinely outside research. Sweden (2022) and Finland (2020) had
+      already restricted their use.
+    text: Should doctors keep prescribing them outside research studies?
+    options:
+      - id: harms_of_waiting
+        label: Yes. Going through puberty has harms too, and major US medical bodies still support this care.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: research
+        label: Only within research studies, so better evidence can be gathered.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me more cautious about blockers than I said.
+        reaction: yield
+        revise: youth_meds
+        principles: { precaution: 0.5 }
+
+  - id: ch_skrmetti
+    type: challenge
+    name: When parents and doctors agree
+    targets: youth_meds
+    when: youth_meds < 0
+    source: United States v. Skrmetti, US Supreme Court (2025)
+    scenario: >-
+      In 2025 the US Supreme Court upheld Tennessee's ban on puberty blockers and hormones for
+      transgender minors. The ban applies even when the young person, their parents and their
+      doctors all agree on treatment.
+    text: Should the state overrule parents and doctors who agree?
+    options:
+      - id: protect_children
+        label: Yes. When the evidence is this uncertain, the state should protect children.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: hormones_only
+        label: Ban hormones and surgery for under-18s, but let doctors and families decide about blockers.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me more open to letting families decide than I said.
+        reaction: yield
+        revise: youth_meds
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Declaration, with exceptions
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would let adults change the sex on their legal documents by their own
+      declaration. Sports bodies, prisons and single-sex services such as women's refuges could
+      still separate people by sex at birth where fairness or safety requires.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
