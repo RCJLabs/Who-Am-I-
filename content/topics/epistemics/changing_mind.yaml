@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How someone weighs and revises their views, as this-or-that choices where both ends have serious
+# defenders. Two spectrums, four pairs each, with the side that scores higher alternating so always
+# picking left or right lands in the middle. "Steady or flexible": holding a view while you check a
+# challenge to it, or loosening your grip right away (the peer-disagreement pair follows Kelly 2005
+# against Christensen 2007 and Elga 2007). "Intuition or analysis": which you lean on when the two
+# conflict; Pacini and Epstein (1999) found the two styles uncorrelated, so this is a lean, not a
+# type. "View", not "belief": items about revising beliefs track religiosity (Stanovich & Toplak
+# 2019). This describes how people see themselves; their record on challenges is shown separately.
+id: changing_mind
+domain: epistemics
+title: Changing your mind
+summary: Quick this-or-that choices about how you weigh and revise your views.
+tier: core
+order: 2
+evidence: custom
+source: >-
+  Inspired by research on open-minded thinking (Jonathan Baron; Keith Stanovich and Richard West)
+  and on intuitive and analytic thinking (Rosemary Pacini and Seymour Epstein, 1999); the questions
+  are original.
+instructions: >-
+  Each question sets two reasonable ways of thinking against each other. Pick the one closer to how
+  you think, then say whether it's slightly or strongly. There are no right answers.
+items:
+  # --- Steady or flexible ------------------------------------------------------------------------
+  - id: strong_argument
+    type: pair
+    text: When a strong argument goes against a view you've held for years, which is wiser?
+    options:
+      - { id: keep, label: "Keep your view until you've had time to look for the flaw", axes: { revising: -1 } }
+      - { id: loosen, label: "Become less sure right away, before you've found one", axes: { revising: 1 } }
+
+  - id: peer
+    type: pair
+    text: When someone as informed and careful as you disagrees with you, which is wiser?
+    options:
+      - { id: less_sure, label: Become less sure of your view, axes: { revising: 1 } }
+      - { id: as_sure, label: "Stay as sure, once you've rechecked your reasoning", axes: { revising: -1 } }
+
+  - id: admire
+    type: pair
+    text: Which do you admire more?
+    options:
+      - { id: convictions, label: Someone who holds to their convictions under pressure, axes: { revising: -1 } }
+      - { id: evidence, label: Someone who changes their mind when the evidence changes, axes: { revising: 1 } }
+
+  - id: old_views
+    type: pair
+    text: Views you've held for a long time…
+    options:
+      - { id: scrutiny, label: …deserve the same scrutiny as new ones, axes: { revising: 1 } }
+      - { id: earned, label: …have usually earned their place, axes: { revising: -1 } }
+
+  # --- Intuition or analysis ---------------------------------------------------------------------
+  - id: numbers
+    type: pair
+    text: When your judgment from experience and the numbers point different ways, which do you go with?
+    options:
+      - { id: experience, label: My judgment from experience, axes: { intuition: -1 } }
+      - { id: numbers, label: The numbers, axes: { intuition: 1 } }
+
+  - id: hiring
+    type: pair
+    text: Two candidates for a job have equally good records. Which should get it?
+    options:
+      - { id: test, label: The one who scored higher on a structured test, axes: { intuition: 1 } }
+      - { id: impression, label: The one who impressed you more in person, axes: { intuition: -1 } }
+
+  - id: offers
+    type: pair
+    text: Two job offers look equally good on paper. Which is the better way to choose?
+    options:
+      - { id: feels_right, label: Take the one that feels right, axes: { intuition: -1 } }
+      - { id: weigh, label: List the differences and weigh them, axes: { intuition: 1 } }
+
+  - id: honest
+    type: pair
+    text: To judge whether someone is being honest with you, which do you rely on more?
+    options:
+      - { id: check, label: "Checking what they've said against the facts", axes: { intuition: 1 } }
+      - { id: sense, label: Your sense of them after talking, axes: { intuition: -1 } }
+
+  # --- Describing yourself (never scored) --------------------------------------------------------
+  - id: changed
+    type: multi
+    text: In the last few years, have you changed your mind about something important? Choose any that fit.
+    options:
+      - { id: politics, label: "Yes, about politics or society" }
+      - { id: big_questions, label: "Yes, about religion or life's big questions" }
+      - { id: someone, label: "Yes, about someone in my life" }
+      - { id: how_i_live, label: "Yes, about how I live or work" }
+      - { id: other, label: "Yes, about something else" }
+      - { id: not_really, label: "No, not really" }

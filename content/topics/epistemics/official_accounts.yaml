@@ -1,0 +1,268 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# When an official account of a major event is widely disputed, who usually turns out closer to the
+# truth: the account or its critics? The middle is a real position (particularism: judge each case
+# on its own evidence; Pigden 1995). Sensitive: some answers carry stigma. Feeds no spectrum: which
+# accounts people doubt depends on who issues them, and that shifts with who holds power. One
+# anchor, independent checking on what police say after an officer shoots someone (invoked more on
+# the left; the vaccine context, invoked more on the right, is in trust). Cases are balanced by
+# which side they flatter, and each proven failure says how it came out and how long it took.
+# No named elections, parties or living politicians.
+id: official_accounts
+domain: epistemics
+title: Official accounts
+summary: When an official account is widely disputed, who usually turns out closer to the truth?
+tier: extended
+order: 3
+evidence: custom
+sensitive: true
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: >-
+      When the official account of a major event, like a disaster, a war, an outbreak or a police
+      shooting, is widely disputed, who usually turns out closer to the truth?
+    help: Critics can be journalists, whistleblowers, researchers, members of the public or other governments.
+    poles: [The official account, Its critics]
+    labels:
+      - The official account, almost always. Alternatives rarely survive checking
+      - The official account, in most cases
+      - The official account, a little more often
+      - Torn / it depends on the case
+      - Its critics, a little more often
+      - Its critics, in most cases
+      - Its critics, almost always. Official accounts protect those in power
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_check
+    type: likert
+    points: 7
+    text: When it comes to what police say after an officer shoots someone, people should hold off believing it until someone independent has checked it, even if that means doubting officers who are telling the truth.
+    principles: { independent_checks: 1 }
+    anchor: { principle: independent_checks, context: what police say after an officer shoots someone, against: trust in officers who are telling the truth }
+
+  # --- Challenges: for the critics ---------------------------------------------------------------
+  - id: ch_horizon
+    type: challenge
+    name: The Post Office's computers
+    targets: stance
+    when: stance < 0
+    source: >-
+      Bates v Post Office Ltd (No 6: Horizon Issues) [2019] EWHC 3408 (QB); Post Office (Horizon
+      System) Offences Act 2024
+    scenario: >-
+      From 1999, Britain's Post Office prosecuted hundreds of the people who ran its local branches
+      for theft and false accounting, insisting that its Horizon computer system was reliable. They
+      said the missing money was the system's fault. In 2019 the High Court found that Horizon had
+      bugs that could cause such shortfalls, and in 2024 Parliament passed a law overturning the
+      convictions, about twenty years after the first ones.
+    text: If an official account can stand for twenty years against the people who said it was wrong, how much should it count when it's disputed?
+    options:
+      - id: checks_worked
+        label: The courts and a public inquiry found the truth in the end. The checks worked, slowly.
+        reaction: hold
+        value: 0
+      - id: own_system
+        label: That was an organization defending its own system. Accounts from independent investigators are different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Critics may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_origin
+    type: challenge
+    name: Where the virus came from
+    targets: stance
+    when: stance < 0
+    source: >-
+      Charles Calisher et al., "Statement in support of the scientists, public health
+      professionals, and medical professionals of China combatting COVID-19," The Lancet (2020),
+      and its addendum (2021); WHO Scientific Advisory Group for the Origins of Novel Pathogens,
+      report (2025)
+    scenario: >-
+      In February 2020, 27 scientists signed a letter in The Lancet condemning "conspiracy theories
+      suggesting that COVID-19 does not have a natural origin." Its organizer didn't disclose that
+      his organization had worked with the Wuhan laboratory at the center of those suggestions; the
+      journal added a note in 2021. From February to May 2021, Facebook removed posts claiming the
+      virus was man-made. Since then the FBI, the CIA and the Energy Department have judged a
+      laboratory accident more likely, most with low confidence, while a World Health Organization
+      advisory group found natural spillover more likely but couldn't rule out a laboratory.
+    text: If a possibility was dismissed as a conspiracy theory before the evidence was in, how far should you trust official certainty when it's disputed?
+    options:
+      - id: still_open
+        label: The origin is still unresolved. Scientists overreaching doesn't make the critics right.
+        reaction: hold
+        value: 0
+      - id: scientists
+        label: That was scientists rushing to judgment, not officials hiding what they knew.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Critics may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_hillsborough
+    type: challenge
+    name: Hillsborough
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Hillsborough Independent Panel, report (2012); the Hillsborough inquests, verdicts (2016)
+    scenario: >-
+      In 1989, 97 Liverpool football fans died after a crush at Hillsborough stadium in Sheffield;
+      the last died of his injuries in 2021. Police blamed drunk and ticketless fans, and a national
+      newspaper printed the claims under the headline "The Truth". The families disputed that
+      account for decades. In 2012 an independent panel found that police had altered 164
+      statements, 116 of them to remove or change comments unfavorable to the police. In 2016 new
+      inquests found that the fans had been unlawfully killed and weren't to blame.
+    text: If the families were right and the official account wrong for 23 years, how much should official accounts count when they're disputed?
+    options:
+      - id: panel
+        label: An independent panel set up by the government found the truth. Official inquiries can correct official accounts.
+        reaction: hold
+        value: 0
+      - id: police
+        label: That was police defending themselves. Independent investigations are different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Critics may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenges: for the official account ------------------------------------------------------
+  - id: ch_twa800
+    type: challenge
+    name: Flight 800
+    targets: stance
+    when: stance > 0
+    source: >-
+      National Transportation Safety Board, "In-Flight Breakup Over the Atlantic Ocean, Trans World
+      Airlines Flight 800," Aircraft Accident Report (2000)
+    scenario: >-
+      In 1996 TWA Flight 800 exploded off Long Island, killing all 230 people aboard. Dozens of
+      witnesses described a streak of light rising toward the plane, and many people came to believe
+      it had been shot down by a missile. After a four-year investigation, the National
+      Transportation Safety Board concluded that fuel vapor in a nearly empty tank had most likely
+      been ignited by a spark from faulty wiring, and that what witnesses saw was most likely the
+      burning plane itself. In 2014 the board declined to reopen the case.
+    text: If many witnesses backed the alternative and it still didn't survive checking, how often do critics turn out right?
+    options:
+      - id: steered
+        label: Investigations can be steered. Witnesses who saw something deserved more weight than they got.
+        reaction: hold
+        value: 0
+      - id: accident
+        label: No one had a motive to hide an accident's cause. My doubts are about officials protecting themselves.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Official accounts may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_wtc7
+    type: challenge
+    name: The third tower
+    targets: stance
+    when: stance > 0
+    source: >-
+      National Institute of Standards and Technology, Final Report on the Collapse of World Trade
+      Center Building 7 (2008)
+    scenario: >-
+      On September 11, 2001, a 47-story building at the World Trade Center, Building 7, collapsed in
+      the late afternoon, though no plane had hit it. Many people came to believe it had been brought
+      down deliberately. After a three-year investigation, the National Institute of Standards and
+      Technology concluded that fires, left to burn because the water supply for the sprinklers had
+      been cut, caused a key column to fail. It called this the first known case of a tall building
+      collapsing mainly because of fire.
+    text: If a famous alternative account didn't hold up, what does that say about how often critics are right?
+    options:
+      - id: same_government
+        label: The investigation was run by the government whose account was in question, and some engineers still dispute it.
+        reaction: hold
+        value: 0
+      - id: engineering
+        label: That's a question about engineering. My doubts are about officials hiding their own mistakes.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Official accounts may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_acoustics
+    type: challenge
+    name: The sound of a fourth shot
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      House Select Committee on Assassinations, Final Report (1979); National Research Council,
+      Report of the Committee on Ballistic Acoustics (1982)
+    scenario: >-
+      In 1979 a committee of the US House of Representatives concluded that President Kennedy was
+      "probably assassinated as a result of a conspiracy," mainly because sounds on a police radio
+      recording seemed to show a fourth shot. In 1982 a panel of the National Academy of Sciences
+      found that the sounds had been recorded about a minute after the shooting.
+    text: If even an official finding of conspiracy fell apart when it was checked, how often do alternative accounts survive checking?
+    options:
+      - id: withheld
+        label: The CIA's own historian later found that the agency had kept things from the first inquiry. Doubting it was reasonable.
+        reaction: hold
+        value: 0
+      - id: one_case
+        label: One famous case can't settle how often critics turn out right.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Official accounts may be right more often than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The engineer's claim
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A former engineer at a government agency says it hid the real cause of a deadly accident. The
+      agency denies it. Its internal files will be released in ten years.
+    text: You said you're torn. At even odds, which would you bet the files will support?
+    options:
+      - id: no_bet
+        label: I wouldn't bet.
+        reaction: hold
+        value: 0
+      - id: engineer
+        label: The engineer
+        reaction: yield
+        revise: stance
+        value: 0
+      - id: agency
+        label: The agency
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

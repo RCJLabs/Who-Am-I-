@@ -7,7 +7,8 @@ topics:
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
-   god, free_will, morality, afterlife, personal_identity]
+   god, free_will, morality, afterlife, personal_identity,
+   trust, changing_mind, official_accounts, settled, supernatural]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -569,8 +570,50 @@ answers:
   personal_identity.ch_branch: carries_on
   personal_identity.ch_torture: habit
   personal_identity.ch_two: what_matters
+  trust.stance: 6 # the majority, unless there's a specific reason to doubt them
+  trust.importance: 3
+  trust.trusted: [scientists, doctors, health_agencies, universities, major_news, courts, unions, international]
+  trust.distrusted: [big_business, drug_companies, tech_companies, intelligence, police]
+  trust.news: [papers, podcasts, radio]
+  trust.checking: [others_agree, source, official]
+  trust.anchor_check: 2 # a regulator's word on a new vaccine is enough...
+  trust.anchor_evidence: 7
+  trust.ch_drift: new_evidence
+  trust.ch_alzheimers: caught
+  trust.ch_ulcers: system
+  changing_mind.strong_argument: loosen
+  changing_mind.peer: less_sure
+  changing_mind.admire: evidence
+  changing_mind.old_views: scrutiny
+  changing_mind.numbers: experience
+  changing_mind.hiring: impression
+  changing_mind.offers: feels_right
+  changing_mind.honest: sense
+  changing_mind.changed: [politics, how_i_live]
+  official_accounts.stance: 5 # the critics, a little more often
+  official_accounts.importance: 2
+  official_accounts.anchor_check: 7 # ...but police after a shooting need independent checks
+  official_accounts.ch_twa800: accident
+  official_accounts.ch_wtc7: engineering
+  settled.stance: 6 # very little: equal airtime misleads
+  settled.importance: 3
+  settled.ch_apa: research
+  settled.ch_takedown: answered
+  settled.ch_semmelweis: data
+  supernatural.spirits_dead: dont
+  supernatural.contact: dont
+  supernatural.other_spirits: dont
+  supernatural.foresight: not_sure
+  supernatural.astrology: dont
+  supernatural.evil_eye: dont
+  supernatural.holy_objects: dont
+  supernatural.charms: dont
+  supernatural.practices: [none]
+  supernatural.religion: none_held
+  supernatural.experiences: [dream]
+  supernatural.understanding: ordinary
 expect:
-  axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5", beyond_nature: "< -0.6" }
+  axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5", beyond_nature: "< -0.6", revising: "> 0.6", intuition: "< -0.6" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -611,6 +654,7 @@ expect:
     climate: { economic: "< -0.5" }
     god: { beyond_nature: "< -0.5" }
     afterlife: { beyond_nature: "< -0.9" }
+    changing_mind: { revising: "> 0.6", intuition: "< -0.6" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0", deserved_punishment: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -655,6 +699,8 @@ expect:
     strangers: { future_generations: "> 0.5" }
     god: { evidence: "> 0.9", expertise: "> 0.9" }
     free_will: { deserved_punishment: "< -0.5", evidence: "> 0.9" }
+    trust: { independent_checks: "< -0.5", evidence: "> 0.9" }
+    official_accounts: { independent_checks: "> 0.9" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -683,6 +729,8 @@ expect:
   # In worldview: a brutal childhood lessens what someone deserves, though officers who kill
   # unlawfully should get what they deserve; and biologists are followed on teaching evolution, but
   # not economists on rents, and food-safety scientists less.
+  # In how you know: police accounts after a shooting checked independently before they're
+  # believed, but not a regulator's word on a new vaccine.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -726,3 +774,4 @@ expect:
     - deserved_punishment|free_will|policing
     - expertise|god|housing
     - expertise|gm_food|god
+    - independent_checks|official_accounts|trust

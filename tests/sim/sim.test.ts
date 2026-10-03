@@ -17,7 +17,9 @@ import { constantPolicy, ideologyPolicy, personaResponses, randomAnswer, randomP
 
 const b: Bundle = realBundle();
 const issueTopics = b.topics.filter((t) => t.stance).map((t) => t.id);
-const spectrumAxes = Object.values(b.axes).filter((a) => a.family === 'political' || a.family === 'values' || a.family === 'worldview' || a.family === 'taste');
+const spectrumAxes = Object.values(b.axes).filter(
+  (a) => a.family === 'political' || a.family === 'values' || a.family === 'thinking' || a.family === 'worldview' || a.family === 'taste',
+);
 
 function profileOf(run: RunResult): Profile {
   return buildProfile(run.state, { includeSensitive: true, appVersion: 'sim', now: '2026-01-01T00:00:00.000Z', resolutions: run.resolutions });

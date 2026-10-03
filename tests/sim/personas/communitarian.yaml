@@ -7,7 +7,8 @@ topics:
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
-   god, free_will, morality, afterlife, personal_identity]
+   god, free_will, morality, afterlife, personal_identity,
+   trust, changing_mind, official_accounts, settled, supernatural]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -533,6 +534,43 @@ answers:
   personal_identity.importance: 2
   personal_identity.same_person: body
   personal_identity.ch_vote: stay
+  trust.stance: 4 # torn: the middle challenge
+  trust.importance: 2
+  trust.trusted: [doctors, scientists, courts, religious_leaders, small_business, unions]
+  trust.distrusted: [big_business, tech_companies]
+  trust.news: [papers, people, leaders]
+  trust.checking: [ask, others_agree]
+  trust.anchor_check: 3 # the same for vaccines as for police: no tension
+  trust.anchor_evidence: 4 # as for God and free will
+  trust.ch_vote: more
+  changing_mind.strong_argument: keep
+  changing_mind.peer: less_sure
+  changing_mind.admire: convictions
+  changing_mind.old_views: scrutiny
+  changing_mind.numbers: experience
+  changing_mind.hiring: test
+  changing_mind.offers: feels_right
+  changing_mind.honest: check
+  changing_mind.changed: [someone]
+  official_accounts.stance: 4 # torn: the middle challenge
+  official_accounts.importance: 2
+  official_accounts.anchor_check: 3
+  official_accounts.ch_vote: no_bet
+  settled.stance: 4 # torn: the middle challenge
+  settled.importance: 2
+  settled.ch_vote: depends
+  supernatural.spirits_dead: not_sure
+  supernatural.contact: not_sure
+  supernatural.other_spirits: not_sure
+  supernatural.foresight: dont
+  supernatural.astrology: dont
+  supernatural.evil_eye: dont
+  supernatural.holy_objects: not_sure
+  supernatural.charms: dont
+  supernatural.practices: [object]
+  supernatural.religion: some
+  supernatural.experiences: [presence]
+  supernatural.understanding: not_sure
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -598,6 +636,8 @@ expect:
     trade: { animal_welfare: "> 0.2" }
     strangers: { future_generations: "> 0.3" }
     free_will: { deserved_punishment: "< 0.1" }
+    trust: { independent_checks: "< 0" }
+    official_accounts: { independent_checks: "< 0" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -612,4 +652,5 @@ expect:
   # to experts and deciding locally each weigh about the same wherever they come up.
   # In worldview as well: deserved punishment, deference to experts and belief that fits the
   # evidence each weigh about the same wherever they come up.
+  # In how you know too: independent checking weighs the same for vaccines and police.
   tensions: []

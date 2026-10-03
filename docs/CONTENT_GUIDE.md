@@ -95,7 +95,8 @@ circumstances use them.
 
 **Spectrums and principles.** Spectrums (`axes.yaml`) are positions between two poles: political
 (civil, cultural, economic, diplomatic), values (stability or change, getting ahead or looking out
-for others, rules or outcomes, near or far), personality and taste. Principles
+for others, rules or outcomes, near or far), how you think (steady or flexible, intuition or
+analysis), worldview, personality and taste. Principles
 (`principles.yaml`) are moral considerations a person endorses or rejects. The first seven are the
 moral foundations, which the moral foundations topic measures directly with statements keyed both
 ways; issue topics add to them through challenge options. Questionnaire topics without a stance
@@ -312,6 +313,12 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | the Hebrew Bible or Torah; the Quran; deities and sacred images; rebirth (for Buddhists) | the Old Testament (for Jewish texts); idols, idol worship; Mohammedan |
 | people who doubt free will; naturalism; "moral claims are never true" | materialism as a label for nonbelievers; nihilists |
 | "It gives me pause" when reconsidering; what a belief gives people, in their words | "Maybe I've been fooling myself"; faith as "comforting" or "convenient" |
+| the official account; its critics; an alternative explanation; people who doubt it | conspiracy theorists, truthers, tinfoil hats; sheeple, NPCs; "the narrative" |
+| specialists, most specialists, dissenting specialists | fringe, cranks, quacks; "settled science", "trust the science", "do your own research" |
+| major news outlets, smaller independent outlets | the mainstream media, MSM, legacy media, fake news |
+| "shown wrong by" whom; a claim that didn't hold up; "cover-up" only where an inquiry found one | debunked, misinformation, disinformation; cover-up as a bare accusation |
+| what people believe and practise; people who consult a medium or an astrologer | "real" or "not real"; paranormal, occult, New Age, superstition |
+| "view" in questions about changing your mind | "belief" there: items about revising beliefs track religiosity |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
@@ -338,7 +345,7 @@ ECR-R, MBTI) have terms that need checking for a commercial app.
 
 ## Sensitive topics
 
-Domains `worldview` and `identity` are sensitive. Their items get "Prefer not to say" and are
+Domains `worldview` and `identity` are sensitive, and so are two topics in `epistemics`. Their items get "Prefer not to say" and are
 excluded from shared output by default. Identity items **describe and never score**: no effects
 (E012). Never infer identity from other answers.
 
@@ -356,6 +363,25 @@ In worldview, the sides are believers and nonbelievers, not left and right:
   directions, so someone who taps the same end everywhere isn't pushed to one pole.
 - **The writer has a stake in machine minds.** That topic waits for a human co-author without
   AI-industry ties, and no case may involve the writer's maker or its models.
+
+A single topic can be sensitive in a domain that isn't (`sensitive: true` on the topic). In How you
+know, official accounts and spirits and signs are, since some answers carry stigma or are
+religious practice.
+
+In How you know, the sides are people who trust an institution's word and people who doubt it, and
+which side doubts which institution moves with who holds power:
+
+- **Neither trust nor doubt is the smart default.** Ladder ends give each side its reason ("together
+  they know far more than I could find out"; "official accounts protect those in power"), never
+  "assume" or "blindly".
+- **Name institutions each side trusts, or none.** A stem built on one agency measures who runs it.
+- **Balance cases by which side they flatter**, and include neutral ones. Every proven failure says
+  how it came out and how long it took; trusters' hold options give their real reason ("the checks
+  worked, slowly"); no yield says "I was naive". No elections, parties or living politicians.
+- **Beliefs about spirits, foresight, astrology and the evil eye are described, never challenged.**
+  For many people they are religious practice, and no case tests worshippers' practice elsewhere
+  either. Ask what people believe, not what is real, and how they understand their own experiences.
+- **No case about trusting AI.** The writer has a stake; AI assistants appear only as a news source.
 
 ## Review checklist
 

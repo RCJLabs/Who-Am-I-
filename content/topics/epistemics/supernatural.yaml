@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Beliefs and practices about spirits, foresight, astrology, the evil eye and protective objects,
+# described and never scored. Moved here from Religion & Worldview: these beliefs don't split
+# believers from nonbelievers. No stance, challenges or anchor: for many people they are religious
+# practice (astrology, jyotisha, is a limb of the Veda; hadith affirm the evil eye; for Spiritists,
+# mediumship is worship), and the app aims no test of prayer at worshippers either. Sensitive. Asks
+# what people believe, not what is "real", and asks how they understand their own experiences
+# rather than assuming they have no explanation. Avoids "paranormal", "occult" and "New Age".
+id: supernatural
+domain: epistemics
+title: Spirits and signs
+summary: "Do you believe in spirits, contact with the dead, astrology, the evil eye and the like?"
+tier: extended
+order: 5
+evidence: custom
+sensitive: true
+instructions: >-
+  These questions describe what you believe and practise. Nothing here is scored, compared or
+  challenged.
+items:
+  - id: spirits_dead
+    type: choice
+    unsure: false
+    text: Do you believe that the spirits of people who have died can be present among the living?
+    options: &belief
+      - { id: believe, label: Believe }
+      - { id: not_sure, label: Not sure }
+      - { id: dont, label: "Don't believe" }
+
+  - id: contact
+    type: choice
+    unsure: false
+    text: Do you believe the living can communicate with the dead, through a medium or directly?
+    options: *belief
+
+  - id: other_spirits
+    type: choice
+    unsure: false
+    text: Do you believe in other spirits, such as jinn, angels, demons or nature spirits?
+    options: *belief
+
+  - id: foresight
+    type: choice
+    unsure: false
+    text: Do you believe some people can know the future, or what others are thinking, without using the ordinary senses?
+    options: *belief
+
+  - id: astrology
+    type: choice
+    unsure: false
+    text: Do you believe astrology, whether Western, Vedic or Chinese, can tell you about a person's character or life?
+    options: *belief
+
+  - id: evil_eye
+    type: choice
+    unsure: false
+    text: Do you believe in the evil eye, curses or witchcraft?
+    options: *belief
+
+  - id: holy_objects
+    type: choice
+    unsure: false
+    text: Do you believe that blessed or holy objects, like medals, prayer beads or verses worn for protection, can protect people?
+    options: *belief
+
+  - id: charms
+    type: choice
+    unsure: false
+    text: Do you believe that objects like lucky charms or crystals can protect people or bring luck?
+    options: *belief
+
+  - id: practices
+    type: multi
+    text: Do you do any of these? Choose any that fit.
+    options:
+      - { id: astrologer, label: "Consult a horoscope, birth chart or astrologer" }
+      - { id: medium, label: Visit a medium or a Spiritist center }
+      - { id: object, label: Keep an object for protection or luck }
+      - { id: evil_eye, label: Take steps against the evil eye }
+      - { id: divination, label: "Use divination, like tarot cards or the I Ching" }
+      - { id: none, label: None of these }
+
+  - id: religion
+    type: choice
+    text: Are any of these beliefs or practices part of your religion?
+    options:
+      - { id: yes_all, label: "Yes" }
+      - { id: some, label: Some of them }
+      - { id: not_religion, label: "No" }
+      - { id: none_held, label: I don't hold any of them }
+
+  - id: experiences
+    type: multi
+    text: Have you ever had an experience like these? Choose any that fit.
+    options:
+      - { id: presence, label: Sensed the presence of someone who had died }
+      - { id: dream, label: Had a dream that came true }
+      - { id: knew, label: Knew something there was no ordinary way to know }
+      - { id: spirit, label: Saw or heard what you took to be a spirit }
+      - { id: none, label: None of these }
+
+  - id: understanding
+    type: choice
+    unsure: false
+    when: experiences has presence or experiences has dream or experiences has knew or experiences has spirit
+    text: How do you understand it?
+    options:
+      - { id: as_seemed, label: It was what it seemed }
+      - { id: not_sure, label: "I'm not sure" }
+      - { id: ordinary, label: It had an ordinary cause }

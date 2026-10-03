@@ -10,7 +10,8 @@ topics:
    democracy, war, cooperation, foreign_aid, local_control, experts,
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
-   god, free_will, morality, afterlife, personal_identity]
+   god, free_will, morality, afterlife, personal_identity,
+   trust, changing_mind, official_accounts, settled, supernatural]
 answers:
   abortion.stance: 2
   abortion.importance: 4
@@ -563,8 +564,49 @@ answers:
   personal_identity.ch_one_cell: not_cells
   personal_identity.ch_split_brain: one
   personal_identity.ch_no_one: not_found
+  trust.stance: 3 # own reading, unless the majority is overwhelming
+  trust.importance: 3
+  trust.trusted: [doctors, police, military, religious_leaders, small_business, courts]
+  trust.distrusted: [major_news, universities, health_agencies, drug_companies, tech_companies, international]
+  trust.news: [tv, radio, people, leaders]
+  trust.checking: [who_gains, record, ask]
+  trust.anchor_check: 6 # hold off believing a regulator on a new vaccine...
+  trust.anchor_evidence: 6 # remedies should follow the evidence, though belief in God needn't
+  trust.ch_polio: earned
+  trust.ch_pauling: weigh
+  trust.ch_doubt: follow_money
+  changing_mind.strong_argument: keep
+  changing_mind.peer: as_sure
+  changing_mind.admire: convictions
+  changing_mind.old_views: earned
+  changing_mind.numbers: numbers
+  changing_mind.hiring: test
+  changing_mind.offers: weigh
+  changing_mind.honest: check
+  changing_mind.changed: [someone]
+  official_accounts.stance: 3 # the official account, a little more often
+  official_accounts.importance: 2 # low: deep items are skipped
+  official_accounts.anchor_check: 2 # ...but not police after a shooting
+  official_accounts.ch_horizon: checks_worked
+  official_accounts.ch_origin: rethink
+  settled.stance: 2 # a regular hearing, labeled as the minority's view
+  settled.importance: 3
+  settled.ch_balance: readers
+  settled.ch_rats: embargo
+  settled.ch_aids_panel: decision
+  supernatural.spirits_dead: not_sure
+  supernatural.contact: dont
+  supernatural.other_spirits: believe
+  supernatural.foresight: dont
+  supernatural.astrology: dont
+  supernatural.evil_eye: not_sure
+  supernatural.holy_objects: not_sure
+  supernatural.charms: dont
+  supernatural.practices: [none]
+  supernatural.religion: some
+  supernatural.experiences: [none]
 expect:
-  axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "> 0.9" }
+  axes: { cultural: "< -0.6", civil: "> 0", economic: "> 0.3", change: "< -0.6", others: "> 0.3", outcomes: "< -0.3", impartiality: "< 0", diplomatic: "< 0", beyond_nature: "> 0.9", revising: "< -0.6", intuition: "> 0.6" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -605,6 +647,7 @@ expect:
     climate: { economic: "> 0" }
     god: { beyond_nature: "> 0.9" }
     afterlife: { beyond_nature: "> 0.9" }
+    changing_mind: { revising: "< -0.6", intuition: "> 0.6" }
   principles:
     sanctity_of_life: "> 0.5"
     market_limits: "> 0.5" # high on selling sex and surrogacy, low on paying for quicker treatment
@@ -649,6 +692,8 @@ expect:
     gene_editing: { natural_order: "> 0.5" }
     god: { evidence: "< -0.5", expertise: "< -0.5" }
     free_will: { deserved_punishment: "> 0.9", evidence: "> 0.5" }
+    trust: { independent_checks: "> 0.5", evidence: "> 0.5" }
+    official_accounts: { independent_checks: "< -0.5" }
   # Bodily autonomy low on abortion, assisted dying, drugs and selling sex but high on vaccines;
   # protecting the vulnerable high on assisted dying and drugs but low on vaccines and guns; the
   # sanctity of life high on abortion and assisted dying but low on the death penalty; caution with
@@ -674,6 +719,8 @@ expect:
   # In worldview: deserved punishment for crimes shaped by a brutal childhood, though officers who
   # kill unlawfully get leeway; belief that fits the evidence about free will, but not about God;
   # and biologists aren't followed on teaching evolution, though economists are on rents.
+  # In how you know: independent checks before believing a regulator on a new vaccine, but not
+  # police after a shooting; and evidence for remedies like homeopathy, though not about God.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -717,3 +764,5 @@ expect:
     - deserved_punishment|free_will|policing
     - expertise|god|housing
     - evidence|free_will|god
+    - independent_checks|official_accounts|trust
+    - evidence|god|trust
