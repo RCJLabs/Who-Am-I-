@@ -3,7 +3,8 @@ topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, surrogacy, gene_editing,
    value_tradeoffs, moral_foundations, moral_reasoning, sacrifice, strangers, fairness, omelas,
    free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety,
-   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
+   democracy, war, cooperation, foreign_aid, local_control, experts]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -45,6 +46,7 @@ answers:
   vaccine_mandates.penalty: testing
   vaccine_mandates.anchor_ba: 2
   vaccine_mandates.anchor_pv: 7
+  vaccine_mandates.anchor_exp: 7 # public-health experts on school vaccines...
   vaccine_mandates.ch_blood: harm_vs_help
   vaccine_mandates.ch_low_risk: transmission
   death_penalty.stance: 1
@@ -269,6 +271,7 @@ answers:
   minimum_wage.importance: 3
   minimum_wage.youth: 2
   minimum_wage.regional: 2
+  minimum_wage.anchor_loc: 6 # local minimum wages...
   minimum_wage.gig: 5
   minimum_wage.small_business: 1
   minimum_wage.ch_cbo: worth_it
@@ -304,8 +307,9 @@ answers:
   housing.public_housing: 5
   housing.empty_homes: 5
   housing.no_reason: 1
+  housing.anchor_exp: 2 # ...but not economists on rents
   housing.ch_supply: loopholes
-  housing.ch_economists: old_style
+  housing.ch_queue: design
   housing.ch_tokyo: both
   inheritance.stance: 6
   inheritance.importance: 3
@@ -317,8 +321,65 @@ answers:
   inheritance.ch_who_pays: close_gaps
   inheritance.ch_bakery: spread
   inheritance.ch_twice: never_taxed
+  democracy.stance: 2
+  democracy.importance: 3
+  democracy.compulsory_voting: 4
+  democracy.voting_age: 5
+  democracy.prisoner_votes: 4
+  democracy.referendums: 2
+  democracy.strong_leader: 1
+  democracy.ch_child_labor: worth_it
+  democracy.ch_waldron: clear_cases
+  democracy.ch_basic_structure: entrench
+  war.stance: 3
+  war.importance: 3
+  war.rescue: 4
+  war.first_strike: 2
+  war.conscription: 2
+  war.drones: 2
+  war.deterrent: 2
+  war.anchor_sov: 6 # no outside interference in who rules a country...
+  war.ch_rwanda: genocide
+  war.ch_srebrenica: diplomacy
+  war.ch_kosovo: law
+  cooperation.stance: 6
+  cooperation.importance: 4
+  cooperation.climate_targets: 5
+  cooperation.rights_court: 5
+  cooperation.un_command: 4
+  cooperation.burden: 5
+  cooperation.anchor_sov: 2 # ...but international courts may try a country's soldiers
+  cooperation.ch_haiti: courts_for_them
+  cooperation.ch_prisoners: court
+  cooperation.ch_commission: reform
+  foreign_aid.stance: 6
+  foreign_aid.importance: 3
+  foreign_aid.tied_aid: 1
+  foreign_aid.conditions: 3
+  foreign_aid.migration: 1
+  foreign_aid.defense: 1
+  foreign_aid.ch_offshore: oversight
+  foreign_aid.ch_compatriots: birthplace
+  foreign_aid.ch_easterly: smarter
+  local_control.stance: 5
+  local_control.importance: 2 # low: deep items are skipped
+  local_control.curriculum: 4
+  local_control.police_chiefs: 2
+  local_control.anchor_loc: 2 # not schools left to local communities...
+  local_control.ch_residential_schools: rights
+  local_control.ch_ostrom: resources
+  experts.stance: 5
+  experts.importance: 3
+  experts.central_bank: 5
+  experts.assemblies: 5
+  experts.boundaries: 5
+  experts.knowledge_test: 1
+  experts.anchor_exp: 6
+  experts.ch_tetlock: forecasting
+  experts.ch_eugenics: facts_values
+  experts.ch_replication: self_correct
 expect:
-  axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5" }
+  axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -348,6 +409,8 @@ expect:
     trade: { economic: "> 0" }
     housing: { economic: "< 0" }
     inheritance: { economic: "< 0" }
+    cooperation: { diplomatic: "> 0" }
+    foreign_aid: { diplomatic: "> 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -368,6 +431,11 @@ expect:
     unions: { liberty: "< 0" }
     housing: { liberty: "< -0.5" }
     inheritance: { retribution: "> 0.5" }
+    democracy: { authority: "< 0", protect_vulnerable: "> 0.3" }
+    war: { collective_welfare: "< 0" }
+    cooperation: { sovereignty: "< -0.5" }
+    local_control: { subsidiarity: "< -0.3" }
+    experts: { expertise: "> 0.5", equality: "> 0.3" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -378,6 +446,10 @@ expect:
   # losing freedom but not guns, and doing vs. allowing high for torture. In the economics topics,
   # just deserts is demanded of heirs but not of people who could work, and money shouldn't buy
   # quicker medical treatment, though surrogates may be paid.
+  # In governance, the mirror image again: no outside interference in who rules a country, but
+  # international courts may try a country's soldiers; minimum wages may be set locally, but
+  # school curricula may not; and experts should decide in general and on school vaccines, but
+  # not economists on rents.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -396,3 +468,7 @@ expect:
     - due_process|guns|public_safety
     - retribution|inheritance|welfare
     - market_limits|healthcare|surrogacy
+    - sovereignty|cooperation|war
+    - subsidiarity|local_control|minimum_wage
+    - expertise|experts|housing
+    - expertise|housing|vaccine_mandates

@@ -20,8 +20,8 @@ items:
     text: When a law passed by elected representatives conflicts with basic rights, courts should be able to…
     help: >-
       Democracies differ. Courts in Germany and India can strike down even changes to the
-      constitution. In the US, a law the Supreme Court strikes down can come back only through a
-      constitutional amendment. Canada's legislatures can override some rulings for five years at a
+      constitution. In the US, a Supreme Court ruling on the constitution can be undone only by a
+      constitutional amendment or by the Court itself. Canada's legislatures can override some rulings for five years at a
       time. UK courts can only declare a law incompatible with rights and leave the decision to
       Parliament.
     poles: [Strike it down, Never overrule elected representatives]
@@ -90,7 +90,7 @@ items:
     when: stance < 0
     source: Hammer v. Dagenhart, 247 U.S. 251 (1918); United States v. Darby, 312 U.S. 100 (1941)
     scenario: >-
-      In 1916 the US Congress banned the sale across state lines of goods made by young children. In
+      In 1916 the US Congress banned shipping goods made by young children across state lines. In
       1918 the Supreme Court struck the law down, 5 to 4. Federal limits on child labor weren't
       upheld until 1941, when the Court reversed itself.
     text: Should unelected judges be able to block laws like that?
@@ -172,7 +172,7 @@ items:
     scenario: >-
       In March 1933, amid arrests and intimidation of its members, Germany's parliament voted 444 to
       94 to let the government make laws without it, even laws that broke the constitution. By that
-      summer, every party but the governing one had been banned.
+      summer, every other party had been banned or forced to dissolve.
     text: If elected representatives can vote away rights, what stops them?
     options:
       - id: voters
@@ -224,7 +224,8 @@ items:
     source: Judicial Procedures Reform Bill of 1937 (United States)
     scenario: >-
       In 1937 the US president, frustrated by rulings against his programs, proposed adding up to six
-      new justices to the Supreme Court. The Senate, controlled by his own party, rejected the plan.
+      new justices to the Supreme Court. The Senate, controlled by his own party, voted 70 to 20 to
+      send the plan back to committee, which killed it.
     text: Should elected leaders be able to reshape courts that stand in their way?
     options:
       - id: reform

@@ -198,11 +198,11 @@ items:
     name: The queue
     targets: stance
     when: stance > 0
-    source: Stockholm Housing Agency (Bostadsförmedlingen), housing queue statistics
+    source: Stockholm Housing Agency (Bostadsförmedlingen), Summary of the year 2025 (2026)
     scenario: >-
       In Stockholm, rents are set through negotiations and kept well below what the market would
-      charge. Most rental flats are handed out through a city queue: people who got one in 2023 had
-      waited about nine years on average, and much longer for the city center.
+      charge. Many rental flats are handed out through a city queue: people who got one in 2025 had
+      waited nine years on average, and far longer for flats in the inner city.
     text: If rents are kept low but homes take years to get, who is being helped?
     options:
       - id: tenants

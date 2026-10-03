@@ -112,11 +112,12 @@ items:
     name: The last canton
     targets: stance
     when: stance < 0
-    source: Swiss Federal Supreme Court ruling on women's suffrage in Appenzell Innerrhoden (27 November 1990)
+    source: Swiss Federal Supreme Court, BGE 116 Ia 359 (27 November 1990)
     scenario: >-
       Swiss women won the vote in national elections in 1971. But in the canton of Appenzell
-      Innerrhoden, where men voted by a show of hands in an open-air assembly, women weren't allowed
-      to vote on local matters until 1990, when Switzerland's highest court ordered it.
+      Innerrhoden, where citizens vote by a show of hands in an open-air assembly, the men voted
+      as late as 1990 to keep women out. Later that year, Switzerland's highest court ordered the
+      canton to let women vote.
     text: Should a local tradition be allowed to deny people an equal vote?
     options:
       - id: patience
@@ -170,9 +171,9 @@ items:
     when: stance > 0
     source: Truth and Reconciliation Commission of Canada, Final Report (2015)
     scenario: >-
-      For over a century, Canada's national government sent about 150,000 Indigenous children to
-      residential schools, many run by churches, to strip them of their languages and cultures. In
-      2015 a national commission called the policy cultural genocide.
+      For over a century, Canada's national government sent more than 150,000 Indigenous children
+      to residential schools, many run by churches, to strip them of their languages and cultures.
+      In 2015 a national commission described the policy as cultural genocide.
     text: What protects communities from a distant government that decides it knows best?
     options:
       - id: rights

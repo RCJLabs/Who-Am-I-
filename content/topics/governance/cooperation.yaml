@@ -141,9 +141,9 @@ items:
     when: stance < 0
     source: The Antarctic Treaty (1959)
     scenario: >-
-      In 1959, twelve countries signed the Antarctic Treaty, setting aside their territorial claims
-      and banning military activity on the continent. More than 50 countries have since joined, and
-      Antarctica has stayed free of military bases for more than 60 years.
+      In 1959, twelve countries signed the Antarctic Treaty, freezing their territorial claims and
+      banning military bases and weapons tests on the continent. More than 50 countries are now
+      parties, and Antarctica has stayed free of military bases for more than 60 years.
     text: If countries can accept shared rules there, why not elsewhere?
     options:
       - id: say
@@ -168,11 +168,12 @@ items:
     when: stance > 0
     source: >-
       UN General Assembly, A New Approach to Cholera in Haiti (2016); Georges v. United Nations
-      (US Court of Appeals, 2nd Circuit, 2016)
+      (US Court of Appeals, 2nd Circuit, 2016); World Health Organization, Cholera – Haiti (2022)
     scenario: >-
-      In 2010, UN peacekeepers brought cholera to Haiti. The epidemic killed more than 9,000 people.
-      When victims' families sued, the UN claimed immunity, and US courts agreed. Six years later,
-      the UN's head apologized.
+      In 2010 cholera broke out in Haiti, and investigators traced it to a base of UN peacekeepers.
+      The epidemic killed nearly 10,000 people. When victims' families sued, the UN claimed
+      immunity, and US courts agreed. In 2016 the UN apologized for its role, without accepting
+      legal responsibility.
     text: Who holds international bodies to account when they cause harm?
     options:
       - id: still_better

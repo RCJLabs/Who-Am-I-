@@ -177,7 +177,7 @@ items:
     when: stance > 0
     source: >-
       Comprehensive Report of the Special Advisor to the Director of Central Intelligence on Iraq's
-      WMD (the Duelfer report, 2004)
+      WMD (the Duelfer report, 2004); Iraq Body Count
     scenario: >-
       In 2003 the US and its allies invaded Iraq, saying it had weapons of mass destruction. The
       US's own inspectors later found no stockpiles, only some old, degraded chemical weapons from

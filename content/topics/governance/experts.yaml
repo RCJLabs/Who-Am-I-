@@ -169,8 +169,8 @@ items:
     source: Philip Tetlock, Expert Political Judgment (2005)
     scenario: >-
       Psychologist Philip Tetlock collected tens of thousands of predictions from 284 political
-      experts over two decades. On average they did little better than chance, and worse than
-      simple statistical rules.
+      experts over two decades. On average they did only slightly better than chance, and worse
+      than simple statistical models.
     text: If experts' forecasts are that unreliable, why should their advice outweigh voters'?
     options:
       - id: still_know
@@ -195,8 +195,8 @@ items:
     source: Buck v. Bell, 274 U.S. 200 (1927)
     scenario: >-
       In the early 20th century, many leading scientists backed eugenics. In 1927 the US Supreme
-      Court upheld laws allowing forced sterilization, and more than 60,000 Americans were
-      sterilized under them.
+      Court upheld a state law allowing forced sterilization, and more than 60,000 Americans were
+      eventually sterilized under laws like it.
     text: When experts' advice rests on their values, not just facts, should it still outweigh voters'?
     options:
       - id: learned

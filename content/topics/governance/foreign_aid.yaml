@@ -130,8 +130,8 @@ items:
     source: Gavi, the Vaccine Alliance, facts and figures
     scenario: >-
       Gavi, a partnership funded mostly by rich countries' governments, buys vaccines for the
-      world's poorest countries. It says it has helped vaccinate more than a billion children since
-      2000, preventing more than 17 million deaths.
+      world's poorest countries. It says it has helped vaccinate more than 1.2 billion children
+      since 2000, which it estimates will prevent more than 20 million deaths.
     text: Is that a good use of taxpayers' money?
     options:
       - id: home_first

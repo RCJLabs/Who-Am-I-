@@ -3,7 +3,8 @@ topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
    surrogacy, gene_editing, value_tradeoffs, moral_foundations, moral_reasoning, fairness, honesty, experience_machine,
    free_speech, guns, surveillance, protest, torture, public_safety,
-   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
+   democracy, war, cooperation, foreign_aid, local_control, experts]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -39,6 +40,7 @@ answers:
   vaccine_mandates.religious: 1
   vaccine_mandates.anchor_ba: 7
   vaccine_mandates.anchor_pv: 2
+  vaccine_mandates.anchor_exp: 1 # not public-health experts on school vaccines...
   vaccine_mandates.ch_drunk_driving: small_risk
   vaccine_mandates.ch_quarantine: isolation_too
   vaccine_mandates.ch_measles: parents_decide
@@ -260,6 +262,7 @@ answers:
   minimum_wage.importance: 3
   minimum_wage.youth: 5
   minimum_wage.regional: 5
+  minimum_wage.anchor_loc: 5
   minimum_wage.gig: 1
   minimum_wage.small_business: 5
   minimum_wage.ch_new_jersey: freedom
@@ -295,6 +298,7 @@ answers:
   housing.public_housing: 1
   housing.empty_homes: 1
   housing.no_reason: 5
+  housing.anchor_exp: 6 # ...but economists on rents
   housing.ch_staying: fewer_homes
   housing.ch_rise: property
   housing.ch_revision: still_harm
@@ -308,8 +312,68 @@ answers:
   inheritance.ch_carnegie: his_choice
   inheritance.ch_florence: not_money
   inheritance.ch_heirs: their_life
+  democracy.stance: 2
+  democracy.importance: 3
+  democracy.compulsory_voting: 1
+  democracy.voting_age: 3
+  democracy.prisoner_votes: 3
+  democracy.referendums: 3
+  democracy.strong_leader: 1
+  democracy.ch_child_labor: worth_it
+  democracy.ch_waldron: protection
+  democracy.ch_basic_structure: entrench
+  war.stance: 2
+  war.importance: 3
+  war.rescue: 2
+  war.first_strike: 1
+  war.conscription: 1
+  war.drones: 2
+  war.deterrent: 3
+  war.anchor_sov: 6
+  war.ch_rwanda: worse
+  war.ch_srebrenica: diplomacy
+  war.ch_kosovo: law
+  cooperation.stance: 2
+  cooperation.importance: 3
+  cooperation.climate_targets: 1
+  cooperation.rights_court: 2
+  cooperation.un_command: 1
+  cooperation.burden: 1
+  cooperation.anchor_sov: 6
+  cooperation.ch_ozone: choose
+  cooperation.ch_smallpox: voluntary
+  cooperation.ch_antarctica: say
+  foreign_aid.stance: 1
+  foreign_aid.importance: 3
+  foreign_aid.tied_aid: 1
+  foreign_aid.conditions: 4
+  foreign_aid.migration: 2
+  foreign_aid.defense: 3
+  foreign_aid.ch_pepfar: charity
+  foreign_aid.ch_budget: works
+  foreign_aid.ch_vaccines: home_first
+  local_control.stance: 1
+  local_control.importance: 3
+  local_control.curriculum: 1
+  local_control.police_chiefs: 4
+  local_control.stricter_rules: 5
+  local_control.equalize: 1
+  local_control.anchor_loc: 7
+  local_control.ch_little_rock: rights_only
+  local_control.ch_appenzell: equal_votes
+  local_control.ch_funding: invest
+  experts.stance: 2
+  experts.importance: 3
+  experts.central_bank: 3
+  experts.assemblies: 2
+  experts.boundaries: 4
+  experts.knowledge_test: 3
+  experts.anchor_exp: 2 # wary of deferring to experts in general...
+  experts.ch_central_banks: technical
+  experts.ch_brennan: inform
+  experts.ch_fluoride: choice
 expect:
-  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
+  axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< -0.5" }
   topicAxes:
     abortion: { cultural: "> 0" }
     assisted_dying: { cultural: "> 0", civil: "< 0" }
@@ -339,6 +403,8 @@ expect:
     trade: { economic: "> 0" }
     housing: { economic: "> 0" }
     inheritance: { economic: "> 0" }
+    cooperation: { diplomatic: "< 0" }
+    foreign_aid: { diplomatic: "< 0" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -359,13 +425,24 @@ expect:
     trade: { loyalty: "< -0.5" }
     housing: { liberty: "> 0.5" }
     inheritance: { retribution: "< -0.5" }
+    democracy: { authority: "< 0" }
+    war: { collective_welfare: "< 0" }
+    cooperation: { sovereignty: "> 0.3" }
+    foreign_aid: { loyalty: "> 0.3" }
+    local_control: { subsidiarity: "> 0.5", equality: "< 0" }
+    experts: { expertise: "< 0" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
   # rights topics add no tensions: liberty and due process high everywhere, and protecting the
   # vulnerable low on guns as on drugs and vaccines. Economics adds one: just deserts demanded of
   # people who could work but not of heirs. Paid markets stay acceptable in healthcare too.
+  # Governance adds two, both on deferring to experts: economists should decide on rents, but
+  # not experts in general or doctors on school vaccines. National self-government and deciding
+  # locally stay high everywhere.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty
     - retribution|inheritance|welfare
+    - expertise|experts|housing
+    - expertise|housing|vaccine_mandates
