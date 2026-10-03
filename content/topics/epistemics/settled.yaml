@@ -2,9 +2,10 @@
 # How much of a hearing dissent should get, in the news, at universities and on major platforms, on
 # questions most specialists consider settled: open debate (a settled question can still be wrong)
 # against "balance as bias" (equal airtime misleads people about where the evidence stands). About
-# editors' and platforms' choices, not law: speech law is in rights/free_speech. The stem's two
-# examples are doubted on different sides (climate more on the right, GM food more on the left).
-# Feeds no spectrum and has no anchor. Cases are balanced by which side they flatter.
+# editors' and platforms' choices, not law: speech law is in rights/free_speech. Of the stem's two
+# examples, climate is doubted more on the right; doubt about GM food spans both parties in US
+# polls, though activist opposition leans left. Feeds no spectrum and has no anchor. Cases are
+# balanced by which side they flatter, with most flattering neither.
 id: settled
 domain: epistemics
 title: Settled or open
@@ -50,7 +51,7 @@ items:
       Researchers Maxwell and Jules Boykoff studied coverage of climate change in four leading US
       newspapers from 1988 to 2002. Just over half of the articles gave roughly equal attention to
       the view that humans were warming the climate and the view that they weren't, at a time when
-      most climate scientists already held the first.
+      the main scientific reviews increasingly backed the first.
     text: If equal time leaves readers thinking specialists are split when they aren't, is that a fair hearing?
     options:
       - id: readers
@@ -78,11 +79,12 @@ items:
       Food Safety Authority, final review (2012)
     scenario: >-
       In 2012 a French team published a study reporting more tumors in rats fed genetically modified
-      maize. Journalists got the paper early only if they agreed not to show it to other scientists
-      before reporting, and photos of rats with large tumors ran around the world. Europe's
-      food-safety agency found the study too flawed to support its conclusions, and the journal
-      retracted it in 2013; the authors republished it elsewhere in 2014. Kenya banned imports of
-      genetically modified food in 2012 and kept the ban for ten years.
+      maize. The authors gave journalists the paper early only if they agreed not to consult other
+      scientists before reporting, and photos of rats with large tumors ran around the world. Citing
+      the study, Kenya banned imports of genetically modified food that year. Europe's food-safety
+      agency found the study too flawed to support its conclusions, and in 2013 the journal
+      retracted it, calling its results inconclusive; the authors republished it elsewhere in 2014.
+      Kenya's government moved to lift its ban in 2022, but court cases have held that up.
     text: When a disputed study gets a worldwide hearing before other specialists can check it, who pays?
     options:
       - id: open
@@ -111,9 +113,10 @@ items:
     scenario: >-
       In 2000 South Africa's president set up an advisory panel on AIDS in which scientists who
       doubted that HIV causes AIDS sat alongside mainstream researchers. For years the government
-      was slow to provide drugs that treat HIV; in 2002 the Constitutional Court ordered it to
-      provide a drug that stops mothers passing the virus to their babies. A Harvard study later
-      estimated that more than 330,000 lives were lost because the drugs weren't provided sooner.
+      was slow to provide drugs that treat HIV; in 2002 the Constitutional Court ordered it to make
+      widely available a drug that cuts the risk of mothers passing the virus to their babies. A
+      Harvard study later estimated that more than 330,000 lives were lost between 2000 and 2005
+      because the drugs weren't provided sooner.
     text: When dissenters on a settled question get an equal hearing where decisions are made, what can it cost?
     options:
       - id: decision
@@ -131,28 +134,29 @@ items:
         value: 0
 
   # --- Challenges: for keeping it open -----------------------------------------------------------
-  - id: ch_apa
+  - id: ch_quasicrystals
     type: challenge
-    name: A disorder no longer
+    name: The impossible crystal
     targets: stance
     when: stance > 0
     source: >-
-      Evelyn Hooker, "The adjustment of the male overt homosexual," Journal of Projective
-      Techniques (1957); American Psychiatric Association, decision of December 1973
+      Dan Shechtman, Ilan Blech, Denis Gratias and John Cahn, "Metallic Phase with Long-Range
+      Orientational Order and No Translational Symmetry," Physical Review Letters (1984); the Nobel
+      Prize in Chemistry (2011)
     scenario: >-
-      For decades psychiatrists classified homosexuality as a mental disorder, and most considered
-      the question settled. In 1957 the psychologist Evelyn Hooker found that experts couldn't tell
-      gay and straight men apart from standard personality tests. Gay activists protested at
-      psychiatric meetings and demanded to be heard. In 1973 the American Psychiatric Association
-      removed homosexuality from its list of disorders.
-    text: If a settled question was reopened by people demanding a hearing, how sure can anyone be that today's settled questions should stay closed?
+      In 1982 the Israeli scientist Dan Shechtman saw a pattern in a metal alloy that textbooks said
+      no crystal could have. Colleagues told him he must be mistaken, the head of his research group
+      asked him to leave, and a leading journal rejected his first paper. Other laboratories soon
+      found the same patterns, and in 2011 he won the Nobel Prize in Chemistry for discovering
+      quasicrystals.
+    text: If a finding that specialists called impossible can turn out right, how much of a hearing should dissenters get?
     options:
-      - id: research
-        label: It changed because of research that specialists weighed. Airtime wasn't what settled it.
+      - id: heard
+        label: His finding was published and confirmed by others within a few years. That's dissent getting the hearing it deserved.
         reaction: hold
         value: 0
-      - id: values
-        label: That classification rested on values as much as evidence. Questions about measurable facts are different.
+      - id: one_measurement
+        label: A lab finding can settle a dispute with one clean measurement. The settled questions in the news can't be overturned that way.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -171,12 +175,12 @@ items:
       Freedom of Information Act; the Great Barrington Declaration (2020)
     scenario: >-
       In October 2020 three professors, at Harvard, Stanford and Oxford, published the Great
-      Barrington Declaration, arguing that pandemic restrictions should focus on protecting the
-      most vulnerable while others resumed normal life. Days later the director of the US National
-      Institutes of Health emailed colleagues that the proposal needed "a quick and devastating
-      published take down." Most public-health specialists opposed the proposal, and whether it was
-      right is still disputed.
-    text: If leading officials try to shut down a dissenting view rather than answer it, is the question really settled?
+      Barrington Declaration, arguing that people at low risk of COVID-19 should resume normal life,
+      building immunity through infection, while the most vulnerable were protected. Days later the
+      director of the US National Institutes of Health emailed colleagues that the proposal needed
+      "a quick and devastating published take down." Most public-health specialists opposed the
+      proposal, and whether it was right is still disputed.
+    text: If leading officials move within days to discredit a dissenting view rather than weigh it, is the question really settled?
     options:
       - id: answered
         label: The proposal was answered in public, and most specialists still rejected it. Settled doesn't mean unanimous.
@@ -202,8 +206,8 @@ items:
     scenario: >-
       In 1847 the Hungarian doctor Ignaz Semmelweis found that deaths from fever among new mothers
       on his ward in Vienna fell sharply once doctors washed their hands in a chlorine solution.
-      Most doctors rejected his findings, and many hospitals ignored them for decades. He died in
-      an asylum in 1865, before germ theory showed he had been right.
+      Most doctors rejected his findings, and many hospitals ignored them for decades. He died in an
+      asylum in 1865, before germ theory explained why handwashing worked.
     text: If treating a question as settled can keep a true idea from a hearing for decades, how much of a hearing should dissenters get?
     options:
       - id: then_and_now

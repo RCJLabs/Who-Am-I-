@@ -558,7 +558,7 @@ answers:
   trust.distrusted: [government, intelligence, health_agencies, international, major_news, unions]
   trust.news: [independent, documents, podcasts]
   trust.checking: [arguments, documents, disagree, who_gains]
-  trust.anchor_check: 6 # independent checks for a regulator's word on vaccines...
+  trust.anchor_check: 6 # independent checks for anonymous sources in the news...
   trust.anchor_evidence: 7 # remedies should follow the evidence, unlike belief in free will
   trust.ch_polio: checking
   trust.ch_pauling: own_field
@@ -697,7 +697,7 @@ expect:
   # good it does; and biologists followed on teaching evolution more than public-health experts on
   # school vaccines.
   # In how you know: evidence for remedies like homeopathy, though belief in free will is kept for
-  # the good it does; independent checks for vaccines and police alike.
+  # the good it does; independent checks for news reports and police alike.
   tensions:
     - precaution|death_penalty|gene_editing
     - truth|experience_machine|honesty

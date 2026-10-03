@@ -132,7 +132,7 @@ nonbelievers.
 | Whose word to take (when most specialists agree but some dissent; trust in each institution, news sources and how you check a claim as unscored items) | core | custom | ✅ | the polio boycott, Pauling and vitamin C, doubt for sale; drifting continents, the doctored Alzheimer's images, the stomach-ulcer bacteria |
 | Changing your mind (this-or-that: steady or flexible, intuition or analysis) | core | custom | ✅ | after research on open-minded thinking and on intuitive and analytic thinking; original items |
 | Official accounts (sensitive) | extended | custom | ✅ | the Post Office's Horizon system, the virus's origin, Hillsborough; TWA Flight 800, Building 7, the Kennedy acoustics |
-| Settled or open (how much of a hearing dissent should get on questions most specialists consider settled) | extended | custom | ✅ | balance as bias, the GM-rat study's embargo, South Africa's AIDS panel; psychiatry in 1973, the takedown email, Semmelweis |
+| Settled or open (how much of a hearing dissent should get on questions most specialists consider settled) | extended | custom | ✅ | balance as bias, the GM-rat study's embargo, South Africa's AIDS panel; the impossible crystal, the takedown email, Semmelweis |
 | Spirits and signs (sensitive; described, never scored or challenged) | extended | custom | ✅ | beliefs, practices and experiences, and whether they're part of your religion |
 
 The design review cut three planned topics: experts vs. common sense (the policy side is
@@ -224,7 +224,7 @@ can surface in both directions.
 | Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
 | Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
 | Belief that fits the evidence | *(not a left–right split: nonbelievers tend to invoke it about God, and people who doubt free will about free will; some nonbelievers keep free will as a useful belief; some on the wellness left and on the right set it aside for remedies like homeopathy)* | | God and religion (belief in God), free will (whether our choices are up to us), whose word to take (remedies like homeopathy) |
-| Independent checking | what police say after an officer shoots someone | a regulator's word that a new vaccine is safe | official accounts (police after a shooting), whose word to take (a regulator's word on a new vaccine); which side invokes it where moves with who holds power |
+| Independent checking | what police say after an officer shoots someone | a major news outlet's report built on anonymous sources | official accounts (police after a shooting), whose word to take (a news report built on anonymous sources); which side invokes it where can shift with who holds power, as trust in vaccine regulators did by 2026 |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -249,9 +249,9 @@ the sides are believers and nonbelievers as much as left and right: deserved pun
 shaped by a brutal childhood but not for officers who kill unlawfully, biologists followed on
 teaching evolution but not food-safety scientists or economists, and belief that fits the evidence
 about God but not about free will, or the reverse. So do the how-you-know anchors: independent
-checks demanded of police after a shooting but not of a regulator approving a vaccine, or the
-reverse, and evidence demanded of remedies like homeopathy but not of belief in God or free will.
-The personas in `tests/sim/personas` pin these down.
+checks demanded of police after a shooting but not of a news report built on anonymous sources,
+or the reverse, and evidence demanded of remedies like homeopathy but not of belief in God or free
+will. The personas in `tests/sim/personas` pin these down.
 
 ## Axes
 

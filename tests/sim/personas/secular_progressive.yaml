@@ -576,7 +576,7 @@ answers:
   trust.distrusted: [big_business, drug_companies, tech_companies, intelligence, police]
   trust.news: [papers, podcasts, radio]
   trust.checking: [others_agree, source, official]
-  trust.anchor_check: 2 # a regulator's word on a new vaccine is enough...
+  trust.anchor_check: 2 # a major outlet's anonymous sources are enough...
   trust.anchor_evidence: 7
   trust.ch_drift: new_evidence
   trust.ch_alzheimers: caught
@@ -597,7 +597,7 @@ answers:
   official_accounts.ch_wtc7: engineering
   settled.stance: 6 # very little: equal airtime misleads
   settled.importance: 3
-  settled.ch_apa: research
+  settled.ch_quasicrystals: heard
   settled.ch_takedown: answered
   settled.ch_semmelweis: data
   supernatural.spirits_dead: dont
@@ -730,7 +730,7 @@ expect:
   # unlawfully should get what they deserve; and biologists are followed on teaching evolution, but
   # not economists on rents, and food-safety scientists less.
   # In how you know: police accounts after a shooting checked independently before they're
-  # believed, but not a regulator's word on a new vaccine.
+  # believed, but not a major news outlet's anonymous sources.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates

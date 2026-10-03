@@ -570,7 +570,7 @@ answers:
   trust.distrusted: [major_news, universities, health_agencies, drug_companies, tech_companies, international]
   trust.news: [tv, radio, people, leaders]
   trust.checking: [who_gains, record, ask]
-  trust.anchor_check: 6 # hold off believing a regulator on a new vaccine...
+  trust.anchor_check: 6 # hold off believing a news report built on anonymous sources...
   trust.anchor_evidence: 6 # remedies should follow the evidence, though belief in God needn't
   trust.ch_polio: earned
   trust.ch_pauling: weigh
@@ -719,8 +719,8 @@ expect:
   # In worldview: deserved punishment for crimes shaped by a brutal childhood, though officers who
   # kill unlawfully get leeway; belief that fits the evidence about free will, but not about God;
   # and biologists aren't followed on teaching evolution, though economists are on rents.
-  # In how you know: independent checks before believing a regulator on a new vaccine, but not
-  # police after a shooting; and evidence for remedies like homeopathy, though not about God.
+  # In how you know: independent checks before believing a news report built on anonymous sources,
+  # but not police after a shooting; and evidence for remedies like homeopathy, though not about God.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates

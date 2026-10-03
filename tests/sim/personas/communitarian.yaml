@@ -540,7 +540,7 @@ answers:
   trust.distrusted: [big_business, tech_companies]
   trust.news: [papers, people, leaders]
   trust.checking: [ask, others_agree]
-  trust.anchor_check: 3 # the same for vaccines as for police: no tension
+  trust.anchor_check: 3 # the same for news reports as for police: no tension
   trust.anchor_evidence: 4 # as for God and free will
   trust.ch_vote: more
   changing_mind.strong_argument: keep
@@ -652,5 +652,5 @@ expect:
   # to experts and deciding locally each weigh about the same wherever they come up.
   # In worldview as well: deserved punishment, deference to experts and belief that fits the
   # evidence each weigh about the same wherever they come up.
-  # In how you know too: independent checking weighs the same for vaccines and police.
+  # In how you know too: independent checking weighs the same for news reports and police.
   tensions: []

@@ -67,8 +67,8 @@
 # Who carries the burden of proof for claims from powerful bodies, not whose judgment policy
 # follows (expertise) or believing beyond the evidence for the good it does (evidence). The
 # Royal Society's motto is "take nobody's word for it". The left tends to invoke it about police
-# accounts, the right about vaccine approvals; which side invokes it where shifts with who holds
-# power.
+# accounts, the right about news reports built on anonymous sources; which side invokes it where
+# can shift with who holds power.
 - id: independent_checks
   label: Independent checking
   definition: Claims from powerful institutions should be checked by someone independent of them before they're believed, even when that means doubting people who are telling the truth.

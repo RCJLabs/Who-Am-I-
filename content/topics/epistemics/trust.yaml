@@ -3,10 +3,12 @@
 # 2001), between "take nobody's word for it" (the Royal Society's motto) and epistemic dependence
 # (Hardwig 1985). The stance names no agency or party: trust in any one institution now moves with
 # whoever runs it, so the per-institution items are unscored descriptions. Feeds no spectrum. Two
-# anchors: independent checking on a regulator's word that a new vaccine is safe (doubted more on
-# the right; the police context, doubted more on the left, is in official_accounts), and belief
-# that fits the evidence on remedies like homeopathy (set aside by some on the wellness left and
-# on the right alike). Cases are balanced by which side they flatter.
+# anchors: independent checking on a news outlet's report built on anonymous sources (doubted
+# more on the right, a gap that has held for a decade; trust in vaccine regulators, the first
+# draft's context, was about even by party by 2026; the police context, doubted more on the left,
+# is in official_accounts), and belief that fits the evidence on remedies like homeopathy (set
+# aside by some on the wellness left and on the right; studies disagree on which side favors
+# alternative medicine more). Cases are balanced by which side they flatter.
 id: trust
 domain: epistemics
 title: Whose word to take
@@ -105,10 +107,10 @@ items:
   - id: anchor_check
     type: likert
     points: 7
-    text: When it comes to a regulator's word that a new vaccine is safe, people should hold off believing it until someone independent has checked it, even if that means doubting scientists who are telling the truth.
-    help: A regulator, like the US Food and Drug Administration or the European Medicines Agency, approves a vaccine after reviewing the results of its trials.
+    text: When it comes to a major news outlet's report built on anonymous sources, people should hold off believing it until someone independent has checked it, even if that means doubting reporters who are telling the truth.
+    help: Anonymous sources are people a report relies on without naming them, often because they could lose their jobs for speaking.
     principles: { independent_checks: 1 }
-    anchor: { principle: independent_checks, context: a regulator's word that a new vaccine is safe, against: trust in scientists who are telling the truth }
+    anchor: { principle: independent_checks, context: a major news outlet's report built on anonymous sources, against: trust in reporters who are telling the truth }
 
   - id: anchor_evidence
     type: likert
@@ -131,8 +133,8 @@ items:
       vaccine, warning that it could cause infertility or carry HIV. Many had reason to distrust
       outsiders: during a meningitis epidemic in Kano in 1996, a drug company had tested an
       experimental antibiotic on sick children, and it later settled with the state over the trial.
-      Kano stopped vaccinating for about a year. Polio cases rose, and the virus spread from Nigeria
-      to about 20 countries that had been free of it.
+      Kano stopped polio vaccination for about a year. Polio cases rose, and the virus spread from
+      Nigeria to about 20 countries that had been free of it.
     text: If people with real reasons for distrust still got this so wrong, how much should the specialists' agreement count?
     options:
       - id: checking
@@ -155,15 +157,17 @@ items:
     targets: stance
     when: stance < 0
     source: >-
-      Linus Pauling, Vitamin C and the Common Cold (1970); Charles Moertel et al., "High-dose
-      vitamin C versus placebo in the treatment of patients with advanced cancer who have had no
-      prior chemotherapy," New England Journal of Medicine (1985)
+      Linus Pauling, Vitamin C and the Common Cold (1970); Edward Creagan et al., "Failure of
+      high-dose vitamin C (ascorbic acid) therapy to benefit patients with advanced cancer," New
+      England Journal of Medicine (1979); Charles Moertel et al., "High-dose vitamin C versus
+      placebo in the treatment of patients with advanced cancer who have had no prior chemotherapy,"
+      New England Journal of Medicine (1985)
     scenario: >-
       Linus Pauling won two Nobel Prizes, one for chemistry and one for peace. Reading the evidence
       for himself, he became convinced that large doses of vitamin C could prevent colds and help
       treat cancer, and millions of people followed his advice. Most specialists disagreed.
-      Controlled trials at the Mayo Clinic, published in 1979 and 1985, found that vitamin C did
-      nothing for patients with advanced cancer.
+      Controlled trials at the Mayo Clinic, published in 1979 and 1985, found that large doses of
+      vitamin C taken by mouth did nothing for patients with advanced cancer.
     text: If even a brilliant scientist reading the evidence for himself can be wrong where most specialists are right, how far should your own reading count?
     options:
       - id: weigh
@@ -223,8 +227,8 @@ items:
       In 1912 the German scientist Alfred Wegener proposed that the continents had once been joined
       and had drifted apart. Most geologists rejected the idea for decades, partly because he
       couldn't explain what moved them. In the 1960s, studies of the ocean floor showed it
-      spreading, and drifting continents became the basis of modern geology. Wegener had died on an
-      expedition in Greenland in 1930.
+      spreading, and moving continents, explained by plate tectonics, became the basis of modern
+      geology. Wegener had died on an expedition in Greenland in 1930.
     text: If most specialists can reject a true idea for fifty years, how much should their agreement count?
     options:
       - id: new_evidence
@@ -243,25 +247,25 @@ items:
 
   - id: ch_alzheimers
     type: challenge
-    name: The doctored images
+    name: The manipulated images
     targets: stance
     when: stance > 0
     source: >-
       Sylvain Lesné et al., "A specific amyloid-β protein assembly in the brain impairs memory,"
       Nature (2006), retracted 2024; Charles Piller, "Blots on a field?" Science (2022)
     scenario: >-
-      In 2006 the journal Nature published a study reporting a protein that seemed to cause memory
-      loss in Alzheimer's disease. It became one of the most cited papers in the field. In 2022 a
-      neuroscientist found signs that images in it had been manipulated, and in 2024 Nature
-      retracted it.
-    text: If a field can build on a doctored study for sixteen years, how much should you rely on what most specialists accept?
+      In 2006 the journal Nature published a study reporting that one form of a protein linked to
+      Alzheimer's disease seemed to cause memory loss in rats. It became one of the most cited
+      papers in the field. In 2022 a neuroscientist reported signs that images in it had been
+      manipulated, and in 2024 it was retracted.
+    text: If a study with manipulated images can be cited thousands of times over sixteen years, how much should you rely on what most specialists accept?
     options:
       - id: many_studies
-        label: One fraud doesn't overturn a field. What specialists accept rests on many studies, not one.
+        label: One flawed study doesn't overturn a field. What specialists accept rests on many studies, not one.
         reaction: hold
         value: 0
       - id: caught
-        label: Fraud is rare, and another scientist caught this one. That's the checks working.
+        label: Studies like this are rare, and another scientist caught this one. That's the checks working.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -282,10 +286,10 @@ items:
       Medicine (2005)
     scenario: >-
       In the early 1980s two Australian doctors, Barry Marshall and Robin Warren, argued that most
-      stomach ulcers were caused by bacteria, not by stress and stomach acid. Most specialists were
-      skeptical. In 1984 Marshall drank a culture of the bacteria and fell ill. Within about a decade
-      the bacterial cause was widely accepted, ulcers were being cured with antibiotics, and in 2005
-      the two won the Nobel Prize.
+      stomach ulcers were caused by bacteria, not mainly by stress and too much stomach acid. Most
+      specialists were skeptical. In 1984 Marshall drank a culture of the bacteria and fell ill.
+      Within about a decade the bacterial cause was widely accepted, ulcers were being cured with
+      antibiotics, and in 2005 the two won the Nobel Prize.
     text: If the dissenters were right and the majority wrong, why go with the majority?
     options:
       - id: system
