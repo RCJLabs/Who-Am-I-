@@ -36,3 +36,10 @@
 >
   {#each PATHS[name] as d (d)}<path {d} />{/each}
 </svg>
+
+<style>
+  /* Icons sit in flex rows beside text; without this, long text squeezes them smaller. */
+  svg {
+    flex-shrink: 0;
+  }
+</style>
