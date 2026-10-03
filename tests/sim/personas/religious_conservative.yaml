@@ -529,9 +529,9 @@ expect:
     local_control: { subsidiarity: "> 0.3" }
     experts: { expertise: "< 0", equality: "> 0.3" }
     immigration: { sovereignty: "> 0.5", personal_responsibility: "< 0" }
-    policing: { equal_treatment: "< 0", protect_vulnerable: "> 0.3" }
+    policing: { equal_treatment: "< 0", protect_vulnerable: "> 0.3", authority: "> 0" }
     same_sex_marriage: { natural_order: "> 0.3", equal_treatment: "< 0" }
-    transgender: { precaution: "> 0.5", bodily_autonomy: "< 0" }
+    transgender: { precaution: "> 0.5", bodily_autonomy: "< 0", authority: "> 0.5" }
     affirmative_action: { equal_treatment: "> 0.5" }
     gender_roles: { equal_treatment: "> 0.5", liberty: "> 0.3" }
     reparations: { personal_responsibility: "> 0.5" }

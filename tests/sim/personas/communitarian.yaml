@@ -418,7 +418,7 @@ answers:
   gender_roles.board_quota: 3
   gender_roles.home_care: 4
   gender_roles.pay_gap: 4
-  gender_roles.combat: 3
+  gender_roles.combat: 5
   gender_roles.anchor_same: 5
   gender_roles.ch_paradox: mothers_only
   gender_roles.ch_six_months: some_reserved
@@ -490,6 +490,7 @@ expect:
     policing: { equal_treatment: "> 0" }
     transgender: { precaution: "> 0" }
     affirmative_action: { equality: "> 0.3" }
+    gender_roles: { equal_treatment: "> 0.3" }
     prisons: { deserved_punishment: "> 0" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
