@@ -118,7 +118,7 @@ probe.
 | Free will (whether people truly deserve blame or praise; the theory as an unscored item) | core | custom | ✅ | the device that never acted, the signal before the choice, resentment; the tumor, Professor Plum, the basic argument |
 | Right and wrong (whether some things are right or wrong for everyone; where morality comes from) | core | custom | ✅ | the Germantown petition, the Nuremberg charter, the anthropologists' statement; honor cultures, Street's dilemma, Mackie's strangeness; Euthyphro and Anscombe on where morality comes from |
 | Life after death | extended | custom | ✅ | van Lommel's cardiac-arrest study, children who remember, Kant on justice; AWARE's hidden images, dementia and the self, the dying brain |
-| What makes you you (Parfit's teleporter) | extended | custom | ✅ | one cell at a time, split brains, Hume's missing self; the branch line, Williams's torture case, two copies on Mars |
+| What makes you you (Parfit's teleporter) | extended | custom | ✅ | Parfit's range of cell replacements, split brains, Hume's missing self; the branch line, Williams's torture case, two copies on Mars |
 | Meaning of life | extended | | ◻️ | deferred: the reviewers found no single ladder fair to both sides |
 | Consciousness and machine minds | extended | | ◻️ | deferred until a human without AI-industry ties writes or co-signs it: the writer has a stake |
 

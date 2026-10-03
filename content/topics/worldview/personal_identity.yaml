@@ -48,14 +48,14 @@ items:
   # --- Challenges: for travel --------------------------------------------------------------------
   - id: ch_one_cell
     type: challenge
-    name: One cell at a time
+    name: From a few cells to all
     targets: stance
     when: stance < 0
     source: Derek Parfit, Reasons and Persons (1984)
     scenario: >-
       The philosopher Derek Parfit imagined a range of operations in which surgeons replace some of
-      your cells with exact copies: in one, a single cell; in others, a tenth of them, then half; in
-      the last, all of them. No one step along the range seems to make the difference between
+      your cells with exact copies: one in a hundred in the first, then half, then nearly all, and
+      in the last, every cell. No one step along the range seems to make the difference between
       surviving and dying, yet in the last case every cell is new, just as on Mars.
     text: If no one step along the range would end your life, why would the last one?
     options:
