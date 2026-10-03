@@ -61,6 +61,12 @@
 - id: subsidiarity
   label: Deciding locally
   definition: Decisions should be made by the communities they affect, not by a distant government, even when some communities choose badly.
+# Who decides for children, not whether adults run their own lives (liberty) or what happens to
+# one's own body (bodily autonomy). The right tends to invoke it on discipline and schooling, the
+# left on medical treatment for transgender under-18s when parents and doctors agree.
+- id: parents_say
+  label: Parents' say
+  definition: Parents, not the state, should decide how their children are raised, short of serious harm.
 - id: expertise
   label: Deference to experts
   definition: Policy should follow the best expert judgment, even when most voters disagree.
@@ -82,6 +88,12 @@
 - id: personal_responsibility
   label: Personal responsibility
   definition: People take on obligations through their own voluntary choices, and don't answer for choices they didn't make.
+# The other side of personal responsibility: a debt nobody chose. Family-obligation traditions
+# ground duties to parents in it (Analects 17.21), and the left invokes it for what people who've
+# done well owe the society that educated them.
+- id: gratitude
+  label: Debts of gratitude
+  definition: We owe something back to those who gave us what we couldn't earn or repay, even if we never agreed to the debt.
 - id: doing_vs_allowing
   label: Doing vs. allowing
   definition: Actively causing harm is worse than failing to prevent it.

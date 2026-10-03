@@ -2,8 +2,10 @@
 # How readily your country should use military force. One threshold scale: humanitarian rescue
 # and striking first share step 5, so a realist and a humanitarian aren't forced apart; the two
 # motives are separate circumstances. No spectrum, since hawks and doves are found on both sides.
-# The anchor is self-government (who rules a country). Yields toward force record protecting the
-# vulnerable or collective welfare; toward restraint, caution or the sanctity of life.
+# Two anchors: self-government (who rules a country) and loyalty (standing by one's country in a
+# war one thinks is a mistake; invoked here more on the right, and on strikes more on the left).
+# Yields toward force record protecting the vulnerable or collective welfare; toward restraint,
+# caution or the sanctity of life.
 id: war
 domain: governance
 title: War and military intervention
@@ -77,13 +79,20 @@ items:
     poles: [Wrong, Right]
     labels: [Wrong, Probably wrong, Torn, Probably right, Right]
 
-  # --- Anchor ------------------------------------------------------------------------------------
+  # --- Anchors -----------------------------------------------------------------------------------
   - id: anchor_sov
     type: likert
     points: 7
     text: When it comes to who rules a country, each country should be left to decide for itself, without other countries or international bodies stepping in, even when it's ruled by a dictatorship that jails its critics.
     principles: { sovereignty: 1 }
     anchor: { principle: sovereignty, context: who rules a country, against: the freedom of people living under a dictatorship }
+
+  - id: anchor_loyal
+    type: likert
+    points: 7
+    text: When it comes to a war their country is fighting, people should stand by their country and support the war effort, even when they think the war is a mistake.
+    principles: { loyalty: 1 }
+    anchor: { principle: loyalty, context: a war their country is fighting, against: their own judgment of the war }
 
   # --- Challenges: for being readier to use force ------------------------------------------------
   - id: ch_rwanda

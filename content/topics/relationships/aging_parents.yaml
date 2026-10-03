@@ -1,0 +1,302 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What grown children owe parents who can no longer look after themselves, from nothing special for
+# being their parents to family care as a first duty. The stem says "as a rule" and the help text
+# "parents in general", so no step tells someone they owe care to a parent who mistreated them;
+# that comes up in a case of its own (Singapore's law). Step 7 says "within the family" because in
+# family-obligation cultures the work is shared, and gives its reason so it doesn't read as
+# self-erasure. Sensitive: estrangement and abuse. Feeds no spectrum: strong duties to parents are
+# held in many immigrant, religious and non-Western families who aren't conservative in other ways.
+# The anchor is debts of gratitude (care returned for care received; invoked here more on the right
+# and in family-obligation cultures, and on what people who've done well owe society more on the
+# left). Caring for a parent is described as work, never as a burden, and a care home never as
+# abandonment.
+id: aging_parents
+domain: relationships
+title: Duties to aging parents
+summary: When parents grow old and need care, what do their grown children owe them?
+tier: core
+order: 2
+evidence: custom
+sensitive: true
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When parents grow old and can no longer look after themselves, their adult children, as a rule…
+    help: Answer for parents in general. Parents who mistreated their children come up later.
+    poles: [Owe them nothing special, Care for them as a first duty]
+    labels:
+      - Owe them nothing special for being their parents; help should come from love, and care from public services
+      - Owe them what the relationship calls for, as with a close friend
+      - Should make sure they're well cared for, arranging or paying for care, without giving up their own work or family life
+      - Torn / it depends
+      - Should take a major part in their care, in time or money, even at real cost to their own plans
+      - Should have them live with family or care for them at home, unless that's truly impossible
+      - Should care for them within the family as a first duty, ahead of their own careers, as their parents once cared for them
+
+  - id: importance
+    type: importance
+    text: How much does this question matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: support_laws
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Laws requiring adult children who can afford it to support a parent in need, as in Singapore, India and China, are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: carer_pay
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Paying family members an allowance from public funds when they care for an aging parent at home is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_grat
+    type: likert
+    points: 7
+    text: When it comes to aging parents, adult children owe them something back for the care they received as children, even though they never agreed to that debt.
+    principles: { gratitude: 1 }
+    anchor: { principle: gratitude, context: aging parents, against: "adult children's own lives, and how their parents treated them" }
+
+  # --- Challenges: for greater duties ------------------------------------------------------------
+  - id: ch_three_years
+    type: challenge
+    name: Three years in their arms
+    targets: stance
+    when: stance < 0
+    source: Confucius, Analects 17.21
+    scenario: >-
+      In the Analects, Confucius's student Zai Wo argues that three years of mourning for a parent
+      is too long, and that one year is enough. After he leaves, Confucius remarks that a child
+      doesn't leave its parents' arms until it is three, and asks whether Zai Wo didn't have three
+      years of his parents' love.
+    text: If parents give years of care before a child can give anything back, do grown children owe care in return?
+    options:
+      - id: not_a_loan
+        label: Love given freely isn't a loan. Children didn't ask to be born.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: gratitude_not_care
+        label: They owe gratitude, shown in love and in making sure their parents are looked after. That needn't mean giving up their own lives to care for them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Grown children owe their parents more than I said.
+        reaction: yield
+        revise: stance
+        principles: { gratitude: 0.5 }
+
+  - id: ch_unpaid
+    type: challenge
+    name: The unpaid work
+    targets: stance
+    when: stance < 0
+    source: >-
+      AARP Public Policy Institute, "Valuing the Invaluable: 2023 Update" (2023)
+    scenario: >-
+      In 2021 about 38 million people in the US gave unpaid care to an adult relative or friend who
+      needed help with daily life, most often a parent or a spouse. AARP valued the work at about
+      $600 billion. Most of the help older people get at home comes from family, unpaid.
+    text: If families provide most of the care older people get, could public services take their place?
+    options:
+      - id: shared_by_all
+        label: Many countries' public services do far more than America's. Care should be shared by everyone, through taxes.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: given_freely
+        label: Families giving care because they want to is fine. My point is that it isn't owed.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Grown children owe their parents more than I said.
+        reaction: yield
+        revise: stance
+        principles: { gratitude: 0.5 }
+
+  - id: ch_unchosen
+    type: challenge
+    name: Unchosen duties
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Jane English, "What Do Grown Children Owe Their Parents?" (1979); Christina Hoff Sommers,
+      "Filial Morality," Journal of Philosophy (1986)
+    scenario: >-
+      The philosopher Jane English argued in 1979 that grown children owe their parents only what
+      friends owe each other: what love calls for now, not repayment for the past. The philosopher
+      Christina Hoff Sommers replied in 1986 that many duties aren't chosen. No one chooses their
+      parents, yet most people think they owe them more than they owe strangers. And if duties came
+      only from present love, she argued, a parent who had given up a great deal for a child would
+      be owed nothing once that love had faded.
+    text: Can we owe something to people we never chose to be bound to?
+    options:
+      - id: only_chosen
+        label: Only what we choose, or freely give, binds us. Love can't be owed.
+        reaction: hold
+        principles: { personal_responsibility: 0.5 }
+      - id: limited
+        label: Some duties are unchosen, but they're limited to seeing that parents are looked after, not caring for them ourselves.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Grown children owe their parents more than I said.
+        reaction: yield
+        revise: stance
+        principles: { gratitude: 0.5 }
+
+  # --- Challenges: for lesser duties -------------------------------------------------------------
+  - id: ch_care_insurance
+    type: challenge
+    name: Care by insurance
+    targets: stance
+    when: stance > 0
+    source: >-
+      Japan, Long-Term Care Insurance Act (1997, in force 2000); Statistics Bureau of Japan,
+      Employment Status Survey (2022)
+    scenario: >-
+      Japan long expected families, mostly wives and daughters-in-law, to care for aging parents at
+      home. In 2000 it began public long-term care insurance, paid for by everyone aged 40 and over,
+      to share that work across society. Even so, about 100,000 people a year still leave their jobs
+      to care for a family member, most of them women.
+    text: If even a country built around family care chose to share the work across society, should caring for parents be a family's first duty?
+    options:
+      - id: still_owed
+        label: Public help makes the family's work easier. It doesn't end the duty.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: stays_responsible
+        label: Sharing the work with paid carers is fine, as long as the family stays responsible for seeing it done.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Society should take on more of this work than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_carers
+    type: challenge
+    name: What carers give up
+    targets: stance
+    when: stance > 0
+    source: >-
+      MetLife Mature Market Institute, "The MetLife Study of Caregiving Costs to Working Caregivers:
+      Double Jeopardy for Baby Boomers Caring for Their Parents" (2011)
+    scenario: >-
+      A 2011 study estimated that Americans aged 50 and over who left work to care for a parent
+      lost, on average, about $304,000 in wages, pensions and Social Security benefits over their
+      lifetimes, and women about $324,000.
+    text: If caring for a parent at home can cost a carer this much, should it come ahead of their own career?
+    options:
+      - id: giving_back
+        label: Parents gave up a great deal to raise their children. Giving back costs something, and that's part of what makes it matter.
+        reaction: hold
+        principles: { gratitude: 0.5 }
+      - id: share_fairly
+        label: The work should be shared fairly among brothers and sisters, not left to one of them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Grown children's own lives should count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_parent_who_left
+    type: challenge
+    name: The parent who left
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Singapore, Maintenance of Parents Act 1995
+    scenario: >-
+      Since 1996, parents in Singapore aged 60 and over who can't support themselves have been able
+      to claim support from their children before a tribunal. But the tribunal can turn a claim down
+      if the parent abused, neglected or abandoned the child.
+    text: If even a law that makes children support their parents excuses those whose parents mistreated them, does the duty come from being a parent, or from how a parent behaved?
+    options:
+      - id: still_parent
+        label: Even a parent who failed a child is still their parent. Some duty remains, if less.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: in_general
+        label: I answered for parents in general. A parent who abandoned a child gave up that claim.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. What grown children owe depends on the relationship more than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  # --- Challenge: aimed at support laws ----------------------------------------------------------
+  - id: ch_bill
+    type: challenge
+    name: The nursing-home bill
+    targets: support_laws
+    deep: true
+    when: support_laws > 0
+    source: Health Care & Retirement Corporation of America v. Pittas, Superior Court of Pennsylvania (2012)
+    scenario: >-
+      In 2007 Maryann Pittas spent about six months in a Pennsylvania nursing home after a car
+      accident, then moved to Greece, leaving a bill of about $93,000. The nursing home sued her son
+      John under a state law that makes adult children responsible for an indigent parent's care. In
+      2012 an appeals court upheld an order that he pay all of it, though she also had a husband and
+      two other grown children, and her application for public help was still pending.
+    text: Should the law be able to make one grown child pay a parent's care bill?
+    options:
+      - id: before_taxpayers
+        label: Yes. The care was given, and children who can afford it should pay before taxpayers do.
+        reaction: hold
+        principles: { gratitude: 0.5 }
+      - id: share_cost
+        label: Such laws should share the cost among all the children, and apply only after public help has been decided.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. I'm less sure about such laws than I said.
+        reaction: yield
+        revise: support_laws
+        principles: { personal_responsibility: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Three years of care
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Your mother can no longer live on her own. Your brother has looked after her in his home for
+      three years and is exhausted. You could take her in and work part-time for a year, or share
+      the cost of a good care home nearby and visit every week.
+    text: You said you're torn. What would you do?
+    options:
+      - id: her_wishes
+        label: It would depend on what she wants.
+        reaction: hold
+        value: 0
+      - id: take_in
+        label: Take her in and work part-time
+        reaction: yield
+        revise: stance
+        principles: { gratitude: 0.5 }
+      - id: care_home
+        label: Share the cost of the care home and visit every week
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

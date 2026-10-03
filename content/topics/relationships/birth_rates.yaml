@@ -1,0 +1,262 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether and how the government should try to change how many children people have, from
+# encouraging smaller families to making more births a national priority. Policy only: nothing
+# implies that anyone ought to have children, and nothing asks about the user's own plans. Step 1
+# gives environmental smaller-family views a place, step 2 makes staying out a real step, and
+# step 5 is helping people have the children they say they want. "People without children", never
+# "childless". Feeds no spectrum and has no anchor: each answer draws people from both sides.
+# Cases at the smaller-family steps argue for doing more and those at the pro-birth steps for doing
+# less. Two deep cases are narrower: the predicted famines reach only step 1, the only step that
+# rests on population growth being harmful, and the case about targets only steps 6 and 7, since
+# it argues for step 5.
+id: birth_rates
+domain: relationships
+title: Birth rates
+summary: Should the government try to change how many children people have?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to how many children people have, the government should…
+    help: This is about government policy, not anyone's own choices about having children.
+    poles: [Encourage smaller families, Make more births a priority]
+    labels:
+      - Encourage smaller families, for example for the environment's sake
+      - Stay out of it, with no payments or campaigns either way
+      - Help with the costs of raising children as a matter of fairness, not to change birth rates
+      - Torn / it depends
+      - Remove what stops people having the children they want, like the cost of housing, childcare and fertility treatment
+      - Aim to raise the birth rate, with payments and tax breaks for parents
+      - Make raising the birth rate a national priority, with large payments for bigger families and campaigns that celebrate having children
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: immigration
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Relying on immigration, rather than more births, to keep up the number of people of working age is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: ivf
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Paying for fertility treatment such as IVF through public health insurance or a national health service is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Challenges: for doing more ----------------------------------------------------------------
+  - id: ch_quebec
+    type: challenge
+    name: Quebec's payment
+    targets: stance
+    when: stance < 0
+    source: >-
+      Kevin Milligan, "Subsidizing the Stork: New Evidence on Tax Incentives and Fertility," Review
+      of Economics and Statistics (2005)
+    scenario: >-
+      From 1988 to 1997 the Canadian province of Quebec paid parents a cash allowance for each new
+      baby, rising to C$8,000 for a third child. Economist Kevin Milligan compared Quebec with the
+      rest of Canada and found that the payments raised birth rates by about 12% on average, and by
+      about 25% among families eligible for the largest payments.
+    text: If payments can raise the number of children people have, should governments use them when birth rates are low?
+    options:
+      - id: family_decision
+        label: No. How many children to have is a family's decision, and governments shouldn't pay to change it.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: not_worth_it
+        label: A modest rise at a large cost isn't worth it. The money would do more for children already born.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do more to help people have children than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_workers
+    type: challenge
+    name: Fewer workers per retiree
+    targets: stance
+    when: stance < 0
+    source: >-
+      United Nations, World Population Prospects 2024; Statistics Bureau of Japan, Population Census
+      (1970, 2020)
+    scenario: >-
+      In 1970 Japan had about ten people of working age for every person aged 65 or over. By 2020 it
+      had about two. With fewer workers paying in, each one pays more toward pensions and health
+      care for older people, and Japan has raised its consumption tax and the age at which pensions
+      start, partly to cover the cost.
+    text: If low birth rates leave each worker supporting more retirees, should the government try to raise the birth rate?
+    options:
+      - id: adapt
+        label: Immigration, later retirement and higher productivity can handle it, without the government steering births.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: too_slow
+        label: More births take twenty years to add workers, and add children to support first. They can't fix this.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do more to raise birth rates than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_famines
+    type: challenge
+    name: The predicted famines
+    targets: stance
+    deep: true
+    when: stance < -0.8
+    source: Paul R. Ehrlich, The Population Bomb (1968)
+    scenario: >-
+      In 1968 the biologist Paul Ehrlich wrote that "in the 1970s hundreds of millions of people
+      will starve to death" because the world's population was outgrowing its food. Instead,
+      harvests grew faster than the population. The world's population has more than doubled since
+      then, to over 8 billion, while the share of people without enough to eat has fallen sharply.
+    text: If predictions that population growth would bring disaster were wrong, should governments still encourage smaller families?
+    options:
+      - id: other_reasons
+        label: Famine was the wrong worry. More people still means more emissions and less room for wildlife.
+        reaction: hold
+        principles: { future_generations: 0.5 }
+      - id: by_choice
+        label: I mean smaller families by choice, through education and contraception, which also help women. That doesn't rest on famine predictions.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do less to encourage smaller families than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: for doing less ----------------------------------------------------------------
+  - id: ch_korea
+    type: challenge
+    name: South Korea's spending
+    targets: stance
+    when: stance > 0
+    source: >-
+      Statistics Korea, Birth Statistics (2023, 2024); South Korea's Basic Plans for Low Fertility
+      and Aging Society (2006–2025)
+    scenario: >-
+      From 2006, South Korea's government spent more than 300 trillion won (over $200 billion) on
+      plans to raise its birth rate, including payments, housing help and childcare. The fertility
+      rate still fell, from 1.13 children per woman in 2006 to 0.72 in 2023, the lowest in the
+      world. It has risen a little since, as more couples married after the pandemic.
+    text: If years of spending couldn't stop the fall, should governments try to raise birth rates?
+    options:
+      - id: worse_without
+        label: The fall might have been worse without it, and births are rising again.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: deeper_causes
+        label: Korea's problems are long working hours, housing costs and the pressure on mothers. Payments can't fix those, but other policies can.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do less to raise birth rates than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_hungary
+    type: challenge
+    name: Hungary's rise and fall
+    targets: stance
+    when: stance > 0
+    source: Hungarian Central Statistical Office (KSH), fertility statistics (2011–2025)
+    scenario: >-
+      From 2010 Hungary made raising births a national priority, with loans forgiven for couples who
+      have three children, mothers of four exempted from income tax for life, and other support. Its
+      fertility rate rose from 1.23 children per woman in 2011 to about 1.6 in 2021, then fell back
+      to about 1.3 by 2025.
+    text: If a big push raised the birth rate for a decade and then the gains faded, was it worth it?
+    options:
+      - id: real_gain
+        label: Ten years of more births is a real gain, and the fall since may have other causes.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: choice_not_push
+        label: Payments for bigger families push people. Making housing and childcare affordable lets them choose.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do less to raise birth rates than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_targets
+    type: challenge
+    name: The children people want
+    targets: stance
+    deep: true
+    when: stance > 0.5
+    source: >-
+      United Nations Population Fund, State of World Population 2025: The Real Fertility Crisis
+      (2025)
+    scenario: >-
+      In 2025 the UN's population agency surveyed 14,000 adults in 14 countries. About one in five
+      said they hadn't had, or didn't expect to have, as many children as they wanted, most often
+      because of money, housing or work. The agency urged governments to remove those obstacles
+      rather than set targets for the birth rate.
+    text: If the aim is letting people have the children they want, should governments aim at the birth rate itself?
+    options:
+      - id: shrinking
+        label: A shrinking population affects everyone. Governments can encourage births without pressuring anyone.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: payments_help
+        label: Payments are a way to remove those obstacles. Money is the one people named most.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It gives me pause. Governments should do less to raise birth rates than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A payment for each birth
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would pay parents $5,000 for each child born, paid for from general taxes.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

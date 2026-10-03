@@ -142,14 +142,22 @@ reviewers proposed Settled or open. Trust and doubt split by institution, and wh
 which institution moves with who holds power, so no stance names a single agency.
 
 ### Relationships & family
-| Topic | Tier | Status |
-|---|---|---|
-| Love and partnership (monogamy ↔ openness, marriage) | core | ◻️ |
-| Kids and parenting | core | ◻️ |
-| Roles at home | extended | ◻️ |
-| Friendship | extended | ◻️ |
-| Jealousy and trust | extended | ◻️ |
-| Duties to family (aging parents) | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Marriage and divorce (what the law requires before a marriage can end; rights for unmarried couples who split up, covenant marriage and suing an affair partner as circumstances) | core | custom | ✅ | Stevenson and Wolfers on unilateral divorce, New York's staged affairs, Owens v Owens; low-conflict marriages, second thoughts among divorcing parents, Gruber on children raised under easy divorce |
+| Duties to aging parents (sensitive; laws requiring support and pay for family carers as circumstances) | core | custom | ✅ | Analects 17.21, the unpaid work of family carers, Sommers answering English; Japan's care insurance, what carers give up, Singapore's exception for parents who mistreated their children; the Pittas nursing-home bill |
+| Physical punishment (what the law says about smacking; the moral question, school paddling and checks on homeschooling as circumstances; qualities to teach children as an unscored list) | core | custom | ✅ | the Lancet review of 69 studies, Sweden since 1979, Canada's abuse study; Lansford's six countries, Larzelere and Kuhn's backup to time-out, New Zealand's referendum |
+| Family and the law (what to do when a close relative commits a serious crime; the friend version as an unscored item) | extended | custom | ✅ | the Unabomber's brother, France's exception for crimes against children, William Bulger; the sheep thief (Analects 13.18), US deportation after an "aggravated felony", relatives' exemptions in German, French and Chinese law |
+| Birth rates (policy only; immigration instead of births and paying for IVF as circumstances) | extended | custom | ✅ | Quebec's newborn allowance, workers per retiree in Japan, Ehrlich's predicted famines; South Korea's spending, Hungary's rise and fall, the UN Population Fund's 2025 survey |
+
+The design review cut four planned topics: faithfulness (same-sex marriage's item on more than
+two partners covers the law, and relationship style belongs in Identity), roles at home (gender
+roles covers the policy), jealousy, and a child-rearing questionnaire, whose items mean different
+things by race, class and religion; a list of qualities to teach children, after the World Values
+Survey, is unscored in physical punishment instead. Friendship became family and the law, since
+the real dispute, and the law, is about family. The sides are traditional and progressive views of
+family, but also individualist and family-obligation cultures, which don't line up with left and
+right.
 
 ### Lifestyle & money
 | Topic | Tier | Status |
@@ -198,21 +206,22 @@ can surface in both directions.
 |---|---|---|---|
 | Bodily autonomy | abortion, drug policy, selling sex, assisted dying, adults' medical transition | vaccine requirements, paternalism (helmets, sugar taxes) | abortion, assisted dying, vaccine requirements, drug policy, protecting people from themselves, selling sex, transgender people and the law |
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
-| Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns |
+| Protecting the vulnerable | vaccine requirements, guns, hate speech, smacking children | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns, physical punishment (smacking children) |
 | Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers), paying for quicker medical treatment | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy, paying for healthcare |
 | Caution with the irreversible | death penalty, climate, GMOs, nuclear power | gene editing, treatment for under-18s who want to transition, rapid social change | death penalty, gene editing, transgender people and the law, nuclear power; artificial intelligence (the most powerful systems), which isn't a left–right split |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
 | Personal responsibility (no one answers for choices they didn't make) | people brought into a country as children | reparations, welfare, drugs | immigration (people brought as children), reparations (wrongs done generations ago) |
+| Debts of gratitude | what people who've done well owe the society that educated them | what grown children owe their parents (also family-obligation cultures, across politics) | duties to aging parents (aging parents), taxes and redistribution (people who've done well) |
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
 | Equality (narrowing gaps) | taxes, healthcare, race in admissions | | *(effects and moral foundations only)* |
 | Same rules for everyone | police stops, marriage | university admissions, company boards | policing (whom police stop), same-sex relationships and marriage (who may marry), race in admissions (admissions), gender roles (company boards) |
 | Just deserts (rewards) | inheritance (heirs didn't earn it) | support for people who could work | welfare and basic income, inheritance |
 | Deserved punishment | police officers who kill without legal justification | death penalty, prisons, crimes shaped by a brutal childhood | policing (officers who kill without legal justification), prisons and sentencing (violent crime), free will (crimes shaped by a brutal childhood); effects in death penalty, rights of the accused, torture |
-| Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
+| Loyalty | strikes | war, patriotism, national service, trade, foreign aid | unions (a strike at their workplace), war and military intervention (a war their country is fighting), family and the law (a close relative who has committed a serious crime; family-obligation cultures, across politics) |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(effects and moral foundations only)* |
-| Liberty | surveillance (private messages) | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance |
+| Liberty | surveillance (private messages), divorce | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance, marriage and divorce (divorce) |
 | Respect for the natural order | GMOs | gene editing, surrogacy | genetically modified food (the genes of crops), editing human genes (the genes of embryos) |
 | Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger); torture | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many, torture |
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
@@ -220,6 +229,7 @@ can surface in both directions.
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 | National self-government | military intervention and regime change | international courts and treaties, immigration | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes), immigration (who may settle) |
 | Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates, wind and solar farms | local or central control (what schools teach), minimum wage (local minimum wages), nature and building (wind and solar farms) |
+| Parents' say | medical treatment for transgender under-18s when their doctors recommend it | discipline, homeschooling, what schools teach | physical punishment (how children are disciplined), transgender people and the law (blockers and hormones for under-18s whose doctors recommend them) |
 | Deference to experts | vaccine requirements, climate, teaching evolution | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists), God and religion (biologists on teaching evolution) |
 | Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
 | Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
@@ -251,7 +261,12 @@ teaching evolution but not food-safety scientists or economists, and belief that
 about God but not about free will, or the reverse. So do the how-you-know anchors: independent
 checks demanded of police after a shooting but not of a news report built on anonymous sources,
 or the reverse, and evidence demanded of remedies like homeopathy but not of belief in God or free
-will. The personas in `tests/sim/personas` pin these down.
+will. So do the relationships anchors: liberty to end a marriage but not to say hateful things;
+children protected from smacking but people not protected from being pressured into assisted
+dying; standing by one's country in a war but not by coworkers in a strike, with family set
+against either; a debt of gratitude to parents but not to society; and parents deciding on
+discipline but not on blockers their child's doctors recommend, each with its reverse. The
+personas in `tests/sim/personas` pin these down.
 
 ## Axes
 
@@ -259,7 +274,7 @@ will. The personas in `tests/sim/personas` pin these down.
 |---|---|---|---|
 | Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage, climate change (how far and how fast to cut emissions); at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
 | Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance, policing; at half weight: prisons and sentencing, assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
-| Cultural | political | Tradition ↔ Progress | abortion, assisted dying, same-sex relationships and marriage, transgender people and the law; at half weight: drug policy, gene editing, faith and equality law, gender roles (race in admissions and reparations feed no spectrum: treating everyone the same regardless of race isn't the tradition end) |
+| Cultural | political | Tradition ↔ Progress | abortion, assisted dying, same-sex relationships and marriage, transgender people and the law; at half weight: drug policy, gene editing, faith and equality law, gender roles, and marriage and divorce, though it's core, since a ladder built on fault fits some faiths' traditions and not others (race in admissions and reparations feed no spectrum: treating everyone the same regardless of race isn't the tradition end) |
 | Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid, immigration (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
 | Stability or change | values | Stability ↔ Change | what matters most |
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
@@ -276,5 +291,9 @@ In topics with a stance, only the stance feeds spectrums, never the circumstance
 and building feed no spectrum: each splits both sides. Traditionalists back strict animal-welfare
 rules as well as progressives do, for example, since close confinement is the newer practice. In How
 you know only changing your mind feeds spectrums: whose word to take, official accounts and settled
-or open split each side by institution. The moral foundations are principles, not spectrums: the
-moral foundations topic measures them directly, and issue topics add to them.
+or open split each side by institution. In Relationships only marriage and divorce feeds a spectrum:
+on the civil spectrum a ban on smacking would score as authoritarian, and on the cultural one
+answers would sort people by race and country of origin as much as by tradition; duties to
+parents, family and the law and birth rates each draw people from both sides. The moral
+foundations are principles, not spectrums: the moral foundations topic measures them directly, and
+issue topics add to them.

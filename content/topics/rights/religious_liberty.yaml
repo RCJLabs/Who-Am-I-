@@ -214,7 +214,7 @@ items:
       - id: parents
         label: Parents have the right to raise their children by their faith, even in this.
         reaction: hold
-        principles: { liberty: 0.5 }
+        principles: { parents_say: 0.5 }
       - id: rethink
         label: No, and it makes me think faith should give way to the law more often than I said.
         reaction: yield

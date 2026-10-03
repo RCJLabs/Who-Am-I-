@@ -5,9 +5,11 @@
 # challenges that circumstance, not the ladder. Wording: "sex at birth", "transgender women who went
 # through male puberty", "gender dysphoria" (the diagnosis, as health services and courts on both
 # sides name it); no slogans from either side. Feeds the cultural spectrum at full weight.
-# Two anchors: caution with the irreversible (treatment for under-18s, where the right tends to
-# invoke it) and bodily autonomy (adults' medical transition, where the left does). Yields toward
-# recognition record liberty; toward sex at birth, protecting the vulnerable or the natural order.
+# Three anchors: caution with the irreversible (treatment for under-18s, where the right tends to
+# invoke it), bodily autonomy (adults' medical transition, where the left does) and parents' say
+# (treatment for under-18s whose doctors recommend it, where the left does; the right does on
+# discipline). Yields toward recognition record liberty, or parents' say where they're about
+# families deciding; toward sex at birth, protecting the vulnerable or the natural order.
 id: transgender
 domain: society
 title: Transgender people and the law
@@ -72,7 +74,7 @@ items:
     text: A school using a pupil's new name and pronouns without telling the parents is…
     poles: [Wrong, Right]
     labels: [Wrong, Probably wrong, Torn, Probably right, Right]
-    principles: { authority: -0.5 }
+    principles: { parents_say: -0.5 }
 
   - id: toilets
     type: slider
@@ -97,6 +99,13 @@ items:
     text: When it comes to medical transition, an adult's right to decide what happens to their own body should come first.
     principles: { bodily_autonomy: 1 }
     anchor: { principle: bodily_autonomy, context: medical transition for adults, against: protecting people from a decision they may regret }
+
+  - id: anchor_parents
+    type: likert
+    points: 7
+    text: When it comes to puberty blockers and hormones for under-18s whose doctors recommend them, parents, not the state, should decide, even when some parents will decide wrongly.
+    principles: { parents_say: 1 }
+    anchor: { principle: parents_say, context: puberty blockers and hormones for under-18s whose doctors recommend them, against: protecting children from treatment they may regret }
 
   # --- Challenges: for recognition ---------------------------------------------------------------
   - id: ch_goodwin
@@ -320,7 +329,7 @@ items:
         label: No. It makes me more open to letting families decide than I said.
         reaction: yield
         revise: youth_meds
-        principles: { liberty: 0.5 }
+        principles: { parents_say: 0.5 }
 
   # --- Challenge: the middle ---------------------------------------------------------------------
   - id: ch_vote

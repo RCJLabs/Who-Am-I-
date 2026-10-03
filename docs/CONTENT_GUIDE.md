@@ -79,7 +79,9 @@ principles: { bodily_autonomy: 1 }
 - An axis or principle an item doesn't mention means *no information*, not neutral. Write `0` on
   an option for an intentional neutral.
 - **In topics with a stance, only the stance feeds spectrums**: weight 1 in core topics, 0.5 in
-  extended ones, so a deep dive never outweighs a core issue. A stance that also feeds a second
+  extended ones, so a deep dive never outweighs a core issue. A core stance whose ladder fits some
+  traditions and not others gets 0.5 too (marriage and divorce, whose fault-based steps come from
+  Western Christian law). A stance that also feeds a second
   spectrum gives it half the main weight (1 and 0.5 in a core topic, 0.5 and 0.25 in a deep dive). Circumstances and challenges are
   chosen to probe one side's hard cases (rape, a threat to life, a mass murderer), so answers to
   them lean one way by design. Scored on a spectrum, they'd pull moderates toward one pole: someone
@@ -226,6 +228,9 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Animal welfare | When it comes to {context}, the law should protect animals from suffering, even if that means {the cost to people}. |
   | Respect for the natural order | When it comes to {context}, {the thing} shouldn't be engineered, even for good ends like {the benefit}. |
   | Belief that fits the evidence | When it comes to {context}, people should believe only what the evidence supports, even if {believing more would help}. |
+  | Loyalty | When it comes to {context}, people should stand by {their family, coworkers or country} and {what that means here}, even {when they think it's in the wrong}. |
+  | Debts of gratitude | When it comes to {context}, {who} owe something back to {who gave}, even though they never agreed to that debt. |
+  | Parents' say | When it comes to {context}, parents, not the state, should decide, even when some parents will decide wrongly. |
 
 - **Rewards and punishment are separate principles.** Someone can hold that rewards should be
   earned without holding that punishment should match wrongdoing, so just deserts
@@ -319,6 +324,14 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | "shown wrong by" whom; a claim that didn't hold up; "cover-up" only where an inquiry found one | debunked, misinformation, disinformation; cover-up as a bare accusation |
 | what people believe and practise; people who consult a medium or an astrologer | "real" or "not real"; paranormal, occult, New Age, superstition |
 | "view" in questions about changing your mind | "belief" there: items about revising beliefs track religiosity |
+| children whose parents live apart; one-parent and two-parent families; born to unmarried parents; living together unmarried | broken homes, intact families, fatherless; illegitimate, out of wedlock, living in sin, shacking up |
+| divorce without blame ("no-fault" only as the legal term); ending a marriage at one spouse's word | divorce on demand, quickie divorce, divorce culture |
+| an affair, as distinct from partners who agree to other relationships | "cheating" for agreed non-monogamy; homewrecker |
+| people without children | childless, child-free, barren |
+| physical punishment, with "smack" defined (an open hand, on the bottom or hand) | "violence" for a smack, "abuse" for all physical punishment; spare the rod, loving discipline, anti-smacking |
+| care homes, carers; caring for a parent as work | caring for a parent as a burden; dumped in a home, warehousing the elderly |
+| report, give evidence | snitch |
+| low or falling birth rates; policies to raise the birth rate | demographic winter, population collapse, overpopulation |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
@@ -345,7 +358,7 @@ ECR-R, MBTI) have terms that need checking for a commercial app.
 
 ## Sensitive topics
 
-Domains `worldview` and `identity` are sensitive, and so are two topics in `epistemics`. Their items get "Prefer not to say" and are
+Domains `worldview` and `identity` are sensitive, and so are two topics in `epistemics` and one in `relationships`. Their items get "Prefer not to say" and are
 excluded from shared output by default. Identity items **describe and never score**: no effects
 (E012). Never infer identity from other answers.
 
@@ -382,6 +395,29 @@ which side doubts which institution moves with who holds power:
   For many people they are religious practice, and no case tests worshippers' practice elsewhere
   either. Ask what people believe, not what is real, and how they understand their own experiences.
 - **No case about trusting AI.** The writer has a stake; AI assistants appear only as a news source.
+
+A single item can be sensitive in a topic that isn't (`sensitive: true` on the item). In physical
+punishment, the moral question can reveal what a parent does and the qualities list can reveal
+faith, so both get "Prefer not to say".
+
+In Relationships & family, the sides are traditional and progressive views of family, and also
+individualist and family-obligation cultures, which don't line up with left and right. Duties to
+aging parents is sensitive: estrangement and abuse.
+
+- **No family form is presented as deficient.** Evidence about children's outcomes says "on
+  average", says what the children are compared with, and names what the study can't rule out, in
+  the same passage. It never says "you".
+- **Duties to parents are stated as a rule.** The stem says "as a rule" and the help text "parents
+  in general", so no step tells someone they owe care to a parent who mistreated them; that comes
+  up in a case of its own. Caring for a parent is work, never a burden, and a care home is never
+  abandonment.
+- **Policy, not people's own lives.** Nothing asks about the user's marriage, discipline or plans
+  for children, and birth rates asks only what governments should do; nothing implies anyone ought
+  to have children. Who the user is belongs to Identity.
+- **Each side in its holders' words.** A ban on smacking is equal protection met mostly with
+  support, not prosecuting parents; divorce at either spouse's word is courts not judging reasons,
+  not whim; owing parents nothing special still owes what the relationship calls for. Hold options
+  give parents' own reasons ("a rare, calm smack within limits").
 
 ## Review checklist
 

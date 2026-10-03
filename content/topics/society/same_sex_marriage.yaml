@@ -6,7 +6,7 @@
 # and aren't repeated here. Feeds the cultural spectrum at full weight. The anchor is the same rules
 # whatever someone's sex, where the left tends to invoke it. Yields toward recognition record the
 # same rules for everyone or liberty; toward the traditional definition, respect for the natural
-# order or authority.
+# order or authority, or parents' say where the case is about what schools teach.
 id: same_sex_marriage
 domain: society
 title: Same-sex relationships and marriage
@@ -247,7 +247,7 @@ items:
         label: No. It makes me think schools should leave this to parents.
         reaction: yield
         revise: stance
-        principles: { authority: 0.5 }
+        principles: { parents_say: 0.5 }
 
   # --- Challenge: aimed at the therapy ban -------------------------------------------------------
   - id: ch_talk_therapy

@@ -2,6 +2,8 @@
 # The legal powers that let unions bargain for workers. Each side meets a case its allies find
 # hard: police unions and the winter of 1978–79 for the pro-union side; the Triangle fire and the
 # Nordic countries, which have strong unions but no national minimum wage set by law, for the other.
+# The anchor is loyalty (standing by coworkers in a strike one thinks is a mistake; invoked here
+# more on the left, and on a war more on the right).
 id: unions
 domain: economics
 title: Unions
@@ -66,6 +68,14 @@ items:
     text: Requiring large companies to give workers seats on their boards, as Germany does, is…
     poles: [A bad idea, A good idea]
     labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_loyal
+    type: likert
+    points: 7
+    text: When it comes to a strike at their workplace, people should stand by their coworkers and join it, even when they think the strike is a mistake.
+    principles: { loyalty: 1 }
+    anchor: { principle: loyalty, context: a strike at their workplace, against: their own judgment of the strike }
 
   # --- Challenges: against strong unions ----------------------------------------------------------
   - id: ch_winter

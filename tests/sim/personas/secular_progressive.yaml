@@ -8,7 +8,8 @@ topics:
    immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
    climate, animals, nuclear, gm_food, ai, nature,
    god, free_will, morality, afterlife, personal_identity,
-   trust, changing_mind, official_accounts, settled, supernatural]
+   trust, changing_mind, official_accounts, settled, supernatural,
+   marriage, aging_parents, physical_punishment, family_crime, birth_rates]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -612,6 +613,50 @@ answers:
   supernatural.religion: none_held
   supernatural.experiences: [dream]
   supernatural.understanding: ordinary
+  unions.anchor_loyal: 6 # with coworkers in a strike they think is a mistake...
+  war.anchor_loyal: 2 # ...but not with their country in a war
+  taxes.anchor_grat: 7 # people who've done well owe something back to society...
+  transgender.anchor_parents: 6 # parents decide on blockers their child's doctors recommend...
+  marriage.stance: 6 # without blame after a few months
+  marriage.importance: 3
+  marriage.cohabiting: 5
+  marriage.covenant: 2
+  marriage.affair_suits: 1
+  marriage.anchor_lib: 7 # free to end a marriage, though speech may be limited
+  marriage.ch_low_conflict: unbearable
+  marriage.ch_second_thoughts: offer_help
+  marriage.ch_raised_under: support_children
+  aging_parents.stance: 3 # make sure they're well cared for
+  aging_parents.importance: 3
+  aging_parents.support_laws: 2
+  aging_parents.carer_pay: 5
+  aging_parents.anchor_grat: 3 # ...but children owe their parents little
+  aging_parents.ch_three_years: gratitude_not_care
+  aging_parents.ch_unpaid: shared_by_all
+  aging_parents.ch_unchosen: limited
+  physical_punishment.stance: 6 # assault, met with parenting support
+  physical_punishment.importance: 3
+  physical_punishment.moral: 1
+  physical_punishment.school: 1
+  physical_punishment.homeschool: 5
+  physical_punishment.qualities: [independence, responsibility, imagination, tolerance, unselfishness]
+  physical_punishment.anchor_pv: 6 # a ban to protect children, unlike assisted dying and drugs
+  physical_punishment.anchor_parents: 2 # ...the state, not parents, sets the line on discipline
+  physical_punishment.ch_normal: same_protection
+  physical_punishment.ch_backup: no_benefit
+  physical_punishment.ch_nz_vote: not_a_vote
+  family_crime.stance: 6 # report, but stand by them
+  family_crime.importance: 2 # low: deep items are skipped
+  family_crime.friend: same
+  family_crime.testify: 3
+  family_crime.anchor_loyal: 2 # not with family against justice, unlike coworkers in a strike
+  family_crime.ch_sheep_thief: same_rules
+  family_crime.ch_deportation: change_law
+  birth_rates.stance: 3 # help with costs as a matter of fairness
+  birth_rates.importance: 2
+  birth_rates.immigration: 5
+  birth_rates.ch_quebec: not_worth_it
+  birth_rates.ch_workers: adapt
 expect:
   axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5", beyond_nature: "< -0.6", revising: "> 0.6", intuition: "< -0.6" }
   topicAxes:
@@ -655,6 +700,7 @@ expect:
     god: { beyond_nature: "< -0.5" }
     afterlife: { beyond_nature: "< -0.9" }
     changing_mind: { revising: "> 0.6", intuition: "< -0.6" }
+    marriage: { cultural: "> 0" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0", deserved_punishment: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -669,21 +715,21 @@ expect:
     protest: { obey_law: "< 0" }
     torture: { doing_vs_allowing: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
-    taxes: { equality: "> 0.5", future_generations: "< 0" }
+    taxes: { equality: "> 0.5", future_generations: "< 0", gratitude: "> 0.5" }
     healthcare: { market_limits: "> 0.5", equality: "> 0.5", liberty: "< 0" }
     welfare: { retribution: "< 0", liberty: "> 0.5" }
-    unions: { liberty: "< 0" }
+    unions: { liberty: "< 0", loyalty: "> 0.5" }
     housing: { liberty: "< -0.5" }
     inheritance: { retribution: "> 0.5" }
     democracy: { authority: "< 0", protect_vulnerable: "> 0.3" }
-    war: { collective_welfare: "< 0" }
+    war: { collective_welfare: "< 0", loyalty: "< -0.5" }
     cooperation: { sovereignty: "< -0.5" }
     local_control: { subsidiarity: "< -0.3" }
     experts: { expertise: "> 0.5", equality: "> 0.3" }
     immigration: { sovereignty: "< 0", personal_responsibility: "> 0.5", equality: "> 0.3", protect_vulnerable: "> 0.5", subsidiarity: "> 0.5", obey_law: "< 0" }
     policing: { equal_treatment: "> 0.5", deserved_punishment: "> 0.5", liberty: "> 0.3" }
     same_sex_marriage: { equal_treatment: "> 0.5", protect_vulnerable: "> 0.3" }
-    transgender: { precaution: "< 0", bodily_autonomy: "> 0.5" }
+    transgender: { precaution: "< 0", bodily_autonomy: "> 0.5", parents_say: "> 0" }
     affirmative_action: { equal_treatment: "< 0", equality: "> 0.3" }
     gender_roles: { equal_treatment: "< 0", equality: "> 0.3" }
     reparations: { personal_responsibility: "< -0.5", equality: "> 0.3" }
@@ -701,6 +747,11 @@ expect:
     free_will: { deserved_punishment: "< -0.5", evidence: "> 0.9" }
     trust: { independent_checks: "< -0.5", evidence: "> 0.9" }
     official_accounts: { independent_checks: "> 0.9" }
+    marriage: { liberty: "> 0.5" }
+    aging_parents: { gratitude: "< 0" }
+    physical_punishment: { protect_vulnerable: "> 0.3", parents_say: "< -0.5" }
+    family_crime: { loyalty: "< -0.3", deserved_punishment: "> 0.3" }
+    birth_rates: { liberty: "> 0.3" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -731,6 +782,11 @@ expect:
   # not economists on rents, and food-safety scientists less.
   # In how you know: police accounts after a shooting checked independently before they're
   # believed, but not a major news outlet's anonymous sources.
+  # In relationships: free to end a marriage but not to say hateful things; children protected
+  # from smacking, though people aren't from being pressured into dying or from drugs; standing by
+  # coworkers in a strike but not by their country in a war, or by family against justice; a debt
+  # of gratitude to society but hardly to parents; and parents decide on blockers their child's
+  # doctors recommend, but not on discipline.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -775,3 +831,10 @@ expect:
     - expertise|god|housing
     - expertise|gm_food|god
     - independent_checks|official_accounts|trust
+    - liberty|free_speech|marriage
+    - protect_vulnerable|assisted_dying|physical_punishment
+    - protect_vulnerable|drug_policy|physical_punishment
+    - loyalty|unions|war
+    - loyalty|family_crime|unions
+    - gratitude|aging_parents|taxes
+    - parents_say|physical_punishment|transgender
