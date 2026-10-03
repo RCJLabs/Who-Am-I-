@@ -1,9 +1,9 @@
-import type { Bundle } from '../model/content.ts';
 import type { AnswersStore } from './stores/answers.svelte.ts';
+import type { ContentStore } from './stores/content.svelte.ts';
 import type { SettingsStore } from './stores/settings.svelte.ts';
 
 export interface AppContext {
-  bundle: Bundle;
+  content: ContentStore;
   answers: AnswersStore;
   settings: SettingsStore;
 }

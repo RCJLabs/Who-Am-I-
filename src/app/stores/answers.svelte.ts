@@ -9,17 +9,20 @@ import { detectTensions } from '../../engine/tensions.ts';
 import { mergeById } from '../storage/backup.ts';
 import * as db from '../storage/db.ts';
 import { ulid } from '../storage/ids.ts';
+import type { ContentStore } from './content.svelte.ts';
 
 export class AnswersStore {
-  readonly bundle: Bundle;
+  readonly content: ContentStore;
   events = $state.raw<readonly AnswerEvent[]>([]);
   resolutions = $state.raw<readonly TensionResolution[]>([]);
   /** Set when the browser refuses to save; answers then live only in memory. */
   storageError = $state(false);
 
-  // $derived is lazy: these run on first read, after the constructor has set `bundle`.
-  // (Read through a method because TypeScript can't see that.)
-  state = $derived(buildAnswerState(this.content(), this.events));
+  // $derived is lazy: these run on first read, after the constructor has set `content`.
+  // (Read through a method because TypeScript can't see that.) Answers to items whose domain
+  // hasn't loaded would read as orphans, so every path that brings in events loads their
+  // domains first.
+  state = $derived(buildAnswerState(this.bundle(), this.events));
   profile = $derived(
     buildProfile(this.state, {
       includeSensitive: true,
@@ -32,12 +35,13 @@ export class AnswersStore {
 
   private channel: BroadcastChannel | null = null;
 
-  private content(): Bundle {
-    return this.bundle;
+  private bundle(): Bundle {
+    return this.content.bundle;
   }
 
-  constructor(bundle: Bundle, events: readonly AnswerEvent[], resolutions: readonly TensionResolution[], storageOk = true) {
-    this.bundle = bundle;
+  /** `events`' domains must already be loaded (main.ts does that before constructing). */
+  constructor(content: ContentStore, events: readonly AnswerEvent[], resolutions: readonly TensionResolution[], storageOk = true) {
+    this.content = content;
     this.events = events;
     this.resolutions = resolutions;
     this.storageError = !storageOk;
@@ -59,7 +63,7 @@ export class AnswersStore {
   }
 
   async record(item: ItemId, r: Response, via?: Via, note?: string): Promise<AnswerEvent> {
-    const ev: AnswerEvent = { id: ulid(), item, r, at: Date.now(), cv: this.bundle.contentVersion };
+    const ev: AnswerEvent = { id: ulid(), item, r, at: Date.now(), cv: this.bundle().contentVersion };
     if (via) ev.via = via;
     if (note?.trim()) ev.note = note.trim();
     this.events = [...this.events, ev];
@@ -74,7 +78,10 @@ export class AnswersStore {
     await this.persist(() => db.putResolution(full));
   }
 
-  async importBackup(b: Backup, mode: 'merge' | 'replace'): Promise<void> {
+  async importBackup(backup: Backup, mode: 'merge' | 'replace'): Promise<void> {
+    // A plain copy: a reactive proxy can't be stored in IndexedDB, and the write would fail.
+    const b = $state.snapshot(backup) as Backup;
+    await this.content.ensureForItems(b.events.map((e) => e.item));
     const events = mode === 'merge' ? mergeById(this.events, b.events) : mergeById([], b.events);
     const resolutions = mode === 'merge' ? mergeById(this.resolutions, b.resolutions) : mergeById([], b.resolutions);
     if (mode === 'replace') await this.persist(() => db.clearAll());
@@ -95,6 +102,7 @@ export class AnswersStore {
   async reload(): Promise<void> {
     try {
       const loaded = await db.loadAll();
+      await this.content.ensureForItems(loaded.events.map((e) => e.item));
       this.events = loaded.events;
       this.resolutions = loaded.resolutions;
     } catch {

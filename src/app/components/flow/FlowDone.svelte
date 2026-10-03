@@ -9,14 +9,14 @@
   import Icon from '../Icon.svelte';
 
   let { topic }: { topic: Topic } = $props();
-  const { bundle, answers, settings } = app();
+  const { content, answers, settings } = app();
 
   const stanceItem = $derived(topic.stance ? answers.state.ix.items.get(topic.stance) : undefined);
   const stanceHistory = $derived(topic.stance ? (answers.state.history.get(topic.stance) ?? []).filter((e) => e.r.kind === 'scale') : []);
   const landed = $derived(stanceItem && stanceHistory.length ? answerLabel(stanceItem, stanceHistory.at(-1)!.r) : null);
   const started = $derived(stanceItem && stanceHistory.length ? answerLabel(stanceItem, stanceHistory[0]!.r) : null);
   const summary = $derived(challengeSummary(answers.state, topic));
-  const next = $derived(nextTopic(bundle, answers.state, topic.id, { alwaysDeep: settings.alwaysDeep }));
+  const next = $derived(nextTopic(content.bundle, answers.state, topic.id, { alwaysDeep: settings.alwaysDeep }));
 
   function sourceName(id: string): string {
     const item = answers.state.ix.items.get(id);

@@ -428,6 +428,7 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
     tier: tf.tier,
     evidence: tf.evidence,
     sensitive,
+    feeds: axesFed(items),
     items,
   };
   if (tf.source) topic.source = tf.source;
@@ -436,6 +437,19 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
   if (tf.stance && tc.index.has(tf.stance)) topic.stance = q(tf.stance);
   if (tf.importance && tc.index.has(tf.importance)) topic.importance = q(tf.importance);
   return topic;
+}
+
+/** Axes that any item or option effect targets, sorted. */
+function axesFed(items: Item[]): string[] {
+  const axes = new Set<string>();
+  for (const it of items) {
+    const effects = [
+      ...('effects' in it ? it.effects : []),
+      ...('options' in it ? it.options.flatMap((o) => ('effects' in o ? o.effects : [])) : []),
+    ];
+    for (const e of effects) if (e.target.startsWith('axis:')) axes.add(e.target.slice('axis:'.length));
+  }
+  return [...axes].sort();
 }
 
 function parseTerms(text: string): string[] {

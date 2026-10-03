@@ -24,6 +24,23 @@ test('the security policy is in place and the app works offline after the first 
   await expect(page.locator('article.question')).toBeVisible();
 });
 
+test("a first visit loads no topic's questions until that topic is opened", async ({ page }) => {
+  // Domain content ships as chunks named content-<domain>-<hash>.js (see vite.config.ts).
+  const loaded: string[] = [];
+  page.on('request', (r) => {
+    const m = /\/assets\/content-([a-z]+)-[^/]*\.js$/.exec(r.url());
+    if (m) loaded.push(m[1]!);
+  });
+  await freshStart(page);
+  await page.getByTestId('nav-topics').click();
+  await expect(page.getByTestId('topic-climate')).toBeVisible();
+  expect(loaded).toEqual([]);
+
+  await page.getByTestId('topic-climate').click();
+  await expect(page.locator('article.question')).toBeVisible();
+  expect(loaded).toEqual(['environment']);
+});
+
 test('a restored backup brings back answers and the tensions they imply', async ({ page }) => {
   const persona = 'tests/sim/personas/religious_conservative.yaml';
   const dir = mkdtempSync(join(tmpdir(), 'whoami-'));
@@ -52,6 +69,12 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await expect(page.locator('.card.tension', { hasText: 'Bodily autonomy' }).getByTestId('tension-row')).toHaveCount(
     tensions.filter((key) => key.startsWith('bodily_autonomy|')).length,
   );
+
+  // On a fresh start, the answered domains load before anything is shown: nothing goes missing.
+  await page.reload();
+  await page.getByTestId('show-all-tensions').click();
+  await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
+  await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
 });
 
 test('deleting all data really empties the app', async ({ page }) => {

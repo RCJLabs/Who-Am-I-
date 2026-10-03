@@ -6,14 +6,15 @@
   import BackupNudge from '../components/BackupNudge.svelte';
   import Icon from '../components/Icon.svelte';
 
-  const { bundle, answers, settings } = app();
+  const { content, answers, settings } = app();
   const opts = $derived({ alwaysDeep: settings.alwaysDeep });
   const isNew = $derived(answers.events.length === 0);
   const active = $derived(activeTopic(answers.state, opts));
   const activeStatus = $derived(active ? topicStatus(answers.state, active, opts) : null);
-  const upNext = $derived(nextTopic(bundle, answers.state, active?.id, opts));
-  const finished = $derived(bundle.topics.filter((t) => topicStatus(answers.state, t, opts).complete).length);
-  const firstTopic = bundle.topics.find((t) => t.domain === 'personality') ?? bundle.topics[0];
+  const upNext = $derived(nextTopic(content.bundle, answers.state, active?.id, opts));
+  const finished = $derived(content.bundle.topics.filter((t) => topicStatus(answers.state, t, opts).complete).length);
+  const total = content.bundle.topics.length;
+  const firstTopic = content.bundle.topics.find((t) => t.domain === 'personality') ?? content.bundle.topics[0];
 </script>
 
 <div class="page">
@@ -68,7 +69,7 @@
     {/if}
 
     <section class="section">
-      <p class="muted">{copy.home.progress(finished, bundle.topics.length)}</p>
+      <p class="muted">{copy.home.progress(finished, total)}</p>
       <div class="btn-row">
         <a class="btn primary" href={to.results()}>{copy.home.seeResults}</a>
         <a class="btn" href={to.topics()}>{copy.home.browse}</a>
