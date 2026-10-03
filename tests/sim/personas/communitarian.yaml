@@ -5,7 +5,8 @@ topics:
    free_speech, guns, surveillance, religious_liberty, protest, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
-   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
+   climate, animals, nuclear, gm_food, ai, nature]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -442,6 +443,63 @@ answers:
   prisons.ch_texas: low_level
   prisons.ch_aging_out: older_prisoners
   prisons.ch_restorative: addition
+  climate.stance: 5 # net zero by about 2050: a burden worth sharing
+  climate.importance: 3
+  climate.carbon_price: 4
+  climate.car_ban: 3
+  climate.livestock_tax: 3
+  climate.sunlight: 3
+  climate.anchor_future: 5
+  climate.anchor_exp: 5
+  climate.ch_carbon_tax: lead
+  climate.ch_coal: our_part
+  climate.ch_nordhaus: tipping
+  animals.stance: 5 # ban close confinement
+  animals.importance: 3
+  animals.testing: 4
+  animals.hunting: 4
+  animals.cell_meat: 2
+  animals.stunning: 3
+  animals.anchor_welfare: 5
+  animals.ch_prop_12: help_families
+  animals.ch_sow_stalls: imports
+  animals.ch_swiss: details
+  animals.ch_fda: where_needed
+  nuclear.stance: 3 # keep what's there while safe, build no more
+  nuclear.importance: 2
+  nuclear.fast_approval: 2
+  nuclear.guarantees: 3
+  nuclear.anchor_prec: 5
+  nuclear.ch_deaths: worst_case
+  nuclear.ch_germany: keep_coal
+  gm_food.stance: 4 # torn: the middle challenge
+  gm_food.importance: 2
+  gm_food.labels: 5
+  gm_food.seed_patents: 2
+  gm_food.anchor_nature: 4
+  gm_food.anchor_exp: 4
+  gm_food.ch_vote: abstain
+  ai.stance: 5 # independent testing before release
+  ai.importance: 3
+  ai.hiring: 2
+  ai.robot_tax: 4
+  ai.copyright: 2
+  ai.local_rules: 3
+  ai.weapons: 1
+  ai.anchor_prec: 5
+  ai.ch_deepseek: agreements
+  ai.ch_eu_delay: details
+  ai.ch_screening: narrow
+  nature.stance: 3 # weigh both, with nature counting extra
+  nature.importance: 3
+  nature.thirty_percent: 4
+  nature.wolves: 3
+  nature.solar_farmland: 2
+  nature.offsets: 3
+  nature.anchor_loc: 5
+  nature.ch_bat_tunnel: poor_planning
+  nature.ch_cape_wind: process
+  nature.ch_snail_darter: lucky
 expect:
   axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
@@ -477,6 +535,7 @@ expect:
     transgender: { cultural: "< 0" }
     gender_roles: { cultural: "> 0" }
     prisons: { civil: "> 0" }
+    climate: { economic: "< 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -495,6 +554,15 @@ expect:
     affirmative_action: { equality: "> 0.3" }
     gender_roles: { equal_treatment: "> 0.3" }
     prisons: { deserved_punishment: "> 0" }
+    climate: { future_generations: "> 0.3", precaution: "> 0.3" }
+    animals: { animal_welfare: "< 0.1", natural_order: "< 0" }
+    nuclear: { precaution: "> 0.3" }
+    gm_food: { market_limits: "> 0.3" }
+    ai: { precaution: "> 0.3", retribution: "> 0.3" }
+    nature: { subsidiarity: "> 0.2" }
+    taxes: { future_generations: "> 0.2" }
+    trade: { animal_welfare: "> 0.2" }
+    strangers: { future_generations: "> 0.3" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
@@ -505,4 +573,6 @@ expect:
   # weigh about the same wherever they come up.
   # In society too: the same rules for everyone, deserved punishment, personal responsibility and
   # self-government each weigh about the same wherever they come up.
+  # In environment too: future generations, animal welfare, caution with the irreversible, deference
+  # to experts and deciding locally each weigh about the same wherever they come up.
   tensions: []
