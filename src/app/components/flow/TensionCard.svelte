@@ -19,8 +19,8 @@
     onnotnow: () => void;
   } = $props();
 
-  const { bundle, answers } = app();
-  const principle = $derived(bundle.principles[tension.principle]);
+  const { content, answers } = app();
+  const principle = $derived(content.bundle.principles[tension.principle]);
   const sides = $derived(
     [tension.a, tension.b].map((side) => {
       const item = answers.state.ix.items.get(side.items[0]!)!;

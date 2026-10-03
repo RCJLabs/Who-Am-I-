@@ -7,11 +7,11 @@
   import EvidenceBadge from '../components/EvidenceBadge.svelte';
   import Icon from '../components/Icon.svelte';
 
-  const { bundle, answers, settings } = app();
+  const { content, answers, settings } = app();
   const opts = $derived({ alwaysDeep: settings.alwaysDeep });
   const groups = $derived(
-    bundle.domains.map((domain) => {
-      const topics = bundle.topics.filter((t) => t.domain === domain.id);
+    content.bundle.domains.map((domain) => {
+      const topics = content.bundle.topics.filter((t) => t.domain === domain.id);
       return { domain, core: topics.filter((t) => t.tier === 'core'), deep: topics.filter((t) => t.tier === 'extended') };
     }),
   );

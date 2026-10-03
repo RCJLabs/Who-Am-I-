@@ -16,16 +16,16 @@
   /** Up to this many positions, every domain starts open. */
   const POSITIONS_OPEN = 6;
 
-  const { bundle, answers } = app();
+  const { content, answers } = app();
   const profile = $derived(answers.profile);
-  const feeders = axisFeeders(bundle);
-  const axes = Object.values(bundle.axes);
+  const feeders = axisFeeders(content.bundle);
+  const axes = Object.values(content.bundle.axes);
   const political = axes.filter((a) => a.family === 'political');
   const values = axes.filter((a) => a.family === 'values');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
-  const economicAxis = bundle.axes['economic'];
-  const civilAxis = bundle.axes['civil'];
+  const economicAxis = content.bundle.axes['economic'];
+  const civilAxis = content.bundle.axes['civil'];
 
   const hasAny = $derived(answers.events.length > 0);
   const answeredTopics = $derived(Object.values(profile.topics).length);
@@ -37,7 +37,7 @@
   const civil = $derived(profile.axes['civil']?.score ?? null);
   const mapLow = $derived(Math.min(profile.axes['economic']?.confidence ?? 0, profile.axes['civil']?.confidence ?? 0) < 0.5);
   const leanings = $derived(strongestLeanings([...political, ...values], profile.axes));
-  const ranked = $derived(rankedPrinciples(Object.values(bundle.principles), profile.principles));
+  const ranked = $derived(rankedPrinciples(Object.values(content.bundle.principles), profile.principles));
   const leanMost = $derived(ranked.filter((r) => r.score >= 0.4).slice(0, 3));
   const totals = $derived(challengeTotals(profile.topics));
 
@@ -59,7 +59,7 @@
   });
 
   // Positions, grouped by domain.
-  const positionGroups = $derived(positionsByDomain(bundle, profile.topics));
+  const positionGroups = $derived(positionsByDomain(content.bundle, profile.topics));
   const positionCount = $derived(positionGroups.reduce((n, g) => n + g.topics.length, 0));
 
   /** Multi-select picks, strongest first, with their labels. */
@@ -105,7 +105,7 @@
     score={sc.score}
     confidence={sc.confidence}
     description={a.description}
-    mixed={withMixed && isMixed(sc, bundle)}
+    mixed={withMixed && isMixed(sc, content.bundle)}
     feeders={feeders.get(a.id) ?? []}
     testid="axis-{a.id}"
   />
@@ -120,7 +120,7 @@
       <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
     </div>
   {:else}
-    <p class="muted small">{copy.results.selfReport} {copy.results.basedOn(answeredTopics, bundle.topics.length)}</p>
+    <p class="muted small">{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}</p>
 
     {#if (econ !== null && civil !== null) || leanings.length || leanMost.length || totals.asked}
       <section class="section" aria-labelledby="overview-title">
@@ -193,7 +193,7 @@
         <p class="muted small">{copy.results.tensionsCount(tensions.length, tensionGroups.length)}</p>
         {#each shownGroups as g (g.principle)}
           <div class="card tension">
-            <p class="tension-title"><strong>{bundle.principles[g.principle]?.label}</strong></p>
+            <p class="tension-title"><strong>{content.bundle.principles[g.principle]?.label}</strong></p>
             {#each g.items as t (t.key)}
               <a class="pair" href={to.tension(t.key)} data-testid="tension-row">
                 <span class="pair-text">

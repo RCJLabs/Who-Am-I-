@@ -24,6 +24,23 @@ test('the security policy is in place and the app works offline after the first 
   await expect(page.locator('article.question')).toBeVisible();
 });
 
+test("a first visit loads no topic's questions until that topic is opened", async ({ page }) => {
+  // Domain content ships as chunks named content-<domain>-<hash>.js (see vite.config.ts).
+  const loaded: string[] = [];
+  page.on('request', (r) => {
+    const m = /\/assets\/content-([a-z]+)-[^/]*\.js$/.exec(r.url());
+    if (m) loaded.push(m[1]!);
+  });
+  await freshStart(page);
+  await page.getByTestId('nav-topics').click();
+  await expect(page.getByTestId('topic-climate')).toBeVisible();
+  expect(loaded).toEqual([]);
+
+  await page.getByTestId('topic-climate').click();
+  await expect(page.locator('article.question')).toBeVisible();
+  expect(loaded).toEqual(['environment']);
+});
+
 test('a restored backup brings back answers and the tensions they imply', async ({ page }) => {
   const persona = 'tests/sim/personas/religious_conservative.yaml';
   const dir = mkdtempSync(join(tmpdir(), 'whoami-'));

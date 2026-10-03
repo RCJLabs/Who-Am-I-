@@ -2,6 +2,7 @@
   import { app } from './context.ts';
   import { copy } from './copy.ts';
   import { router } from './router.svelte.ts';
+  import ContentGate from './components/ContentGate.svelte';
   import NavBar from './components/NavBar.svelte';
   import Toasts from './components/Toasts.svelte';
   import UpdateBanner from './components/UpdateBanner.svelte';
@@ -16,8 +17,13 @@
   import TopicResults from './routes/TopicResults.svelte';
   import Topics from './routes/Topics.svelte';
 
-  const { answers } = app();
+  const { answers, content } = app();
   const route = $derived(router.route);
+  /** What a topic's screens need loaded. An unknown topic needs nothing: it shows "not found". */
+  const topicDomains = (topic: string): string[] => {
+    const domain = content.topicDomain(topic);
+    return domain ? [domain] : [];
+  };
   const tab = $derived.by(() => {
     switch (route.name) {
       case 'home':
@@ -41,6 +47,9 @@
 {#if answers.storageError}
   <div class="banner" role="alert">{copy.storageWarning}</div>
 {/if}
+{#if content.error}
+  <div class="banner" role="alert">{copy.contentWarning}</div>
+{/if}
 
 {#key route}
   {#if route.name === 'home'}
@@ -48,19 +57,19 @@
   {:else if route.name === 'topics'}
     <Topics />
   {:else if route.name === 'flow'}
-    <Flow topicId={route.topic} edit={route.edit} />
+    <ContentGate domains={topicDomains(route.topic)}><Flow topicId={route.topic} edit={route.edit} /></ContentGate>
   {:else if route.name === 'results'}
     <Results />
   {:else if route.name === 'topic-results'}
-    <TopicResults topicId={route.topic} />
+    <ContentGate domains={topicDomains(route.topic)}><TopicResults topicId={route.topic} /></ContentGate>
   {:else if route.name === 'tension'}
     <TensionView tensionKey={route.key} />
   {:else if route.name === 'settings'}
     <Settings />
   {:else if route.name === 'about'}
-    <About />
+    <ContentGate domains="all"><About /></ContentGate>
   {:else if route.name === 'content'}
-    <ContentPreview />
+    <ContentGate domains="all"><ContentPreview /></ContentGate>
   {:else}
     <NotFound />
   {/if}

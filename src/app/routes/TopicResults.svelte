@@ -8,8 +8,8 @@
   import NotFound from './NotFound.svelte';
 
   let { topicId }: { topicId: string } = $props();
-  const { bundle, answers, settings } = app();
-  const topic = $derived(bundle.topics.find((t) => t.id === topicId));
+  const { content, answers, settings } = app();
+  const topic = $derived(content.bundle.topics.find((t) => t.id === topicId));
   const status = $derived(topic ? topicStatus(answers.state, topic, { alwaysDeep: settings.alwaysDeep }) : null);
   const summary = $derived(topic ? challengeSummary(answers.state, topic) : null);
   const result = $derived(topic ? answers.profile.topics[topic.id] : undefined);

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { defineConfig, type Plugin } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { VitePWA } from 'vite-plugin-pwa';
-import { contentPlugin } from './src/compiler/vite-plugin.ts';
+import { contentChunkName, contentPlugin } from './src/compiler/vite-plugin.ts';
 
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
 
@@ -78,5 +78,11 @@ export default defineConfig({
   ],
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
+  },
+  build: {
+    rollupOptions: {
+      // Each domain's content is a chunk of its own, named content-<domain>-<hash>.js.
+      output: { chunkFileNames: (chunk) => `assets/${contentChunkName(chunk.facadeModuleId) ?? '[name]'}-[hash].js` },
+    },
   },
 });

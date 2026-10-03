@@ -94,17 +94,7 @@ export function orderedOptions<T extends Option | { id: string; label: string }>
 /** Which topics feed each axis (for "not enough data: answer these"). */
 export function axisFeeders(b: Bundle): Map<string, Topic[]> {
   const out = new Map<string, Topic[]>();
-  for (const t of b.topics) {
-    const axes = new Set<string>();
-    for (const it of t.items) {
-      const effects = [
-        ...('effects' in it ? it.effects : []),
-        ...('options' in it ? it.options.flatMap((o) => ('effects' in o ? o.effects : [])) : []),
-      ];
-      for (const e of effects) if (e.target.startsWith('axis:')) axes.add(e.target.slice(5));
-    }
-    for (const a of axes) out.set(a, [...(out.get(a) ?? []), t]);
-  }
+  for (const t of b.topics) for (const a of t.feeds) out.set(a, [...(out.get(a) ?? []), t]);
   return out;
 }
 

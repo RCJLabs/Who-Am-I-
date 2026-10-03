@@ -5,8 +5,8 @@
   import { sources } from '../view.ts';
   import Markdown from '../components/Markdown.svelte';
 
-  const { bundle } = app();
-  const cited = sources(bundle);
+  const { content } = app();
+  const cited = sources(content.bundle);
   const evidenceOrder = ['validated', 'adapted', 'custom', 'for-fun'] as const;
 </script>
 

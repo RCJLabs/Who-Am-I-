@@ -211,6 +211,9 @@ export const copy = {
   },
 
   storageWarning: "Your browser isn't letting this app save. Answers will be lost when you close the page.",
+  contentWarning: "Some questions didn't load, so some of your answers may be missing from your results. Reload the app to try again.",
+
+  loading: { text: 'Loading…', failed: "This part of the app didn't load. Check your connection and try again.", retry: 'Reload' },
 
   update: { available: 'A new version is ready.', reload: 'Update', dismiss: 'Later', offline: 'Ready to work offline.' },
 

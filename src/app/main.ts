@@ -1,11 +1,12 @@
 import './styles/app.css';
 import { mount } from 'svelte';
-import bundle from 'virtual:content';
+import index, { loaders } from 'virtual:content';
 import App from './App.svelte';
 import { initApp } from './context.ts';
 import { pwa } from './pwa.svelte.ts';
 import { loadAll, type Loaded } from './storage/db.ts';
 import { AnswersStore } from './stores/answers.svelte.ts';
+import { ContentStore } from './stores/content.svelte.ts';
 import { SettingsStore } from './stores/settings.svelte.ts';
 
 const target = document.getElementById('app');
@@ -21,9 +22,13 @@ try {
   storageOk = false;
 }
 
+// Only the domains already answered load now; the rest load when a screen needs them.
+const content = new ContentStore(index, loaders);
+await content.ensureForItems(loaded.events.map((e) => e.item));
+
 initApp({
-  bundle,
-  answers: new AnswersStore(bundle, loaded.events, loaded.resolutions, storageOk),
+  content,
+  answers: new AnswersStore(content, loaded.events, loaded.resolutions, storageOk),
   settings: new SettingsStore(loaded.settings),
 });
 

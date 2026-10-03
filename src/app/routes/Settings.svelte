@@ -10,7 +10,7 @@
   import ConfirmDialog from '../components/ConfirmDialog.svelte';
   import Icon from '../components/Icon.svelte';
 
-  const { bundle, answers, settings } = app();
+  const { content, answers, settings } = app();
 
   let persisted = $state<boolean | null>(null);
   let pending = $state<Backup | null>(null);
@@ -118,7 +118,7 @@
   <section class="section links">
     <a href={to.about()}>{copy.settings.aboutLink}</a>
     <a href={to.content()}>{copy.settings.contentLink}</a>
-    <p class="muted small">{copy.settings.version(__APP_VERSION__, bundle.contentVersion)}</p>
+    <p class="muted small">{copy.settings.version(__APP_VERSION__, content.bundle.contentVersion)}</p>
   </section>
 </div>
 

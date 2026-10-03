@@ -24,8 +24,8 @@
   }
 
   let { topicId, edit }: { topicId: string; edit?: string | undefined } = $props();
-  const { bundle, answers, settings } = app();
-  const topic = $derived(bundle.topics.find((t) => t.id === topicId));
+  const { content, answers, settings } = app();
+  const topic = $derived(content.bundle.topics.find((t) => t.id === topicId));
 
   // Per-visit state. Everything else is derived from the answer log.
   let tensionDone = $state(false);

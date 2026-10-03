@@ -65,6 +65,8 @@ export interface Topic {
   sensitive: boolean;
   stance?: ItemId;
   importance?: ItemId;
+  /** Axes the items feed, so screens can list a spectrum's topics before their items load. */
+  feeds: AxisId[];
   items: Item[];
 }
 

@@ -6,16 +6,16 @@
   import { describeCond } from '../../engine/cond/describe.ts';
   import { app } from '../context.ts';
 
-  const { bundle } = app();
+  const { content } = app();
 
   const version = __APP_VERSION__;
-  const ix = $derived(indexBundle(bundle));
+  const ix = $derived(indexBundle(content.bundle));
   const groups = $derived(
-    bundle.domains
-      .map((domain) => ({ domain, topics: bundle.topics.filter((t) => t.domain === domain.id) }))
+    content.bundle.domains
+      .map((domain) => ({ domain, topics: content.bundle.topics.filter((t) => t.domain === domain.id) }))
       .filter((g) => g.topics.length > 0),
   );
-  const allItems = $derived(bundle.topics.flatMap((t) => t.items));
+  const allItems = $derived(content.bundle.topics.flatMap((t) => t.items));
   const challengeCount = $derived(allItems.filter((i) => i.type === 'challenge').length);
 
   const REACTION: Record<Reaction, string> = {
@@ -35,8 +35,8 @@
   }
 
   function targetLabel(t: Target): string {
-    if (t.startsWith('axis:')) return bundle.axes[t.slice(5)]?.title ?? t;
-    return bundle.principles[t.slice('principle:'.length)]?.label ?? t;
+    if (t.startsWith('axis:')) return content.bundle.axes[t.slice(5)]?.title ?? t;
+    return content.bundle.principles[t.slice('principle:'.length)]?.label ?? t;
   }
 
   function signed(n: number): string {
@@ -61,7 +61,7 @@
       you only see the ones aimed at your answers.
     </p>
     <p class="meta">
-      Build {version} · content {bundle.contentVersion} · {bundle.topics.length} topics · {allItems.length} items ·
+      Build {version} · content {content.bundle.contentVersion} · {content.bundle.topics.length} topics · {allItems.length} items ·
       {challengeCount} challenges
     </p>
   </header>
@@ -149,7 +149,7 @@
 
                   {#if item.anchor}
                     <p class="anchor">
-                      Anchor for <strong>{bundle.principles[item.anchor.principle]?.label}</strong> in {item.anchor.context}{#if item.anchor.against}; competing interest: {item.anchor.against}{/if}
+                      Anchor for <strong>{content.bundle.principles[item.anchor.principle]?.label}</strong> in {item.anchor.context}{#if item.anchor.against}; competing interest: {item.anchor.against}{/if}
                     </p>
                   {/if}
 
