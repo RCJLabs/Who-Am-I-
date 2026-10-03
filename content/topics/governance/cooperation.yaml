@@ -1,0 +1,277 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How far your country should bind itself to shared international rules. The steps run from
+# acting alone to handing over lawmaking power, so a sovereigntist who values democratic control
+# (not isolation) has a home at steps 2 and 3. Feeds the diplomatic spectrum, where shared rules
+# are the Global end. The anchor is self-government, applied to international courts. Yields
+# toward shared rules record collective welfare; toward national control, self-government.
+id: cooperation
+domain: governance
+title: National control or shared rules
+summary: Should your country bind itself to rules it shares with other countries?
+tier: core
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: On shared problems like climate change, pandemics and pollution, your country should…
+    poles: [Act alone, Share lawmaking power]
+    labels:
+      - Act alone, avoiding binding commitments
+      - Make deals it can leave whenever it wants
+      - Sign treaties, but not let any international body enforce them
+      - Torn / it depends
+      - Let international bodies enforce the rules it has agreed to
+      - Accept international decisions, even when it's outvoted
+      - Hand real lawmaking power to international bodies
+    axes: { diplomatic: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: climate_targets
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Binding targets for cutting emissions, agreed with other countries, with penalties for missing them, are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: rights_court
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: An international human rights court having the final say over your country's own courts is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { sovereignty: -0.5 }
+
+  - id: un_command
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Your country's troops serving under UN command in peacekeeping missions is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: burden
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Richer countries paying more than others into shared international funds is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_sov
+    type: likert
+    points: 7
+    text: When it comes to trying its own soldiers for war crimes, each country should be left to decide for itself, without other countries or international bodies stepping in, even when its courts let the guilty go free.
+    principles: { sovereignty: 1 }
+    anchor: { principle: sovereignty, context: trying its own soldiers for war crimes, against: justice for the victims of war crimes }
+
+  # --- Challenges: for shared rules --------------------------------------------------------------
+  - id: ch_ozone
+    type: challenge
+    name: Mending the ozone layer
+    targets: stance
+    when: stance < 0
+    source: >-
+      Montreal Protocol on Substances that Deplete the Ozone Layer (1987); WMO/UNEP, Scientific
+      Assessment of Ozone Depletion: 2022 (2023)
+    scenario: >-
+      In 1987 countries signed the Montreal Protocol, a binding treaty to phase out chemicals that
+      were destroying the ozone layer, with limits on trade with countries that stayed out. Nearly
+      99% of the banned chemicals have since been phased out, and scientists expect the ozone layer
+      to recover by about 2040 over most of the world.
+    text: Could any country have done that alone?
+    options:
+      - id: choose
+        label: No, but treaties like that work because each country chooses to keep them, not because anyone can force it.
+        reaction: hold
+        principles: { sovereignty: 0.5 }
+      - id: rare
+        label: Some rare problems need binding rules. Most don't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me more open to binding international rules than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_smallpox
+    type: challenge
+    name: Ending smallpox
+    targets: stance
+    when: stance < 0
+    source: World Health Organization, The Global Eradication of Smallpox (1980)
+    scenario: >-
+      Smallpox killed hundreds of millions of people in the 20th century. Starting in 1967, a global
+      campaign led by the World Health Organization tracked down every case, and in 1980 the disease
+      was declared eradicated.
+    text: Doesn't a problem that crosses borders need a response that does too?
+    options:
+      - id: voluntary
+        label: Countries cooperated freely. That doesn't mean handing power to international bodies.
+        reaction: hold
+        principles: { sovereignty: 0.5 }
+      - id: disease
+        label: Disease is a special case. Most problems can be handled at home.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me more open to shared rules than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_antarctica
+    type: challenge
+    name: A continent for science
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: The Antarctic Treaty (1959)
+    scenario: >-
+      In 1959, twelve countries signed the Antarctic Treaty, freezing their territorial claims and
+      banning military bases and weapons tests on the continent. More than 50 countries are now
+      parties, and Antarctica has stayed free of military bases for more than 60 years.
+    text: If countries can accept shared rules there, why not elsewhere?
+    options:
+      - id: say
+        label: Elsewhere, giving up control would cost people a real say over their own lives.
+        reaction: hold
+        principles: { sovereignty: 0.5 }
+      - id: empty
+        label: Antarctica has no people and little at stake. It's a special case.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Why not? It makes me more open to shared rules than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: for national control ----------------------------------------------------------
+  - id: ch_haiti
+    type: challenge
+    name: Cholera in Haiti
+    targets: stance
+    when: stance > 0
+    source: >-
+      UN General Assembly, A New Approach to Cholera in Haiti (2016); Georges v. United Nations
+      (US Court of Appeals, 2nd Circuit, 2016); World Health Organization, Cholera – Haiti (2022)
+    scenario: >-
+      In 2010 cholera broke out in Haiti, and investigators traced it to a base of UN peacekeepers.
+      The epidemic killed nearly 10,000 people. When victims' families sued, the UN claimed
+      immunity, and US courts agreed. In 2016 the UN apologized for its role, without accepting
+      legal responsibility.
+    text: Who holds international bodies to account when they cause harm?
+    options:
+      - id: still_better
+        label: No institution is perfect. National governments cause far more harm, and are rarely held to account either.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: courts_for_them
+        label: International bodies need courts of their own to answer to, not less power.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Too often no one. It makes me warier of giving them power than I said.
+        reaction: yield
+        revise: stance
+        principles: { sovereignty: 0.5 }
+
+  - id: ch_prisoners
+    type: challenge
+    name: The prisoners' vote
+    targets: stance
+    when: stance > 0
+    source: >-
+      Hirst v. United Kingdom (No. 2), European Court of Human Rights (2005); House of Commons
+      debate on voting by prisoners (10 February 2011)
+    scenario: >-
+      In 2005 the European Court of Human Rights ruled that Britain's ban on prisoners voting
+      violated their rights. In 2011 Britain's elected House of Commons voted 234 to 22 to keep the
+      ban, and it stayed in place for years.
+    text: When an international court and an elected parliament disagree, who should win?
+    options:
+      - id: court
+        label: The court. Basic rights shouldn't depend on what a national majority wants.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: grave_only
+        label: International courts should rule on grave abuses, not on questions democracies reasonably disagree about.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: The parliament. It makes me want more national control than I said.
+        reaction: yield
+        revise: stance
+        principles: { sovereignty: 0.5 }
+
+  - id: ch_commission
+    type: challenge
+    name: Who sits in judgment
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: UN Commission on Human Rights, election of its chair (January 2003)
+    scenario: >-
+      In 2003 Libya, then a dictatorship, was elected by other governments to chair the UN
+      Commission on Human Rights. The commission was replaced three years later.
+    text: Should international bodies whose members include dictatorships have power over democracies?
+    options:
+      - id: reform
+        label: Yes. Reform them, but the alternative is having no shared rules at all.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: democracies
+        label: Only bodies made up of democracies should have binding power.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want more national control than I said.
+        reaction: yield
+        revise: stance
+        principles: { sovereignty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Inspectors at the door
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed treaty would let international inspectors visit any laboratory in your country at
+      short notice, to check for biological weapons. Other countries would accept the same.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { sovereignty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -3,7 +3,8 @@ topics:
   [abortion, assisted_dying, vaccine_mandates, death_penalty, drug_policy, paternalism, organ_donation, sex_work,
    value_tradeoffs, moral_foundations, moral_reasoning, strangers, sacrifice, ring_of_gyges,
    free_speech, guns, surveillance, religious_liberty, protest, public_safety,
-   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance]
+   taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
+   democracy, war, cooperation, foreign_aid, local_control, experts]
 answers:
   abortion.stance: 3
   abortion.importance: 3
@@ -43,6 +44,7 @@ answers:
   vaccine_mandates.penalty: exclusion
   vaccine_mandates.anchor_ba: 3
   vaccine_mandates.anchor_pv: 6
+  vaccine_mandates.anchor_exp: 5
   vaccine_mandates.ch_blood: harm_vs_help
   vaccine_mandates.ch_low_risk: still_yes
   death_penalty.stance: 3
@@ -258,6 +260,7 @@ answers:
   minimum_wage.importance: 3
   minimum_wage.youth: 4
   minimum_wage.regional: 3
+  minimum_wage.anchor_loc: 4
   minimum_wage.gig: 4
   minimum_wage.small_business: 2
   minimum_wage.ch_cbo: careful
@@ -293,8 +296,9 @@ answers:
   housing.public_housing: 5
   housing.empty_homes: 4
   housing.no_reason: 2
+  housing.anchor_exp: 4
   housing.ch_supply: stability
-  housing.ch_economists: not_only
+  housing.ch_queue: tenants
   housing.ch_tokyo: both
   inheritance.stance: 3
   inheritance.importance: 2
@@ -303,8 +307,59 @@ answers:
   inheritance.anchor_desert: 4
   inheritance.ch_carnegie: scale
   inheritance.ch_florence: family
+  democracy.stance: 4
+  democracy.importance: 3
+  democracy.compulsory_voting: 5
+  democracy.voting_age: 2
+  democracy.prisoner_votes: 2
+  democracy.referendums: 4
+  democracy.strong_leader: 2
+  democracy.ch_vote: "yes"
+  war.stance: 5
+  war.importance: 3
+  war.rescue: 4
+  war.first_strike: 3
+  war.conscription: 5
+  war.drones: 4
+  war.deterrent: 4
+  war.anchor_sov: 4
+  war.ch_iraq: evidence
+  war.ch_libya: massacre
+  war.ch_vietnam: far_away
+  cooperation.stance: 5
+  cooperation.importance: 3
+  cooperation.climate_targets: 4
+  cooperation.rights_court: 3
+  cooperation.un_command: 4
+  cooperation.burden: 4
+  cooperation.anchor_sov: 4
+  cooperation.ch_haiti: still_better
+  cooperation.ch_prisoners: grave_only
+  cooperation.ch_commission: democracies
+  foreign_aid.stance: 5
+  foreign_aid.importance: 2 # low: deep items are skipped
+  foreign_aid.tied_aid: 3
+  foreign_aid.conditions: 4
+  foreign_aid.ch_offshore: channels
+  foreign_aid.ch_compatriots: both
+  local_control.stance: 4
+  local_control.importance: 3
+  local_control.curriculum: 4
+  local_control.police_chiefs: 3
+  local_control.stricter_rules: 4
+  local_control.equalize: 5
+  local_control.anchor_loc: 4
+  local_control.ch_vote: abstain
+  experts.stance: 5
+  experts.importance: 2
+  experts.central_bank: 4
+  experts.assemblies: 4
+  experts.boundaries: 4
+  experts.anchor_exp: 5
+  experts.ch_tetlock: still_know
+  experts.ch_eugenics: learned
 expect:
-  axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0" }
+  axes: { civil: "> 0.3", cultural: "< 0", economic: "< 0", change: "< -0.6", others: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "> 0" }
   topicAxes:
     abortion: { cultural: "< 0" }
     assisted_dying: { cultural: "< 0", civil: "> 0" }
@@ -331,6 +386,8 @@ expect:
     trade: { economic: "< 0" }
     housing: { economic: "< 0" }
     inheritance: { economic: "> 0" }
+    cooperation: { diplomatic: "> 0" }
+    foreign_aid: { diplomatic: "> 0" }
   principles: { protect_vulnerable: "> 0.5", market_limits: "> 0.5" }
   topicPrinciples:
     moral_foundations:
@@ -341,10 +398,15 @@ expect:
     guns: { protect_vulnerable: "> 0.5" }
     protest: { obey_law: "> 0.5" }
     healthcare: { market_limits: "> 0.5" }
+    democracy: { authority: "< 0", protect_vulnerable: "> 0.3" }
+    war: { collective_welfare: "> 0.5" }
+    experts: { expertise: "> 0.3" }
   # Consistent: moderate on bodily autonomy everywhere, protective everywhere, wary of paid markets
   # in bodies everywhere. In the rights topics too: protective on guns as on drugs and vaccines,
   # liberty equally modest for speech and private messages, the law binding on protesters and
   # religious objectors alike, and due process weighed the same for guns and freedom. In economics:
   # money shouldn't buy quicker treatment any more than a kidney or sex, and just deserts weighs
   # about the same for people who could work and for heirs.
+  # In governance too: national self-government, deciding locally and deferring to experts each
+  # weigh about the same wherever they come up.
   tensions: []

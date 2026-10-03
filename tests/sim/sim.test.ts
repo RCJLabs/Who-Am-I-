@@ -132,6 +132,8 @@ describe('ideology bots (pipeline sanity; they use the content weights)', () => 
     ['axis:civil', -1],
     ['axis:economic', 1],
     ['axis:economic', -1],
+    ['axis:diplomatic', 1],
+    ['axis:diplomatic', -1],
     ['axis:novelty', 1],
     ['axis:mainstream', -1],
     ['axis:change', 1],

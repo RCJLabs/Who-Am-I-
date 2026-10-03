@@ -1,0 +1,263 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much aid your country should give to poorer countries. Steps are fixed amounts, with the
+# dated averages in the help text. values/strangers covers personal giving (Singer, GiveWell,
+# Deaton on aid that backfires), so this topic avoids those cases. Feeds the diplomatic spectrum
+# at full weight. Yields toward more aid record care; toward less, loyalty to fellow citizens.
+id: foreign_aid
+domain: governance
+title: Foreign aid
+summary: How much should your country spend helping poorer countries?
+tier: core
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Your country's aid to poorer countries should be…
+    help: >-
+      Rich countries' aid added up to about 0.37% of their combined national income in 2023, then
+      fell to about 0.26% in 2025, the largest drop on record. The UN target, set in 1970, is 0.7%.
+    poles: [None, Well above the UN target]
+    labels:
+      - None at all
+      - Only emergency relief after disasters
+      - Small, about 0.1% to 0.2% of national income
+      - Torn / it depends
+      - Moderate, about 0.3% to 0.4% of national income
+      - The UN target of 0.7% of national income
+      - Well above 0.7% of national income
+    axes: { diplomatic: 1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: tied_aid
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring aid money to be spent with your own country's companies is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: conditions
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Cutting aid to governments that abuse human rights, even though their people suffer for it, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: migration
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Giving aid to countries on condition that they stop migrants from leaving is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: defense
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Cutting aid to pay for more defense spending is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Challenges: for more aid ------------------------------------------------------------------
+  - id: ch_pepfar
+    type: challenge
+    name: Fighting AIDS
+    targets: stance
+    when: stance < 0
+    source: US State Department, PEPFAR Latest Global Results and Projections (December 2024)
+    scenario: >-
+      In 2003 the US launched PEPFAR, a program to fight HIV and AIDS, mostly in Africa. The US
+      State Department estimates that it has saved about 26 million lives.
+    text: If government aid can do that, is giving little or none still right?
+    options:
+      - id: charity
+        label: Yes. Charities can fund that. Governments owe their own citizens first.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: proven
+        label: Programs with results like that deserve funding. Most aid isn't like that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want my country to give more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_budget
+    type: challenge
+    name: How big is the aid budget?
+    targets: stance
+    when: stance < 0
+    source: KFF, 2016 Survey of Americans on the U.S. Role in Global Health
+    scenario: >-
+      In a 2016 survey, Americans guessed on average that 31% of the federal budget went to foreign
+      aid. The real share was about 1%.
+    text: Does knowing how small aid budgets are change how much you'd give?
+    options:
+      - id: still_ours
+        label: No. Even a small share is money our own citizens need.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: works
+        label: The size isn't what matters to me. Whether it works is.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want my country to give more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_vaccines
+    type: challenge
+    name: Vaccines for the poorest
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Gavi, the Vaccine Alliance, facts and figures
+    scenario: >-
+      Gavi, a partnership funded mostly by rich countries' governments, buys vaccines for the
+      world's poorest countries. It says it has helped vaccinate more than 1.2 billion children
+      since 2000, which it estimates will prevent more than 20 million deaths.
+    text: Is that a good use of taxpayers' money?
+    options:
+      - id: home_first
+        label: It's good work, but our own taxpayers' needs come first.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: health_only
+        label: Vaccines, yes. That doesn't justify aid budgets in general.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want my country to give more than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenges: for less aid ------------------------------------------------------------------
+  - id: ch_offshore
+    type: challenge
+    name: Where the money goes
+    targets: stance
+    when: stance > 0
+    source: >-
+      Jørgen Juel Andersen, Niels Johannesen and Bob Rijkers, "Elite Capture of Foreign Aid:
+      Evidence from Offshore Bank Accounts," Journal of Political Economy (2022)
+    scenario: >-
+      A study tracked aid to 22 of the most aid-dependent countries. When large aid payments
+      arrived, deposits in secretive offshore bank accounts jumped. The researchers estimated that
+      about 7.5% of the aid was diverted.
+    text: If some aid ends up in the accounts of the powerful, should countries give less?
+    options:
+      - id: oversight
+        label: No. Most of it still reaches people. The answer is better oversight.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: channels
+        label: Give through charities and programs, not directly to governments.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want my country to give less than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_compatriots
+    type: challenge
+    name: Our own first?
+    targets: stance
+    when: stance > 0
+    source: David Miller, National Responsibility and Global Justice (2007)
+    scenario: >-
+      Political philosopher David Miller argues that citizens owe more to one another than to
+      strangers abroad, much as family members owe more to each other, because they share
+      institutions and a common life they've built together.
+    text: Should your country help its own poor before people in poorer countries?
+    options:
+      - id: birthplace
+        label: No. Where someone happens to be born shouldn't decide whether they live or die.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: both
+        label: Our own come first, but helping the poorest abroad is so cheap that it's still a duty.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want my country to give less than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_easterly
+    type: challenge
+    name: Twelve-cent medicines
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: William Easterly, The White Man's Burden (2006)
+    scenario: >-
+      Economist William Easterly wrote that the West spent $2.3 trillion on foreign aid over five
+      decades and "still had not managed to get twelve-cent medicines to children to prevent half
+      of all malaria deaths."
+    text: If aid has achieved that little, why give more?
+    options:
+      - id: improved
+        label: Aid has improved since, and it should go to programs proven to work.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: smarter
+        label: The lesson is to give smarter, not more or less.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want my country to give less than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Aid that passes the test
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would raise your country's aid by 25% over five years, spending all of it on
+      programs that pass an independent evaluation.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

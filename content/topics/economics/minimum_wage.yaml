@@ -69,6 +69,14 @@ items:
     poles: [Unfair, Sensible]
     labels: [Unfair, Probably unfair, Torn, Probably sensible, Sensible]
 
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_loc
+    type: likert
+    points: 7
+    text: When it comes to minimum wages, decisions should be left to local communities, even when that means pay differs from one town to the next.
+    principles: { subsidiarity: 1 }
+    anchor: { principle: subsidiarity, context: minimum wages, against: the same wage floor for every worker }
+
   # --- Challenges: against a high minimum ---------------------------------------------------------
   - id: ch_cbo
     type: challenge

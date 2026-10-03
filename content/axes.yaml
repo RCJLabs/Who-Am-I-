@@ -28,15 +28,17 @@
   minWeight: 1.5
   fullWeight: 6
   minTopics: 2
+# Only two core topics feed this axis so far (shared rules, foreign aid), so the most anyone can
+# give is weight 2. A full weight of 6 would mark every answer "based on few answers"; at 3,
+# answering both reads as a real but partial picture. Raise it as more topics feed the axis.
 - id: diplomatic
   family: political
   title: Diplomatic
   description: Should your country put its own interests first, or cooperate globally?
   poles: [National, Global]
   minWeight: 1.5
-  fullWeight: 6
+  fullWeight: 3
   minTopics: 2
-  planned: true
 
 # --- Values: what you prioritize, and how you reason about right and wrong ---
 # The first two follow the two main dimensions of Shalom Schwartz's theory of basic values; the

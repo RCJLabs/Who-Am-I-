@@ -45,6 +45,15 @@
 - id: obey_law
   label: Obeying the law
   definition: Laws should be obeyed even by people who think they're unjust, and changed only through legal means.
+- id: sovereignty
+  label: National self-government
+  definition: Each country should run its own affairs, without other countries or international bodies stepping in, even when it runs them badly.
+- id: subsidiarity
+  label: Deciding locally
+  definition: Decisions should be made by the communities they affect, not by a distant government, even when some communities choose badly.
+- id: expertise
+  label: Deference to experts
+  definition: Policy should follow the best expert judgment, even when most voters disagree.
 - id: collective_welfare
   label: Collective welfare
   definition: Individuals should accept burdens for the good of the community.

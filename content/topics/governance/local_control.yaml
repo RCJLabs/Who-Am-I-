@@ -1,0 +1,276 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How much should be decided locally rather than by central government ("central" covers national
+# governments and, in federal countries, state or provincial ones). No spectrum: both left and
+# right switch sides depending on the issue, which the deciding-locally anchors (here, on school
+# curricula; in economics/minimum_wage, on local minimum wages) are built to surface. Yields toward
+# local control record deciding locally; toward central control, equality.
+id: local_control
+domain: governance
+title: Local or central control
+summary: Should communities decide for themselves, or should one set of rules apply everywhere?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Decisions about schools, policing and planning should be made mainly by…
+    poles: [Local communities, Central government]
+    labels:
+      - Local communities, with no central rules
+      - Local communities, within a few basic central standards
+      - Mostly local communities, with central money to even out differences
+      - Torn / it depends
+      - Central government, with real local input
+      - Central government, with local councils carrying out its plans
+      - Central government alone, so the rules are the same everywhere
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: curriculum
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A national curriculum that every school must follow is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { subsidiarity: -0.5 }
+
+  - id: police_chiefs
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting local voters elect their police chiefs, rather than having them appointed, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: stricter_rules
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting cities set stricter rules than the rest of the country, for example on pollution, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: equalize
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Using taxes from richer regions to pay for services in poorer ones is…
+    poles: [Unfair, Fair]
+    labels: [Unfair, Probably unfair, Torn, Probably fair, Fair]
+    principles: { equality: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_loc
+    type: likert
+    points: 7
+    text: When it comes to what schools teach, decisions should be left to local communities, even when some communities choose badly.
+    principles: { subsidiarity: 1 }
+    anchor: { principle: subsidiarity, context: what schools teach, against: the same good education for every child }
+
+  # --- Challenges: for central control -----------------------------------------------------------
+  - id: ch_little_rock
+    type: challenge
+    name: Little Rock, 1957
+    targets: stance
+    when: stance < 0
+    source: >-
+      Brown v. Board of Education, 347 U.S. 483 (1954); Executive Order 10730 (1957); Eisenhower
+      Presidential Library, The Little Rock School Integration Crisis
+    scenario: >-
+      In 1954 the US Supreme Court ruled that segregated schools were unconstitutional. In 1957,
+      when nine Black students tried to enroll at Central High School in Little Rock, Arkansas, the
+      state's governor sent the National Guard to keep them out. The president sent federal troops
+      to escort them in.
+    text: When local majorities deny people their rights, shouldn't the central government step in?
+    options:
+      - id: rare
+        label: Rare abuses don't outweigh the benefits of deciding locally in everything else.
+        reaction: hold
+        principles: { subsidiarity: 0.5 }
+      - id: rights_only
+        label: Protecting basic rights is the central government's job. Running schools isn't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more central control than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_appenzell
+    type: challenge
+    name: The last canton
+    targets: stance
+    when: stance < 0
+    source: Swiss Federal Supreme Court, BGE 116 Ia 359 (27 November 1990)
+    scenario: >-
+      Swiss women won the vote in national elections in 1971. But in the canton of Appenzell
+      Innerrhoden, where citizens vote by a show of hands in an open-air assembly, the men voted
+      as late as 1990 to keep women out. Later that year, Switzerland's highest court ordered the
+      canton to let women vote.
+    text: Should a local tradition be allowed to deny people an equal vote?
+    options:
+      - id: patience
+        label: Change imposed from outside breeds resentment. Communities should get there themselves.
+        reaction: hold
+        principles: { subsidiarity: 0.5 }
+      - id: equal_votes
+        label: Equal voting rights are basic and should be the same everywhere. Almost everything else can be local.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want more central control than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_funding
+    type: challenge
+    name: Rich district, poor district
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      National Center for Education Statistics, Public School Revenue Sources; The Education Trust,
+      Funding Gaps 2018
+    scenario: >-
+      In the US, local property taxes provide over a third of the money for public schools. One
+      2018 study found that the poorest districts got about $1,000 less per student from state and
+      local sources than the richest.
+    text: Should where you live decide what your school can spend?
+    options:
+      - id: invest
+        label: Communities should be free to invest more in their own schools.
+        reaction: hold
+        principles: { subsidiarity: 0.5 }
+      - id: fund_centrally
+        label: Pay for schools centrally, but let communities run them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want more central control than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenges: for local control -------------------------------------------------------------
+  - id: ch_residential_schools
+    type: challenge
+    name: The residential schools
+    targets: stance
+    when: stance > 0
+    source: Truth and Reconciliation Commission of Canada, Final Report (2015)
+    scenario: >-
+      For over a century, Canada's national government sent more than 150,000 Indigenous children
+      to residential schools, many run by churches, to strip them of their languages and cultures.
+      In 2015 a national commission described the policy as cultural genocide.
+    text: What protects communities from a distant government that decides it knows best?
+    options:
+      - id: rights
+        label: National rights and courts, not handing power to local majorities.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: culture
+        label: Communities should control their own culture and schools, but national standards still matter elsewhere.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Too little. It makes me want more decided locally than I said.
+        reaction: yield
+        revise: stance
+        principles: { subsidiarity: 0.5 }
+
+  - id: ch_ostrom
+    type: challenge
+    name: Governing the commons
+    targets: stance
+    when: stance > 0
+    source: Elinor Ostrom, Governing the Commons (1990); Nobel Prize in Economic Sciences (2009)
+    scenario: >-
+      Political economist Elinor Ostrom, who won a Nobel Prize in 2009, showed that communities,
+      such as Swiss villages sharing alpine pastures, have managed shared resources well for
+      centuries without central control.
+    text: Should central governments trust communities more?
+    options:
+      - id: scale
+        label: Small, close-knit communities aren't a model for running a modern country.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: resources
+        label: For shared local resources, yes. For schools and policing, common rules matter more.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more decided locally than I said.
+        reaction: yield
+        revise: stance
+        principles: { subsidiarity: 0.5 }
+
+  - id: ch_hayek
+    type: challenge
+    name: Knowledge on the spot
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Friedrich Hayek, "The Use of Knowledge in Society," American Economic Review (1945)
+    scenario: >-
+      Economist Friedrich Hayek argued in 1945 that the knowledge needed to decide well, about
+      particular places, times and people, is spread among many people and can never all be
+      gathered by a central planner.
+    text: Can a central government know enough to decide well for every community?
+    options:
+      - id: patterns
+        label: It doesn't need to know everything to set fair rules that apply to all.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: markets
+        label: That's an argument for markets and prices, not for local governments.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want more decided locally than I said.
+        reaction: yield
+        revise: stance
+        principles: { subsidiarity: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Same exams, local lessons
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would let each region write its own school curriculum, as long as students
+      sit the same national exams.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { subsidiarity: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

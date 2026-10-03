@@ -99,14 +99,14 @@ The full map of what Who Am I covers.
 | Space exploration | extended | ◻️ |
 
 ### Governance & the world
-| Topic | Tier | Status |
-|---|---|---|
-| Democracy and voting rules | core | ◻️ |
-| War and military intervention | core | ◻️ |
-| Foreign aid | extended | ◻️ |
-| Nation first or global cooperation | extended | ◻️ |
-| Local vs. central control | extended | ◻️ |
-| Experts vs. voters (technocracy) | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Democracy and the courts (who has the last word on rights; voting rules as circumstances) | core | custom | ✅ | the child-labor law the Court later allowed, Waldron, India's basic structure, the Enabling Act, Peru 1992, the 1937 court plan |
+| War and military intervention | core | custom | ✅ | Rwanda, Srebrenica, Kosovo, Iraq's missing weapons, Libya after 2011, Vietnam |
+| National control or shared rules | core | custom | ✅ | the ozone treaty, ending smallpox, Antarctica, cholera in Haiti, the prisoners' vote, Libya chairing the human rights commission |
+| Foreign aid | core | custom | ✅ | PEPFAR, the guessed size of the aid budget, Gavi, aid in offshore accounts, Miller on compatriots, Easterly |
+| Local or central control | extended | custom | ✅ | Little Rock, Appenzell, school funding gaps, the residential schools, Ostrom, Hayek |
+| Experts or voters | extended | custom | ✅ | independent central banks, Brennan, Calgary's fluoride, Tetlock's forecasts, Buck v. Bell, the replication project |
 
 ### Religion & worldview (sensitive)
 | Topic | Tier | Status |
@@ -197,7 +197,7 @@ can surface in both directions.
 | Care | assisted dying, healthcare | | *(effects and moral foundations only)* |
 | Equality | taxes, healthcare, affirmative action | | *(effects and moral foundations only)* |
 | Just deserts | inheritance (heirs didn't earn it) | support for people who could work, death penalty, prisons | welfare and basic income, inheritance (rewards only: punishment needs its own principle) |
-| Loyalty | | patriotism, national service | *(moral foundations only)* |
+| Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
 | Liberty | surveillance (private messages) | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance |
@@ -206,6 +206,9 @@ can surface in both directions.
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
 | Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, rights of the accused |
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
+| National self-government | military intervention and regime change | international courts and treaties | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes) |
+| Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates | local or central control (what schools teach), minimum wage (local minimum wages) |
+| Deference to experts | vaccine requirements, climate | rent limits, minimum wages (economists' warnings) | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits) |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -215,7 +218,10 @@ messages, obeying the law required of protesters but not of religious objectors,
 demanded before losing guns but not freedom each raise a tension, and so does each reverse. So
 do the economics anchors: just deserts demanded of people who could work but not of heirs, and
 money allowed to buy quicker medical treatment but not sex or surrogacy, each raise a tension in
-either direction. The personas in `tests/sim/personas` pin these down.
+either direction. So do the governance anchors: outsiders kept from deciding who rules a country
+but allowed to try its soldiers, schools left to local communities but not minimum wages, and
+economists followed on rents but not public-health experts on school vaccines. The personas in
+`tests/sim/personas` pin these down.
 
 ## Axes
 
@@ -224,7 +230,7 @@ either direction. The personas in `tests/sim/personas` pin these down.
 | Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage; at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
 | Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance; at half weight: assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
 | Cultural | political | Tradition ↔ Progress | abortion, assisted dying; at half weight: drug policy, gene editing, faith and equality law |
-| Diplomatic | political | National ↔ Global | *(planned)* |
+| Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
 | Stability or change | values | Stability ↔ Change | what matters most |
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
 | Rules or outcomes | values | Rules ↔ Outcomes | rules or outcomes; at half weight: sacrificing one, lying and honesty, the price of a perfect world |

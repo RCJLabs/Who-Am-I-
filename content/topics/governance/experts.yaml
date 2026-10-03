@@ -1,0 +1,275 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whose judgment policy should follow when experts and voters disagree. No spectrum: deference to
+# experts splits by issue rather than by side, which the deference anchors (here in general; in
+# life/vaccine_mandates on childhood vaccines; in economics/housing on limits on rents) are built
+# to surface. Yields toward experts record deference to expertise; toward voters, equality (each
+# citizen's say counting the same).
+id: experts
+domain: governance
+title: Experts or voters
+summary: When experts and most voters disagree, whose judgment should policy follow?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When experts and most voters disagree about a policy, the government should follow…
+    poles: [The voters, The experts]
+    labels:
+      - The voters, always
+      - The voters, almost always
+      - The voters, unless the evidence against them is overwhelming
+      - Torn / it depends
+      - The experts, on technical questions
+      - The experts, in most cases
+      - The experts, always
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: central_bank
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting an independent central bank, rather than elected politicians, set interest rates is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { expertise: 0.5 }
+
+  - id: assemblies
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Having randomly chosen citizens study an issue with experts, then recommend a policy, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: boundaries
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Having independent commissions, rather than politicians, draw the boundaries of electoral districts is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: knowledge_test
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring people to pass a basic test of political knowledge before they can vote is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { equality: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_exp
+    type: likert
+    points: 7
+    text: When it comes to complex policy questions, governments should follow what experts recommend, even when most voters disagree.
+    principles: { expertise: 1 }
+    anchor: { principle: expertise, context: complex policy questions, against: voters' right to decide }
+
+  # --- Challenges: for experts -------------------------------------------------------------------
+  - id: ch_central_banks
+    type: challenge
+    name: Independent central banks
+    targets: stance
+    when: stance < 0
+    source: >-
+      Alberto Alesina and Lawrence Summers, "Central Bank Independence and Macroeconomic
+      Performance," Journal of Money, Credit and Banking (1993)
+    scenario: >-
+      Most rich democracies have handed control of interest rates to independent central banks run
+      by experts. A classic 1993 study of 16 rich countries found that those with more independent
+      central banks had lower inflation, with no measurable cost to growth or jobs.
+    text: If experts do some jobs better than voters' representatives, why not let them?
+    options:
+      - id: choose
+        label: Because in a democracy, people should be able to choose, even when they choose wrong.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: technical
+        label: Interest rates are narrow and technical. Most policy questions are about values.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Why not? It makes me want experts to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { expertise: 0.5 }
+
+  - id: ch_brennan
+    type: challenge
+    name: Against democracy?
+    targets: stance
+    when: stance < 0
+    source: Jason Brennan, Against Democracy (2016)
+    scenario: >-
+      Philosopher Jason Brennan argues that most voters know little about the policies they vote on,
+      and that governments chosen by uninformed voters harm everyone. So, he says, votes shouldn't
+      all count equally.
+    text: Should people who know more have more say?
+    options:
+      - id: equal
+        label: No. Everyone lives with the results, so everyone should count the same.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: inform
+        label: The answer is better-informed voters, not fewer votes.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Perhaps. It makes me want experts to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { expertise: 0.5 }
+
+  - id: ch_fluoride
+    type: challenge
+    name: Taking out the fluoride
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Lindsay McLaren et al., "Measuring the short-term impact of fluoridation cessation on dental
+      caries in Grade 2 children," Community Dentistry and Oral Epidemiology (2016)
+    scenario: >-
+      In 2011 Calgary's city council stopped adding fluoride to the water supply, against the advice
+      of dental experts. A study later found that tooth decay rose more among Calgary's children
+      than in Edmonton, which kept fluoride. Calgary later decided to bring it back.
+    text: When the public overrules experts, who pays the price?
+    options:
+      - id: choice
+        label: Then people learn and change course, as Calgary did. That's how democracy should work.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: health
+        label: Public health is a special case. Most policy isn't like that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Children, and it makes me want experts to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { expertise: 0.5 }
+
+  # --- Challenges: for voters --------------------------------------------------------------------
+  - id: ch_tetlock
+    type: challenge
+    name: Expert predictions
+    targets: stance
+    when: stance > 0
+    source: Philip Tetlock, Expert Political Judgment (2005)
+    scenario: >-
+      Psychologist Philip Tetlock collected tens of thousands of predictions from 284 political
+      experts over two decades. On average they did only slightly better than chance, and worse
+      than simple statistical models.
+    text: If experts' forecasts are that unreliable, why should their advice outweigh voters'?
+    options:
+      - id: still_know
+        label: Experts still know far more than voters about how policies actually work.
+        reaction: hold
+        principles: { expertise: 0.5 }
+      - id: forecasting
+        label: Predicting events is hard. Judging the evidence on what works is a different skill.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It shouldn't. It makes me want voters to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_eugenics
+    type: challenge
+    name: When the experts agreed
+    targets: stance
+    when: stance > 0
+    source: Buck v. Bell, 274 U.S. 200 (1927)
+    scenario: >-
+      In the early 20th century, many leading scientists backed eugenics. In 1927 the US Supreme
+      Court upheld a state law allowing forced sterilization, and more than 60,000 Americans were
+      eventually sterilized under laws like it.
+    text: When experts' advice rests on their values, not just facts, should it still outweigh voters'?
+    options:
+      - id: learned
+        label: Science has learned from those mistakes. Today's experts are far more reliable.
+        reaction: hold
+        principles: { expertise: 0.5 }
+      - id: facts_values
+        label: Experts should advise on the facts. Voters should decide the values.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want voters to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_replication
+    type: challenge
+    name: Studies that didn't hold up
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Open Science Collaboration, "Estimating the reproducibility of psychological science,"
+      Science (2015)
+    scenario: >-
+      In 2015 a team of researchers repeated 100 studies published in leading psychology journals.
+      Almost all the originals had reported significant findings; only about a third of the repeat
+      studies did.
+    text: If published research can be that shaky, how much should policy rely on it?
+    options:
+      - id: self_correct
+        label: Science corrects itself, as this project shows. It's still the best guide we have.
+        reaction: hold
+        principles: { expertise: 0.5 }
+      - id: fields
+        label: Some fields are far more reliable than others. Trust depends on the evidence.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Less than I thought. It makes me want voters to have more say than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A health commission
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would set up a commission of independent scientists whose public-health
+      recommendations the government must follow, unless parliament votes them down.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { expertise: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

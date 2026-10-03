@@ -210,11 +210,19 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Due process | No one should lose {a right} because a court fears what they might do, rather than for something they've been proven to have done, even if that means some dangerous people {keep it} for a while. |
   | Obeying the law | {Who} should obey {the law} even when {the conflict}, and work for change only through legal means. |
   | Just deserts | When it comes to {context}, no one should get money they haven't earned through their own efforts, even if that means {the cost}. |
+  | National self-government | When it comes to {context}, each country should be left to decide for itself, without other countries or international bodies stepping in, even when {the worst case}. |
+  | Deciding locally | When it comes to {context}, decisions should be left to local communities, even when {the cost}. |
+  | Deference to experts | When it comes to {context}, governments should follow what {which experts} recommend, even when most voters disagree. |
 
 - **Just deserts anchors cover rewards only.** The principle also covers punishment, but someone
   can hold that rewards should be earned without holding that punishment should match wrongdoing.
   A future punishment anchor (in policing or prisons) needs its own principle, or the tension
   detector would compare the two as if they were the same claim.
+- **Deference anchors name the experts and say what they advise.** "Experts" means different
+  people on vaccines and on rents, so an issue topic's anchor names them (public-health experts,
+  economists) and its help text states their usual advice. Only the general anchor in experts or
+  voters says just "experts". Someone who disagrees should be disagreeing with deferring, not
+  guessing what the experts think.
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of
   other people*").
@@ -257,6 +265,11 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | drug companies, the largest technology companies | big pharma, big tech |
 | low-paid or unsafe factories, naming the conditions; forced labor where it is forced | sweatshops, slave labor |
 | laws banning required union fees | "right-to-work" (fine in the names of laws) |
+| supporters of military action, people who oppose a war | warmongers, chicken hawks, appeasers |
+| courts striking down laws | activist judges, judicial activism |
+| officials, regulators, civil servants | unelected bureaucrats, the deep state, so-called experts |
+| international bodies, shared international rules | globalists, new world order |
+| putting your own country first, in plain words | "America First" and other campaign slogans |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
