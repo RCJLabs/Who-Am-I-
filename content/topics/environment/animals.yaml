@@ -92,7 +92,7 @@ items:
       Prevention," PLoS ONE (2008); Martin Zuidhof et al., "Growth, efficiency, and yield of
       commercial broilers from 1957, 1978, and 2005," Poultry Science (2014)
     scenario: >-
-      Today's meat chickens grow about four times faster than breeds from the 1950s. In a study of
+      Today's meat chickens grow more than four times as fast as breeds from the 1950s. In a study of
       51,000 British chickens, more than a quarter walked poorly by the time they were slaughtered,
       at about six weeks old, and 3% could barely walk.
     text: If the problem is bred into the birds, can labels and shoppers' choices fix it?
@@ -122,10 +122,10 @@ items:
       Veterinary Medicines Institute (SDa), reports on antibiotic use in livestock
     scenario: >-
       Colistin is an antibiotic doctors save for infections nothing else can treat. In 2015
-      researchers found a gene that lets bacteria resist it spreading on Chinese pig farms, where
+      researchers reported a gene that lets bacteria resist it spreading on Chinese pig farms, where
       colistin was fed to animals to make them grow faster, and in people. China banned it from
-      animal feed in 2017. The Netherlands, a major meat exporter, has cut antibiotic use on its farms
-      by about three-quarters since 2009.
+      animal feed in 2017. The Netherlands, a major meat exporter, has cut antibiotic use on its
+      farms by about three-quarters since 2009.
     text: When farming practices put people's medicines at risk, is it still just the farmer's business?
     options:
       - id: costs
@@ -201,21 +201,21 @@ items:
 
   - id: ch_sow_stalls
     type: challenge
-    name: Going first
+    name: Going it alone
     targets: stance
     when: stance > 0
     source: >-
       UK ban on sow stalls (from 1999); Defra June Survey of Agriculture, pig numbers; National Pig
       Association evidence to the House of Commons
     scenario: >-
-      Britain banned stalls that confine pregnant sows from 1999, 14 years before the rest of the
-      European Union. Over the next decade its pig herd shrank by about 40%, also hit by disease
+      Britain banned stalls that confine pregnant sows from 1999, 14 years before the European Union
+      restricted them. Over the next decade its pig herd shrank by about 40%, also hit by disease
       outbreaks and low prices, and imports from countries where stalls were still allowed filled
       the gap.
     text: If stricter rules at home move farming to places with weaker rules, have the animals gained?
     options:
       - id: go_first
-        label: Someone has to go first. Europe followed Britain's lead.
+        label: Someone has to move first, and the European Union restricted stalls too in the end.
         reaction: hold
         principles: { animal_welfare: 0.5 }
       - id: imports
@@ -258,16 +258,17 @@ items:
   # --- Challenges: aimed at animal testing --------------------------------------------------------
   - id: ch_first_tests
     type: challenge
-    name: Before the volunteers
+    name: Before the big trial
     targets: testing
     when: testing < 0
     source: >-
       Kizzmekia Corbett et al., "Evaluation of the mRNA-1273 Vaccine against SARS-CoV-2 in Nonhuman
       Primates," New England Journal of Medicine (2020)
     scenario: >-
-      Before Moderna's COVID-19 vaccine went into its large trial with 30,000 volunteers, it was
-      tested in monkeys. They were protected against the virus, with no sign of the vaccine making
-      the disease worse, a danger seen with some earlier vaccines.
+      Moderna's COVID-19 vaccine was tested in monkeys while a small first trial in people was under
+      way, and before its large trial with 30,000 volunteers. The monkeys were protected against the
+      virus, with no sign of the vaccine making the disease worse, a danger seen with some earlier
+      vaccines.
     text: Can new medicines be made safe for people without testing them on animals first?
     options:
       - id: alternatives

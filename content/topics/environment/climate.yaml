@@ -107,7 +107,7 @@ items:
     scenario: >-
       In 1990 the US capped power plants' emissions of sulfur dioxide, the main cause of acid rain,
       and let them buy and sell the right to emit it. Industry warned of crippling costs. Emissions
-      fell by about half, and the costs came in at the low end of the forecasts.
+      fell by about half, and the costs came in below most forecasts.
     text: If a cap cut pollution far more cheaply than feared, could the same be true of greenhouse gases?
     options:
       - id: adapt
@@ -164,8 +164,8 @@ items:
       Past Climate Model Projections," Geophysical Research Letters (2020)
     scenario: >-
       A 2020 study checked 17 projections of global warming from climate models published between
-      1970 and 2007 against the warming that followed. Most matched it closely, once the models were
-      given the emissions that actually happened.
+      1970 and 2007 against the warming that followed. Most matched it closely, especially after
+      allowing for differences between the emissions the models assumed and those that happened.
     text: If the models got the warming right, should their warnings about what comes next count for more?
     options:
       - id: richer
@@ -192,10 +192,11 @@ items:
       Department of Finance Canada, "Removing the consumer carbon price, effective April 1, 2025";
       Parliamentary Budget Officer, updated analysis of the federal fuel charge (October 2024)
     scenario: >-
-      From 2019 Canada taxed the carbon in fuel and paid most of the money back to households.
-      Counting only the tax and the payments, most households got back more than they paid; counting
-      the tax's drag on wages and investment income too, most came out slightly behind. It stayed
-      unpopular, and in 2025 the new prime minister set it to zero as one of his first acts.
+      From 2019 Canada taxed the carbon in fuel and paid most of the money back to households. By the
+      budget officer's estimate, counting only the tax and the payments, most households got back
+      more than they paid; counting the tax's drag on wages and investment income too, most came out
+      slightly behind. It stayed unpopular. In 2025 the new prime minister set it to zero as one of
+      his first acts, and in 2026 Parliament repealed it.
     text: If even a tax with the money paid back couldn't keep public support, can deep cuts last?
     options:
       - id: lead
@@ -218,9 +219,9 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      Centre for Research on Energy and Clean Air and Global Energy Monitor, "China's coal power boom"
-      (2025); Rhodium Group, "China's Greenhouse Gas Emissions Exceeded the Developed World for the
-      First Time in 2019" (2021)
+      Centre for Research on Energy and Clean Air and Global Energy Monitor, "When Coal Won't Step
+      Aside: The Challenge of Scaling Clean Energy in China" (2025); Rhodium Group, "China's
+      Greenhouse Gas Emissions Exceeded the Developed World for the First Time in 2019" (2021)
     scenario: >-
       China emits more greenhouse gases than all developed countries combined. In 2024 it started
       building 94.5 gigawatts of new coal power, the most in a decade, while also adding record
@@ -279,9 +280,9 @@ items:
     when: stance == 0
     source: Original scenario, after the economists' carbon-dividend proposal (2019)
     scenario: >-
-      A proposed law would tax coal, oil and gas at $50 for each tonne of carbon dioxide they release,
-      about 12 cents a liter of gasoline, rising every year, and pay all the money back to households
-      in equal amounts.
+      A proposed law would tax coal, oil and gas at $50 for each tonne of carbon dioxide they
+      release, about 12 cents a liter of gasoline, rising every year, and pay all the money back to
+      households in equal amounts.
     text: You said you're torn. How would you vote?
     options:
       - id: abstain

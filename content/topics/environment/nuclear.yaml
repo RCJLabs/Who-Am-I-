@@ -106,10 +106,10 @@ items:
       Stephen Jarvis, Olivier Deschenes and Akshaya Jha, "The Private and External Costs of
       Germany's Nuclear Phase-Out," Journal of the European Economic Association (2022)
     scenario: >-
-      After Fukushima, Germany decided to close all its nuclear plants; the last three shut in 2023.
-      A study of the closures up to 2017 found the lost power was replaced mainly by coal and
-      imports, at a cost of about $12 billion a year, over 70% of it from about 1,100 extra deaths a
-      year caused by air pollution.
+      After Fukushima, Germany shut eight reactors at once and set dates to close the rest, undoing a
+      recent extension; the last three shut in 2023. A study of the closures up to 2017 found the
+      lost power was replaced mainly by coal and imports, at a cost of about $12 billion a year, over
+      70% of it from an estimated 1,100 extra deaths a year caused by air pollution.
     text: Can closing nuclear plants cost more lives than it saves?
     options:
       - id: still_risky
@@ -198,7 +198,8 @@ items:
       homes, and some towns stayed closed for years. Radiation is officially linked to one death,
       but more than 2,000 deaths, mostly of older people, were linked to the evacuation itself.
       Japan's government put the cost of compensation, cleanup and dismantling at about ¥21.5
-      trillion (about $190 billion).
+      trillion in 2016 (about $190 billion at the time), and has since raised it to about ¥23.4
+      trillion.
     text: Is a risk like that worth taking for low-carbon power?
     options:
       - id: rare
@@ -225,10 +226,11 @@ items:
       US Department of Energy, Agency Financial Report (2024), on spent fuel liabilities; Nuclear
       Waste Policy Act amendments (1987)
     scenario: >-
-      In 1987 the US chose Yucca Mountain in Nevada as a permanent store for spent nuclear fuel,
-      which stays dangerous for thousands of years. The project was halted in 2010, and the fuel
-      stays at the power plants. Because the government hasn't taken it as promised, taxpayers have
-      paid power companies over $11 billion in damages, with tens of billions more expected.
+      In 1987 Congress picked Yucca Mountain in Nevada as the only candidate for a permanent store
+      for spent nuclear fuel, which stays dangerous for thousands of years. The project was halted
+      in 2010, and the fuel stays at the power plants. Because the government hasn't taken it as
+      promised, taxpayers have paid power companies over $11 billion in damages, with tens of
+      billions more expected.
     text: Should we keep making spent fuel before there's a permanent place to put it?
     options:
       - id: small_amount
@@ -236,7 +238,7 @@ items:
         reaction: hold
         principles: { precaution: -0.5 }
       - id: political
-        label: That's a political problem, not a technical one. Finland and Sweden are building permanent stores.
+        label: That's a political problem, not a technical one. Finland has built a permanent store, and Sweden is building one.
         reaction: distinguish
         value: 0
       - id: rethink

@@ -236,9 +236,9 @@ items:
     when: stance > 0
     source: Bowman v. Monsanto Co., 569 U.S. 278 (2013)
     scenario: >-
-      An Indiana farmer bought cheap grain soybeans, planted them, and sprayed them with weedkiller to
-      keep the plants carrying Monsanto's patented resistance gene. In 2013 the US Supreme Court ruled
-      unanimously that growing new seed this way without paying infringed the patent.
+      An Indiana farmer bought cheap grain soybeans, planted them, and sprayed them with weedkiller
+      to keep the plants carrying Monsanto's patented resistance gene. In 2013 the US Supreme Court
+      ruled unanimously that growing new seed this way without paying infringed the patent.
     text: Should companies be able to stop farmers from saving and replanting seed?
     options:
       - id: research
@@ -263,8 +263,8 @@ items:
     when: stance == 0
     source: Original scenario, after England's precision-breeding rules (2025)
     scenario: >-
-      A proposed law would let farmers grow gene-edited crops, whose changes could also have come from
-      ordinary breeding, under the same rules as conventional crops.
+      A proposed law would let farmers grow gene-edited crops, whose changes could also have come
+      from ordinary breeding, under the same rules as conventional crops.
     text: You said you're torn. How would you vote?
     options:
       - id: abstain
