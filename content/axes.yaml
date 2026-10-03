@@ -36,7 +36,6 @@
   minWeight: 1.5
   fullWeight: 6
   minTopics: 2
-  planned: true
 
 # --- Values: what you prioritize, and how you reason about right and wrong ---
 # The first two follow the two main dimensions of Shalom Schwartz's theory of basic values; the

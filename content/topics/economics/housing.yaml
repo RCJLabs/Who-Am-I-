@@ -68,6 +68,15 @@ items:
     labels: [Wrong, Probably wrong, Torn, Probably fair, Fair]
     principles: { liberty: 0.5 }
 
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_exp
+    type: likert
+    points: 7
+    text: When it comes to limits on rents, governments should follow what economists recommend, even when most voters disagree.
+    help: In surveys, most economists say limits on rents don't improve the amount or quality of affordable housing.
+    principles: { expertise: 1 }
+    anchor: { principle: expertise, context: limits on rents, against: tenants' security in their homes }
+
   # --- Challenges: for limits on rents -------------------------------------------------------------
   - id: ch_staying
     type: challenge
@@ -184,28 +193,28 @@ items:
         revise: stance
         principles: { liberty: 0.5 }
 
-  - id: ch_economists
+  - id: ch_queue
     type: challenge
-    name: What economists think
+    name: The queue
     targets: stance
     when: stance > 0
-    source: IGM Forum, University of Chicago Booth School of Business, survey on rent control (February 2012)
+    source: Stockholm Housing Agency (Bostadsförmedlingen), housing queue statistics
     scenario: >-
-      In 2012 the University of Chicago asked a panel of leading economists whether rent control in
-      cities like New York and San Francisco had improved the amount and quality of affordable
-      housing. 81% disagreed. Only one agreed.
-    text: When economists agree this much, should that settle it?
+      In Stockholm, rents are set through negotiations and kept well below what the market would
+      charge. Most rental flats are handed out through a city queue: people who got one in 2023 had
+      waited about nine years on average, and much longer for the city center.
+    text: If rents are kept low but homes take years to get, who is being helped?
     options:
-      - id: not_only
-        label: No. Economists measure supply and prices, not what it means to lose your home.
+      - id: tenants
+        label: The people who have homes are secure. The answer is to build more, not to raise rents.
         reaction: hold
         principles: { protect_vulnerable: 0.5 }
-      - id: old_style
-        label: They were judging old-style rent freezes. Modern limits tied to inflation are different.
+      - id: design
+        label: That's a sign of rents held far too low for too long. Moderate limits needn't do that.
         reaction: distinguish
         value: 0
       - id: rethink
-        label: It should count for a lot. It makes me want lighter limits on rents than I said.
+        label: Mostly those already inside. It makes me want lighter limits on rents than I said.
         reaction: yield
         revise: stance
         principles: { liberty: 0.5 }

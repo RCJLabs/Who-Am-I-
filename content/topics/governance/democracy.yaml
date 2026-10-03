@@ -1,0 +1,274 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Who has the last word when elected majorities and basic rights collide: courts or legislatures.
+# Each step is a system some democracy actually uses. It feeds no spectrum: supporters of
+# parliamentary sovereignty aren't authoritarian, and supporters of strong courts aren't all
+# liberals. Voting rules are circumstances. Yields toward stronger courts record protecting the
+# vulnerable (minorities against majorities); toward elected majorities, equality (equal votes).
+id: democracy
+domain: governance
+title: Democracy and the courts
+summary: When elected majorities and basic rights collide, who should have the last word?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When a law passed by elected representatives conflicts with basic rights, courts should be able to…
+    help: >-
+      Democracies differ. Courts in Germany and India can strike down even changes to the
+      constitution. In the US, a law the Supreme Court strikes down can come back only through a
+      constitutional amendment. Canada's legislatures can override some rulings for five years at a
+      time. UK courts can only declare a law incompatible with rights and leave the decision to
+      Parliament.
+    poles: [Strike it down, Never overrule elected representatives]
+    labels:
+      - Strike it down, even if it's a change to the constitution itself
+      - Strike it down, unless the constitution is amended
+      - Strike it down, but let parliament override them for a few years
+      - Torn / it depends
+      - Only declare the conflict, and leave the decision to parliament
+      - Only interpret the law to fit rights where its wording allows
+      - Never overrule elected representatives; voters are the check
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: compulsory_voting
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Making voting compulsory, with a small fine for not voting, as Australia does, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: voting_age
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Lowering the voting age to 16 is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: prisoner_votes
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting people serving prison sentences vote is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: referendums
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Deciding major questions by a national vote of all citizens, rather than leaving them to parliament, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: strong_leader
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Having a strong leader who doesn't have to bother with parliament and elections would be…
+    poles: [A very bad way to govern, A very good way to govern]
+    labels: [Very bad, Fairly bad, Torn, Fairly good, Very good]
+    principles: { authority: 0.5 }
+
+  # --- Challenges: against strong courts ---------------------------------------------------------
+  - id: ch_child_labor
+    type: challenge
+    name: The child-labor law
+    targets: stance
+    when: stance < 0
+    source: Hammer v. Dagenhart, 247 U.S. 251 (1918); United States v. Darby, 312 U.S. 100 (1941)
+    scenario: >-
+      In 1916 the US Congress banned the sale across state lines of goods made by young children. In
+      1918 the Supreme Court struck the law down, 5 to 4. Federal limits on child labor weren't
+      upheld until 1941, when the Court reversed itself.
+    text: Should unelected judges be able to block laws like that?
+    options:
+      - id: worth_it
+        label: Yes. The same power protects people's rights far more often than it blocks good laws.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: basic_rights
+        label: Courts should protect basic rights like free speech and fair trials, not second-guess laws about the economy.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me think elected representatives should have more of the last word than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_waldron
+    type: challenge
+    name: Whose vote counts?
+    targets: stance
+    when: stance < 0
+    source: Jeremy Waldron, "The Core of the Case Against Judicial Review," Yale Law Journal (2006)
+    scenario: >-
+      Legal philosopher Jeremy Waldron argues that when citizens disagree in good faith about what
+      rights require, as they do about abortion or hateful speech, it's unfair to let a handful of
+      judges settle it by voting among themselves. Every citizen's vote should count equally.
+    text: Why should judges' votes count for more than everyone else's on questions people reasonably disagree about?
+    options:
+      - id: protection
+        label: Because rights shouldn't depend on winning a vote. Courts are there to protect the people who'd lose.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: clear_cases
+        label: Judges should strike down only clear violations, and leave the questions people disagree about to voters.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: They shouldn't. It makes me want elected representatives to have more of the last word than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: ch_basic_structure
+    type: challenge
+    name: Above the constitution
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Kesavananda Bharati v. State of Kerala (Supreme Court of India, 1973)
+    scenario: >-
+      In 1973 India's Supreme Court ruled, by 7 to 6, that Parliament can't change the "basic
+      structure" of the constitution. Since then, judges have been able to strike down even
+      constitutional amendments passed by large majorities.
+    text: Should judges be able to overrule even the constitution's own process for changing itself?
+    options:
+      - id: entrench
+        label: Yes. Some protections should be beyond the reach of any majority, however large.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: democracy_core
+        label: Only to protect democracy itself, like free elections and independent courts.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want elected representatives to have more of the last word than I said.
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  # --- Challenges: against majority rule -----------------------------------------------------------
+  - id: ch_enabling_act
+    type: challenge
+    name: The Enabling Act
+    targets: stance
+    when: stance > 0
+    source: Law to Remedy the Distress of People and Reich (Enabling Act), Germany, 23 March 1933
+    scenario: >-
+      In March 1933, amid arrests and intimidation of its members, Germany's parliament voted 444 to
+      94 to let the government make laws without it, even laws that broke the constitution. By that
+      summer, every party but the governing one had been banned.
+    text: If elected representatives can vote away rights, what stops them?
+    options:
+      - id: voters
+        label: Nothing on paper can. Only free elections and citizens willing to defend them.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: not_free
+        label: That was a parliament acting under threat, not a free vote. Free parliaments are still the right check.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want courts with more power to stop that than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_peru
+    type: challenge
+    name: Peru, 1992
+    targets: stance
+    when: stance > 0
+    source: The 1992 Peruvian constitutional crisis (autogolpe of 5 April 1992)
+    scenario: >-
+      In April 1992, Peru's elected president, with the army's backing, shut down Congress and
+      suspended the constitution, saying they stood in the way of fighting terrorism and economic
+      crisis. Polls showed most Peruvians approved.
+    text: If most voters back a leader who sweeps aside the other checks, what protects their rights?
+    options:
+      - id: parliament
+        label: A strong, elected parliament. The danger came from a president escaping it, not from parliaments.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: presidents
+        label: The lesson is about presidents with too much power, not about courts versus parliaments.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Independent courts. It makes me want them to have more power than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_court_packing
+    type: challenge
+    name: Adding judges
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Judicial Procedures Reform Bill of 1937 (United States)
+    scenario: >-
+      In 1937 the US president, frustrated by rulings against his programs, proposed adding up to six
+      new justices to the Supreme Court. The Senate, controlled by his own party, rejected the plan.
+    text: Should elected leaders be able to reshape courts that stand in their way?
+    options:
+      - id: reform
+        label: Yes. Courts that keep blocking what voters chose should answer to the voters' representatives.
+        reaction: hold
+        principles: { equality: 0.5 }
+      - id: openly
+        label: Changing the courts' powers openly is fair. Filling them with allies isn't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want courts to be more independent and powerful than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A new constitution
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      Imagine your country is writing a new constitution. A proposal would give its top court the
+      power to strike down laws that violate basic rights.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { equality: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -1,0 +1,286 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How readily your country should use military force. One threshold scale: humanitarian rescue
+# and striking first share step 5, so a realist and a humanitarian aren't forced apart; the two
+# motives are separate circumstances. No spectrum, since hawks and doves are found on both sides.
+# The anchor is self-government (who rules a country). Yields toward force record protecting the
+# vulnerable or collective welfare; toward restraint, caution or the sanctity of life.
+id: war
+domain: governance
+title: War and military intervention
+summary: When should your country be willing to go to war?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Your country should be willing to use military force…
+    poles: [Never, Whenever it serves the country]
+    labels:
+      - Never, not even if attacked
+      - Only to defend its own territory
+      - Also to defend allies under attack
+      - Torn / it depends
+      - Also as a last resort against grave dangers, like a genocide or a hostile state about to get nuclear weapons
+      - Also against serious threats, once diplomacy and sanctions have failed
+      - Whenever force best protects its security and interests
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: rescue
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Using force to stop a genocide in another country, without the UN's approval, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { protect_vulnerable: 0.5 }
+
+  - id: first_strike
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Striking first to stop a hostile country from building nuclear weapons is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: conscription
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring young people to serve in the military in wartime is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { collective_welfare: 0.5 }
+
+  - id: drones
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Killing suspected terrorist leaders abroad with drone strikes is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: deterrent
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Keeping nuclear weapons to deter attacks is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_sov
+    type: likert
+    points: 7
+    text: When it comes to who rules a country, each country should be left to decide for itself, without other countries or international bodies stepping in, even when it's ruled by a dictatorship that jails its critics.
+    principles: { sovereignty: 1 }
+    anchor: { principle: sovereignty, context: who rules a country, against: the freedom of people living under a dictatorship }
+
+  # --- Challenges: for being readier to use force ------------------------------------------------
+  - id: ch_rwanda
+    type: challenge
+    name: Rwanda
+    targets: stance
+    when: stance < 0
+    source: >-
+      UN Security Council Resolution 912 (1994); Human Rights Watch, Leave None to Tell the Story
+      (1999)
+    scenario: >-
+      In 1994, in about 100 days, an estimated 500,000 to more than a million people in Rwanda, most
+      of them Tutsi, were killed. As the killing began, the UN Security Council cut its peacekeeping
+      force there from about 2,500 troops to 270.
+    text: Should other countries have used force to stop it?
+    options:
+      - id: worse
+        label: Even then, outside forces could have made things worse, or been drawn into a long war.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: genocide
+        label: Stopping a genocide is the rare exception. Most wars aren't like that.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes, and it makes me more willing to use force than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_srebrenica
+    type: challenge
+    name: The safe area
+    targets: stance
+    when: stance < 0
+    source: >-
+      UN Security Council Resolution 819 (1993); International Criminal Tribunal for the former
+      Yugoslavia, Prosecutor v. Krstić (2004)
+    scenario: >-
+      In July 1995, Bosnian Serb forces overran Srebrenica, a town the UN had declared a "safe area",
+      guarded by about 400 lightly armed Dutch peacekeepers. More than 8,000 Bosniak men and boys
+      were killed. International courts later ruled it a genocide.
+    text: Is a promise of protection worth anything without the will to use force?
+    options:
+      - id: diplomacy
+        label: The answer is stronger peacekeeping and diplomacy, not more willingness to go to war.
+        reaction: hold
+        principles: { sanctity_of_life: 0.5 }
+      - id: promise
+        label: Once a country promises protection, it must keep it. Starting wars is different.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No, and it makes me more willing to use force than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  - id: ch_kosovo
+    type: challenge
+    name: Illegal but legitimate?
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Independent International Commission on Kosovo, The Kosovo Report (2000)
+    scenario: >-
+      In 1999 NATO bombed Yugoslavia for 78 days, without explicit approval from the UN Security
+      Council, to stop attacks on Kosovo's Albanians. An international commission later called the
+      intervention "illegal but legitimate."
+    text: Can it be right to use force without the law on your side?
+    options:
+      - id: law
+        label: No. Without the UN's approval, any country can claim a good reason for war.
+        reaction: hold
+        principles: { obey_law: 0.5 }
+      - id: blocked
+        label: Only to stop mass killing, and only when the UN is blocked.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me more willing to use force than I said.
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+
+  # --- Challenges: for restraint -----------------------------------------------------------------
+  - id: ch_iraq
+    type: challenge
+    name: The weapons that weren't there
+    targets: stance
+    when: stance > 0
+    source: >-
+      Comprehensive Report of the Special Advisor to the Director of Central Intelligence on Iraq's
+      WMD (the Duelfer report, 2004)
+    scenario: >-
+      In 2003 the US and its allies invaded Iraq, saying it had weapons of mass destruction. The
+      US's own inspectors later found no stockpiles, only some old, degraded chemical weapons from
+      before 1991. The war and the violence that followed killed well over 100,000 Iraqi civilians.
+    text: If intelligence can be that wrong, should countries ever strike first?
+    options:
+      - id: too_late
+        label: Sometimes. Waiting for certainty can mean waiting until it's too late.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: evidence
+        label: Only with strong, independently checked evidence, which that war didn't have.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want a higher bar for using force than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: ch_libya
+    type: challenge
+    name: After the rescue
+    targets: stance
+    when: stance > 0
+    source: UN Security Council Resolution 1973 (2011); Council on Foreign Relations, Global Conflict Tracker
+    scenario: >-
+      In 2011 the UN Security Council authorized force to protect civilians in Libya. NATO's air
+      campaign helped topple the government, and the country fell into years of instability,
+      including a second civil war from 2014 to 2020.
+    text: Is preventing one disaster worth the risk of starting another?
+    options:
+      - id: massacre
+        label: Yes. The threat to civilians was immediate; the chaos afterward was only a risk.
+        reaction: hold
+        principles: { protect_vulnerable: 0.5 }
+      - id: regime
+        label: Protecting civilians was right. Going on to topple the government wasn't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Not always. It makes me want a higher bar for using force than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: ch_vietnam
+    type: challenge
+    name: Vietnam
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      US National Archives, Vietnam War casualty statistics; Charles Hirschman et al., Population
+      and Development Review (1995)
+    scenario: >-
+      The US fought in Vietnam to stop the spread of communism. About 58,000 US troops died, along
+      with between 1 and 3 million Vietnamese. The war ended in 1975 with a communist victory.
+    text: Can a war fought for serious reasons still be a mistake from the start?
+    options:
+      - id: judgment
+        label: Yes, but that's a reason for better judgment, not for refusing to fight.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: far_away
+        label: A long war in someone else's country is different from facing a clear threat.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes, and it makes me want a higher bar for war than I said.
+        reaction: yield
+        revise: stance
+        principles: { sanctity_of_life: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Joining a peace force
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would send 2,000 of your country's troops to join a UN-approved force to stop
+      a massacre in another country. The mission is expected to last several years, and some of the
+      soldiers would probably be killed.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { protect_vulnerable: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
