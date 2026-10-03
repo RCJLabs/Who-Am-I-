@@ -13,7 +13,12 @@
   --warn: #9a5b06;
   --danger: #b42318;
   --track: #e6e3dc;
-  --marker: #4f46e5;
+  /* Chart marks, validated with the dataviz checks against --surface in each mode. */
+  --chart-mark: #4f46e5;
+  --chart-reject: #eb6834;
+  --chart-step-1: #818cf8;
+  --chart-step-2: #5b5bd6;
+  --chart-step-3: #3730a3;
   --shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 4px 16px rgb(0 0 0 / 5%);
   --radius: 14px;
   --radius-sm: 10px;
@@ -37,7 +42,11 @@
     --warn: #f0b35a;
     --danger: #f97066;
     --track: #2d2d34;
-    --marker: #a5a6ff;
+    --chart-mark: #7f80f3;
+    --chart-reject: #d95926;
+    --chart-step-1: #4b4fc4;
+    --chart-step-2: #7f80f3;
+    --chart-step-3: #b3b5fb;
     --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 30%);
   }
 }

@@ -1,7 +1,8 @@
 // Pure helpers shared by screens. No DOM, no stores: easy to test.
 import type { Response } from '../model/answers.ts';
-import type { Bundle, Item, Option, Topic, TopicId } from '../model/content.ts';
+import type { Axis, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
 import { isScale, scalePoints } from '../model/content.ts';
+import type { Profile } from '../model/profile.ts';
 import { progress, type FlowOptions } from '../engine/flow.ts';
 import { hash32, mulberry32 } from '../engine/rng.ts';
 import type { AnswerState } from '../engine/state.ts';
@@ -129,4 +130,89 @@ export function toPercent(score: number): number {
 /** Big Five style 1–5 value from a -1..1 score. */
 export function toFivePoint(score: number): number {
   return Math.round((score + 1) * 2 * 10) / 10 + 1;
+}
+
+// --- Results ---------------------------------------------------------------------------------
+
+/** Plain-language position on a two-pole spectrum, e.g. "Leans Progress". */
+export function positionLabel(score: number, poles: readonly [string, string]): string {
+  const a = Math.abs(score);
+  const pole = score < 0 ? poles[0] : poles[1];
+  if (a < 0.15) return 'Center';
+  if (a < 0.4) return `Leans ${pole}`;
+  if (a < 0.7) return pole;
+  return `Strongly ${pole}`;
+}
+
+/** Plain-language endorsement of a principle, e.g. "Strongly endorses". */
+export function endorsementLabel(score: number): string {
+  const a = Math.abs(score);
+  if (a < 0.15) return 'Neutral';
+  if (a < 0.4) return score > 0 ? 'Leans toward it' : 'Leans against it';
+  if (a < 0.7) return score > 0 ? 'Endorses' : 'Rejects';
+  return score > 0 ? 'Strongly endorses' : 'Strongly rejects';
+}
+
+export interface Leaning {
+  axis: string;
+  title: string;
+  label: string;
+}
+
+/**
+ * The clearest positions among these spectrums (at least the "Pole" band, not just "Leans"),
+ * strongest and best-evidenced first.
+ */
+export function strongestLeanings(axes: readonly Axis[], scores: Profile['axes'], n = 3): Leaning[] {
+  return axes
+    .flatMap((a) => {
+      const s = scores[a.id];
+      if (!s || s.score === null || Math.abs(s.score) < 0.4) return [];
+      return [{ axis: a.id, title: a.title, label: positionLabel(s.score, a.poles), strength: Math.abs(s.score) * s.confidence }];
+    })
+    .sort((x, y) => y.strength - x.strength)
+    .slice(0, n)
+    .map(({ axis, title, label }) => ({ axis, title, label }));
+}
+
+export interface RankedPrinciple {
+  principle: Principle;
+  score: number;
+  result: Profile['principles'][string];
+}
+
+/** Scored principles, most endorsed first. */
+export function rankedPrinciples(principles: readonly Principle[], scores: Profile['principles']): RankedPrinciple[] {
+  return principles
+    .flatMap((p) => {
+      const r = scores[p.id];
+      return r && r.score !== null ? [{ principle: p, score: r.score, result: r }] : [];
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+export interface ChallengeTotals {
+  asked: number;
+  held: number;
+  distinguished: number;
+  moved: number;
+}
+
+/** How the user handled challenges, summed over all topics. */
+export function challengeTotals(topics: Profile['topics']): ChallengeTotals {
+  const t: ChallengeTotals = { asked: 0, held: 0, distinguished: 0, moved: 0 };
+  for (const r of Object.values(topics)) {
+    t.asked += r.challenges.asked;
+    t.held += r.challenges.held;
+    t.distinguished += r.challenges.distinguished;
+    t.moved += r.challenges.moved;
+  }
+  return t;
+}
+
+/** Topics with a stance answer, grouped by domain in content order. */
+export function positionsByDomain(b: Bundle, topics: Profile['topics']): { domain: Domain; topics: Topic[] }[] {
+  return b.domains
+    .map((domain) => ({ domain, topics: b.topics.filter((t) => t.domain === domain.id && t.stance && topics[t.id]?.stance != null) }))
+    .filter((g) => g.topics.length);
 }

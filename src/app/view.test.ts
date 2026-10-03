@@ -3,7 +3,25 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { fixtureBundle, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
 import { parseHash, to } from './routes.ts';
-import { activeTopic, answerLabel, axisFeeders, nextTopic, orderedOptions, sources, toFivePoint, toPercent, topicStatus } from './view.ts';
+import type { Axis, Principle } from '../model/content.ts';
+import type { Profile } from '../model/profile.ts';
+import {
+  activeTopic,
+  answerLabel,
+  axisFeeders,
+  challengeTotals,
+  endorsementLabel,
+  nextTopic,
+  orderedOptions,
+  positionLabel,
+  positionsByDomain,
+  rankedPrinciples,
+  sources,
+  strongestLeanings,
+  toFivePoint,
+  toPercent,
+  topicStatus,
+} from './view.ts';
 
 const b = fixtureBundle();
 const item = (id: string): Item => b.topics.flatMap((t) => t.items).find((i) => i.id === id)!;
@@ -96,5 +114,68 @@ describe('content helpers', () => {
     expect(toFivePoint(-1)).toBe(1);
     expect(toFivePoint(0)).toBe(3);
     expect(toFivePoint(1)).toBe(5);
+  });
+});
+
+describe('results helpers', () => {
+  const scored = (score: number | null, confidence = 1) => ({ score, confidence, weight: 1, spread: 0, topics: 1 });
+  const axis = (id: string, poles: [string, string]): Axis => ({ id, family: 'political', title: id.toUpperCase(), description: '', poles, minWeight: 1, fullWeight: 1, minTopics: 1 });
+
+  it('names positions and endorsements in plain words, band by band', () => {
+    const poles: [string, string] = ['Tradition', 'Progress'];
+    expect([-0.9, -0.5, -0.2, 0, 0.2, 0.5, 0.9].map((s) => positionLabel(s, poles))).toEqual([
+      'Strongly Tradition',
+      'Tradition',
+      'Leans Tradition',
+      'Center',
+      'Leans Progress',
+      'Progress',
+      'Strongly Progress',
+    ]);
+    expect([-0.9, -0.5, -0.2, 0.1, 0.2, 0.5, 0.9].map(endorsementLabel)).toEqual([
+      'Strongly rejects',
+      'Rejects',
+      'Leans against it',
+      'Neutral',
+      'Leans toward it',
+      'Endorses',
+      'Strongly endorses',
+    ]);
+  });
+
+  it('picks the clearest leanings: past "leans", strongest and best-evidenced first, at most three', () => {
+    const axes = [axis('a', ['A-', 'A+']), axis('b', ['B-', 'B+']), axis('c', ['C-', 'C+']), axis('d', ['D-', 'D+']), axis('e', ['E-', 'E+'])];
+    const scores = { a: { ...scored(0.9, 0.5), family: 'political' }, b: { ...scored(-0.6), family: 'political' }, c: { ...scored(0.3), family: 'political' }, d: { ...scored(null), family: 'political' }, e: { ...scored(0.8), family: 'political' } } as Profile['axes'];
+    expect(strongestLeanings(axes, scores).map((l) => l.label)).toEqual(['Strongly E+', 'B-', 'Strongly A+']);
+    expect(strongestLeanings(axes, scores, 1)).toEqual([{ axis: 'e', title: 'E', label: 'Strongly E+' }]);
+  });
+
+  it('ranks scored principles from most endorsed to most rejected', () => {
+    const p = (id: string): Principle => ({ id, label: id, definition: '' });
+    const scores = {
+      x: { ...scored(-0.4), byTopic: {}, consistency: null },
+      y: { ...scored(0.7), byTopic: {}, consistency: null },
+      z: { ...scored(null), byTopic: {}, consistency: null },
+    } as Profile['principles'];
+    expect(rankedPrinciples([p('x'), p('y'), p('z'), p('w')], scores).map((r) => [r.principle.id, r.score])).toEqual([
+      ['y', 0.7],
+      ['x', -0.4],
+    ]);
+  });
+
+  it('sums how challenges were handled, and groups positions by domain in content order', () => {
+    const result = (stance: number | null, held: number, distinguished: number, moved: number) => ({
+      stance,
+      stanceLabel: null,
+      initialStance: null,
+      importance: null,
+      complete: true,
+      circumstances: {},
+      challenges: { asked: held + distinguished + moved, held, distinguished, moved, moves: [] },
+    });
+    const topics = { alpha: result(0.5, 1, 1, 0), beta: result(null, 0, 0, 0), gamma: result(-1, 2, 0, 1) } as Profile['topics'];
+    expect(challengeTotals(topics)).toEqual({ asked: 5, held: 3, distinguished: 1, moved: 1 });
+    // beta has no stance answer yet and gamma has no stance item, so only alpha is a position.
+    expect(positionsByDomain(b, topics).map((g) => [g.domain.id, g.topics.map((t) => t.id)])).toEqual([['life', ['alpha']]]);
   });
 });
