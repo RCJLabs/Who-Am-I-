@@ -91,18 +91,18 @@ items:
       Michael Marmot et al., "Employment grade and coronary heart disease in British civil
       servants," Journal of Epidemiology and Community Health (1978)
     scenario: >-
-      A study of 17,530 British civil servants, all in steady office jobs and all with free health
-      care, found that men in the lowest grades had about three and a half times the death rate from
-      heart disease of men in the highest. Smoking, blood pressure, cholesterol and other known
-      risks explained only part of the gap.
+      A study of 17,530 British civil servants, all in steady jobs and all with free health care,
+      found that men in the lowest grade had about three and a half times the death rate from heart
+      disease of men in the highest. Smoking, blood pressure, cholesterol and other known risks
+      explained only part of the gap.
     text: If people's rank at work predicts their heart disease beyond their habits, how much of the difference comes down to choices?
     options:
       - id: measured_better
-        label: A later study of civil servants that measured habits more often found they explained most of the gap.
+        label: A later study of civil servants that measured habits repeatedly found they explained most of the gap in deaths overall, if less for heart disease.
         reaction: hold
         value: 0
       - id: within_grades
-        label: Within every grade, people who smoked and didn't exercise did worse. Circumstances shift the odds; choices still decide most.
+        label: Within every grade, people who smoked did worse. Circumstances shift the odds; choices still decide most.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -120,11 +120,11 @@ items:
       Jens Ludwig et al., "Neighborhoods, Obesity, and Diabetes: A Randomized Social Experiment,"
       New England Journal of Medicine (2011)
     scenario: >-
-      In the 1990s, families in public housing in five US cities were offered, by lottery, vouchers
-      to move to lower-poverty neighborhoods. Ten to fifteen years later, the women who had been
-      offered the vouchers had lower rates of severe obesity and diabetes than those who hadn't,
-      though nothing in the program aimed at their diet or exercise.
-    text: If moving to a different neighborhood changed people's health without any program to change their habits, how much comes down to choice?
+      In the 1990s, families in public housing in five US cities entered a lottery, and some were
+      offered vouchers usable only in low-poverty neighborhoods. Ten to fifteen years later, the
+      women offered those vouchers had lower rates of severe obesity and diabetes than women in a
+      control group, though nothing in the program aimed at their diet or exercise.
+    text: If the chance to move to a better-off neighborhood changed people's health without any program to change their habits, how much comes down to choice?
     options:
       - id: new_habits
         label: The move may well have changed their habits. Choices made in a new place are still choices.
@@ -150,9 +150,9 @@ items:
       Albert J. Stunkard et al., "The Body-Mass Index of Twins Who Have Been Reared Apart," New
       England Journal of Medicine (1990)
     scenario: >-
-      A study of Swedish twins found that identical twins raised in separate homes ended up with very
-      similar body weights for their height: the correlation was 0.70 for men and 0.66 for women. The
-      homes they grew up in made little difference.
+      A study of Swedish twins found that identical twins raised in separate homes ended up with
+      very similar body weights for their height: the correlation was 0.70 for men and 0.66 for
+      women. The homes they grew up in made little difference.
     text: If body weight runs this strongly in the genes, how much of the risk that comes with it is a choice?
     options:
       - id: same_genes
@@ -176,16 +176,16 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      Diabetes Prevention Program Research Group, "Reduction in the Incidence of Type 2 Diabetes with
-      Lifestyle Intervention or Metformin," New England Journal of Medicine (2002)
+      Diabetes Prevention Program Research Group, "Reduction in the Incidence of Type 2 Diabetes
+      with Lifestyle Intervention or Metformin," New England Journal of Medicine (2002)
     scenario: >-
-      In a trial of 3,234 American adults at high risk of diabetes, a program that helped people
-      lose about 7% of their weight and exercise 150 minutes a week cut new cases of type 2 diabetes
-      by 58% over about three years, compared with a placebo.
+      In a trial of 3,234 American adults at high risk of diabetes, a program aiming for a 7% weight
+      loss and 150 minutes of exercise a week cut new cases of type 2 diabetes by 58% over about
+      three years, compared with a placebo.
     text: If changing habits can cut diabetes by more than half, how much of the risk is out of people's hands?
     options:
       - id: coaching
-        label: The program gave people coaching and support most can't get. That's a circumstance too.
+        label: The program gave people coaching and support most people don't get. That's a circumstance too.
         reaction: hold
         value: 0
       - id: shaped
@@ -237,10 +237,10 @@ items:
       Economics (2019)
     scenario: >-
       Economists studied what American households buy. When a new supermarket opened nearby,
-      low-income families' diets barely changed. Giving poorer households the same stores and prices
-      as richer ones would close only about a tenth of the gap in how healthily they eat; the rest
-      came from what people chose to buy.
-    text: If diets differ mainly because of what people choose, not what's on offer, how much is out of their hands?
+      low-income families' diets barely changed. Giving poorer households the same products and
+      prices as richer ones would close only about a tenth of the gap in how healthily they eat; the
+      rest came from differences in what people want to buy.
+    text: If diets differ mainly because of what people want to buy, not what's on offer, how much is out of their hands?
     options:
       - id: tastes
         label: What people choose to eat is shaped by what they grew up with, their time and their stress. Those aren't free choices.
@@ -265,7 +265,8 @@ items:
     source: Original scenario
     scenario: >-
       Picture two ways a 30-year-old's life could go better: never smoking, eating well and staying
-      active; or having an income in the top fifth rather than the bottom fifth.
+      active, rather than the opposite; or having an income in the top fifth rather than the bottom
+      fifth.
     text: You said you're torn. Which would you bet adds more years of life, on average?
     options:
       - id: no_bet

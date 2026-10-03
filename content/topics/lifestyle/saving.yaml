@@ -82,7 +82,7 @@ items:
       not counting their home, had spent a median of about 12% of it 18 years later, and about a
       third of all the retirees studied had more than when they retired. Some of that is caution
       about the cost of care in old age.
-    text: If many savers never spend what they saved, how much should people put away?
+    text: If many savers spend little of what they saved, how much should people put away?
     options:
       - id: for_children
         label: What's left goes to children and grandchildren. That's part of what it was for.
@@ -135,8 +135,8 @@ items:
       Journal of Consumer Research (2006)
     scenario: >-
       In studies by Ran Kivetz and Anat Keinan, people looking back on choices from long ago
-      regretted working or saving instead of enjoying themselves more than the reverse. In the
-      short run, they felt more guilt about indulging.
+      regretted choosing work over pleasure more than the reverse. In the short run, they felt more
+      guilt about indulging.
     text: If people come to regret too much self-denial more than too little, should they save as much as you said?
     options:
       - id: worse_regret
@@ -144,7 +144,7 @@ items:
         reaction: hold
         value: 0
       - id: small_choices
-        label: Those were looking back on small treats and lost holidays. Security for a family is a different kind of choice.
+        label: Those were mostly small treats and lost holidays. Security for a family is a different kind of choice.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -166,7 +166,7 @@ items:
       In a study of 585 British bank customers, how much money people had in their bank accounts
       predicted how satisfied they were with their lives, mostly because they worried less about
       money. That held even after accounting for their income, investments, spending and debt.
-    text: If savings bring a peace of mind that spending doesn't, should people spend most of what they have left?
+    text: If money in the bank brings peace of mind, should people spend most of what they have left?
     options:
       - id: young_years
         label: Peace of mind is worth something, but so are the years when you're young and well enough to enjoy things.
@@ -193,7 +193,7 @@ items:
     scenario: >-
       Economists Richard Thaler and Shlomo Benartzi offered workers at one company the chance to
       commit part of their future pay raises to retirement savings. Most of those offered it signed
-      up, and their saving rate rose from 3.5% of pay to 13.6% over about three and a half years.
+      up, and their saving rate rose from 3.5% of pay to 13.6% over 40 months.
     text: If people save far more once it's made easy, do they really want to spend as much now as they do?
     options:
       - id: still_room

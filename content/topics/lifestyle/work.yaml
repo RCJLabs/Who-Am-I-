@@ -95,13 +95,15 @@ items:
     when: stance < 0
     source: >-
       Frank Pega et al., "Global, regional, and national burdens of ischemic heart disease and
-      stroke attributable to exposure to long working hours for 194 countries, 2000–2016,"
-      Environment International (2021)
+      stroke attributable to exposure to long working hours for 194 countries, 2000–2016: A
+      systematic analysis from the WHO/ILO Joint Estimates of the Work-related Burden of Disease and
+      Injury," Environment International (2021)
     scenario: >-
-      In 2021 the World Health Organization and the International Labour Organization estimated
-      that working 55 hours a week or more caused about 745,000 deaths from stroke and heart disease
-      in 2016. Compared with working 35 to 40 hours, it went with a 35% higher risk of stroke and a
-      17% higher risk of dying of heart disease. The estimate is modeled from observational studies.
+      In 2021 the World Health Organization and the International Labour Organization estimated that
+      working 55 hours a week or more caused about 745,000 deaths from stroke and heart disease in
+      2016. Compared with working 35 to 40 hours, it went with a 35% higher risk of stroke and a 17%
+      higher risk of dying of heart disease. The estimate is modeled from observational studies, and
+      its heart-disease part is disputed.
     text: If very long hours can cost people their health, should a good life be built around work?
     options:
       - id: chosen_work
@@ -126,8 +128,8 @@ items:
     source: John Pencavel, "The Productivity of Working Hours," Economic Journal (2015)
     scenario: >-
       Economist John Pencavel studied British munitions workers during the First World War, whose
-      hours and output were carefully recorded. Up to about 50 hours a week, output rose in step
-      with hours. Beyond that it rose much more slowly, so very long weeks added little.
+      hours and output were carefully recorded. Up to about 49 hours a week, output rose in step
+      with hours. Beyond that it rose more slowly, and past about 63 hours it fell.
     text: If extra hours add little past a point, does giving work first call on your time pay off?
     options:
       - id: not_output
@@ -154,7 +156,7 @@ items:
     scenario: >-
       In 1930 the economist John Maynard Keynes predicted that within a century people would be four
       to eight times richer, and could live well working "three-hour shifts or a fifteen-hour week".
-      The wealth came. Most full-time workers in rich countries still work 35 to 40 hours a week.
+      The wealth came. Yet full-time workers in rich countries still average about 40 hours a week.
     text: If people are far richer than their grandparents, why should a good life still be built around work?
     options:
       - id: retirement
@@ -183,7 +185,7 @@ items:
       Review (2017); Bengt Furåker and Anna Hedenus, "Gambling Windfall Decisions: Lottery Winners
       and Employment Behavior," UNLV Gaming Research & Review Journal (2009)
     scenario: >-
-      Economists studied Swedish lottery players whose prizes were large enough to change their
+      Economists studied Swedish lottery winners, some with prizes large enough to change their
       lives. Winners cut their earnings only a little, by about 1% of the prize a year, and in a
       survey of large winners fewer than one in eight quit their jobs.
     text: If even people who could stop working mostly keep going, how small should work be in a good life?
@@ -211,9 +213,9 @@ items:
       Nancy C. Morse and Robert S. Weiss, "The Function and Meaning of Work and the Job," American
       Sociological Review (1955); General Social Survey (1973–2024)
     scenario: >-
-      In 1955, 80% of employed American men said they would keep working even if they inherited
-      enough to live comfortably without it. The General Social Survey has asked the same question
-      since the 1970s, and most working Americans still say they would carry on.
+      In a 1955 study, 80% of employed American men said they would keep working even if they
+      inherited enough to live comfortably without it. The General Social Survey has asked a similar
+      question since 1973, and most working Americans still say they would carry on.
     text: If most people say they'd keep working without the money, is paid work only a means to an end?
     options:
       - id: what_they_say
@@ -241,9 +243,8 @@ items:
       X: Work as a Predictor of Positive Mental Health," American Journal of Psychiatry (1981)
     scenario: >-
       Researchers followed 456 men from inner-city Boston from age 14 to 47. How hard-working they
-      had been as boys, in part-time jobs, chores and school, predicted their mental health and close
-      relationships as adults better than their family's class, their childhood problems or their
-      IQ.
+      had been as boys, in part-time jobs, chores and school, predicted their mental health and
+      close relationships as adults better than their family's class or problems, or their IQ.
     text: If the capacity to work hard goes with a good life this closely, should work count for more in it?
     options:
       - id: childhood
@@ -273,7 +274,7 @@ items:
     scenario: >-
       France cut its standard working week from 39 hours to 35, in large firms in 2000 and in small
       ones in 2002, partly to spread work around and create jobs. Comparing workers the law covered
-      with those it didn't, economists found no measurable gain in employment.
+      first with those it covered later, economists found no measurable gain in employment.
     text: If shorter hours by law didn't create jobs, is a four-day week by law a good idea?
     options:
       - id: time_off
@@ -281,7 +282,7 @@ items:
         reaction: hold
         value: 0
       - id: flexible
-        label: France did it all at once. A four-day week can be phased in, industry by industry.
+        label: France set one rule for every industry. A four-day week can be phased in, industry by industry.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -297,13 +298,16 @@ items:
     deep: true
     when: four_day < 0
     source: >-
-      Autonomy, "The results are in: The UK's four-day week pilot" (2023); Wen Fan, Juliet B. Schor
-      et al., "Four-day workweek and well-being," Nature Human Behaviour (2025)
+      Autonomy, "The results are in: The UK's four-day week pilot" (2023) and "Making It Stick: The
+      UK Four-Day Week Pilot One Year On" (2024); Wen Fan, Juliet B. Schor, Orla Kelly and Guolin
+      Gu, "Work time reduction via a 4-day workweek finds improvements in workers' well-being,"
+      Nature Human Behaviour (2025)
     scenario: >-
       In 2022, 61 British companies tried a four-day week with no cut in pay. Revenue held steady,
       and a year later 54 of them were still doing it. A larger study of 141 organizations in six
-      countries, compared with similar companies that didn't change, found that burnout fell and job
-      satisfaction and health improved. The companies volunteered, and most were small office firms.
+      countries, compared with 12 companies that kept a five-day week, found that burnout fell and
+      job satisfaction and health improved. The companies volunteered, and most were small, many of
+      them office-based.
     text: If firms that tried it mostly kept it, and workers were healthier, is a four-day week by law a bad idea?
     options:
       - id: volunteers

@@ -73,13 +73,12 @@ items:
     when: stance > 0
     source: >-
       Brett Hollenbeck, Poet Larsen and Davide Proserpio, "The Financial Consequences of Legalized
-      Sports Gambling" (working paper, 2024)
+      Sports Gambling," Management Science (2026)
     scenario: >-
       After the US Supreme Court let states legalize sports betting in 2018, many allowed it on
       phones. Economists compared the credit records of about 7 million Americans in states that did
-      and states that didn't. Four years after online betting arrived, bankruptcies were about a
-      quarter higher, and more debt had gone to collection agencies, mostly among people already
-      close to the edge.
+      and states that didn't. Within a few years of online betting arriving, more people had gone
+      bankrupt or had debts sent to collection agencies, mostly people already close to the edge.
     text: If legal online betting goes with more people going broke, should it be legal and advertised?
     options:
       - id: adults_choose
@@ -102,13 +101,13 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      NatCen Social Research and the University of Liverpool, "Patterns of Play: Analysis of data
-      from machines in bookmakers and online gambling accounts," report for GambleAware (2022)
+      NatCen Social Research and the University of Liverpool, "Patterns of Play: Extended Executive
+      Summary Report," for GambleAware (2022)
     scenario: >-
-      A study of 139,152 British online gambling accounts found that the 5% of accounts that lost the
-      most supplied most of the companies' gambling revenue, by the report's estimates between 70%
-      and 86% of it. Accounts losing money on casino games were twice as likely to be in the most
-      deprived areas as the least.
+      A study of 139,152 British online gambling accounts found that the 5% of accounts that lost
+      the most supplied most of the companies' gambling revenue: at least 70% of it for each type of
+      gambling. More than twice as many accounts used for casino games, slots and bingo were in the
+      most deprived fifth of areas as in the least deprived.
     text: If gambling companies earn most of their money from a small share of heavy losers, should it be sold like other products?
     options:
       - id: other_products
@@ -133,13 +132,13 @@ items:
     when: stance > 0
     source: >-
       Scott R. Baker, Justin Balthrop, Mark J. Johnson, Jason D. Kotter and Kevin Pisciotta,
-      "Gambling Away Stability: Sports Betting's Impact on Vulnerable Households" (2024)
+      "Gambling Away Stability: Sports Betting's Impact on Vulnerable Households," Journal of
+      Financial Economics (2026)
     scenario: >-
-      Using the bank and card records of hundreds of thousands of American households, economists
-      found that when a state legalized online sports betting, households there put about 14% less
-      into savings and investments, and those already short of money ran up more overdrafts and
-      card debt.
-    text: If betting money comes out of families' savings, should it be legal and advertised?
+      Using the bank and card records of about 184,000 American households, economists found that
+      when a state legalized online sports betting, households there put about a fifth less into
+      investment accounts, and those with little savings ran up more overdrafts and card debt.
+    text: If betting money comes out of what families would have invested, should it be legal and advertised?
     options:
       - id: their_money
         label: How families spend their own money is their business, whether on betting or anything else.
@@ -162,13 +161,13 @@ items:
     targets: stance
     when: stance < 0
     source: >-
-      Norwegian Gaming Authority (Lotteritilsynet), annual reports on the gambling market (2023,
-      2024)
+      Norwegian Gaming Authority (Lotteritilsynet), responsibility and channelling report for 2024
+      (2025)
     scenario: >-
-      Norway allows gambling only through two state companies, with a monthly limit on how much
-      anyone can lose. It blocks payments to unlicensed gambling sites and, since 2025, the sites
-      themselves. Even so, unlicensed foreign sites took an estimated quarter or more of what
-      Norwegians spent on the riskiest games in 2024.
+      Norway lets only two state-licensed monopolies offer betting and casino games, with a monthly
+      limit on how much anyone can lose. It blocks payments to unlicensed gambling sites and, since
+      2025, the sites themselves. Even so, unlicensed foreign sites took an estimated 22% to 28% of
+      what Norwegians spent on the riskiest games in 2024.
     text: If people find ways to bet whatever the law says, does banning or tightly limiting it protect them?
     options:
       - id: fewer_harmed
@@ -176,7 +175,7 @@ items:
         reaction: hold
         principles: { protect_vulnerable: 0.5 }
       - id: ads_matter
-        label: Norway's limits still keep betting out of sight. My concern is advertising, and that can be stopped.
+        label: My concern is advertising, and Norway shows ads can be curbed even when some betting gets around the rules.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -192,15 +191,15 @@ items:
     when: stance < 0
     source: >-
       National Council on Problem Gambling (US), prevalence estimates; Gambling Commission, Gambling
-      Survey for Great Britain (2024)
+      Survey for Great Britain (2025 report, 2026)
     scenario: >-
       About 1% of American adults are estimated to have severe gambling problems, and another 2% to
-      3% milder ones. A 2024 survey in Great Britain, using a newer method, found about 2.7% of adults
-      with signs of serious problems. Most people who bet show no signs of harm.
-    text: If most people who bet aren't harmed, should the law stop all of them to protect the few?
+      3% milder ones. A 2025 survey in Great Britain, using a newer method, found about 2.4% of
+      adults with signs of problem gambling. Most people who bet show no signs of harm.
+    text: If most people who bet aren't harmed, should the law restrict all of them to protect the few?
     options:
       - id: families_too
-        label: Each person with a gambling disorder harms a family too, and the companies earn most from them.
+        label: People with a gambling disorder often harm their families too, and companies earn much of their money from the heaviest losers.
         reaction: hold
         principles: { protect_vulnerable: 0.5 }
       - id: not_all
@@ -221,10 +220,10 @@ items:
     when: stance < 0
     source: Italy, Decree-Law 87/2018 ("Dignity Decree"), article 9
     scenario: >-
-      Since 2019, Italy has banned all gambling advertising and sponsorship, including on football
-      shirts and in stadiums. Italy's top football league says the ban costs it up to about €100
-      million a year, foreign betting sites still reach Italians online, and the government has been
-      considering relaxing it.
+      Since 2019, Italy has banned almost all gambling advertising and sponsorship, including on
+      football shirts and in stadiums. Italy's top football league says the ban costs it up to about
+      €100 million a year, foreign betting sites still reach Italians online, and the government has
+      been considering relaxing it.
     text: If a full ban on gambling ads is hard to enforce and costly, should the law ban them?
     options:
       - id: still_less
@@ -247,10 +246,10 @@ items:
     name: Ads during the game
     targets: stance
     when: stance == 0
-    source: Original scenario, after Australia's response to its 2023 parliamentary inquiry (2026)
+    source: Original scenario, after the betting-ad limits Australia passed in August 2026
     scenario: >-
-      A proposed law would allow no more than three gambling ads an hour on TV before 8:30pm, and
-      none during live sport, on team shirts or in stadiums.
+      A proposed law would allow no more than three betting ads an hour on TV before 8:30pm, none
+      during live sport before 8:30pm, and none on team shirts or in stadiums.
     text: You said you're torn. How would you vote?
     options:
       - id: abstain

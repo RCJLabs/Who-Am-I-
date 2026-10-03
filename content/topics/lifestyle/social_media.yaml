@@ -2,14 +2,15 @@
 # Whether the law should open or close social media accounts to under-16s, from leaving it to
 # families and teenagers to closing accounts even with a parent's consent. Steps 1-3 differ by how
 # much the law asks of platforms; step 5 lets parents decide; step 6 is Florida's rule; step 7 is
-# Australia's law and Britain's planned one. Phones at school and age checks for every user are
-# circumstances, since many people back one and not the other. Feeds no spectrum: a law to protect
-# children would score as authority on the civil spectrum, as a smacking ban would, and both
-# parties back limits. Two anchors: protecting the vulnerable, with the cost to teenagers named,
-# and parents' say (invoked by the right on discipline and by the left on treatment for
+# Australia's law (Britain has announced similar plans). Phones at school and age checks for every
+# user are circumstances, since many people back one and not the other. Feeds no spectrum: a law
+# to protect children would score as authority on the civil spectrum, as a smacking ban would, and
+# both parties back limits. Two anchors: protecting the vulnerable, with the cost to teenagers
+# named, and parents' say (invoked by the right on discipline and by the left on treatment for
 # transgender under-18s; many on both sides back age limits here). "Under-16s" and "heavy use",
-# never "iPad kids" or "screen addiction"; the help text gives teenagers' own views. No case
-# involves AI chatbots or AI companies.
+# never "iPad kids" or "screen addiction"; the help text gives teenagers' own views. Cases that
+# ask about the law say "limit their access", since step 5 leaves accounts open with a parent's
+# consent. No case involves AI chatbots or AI companies.
 id: social_media
 domain: lifestyle
 title: Under-16s and social media
@@ -25,9 +26,9 @@ items:
     steps: 7
     text: Social media accounts for under-16s should be…
     help: >-
-      In a 2025 survey, 74% of American teenagers said social media helps them feel connected to
-      their friends, and 48% said it mostly harms people their age. Phones at school come up
-      separately.
+      In a survey published in 2025, 74% of American teenagers said social media helps them feel
+      connected to their friends, and 48% said it mostly harms people their age. Phones at school
+      come up separately.
     poles: [Open to under-16s, Closed to under-16s]
     labels:
       - Open to them, with no special laws; families and teenagers decide how to use it
@@ -115,12 +116,13 @@ items:
     scenario: >-
       In 2021 the Wall Street Journal published internal research from Instagram's owner. A 2020
       slide said: "Thirty-two percent of teen girls said that when they felt bad about their bodies,
-      Instagram made them feel worse." The company replied that on 11 of 12 issues it studied, more
-      teenage girls said Instagram helped than hurt.
+      Instagram made them feel worse." The company replied that on 11 of the 12 issues the slide
+      covered, more of the teenage girls who struggled with each said Instagram made things better
+      than worse. Body image was the exception.
     text: If the company's own research found it made some girls feel worse, should under-16s have open access?
     options:
       - id: helped_more
-        label: Most girls said it helped more than it hurt. Parents can watch for the ones it harms.
+        label: On most issues, more of the girls who struggled said it helped than hurt. Parents can watch for the ones it harms.
         reaction: hold
         principles: { parents_say: 0.5 }
       - id: fix_design
@@ -143,9 +145,10 @@ items:
     scenario: >-
       In 2023 the US Surgeon General warned that up to 95% of 13- to 17-year-olds use social media,
       more than a third "almost constantly", and that those who spend more than three hours a day on
-      it face double the risk of symptoms of depression and anxiety. "We cannot conclude social
-      media is sufficiently safe for children and adolescents," the advisory said.
-    text: If the country's top doctor says it can't be called safe, should under-16s use it freely?
+      it face double the risk of symptoms of depression and anxiety. The advisory said there was not
+      yet enough evidence to determine whether social media is "sufficiently safe for children and
+      adolescents".
+    text: If the country's top doctor says it hasn't been shown to be safe, should under-16s use it freely?
     options:
       - id: correlation
         label: A link with heavy use isn't proof that social media causes the harm.
@@ -174,7 +177,7 @@ items:
       In 2023 a committee of the US National Academies of Sciences reviewed the research and found
       that it "did not support the conclusion that social media causes changes in adolescent health
       at the population level", while noting that some young people are harmed.
-    text: If the evidence doesn't show social media harming teenagers as a whole, should the law close it to them?
+    text: If the evidence doesn't show social media harming teenagers as a whole, should the law limit their access to it?
     options:
       - id: some_harmed
         label: Waiting for proof while some are harmed is too slow. Harm to some is enough.
@@ -196,14 +199,15 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      Online Safety Amendment (Social Media Minimum Age) Act 2024 (Australia); follow-up study of
-      Australian adolescents, BMJ (2026)
+      Online Safety Amendment (Social Media Minimum Age) Act 2024 (Australia), amended 2026; Barnes
+      et al., "Assessing early effects of Australia's Social Media Minimum Age Act on adolescents'
+      social media use: observational study," BMJ (2026)
     scenario: >-
       Since December 2025, Australia has required platforms to close the accounts of everyone under
-      16, with fines of up to A$49.5 million, and about 4.7 million accounts were removed. In a study
-      of 408 young Australians three months later, more than 85% of those under 16 were still using
-      the platforms, most on their own accounts.
-    text: If most teenagers get around a ban, is closing social media to them worth the cost?
+      16, with fines that now reach about A$109 million, and in the first weeks about 4.7 million
+      accounts were closed or restricted. In a study of 408 young Australians three months later,
+      more than 85% of those under 16 were still using the platforms, most on their own accounts.
+    text: If most teenagers get around a ban, are legal limits on their access worth the cost?
     options:
       - id: norms
         label: Laws take time to bite, and a ban sets a norm that helps parents say no.
@@ -227,12 +231,14 @@ items:
     when: stance > 0
     source: >-
       The Trevor Project, "2024 U.S. National Survey on the Mental Health of LGBTQ+ Young People"
-      (2024)
+      (2024) and "Online Experiences and Mental Health of LGBTQ+ Young People" (research brief,
+      2025)
     scenario: >-
       In a 2024 survey of more than 18,000 LGBTQ+ people aged 13 to 24 in the US, online spaces were
-      the most common place where they felt affirmed, and those with affirming spaces were less
-      likely to report attempting suicide. The survey recruited its sample online.
-    text: If some teenagers find their main support online, should the law close it to them?
+      the most common place where they felt affirmed. The 7% who felt safe and understood nowhere
+      online reported attempting suicide more often, about 14% against 11%. The survey recruited its
+      sample through social media ads.
+    text: If some teenagers find their main support online, should the law limit their access to it?
     options:
       - id: safer_places
         label: Support can be found in safer places than social media feeds, and a ban protects far more teenagers than it cuts off.
