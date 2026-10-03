@@ -72,11 +72,12 @@ items:
       United States v. Kaczynski (1998); David Kaczynski, Every Last Tie: The Story of the Unabomber
       and His Family (2016)
     scenario: >-
-      From 1978 to 1995, a bomber killed three people and injured 23 with bombs sent or left in
-      packages. In 1995 newspapers published his manifesto, and David Kaczynski recognized the ideas
+      From 1978 to 1995, a bomber killed three people and injured 23 with bombs he mailed or
+      planted. In 1995 newspapers published his manifesto, and David Kaczynski recognized the ideas
       and phrasing of his brother Ted. After months of agonizing, he went to the FBI, which arrested
       Ted in 1996. Prosecutors sought the death penalty, and in 1998 Ted pleaded guilty in return
-      for life in prison without parole. David gave the reward money to the victims' families.
+      for life in prison without parole. David gave most of the reward money to the victims and
+      their families.
     text: If keeping quiet about a brother could cost more lives, should family loyalty give way?
     options:
       - id: someone_else
@@ -84,7 +85,7 @@ items:
         reaction: hold
         principles: { loyalty: 0.5 }
       - id: still_killing
-        label: He was still killing. Stopping more harm is different from reporting a crime that's over.
+        label: He might have killed again. Stopping more harm is different from reporting a crime that's over.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -126,15 +127,15 @@ items:
     deep: true
     when: stance < 0
     source: >-
-      Testimony of William M. Bulger, House Committee on Government Reform (June 19, 2003); United
-      States v. James J. Bulger (2013)
+      William M. Bulger, testimony to a federal grand jury (2001), reported by The Boston Globe
+      (December 3, 2002); United States v. James J. Bulger (2013)
     scenario: >-
-      In 1995 James "Whitey" Bulger, the leader of a Boston gang, fled before he could be arrested.
-      His brother William, a leading Massachusetts politician, took a phone call from him soon after
-      and didn't tell investigators. Testifying to Congress in 2003, he said: "I do have an honest
-      loyalty to my brother, and I care about him," and that he hoped never to help anyone against
-      him. His brother was caught in 2011, and in 2013 he was convicted of crimes including 11
-      murders.
+      In January 1995 James "Whitey" Bulger, the leader of a Boston gang, fled before he could be
+      arrested. His brother William, a leading Massachusetts politician, took a phone call from him
+      soon after and didn't tell investigators. Questioned by a grand jury in 2001, he said: "I do
+      have an honest loyalty to my brother, and I care about him," and that he hoped never to help
+      anyone against him. His brother was caught in 2011, and in 2013 he was convicted of crimes
+      including 11 murders.
     text: If loyalty can mean not helping to catch a brother wanted for murder, how far should it go?
     options:
       - id: not_hiding
@@ -159,8 +160,8 @@ items:
     when: stance > 0
     source: Confucius, Analects 13.18
     scenario: >-
-      In the Analects, a ruler boasts to Confucius that people in his land are so upright that when
-      a father stole a sheep, his son testified against him. Confucius replies that where he comes
+      In the Analects, a local governor tells Confucius of a man in his district so upright that
+      when his father stole a sheep, he testified against him. Confucius replies that where he comes
       from, uprightness is different: fathers cover for their sons and sons for their fathers, and
       uprightness lies in that. For centuries afterward, Chinese law let close relatives conceal one
       another's crimes.
@@ -185,16 +186,16 @@ items:
     name: A conviction and a deportation
     targets: stance
     when: stance > 0
-    source: Immigration and Nationality Act, 8 U.S.C. § 1101(a)(43) and (48)
+    source: Immigration and Nationality Act, 8 U.S.C. §§ 1101(a)(43)(G) and (a)(48)(B), 1229b(a)(3), 1182(a)(9)(A)
     scenario: >-
-      In the United States, a noncitizen convicted of theft and sentenced to a year in prison has
-      committed an "aggravated felony" under immigration law, even if the sentence is suspended.
-      Even someone who has lived in the country legally for decades can then be deported, with no
+      In the United States, many convictions make a noncitizen deportable. Even a theft with a
+      one-year sentence, suspended, counts as an "aggravated felony" under immigration law. Someone
+      who has lived in the country legally for decades can then be deported, in most cases with no
       chance to ask a judge to weigh their family ties, and is usually barred from ever returning.
     text: If reporting a relative could get them sent away from their family for good, should you report them as you would anyone else?
     options:
       - id: answer_for_it
-        label: The law's harshness isn't the victim's fault. Someone who badly hurt a person still has to answer for it.
+        label: The law's harshness isn't the victim's fault. A serious crime still has to be answered for.
         reaction: hold
         principles: { deserved_punishment: 0.5 }
       - id: change_law
@@ -215,12 +216,12 @@ items:
     when: stance > 0
     source: >-
       German Criminal Code, section 258(6); French Penal Code, article 434-6; Criminal Procedure Law
-      of the People's Republic of China (2012), article 188
+      of the People's Republic of China (2012), article 188 (article 193 since 2018)
     scenario: >-
       Germany doesn't punish people for helping a relative escape prosecution. France exempts close
-      relatives from its offense of hiding a criminal. And since 2012, China hasn't forced a
-      defendant's spouse, parents or children to testify against them in court.
-    text: If many legal systems excuse people who shield a relative, should anyone be expected to report their own family?
+      relatives from its offense of hiding a criminal. And since 2013, Chinese courts can't force a
+      defendant's spouse, parents or children to appear in court to testify against them.
+    text: If many legal systems spare relatives from acting against one another, should anyone be expected to report their own family?
     options:
       - id: excused_not_right
         label: Not punishing relatives isn't the same as saying they did right. Reporting is still what justice asks.

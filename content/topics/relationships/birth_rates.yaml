@@ -67,9 +67,9 @@ items:
       of Economics and Statistics (2005)
     scenario: >-
       From 1988 to 1997 the Canadian province of Quebec paid parents a cash allowance for each new
-      baby, rising to C$8,000 for a third child. Economist Kevin Milligan compared Quebec with the
-      rest of Canada and found that the payments raised birth rates by about 12% on average, and by
-      about 25% among families eligible for the largest payments.
+      baby, rising to C$8,000 for a third or later child. Economist Kevin Milligan compared Quebec
+      with the rest of Canada and found that the payments raised birth rates by about 12% on
+      average, and by about 25% among families eligible for the largest payments.
     text: If payments can raise the number of children people have, should governments use them when birth rates are low?
     options:
       - id: family_decision
@@ -123,8 +123,8 @@ items:
     when: stance < -0.8
     source: Paul R. Ehrlich, The Population Bomb (1968)
     scenario: >-
-      In 1968 the biologist Paul Ehrlich wrote that "in the 1970s hundreds of millions of people
-      will starve to death" because the world's population was outgrowing its food. Instead,
+      In 1968 the biologist Paul Ehrlich wrote that in the 1970s "hundreds of millions of people are
+      going to starve to death," because the world's population was outgrowing its food. Instead,
       harvests grew faster than the population. The world's population has more than doubled since
       then, to over 8 billion, while the share of people without enough to eat has fallen sharply.
     text: If predictions that population growth would bring disaster were wrong, should governments still encourage smaller families?
@@ -150,13 +150,14 @@ items:
     targets: stance
     when: stance > 0
     source: >-
-      Statistics Korea, Birth Statistics (2023, 2024); South Korea's Basic Plans for Low Fertility
+      Statistics Korea, Birth Statistics (2023–2025); South Korea's Basic Plans for Low Fertility
       and Aging Society (2006–2025)
     scenario: >-
       From 2006, South Korea's government spent more than 300 trillion won (over $200 billion) on
       plans to raise its birth rate, including payments, housing help and childcare. The fertility
-      rate still fell, from 1.13 children per woman in 2006 to 0.72 in 2023, the lowest in the
-      world. It has risen a little since, as more couples married after the pandemic.
+      rate, 1.13 children per woman in 2006, edged up to about 1.3 by 2012, then fell to 0.72 in
+      2023, the lowest of any country. It has since risen a little, to 0.75 in 2024 and 0.80 in
+      2025, partly because more couples married after the pandemic.
     text: If years of spending couldn't stop the fall, should governments try to raise birth rates?
     options:
       - id: worse_without
@@ -211,9 +212,9 @@ items:
       (2025)
     scenario: >-
       In 2025 the UN's population agency surveyed 14,000 adults in 14 countries. About one in five
-      said they hadn't had, or didn't expect to have, as many children as they wanted, most often
-      because of money, housing or work. The agency urged governments to remove those obstacles
-      rather than set targets for the birth rate.
+      of those of childbearing age didn't expect to have the number of children they wanted, most
+      often because of money, housing or work. The agency called this the real fertility crisis and
+      urged governments to remove those obstacles.
     text: If the aim is letting people have the children they want, should governments aim at the birth rate itself?
     options:
       - id: shrinking
