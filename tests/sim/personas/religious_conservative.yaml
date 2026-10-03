@@ -92,6 +92,7 @@ answers:
   gene_editing.sex_choice: 1
   gene_editing.intelligence: 1
   gene_editing.anchor_prec: 7
+  gene_editing.anchor_nature: 7 # children's genes aren't ours to engineer
   gene_editing.ch_huntington: line
   gene_editing.ch_mitochondria: line
   gene_editing.ch_savulescu: accept
@@ -253,6 +254,8 @@ answers:
   taxes.wealth_tax: 2
   taxes.flat_tax: 4
   taxes.corporate: 2
+  taxes.borrowing: 2
+  taxes.anchor_future: 6 # no debts passed to our children
   taxes.ch_ownership: shared_costs
   taxes.ch_extra_dollar: targeted
   taxes.ch_public_research: real_work
@@ -301,6 +304,7 @@ answers:
   trade.farmers: 4
   trade.buy_national: 4
   trade.takeovers: 4
+  trade.anchor_animals: 6 # keep out imports from farms that would be illegal here
   trade.ch_washers: towns
   trade.ch_depression: protect_own
   trade.ch_poverty: citizens_first

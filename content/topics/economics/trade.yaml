@@ -3,6 +3,8 @@
 # other economics topics (free trade is the markets end), and deliberately not the diplomatic
 # axis: protection is popular on both left and right. Yields toward freer trade record liberty;
 # toward protection, loyalty to fellow citizens, except where the reason is foreign workers' safety.
+# The anchor is animal welfare in food imports, where farmers and the protectionist right tend to
+# invoke it; the left does in environment/animals (how animals are raised at home).
 id: trade
 domain: economics
 title: Trade and tariffs
@@ -67,6 +69,14 @@ items:
     text: Blocking foreign companies from buying important companies in your country is…
     poles: [Wrong, Right]
     labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_animals
+    type: likert
+    points: 7
+    text: When it comes to food from other countries, the law should protect animals from suffering, even if that means turning away cheaper imports from places with weaker animal-welfare rules.
+    principles: { animal_welfare: 1 }
+    anchor: { principle: animal_welfare, context: food from other countries, against: cheaper food for shoppers }
 
   # --- Challenges: for freer trade -----------------------------------------------------------------
   - id: ch_washers

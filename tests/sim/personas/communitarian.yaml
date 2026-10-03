@@ -234,6 +234,8 @@ answers:
   taxes.wealth_tax: 4
   taxes.flat_tax: 2
   taxes.corporate: 4
+  taxes.borrowing: 2
+  taxes.anchor_future: 5 # don't leave debts to the next generation, within reason
   taxes.ch_france: design
   taxes.ch_wealth_taxes: other_ways
   taxes.ch_forced_labor: need
@@ -288,6 +290,7 @@ answers:
   trade.farmers: 5
   trade.buy_national: 4
   trade.takeovers: 5
+  trade.anchor_animals: 5
   trade.ch_washers: towns
   trade.ch_depression: depression
   trade.ch_poverty: poorest

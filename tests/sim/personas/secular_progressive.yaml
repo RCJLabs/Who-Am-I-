@@ -86,6 +86,7 @@ answers:
   gene_editing.sex_choice: 2
   gene_editing.intelligence: 2
   gene_editing.anchor_prec: 3
+  gene_editing.anchor_nature: 2
   gene_editing.ch_twins: oversight
   gene_editing.ch_asch: treating
   value_tradeoffs.freedom: choose
@@ -245,6 +246,8 @@ answers:
   taxes.wealth_tax: 5
   taxes.flat_tax: 1
   taxes.corporate: 5
+  taxes.borrowing: 4
+  taxes.anchor_future: 3 # borrowing to invest can leave the next generation better off
   taxes.ch_france: design
   taxes.ch_wealth_taxes: loopholes
   taxes.ch_forced_labor: choice
@@ -300,6 +303,7 @@ answers:
   trade.importance: 2
   trade.security: 3
   trade.farmers: 3
+  trade.anchor_animals: 5
   trade.ch_china_shock: help_places
   trade.ch_rana_plaza: brands
   housing.stance: 5

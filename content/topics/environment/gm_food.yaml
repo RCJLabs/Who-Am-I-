@@ -1,0 +1,285 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether genetically modified crops, including gene-edited ones, should be grown and sold. Feeds
+# no spectrum: doubts run through the left (European greens) and the right (Hungary's constitution,
+# American food-purity movements) alike. Labels, seed patents and gene drives are circumstances.
+# Two anchors: the natural order (the genes of crops, where the left tends to invoke it; the right
+# does on embryos, in life/gene_editing) and deference to food-safety scientists (where the
+# pro-innovation right tends to invoke it; the left does on climate). Options toward allowing GM
+# crops record care or liberty; toward restricting them, caution or the natural order, or harm to
+# others where neighbors' farms are hurt.
+id: gm_food
+domain: environment
+title: Genetically modified food
+summary: Should genetically modified crops be grown and sold, and on what terms?
+tier: extended
+order: 4
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: Growing and selling genetically modified (GM) crops, including gene-edited ones, should be…
+    poles: [Banned, Encouraged]
+    labels:
+      - Banned completely
+      - Banned from farms here, but allowed in imported animal feed
+      - Allowed only case by case, after years of safety tests
+      - Torn / it depends
+      - Allowed once each new crop passes a safety review
+      - Treated like any other new crop, with no special rules
+      - Actively encouraged, with public money for crops that resist drought and disease
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: labels
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Requiring labels on food made from GM crops is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: seed_patents
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Letting companies patent the seeds they develop, so farmers can't save and replant them without paying, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { market_limits: -0.5 }
+
+  - id: gene_drive
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Releasing mosquitoes engineered to wipe out the species that spreads malaria is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { natural_order: -0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_nature
+    type: likert
+    points: 7
+    text: When it comes to the crops we grow, the genes of plants shouldn't be engineered, even for good ends like crops that survive drought and disease.
+    principles: { natural_order: 1 }
+    anchor: { principle: natural_order, context: the genes of crops, against: crops that survive drought and disease }
+
+  - id: anchor_exp
+    type: likert
+    points: 7
+    text: When it comes to the safety of GM food, governments should follow what food-safety scientists recommend, even when most voters disagree.
+    help: >-
+      Major scientific bodies, such as the US National Academies in 2016, have found no evidence that
+      approved GM foods are less safe to eat than other foods.
+    principles: { expertise: 1 }
+    anchor: { principle: expertise, context: the safety of GM food, against: shoppers' and farmers' own judgment }
+
+  # --- Challenges: for GM crops ------------------------------------------------------------------
+  - id: ch_golden_rice
+    type: challenge
+    name: Golden Rice
+    targets: stance
+    when: stance < 0
+    source: >-
+      Philippine Court of Appeals, decision on Golden Rice and Bt eggplant (April 2024); World Health
+      Organization, on vitamin A deficiency
+    scenario: >-
+      Golden Rice is engineered to provide vitamin A, the lack of which blinds hundreds of thousands
+      of young children a year in poor countries, many of whom die within a year. In 2021 the
+      Philippines became the first country to approve it for planting. In 2024 an appeals court
+      halted it, citing uncertain risks to health and the environment.
+    text: When a crop could save children's sight, should uncertain risks keep it out of the fields?
+    options:
+      - id: cant_recall
+        label: A crop can't be recalled once it spreads. The court was right to be cautious.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: other_ways
+        label: Vitamin supplements and more varied diets can do the same job without the risk.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_eggplant
+    type: challenge
+    name: The eggplant trial
+    targets: stance
+    when: stance < 0
+    source: >-
+      Akhter Ahmed, John Hoddinott and colleagues, randomized trial of Bt eggplant in Bangladesh,
+      American Journal of Agricultural Economics (2021)
+    scenario: >-
+      In a randomized trial in Bangladesh, farmers given an eggplant engineered to resist its worst
+      pest harvested about half again as much, spent less on pesticide, and earned more. India, next
+      door, has kept a ban on growing the same crop since 2010.
+    text: If a GM crop helps poor farmers this much, should it be kept out of their fields?
+    options:
+      - id: one_trial
+        label: Gains in one trial don't show it's safe to grow everywhere for decades.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: case_by_case
+        label: Allow crops like that one, tested case by case. That doesn't mean every GM crop.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_papaya
+    type: challenge
+    name: Saving the papaya
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Dennis Gonsalves, "Control of papaya ringspot virus in papaya: a case study," Annual Review of
+      Phytopathology (1998)
+    scenario: >-
+      In the 1990s a virus was destroying Hawaii's papaya trees. Scientists at Cornell University and
+      the University of Hawaii engineered a papaya that resists it. Planted from 1998, it saved the
+      islands' papaya farms.
+    text: If public scientists can use genetic modification to save a crop, what's the case against it?
+    options:
+      - id: unnatural
+        label: Some things about nature shouldn't be engineered, even to save a crop.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: public_good
+        label: Crops made by public scientists for farmers' sake, yes. Crops made for a company's profit are another matter.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenges: against GM crops --------------------------------------------------------------
+  - id: ch_dicamba
+    type: challenge
+    name: Drift onto the neighbors
+    targets: stance
+    when: stance > 0
+    source: >-
+      Kevin Bradley, University of Missouri, survey of dicamba injury to soybeans (2017); National
+      Family Farm Coalition v. EPA, 9th Circuit (2020); Center for Biological Diversity v. EPA,
+      US District Court for Arizona (2024)
+    scenario: >-
+      GM soybeans and cotton were engineered to survive the weedkiller dicamba, so farmers could
+      spray it over their crops. In 2017 it drifted onto neighboring farms and damaged about 3.6
+      million acres of soybeans that hadn't been engineered to resist it. Courts struck down the
+      weedkiller's approval for this use in 2020 and again in 2024.
+    text: When one farm's GM crop harms its neighbors, should it still be treated like any other crop?
+    options:
+      - id: free_to_farm
+        label: Farmers should be free to grow what they choose, and pay for any harm they cause.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: weedkiller
+        label: The problem was the weedkiller, not the genes. Regulate the spraying.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want stricter rules on GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_libertylink
+    type: challenge
+    name: The rice that got out
+    targets: stance
+    when: stance > 0
+    source: In re Genetically Modified Rice Litigation; Bayer CropScience settlement with US rice farmers (2011)
+    scenario: >-
+      In 2006 a GM rice that had never been approved for sale turned up in American long-grain rice.
+      Europe and Japan blocked imports and prices fell. In 2011 Bayer agreed to pay up to $750
+      million to rice farmers, most of whom had never grown it.
+    text: If GM crops can't be kept apart from other crops, should farmers who don't want them have more say?
+    options:
+      - id: company_paid
+        label: The company paid for the harm, as it should. That's how it's meant to work.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: test_crop
+        label: That was an unapproved crop from field trials. Approved crops and tighter controls are another matter.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want stricter rules on GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_bowman
+    type: challenge
+    name: The farmer and the patent
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Bowman v. Monsanto Co., 569 U.S. 278 (2013)
+    scenario: >-
+      An Indiana farmer bought cheap grain soybeans, planted them, and sprayed them with weedkiller to
+      keep the plants carrying Monsanto's patented resistance gene. In 2013 the US Supreme Court ruled
+      unanimously that growing new seed this way without paying infringed the patent.
+    text: Should companies be able to stop farmers from saving and replanting seed?
+    options:
+      - id: research
+        label: Yes. Without patents, no one would pay for the research that makes better seeds.
+        reaction: hold
+        principles: { retribution: 0.5 }
+      - id: not_special
+        label: Patents cover conventional seed varieties too. That's not a reason to treat GM crops differently.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want tighter rules on GM crops than I said.
+        reaction: yield
+        revise: stance
+        principles: { market_limits: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Gene editing on the farm
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after England's precision-breeding rules (2025)
+    scenario: >-
+      A proposed law would let farmers grow gene-edited crops, whose changes could also have come from
+      ordinary breeding, under the same rules as conventional crops.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { expertise: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

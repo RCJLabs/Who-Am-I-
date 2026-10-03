@@ -101,6 +101,7 @@ answers:
   gene_editing.somatic: 5
   gene_editing.screening: 5
   gene_editing.anchor_prec: 2
+  gene_editing.anchor_nature: 1
   gene_editing.ch_twins: early_days
   gene_editing.ch_advantages: already
   value_tradeoffs.freedom: choose
@@ -236,6 +237,8 @@ answers:
   taxes.wealth_tax: 1
   taxes.flat_tax: 5
   taxes.corporate: 1
+  taxes.borrowing: 1
+  taxes.anchor_future: 7 # no debts passed to the next generation
   taxes.ch_ownership: market_value
   taxes.ch_extra_dollar: more_needed
   taxes.ch_public_research: real_work
@@ -290,6 +293,7 @@ answers:
   trade.farmers: 1
   trade.buy_national: 1
   trade.takeovers: 1
+  trade.anchor_animals: 1 # no import bans, for animals or anything else
   trade.ch_china_shock: gains
   trade.ch_rana_plaza: jobs_help
   trade.ch_ladder: rare_success

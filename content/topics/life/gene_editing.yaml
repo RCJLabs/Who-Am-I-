@@ -1,6 +1,8 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # The stance is about inherited (germline) changes. Editing a patient's own cells and choosing
 # among IVF embryos are circumstances. Avoid "designer babies" and "playing God" outside quotations.
+# Two anchors on the same context: caution with the irreversible (the risk) and the natural order
+# (whether embryos' genes should be engineered at all).
 id: gene_editing
 domain: life
 title: Editing human genes
@@ -66,13 +68,21 @@ items:
     poles: [Banned, Allowed]
     labels: [Banned, Probably banned, Torn, Probably allowed, Allowed]
 
-  # --- Anchor ------------------------------------------------------------------------------------
+  # --- Anchors -----------------------------------------------------------------------------------
   - id: anchor_prec
     type: likert
     points: 7
     text: When it comes to editing human embryos, the risk of a mistake that can never be undone should make us hold back, even if that means giving up cures for serious diseases.
     principles: { precaution: 1 }
     anchor: { principle: precaution, context: editing human embryos, against: preventing serious inherited diseases }
+
+  # Where the right tends to invoke the natural order; the left does on GM crops (environment/gm_food).
+  - id: anchor_nature
+    type: likert
+    points: 7
+    text: When it comes to having children, the genes of embryos shouldn't be engineered, even for good ends like preventing disease.
+    principles: { natural_order: 1 }
+    anchor: { principle: natural_order, context: the genes of human embryos, against: preventing serious inherited diseases }
 
   # --- Challenges: against editing ---------------------------------------------------------------
   - id: ch_huntington

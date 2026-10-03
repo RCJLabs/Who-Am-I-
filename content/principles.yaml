@@ -67,6 +67,10 @@
 - id: collective_welfare
   label: Collective welfare
   definition: Individuals should accept burdens for the good of the community.
+# The left invokes it on climate, the right on government debt.
+- id: future_generations
+  label: Duties to future generations
+  definition: We shouldn't pass the costs of what we do today on to the people who come after us.
 - id: personal_responsibility
   label: Personal responsibility
   definition: People take on obligations through their own voluntary choices, and don't answer for choices they didn't make.
@@ -79,6 +83,11 @@
 - id: precaution
   label: Caution with the irreversible
   definition: When a mistake can't be undone, hold back, even at the cost of real benefits.
+# Care covers people; this covers animals. Worded as protection by law, so that it costs something
+# to endorse: almost everyone agrees animals' suffering counts for something.
+- id: animal_welfare
+  label: Animal welfare
+  definition: The law should protect animals from suffering, even when that costs people something.
 - id: natural_order
   label: Respect for the natural order
   definition: Some things about human life and nature shouldn't be engineered or altered, even for good ends.

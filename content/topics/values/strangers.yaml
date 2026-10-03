@@ -57,7 +57,7 @@ items:
     text: Giving up some comfort now to protect people who will live a century from now is…
     poles: [Not our duty, Our duty]
     labels: [Not our duty, Probably not our duty, Torn, Probably our duty, Our duty]
-    principles: { collective_welfare: 0.5 }
+    principles: { future_generations: 0.5 }
 
   # --- Challenges: against a duty to help --------------------------------------------------------
   - id: ch_drowning

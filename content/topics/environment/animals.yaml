@@ -1,0 +1,346 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How far the law should protect animals raised for food. Feeds no spectrum: close confinement is
+# the newer practice, traditionalists (Scruton, Scully) oppose it too, and welfare measures win
+# votes across parties, so the stance can't be scored as tradition against reform. Medical testing,
+# hunting, meat grown from animal cells and religious slaughter are circumstances; the testing pair
+# of challenges targets its circumstance. The anchor is animal welfare on the farm, where the left
+# tends to invoke it; farmers and the protectionist right do on food imports (economics/trade).
+# Yields toward stronger protection record animal welfare; toward weaker, care for families' food
+# budgets, or liberty.
+id: animals
+domain: environment
+title: Animals
+summary: How far should the law protect animals raised for food, and animals used in research?
+tier: core
+order: 2
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to animals raised for meat, milk and eggs, the law should…
+    poles: [Leave it to farmers, Phase out animal farming]
+    labels:
+      - Ban deliberate cruelty, and leave the rest to farmers
+      - Keep welfare rules basic, with clear labels so shoppers can pay for higher welfare
+      - Require better conditions, phased in at a pace farmers can afford
+      - Torn / it depends
+      - Ban close confinement, like cages for hens and crates for sows, even if food costs more
+      - Require that all farm animals can move freely and go outdoors, even if meat costs much more
+      - Phase out raising and killing animals for food
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: testing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Testing new medicines on animals before they're tried in people is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { animal_welfare: -0.5 }
+
+  - id: hunting
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Hunting wild animals like deer or ducks, for food and recreation, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { animal_welfare: -0.5 }
+
+  - id: cell_meat
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Banning the sale of meat grown from animal cells, as Italy and some US states have done, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { natural_order: 0.5 }
+
+  - id: stunning
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Requiring all animals to be stunned before slaughter, with no exception for Jewish and Muslim religious slaughter, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { animal_welfare: 0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_welfare
+    type: likert
+    points: 7
+    text: When it comes to raising animals for food, the law should protect animals from suffering, even if that means food costs more and some farms go out of business.
+    principles: { animal_welfare: 1 }
+    anchor: { principle: animal_welfare, context: raising animals for food, against: affordable food and farmers' livelihoods }
+
+  # --- Challenges: for more protection -----------------------------------------------------------
+  - id: ch_broilers
+    type: challenge
+    name: Bred to grow
+    targets: stance
+    when: stance < 0
+    source: >-
+      Toby Knowles et al., "Leg Disorders in Broiler Chickens: Prevalence, Risk Factors and
+      Prevention," PLoS ONE (2008); Martin Zuidhof et al., "Growth, efficiency, and yield of
+      commercial broilers from 1957, 1978, and 2005," Poultry Science (2014)
+    scenario: >-
+      Today's meat chickens grow about four times faster than breeds from the 1950s. In a study of
+      51,000 British chickens, more than a quarter walked poorly by the time they were slaughtered,
+      at about six weeks old, and 3% could barely walk.
+    text: If the problem is bred into the birds, can labels and shoppers' choices fix it?
+    options:
+      - id: choice
+        label: Shoppers who care can buy slower-growing chicken. The law shouldn't choose for everyone.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: breeds
+        label: That calls for a rule on breeds, not for wider rules on how farms are run.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want the law to protect farm animals more than I said.
+        reaction: yield
+        revise: stance
+        principles: { animal_welfare: 0.5 }
+
+  - id: ch_antibiotics
+    type: challenge
+    name: The last-resort drug
+    targets: stance
+    when: stance < 0
+    source: >-
+      Yi-Yun Liu et al., "Emergence of plasmid-mediated colistin resistance mechanism MCR-1 in
+      animals and human beings in China," The Lancet Infectious Diseases (2016); Netherlands
+      Veterinary Medicines Institute (SDa), reports on antibiotic use in livestock
+    scenario: >-
+      Colistin is an antibiotic doctors save for infections nothing else can treat. In 2015
+      researchers found a gene that lets bacteria resist it spreading on Chinese pig farms, where
+      colistin was fed to animals to make them grow faster, and in people. China banned it from
+      animal feed in 2017. The Netherlands, a major meat exporter, has cut antibiotic use on its farms
+      by about three-quarters since 2009.
+    text: When farming practices put people's medicines at risk, is it still just the farmer's business?
+    options:
+      - id: costs
+        label: Farmers already want healthy animals. More rules would raise prices for families who can least afford it.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: drugs_only
+        label: That calls for limits on farm antibiotics, as China and the Netherlands set, not wider welfare rules.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want stricter rules on how farm animals are kept than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_massachusetts
+    type: challenge
+    name: The voters' verdict
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Massachusetts Question 3 (2016), Minimum Size Requirements for Farm Animal Containment
+    scenario: >-
+      In 2016, 78% of Massachusetts voters approved a law banning the sale of eggs, pork and veal
+      from animals kept in cages or crates too small to turn around in, wherever they were raised.
+    text: If most voters want rules like these, should the law leave it to farmers?
+    options:
+      - id: rights
+        label: Voters shouldn't set rules for farms they've never run, often in other states.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: state
+        label: Each state can set its own rules. That doesn't make them right everywhere.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want the law to protect farm animals more than I said.
+        reaction: yield
+        revise: stance
+        principles: { animal_welfare: 0.5 }
+
+  # --- Challenges: for less protection -----------------------------------------------------------
+  - id: ch_prop_12
+    type: challenge
+    name: The price of space
+    targets: stance
+    when: stance > 0
+    source: >-
+      Hannah Hawkins, Shawn Arita and Seth Meyer, "Proposition 12 Pork Retail Price Impacts on
+      California Consumers," ARE Update (2024); National Pork Producers Council v. Ross, US Supreme
+      Court (2023)
+    scenario: >-
+      In 2018 California voters required that pork sold in the state come from sows given at least
+      24 square feet each, wherever the pigs were raised. After the rule took full effect in 2023,
+      prices of the pork it covered rose by about 20% on average, and pork loins by 41%. The US
+      Supreme Court upheld the law, which farmers in other states had to follow to sell there.
+    text: Who should bear the cost of higher welfare, and should one state's voters set it for farmers elsewhere?
+    options:
+      - id: worth_it
+        label: The animals' suffering matters more than cheaper pork.
+        reaction: hold
+        principles: { animal_welfare: 0.5 }
+      - id: help_families
+        label: Keep the rules, but phase them in and help poorer families with food costs.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want the law to go slower than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_sow_stalls
+    type: challenge
+    name: Going first
+    targets: stance
+    when: stance > 0
+    source: >-
+      UK ban on sow stalls (from 1999); Defra June Survey of Agriculture, pig numbers; National Pig
+      Association evidence to the House of Commons
+    scenario: >-
+      Britain banned stalls that confine pregnant sows from 1999, 14 years before the rest of the
+      European Union. Over the next decade its pig herd shrank by about 40%, also hit by disease
+      outbreaks and low prices, and imports from countries where stalls were still allowed filled
+      the gap.
+    text: If stricter rules at home move farming to places with weaker rules, have the animals gained?
+    options:
+      - id: go_first
+        label: Someone has to go first. Europe followed Britain's lead.
+        reaction: hold
+        principles: { animal_welfare: 0.5 }
+      - id: imports
+        label: Then hold imports to the same standards, so farmers at home aren't undercut.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want the law to move more carefully than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_swiss
+    type: challenge
+    name: The Swiss vote
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: Swiss Federal Chancellery, results of the popular vote of 25 September 2022 on the initiative against intensive livestock farming
+    scenario: >-
+      In 2022 Swiss voters were asked to require at least organic standards of welfare for all farm
+      animals, including for imported meat and eggs, in a country whose rules were already among the
+      strictest in the world. 63% voted no.
+    text: If voters in a wealthy country that already cares for its animals said no, should the law go that far?
+    options:
+      - id: not_a_vote
+        label: Animals' suffering isn't something a majority should be able to vote away.
+        reaction: hold
+        principles: { animal_welfare: 0.5 }
+      - id: details
+        label: Voters turned down that plan's timetable and costs, not the goal.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want the law to go less far than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  # --- Challenges: aimed at animal testing --------------------------------------------------------
+  - id: ch_first_tests
+    type: challenge
+    name: Before the volunteers
+    targets: testing
+    when: testing < 0
+    source: >-
+      Kizzmekia Corbett et al., "Evaluation of the mRNA-1273 Vaccine against SARS-CoV-2 in Nonhuman
+      Primates," New England Journal of Medicine (2020)
+    scenario: >-
+      Before Moderna's COVID-19 vaccine went into its large trial with 30,000 volunteers, it was
+      tested in monkeys. They were protected against the virus, with no sign of the vaccine making
+      the disease worse, a danger seen with some earlier vaccines.
+    text: Can new medicines be made safe for people without testing them on animals first?
+    options:
+      - id: alternatives
+        label: Tests on human cells and computer models keep improving. We should use them instead.
+        reaction: hold
+        principles: { animal_welfare: 0.5 }
+      - id: medicine_only
+        label: For medicines that save lives, perhaps. For cosmetics and household products, no.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more accepting of testing medicines on animals than I said.
+        reaction: yield
+        revise: testing
+        principles: { relief_of_suffering: 0.5 }
+
+  - id: ch_fda
+    type: challenge
+    name: No longer required
+    targets: testing
+    when: testing > 0
+    source: >-
+      FDA Modernization Act 2.0 (2022); US Food and Drug Administration, "Roadmap to Reducing Animal
+      Testing in Preclinical Safety Studies" (2025)
+    scenario: >-
+      In 2022 the US Congress, with support from both parties, ended the legal requirement that new
+      drugs be tested on animals before human trials. In 2025 the Food and Drug Administration set
+      out a plan to phase out animal tests for some drugs, saying that methods using human cells and
+      computer models can predict human responses better.
+    text: If better methods exist, is testing on animals still justified?
+    options:
+      - id: not_yet
+        label: Not until the new methods are proven for most medicines. Patients' safety comes first.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: where_needed
+        label: Use the new methods where they work, and animals only where they don't.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me less accepting of animal testing than I said.
+        reaction: yield
+        revise: testing
+        principles: { animal_welfare: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: The end of cages
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would phase out cages for egg-laying hens over ten years. Eggs would likely cost
+      more.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { animal_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?
