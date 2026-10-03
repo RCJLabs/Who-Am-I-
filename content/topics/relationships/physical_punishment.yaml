@@ -27,8 +27,8 @@ items:
     text: When it comes to parents smacking a child as punishment (an open-handed smack on the bottom or hand), the law should…
     help: >-
       For example, Canada allows it within limits like those in step 2; Germany and Japan ban it in
-      family law without adding penalties; Wales treats it as assault but answers most minor cases
-      with parenting support.
+      family law without adding penalties; Wales treats it as assault but in practice offers parents
+      support rather than prosecution.
     poles: [Leave it to parents, Prosecute it like any assault]
     labels:
       - Leave it to parents, with no limits beyond the laws against abuse
@@ -124,7 +124,7 @@ items:
     text: If smacking doesn't improve children's behavior, and may make it worse, should the law allow it?
     options:
       - id: rare_calm
-        label: Those studies mostly count any physical punishment, often harsh or frequent. They don't show that a rare, calm smack within limits does harm.
+        label: Those studies lump all physical punishment together, from a rare smack to frequent hitting. They don't show that a rare, calm smack within limits does harm.
         reaction: hold
         principles: { parents_say: 0.5 }
       - id: advise
@@ -144,20 +144,23 @@ items:
     when: stance < 0
     source: >-
       Joan E. Durrant, "Evaluating the success of Sweden's corporal punishment ban," Child Abuse &
-      Neglect (1999); Sweden, Parental Code (1979 amendment)
+      Neglect (1999); Julian V. Roberts, "Changing public attitudes towards corporal punishment: the
+      effects of statutory reform in Sweden," Child Abuse & Neglect (2000); Sweden, Parental Code
+      (1979 amendment)
     scenario: >-
       In 1979 Sweden became the first country to ban all physical punishment of children. The ban
       carried no penalty of its own and came with a public campaign, including messages printed on
-      milk cartons. In 1965, 53% of Swedes had said physical punishment was necessary in raising
-      children; by 1994, 11% did.
-    text: If a ban can change what parents think is acceptable, should the law still allow smacking?
+      milk cartons. Attitudes were already shifting: in 1965, 53% of Swedes agreed that a child
+      sometimes had to be physically punished, and by 1981, 26% did. In 1994, 11% said they favored
+      even mild physical punishment.
+    text: If a ban can set a standard without punishing parents, should the law still allow smacking?
     options:
       - id: not_the_state
         label: Using the law to change how parents think is the problem. How to raise children is for parents to decide.
         reaction: hold
         principles: { parents_say: 0.5 }
       - id: persuasion
-        label: The campaign did much of that work. Persuasion can change minds without a ban.
+        label: Attitudes were changing before the ban. Persuasion can do that work without the law.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -172,19 +175,23 @@ items:
     targets: stance
     deep: true
     when: stance < 0
-    source: Canadian Incidence Study of Reported Child Abuse and Neglect (2003)
+    source: >-
+      Canadian Incidence Study of Reported Child Abuse and Neglect (2003); Joan E. Durrant, Nico
+      Trocmé, Barbara Fallon, Corinne Milne and Tara Black, "Protection of Children From Physical
+      Maltreatment in Canada: An Evaluation of the Supreme Court's Definition of Reasonable Force,"
+      Journal of Aggression, Maltreatment & Trauma (2009)
     scenario: >-
       In Canada, a national study of cases reported to child-protection services in 2003 found that
       about three-quarters of the physical abuse that caseworkers confirmed had happened while a
       parent was punishing a child.
-    text: If most physical abuse begins as punishment, can the law draw a safe line?
+    text: If most confirmed physical abuse happens during punishment, can the law draw a safe line?
     options:
       - id: already_crime
         label: Abuse is already a crime. Banning smacks won't stop parents who are already breaking the law.
         reaction: hold
         principles: { parents_say: 0.5 }
       - id: clear_limits
-        label: Clear limits, like never the head and never with an object, are what keep punishment from turning into abuse.
+        label: Clear limits, like never the head and never with an object, are the right way to separate punishment from abuse.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -235,9 +242,10 @@ items:
     scenario: >-
       In 2005 psychologists Robert Larzelere and Brett Kuhn pooled 26 studies comparing physical
       punishment with other ways of disciplining children. When smacking was used with children aged
-      2 to 6 only as a backup, for example when a child refused to stay in time-out, it reduced
-      defiance and antisocial behavior more than 10 of 13 other methods. Harsh or frequent physical
-      punishment compared badly with the alternatives.
+      2 to 6 mainly as a backup, for example when a child refused to stay in time-out, it reduced
+      defiance and antisocial behavior more than 10 of 13 other methods. Typical use did about as
+      well as the alternatives, while overly severe use, or relying on it as the main method,
+      compared badly.
     text: If a smack used as a backup can work better than most alternatives with young children, should the law forbid it?
     options:
       - id: no_benefit
@@ -269,7 +277,7 @@ items:
       cases. In a referendum in 2009, 87% of voters answered no to the question "Should a smack as
       part of good parental correction be a criminal offence in New Zealand?", on a turnout of 56%.
       The referendum didn't bind Parliament, and the law stayed. Supporters of the law said the
-      question was worded to get a no.
+      question was loaded.
     text: If most voters reject making a smack a crime, should the law do it anyway?
     options:
       - id: not_a_vote

@@ -25,7 +25,8 @@ items:
     text: When it comes to ending a marriage, the law should…
     help: >-
       This is about civil law. Some faiths have their own rules: Catholic teaching doesn't recognize
-      divorce, while Jewish and Islamic law allow it on their own terms.
+      divorce, though it can declare a marriage invalid, while Jewish and Islamic law allow divorce
+      on their own terms.
     poles: [Not allow divorce, Allow it whenever either spouse decides]
     labels:
       - Not allow divorce, only legal separation
@@ -88,8 +89,8 @@ items:
       Starting with California in 1969, most US states changed their laws so that one spouse could
       end a marriage without proving the other at fault and without the other's agreement.
       Economists Betsey Stevenson and Justin Wolfers compared states by when they made the change.
-      In the years after it, suicide among women fell by 8 to 16 percent, with no change for men,
-      and domestic violence fell by about a third, against both men and women.
+      In the years after it, suicide among women fell by 8 to 16 percent, with no clear change for
+      men, and the authors estimated that domestic violence fell by roughly 30 percent.
     text: If letting one spouse leave without the other's agreement protects people in bad marriages, should the law require a reason?
     options:
       - id: promise
@@ -115,7 +116,7 @@ items:
       Nelson Manfred Blake, The Road to Reno: A History of Divorce in the United States (1962); New
       York's Divorce Reform Law (1966)
     scenario: >-
-      Until 1966, adultery was the only ground for divorce in New York. Couples who both wanted out
+      Until 1967, adultery was the only ground for divorce in New York. Couples who both wanted out
       often staged it: a woman paid to pose with the husband in a hotel room, a photographer to
       catch them, and judges granting divorces on evidence many knew was invented. Couples who could
       afford it went to Nevada instead, living there for six weeks to qualify for a divorce under
@@ -127,7 +128,7 @@ items:
         reaction: hold
         principles: { authority: 0.5 }
       - id: one_ground
-        label: New York allowed only adultery. A law that also allows divorce for abuse or desertion leaves far less reason to lie.
+        label: That shows New York's rule was too narrow, not that the law should stop asking for a reason.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -183,7 +184,7 @@ items:
       did worse than children whose parents stayed in theirs. The authors estimated that fewer than
       a third of divorces involving children end high-conflict marriages. Families that divorce can
       differ in other ways too, which no study of this kind fully rules out.
-    text: If most divorces end marriages that weren't harming the children, should the law make those divorces harder?
+    text: If most divorces end low-conflict marriages, whose children on average did better when their parents stayed together, should the law make those divorces harder?
     options:
       - id: unbearable
         label: No. Adults shouldn't need a court's permission to leave, and a marriage that looks calm to researchers can still be unbearable.
@@ -210,7 +211,8 @@ items:
     scenario: >-
       Researchers surveyed about 2,500 divorcing parents in Minnesota who were taking a parenting
       class the court required. About one in four said they believed their marriage could still be
-      saved with hard work.
+      saved with hard work. Parents whose spouse had started the divorce were far more open to
+      reconciling, and in only about one couple in ten were both open to help with it.
     text: If many people going through a divorce think their marriage could still be saved, should the law slow it down?
     options:
       - id: their_decision

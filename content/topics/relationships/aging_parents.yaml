@@ -100,12 +100,15 @@ items:
     targets: stance
     when: stance < 0
     source: >-
-      AARP Public Policy Institute, "Valuing the Invaluable: 2023 Update" (2023)
+      AARP Public Policy Institute, "Valuing the Invaluable: 2023 Update" (2023); AARP and National
+      Alliance for Caregiving, "Caregiving in the U.S. 2020" (2020); Brenda C. Spillman et al.,
+      "Informal Caregiving for Older Americans: An Analysis of the 2011 National Study of
+      Caregiving" (US Department of Health and Human Services, 2014)
     scenario: >-
       In 2021 about 38 million people in the US gave unpaid care to an adult relative or friend who
       needed help with daily life, most often a parent or a spouse. AARP valued the work at about
-      $600 billion. Most of the help older people get at home comes from family, unpaid.
-    text: If families provide most of the care older people get, could public services take their place?
+      $600 billion. Most of the help older people get at home comes from family and friends, unpaid.
+    text: If family and friends provide most of the care older people get at home, could public services take their place?
     options:
       - id: shared_by_all
         label: Many countries' public services do far more than America's. Care should be shared by everyone, through taxes.
@@ -164,9 +167,9 @@ items:
       Employment Status Survey (2022)
     scenario: >-
       Japan long expected families, mostly wives and daughters-in-law, to care for aging parents at
-      home. In 2000 it began public long-term care insurance, paid for by everyone aged 40 and over,
-      to share that work across society. Even so, about 100,000 people a year still leave their jobs
-      to care for a family member, most of them women.
+      home. In 2000 it began public long-term care insurance, paid for half by taxes and half by
+      premiums from everyone aged 40 and over, to share that work across society. Even so, about
+      100,000 people a year still leave their jobs to care for a family member, most of them women.
     text: If even a country built around family care chose to share the work across society, should caring for parents be a family's first duty?
     options:
       - id: still_owed
@@ -220,8 +223,9 @@ items:
     source: Singapore, Maintenance of Parents Act 1995
     scenario: >-
       Since 1996, parents in Singapore aged 60 and over who can't support themselves have been able
-      to claim support from their children before a tribunal. But the tribunal can turn a claim down
-      if the parent abused, neglected or abandoned the child.
+      to claim support from their children before a tribunal. But the tribunal can turn a claim
+      down, or reduce it, if the parent abused, neglected or abandoned the child. Since 2024,
+      parents with a record of doing so have needed the tribunal's permission even to bring a claim.
     text: If even a law that makes children support their parents excuses those whose parents mistreated them, does the duty come from being a parent, or from how a parent behaved?
     options:
       - id: still_parent
@@ -247,11 +251,11 @@ items:
     when: support_laws > 0
     source: Health Care & Retirement Corporation of America v. Pittas, Superior Court of Pennsylvania (2012)
     scenario: >-
-      In 2007 Maryann Pittas spent about six months in a Pennsylvania nursing home after a car
-      accident, then moved to Greece, leaving a bill of about $93,000. The nursing home sued her son
-      John under a state law that makes adult children responsible for an indigent parent's care. In
-      2012 an appeals court upheld an order that he pay all of it, though she also had a husband and
-      two other grown children, and her application for public help was still pending.
+      In 2007 and 2008 Maryann Pittas spent about six months in a Pennsylvania nursing home after a
+      car accident, then moved to Greece, leaving a bill of about $93,000. The nursing home sued her
+      son John under a state law that makes adult children responsible for an indigent parent's
+      care. In 2012 an appeals court upheld an order that he pay all of it, though she also had a
+      husband and two other grown children, and her application for public help was still pending.
     text: Should the law be able to make one grown child pay a parent's care bill?
     options:
       - id: before_taxpayers
