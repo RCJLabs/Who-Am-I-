@@ -4,7 +4,7 @@
 # against "balance as bias" (equal airtime misleads people about where the evidence stands). About
 # editors' and platforms' choices, not law: speech law is in rights/free_speech. Of the stem's two
 # examples, climate is doubted more on the right; doubt about GM food spans both parties in US
-# polls, though activist opposition leans left. Feeds no spectrum and has no anchor. Cases are
+# polls, though organized opposition has historically leaned left. Feeds no spectrum and has no anchor. Cases are
 # balanced by which side they flatter, with most flattering neither.
 id: settled
 domain: epistemics
@@ -84,7 +84,7 @@ items:
       the study, Kenya banned imports of genetically modified food that year. Europe's food-safety
       agency found the study too flawed to support its conclusions, and in 2013 the journal
       retracted it, calling its results inconclusive; the authors republished it elsewhere in 2014.
-      Kenya's government moved to lift its ban in 2022, but court cases have held that up.
+      Kenya's government moved to lift its ban in 2022, but court cases held that up for years.
     text: When a disputed study gets a worldwide hearing before other specialists can check it, who pays?
     options:
       - id: open
@@ -146,9 +146,9 @@ items:
     scenario: >-
       In 1982 the Israeli scientist Dan Shechtman saw a pattern in a metal alloy that textbooks said
       no crystal could have. Colleagues told him he must be mistaken, the head of his research group
-      asked him to leave, and a leading journal rejected his first paper. Other laboratories soon
-      found the same patterns, and in 2011 he won the Nobel Prize in Chemistry for discovering
-      quasicrystals.
+      asked him to leave, and a physics journal turned down his first paper, saying it wouldn't
+      interest its readers. Other laboratories soon found the same patterns, and in 2011 he won the
+      Nobel Prize in Chemistry for discovering quasicrystals.
     text: If a finding that specialists called impossible can turn out right, how much of a hearing should dissenters get?
     options:
       - id: heard
@@ -156,7 +156,7 @@ items:
         reaction: hold
         value: 0
       - id: one_measurement
-        label: A lab finding can settle a dispute with one clean measurement. The settled questions in the news can't be overturned that way.
+        label: A lab result can be checked by anyone who repeats the experiment. Most settled questions in the news can't be checked that directly.
         reaction: distinguish
         value: 0
       - id: rethink
@@ -175,12 +175,12 @@ items:
       Freedom of Information Act; the Great Barrington Declaration (2020)
     scenario: >-
       In October 2020 three professors, at Harvard, Stanford and Oxford, published the Great
-      Barrington Declaration, arguing that people at low risk of COVID-19 should resume normal life,
-      building immunity through infection, while the most vulnerable were protected. Days later the
-      director of the US National Institutes of Health emailed colleagues that the proposal needed
-      "a quick and devastating published take down." Most public-health specialists opposed the
-      proposal, and whether it was right is still disputed.
-    text: If leading officials move within days to discredit a dissenting view rather than weigh it, is the question really settled?
+      Barrington Declaration, arguing that people at low risk of dying from COVID-19 should resume
+      normal life, building immunity through infection, while the most vulnerable were protected.
+      Days later the director of the US National Institutes of Health emailed colleagues that the
+      proposal needed "a quick and devastating published take down." Most public-health specialists
+      opposed the proposal, and whether it was right is still disputed.
+    text: If leading officials call within days for a "devastating" takedown of a dissenting view, is the question really settled?
     options:
       - id: answered
         label: The proposal was answered in public, and most specialists still rejected it. Settled doesn't mean unanimous.

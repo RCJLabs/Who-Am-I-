@@ -88,9 +88,10 @@ items:
     source: >-
       Charles Calisher et al., "Statement in support of the scientists, public health professionals,
       and medical professionals of China combatting COVID-19," The Lancet (2020), and its addendum
-      (2021); Office of the Director of National Intelligence, report on the origins of COVID-19
-      (2023); WHO Scientific Advisory Group for the Origins of Novel Pathogens, "Independent
-      assessment of the origins of SARS-CoV-2" (2025)
+      (2021); Office of the Director of National Intelligence, "Potential Links Between the Wuhan
+      Institute of Virology and the Origin of the COVID-19 Pandemic" (2023); CIA statement (2025);
+      WHO Scientific Advisory Group for the Origins of Novel Pathogens, "Independent assessment of
+      the origins of SARS-CoV-2" (2025)
     scenario: >-
       In February 2020, 27 scientists signed a letter in The Lancet condemning "conspiracy theories
       suggesting that COVID-19 does not have a natural origin." Its organizer didn't disclose that
@@ -136,7 +137,7 @@ items:
     text: If the families were right and the official record wrong for more than twenty years, how much should official accounts count when they're disputed?
     options:
       - id: panel
-        label: A judge's inquiry blamed the police within months, and a panel set up by the government found the rest. Official inquiries can correct official accounts.
+        label: A judge's inquiry blamed the police within months, and a panel set up by the government, then new inquests, found the rest. Official inquiries can correct official accounts.
         reaction: hold
         value: 0
       - id: police
@@ -160,11 +161,11 @@ items:
       Airlines Flight 800," Aircraft Accident Report (2000)
     scenario: >-
       In 1996 TWA Flight 800 exploded off Long Island, killing all 230 people aboard. More than 250
-      witnesses reported a streak of light, dozens of them saying it rose toward the plane, and many
-      people came to believe a missile had shot it down. After a four-year investigation, the
-      National Transportation Safety Board concluded that fuel vapor in a nearly empty tank had most
-      likely been ignited by a spark from faulty wiring, and that what witnesses saw was most likely
-      the burning plane itself. In 2014 the board declined to reopen the case.
+      witnesses reported a streak of light, dozens of them saying it rose almost straight up, and
+      many people came to believe a missile had shot the plane down. After a four-year
+      investigation, the National Transportation Safety Board concluded that fuel vapor in a nearly
+      empty tank had most likely been ignited by a spark from faulty wiring, and that what witnesses
+      saw was most likely the burning plane itself. In 2014 the board declined to reopen the case.
     text: If many witnesses backed the alternative and it still didn't survive checking, how often do critics turn out right?
     options:
       - id: steered
