@@ -51,6 +51,7 @@ items:
       - { id: many_forms, label: One God in many forms }
       - { id: many, label: Many gods }
       - { id: reality, label: A divine reality that isn't a person }
+      - { id: creator, label: "A creator who made the world but doesn't step in" }
       - { id: unsure, label: "Something, but I'm not sure what" }
 
   - id: label
@@ -175,8 +176,8 @@ items:
     scenario: >-
       In a 1987 survey, 48% of British adults said they'd had at least one of several kinds of
       spiritual experience, and 27% said they'd been aware of the presence of God. The philosopher
-      William Alston argued that we trust our senses without outside proof, and that experiences
-      like these deserve the same trust unless there's reason to doubt them.
+      William Alston argued that we trust our senses without outside proof, and that experiences of
+      God's presence deserve the same trust unless there's reason to doubt them.
     text: If so many people report experiencing something beyond themselves, should that count as evidence?
     options:
       - id: brain

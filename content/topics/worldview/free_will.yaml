@@ -190,9 +190,9 @@ items:
     source: Derk Pereboom, Living Without Free Will (2001)
     scenario: >-
       The philosopher Derk Pereboom imagined a man, Plum, whose reasoning had been programmed by
-      scientists so that he would decide, for his own reasons, to kill. Most people say Plum isn't
-      to blame. Pereboom then asked what changes if genes and upbringing do the programming instead,
-      as they would for everyone if every choice has causes.
+      scientists so that he would decide, for his own reasons, to kill. Pereboom held that Plum
+      isn't to blame. He then asked what changes if genes and upbringing do the programming instead,
+      as they would for everyone if every choice were fully caused by earlier events.
     text: If Plum isn't to blame, what makes the rest of us different?
     options:
       - id: reasons
