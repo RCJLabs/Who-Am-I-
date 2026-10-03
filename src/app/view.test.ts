@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
+import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
 import { parseHash, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
@@ -11,6 +12,7 @@ import {
   axisFeeders,
   challengeTotals,
   endorsementLabel,
+  interestList,
   nextTopic,
   orderedOptions,
   positionLabel,
@@ -177,5 +179,18 @@ describe('results helpers', () => {
     expect(challengeTotals(topics)).toEqual({ asked: 5, held: 3, distinguished: 1, moved: 1 });
     // beta has no stance answer yet and gamma has no stance item, so only alpha is a position.
     expect(positionsByDomain(b, topics).map((g) => [g.domain.id, g.topics.map((t) => t.id)])).toEqual([['life', ['alpha']]]);
+  });
+
+  it('lists interests strongest first: picks by option and ratings by question, with the answer', () => {
+    const log = new Log();
+    log.add('tunes.genres', multi({ jazz: 5, rock: 2 }));
+    log.add('tunes.love', scale(4));
+    const s = buildAnswerState(b, log.events);
+    const p = buildProfile(s, { includeSensitive: true, appVersion: 't', now: 'x', resolutions: [] });
+    expect(interestList(p.interests, s)).toEqual([
+      { key: 'tunes.genres.jazz', kind: 'pick', label: 'Jazz', v: 1 },
+      { key: 'tunes.love', kind: 'rating', label: 'How much does music matter to you?', answer: 'Leaning “Hugely”', v: 0.75 },
+      { key: 'tunes.genres.rock', kind: 'pick', label: 'Rock', v: 0.4 },
+    ]);
   });
 });

@@ -3,6 +3,7 @@ import type { Response } from '../model/answers.ts';
 import type { Axis, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
 import { isScale, scalePoints } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
+import { BAND } from '../engine/analysis/constants.ts';
 import { progress, type FlowOptions } from '../engine/flow.ts';
 import { hash32, mulberry32 } from '../engine/rng.ts';
 import type { AnswerState } from '../engine/state.ts';
@@ -128,18 +129,18 @@ export function toFivePoint(score: number): number {
 export function positionLabel(score: number, poles: readonly [string, string]): string {
   const a = Math.abs(score);
   const pole = score < 0 ? poles[0] : poles[1];
-  if (a < 0.15) return 'Center';
-  if (a < 0.4) return `Leans ${pole}`;
-  if (a < 0.7) return pole;
+  if (a < BAND.center) return 'Center';
+  if (a < BAND.leans) return `Leans ${pole}`;
+  if (a < BAND.strong) return pole;
   return `Strongly ${pole}`;
 }
 
 /** Plain-language endorsement of a principle, e.g. "Strongly endorses". */
 export function endorsementLabel(score: number): string {
   const a = Math.abs(score);
-  if (a < 0.15) return 'Neutral';
-  if (a < 0.4) return score > 0 ? 'Leans toward it' : 'Leans against it';
-  if (a < 0.7) return score > 0 ? 'Endorses' : 'Rejects';
+  if (a < BAND.center) return 'Neutral';
+  if (a < BAND.leans) return score > 0 ? 'Leans toward it' : 'Leans against it';
+  if (a < BAND.strong) return score > 0 ? 'Endorses' : 'Rejects';
   return score > 0 ? 'Strongly endorses' : 'Strongly rejects';
 }
 
@@ -157,7 +158,7 @@ export function strongestLeanings(axes: readonly Axis[], scores: Profile['axes']
   return axes
     .flatMap((a) => {
       const s = scores[a.id];
-      if (!s || s.score === null || Math.abs(s.score) < 0.4) return [];
+      if (!s || s.score === null || Math.abs(s.score) < BAND.leans) return [];
       return [{ axis: a.id, title: a.title, label: positionLabel(s.score, a.poles), strength: Math.abs(s.score) * s.confidence }];
     })
     .sort((x, y) => y.strength - x.strength)
@@ -198,6 +199,38 @@ export function challengeTotals(topics: Profile['topics']): ChallengeTotals {
     t.moved += r.challenges.moved;
   }
   return t;
+}
+
+export interface InterestEntry {
+  key: string;
+  kind: 'pick' | 'rating';
+  /** The option picked, or the rating question. */
+  label: string;
+  /** For ratings, the answer in words. */
+  answer?: string;
+  /** 0..1 */
+  v: number;
+}
+
+/**
+ * Interests, strongest first: multi-select picks by their option label (`topic.item.option`) and
+ * ratings by their question (`topic.item`).
+ */
+export function interestList(interests: Profile['interests'], s: AnswerState): InterestEntry[] {
+  const out: InterestEntry[] = [];
+  for (const [key, v] of Object.entries(interests)) {
+    const parts = key.split('.');
+    if (parts.length === 3) {
+      const item = s.ix.items.get(`${parts[0]}.${parts[1]}`);
+      const label = item?.type === 'multi' ? item.options.find((o) => o.id === parts[2])?.label : undefined;
+      if (label) out.push({ key, kind: 'pick', label, v });
+    } else if (parts.length === 2) {
+      const item = s.ix.items.get(key);
+      const ev = s.latest.get(key);
+      if (item && ev) out.push({ key, kind: 'rating', label: item.text, answer: answerLabel(item, ev.r), v });
+    }
+  }
+  return out.sort((a, b) => b.v - a.v);
 }
 
 /** Topics with a stance answer, grouped by domain in content order. */

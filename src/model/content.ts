@@ -67,6 +67,8 @@ export interface Topic {
   importance?: ItemId;
   /** Axes the items feed, so screens can list a spectrum's topics before their items load. */
   feeds: AxisId[];
+  /** Principles the topic's anchor items test, for the same reason. */
+  anchors: PrincipleId[];
   items: Item[];
 }
 

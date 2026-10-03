@@ -238,6 +238,25 @@ code {
   white-space: nowrap;
 }
 
+@media print {
+  nav,
+  .banner,
+  [data-testid='jump-bar'] {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .page {
+    padding-bottom: 16px;
+  }
+  .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

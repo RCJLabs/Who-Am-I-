@@ -20,6 +20,11 @@ The profile is the app's public output: what results screens render, and what th
   game. Sensitive topics (religion & worldview, identity, and any item marked sensitive) are
   dropped, and **every score is recomputed without them**. A sensitive answer can't leak through a
   derived axis or principle.
+- Sensitive items inside other topics (such as the moral question in physical punishment) are
+  dropped the same way: from scores, `circumstances`, `interests` and `completeness.answered`.
+  Earlier builds still listed such items under `circumstances` and counted them as answered; that
+  was a bug, fixed without a version change because it only removes data that was never meant to
+  be there.
 - `scope.sensitiveIncluded` records which view this is.
 - Identity answers appear only in `identity`, only when `includeSensitive` is true, and never
   affect scores.

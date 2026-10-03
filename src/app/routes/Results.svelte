@@ -1,22 +1,36 @@
 <script lang="ts">
-  import type { Item } from '../../model/content.ts';
+  // Results: a written summary first, then one section per kind of result, each pairing a short
+  // read-out with its chart, then next steps. The analysis runs on this device (see
+  // docs/ANALYSIS.md); the summary and next steps use only answers that could ever be shared.
+  import type { AxisId, Item } from '../../model/content.ts';
+  import { analyse } from '../../engine/analysis/index.ts';
   import { isMixed } from '../../engine/score.ts';
+  import { composeAnalysis, type SectionId } from '../analysis/compose.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { to } from '../routes.ts';
-  import { axisFeeders, challengeTotals, positionLabel, positionsByDomain, rankedPrinciples, strongestLeanings } from '../view.ts';
+  import { axisFeeders, challengeTotals, interestList, positionLabel, positionsByDomain, rankedPrinciples } from '../view.ts';
   import ChallengeBar from '../components/results/ChallengeBar.svelte';
+  import JumpBar from '../components/results/JumpBar.svelte';
+  import NextSteps from '../components/results/NextSteps.svelte';
   import PoliticalMap from '../components/results/PoliticalMap.svelte';
+  import PositionRow from '../components/results/PositionRow.svelte';
   import PrincipleChart from '../components/results/PrincipleChart.svelte';
+  import ResultSection from '../components/results/ResultSection.svelte';
   import SpectrumRow from '../components/results/SpectrumRow.svelte';
+  import SummaryCard from '../components/results/SummaryCard.svelte';
   import Icon from '../components/Icon.svelte';
 
   /** Tension cards shown before "Show all". */
   const TENSION_GROUPS_SHOWN = 3;
   /** Up to this many positions, every domain starts open. */
   const POSITIONS_OPEN = 6;
+  /** The two spectrums drawn as the political map. */
+  const MAP_AXES = ['economic', 'civil'] as const;
+  /** Topics listed per pole under "What pulled you". */
+  const DRIVERS_SHOWN = 3;
 
-  const { content, answers } = app();
+  const { content, answers, settings } = app();
   const profile = $derived(answers.profile);
   const feeders = axisFeeders(content.bundle);
   const axes = Object.values(content.bundle.axes);
@@ -26,8 +40,8 @@
   const worldview = axes.filter((a) => a.family === 'worldview');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
-  const economicAxis = content.bundle.axes['economic'];
-  const civilAxis = content.bundle.axes['civil'];
+  const economicAxis = content.bundle.axes[MAP_AXES[0]];
+  const civilAxis = content.bundle.axes[MAP_AXES[1]];
 
   const hasAny = $derived(answers.events.length > 0);
   const answeredTopics = $derived(Object.values(profile.topics).length);
@@ -36,13 +50,40 @@
   // Sensitive: shown once answered, never as a "not yet" nudge toward questions about religion.
   const worldviewScored = $derived(worldview.filter((a) => profile.axes[a.id]?.score !== null));
 
-  // Overview
-  const econ = $derived(profile.axes['economic']?.score ?? null);
-  const civil = $derived(profile.axes['civil']?.score ?? null);
-  const mapLow = $derived(Math.min(profile.axes['economic']?.confidence ?? 0, profile.axes['civil']?.confidence ?? 0) < 0.5);
-  const leanings = $derived(strongestLeanings([...political, ...values], profile.axes));
+  // The written analysis. Lazy: the shared profile is only built when this page shows.
+  const facts = $derived(
+    hasAny
+      ? analyse({
+          state: answers.state,
+          profile,
+          publicProfile: answers.publicProfile,
+          tensions: answers.tensions,
+          flow: { alwaysDeep: settings.alwaysDeep },
+          mapAxes: MAP_AXES,
+        })
+      : null,
+  );
+  const interests = $derived(interestList(profile.interests, answers.state));
+  const analysis = $derived(
+    facts
+      ? composeAnalysis({
+          bundle: content.bundle,
+          state: answers.state,
+          facts,
+          profile,
+          publicProfile: answers.publicProfile,
+          tensions: answers.tensions,
+          interests,
+          alwaysDeep: settings.alwaysDeep,
+        })
+      : null,
+  );
+
+  // Map
+  const econ = $derived(profile.axes[MAP_AXES[0]]?.score ?? null);
+  const civil = $derived(profile.axes[MAP_AXES[1]]?.score ?? null);
+  const mapLow = $derived(Math.min(profile.axes[MAP_AXES[0]]?.confidence ?? 0, profile.axes[MAP_AXES[1]]?.confidence ?? 0) < 0.5);
   const ranked = $derived(rankedPrinciples(Object.values(content.bundle.principles), profile.principles));
-  const leanMost = $derived(ranked.filter((r) => r.score >= 0.4).slice(0, 3));
   const totals = $derived(challengeTotals(profile.topics));
 
   // Tensions: one card per principle, most pressing first; open before resolved.
@@ -65,18 +106,24 @@
   // Positions, grouped by domain.
   const positionGroups = $derived(positionsByDomain(content.bundle, profile.topics));
   const positionCount = $derived(positionGroups.reduce((n, g) => n + g.topics.length, 0));
+  const picks = $derived(interests.filter((e) => e.kind === 'pick'));
+  const ratings = $derived(interests.filter((e) => e.kind === 'rating'));
 
-  /** Multi-select picks, strongest first, with their labels. */
-  const enjoys = $derived.by(() => {
-    const out: { key: string; label: string; v: number }[] = [];
-    for (const [key, v] of Object.entries(profile.interests)) {
-      const parts = key.split('.');
-      if (parts.length !== 3) continue;
-      const item = answers.state.ix.items.get(`${parts[0]}.${parts[1]}`);
-      const label = item && item.type === 'multi' ? item.options.find((o) => o.id === parts[2])?.label : undefined;
-      if (label) out.push({ key, label, v });
-    }
-    return out.sort((a, b) => b.v - a.v);
+  // Sections in page order; the jump bar lists the ones that show.
+  const sections = $derived.by(() => {
+    const out: { id: SectionId | 'next'; label: string }[] = [];
+    const add = (id: SectionId | 'next', show: boolean) => show && out.push({ id, label: copy.analysis.sections[id] });
+    add('politics', true);
+    add('values', values.length > 0);
+    add('thinking', thinking.length > 0);
+    add('worldview', worldviewScored.length > 0);
+    add('personality', true);
+    add('principles', ranked.length > 0);
+    add('tensions', true);
+    add('positions', positionGroups.length > 0);
+    add('taste', tasteScored.length > 0 || interests.length > 0);
+    add('next', (analysis?.next.length ?? 0) > 0);
+    return out;
   });
 
   function topicTitle(id: string): string {
@@ -95,9 +142,27 @@
     return delta > 0 ? 'agree' : 'disagree';
   }
 
-  function scrollToId(id: string): void {
+  function drivers(axis: AxisId, poles: [string, string]) {
+    const fact = facts && Object.values(facts.axes).flat().find((f) => f.axis === axis);
+    if (!fact) return [];
+    return fact.drivers.map((list, k) => ({
+      pole: poles[k]!,
+      topics: list.slice(0, DRIVERS_SHOWN).map((d) => ({ id: d.topic, title: topicTitle(d.topic) })),
+    }));
+  }
+
+  // Printing shows every section in full.
+  $effect(() => {
+    const open = () => document.querySelectorAll('details').forEach((d) => (d.open = true));
+    window.addEventListener('beforeprint', open);
+    return () => window.removeEventListener('beforeprint', open);
+  });
+
+  function goTo(id: string): void {
+    const section = document.getElementById(`sec-${id}`);
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    section?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    section?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
   }
 </script>
 
@@ -111,6 +176,7 @@
     description={a.description}
     mixed={withMixed && isMixed(sc, content.bundle)}
     feeders={feeders.get(a.id) ?? []}
+    drivers={drivers(a.id, a.poles)}
     testid="axis-{a.id}"
   />
 {/snippet}
@@ -118,101 +184,94 @@
 <div class="page">
   <h1>{copy.results.title}</h1>
 
-  {#if !hasAny}
+  {#if !hasAny || !analysis}
     <div class="card center">
       <p>{copy.results.empty}</p>
       <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
     </div>
   {:else}
-    <p class="muted small">{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}</p>
+    <SummaryCard
+      summary={analysis.summary}
+      footer="{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}"
+      onTensions={() => goTo('tensions')}
+    />
 
-    {#if (econ !== null && civil !== null) || leanings.length || leanMost.length || totals.asked}
-      <section class="section" aria-labelledby="overview-title">
-        <h2 class="section-title" id="overview-title">{copy.results.overview}</h2>
-        <div class="card overview">
-          {#if econ !== null && civil !== null && economicAxis && civilAxis}
-            <PoliticalMap
-              x={econ}
-              y={civil}
-              xPoles={economicAxis.poles}
-              yPoles={civilAxis.poles}
-              caption="{economicAxis.title}: {positionLabel(econ, economicAxis.poles)} · {civilAxis.title}: {positionLabel(civil, civilAxis.poles)}{mapLow ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}"
-              low={mapLow}
-            />
-          {:else if econ !== null || civil !== null}
-            <p class="small muted">{copy.results.mapNeeds}</p>
-          {/if}
-          {#if leanings.length || leanMost.length}
-            <dl class="highlights">
-              {#if leanings.length}
-                <div>
-                  <dt>{copy.results.clearest}</dt>
-                  <dd class="leanings" data-testid="clearest">
-                    {#each leanings as l (l.axis)}<span class="chip lean" title={l.title}>{l.label}</span>{/each}
-                  </dd>
-                </div>
-              {/if}
-              {#if leanMost.length}
-                <div>
-                  <dt>{copy.results.leanMost}</dt>
-                  <dd>{leanMost.map((r) => r.principle.label).join(', ')}</dd>
-                </div>
-              {/if}
-            </dl>
-          {/if}
-          {#if openTensions.length}
-            <button type="button" class="jump" onclick={() => scrollToId('tensions')}>
-              {copy.results.pullApart(openTensions.length)}
-              <Icon name="right" size={16} />
-            </button>
-          {/if}
+    <JumpBar {sections} />
+
+    <ResultSection id="politics" title={copy.analysis.sections.politics} readout={analysis.readouts.politics}>
+      {#if econ !== null || civil !== null}
+      <div class="card">
+        {#if econ !== null && civil !== null && economicAxis && civilAxis}
+          <PoliticalMap
+            x={econ}
+            y={civil}
+            xPoles={economicAxis.poles}
+            yPoles={civilAxis.poles}
+            caption="{economicAxis.title}: {positionLabel(econ, economicAxis.poles)} · {civilAxis.title}: {positionLabel(civil, civilAxis.poles)}{mapLow ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}"
+            low={mapLow}
+          />
+        {:else}
+          <p class="small muted flush">{copy.results.mapNeeds}</p>
+        {/if}
+      </div>
+      {/if}
+      <div class="card rows">
+        {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
+      </div>
+    </ResultSection>
+
+    {#if values.length}
+      <ResultSection id="values" title={copy.analysis.sections.values} readout={analysis.readouts.values}>
+        <div class="card rows">
+          {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
+        </div>
+      </ResultSection>
+    {/if}
+
+    {#if thinking.length}
+      <ResultSection id="thinking" title={copy.analysis.sections.thinking} readout={analysis.readouts.thinking}>
+        <div class="card rows">
+          {#each thinking as a (a.id)}{@render spectrum(a, true)}{/each}
         </div>
         {#if totals.asked}
           <div class="card">
             <ChallengeBar {totals} />
           </div>
         {/if}
-      </section>
-    {/if}
-
-    <section class="section" aria-labelledby="political-title">
-      <h2 class="section-title" id="political-title">{copy.results.political}</h2>
-      <div class="card rows">
-        {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
-      </div>
-    </section>
-
-    {#if values.length}
-      <section class="section" aria-labelledby="values-title">
-        <h2 class="section-title" id="values-title">{copy.results.values}</h2>
-        <div class="card rows">
-          {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
-        </div>
-      </section>
-    {/if}
-
-    {#if thinking.length}
-      <section class="section" aria-labelledby="thinking-title">
-        <h2 class="section-title" id="thinking-title">{copy.results.thinking}</h2>
-        <div class="card rows">
-          {#each thinking as a (a.id)}{@render spectrum(a, true)}{/each}
-        </div>
-      </section>
+      </ResultSection>
     {/if}
 
     {#if worldviewScored.length}
-      <section class="section" aria-labelledby="worldview-title">
-        <h2 class="section-title" id="worldview-title">{copy.results.worldview}</h2>
+      <ResultSection id="worldview" title={copy.analysis.sections.worldview} readout={analysis.readouts.worldview}>
         <div class="card rows">
           {#each worldviewScored as a (a.id)}{@render spectrum(a, true)}{/each}
         </div>
-      </section>
+      </ResultSection>
     {/if}
 
-    <section class="section" id="tensions" aria-labelledby="tensions-title">
-      <h2 class="section-title" id="tensions-title">{copy.results.tensions}</h2>
+    <ResultSection id="personality" title={copy.analysis.sections.personality} readout={analysis.readouts.personality} note={copy.results.personalityNote}>
+      <div class="card" class:rows={personalityScored}>
+        {#if personalityScored}
+          {#each personality as a (a.id)}{@render spectrum(a, false)}{/each}
+        {:else}
+          <p class="small muted flush">
+            {copy.results.notEnough}
+            {#each feeders.get('extraversion') ?? [] as t (t.id)}<a href={to.flow(t.id)}>{t.title}</a>{/each}
+          </p>
+        {/if}
+      </div>
+    </ResultSection>
+
+    {#if ranked.length}
+      <ResultSection id="principles" title={copy.analysis.sections.principles} readout={analysis.readouts.principles} note={copy.results.principlesNote}>
+        <div class="card">
+          <PrincipleChart rows={ranked} {topicTitle} tensions={openByPrinciple} />
+        </div>
+      </ResultSection>
+    {/if}
+
+    <ResultSection id="tensions" title={copy.analysis.sections.tensions} readout={analysis.readouts.tensions}>
       {#if tensionGroups.length}
-        <p class="muted small">{copy.results.tensionsCount(tensions.length, tensionGroups.length)}</p>
         {#each shownGroups as g (g.principle)}
           <div class="card tension">
             <p class="tension-title"><strong>{content.bundle.principles[g.principle]?.label}</strong></p>
@@ -243,36 +302,10 @@
       {:else}
         <p class="muted small">{copy.results.tensionsEmpty}</p>
       {/if}
-    </section>
-
-    {#if ranked.length}
-      <section class="section" aria-labelledby="principles-title">
-        <h2 class="section-title" id="principles-title">{copy.results.principles}</h2>
-        <p class="muted small">{copy.results.principlesNote}</p>
-        <div class="card">
-          <PrincipleChart rows={ranked} {topicTitle} tensions={openByPrinciple} />
-        </div>
-      </section>
-    {/if}
-
-    <section class="section" aria-labelledby="personality-title">
-      <h2 class="section-title" id="personality-title">{copy.results.personality}</h2>
-      <p class="muted small">{copy.results.personalityNote}</p>
-      <div class="card" class:rows={personalityScored}>
-        {#if personalityScored}
-          {#each personality as a (a.id)}{@render spectrum(a, false)}{/each}
-        {:else}
-          <p class="small muted flush">
-            {copy.results.notEnough}
-            {#each feeders.get('extraversion') ?? [] as t (t.id)}<a href={to.flow(t.id)}>{t.title}</a>{/each}
-          </p>
-        {/if}
-      </div>
-    </section>
+    </ResultSection>
 
     {#if positionGroups.length}
-      <section class="section" aria-labelledby="positions-title">
-        <h2 class="section-title" id="positions-title">{copy.results.topics}</h2>
+      <ResultSection id="positions" title={copy.analysis.sections.positions} readout={analysis.readouts.positions}>
         {#each positionGroups as g (g.domain.id)}
           {@const moved = g.topics.reduce((n, t) => n + (profile.topics[t.id]?.challenges.moved ?? 0), 0)}
           <details class="card domain" open={positionCount <= POSITIONS_OPEN}>
@@ -288,38 +321,50 @@
             {#each g.topics as t (t.id)}
               {@const r = profile.topics[t.id]!}
               {@const stance = t.stance ? answers.state.ix.items.get(t.stance) : undefined}
-              <a class="position" href={to.topicResults(t.id)} data-testid="position-{t.id}">
-                <span class="position-text">
-                  <span class="position-title">{t.title}</span>
-                  <span class="stance">{r.stanceLabel ?? ''}</span>
-                  {#each r.challenges.moves as m, i (i)}
-                    {#if m.steps}
-                      <span class="small moved" data-testid="moved-{t.id}">{copy.results.movedLine(sourceName(m.source), m.steps, toward(stance, m.delta))}</span>
-                    {/if}
-                  {/each}
-                </span>
-                <Icon name="right" size={18} />
-              </a>
+              <PositionRow
+                topic={t}
+                href={to.topicResults(t.id)}
+                label={r.stanceLabel ?? ''}
+                stance={r.stanceLabel === null ? null : r.stance}
+                initial={r.initialStance}
+                poles={stance && (stance.type === 'slider' || stance.type === 'rating') ? stance.poles : null}
+                moves={r.challenges.moves.filter((m) => m.steps).map((m) => copy.results.movedLine(sourceName(m.source), m.steps!, toward(stance, m.delta)))}
+              />
             {/each}
           </details>
         {/each}
-      </section>
+      </ResultSection>
     {/if}
 
-    {#if tasteScored.length || enjoys.length}
-      <section class="section" aria-labelledby="taste-title">
-        <h2 class="section-title" id="taste-title">{copy.results.taste}</h2>
+    {#if tasteScored.length || interests.length}
+      <ResultSection id="taste" title={copy.analysis.sections.taste} readout={analysis.readouts.taste}>
         <div class="card rows">
           {#each tasteScored as a (a.id)}{@render spectrum(a, false)}{/each}
-          {#if enjoys.length}
+          {#if picks.length || ratings.length}
             <h3 class="enjoy-title">{copy.results.interests}</h3>
-            <div class="chips">
-              {#each enjoys as e (e.key)}
-                <span class="chip enjoy" style:--strength={e.v}>{e.label}</span>
-              {/each}
-            </div>
+            {#each ratings as e (e.key)}
+              <p class="rating" data-testid="interest-{e.key}">
+                <span class="small muted">{e.label}</span>
+                <span class="rating-answer">{e.answer}</span>
+                <span class="meter" aria-hidden="true"><span style:width="{e.v * 100}%"></span></span>
+              </p>
+            {/each}
+            {#if picks.length}
+              <div class="chips">
+                {#each picks as e (e.key)}
+                  <span class="chip enjoy" style:--strength={e.v} data-testid="interest-{e.key}">{e.label}</span>
+                {/each}
+              </div>
+            {/if}
           {/if}
         </div>
+      </ResultSection>
+    {/if}
+
+    {#if analysis.next.length}
+      <section class="section result" id="sec-next" aria-labelledby="sec-next-title">
+        <h2 class="section-title" id="sec-next-title" tabindex="-1">{copy.analysis.next.title}</h2>
+        <NextSteps groups={analysis.next} />
       </section>
     {/if}
   {/if}
@@ -330,50 +375,8 @@
     padding-top: 4px;
     padding-bottom: 4px;
   }
-  .overview {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .highlights {
-    margin: 0;
-    display: grid;
-    gap: 10px;
-  }
-  .highlights dt {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  .highlights dd {
-    margin: 2px 0 0;
-    font-weight: 650;
-  }
-  .leanings {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .lean {
-    font-size: 0.85rem;
-    color: var(--accent);
-    border-color: currentColor;
-  }
   .flush {
     margin: 0;
-  }
-  .jump {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    align-self: flex-start;
-    text-align: left;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    font-weight: 600;
-    color: var(--accent);
-    cursor: pointer;
   }
   .tension {
     margin-top: 10px;
@@ -438,38 +441,36 @@
   .domain[open] .chev {
     transform: translateY(1px) rotate(-135deg);
   }
-  .position {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 0;
-    border-top: 1px solid var(--border);
-    color: inherit;
-    text-decoration: none;
+  .enjoy-title {
+    margin-top: 16px;
   }
-  .position-text {
+  .rating {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    min-width: 0;
+    margin: 0 0 12px;
   }
-  .position-title {
-    font-weight: 650;
+  .rating-answer {
+    font-weight: 600;
   }
-  .stance {
-    color: var(--accent);
+  .meter {
+    display: block;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--track);
+    overflow: hidden;
   }
-  .moved {
-    color: var(--text);
-  }
-  .enjoy-title {
-    margin-top: 16px;
+  .meter span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--chart-mark);
   }
   .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-bottom: 12px;
   }
   .enjoy {
     font-size: 0.85rem;

@@ -31,6 +31,15 @@ export class AnswersStore {
       resolutions: this.resolutions,
     }),
   );
+  /** Without sensitive answers, every score recomputed: what the summary and recommendations use. */
+  publicProfile = $derived(
+    buildProfile(this.state, {
+      includeSensitive: false,
+      appVersion: __APP_VERSION__,
+      now: new Date().toISOString(),
+      resolutions: this.resolutions,
+    }),
+  );
   tensions = $derived(detectTensions(this.state, observe(this.state, { includeSensitive: true }), this.resolutions));
 
   private channel: BroadcastChannel | null = null;

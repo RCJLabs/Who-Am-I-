@@ -2,6 +2,20 @@
 // Tone: plain, warm, Socratic. Never tell the user they're wrong.
 import type { Evidence } from '../model/content.ts';
 
+const s = (n: number) => (n === 1 ? '' : 's');
+/** Quoted, for pole names, principles and topic titles inside sentences. */
+const q = (text: string) => `“${text}”`;
+/** "a", "a and b", "a, b and c". */
+export function list(items: readonly string[]): string {
+  if (items.length <= 1) return items[0] ?? '';
+  return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
+}
+/** For parts that may contain "and" themselves: "a, and b", "a, b, and c". */
+function series(items: readonly string[]): string {
+  if (items.length <= 1) return items[0] ?? '';
+  return `${items.slice(0, -1).join(', ')}, and ${items.at(-1)}`;
+}
+
 export const copy = {
   appName: 'Who Am I',
   tagline: 'Find out where you stand, and why.',
@@ -101,18 +115,9 @@ export const copy = {
     title: 'Your results',
     empty: 'Answer a few topics and your results will appear here.',
     emptyCta: 'Choose a topic',
-    political: 'Political spectrums',
-    values: 'Values',
-    thinking: 'How you think',
-    worldview: 'Worldview',
-    personality: 'Personality',
     personalityNote: 'Validated short form (Mini-IPIP). Your raw position on each scale, not a comparison with other people.',
-    principles: 'Principles you lean on',
     principlesNote: 'How strongly your answers endorse each principle, most endorsed first. Tap one to see it topic by topic.',
-    topics: 'Your positions',
-    tensions: 'Where your answers pull apart',
     tensionsEmpty: 'No tensions found between your answers so far.',
-    taste: 'Taste',
     interests: 'What you enjoy',
     notEnough: 'Not enough answers yet.',
     noTopicsYet: 'No topics measure this yet. They are on the way.',
@@ -131,31 +136,150 @@ export const copy = {
       revised: 'You revised an answer',
       acknowledged: 'You acknowledged it',
     },
-    details: 'Details',
     selfReport: 'These results reflect what you told the app. They are a mirror, not a diagnosis.',
     basedOn: (n: number, total: number) => `Based on ${n} of ${total} topics so far.`,
-    overview: 'At a glance',
     politicalMap: 'Your political map',
     mapNeeds: 'Answer topics in Economics and in Rights & liberties to see your political map.',
-    clearest: 'Clearest leanings',
-    leanMost: 'Principles you lean on most',
-    pullApart: (n: number) => `${n} place${n === 1 ? '' : 's'} where your answers pull apart`,
     challengesTitle: 'How you handled challenges',
     challengesTotal: (n: number) => `${n} challenge${n === 1 ? '' : 's'} so far`,
     challengeParts: { held: 'Held your view', distinguished: 'Named a difference', moved: 'Reconsidered' },
     lowConfidence: 'Based on few answers so far',
+    lighter: 'Lighter: based on few answers',
+    pulledBy: 'What pulled you',
+    toward: (pole: string) => `Toward ${pole}:`,
     comingSoon: 'No topics yet',
     notYet: 'Not enough answers',
     rejects: 'Rejects',
     endorses: 'Endorses',
     byTopic: 'Topic by topic',
-    tensionsCount: (rows: number, groups: number) =>
-      `${rows} pair${rows === 1 ? '' : 's'} of answers across ${groups} principle${groups === 1 ? '' : 's'}. Most pressing first.`,
     showAll: (n: number) => `Show all ${n} principles`,
     showFewer: 'Show fewer',
     topicCount: (n: number) => `${n} topic${n === 1 ? '' : 's'}`,
     reconsideredCount: (n: number) => `reconsidered ${n}`,
     principleTensions: (n: number) => `${n} open tension${n === 1 ? '' : 's'}`,
+  },
+
+  // The written analysis on the results page. Every sentence is built here from parts the rules
+  // pick (src/app/analysis/compose.ts). Describe and ask; never prescribe, never compare the user
+  // with other people.
+  analysis: {
+    jumpLabel: 'Sections',
+    sections: {
+      politics: 'Politics',
+      values: 'Values',
+      thinking: 'How you think',
+      worldview: 'Worldview',
+      personality: 'Personality',
+      principles: 'Principles',
+      tensions: 'Tensions',
+      positions: 'Positions',
+      taste: 'Taste',
+      next: 'Next steps',
+    },
+    summaryTitle: 'Summary',
+    headline: {
+      leanings: (poles: readonly string[]) => `You lean toward ${list(poles.map(q))}`,
+      principles: (labels: readonly string[]) => `You lean most on ${list(labels.map(q))}`,
+      personality: (traits: readonly string[]) => `You describe yourself as ${list(traits)}`,
+      empty: 'Your results so far',
+    },
+    summaryEmpty: 'Answer a few more topics, and this summary will describe what your answers add up to.',
+    tiles: {
+      topics: 'Topics answered',
+      topicsOf: (total: number) => `of ${total}`,
+      challenges: 'Challenges faced',
+      reconsidered: (n: number) => `${n} reconsidered`,
+      tensions: 'Open tensions',
+      tensionsSee: 'See where',
+    },
+    toward: {
+      slight: (poles: readonly string[]) => `slightly toward ${list(poles.map(q))}`,
+      plain: (poles: readonly string[]) => `toward ${list(poles.map(q))}`,
+      strong: (poles: readonly string[]) => `strongly toward ${list(poles.map(q))}`,
+    },
+    /** e.g. intro "Politically," → "Politically, you lean toward “Markets”, and sit in the middle on “Civil”." */
+    lean: (intro: string, leaning: readonly string[], middle: readonly string[]) =>
+      leaning.length
+        ? `${intro} you lean ${series(leaning)}${middle.length ? `, and sit in the middle on ${list(middle.map(q))}` : ''}.`
+        : `${intro} you sit in the middle on ${list(middle.map(q))}.`,
+    intro: {
+      politics: 'Politically,',
+      values: 'In your values,',
+      thinking: 'In how you describe your thinking,',
+      worldview: 'On worldview,',
+      taste: 'In your taste,',
+    },
+    pullsBothWays: (spectrum: string, a: readonly string[], poleA: string, b: readonly string[], poleB: string) =>
+      `On ${q(spectrum)} your answers pull both ways: ${list(a.map(q))} toward ${q(poleA)}, and ${list(b.map(q))} toward ${q(poleB)}.`,
+    personality: (traits: readonly string[]) => `You describe yourself as ${list(traits)}.`,
+    trait: {
+      slight: (pole: string) => `slightly ${pole.toLowerCase()}`,
+      plain: (pole: string) => `fairly ${pole.toLowerCase()}`,
+      strong: (pole: string) => `very ${pole.toLowerCase()}`,
+      neither: (a: string, b: string) => `neither ${a.toLowerCase()} nor ${b.toLowerCase()}`,
+    },
+    principlesTop: (labels: readonly string[]) => `You endorse ${list(labels.map(q))} most.`,
+    principlesLow: (label: string) => `The principle you reject most is ${q(label)}.`,
+    consistency: (most: string, least: string) => `You apply ${q(most)} most evenly across topics, and ${q(least)} least evenly.`,
+    challenges: (asked: number, held: number, distinguished: number, moved: number) =>
+      `You faced ${asked} challenge${s(asked)}: you ${list(
+        [
+          held ? `held your view through ${held}` : '',
+          distinguished ? `named a difference in ${distinguished}` : '',
+          moved ? `reconsidered ${moved}` : '',
+        ].filter(Boolean),
+      )}.`,
+    tensionsSummary: (open: number, principle: string) =>
+      `${open} pair${s(open)} of your answers pull${open === 1 ? 's' : ''} in different directions; the most pressing is about ${q(principle)}.`,
+    tensionsRead: (pairs: number, principles: number, resolved: number) =>
+      `${pairs} pair${s(pairs)} of answers pull${pairs === 1 ? 's' : ''} in different directions, across ${principles} principle${s(principles)}.${
+        resolved ? ` You've thought through ${resolved}.` : ''
+      }`,
+    firmest: (titles: readonly string[]) => `Your firmest position${s(titles.length)} ${titles.length === 1 ? 'is' : 'are'} on ${list(titles.map(q))}.`,
+    reconsidered: (n: number) => (n ? `You reconsidered ${n} position${s(n)} after a challenge.` : 'You held every position through its challenges.'),
+    enjoys: (labels: readonly string[]) => `You enjoy ${list(labels)} most.`,
+    basedOn: (topics: number) => `Based on ${topics} topic${s(topics)}.`,
+    basedOnSelf: (topics: number) => `Your self-description is based on ${topics} topic${s(topics)}.`,
+    fewAnswers: 'Some results rest on few answers so far.',
+    next: {
+      title: 'Next steps',
+      read: {
+        title: 'Read both sides',
+        intro: 'The strongest cases on your firmest positions, from the sources the app cites.',
+        against: (topic: string) => `Against your view on ${topic}`,
+        for: (topic: string) => `For your view on ${topic}`,
+        met: { held: 'You held your view', distinguished: 'You named a difference', moved: 'You reconsidered' },
+        otherSide: 'Put to people on the other side',
+      },
+      explore: {
+        title: 'Explore next',
+        intro: 'The topics that would add most to your results.',
+        finish: 'Finish this topic',
+        map: (spectrum: string) => `Adds the ${spectrum.toLowerCase()} spectrum to your political map`,
+        show: (spectrum: string) => `Adds your ${q(spectrum)} result`,
+        personality: 'Adds your personality profile',
+        firmUp: (spectrum: string) => `Firms up your ${q(spectrum)} result`,
+        consistency: (principle: string) => `Tests ${q(principle)} in a new setting`,
+        start: 'Not started yet',
+        cta: 'Start',
+        ctaContinue: 'Continue',
+      },
+      reflect: {
+        title: 'Worth a second look',
+        intro: 'Where your answers pull apart most. Often there is a good reason; it helps to know it.',
+        lead: {
+          'endorse-reject': (principle: string, hi: string, lo: string) =>
+            `You endorsed ${q(principle)} when it comes to ${hi}, but rejected it when it comes to ${lo}.`,
+          'endorse-neutral': (principle: string, hi: string, lo: string) =>
+            `You endorsed ${q(principle)} when it comes to ${hi}, but not when it comes to ${lo}.`,
+          'neutral-reject': (principle: string, hi: string, lo: string) =>
+            `You were neutral on ${q(principle)} when it comes to ${hi}, but rejected it when it comes to ${lo}.`,
+        },
+        ask: (against: string) => `Is it ${against} that makes the difference?`,
+        askOpen: 'What makes the difference for you?',
+        cta: 'Think it through',
+      },
+    },
   },
 
   topicResults: {

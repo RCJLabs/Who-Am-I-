@@ -27,6 +27,7 @@ import type {
 } from '../model/content.ts';
 import { COND_KEYWORDS, mapRefs, parseCond, type RefUse } from '../engine/cond/parse.ts';
 import { Reporter, type CompiledTopic, type Env, type Loc, type TopicCtx } from './context.ts';
+import { parseTerms } from './loaded-terms.ts';
 import { runRules } from './rules/index.ts';
 import type { ContentSources, Diagnostic } from './types.ts';
 import { parseYaml, type ParsedFile, type Path } from './yaml.ts';
@@ -429,6 +430,7 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
     evidence: tf.evidence,
     sensitive,
     feeds: axesFed(items),
+    anchors: principlesAnchored(items),
     items,
   };
   if (tf.source) topic.source = tf.source;
@@ -452,11 +454,9 @@ function axesFed(items: Item[]): string[] {
   return [...axes].sort();
 }
 
-function parseTerms(text: string): string[] {
-  return text
-    .split('\n')
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith('#'));
+/** Principles that any anchor item tests, sorted. */
+function principlesAnchored(items: Item[]): string[] {
+  return [...new Set(items.flatMap((it) => (it.anchor ? [it.anchor.principle] : [])))].sort();
 }
 
 function sortDiags(d: Diagnostic[]): Diagnostic[] {
