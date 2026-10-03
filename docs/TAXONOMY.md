@@ -112,22 +112,25 @@ probe.
 | Experts or voters | extended | custom | ✅ | independent central banks, Brennan, Calgary's fluoride, Tetlock's forecasts, Buck v. Bell, the replication project |
 
 ### Religion & worldview (sensitive)
-| Topic | Tier | Status |
-|---|---|---|
-| God and religion (belief, practice) | core | ◻️ |
-| Free will | core | ◻️ |
-| Where morality comes from (realism vs. relativism) | core | ◻️ |
-| Afterlife | extended | ◻️ |
-| Meaning of life | extended | ◻️ |
-| Personal identity (teleporter, Ship of Theseus) | extended | ◻️ |
-| Consciousness and machine minds | extended | ◻️ |
-| Science and faith | extended | ◻️ |
-| The supernatural | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| God and religion (belief; what kind of God, practices and science and faith as unscored items) | core | custom | ✅ | Rees's six numbers, why anything at all, a presence; the 2004 tsunami, born into it, the sincere seeker; ten years as if |
+| Free will (whether people truly deserve blame or praise; the theory as an unscored item) | core | custom | ✅ | the device that never acted, the signal before the choice, resentment; the tumor, Professor Plum, the basic argument |
+| Right and wrong (whether some things are right or wrong for everyone; where morality comes from) | core | custom | ✅ | the Germantown petition, the Nuremberg charter, the anthropologists' statement; honor cultures, Street's dilemma, Mackie's strangeness; Euthyphro and Anscombe on where morality comes from |
+| Life after death | extended | custom | ✅ | van Lommel's cardiac-arrest study, children who remember, Kant on justice; AWARE's hidden images, dementia and the self, the dying brain |
+| What makes you you (Parfit's teleporter) | extended | custom | ✅ | one cell at a time, split brains, Hume's missing self; the branch line, Williams's torture case, two copies on Mars |
+| Meaning of life | extended | | ◻️ | deferred: the reviewers found no single ladder fair to both sides |
+| Consciousness and machine minds | extended | | ◻️ | deferred until a human without AI-industry ties writes or co-signs it: the writer has a stake |
+
+Science and faith became an item in God and religion: both reviewers agreed it isn't a ladder of
+its own. The supernatural moved to How you know, since it doesn't split believers from
+nonbelievers.
 
 ### How you know
 | Topic | Tier | Status |
 |---|---|---|
 | Trust in institutions (science, media, government, courts) | core | ◻️ |
+| The supernatural (ghosts, psychic powers, astrology), unscored | extended | ◻️ |
 | Changing your mind | core | ◻️ |
 | Intuition vs. evidence | extended | ◻️ |
 | Where you get your news | extended | ◻️ |
@@ -201,7 +204,7 @@ can surface in both directions.
 | Equality (narrowing gaps) | taxes, healthcare, race in admissions | | *(effects and moral foundations only)* |
 | Same rules for everyone | police stops, marriage | university admissions, company boards | policing (whom police stop), same-sex relationships and marriage (who may marry), race in admissions (admissions), gender roles (company boards) |
 | Just deserts (rewards) | inheritance (heirs didn't earn it) | support for people who could work | welfare and basic income, inheritance |
-| Deserved punishment | police officers who kill without legal justification | death penalty, prisons | policing (officers who kill without legal justification), prisons and sentencing (violent crime); effects in death penalty, rights of the accused, torture |
+| Deserved punishment | police officers who kill without legal justification | death penalty, prisons, crimes shaped by a brutal childhood | policing (officers who kill without legal justification), prisons and sentencing (violent crime), free will (crimes shaped by a brutal childhood); effects in death penalty, rights of the accused, torture |
 | Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
 | Purity | GMOs, food | sexuality, gene editing | *(effects and moral foundations only)* |
@@ -213,9 +216,10 @@ can surface in both directions.
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 | National self-government | military intervention and regime change | international courts and treaties, immigration | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes), immigration (who may settle) |
 | Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates, wind and solar farms | local or central control (what schools teach), minimum wage (local minimum wages), nature and building (wind and solar farms) |
-| Deference to experts | vaccine requirements, climate | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists) |
+| Deference to experts | vaccine requirements, climate, teaching evolution | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists), God and religion (biologists on teaching evolution) |
 | Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
 | Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
+| Belief that fits the evidence | *(not a left–right split: nonbelievers tend to invoke it about God, and people who doubt free will about free will; some nonbelievers keep free will as a useful belief)* | | God and religion (belief in God), free will (whether our choices are up to us) |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -235,8 +239,12 @@ are made to leave. So do the environment anchors: future generations weighed aga
 change but not government debt, animals protected from suffering on farms abroad but not at home,
 crops' genes engineered but not embryos', climate scientists followed but not food-safety
 scientists, caution about nuclear power but not embryo editing, and local say over wind farms but
-not minimum wages, each raise a tension in either direction. The personas in
-`tests/sim/personas` pin these down.
+not minimum wages, each raise a tension in either direction. So do the worldview anchors, where
+the sides are believers and nonbelievers as much as left and right: deserved punishment for crimes
+shaped by a brutal childhood but not for officers who kill unlawfully, biologists followed on
+teaching evolution but not food-safety scientists or economists, and belief that fits the evidence
+about God but not about free will, or the reverse. The personas in `tests/sim/personas` pin these
+down.
 
 ## Axes
 
@@ -250,6 +258,7 @@ not minimum wages, each raise a tension in either direction. The personas in
 | Getting ahead or looking out for others | values | Getting ahead ↔ Others' welfare | what matters most |
 | Rules or outcomes | values | Rules ↔ Outcomes | rules or outcomes; at half weight: sacrificing one, lying and honesty, the price of a perfect world |
 | Near or far | values | Close ones first ↔ Everyone equally | rules or outcomes; at half weight: helping strangers |
+| The natural world or more | worldview | Only the natural world ↔ More than the natural world | God and religion; at half weight, life after death, whose ladder runs the other way so tapping one end everywhere doesn't push the spectrum (free will, right and wrong and personal identity feed nothing: each splits believers and nonbelievers alike) |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
 | Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
 

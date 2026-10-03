@@ -224,6 +224,7 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Duties to future generations | When it comes to {context}, we shouldn't pass the costs of {what we do today} on to future generations, even if that means {the cost now}. |
   | Animal welfare | When it comes to {context}, the law should protect animals from suffering, even if that means {the cost to people}. |
   | Respect for the natural order | When it comes to {context}, {the thing} shouldn't be engineered, even for good ends like {the benefit}. |
+  | Belief that fits the evidence | When it comes to {context}, people should believe only what the evidence supports, even if {believing more would help}. |
 
 - **Rewards and punishment are separate principles.** Someone can hold that rewards should be
   earned without holding that punishment should match wrongdoing, so just deserts
@@ -306,6 +307,11 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | GM food; gene-edited crops; GM crops found in other fields | Frankenfood, terminator seeds, genetic pollution |
 | spent fuel; a permanent store | nuclear dump, nuke plants |
 | people who think advanced AI could cause a catastrophe; people who want AI built as fast as possible; technology executives | doomers, decels, accelerationists, e/acc; tech bros, AI slop |
+| believers; nonbelievers, or the labels people choose (atheist, agnostic, humanist) | the godless, unbelievers, nones, heathens, infidels; fundamentalists, Bible-thumpers |
+| a tradition "teaches"; people "report experiencing"; "convinced" (not "sure") at the ends of a belief ladder | "claims"; superstition, delusion, fairy tale, blind faith, brainwashed |
+| the Hebrew Bible or Torah; the Quran; deities and sacred images; rebirth (for Buddhists) | the Old Testament (for Jewish texts); idols, idol worship; Mohammedan |
+| people who doubt free will; naturalism; "moral claims are never true" | materialism as a label for nonbelievers; nihilists |
+| "It gives me pause" when reconsidering; what a belief gives people, in their words | "Maybe I've been fooling myself"; faith as "comforting" or "convenient" |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.
@@ -335,6 +341,21 @@ ECR-R, MBTI) have terms that need checking for a commercial app.
 Domains `worldview` and `identity` are sensitive. Their items get "Prefer not to say" and are
 excluded from shared output by default. Identity items **describe and never score**: no effects
 (E012). Never infer identity from other answers.
+
+In worldview, the sides are believers and nonbelievers, not left and right:
+
+- **Same words on both sides.** A belief ladder runs from "Convinced there is none" to "Convinced
+  there is one", with the same verbs at each step. "Convinced", not "sure": many believers separate
+  faith from certainty. The middle is "Undecided", which includes thinking it can't be known.
+- **Descriptive items are never scored:** what kind of God, practices, the label someone uses. Ask
+  about private prayer, meditation and services separately, so neither secular meditators nor
+  people who mostly worship at home are misdescribed.
+- **No challenge implies that without God anything is permitted,** or that nonbelievers can't be
+  good. A metaethics help text says people anywhere on the scale can live moral lives.
+- **Balance the spectrum against acquiescence.** The two stances that feed it run in opposite
+  directions, so someone who taps the same end everywhere isn't pushed to one pole.
+- **The writer has a stake in machine minds.** That topic waits for a human co-author without
+  AI-industry ties, and no case may involve the writer's maker or its models.
 
 ## Review checklist
 
