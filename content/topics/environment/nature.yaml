@@ -1,0 +1,281 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# What gives way when a project would harm wildlife or a landscape. This is where greens and
+# builders of low-carbon power split, and the rural right and the pro-building right. Housing rules
+# belong to economics/housing. Feeds no spectrum. The anchor is deciding locally, applied to wind
+# and solar farms, where the right tends to invoke it (local minimum wages are where the left does).
+# Options toward protecting nature record the natural order (some places shouldn't be altered);
+# toward building, collective welfare (what the project does for everyone).
+id: nature
+domain: environment
+title: Nature and building
+summary: When a road, railway, dam or wind farm would harm nature, which should give way?
+tier: extended
+order: 6
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When a project like a road, railway, dam or wind farm would harm wildlife or a valued landscape, the law should…
+    poles: [Protect nature first, Build what's needed]
+    labels:
+      - Stop it whenever it would harm a protected species or habitat
+      - Allow it only if the harm is small and made up for elsewhere
+      - Weigh both, giving nature extra weight
+      - Torn / it depends
+      - Weigh both, giving the project's benefits extra weight
+      - Allow it when the benefits clearly outweigh the harm, with time limits on reviews and lawsuits
+      - Let needed projects go ahead, without nature rules able to block them
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: thirty_percent
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Setting aside 30% of the country's land and sea for nature by 2030 is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: wolves
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Bringing back wolves to areas where they were wiped out, even though they sometimes kill farm animals, is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: solar_farmland
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Covering good farmland with solar panels is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: offsets
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting builders destroy wildlife habitat if they pay to create more of it somewhere else is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_loc
+    type: likert
+    points: 7
+    text: When it comes to wind and solar farms, decisions should be left to local communities, even when that means fewer of them get built.
+    principles: { subsidiarity: 1 }
+    anchor: { principle: subsidiarity, context: wind and solar farms, against: low-carbon power the whole country needs }
+
+  # --- Challenges: for building ------------------------------------------------------------------
+  - id: ch_bat_tunnel
+    type: challenge
+    name: The bat tunnel
+    targets: stance
+    when: stance < 0
+    source: HS2 Ltd, on the Sheephouse Wood bat protection structure; reporting on its cost (2024–2025)
+    scenario: >-
+      To protect rare bats in a wood in Buckinghamshire, England's new high-speed railway is building
+      a shelter about a kilometer long over its tracks, at a cost of more than £100 million.
+      Government ministers have cited it as a symbol of how costly and slow building has become in
+      Britain.
+    text: When protecting nature costs this much, should the rules give more weight to what's being built?
+    options:
+      - id: irreplaceable
+        label: Rare species can't be brought back. The rules are right, even if this case was handled badly.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: poor_planning
+        label: That was poor planning, not a reason to weaken protection for nature.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want projects to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_cape_wind
+    type: challenge
+    name: The wind farm that never was
+    targets: stance
+    when: stance < 0
+    source: >-
+      Cape Wind Associates, project history; reporting on the developer ending the project (December
+      2017)
+    scenario: >-
+      In 2001 a developer proposed 170 wind turbines in Nantucket Sound, off Cape Cod in
+      Massachusetts, later cut to 130. Opponents, including waterfront homeowners, fishermen and two
+      Wampanoag tribes, fought it for 16 years in courts and reviews over the views, birds, fishing
+      grounds and tribal sacred sites. After utilities canceled its power contracts in 2015, the
+      developer gave up in 2017, and the turbines were never built.
+    text: When reviews and lawsuits can hold up a wind farm for 16 years, is the balance right?
+    options:
+      - id: right_call
+        label: The objections were real. A place like that is worth protecting, even from wind turbines.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: process
+        label: Set time limits on reviews and lawsuits, but keep the protections themselves.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want projects to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  - id: ch_snail_darter
+    type: challenge
+    name: The snail darter
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Tennessee Valley Authority v. Hill, 437 U.S. 153 (1978); US Fish and Wildlife Service, removal
+      of the snail darter from the endangered species list (2022)
+    scenario: >-
+      In 1978 the US Supreme Court upheld an order stopping the nearly finished Tellico Dam in
+      Tennessee to protect a small fish, the snail darter, under the Endangered Species Act. Congress
+      then exempted the dam, which was finished in 1979. Biologists had moved some of the fish to
+      other rivers, more were later found elsewhere, and in 2022 it was declared recovered and taken
+      off the endangered species list.
+    text: If the fish survived anyway, was stopping the dam the right call?
+    options:
+      - id: law_worked
+        label: Yes. The law bought time to find and protect the fish. That's its job.
+        reaction: hold
+        principles: { natural_order: 0.5 }
+      - id: lucky
+        label: This time the fish was found elsewhere. Next time it may not be.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want projects to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+
+  # --- Challenges: for protecting nature ---------------------------------------------------------
+  - id: ch_birds
+    type: challenge
+    name: The missing birds
+    targets: stance
+    when: stance > 0
+    source: Kenneth Rosenberg et al., "Decline of the North American avifauna," Science (2019)
+    scenario: >-
+      A 2019 study estimated that the US and Canada have nearly 3 billion fewer birds than in 1970,
+      a fall of about 29%. The loss of their habitat, much of it to farming and building, is
+      thought to be the main cause.
+    text: If wildlife keeps losing ground to building and farming, should the law give nature more weight?
+    options:
+      - id: other_causes
+        label: Farming does more of the damage than building. Projects people need shouldn't pay for that.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: better_design
+        label: Build, but design projects to leave room for wildlife.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want nature to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  - id: ch_aral
+    type: challenge
+    name: The vanishing sea
+    targets: stance
+    when: stance > 0
+    source: >-
+      Philip Micklin, "The Aral Sea Disaster," Annual Review of Earth and Planetary Sciences (2007)
+    scenario: >-
+      From the 1960s the Soviet Union diverted the two rivers that fed the Aral Sea, then the world's
+      fourth-largest lake, to grow cotton in the desert. By the 2000s most of the sea had dried up,
+      its fishing towns were stranded, and dust storms carried salt and farm chemicals across the
+      region.
+    text: When the harm to nature can't be undone, should projects get the benefit of the doubt?
+    options:
+      - id: different_era
+        label: That was a planned economy with no reviews at all. Modern projects are nothing like it.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: scale
+        label: Nature should win when the harm is that large. Most projects are far smaller.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want nature to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  - id: ch_bristol_bay
+    type: challenge
+    name: The salmon or the mine
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      US Environmental Protection Agency, Clean Water Act Section 404(c) Final Determination for the
+      Pebble Deposit Area (January 2023)
+    scenario: >-
+      Alaska's Bristol Bay has the world's largest run of sockeye salmon, which supports thousands of
+      fishing jobs. In 2023, after years of review, the US Environmental Protection Agency blocked a
+      huge copper and gold mine planned near the rivers where the salmon breed.
+    text: Can some places be worth more left alone than built on?
+    options:
+      - id: jobs_too
+        label: The mine would have brought jobs and metals the world needs. Careful mining could have done both.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: weighed
+        label: That was a fair weighing of jobs against jobs. It doesn't mean nature always comes first.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want nature to count for more than I said.
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Faster reviews, more habitat
+    targets: stance
+    when: stance == 0
+    source: Original scenario
+    scenario: >-
+      A proposed law would limit environmental reviews of big projects to two years, and require
+      builders to create more wildlife habitat than they destroy.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { collective_welfare: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { natural_order: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

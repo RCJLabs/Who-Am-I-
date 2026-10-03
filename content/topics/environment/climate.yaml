@@ -1,0 +1,308 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How far and how fast your country should cut greenhouse gases. The ladder ranks ambition and the
+# cost accepted, not the tools: carbon prices, rules and subsidies are circumstances, so a market
+# environmentalist and a supporter of mandates can pick the same step. Step 1 is adapting, as its
+# holders describe it ("doing nothing" is the other side's phrase). International targets and
+# climate funds belong to governance/cooperation and aren't repeated. Feeds the economic spectrum at
+# full weight (more ambition is the collective-action end). Two anchors, both where the left tends
+# to invoke the principle: duties to future generations (the right does on government debt, in
+# economics/taxes) and deference to climate scientists (the right does on GM food's safety, in
+# gm_food). Yields toward faster cuts record future generations; toward slower, care for people's
+# needs now or liberty.
+id: climate
+domain: environment
+title: Climate change
+summary: How far and how fast should your country cut the gases that cause climate change?
+tier: core
+order: 1
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to the greenhouse gases that cause climate change, your country should…
+    help: >-
+      Net zero means removing as much greenhouse gas as is still released. Choose by how far and how
+      fast; how to get there, with carbon prices, rules or public investment, comes up later.
+    poles: [Adapt rather than cut, Cut as fast as possible]
+    labels:
+      - Focus on adapting to the changes, not on cutting emissions
+      - Cut emissions only where it pays for itself, like saving energy
+      - Cut steadily, but only as fast as it can be done without raising energy prices much
+      - Torn / it depends
+      - Reach net zero by about 2050, even if energy costs more
+      - Reach net zero by about 2040, even at a real cost to growth
+      - Cut emissions as fast as possible, even if it changes how people travel, eat and live
+    axes: { economic: -1 }
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: carbon_price
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Cutting emissions mainly by putting a price on carbon, rather than through rules and subsidies, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: car_ban
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Banning the sale of new cars that run on gasoline or diesel from 2035 is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { liberty: -0.5 }
+
+  - id: livestock_tax
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A tax on the greenhouse gases that farm animals give off, such as the methane from cattle, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: sunlight
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Researching ways to cool the planet by reflecting some sunlight back into space is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { natural_order: -0.5 }
+
+  # --- Anchors -----------------------------------------------------------------------------------
+  - id: anchor_future
+    type: likert
+    points: 7
+    text: When it comes to climate change, we shouldn't pass the costs of today's emissions on to future generations, even if that means higher energy prices and slower growth today.
+    principles: { future_generations: 1 }
+    anchor: { principle: future_generations, context: climate change, against: lower energy prices and faster growth for people now }
+
+  - id: anchor_exp
+    type: likert
+    points: 7
+    text: When it comes to climate change, governments should follow what climate scientists recommend, even when most voters disagree.
+    help: >-
+      The UN's climate science panel finds that keeping warming to 1.5 °C would mean cutting the
+      world's carbon dioxide emissions to net zero around 2050.
+    principles: { expertise: 1 }
+    anchor: { principle: expertise, context: climate change, against: what households and workers can afford }
+
+  # --- Challenges: for cutting more --------------------------------------------------------------
+  - id: ch_acid_rain
+    type: challenge
+    name: The acid rain market
+    targets: stance
+    when: stance < 0
+    source: >-
+      Richard Schmalensee and Robert Stavins, "The SO2 Allowance Trading System: The Ironic History
+      of a Grand Policy Experiment," Journal of Economic Perspectives (2013)
+    scenario: >-
+      In 1990 the US capped power plants' emissions of sulfur dioxide, the main cause of acid rain,
+      and let them buy and sell the right to emit it. Industry warned of crippling costs. Emissions
+      fell by about half, and the costs came in below most forecasts.
+    text: If a cap cut pollution far more cheaply than feared, could the same be true of greenhouse gases?
+    options:
+      - id: adapt
+        label: Even cheap cuts cost something. That money would do more good helping people adapt.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: substitute
+        label: Sulfur had a cheap fix in low-sulfur coal. Coal, oil and gas have no cheap substitute yet.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think cutting emissions could cost less than I assumed.
+        reaction: yield
+        revise: stance
+        principles: { future_generations: 0.5 }
+
+  - id: ch_economists
+    type: challenge
+    name: The economists' letter
+    targets: stance
+    when: stance < 0
+    source: >-
+      "Economists' Statement on Carbon Dividends," The Wall Street Journal (January 17, 2019), and
+      its later signatories
+    scenario: >-
+      In 2019 more than 3,500 US economists signed a statement calling a rising tax on carbon, with
+      the money paid back to households, the most cost-effective way to cut emissions at the scale
+      needed. They included 27 Nobel prize winners and former heads of the Federal Reserve and of the
+      President's economic advisers under both parties.
+    text: If economists across the spectrum say cutting is worth the cost, is it?
+    options:
+      - id: judgment
+        label: Economists can say how to cut cheaply. How much cutting is worth the cost is a judgment for voters.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: dividend_only
+        label: A tax with the money paid back, yes. The rules and subsidies we actually get, no.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think cutting emissions is worth more than I said.
+        reaction: yield
+        revise: stance
+        principles: { future_generations: 0.5 }
+
+  - id: ch_models
+    type: challenge
+    name: The forecasts that came true
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      Zeke Hausfather, Henri Drake, Tristan Abbott and Gavin Schmidt, "Evaluating the Performance of
+      Past Climate Model Projections," Geophysical Research Letters (2020)
+    scenario: >-
+      A 2020 study checked 17 projections of global warming from climate models published between
+      1970 and 2007 against the warming that followed. Most matched it closely, especially after
+      allowing for differences between what the models assumed, such as future emissions, and what
+      actually happened.
+    text: If the models got the warming right, should their warnings about what comes next count for more?
+    options:
+      - id: richer
+        label: People have adapted to change before, and richer societies adapt best.
+        reaction: hold
+        principles: { relief_of_suffering: 0.5 }
+      - id: damage
+        label: Predicting warming is one thing. Predicting the damage, and what's worth paying to avoid it, is another.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me take the warnings more seriously than I did.
+        reaction: yield
+        revise: stance
+        principles: { future_generations: 0.5 }
+
+  # --- Challenges: for cutting less --------------------------------------------------------------
+  - id: ch_carbon_tax
+    type: challenge
+    name: The tax that was scrapped
+    targets: stance
+    when: stance > 0
+    source: >-
+      Department of Finance Canada, "Removing the consumer carbon price, effective April 1, 2025";
+      Parliamentary Budget Officer, updated analysis of the federal fuel charge (October 2024); Bill
+      C-4, Parliament of Canada (2026)
+    scenario: >-
+      From 2019 Canada taxed the carbon in fuel and paid most of the money back to households. The
+      budget officer projected that in 2030, counting only the tax and the payments, most households
+      would get back more than they paid; counting the tax's drag on wages and investment income
+      too, most would come out slightly behind. It stayed unpopular. In 2025 the new prime minister
+      set it to zero as one of his first acts, and in 2026 Parliament repealed it.
+    text: If even a tax with the money paid back couldn't keep public support, can deep cuts last?
+    options:
+      - id: lead
+        label: Leaders have to make the case and keep at it. Climate change won't wait for the polls.
+        reaction: hold
+        principles: { future_generations: 0.5 }
+      - id: other_tools
+        label: A visible tax was the problem. Rules and public investment are easier to keep.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think cuts must go at a pace voters will accept, slower than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_coal
+    type: challenge
+    name: Coal in China
+    targets: stance
+    when: stance > 0
+    source: >-
+      Centre for Research on Energy and Clean Air and Global Energy Monitor, "When Coal Won't Step
+      Aside: The Challenge of Scaling Clean Energy in China" (2025); Rhodium Group, "China's
+      Greenhouse Gas Emissions Exceeded the Developed World for the First Time in 2019" (2021)
+    scenario: >-
+      China emits more greenhouse gases than all developed countries combined. In 2024 it started
+      building 94.5 gigawatts of new coal power, the most in a decade, while also adding record
+      amounts of wind and solar.
+    text: If the biggest emitter keeps building coal plants, how much can your country's cuts achieve?
+    options:
+      - id: our_part
+        label: Every country has to do its part, and rich ones more, since they released most of what's up there.
+        reaction: hold
+        principles: { future_generations: 0.5 }
+      - id: cheaper
+        label: Cuts here make low-carbon technology cheaper for everyone. That matters more than our own share.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Less than I thought. It makes me think cuts here should go slower than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_nordhaus
+    type: challenge
+    name: Weighing costs and benefits
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Lint Barrage and William Nordhaus, "Policies, projections, and the social cost of carbon:
+      Results from the DICE-2023 model," Proceedings of the National Academy of Sciences (2024)
+    scenario: >-
+      William Nordhaus won a Nobel prize for building climate change into economic models. In the
+      2024 update of his model, the path on which the benefits of cutting emissions most exceed the
+      costs lets warming reach about 2.6 °C by 2100, well above the 1.5 °C or 2 °C that net-zero
+      targets aim for.
+    text: If the best balance of costs and benefits means slower cuts, should we aim lower?
+    options:
+      - id: tipping
+        label: Models like this leave out the worst risks, like changes we could never undo.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: cheaper_now
+        label: The same update found 2 °C costs less than it used to, so a stricter goal is affordable.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think slower, cheaper cuts may be wiser than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A carbon dividend
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after the economists' carbon-dividend proposal (2019)
+    scenario: >-
+      A proposed law would tax coal, oil and gas at $50 for each tonne of carbon dioxide they
+      release, about 12 cents a liter of gasoline, rising every year, and pay all the money back to
+      households in equal amounts.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { future_generations: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # How far taxes should be used to move money from richer to poorer people. values/fairness asks
 # what a fair distribution is, so this topic avoids its cases (the veil, Wilt Chamberlain, the
-# camping trip). No anchor: a "people deserve what they earn" anchor here would only restate the
-# stance, so just deserts is anchored in welfare and inheritance instead.
+# camping trip). A "people deserve what they earn" anchor here would only restate the stance, so
+# just deserts is anchored in welfare and inheritance instead. The anchor is about debt instead:
+# duties to future generations, where the right tends to invoke them (the left does on climate).
 id: taxes
 domain: economics
 title: Taxes and redistribution
@@ -68,6 +69,23 @@ items:
     text: Taxes on company profits should be…
     poles: [Much lower, Much higher]
     labels: [Much lower, Somewhat lower, About right, Somewhat higher, Much higher]
+
+  - id: borrowing
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A government borrowing year after year to pay for day-to-day spending, rather than raising taxes or cutting spending, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { future_generations: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_future
+    type: likert
+    points: 7
+    text: When it comes to government debt, we shouldn't pass the costs of today's spending on to future generations, even if that means cutting spending or raising taxes today.
+    principles: { future_generations: 1 }
+    anchor: { principle: future_generations, context: government debt, against: public services and lower taxes today }
 
   # --- Challenges: for more redistribution --------------------------------------------------------
   - id: ch_ownership

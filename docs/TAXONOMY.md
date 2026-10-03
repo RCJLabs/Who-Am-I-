@@ -89,14 +89,17 @@ The full map of what Who Am I covers.
 | Prisons and sentencing | extended | custom | ✅ | Texas's reinvestment, aging out of crime, restorative justice; Italy's pardon, Norway's prisons, Spain's mediation ban |
 
 ### Environment, science & tech
-| Topic | Tier | Status |
-|---|---|---|
-| Climate policy | core | ◻️ |
-| Animals (meat, factory farming, testing) | core | ◻️ |
-| Nuclear power | extended | ◻️ |
-| Genetically modified food | extended | ◻️ |
-| AI and automation | extended | ◻️ |
-| Space exploration | extended | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Climate change (how far and how fast to cut; carbon prices, rules and subsidies as circumstances) | core | custom | ✅ | acid-rain trading, the economists' carbon-dividend letter, past climate models; Canada's scrapped carbon tax, coal in China, Nordhaus's cost-benefit path |
+| Animals (raising animals for food; testing, hunting, meat grown from cells and religious slaughter as circumstances) | core | custom | ✅ | fast-growing chickens, the last-resort antibiotic, Massachusetts' vote; Prop 12's prices, Britain's sow-stall ban, the Swiss vote; vaccine tests in monkeys and the FDA's new rules |
+| Nuclear power | extended | custom | ✅ | deaths per unit of power, Germany's phase-out, France's build-out; Vogtle, Fukushima's evacuation, spent fuel with nowhere to go |
+| Genetically modified food (including gene editing) | extended | custom | ✅ | Golden Rice, Bangladesh's eggplant trial, Hawaii's papaya; dicamba drift, the rice that got out, Bowman v. Monsanto |
+| Artificial intelligence (the most powerful systems; jobs, hiring and copyright as circumstances) | extended | custom | ✅ | the fake Biden robocall, Asilomar, researchers' risk estimates; DeepSeek, the EU delaying its own rules, AI in breast screening |
+| Nature and building (what gives way when a project harms wildlife or a landscape) | extended | custom | ✅ | HS2's bat tunnel, Cape Wind, the snail darter; North America's missing birds, the Aral Sea, Bristol Bay's salmon |
+
+Space exploration was dropped after the design review: it has no left–right or value split to
+probe.
 
 ### Governance & the world
 | Topic | Tier | Evidence | Status | Notes |
@@ -190,7 +193,7 @@ can surface in both directions.
 | Sanctity of life | death penalty, war | abortion, assisted dying | abortion, assisted dying, death penalty |
 | Protecting the vulnerable | vaccine requirements, guns, hate speech | assisted dying, drugs, selling sex | assisted dying, vaccine requirements, drug policy, guns |
 | Things money shouldn't buy | organ sales, paid surrogacy (exploiting poor sellers), paying for quicker medical treatment | selling sex, paid surrogacy (commodifying sex and children) | organ donation, selling sex, surrogacy, paying for healthcare |
-| Caution with the irreversible | death penalty, climate, GMOs | gene editing, treatment for under-18s who want to transition, rapid social change | death penalty, gene editing, transgender people and the law |
+| Caution with the irreversible | death penalty, climate, GMOs, nuclear power | gene editing, treatment for under-18s who want to transition, rapid social change | death penalty, gene editing, transgender people and the law, nuclear power; artificial intelligence (the most powerful systems), which isn't a left–right split |
 | Preventing harm to others | guns, climate, vaccine requirements | free speech (only harm justifies limits), drugs | *(effects only)* |
 | Collective welfare | taxes, healthcare, climate | national service, patriotism | *(effects only)* |
 | Personal responsibility (no one answers for choices they didn't make) | people brought into a country as children | reparations, welfare, drugs | immigration (people brought as children), reparations (wrongs done generations ago) |
@@ -201,16 +204,18 @@ can surface in both directions.
 | Deserved punishment | police officers who kill without legal justification | death penalty, prisons | policing (officers who kill without legal justification), prisons and sentencing (violent crime); effects in death penalty, rights of the accused, torture |
 | Loyalty | | patriotism, national service, trade, foreign aid | *(effects and moral foundations only)* |
 | Respect for authority | | policing, protest, schools | *(moral foundations only; protest is anchored through obeying the law)* |
-| Purity | GMOs, food | sexuality, gene editing | *(moral foundations only)* |
+| Purity | GMOs, food | sexuality, gene editing | *(effects and moral foundations only)* |
 | Liberty | surveillance (private messages) | speech (laws against hateful speech), taxes, guns, regulation | free speech, privacy and surveillance |
-| Respect for the natural order | GMOs | gene editing, surrogacy | *(effects only)* |
+| Respect for the natural order | GMOs | gene editing, surrogacy | genetically modified food (the genes of crops), editing human genes (the genes of embryos) |
 | Doing vs. allowing | rescue dilemmas, by most people (not pushing the stranger); torture | assisted dying (ending a life vs. stopping treatment) | assisted dying, sacrificing one to save many, torture |
 | Truth | *(not a left–right split)* | | lying and honesty, happiness and reality (what we tell others vs. our own lives) |
 | Due process | detention before trial or after a sentence, policing | removing someone's guns before a full hearing | guns, rights of the accused |
 | Obeying the law | religious objectors to anti-discrimination law | protest and civil disobedience | faith and equality law, protest |
 | National self-government | military intervention and regime change | international courts and treaties, immigration | war and military intervention (who rules a country), national control or shared rules (trying a country's own soldiers for war crimes), immigration (who may settle) |
-| Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates | local or central control (what schools teach), minimum wage (local minimum wages) |
-| Deference to experts | vaccine requirements, climate | rent limits, minimum wages (economists' warnings) | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits) |
+| Deciding locally | local minimum wages, cities' own climate and immigration rules | schools, federal mandates, wind and solar farms | local or central control (what schools teach), minimum wage (local minimum wages), nature and building (wind and solar farms) |
+| Deference to experts | vaccine requirements, climate | rent limits, minimum wages (economists' warnings), the safety of GM food | experts or voters (complex policy in general), vaccine requirements (school vaccines), housing and rents (rent limits), climate change (climate scientists), genetically modified food (food-safety scientists) |
+| Duties to future generations | climate | government debt | climate change, taxes and redistribution (government debt); effects in helping strangers |
+| Animal welfare | raising animals for food | food imports from places with weaker rules (farmers, the protectionist right) | animals (raising animals for food), trade and tariffs (food from other countries); slaughter without stunning is a circumstance, since it splits secular from religious voters rather than left from right |
 
 The current anchors already work in both directions. For example, bodily autonomy rated high on
 abortion and low on vaccine requirements raises a tension, and so does the reverse pattern; the
@@ -226,14 +231,18 @@ economists followed on rents but not public-health experts on school vaccines. A
 anchors: the same rules whatever someone's race or sex demanded for admissions and boards but not
 police stops or marriage, deserved punishment for violent crime but not for officers who kill
 unlawfully, and no one paying for wrongs done generations ago while people brought as children
-are made to leave. The personas in
+are made to leave. So do the environment anchors: future generations weighed against climate
+change but not government debt, animals protected from suffering on farms abroad but not at home,
+crops' genes engineered but not embryos', climate scientists followed but not food-safety
+scientists, caution about nuclear power but not embryo editing, and local say over wind farms but
+not minimum wages, each raise a tension in either direction. The personas in
 `tests/sim/personas` pin these down.
 
 ## Axes
 
 | Axis | Family | Poles | Fed by (now) |
 |---|---|---|---|
-| Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage; at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
+| Economic | political | Equality ↔ Markets | taxes, healthcare, welfare, minimum wage, climate change (how far and how fast to cut emissions); at half weight: what makes a society fair, regulating business, unions, housing and rents, inheritance, and trade (free trade at the markets end; not on the diplomatic axis, since protection draws support from left and right alike) |
 | Civil | political | Liberty ↔ Authority | vaccine requirements, death penalty, drug policy, free speech, guns, surveillance, policing; at half weight: prisons and sentencing, assisted dying and the deep dives (protecting people from themselves, organ donation, selling sex, surrogacy, protest, torture, rights of the accused); at quarter weight: faith and equality law |
 | Cultural | political | Tradition ↔ Progress | abortion, assisted dying, same-sex relationships and marriage, transgender people and the law; at half weight: drug policy, gene editing, faith and equality law, gender roles (race in admissions and reparations feed no spectrum: treating everyone the same regardless of race isn't the tradition end) |
 | Diplomatic | political | National ↔ Global | national control or shared rules, foreign aid, immigration (democracy and the courts, war, local or central control, and experts or voters feed no spectrum: each divides people within the left and within the right) |
@@ -245,5 +254,8 @@ are made to leave. The personas in
 | Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
 
 In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges
-(see `CONTENT_GUIDE.md`, Effects). The moral foundations are principles, not spectrums: the moral
-foundations topic measures them directly, and issue topics add to them.
+(see `CONTENT_GUIDE.md`, Effects). Animals, nuclear power, GM food, artificial intelligence, and
+nature and building feed no spectrum: each splits both sides. Traditionalists back strict
+animal-welfare rules as well as progressives do, for example, since close confinement is the newer
+practice. The moral foundations are principles, not spectrums: the moral foundations topic measures
+them directly, and issue topics add to them.

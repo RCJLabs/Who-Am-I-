@@ -1,0 +1,280 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Whether to close, keep or build nuclear power plants. Feeds no spectrum: support is high on the
+# right and splits the left (many greens against, many climate-minded progressives for). The anchor
+# is caution with the irreversible (accidents and spent fuel), where the left tends to invoke it;
+# the right does on embryo editing and puberty blockers. Options toward more nuclear record less
+# caution; toward less, more caution, except where the reason is cost (Vogtle).
+id: nuclear
+domain: environment
+title: Nuclear power
+summary: Should your country close, keep or build nuclear power plants?
+tier: extended
+order: 3
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: As a source of electricity, nuclear power should be…
+    help: In a country with no nuclear plants, the first three steps all mean building none.
+    poles: [Phased out fast, The main source of power]
+    labels:
+      - Phased out as fast as possible
+      - Phased out as plants reach the end of their licenses, with none built
+      - Kept running while safe, with none built
+      - Torn / it depends
+      - Kept, with new plants replacing old ones
+      - Expanded, as a main source of low-carbon power
+      - Made the main source of power, with much faster approval of new plants
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: fast_approval
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Approving new designs of reactor faster, with shorter safety reviews, is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { precaution: -0.5 }
+
+  - id: guarantees
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Government guarantees that make it cheaper to borrow money for new nuclear plants are…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: storage_here
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: A permanent underground store for spent nuclear fuel in your region is…
+    poles: [Unacceptable, Acceptable]
+    labels: [Unacceptable, Probably unacceptable, Torn, Probably acceptable, Acceptable]
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_prec
+    type: likert
+    points: 7
+    text: When it comes to nuclear power, the risk of a mistake that can never be undone should make us hold back, even if that means giving up a steady source of low-carbon power.
+    principles: { precaution: 1 }
+    anchor: { principle: precaution, context: nuclear power, against: a steady source of low-carbon power }
+
+  # --- Challenges: for nuclear -------------------------------------------------------------------
+  - id: ch_deaths
+    type: challenge
+    name: Counting the deaths
+    targets: stance
+    when: stance < 0
+    source: >-
+      Anil Markandya and Paul Wilkinson, "Electricity generation and health," The Lancet (2007); Our
+      World in Data, "What are the safest and cleanest sources of energy?" (2020)
+    scenario: >-
+      Counting accidents and air pollution, and including Chernobyl and Fukushima by widely used
+      estimates, nuclear power has caused about 0.03 deaths for each terawatt-hour of electricity,
+      about the same as wind and solar. Coal has caused about 25, mostly through air pollution.
+    text: If nuclear is among the safest sources of power, why phase it out?
+    options:
+      - id: worst_case
+        label: Deaths aren't the only harm. One bad accident can empty a region for decades.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: renewables
+        label: Safer than coal, yes. But wind and solar are as safe, and cheaper to build.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to nuclear power than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: -0.5 }
+
+  - id: ch_germany
+    type: challenge
+    name: Germany's exit
+    targets: stance
+    when: stance < 0
+    source: >-
+      Stephen Jarvis, Olivier Deschenes and Akshaya Jha, "The Private and External Costs of
+      Germany's Nuclear Phase-Out," Journal of the European Economic Association (2022)
+    scenario: >-
+      After Fukushima, Germany shut eight reactors at once and set dates to close the rest, undoing a
+      recent extension; the last three shut in 2023. A study of the closures up to 2017 found the
+      lost power was replaced mainly by coal and imports, at a cost of about $12 billion a year, over
+      70% of it from an estimated 1,100 extra deaths a year caused by air pollution.
+    text: Can closing nuclear plants cost more lives than it saves?
+    options:
+      - id: still_risky
+        label: Even so, a future accident or a leak of spent fuel could be worse, and couldn't be undone.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: keep_coal
+        label: The mistake was keeping coal. Close coal first, then nuclear, and build wind and solar.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to nuclear power than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: -0.5 }
+
+  - id: ch_france
+    type: challenge
+    name: France's build-out
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: >-
+      France's nuclear program after the 1974 Messmer plan; International Energy Agency electricity
+      statistics
+    scenario: >-
+      After the 1973 oil crisis, France built most of its nuclear power plants in about 15 years.
+      Nuclear now makes about two-thirds of its electricity, which releases a small fraction of the
+      carbon dioxide per unit that Germany's does.
+    text: If one country cut its power's emissions this quickly, why not others?
+    options:
+      - id: worth_the_risk
+        label: Cleaner air today doesn't outweigh a risk that lasts for generations.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: then_and_now
+        label: That was then. France's newest reactor took 17 years to build and cost several times its budget.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more open to nuclear power than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: -0.5 }
+
+  # --- Challenges: against nuclear ---------------------------------------------------------------
+  - id: ch_vogtle
+    type: challenge
+    name: Over budget
+    targets: stance
+    when: stance > 0
+    source: >-
+      US Energy Information Administration, on Vogtle units 3 and 4 (2024); reporting on the
+      abandoned V.C. Summer reactors in South Carolina (2017)
+    scenario: >-
+      Two new reactors at the Vogtle plant in Georgia were meant to cost about $14 billion and start
+      in 2016 and 2017. They started in 2023 and 2024, at over $30 billion. In South Carolina, two
+      similar reactors were abandoned in 2017 after about $9 billion had been spent, much of it paid
+      by customers through their bills.
+    text: If new plants take this long and cost this much, is nuclear the best way to get low-carbon power?
+    options:
+      - id: worth_paying
+        label: Steady low-carbon power is worth paying for, even at that price.
+        reaction: hold
+        principles: { collective_welfare: 0.5 }
+      - id: first_builds
+        label: Those were the first of their kind in decades. Building many of one design brings costs down.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me less keen on building new plants than I said.
+        reaction: yield
+        revise: stance
+        value: 0
+
+  - id: ch_fukushima
+    type: challenge
+    name: Fukushima's evacuation
+    targets: stance
+    when: stance > 0
+    source: >-
+      World Nuclear Association, "Fukushima Daiichi Accident"; Japan's Ministry of Economy, Trade
+      and Industry, estimates of accident costs (2016, revised 2023)
+    scenario: >-
+      After the 2011 tsunami wrecked the Fukushima Daiichi plant, about 160,000 people left their
+      homes, and some towns stayed closed for years. Radiation is officially linked to one death,
+      but more than 2,000 deaths, mostly of older people, were linked to the evacuation itself.
+      Japan's government put the cost of compensation, cleanup and dismantling at about ¥21.5
+      trillion in 2016 (about $190 billion at the time), and has since raised it to about ¥23.4
+      trillion.
+    text: Is a risk like that worth taking for low-carbon power?
+    options:
+      - id: rare
+        label: Accidents like that are rare, and climate change will harm far more people.
+        reaction: hold
+        principles: { precaution: -0.5 }
+      - id: evacuation
+        label: The evacuation did more harm than the radiation. Better planning, not fewer plants, is the lesson.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more cautious about nuclear power than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: ch_spent_fuel
+    type: challenge
+    name: Nowhere to put it
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      US Department of Energy, Agency Financial Report (2024), on spent fuel liabilities; Nuclear
+      Waste Policy Act amendments (1987)
+    scenario: >-
+      In 1987 Congress picked Yucca Mountain in Nevada as the only candidate for a permanent store
+      for spent nuclear fuel, which stays dangerous for thousands of years. The project was halted
+      in 2010, and the fuel stays at the power plants. Because the government hasn't taken it as
+      promised, taxpayers have paid power companies over $11 billion in damages, with tens of
+      billions more expected.
+    text: Should we keep making spent fuel before there's a permanent place to put it?
+    options:
+      - id: small_amount
+        label: The amount is small and safely stored. Climate change is the bigger danger.
+        reaction: hold
+        principles: { precaution: -0.5 }
+      - id: political
+        label: That's a political problem, not a technical one. Finland has built a permanent store, and Sweden is building one.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me more cautious about nuclear power than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: A new plant
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after the financing of the Sizewell C plant in England (2025)
+    scenario: >-
+      A proposed law would let a company build a new nuclear plant, with every household paying a
+      small charge on its electricity bill during construction to lower the cost of borrowing.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { precaution: -0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

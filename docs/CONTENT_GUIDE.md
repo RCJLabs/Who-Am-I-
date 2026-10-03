@@ -221,6 +221,9 @@ Tensions are the "you apply this principle differently here than there" cards. T
   | Same rules for everyone | When it comes to {context}, everyone should be treated by the same rules, whatever their {race or sex}, even when {the cost}. |
   | Deserved punishment | When it comes to {context}, people who do serious wrong should be punished as they deserve, even {when the cost}. |
   | Personal responsibility | When it comes to {context}, no one should be made to pay for a wrong they didn't commit themselves, even {when the cost}. |
+  | Duties to future generations | When it comes to {context}, we shouldn't pass the costs of {what we do today} on to future generations, even if that means {the cost now}. |
+  | Animal welfare | When it comes to {context}, the law should protect animals from suffering, even if that means {the cost to people}. |
+  | Respect for the natural order | When it comes to {context}, {the thing} shouldn't be engineered, even for good ends like {the benefit}. |
 
 - **Rewards and punishment are separate principles.** Someone can hold that rewards should be
   earned without holding that punishment should match wrongdoing, so just deserts
@@ -232,6 +235,11 @@ Tensions are the "you apply this principle differently here than there" cards. T
   economists) and its help text states their usual advice. Only the general anchor in experts or
   voters says just "experts". Someone who disagrees should be disagreeing with deferring, not
   guessing what the experts think.
+- **Match the stakes across contexts.** The benefit given up should weigh about the same in each
+  topic, or agreeing costs less in one than the other. The natural order's crops anchor gives up
+  "crops that survive drought and disease" to match "preventing disease" for embryos, not "bigger
+  harvests". For the same reason, animal welfare's frame asks whether the law should protect
+  animals at a cost: almost everyone agrees animals' suffering counts for something.
 - **`against`** names the competing interest in this context. The tension card offers it to the
   user as their best defense ("one difference: there the competing interest is *the health of
   other people*").
@@ -289,6 +297,15 @@ Tensions are the "you apply this principle differently here than there" cards. T
 | considering race; reserved places; naming the groups | racial preferences, reverse discrimination; catch-all labels |
 | the policy itself (leave reserved for each parent, board quotas) | "equal outcomes" as a label for the other side's view |
 | treating everyone equally now; descendants of enslaved people | "doing nothing"; white guilt, victim mentality |
+| the position in its holders' words ("focus on adapting"); people who doubt warming is mostly man-made or dangerous; people who see climate change as an emergency | climate deniers, alarmists, climate hoax, climate cult, "doing nothing" |
+| climate change; low-carbon, naming the source | climate crisis, climate emergency, global heating; clean coal, dirty energy |
+| the policy itself (a ban on new gasoline cars, a carbon tax) | war on cars, war on farmers, axe the tax, keep it in the ground, drill baby drill |
+| intensive farming, naming the practice (cages, crates); livestock farming | factory farming, big meat, big ag |
+| meat grown from animal cells | lab-grown meat, cultivated meat, fake meat, clean meat |
+| slaughter without stunning for religious reasons; naming the communities | ritual slaughter, humane slaughter |
+| GM food; gene-edited crops; GM crops found in other fields | Frankenfood, terminator seeds, genetic pollution |
+| spent fuel; a permanent store | nuclear dump, nuke plants |
+| people who think advanced AI could cause a catastrophe; people who want AI built as fast as possible; technology executives | doomers, decels, accelerationists, e/acc; tech bros, AI slop |
 
 `content/loaded-terms.txt` lists terms the lint flags (W108). Because warnings fail the tests and
 CI, a flagged term can't appear in anything users read, even inside a quotation: paraphrase it.

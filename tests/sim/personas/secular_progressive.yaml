@@ -5,7 +5,8 @@ topics:
    free_speech, guns, surveillance, religious_liberty, protest, torture, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
-   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
+   climate, animals, nuclear, gm_food, ai, nature]
 answers:
   abortion.stance: 7
   abortion.importance: 4
@@ -86,6 +87,7 @@ answers:
   gene_editing.sex_choice: 2
   gene_editing.intelligence: 2
   gene_editing.anchor_prec: 3
+  gene_editing.anchor_nature: 2
   gene_editing.ch_twins: oversight
   gene_editing.ch_asch: treating
   value_tradeoffs.freedom: choose
@@ -245,6 +247,8 @@ answers:
   taxes.wealth_tax: 5
   taxes.flat_tax: 1
   taxes.corporate: 5
+  taxes.borrowing: 4
+  taxes.anchor_future: 3 # borrowing to invest can leave the next generation better off
   taxes.ch_france: design
   taxes.ch_wealth_taxes: loopholes
   taxes.ch_forced_labor: choice
@@ -300,6 +304,7 @@ answers:
   trade.importance: 2
   trade.security: 3
   trade.farmers: 3
+  trade.anchor_animals: 5
   trade.ch_china_shock: help_places
   trade.ch_rana_plaza: brands
   housing.stance: 5
@@ -467,6 +472,66 @@ answers:
   prisons.ch_pardon: sudden_release
   prisons.ch_norway: better_prisons
   prisons.ch_mediation: abuse_cases
+  climate.stance: 6 # net zero by about 2040
+  climate.importance: 4
+  climate.carbon_price: 4
+  climate.car_ban: 5
+  climate.livestock_tax: 4
+  climate.sunlight: 2
+  climate.anchor_future: 7 # future generations on climate, though not on debt
+  climate.anchor_exp: 7 # climate scientists...
+  climate.ch_carbon_tax: other_tools
+  climate.ch_coal: our_part
+  climate.ch_nordhaus: tipping
+  animals.stance: 6
+  animals.importance: 3
+  animals.testing: 2
+  animals.hunting: 2
+  animals.cell_meat: 1
+  animals.stunning: 4
+  animals.anchor_welfare: 6
+  animals.ch_prop_12: worth_it
+  animals.ch_sow_stalls: imports
+  animals.ch_swiss: not_a_vote
+  animals.ch_first_tests: medicine_only
+  nuclear.stance: 3 # keep what's there while safe, build no more
+  nuclear.importance: 3
+  nuclear.fast_approval: 2
+  nuclear.guarantees: 2
+  nuclear.storage_here: 2
+  nuclear.anchor_prec: 6 # caution about nuclear, though not about embryos or under-18s
+  nuclear.ch_deaths: renewables
+  nuclear.ch_germany: keep_coal
+  nuclear.ch_france: worth_the_risk
+  gm_food.stance: 3 # case by case, after years of tests
+  gm_food.importance: 3
+  gm_food.labels: 5
+  gm_food.seed_patents: 1
+  gm_food.gene_drive: 4
+  gm_food.anchor_nature: 5 # crops' genes shouldn't be engineered, though embryos' may be
+  gm_food.anchor_exp: 4 # ...but less so food-safety scientists
+  gm_food.ch_golden_rice: cant_recall
+  gm_food.ch_eggplant: case_by_case
+  gm_food.ch_papaya: public_good
+  ai.stance: 6
+  ai.importance: 3
+  ai.hiring: 1
+  ai.robot_tax: 5
+  ai.copyright: 1
+  ai.local_rules: 3
+  ai.weapons: 1
+  ai.anchor_prec: 5
+  ai.ch_deepseek: agreements
+  ai.ch_eu_delay: still_needed
+  ai.ch_screening: narrow
+  nature.stance: 5 # build what's needed, low-carbon power above all
+  nature.importance: 2
+  nature.thirty_percent: 5
+  nature.wolves: 5
+  nature.solar_farmland: 4
+  nature.anchor_loc: 2 # not local say over wind farms, though over minimum wages
+  nature.ch_birds: better_design
+  nature.ch_aral: scale
 expect:
   axes: { cultural: "> 0.6", economic: "< -0.3", change: "> 0.3", others: "> 0.6", outcomes: "> 0", impartiality: "> 0.5", diplomatic: "> 0.5" }
   topicAxes:
@@ -506,6 +571,7 @@ expect:
     transgender: { cultural: "> 0" }
     gender_roles: { cultural: "> 0" }
     prisons: { civil: "< 0" }
+    climate: { economic: "< -0.5" }
   principles: { bodily_autonomy: "> 0.3", retribution: "< 0", deserved_punishment: "< 0" }
   topicPrinciples:
     moral_foundations:
@@ -520,7 +586,7 @@ expect:
     protest: { obey_law: "< 0" }
     torture: { doing_vs_allowing: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
-    taxes: { equality: "> 0.5" }
+    taxes: { equality: "> 0.5", future_generations: "< 0" }
     healthcare: { market_limits: "> 0.5", equality: "> 0.5", liberty: "< 0" }
     welfare: { retribution: "< 0", liberty: "> 0.5" }
     unions: { liberty: "< 0" }
@@ -539,6 +605,15 @@ expect:
     gender_roles: { equal_treatment: "< 0", equality: "> 0.3" }
     reparations: { personal_responsibility: "< -0.5", equality: "> 0.3" }
     prisons: { deserved_punishment: "< 0", liberty: "> 0.3" }
+    climate: { future_generations: "> 0.5", liberty: "< -0.5", expertise: "> 0.5", natural_order: "> 0.3" }
+    animals: { animal_welfare: "> 0.45", natural_order: "< -0.5" }
+    nuclear: { precaution: "> 0.3" }
+    gm_food: { market_limits: "> 0.5", precaution: "> 0.3" }
+    ai: { precaution: "> 0.3", retribution: "> 0.5" }
+    nature: { subsidiarity: "< -0.3" }
+    trade: { animal_welfare: "> 0.2" }
+    gene_editing: { natural_order: "< -0.3" }
+    strangers: { future_generations: "> 0.5" }
   # The mirror image of the religious conservative: bodily autonomy and protecting the vulnerable
   # flip on vaccines; the sanctity of life and caution with the irreversible are high on the death
   # penalty but low on abortion, assisted dying and gene editing. And Rachels's target: killing and
@@ -559,6 +634,11 @@ expect:
   # shouldn't pay for others' wrongs, but today's taxpayers may owe for old ones; who settles isn't
   # each country's call alone, though who rules it is; no special caution with under-18s' treatment,
   # though there is for executions; and adults decide about transition, though not about vaccines.
+  # In environment: future generations on climate, though not on debt; climate scientists, but not
+  # economists on rents, and food-safety scientists less than climate or public-health experts;
+  # crops' genes shouldn't be engineered, though embryos' may be; caution about nuclear power and AI,
+  # though not about embryo editing or under-18s' treatment; and no local say over wind farms, though
+  # local minimum wages are fine.
   tensions:
     - bodily_autonomy|abortion|vaccine_mandates
     - bodily_autonomy|assisted_dying|vaccine_mandates
@@ -590,3 +670,12 @@ expect:
     - deserved_punishment|policing|prisons
     - precaution|death_penalty|transgender
     - bodily_autonomy|transgender|vaccine_mandates
+    - future_generations|climate|taxes
+    - expertise|climate|housing
+    - expertise|climate|gm_food
+    - expertise|gm_food|vaccine_mandates
+    - precaution|gene_editing|nuclear
+    - precaution|nuclear|transgender
+    - precaution|ai|transgender
+    - natural_order|gene_editing|gm_food
+    - subsidiarity|minimum_wage|nature

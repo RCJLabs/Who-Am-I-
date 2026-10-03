@@ -1,0 +1,296 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# How governments should handle the most powerful AI systems. Feeds no spectrum: the populist right
+# and the progressive left both lean toward rules, the libertarian right and much of the tech world
+# against. Jobs, hiring, copyright, local rules and weapons are circumstances; AI companions, facial
+# recognition, self-driving dilemmas and machine consciousness are covered elsewhere or planned
+# there. The anchor is caution with the irreversible, which here isn't a left-right split. Options
+# toward more rules record caution, or harm to others for present-day harms; toward fewer, liberty,
+# loyalty to one's own country in a race with rivals, or care for patients helped now.
+id: ai
+domain: environment
+title: Artificial intelligence
+summary: How should governments handle the most powerful AI systems?
+tier: extended
+order: 5
+evidence: custom
+stance: stance
+importance: importance
+items:
+  - id: stance
+    type: slider
+    steps: 7
+    text: When it comes to the most powerful AI systems, governments should…
+    poles: [Stay out, Pause development]
+    labels:
+      - Stay out, so companies compete freely and the country doesn't fall behind
+      - Add no new rules, and rely on existing laws against fraud and discrimination
+      - Add light rules, like labels on content made by AI
+      - Torn / it depends
+      - Require independent safety testing before release
+      - License the companies that build them, and make them pay for any harm their systems cause
+      - Pause their development until they can be shown to be safe
+
+  - id: importance
+    type: importance
+    text: How much does this issue matter to you?
+
+  # --- Circumstances ---------------------------------------------------------------------------
+  - id: hiring
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Employers using AI to screen job applicants is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+
+  - id: robot_tax
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: A tax on companies that replace workers with AI or robots is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+
+  - id: copyright
+    type: slider
+    steps: 5
+    tags: [circumstance]
+    text: Training AI on books, art and music without the creators' permission is…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { retribution: -0.5 }
+
+  - id: local_rules
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Letting each state or region set its own rules for AI is…
+    poles: [A bad idea, A good idea]
+    labels: [A bad idea, Probably a bad idea, Torn, Probably a good idea, A good idea]
+    principles: { subsidiarity: 0.5 }
+
+  - id: weapons
+    type: slider
+    steps: 5
+    deep: true
+    tags: [circumstance]
+    text: Weapons that choose and attack targets without a person deciding are…
+    poles: [Wrong, Right]
+    labels: [Wrong, Probably wrong, Torn, Probably right, Right]
+    principles: { precaution: -0.5 }
+
+  # --- Anchor ------------------------------------------------------------------------------------
+  - id: anchor_prec
+    type: likert
+    points: 7
+    text: When it comes to the most powerful AI systems, the risk of a mistake that can never be undone should make us hold back, even if that means slower progress in medicine and science.
+    principles: { precaution: 1 }
+    anchor: { principle: precaution, context: the most powerful AI systems, against: faster progress in medicine and science }
+
+  # --- Challenges: for more rules ----------------------------------------------------------------
+  - id: ch_robocall
+    type: challenge
+    name: The fake president
+    targets: stance
+    when: stance < 0
+    source: >-
+      Federal Communications Commission, forfeiture order (2024); New Hampshire Public Radio,
+      report on the verdict (June 13, 2025)
+    scenario: >-
+      Two days before New Hampshire's 2024 primary election, thousands of voters got phone calls with
+      an AI-made copy of President Biden's voice, telling them not to vote in it. The political
+      consultant behind the calls was fined $6 million by the US communications regulator, but in
+      2025 a jury acquitted him of all criminal charges.
+    text: Are existing laws enough when AI makes fakes this easy?
+    options:
+      - id: caught
+        label: He was caught and fined. Existing laws did their job.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: fakes_only
+        label: Ban faking real people's voices and faces, but leave AI in general alone.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: No. It makes me want more rules on AI than I said.
+        reaction: yield
+        revise: stance
+        principles: { harm_principle: 0.5 }
+
+  - id: ch_asilomar
+    type: challenge
+    name: The scientists' pause
+    targets: stance
+    when: stance < 0
+    source: >-
+      Paul Berg et al., "Summary Statement of the Asilomar Conference on Recombinant DNA Molecules,"
+      Proceedings of the National Academy of Sciences (1975)
+    scenario: >-
+      In 1974 biologists who had learned to move genes between organisms paused some experiments
+      over fears of creating dangerous germs. At Asilomar, California, in 1975 they agreed safety
+      rules, which were the basis for US government guidelines in 1976. The biotechnology industry
+      grew up under those rules.
+    text: If safety rules didn't stop biotechnology from booming, would they stop AI?
+    options:
+      - id: rivals
+        label: Biotech had no rival power racing to get there first. AI does.
+        reaction: hold
+        principles: { loyalty: 0.5 }
+      - id: self_rule
+        label: That was scientists setting their own rules, not governments licensing companies.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me think rules on AI could do more good than harm.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  - id: ch_survey
+    type: challenge
+    name: What the researchers think
+    targets: stance
+    deep: true
+    when: stance < 0
+    source: Katja Grace et al., "Thousands of AI Authors on the Future of AI," Journal of Artificial Intelligence Research (2025)
+    scenario: >-
+      In a 2023 survey of 2,778 researchers who had published at leading AI conferences, the median
+      answer put a 5% chance on advanced AI eventually causing outcomes as bad as human extinction.
+    text: If the people building it see even a small chance of catastrophe, should governments step in?
+    options:
+      - id: guesses
+        label: Those are guesses about technology that doesn't exist yet. Rules should deal with real harms.
+        reaction: hold
+        principles: { liberty: 0.5 }
+      - id: research
+        label: Fund research on making AI safe, but don't slow it down.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: Yes. It makes me want more rules on AI than I said.
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+
+  # --- Challenges: for fewer rules ---------------------------------------------------------------
+  - id: ch_deepseek
+    type: challenge
+    name: The rival lab
+    targets: stance
+    when: stance > 0
+    source: >-
+      DeepSeek-AI, "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning,"
+      Nature (2025); market reports (January 27, 2025)
+    scenario: >-
+      In January 2025 a Chinese company, DeepSeek, released an AI model that matched leading American
+      systems on many tests and let anyone download it for free, despite US limits on selling
+      advanced chips to China. The chipmaker Nvidia lost about $590 billion in stock-market value in
+      a day.
+    text: If one country slows down, will the most powerful AI just be built somewhere else?
+    options:
+      - id: still_wrong
+        label: Even so, no country should build what it believes is dangerous.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: agreements
+        label: Then countries need to agree on rules together, not give up on them.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want lighter rules on AI than I said.
+        reaction: yield
+        revise: stance
+        principles: { loyalty: 0.5 }
+
+  - id: ch_eu_delay
+    type: challenge
+    name: The rulebook on hold
+    targets: stance
+    when: stance > 0
+    source: >-
+      European Commission, "Digital Omnibus" proposals (November 19, 2025), and the amending
+      regulation that took effect in July 2026
+    scenario: >-
+      In 2024 the European Union passed the world's first broad law on AI. In 2025 the European
+      Commission itself proposed delaying its main rules for high-risk AI, such as AI used in hiring
+      and lending, saying businesses needed more time and clearer standards. In 2026 EU lawmakers
+      agreed, pushing those rules back from August 2026 to December 2027.
+    text: If even the EU found its rules hard to put into practice, should governments go slower?
+    options:
+      - id: still_needed
+        label: Hard to do isn't the same as not worth doing. The rules are still needed.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: details
+        label: That's about the details of one law, not about whether AI needs rules.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want lighter rules on AI than I said.
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: ch_screening
+    type: challenge
+    name: A second reader
+    targets: stance
+    deep: true
+    when: stance > 0
+    source: >-
+      Veronica Hernström et al., "Screening performance and characteristics of breast cancer detected
+      in the Mammography Screening with Artificial Intelligence trial (MASAI)," The Lancet Digital
+      Health (2025)
+    scenario: >-
+      In a trial with over 100,000 women in Sweden, breast-cancer screening supported by AI found 29%
+      more cancers than the usual screening by two doctors, while cutting the doctors' reading work
+      by 44%.
+    text: If AI is already helping to save lives, should rules slow it down?
+    options:
+      - id: tested
+        label: That tool was tested carefully before use. That's exactly what rules should require.
+        reaction: hold
+        principles: { precaution: 0.5 }
+      - id: narrow
+        label: Rules for the most powerful general systems needn't touch narrow medical tools like this.
+        reaction: distinguish
+        value: 0
+      - id: rethink
+        label: It makes me want lighter rules on AI than I said.
+        reaction: yield
+        revise: stance
+        principles: { relief_of_suffering: 0.5 }
+
+  # --- Challenge: the middle ---------------------------------------------------------------------
+  - id: ch_vote
+    type: challenge
+    name: Testing in the open
+    targets: stance
+    when: stance == 0
+    source: Original scenario, after California's law on the most powerful AI models (2025)
+    scenario: >-
+      A proposed law would require companies building the most powerful AI systems to publish how
+      they test them for safety and to report serious incidents to the government, with fines for
+      breaking the rules.
+    text: You said you're torn. How would you vote?
+    options:
+      - id: abstain
+        label: I'd leave it blank. Both sides have real force.
+        reaction: hold
+        value: 0
+      - id: yes
+        label: "Yes"
+        reaction: yield
+        revise: stance
+        principles: { precaution: 0.5 }
+      - id: no
+        label: "No"
+        reaction: yield
+        revise: stance
+        principles: { liberty: 0.5 }
+
+  - id: stance_check
+    type: reask
+    target: stance
+    text: Having thought about these cases, where do you land now?

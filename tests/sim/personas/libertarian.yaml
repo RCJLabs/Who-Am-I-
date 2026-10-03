@@ -5,7 +5,8 @@ topics:
    free_speech, guns, surveillance, protest, torture, public_safety,
    taxes, healthcare, welfare, minimum_wage, regulation, unions, trade, housing, inheritance,
    democracy, war, cooperation, foreign_aid, local_control, experts,
-   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons]
+   immigration, policing, same_sex_marriage, transgender, affirmative_action, gender_roles, reparations, prisons,
+   climate, animals, nuclear, gm_food, ai, nature]
 answers:
   abortion.stance: 6
   abortion.importance: 2 # low: deep items are skipped
@@ -101,6 +102,7 @@ answers:
   gene_editing.somatic: 5
   gene_editing.screening: 5
   gene_editing.anchor_prec: 2
+  gene_editing.anchor_nature: 1
   gene_editing.ch_twins: early_days
   gene_editing.ch_advantages: already
   value_tradeoffs.freedom: choose
@@ -236,6 +238,8 @@ answers:
   taxes.wealth_tax: 1
   taxes.flat_tax: 5
   taxes.corporate: 1
+  taxes.borrowing: 1
+  taxes.anchor_future: 7 # no debts passed to the next generation
   taxes.ch_ownership: market_value
   taxes.ch_extra_dollar: more_needed
   taxes.ch_public_research: real_work
@@ -290,6 +294,7 @@ answers:
   trade.farmers: 1
   trade.buy_national: 1
   trade.takeovers: 1
+  trade.anchor_animals: 1 # no import bans, for animals or anything else
   trade.ch_china_shock: gains
   trade.ch_rana_plaza: jobs_help
   trade.ch_ladder: rare_success
@@ -450,6 +455,66 @@ answers:
   prisons.ch_pardon: repeat_offenders
   prisons.ch_norway: norway_only
   prisons.ch_mediation: abuse_cases
+  climate.stance: 2 # cut only where it pays
+  climate.importance: 3
+  climate.carbon_price: 4
+  climate.car_ban: 1
+  climate.livestock_tax: 1
+  climate.sunlight: 4
+  climate.anchor_future: 2 # not future generations on climate...
+  climate.anchor_exp: 2 # ...and not climate scientists, though economists on rents
+  climate.ch_acid_rain: substitute
+  climate.ch_economists: judgment
+  climate.ch_models: richer
+  animals.stance: 1 # ban cruelty, leave the rest to farmers
+  animals.importance: 2
+  animals.testing: 5
+  animals.hunting: 5
+  animals.cell_meat: 1
+  animals.anchor_welfare: 1
+  animals.ch_broilers: choice
+  animals.ch_antibiotics: drugs_only
+  animals.ch_fda: not_yet
+  nuclear.stance: 7
+  nuclear.importance: 3
+  nuclear.fast_approval: 5
+  nuclear.guarantees: 1
+  nuclear.storage_here: 5
+  nuclear.anchor_prec: 2 # no special caution about nuclear, unlike the death penalty
+  nuclear.ch_vogtle: first_builds
+  nuclear.ch_fukushima: rare
+  nuclear.ch_spent_fuel: small_amount
+  gm_food.stance: 6 # treated like any other crop
+  gm_food.importance: 3
+  gm_food.labels: 1
+  gm_food.seed_patents: 5
+  gm_food.gene_drive: 5
+  gm_food.anchor_nature: 1
+  gm_food.anchor_exp: 4 # food-safety scientists, but not public-health experts
+  gm_food.ch_dicamba: free_to_farm
+  gm_food.ch_libertylink: company_paid
+  gm_food.ch_bowman: research
+  ai.stance: 1 # stay out
+  ai.importance: 3
+  ai.hiring: 5
+  ai.robot_tax: 1
+  ai.copyright: 4
+  ai.local_rules: 4
+  ai.weapons: 3
+  ai.anchor_prec: 2
+  ai.ch_robocall: caught
+  ai.ch_asilomar: self_rule
+  ai.ch_survey: guesses
+  nature.stance: 6
+  nature.importance: 3
+  nature.thirty_percent: 1
+  nature.wolves: 2
+  nature.solar_farmland: 4
+  nature.offsets: 5
+  nature.anchor_loc: 7
+  nature.ch_birds: better_design
+  nature.ch_aral: different_era
+  nature.ch_bristol_bay: jobs_too
 expect:
   axes: { civil: "< -0.6", cultural: "> 0.5", economic: "> 0.8", change: "> 0.6", outcomes: "< 0", impartiality: "< 0", diplomatic: "< 0" }
   topicAxes:
@@ -489,6 +554,7 @@ expect:
     transgender: { cultural: "> 0" }
     gender_roles: { cultural: "< 0" }
     prisons: { civil: "< 0" }
+    climate: { economic: "> 0.5" }
   principles: { bodily_autonomy: "> 0.6", market_limits: "< -0.6" }
   topicPrinciples:
     moral_foundations:
@@ -501,12 +567,12 @@ expect:
     surveillance: { liberty: "> 0.5" }
     guns: { due_process: "> 0.5" }
     public_safety: { due_process: "> 0.5" }
-    taxes: { equality: "< -0.5" }
+    taxes: { equality: "< -0.5", future_generations: "> 0.5" }
     healthcare: { market_limits: "< -0.5", liberty: "> 0.5" }
     welfare: { retribution: "> 0.5", liberty: "> 0.5" }
     regulation: { liberty: "> 0.5" }
     unions: { liberty: "> 0.5" }
-    trade: { loyalty: "< -0.5" }
+    trade: { loyalty: "< -0.5", animal_welfare: "< -0.5" }
     housing: { liberty: "> 0.5" }
     inheritance: { retribution: "< -0.5" }
     democracy: { authority: "< 0" }
@@ -523,6 +589,13 @@ expect:
     gender_roles: { equal_treatment: "> 0.5" }
     reparations: { personal_responsibility: "> 0.5" }
     prisons: { deserved_punishment: "< 0", liberty: "> 0.3" }
+    climate: { future_generations: "< -0.5", liberty: "> 0.5", natural_order: "< 0", expertise: "< -0.5" }
+    animals: { animal_welfare: "< -0.5", natural_order: "< -0.5" }
+    nuclear: { precaution: "< -0.5" }
+    gm_food: { market_limits: "< -0.5", natural_order: "< -0.5", retribution: "> 0.3" }
+    ai: { precaution: "< -0.3", retribution: "< 0", subsidiarity: "> 0.3", liberty: "> 0.3" }
+    nature: { subsidiarity: "> 0.5", collective_welfare: "> 0.3" }
+    gene_editing: { natural_order: "< -0.5" }
   # Consistent on bodily autonomy (high everywhere), protecting the vulnerable and paid markets
   # (low everywhere). Two real splits: caution with the irreversible is high on executions but low
   # on gene editing, and truth matters more in what we tell others than in one's own life. The
@@ -541,3 +614,8 @@ expect:
     - retribution|inheritance|welfare
     - expertise|experts|housing
     - expertise|housing|vaccine_mandates
+    - future_generations|climate|taxes
+    - expertise|climate|housing
+    - expertise|gm_food|vaccine_mandates
+    - precaution|death_penalty|nuclear
+    - precaution|ai|death_penalty
