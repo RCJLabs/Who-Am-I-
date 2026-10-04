@@ -454,3 +454,66 @@ adherents hold).
 - **Sheets describe present-day adherents in Western democracies.** Where American and European
   adherents differ (healthcare and the minimum wage for traditional conservatives, guns and
   housing for social liberals), the question is split, so neither camp is held against the other.
+
+## Links from research
+
+Published associations between one Big Five trait and an interest, shown under Next steps from
+the personality answers only. How they are chosen is in
+[ANALYSIS.md](ANALYSIS.md#links-from-research-suggestionsts); the content is
+`content/analysis/suggestions.yaml`.
+
+### Links
+
+Each is written from both ends: the end with more interest, and the other end, which describes
+less of the same activity. Where the meta-analyses differ, `r` is the lowest uncorrected estimate,
+from the largest and newest (Hurtado Rúa, Stead & Poklar, 2019: 43 samples, N = 19,872).
+
+| Link (toward / away) | Trait, toward | r used | Other estimates | Strength | Kind |
+|---|---|---|---|---|---|
+| Artistic work / Work where art and design play a small part | openness, Imaginative | .36 | .48 (Larson, Rottinghaus & Borgen, 2002); corrected ρ = .39 (Barrick, Mount & Gupta, 2003) | somewhat | ways of working |
+| Leading and negotiating / Work where leading and negotiating play a small part | extraversion, Outgoing | .27 | .41 (Larson et al.); corrected ρ = .41 (Barrick et al.) | a little | ways of working |
+
+Activities come from O*NET's descriptions of the Artistic and Enterprising interest types; for
+Enterprising, selling, finance, politics and law are left out.
+
+### Checked and dropped
+
+| Candidate | Why |
+|---|---|
+| Extraversion and Social interests (teaching, advising) | r = .21 (Hurtado Rúa et al.), .31 (Larson et al.). Same trait and kind as leading and negotiating, so it could never show; "helping others", from the reserved end, would read as caring less. |
+| Openness and Investigative interests | r = .17 in the largest meta-analysis (.28 in Larson et al.) |
+| Agreeableness and Social interests | r = .18 (Hurtado Rúa et al.), .19 (Larson et al.) |
+| Conscientiousness and Conventional interests | no pair at the bar |
+| Openness and free time (reading, arts and cultural participation) or fields of study | the direction is consistent, but no uncorrected r of .20 or more could be read from full texts here. Leads, not yet checked: Kraaykamp & van Eijck (2005), Sander et al. (2021), Kuper et al. (2023), Vedel (2016) |
+
+### Norms
+
+The gate needs an adult mean and SD for each trait a link reads. No published trait-level
+Mini-IPIP norms could be confirmed: Baldasaro, Shanahan & Bauer (2013), the planned source, print
+item statistics only. So they are computed from the Open-Source Psychometrics Project's BIG5 data:
+an online test, about 2012, the same items on a 1 (Disagree) to 5 (Agree) scale. Of 19,719 rows,
+15,657 are adults (18 to 90) who answered all 16 items for extraversion, agreeableness,
+conscientiousness and openness. A trait is the mean of its 4 keyed items.
+
+| Trait | Mean | SD | In the app's units (−1..1) | Gate toward / away | Reversal pairs |
+|---|---|---|---|---|---|
+| Extraversion | 2.92 | 1.02 | −0.04, SD 0.51 | ≥ 0.5 / ≤ −0.5 | life of the party / keep in the background; talk to a lot of different people at parties / don't talk a lot |
+| Openness | 4.04 | 0.77 | 0.52, SD 0.385 | ≥ 0.75 / ≤ −0.5 | vivid imagination / not a good imagination |
+
+Agreeableness (3.94, SD 0.85) and conscientiousness (3.27, SD 0.89) aren't listed, since no link
+reads them. Applying the app's gate to the same 15,657 people: no link 35.3%, Artistic work 23.6%,
+Work where leading and negotiating play a small part 21.4%, Leading and negotiating 18.2%, Work
+where art and design play a small part 1.5%. The low end of openness is rare because few people
+describe themselves that way on these items.
+
+### Limitations
+
+- **Two links, both ways of working,** so a person sees at most one. Free time and subjects wait
+  for evidence that clears the bar.
+- **The norms aren't published norms.** The sample is online volunteers answering agree/disagree,
+  where the app asks how accurately each statement describes you.
+- **Mini-IPIP openness has no item on art or beauty,** unlike the NEO-PI-R used in the
+  meta-analyses, so the artistic link may be weaker for the app's scores.
+- **Four items per trait.** Near the cut, a retake can land on the other side of it.
+- **The reviewers are agents,** and no blind check (people choosing a link or its mirror without
+  the reason) has been run.
