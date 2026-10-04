@@ -480,10 +480,12 @@ engine, so its positions sit on the same scales as everyone's answers and can't 
 - **The middle step is a position,** not a way to avoid committing; nor is the last rung the
   default. Pick the step thoughtful adherents actually choose.
 - **`divided` is for real splits** within the tradition, where both camps can be named, often by
-  country. A split question counts at the middle of its scale when the sheet is scored, where the
-  tradition as a whole sits on it, and is left out of the question-by-question fit, so neither
-  camp is held against the other. A spectrum or principle is divided when split questions carry
-  half its weight or more: it then counts half, and the results draw no tick for it.
+  country, and sit on opposite sides of the middle step. When both camps lean the same way (steps 1
+  and 3, say), answer the step between them instead. A split question counts at the middle of its
+  scale when the sheet is scored, where the tradition as a whole sits on it, and is left out of the
+  question-by-question fit, so neither camp is held against the other. A spectrum or principle is
+  divided when split questions carry half its weight or more: it then counts half, and the results
+  draw no tick for it.
 - **A new political question needs an answer in every sheet** (E015 lists what's missing): a
   sheet that skipped it would quietly place its tradition on less evidence than everyone else.
 - `node scripts/tradition-targets.ts` prints the positions the sheets give.
