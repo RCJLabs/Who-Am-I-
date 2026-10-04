@@ -12,7 +12,11 @@ content/
   axes.yaml          spectrums shown in results: poles + evidence rules
   principles.yaml    moral principles tracked across topics
   loaded-terms.txt   words that signal a side (lint warning W108)
+  named-politics.txt party and politician names the analysis pack must not use (W112)
   topics/<domain>/<topic>.yaml
+  analysis/          reference material for the results analysis (optional; shipped separately)
+    traditions.yaml  political traditions, placed on the political spectrums
+    readings.yaml    readings from inside and outside each tradition
 ```
 
 Each topic file starts with `# yaml-language-server: $schema=../../../schema/topic.schema.json`, so
@@ -474,7 +478,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | E001 | YAML syntax or duplicate key |
 | E002 | schema violation (unknown key, wrong type, reserved id) |
 | E003 | duplicate id |
-| E004 | unresolved reference (item, axis, principle, domain) |
+| E004 | unresolved reference (item, axis, principle, domain; in the analysis pack, tradition, reading or pole) |
 | E005 | reference to a later item |
 | E006 | condition syntax or type error |
 | E007 | item can never be shown (or a reask can never run) |
@@ -484,6 +488,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | E011 | choice with item-level effects needs option values |
 | E012 | sensitivity rules (no opt-out; identity items don't score) |
 | E013 | anchor not keyed toward its principle |
+| E014 | tradition balance: every political spectrum and compared principle placed; two traditions toward each pole; left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |
 | W103 | reachability couldn't be proven (sampled) |
@@ -494,3 +499,5 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | W108 | loaded term |
 | W109 | anchor loads a second principle |
 | W110 | choice/pair options average away from 0 on an axis (an undecided respondent gets pushed one way) |
+| W111 | readings: fewer than two inside or outside a tradition, unused, or uneven between the sides or poles |
+| W112 | a party or politician named in the analysis pack (titles and authors, as citations, are exempt) |

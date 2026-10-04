@@ -1,7 +1,6 @@
 // Content compiler: YAML sources → validated, normalized Bundle (+ diagnostics with file/line).
 // Node-only (uses node:crypto for the content hash).
 import { createHash } from 'node:crypto';
-import type { z } from 'zod';
 import {
   AxesFileSchema,
   ConfigFileSchema,
@@ -25,15 +24,22 @@ import type {
   Principle,
   Topic,
 } from '../model/content.ts';
+import type { AnalysisPack } from '../model/analysis.ts';
 import { COND_KEYWORDS, mapRefs, parseCond, type RefUse } from '../engine/cond/parse.ts';
+import { compilePack, parsePack } from './analysis.ts';
 import { Reporter, type CompiledTopic, type Env, type Loc, type TopicCtx } from './context.ts';
 import { parseTerms } from './loaded-terms.ts';
 import { runRules } from './rules/index.ts';
 import type { ContentSources, Diagnostic } from './types.ts';
-import { parseYaml, type ParsedFile, type Path } from './yaml.ts';
+import { canonicalJson, checkUnique, sortDiags, validate } from './validate.ts';
+import { parseYaml, type Path } from './yaml.ts';
+
+export { canonicalJson } from './validate.ts';
 
 export interface CompileResult {
   bundle: Bundle | null;
+  /** The analysis pack (content/analysis/), or null when there is none or anything has errors. */
+  analysis: AnalysisPack | null;
   diagnostics: Diagnostic[];
 }
 
@@ -57,30 +63,6 @@ const ACCURACY5 = [
   'Very accurate',
 ];
 const IMPORTANCE = ['Not at all', 'A little', 'Quite a bit', 'A lot'];
-
-function validate<T>(pf: ParsedFile, schema: z.ZodType<T>, rep: Reporter): T | null {
-  const res = schema.safeParse(pf.data);
-  if (res.success) return res.data;
-  for (const issue of res.error.issues) {
-    let path = issue.path.filter((p): p is string | number => typeof p !== 'symbol');
-    let message = issue.message;
-    if (issue.code === 'unrecognized_keys') {
-      path = [...path, issue.keys[0]!];
-      message = `Unknown key${issue.keys.length > 1 ? 's' : ''}: ${issue.keys.join(', ')}`;
-    }
-    const where = path.length ? `${path.join('.')}: ` : '';
-    rep.report('E002', `${where}${message}`, { pf, path });
-  }
-  return null;
-}
-
-function checkUnique<T extends { id: string }>(list: readonly T[], what: string, pf: ParsedFile, base: Path, rep: Reporter): void {
-  const seen = new Set<string>();
-  list.forEach((x, i) => {
-    if (seen.has(x.id)) rep.report('E003', `Duplicate ${what} id '${x.id}'`, { pf, path: [...base, i, 'id'] });
-    seen.add(x.id);
-  });
-}
 
 export function compile(src: ContentSources): CompileResult {
   const rep = new Reporter();
@@ -109,9 +91,11 @@ export function compile(src: ContentSources): CompileResult {
     });
     topicCtxs.push({ pf, tf, index });
   }
+  // Parsed up front, so its syntax and schema errors show even when other files fail.
+  const pack = parsePack(src.analysis, rep);
 
   if (!config || !domains || !axes || !principles || !parsed.axes || !parsed.principles || !parsed.domains) {
-    return { bundle: null, diagnostics: sortDiags(rep.diagnostics) };
+    return { bundle: null, analysis: null, diagnostics: sortDiags(rep.diagnostics) };
   }
 
   checkUnique(domains, 'domain', parsed.domains, [], rep);
@@ -130,6 +114,7 @@ export function compile(src: ContentSources): CompileResult {
     principlesFile: parsed.principles,
     domainsFile: parsed.domains,
     loadedTerms: parseTerms(src.loadedTerms?.text ?? ''),
+    namedPolitics: parseTerms(src.namedPolitics?.text ?? ''),
   };
 
   const byTopic = new Map<string, TopicCtx>();
@@ -144,8 +129,9 @@ export function compile(src: ContentSources): CompileResult {
   }
 
   runRules({ topics: compiled, env, rep });
+  const analysis = pack ? compilePack(pack, env, rep) : null;
 
-  if (rep.errors > 0) return { bundle: null, diagnostics: sortDiags(rep.diagnostics) };
+  if (rep.errors > 0) return { bundle: null, analysis: null, diagnostics: sortDiags(rep.diagnostics) };
 
   const domainOrder = new Map(domains.map((d, i) => [d.id, i]));
   const order = new Map(compiled.map((c) => [c.topic.id, c.tc.tf.order ?? 0]));
@@ -186,7 +172,7 @@ export function compile(src: ContentSources): CompileResult {
     config,
   };
   const contentVersion = createHash('sha256').update(canonicalJson(body)).digest('hex').slice(0, 12);
-  return { bundle: { ...body, contentVersion }, diagnostics: sortDiags(rep.diagnostics) };
+  return { bundle: { ...body, contentVersion }, analysis, diagnostics: sortDiags(rep.diagnostics) };
 }
 
 function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep: Reporter): Topic {
@@ -457,16 +443,4 @@ function axesFed(items: Item[]): string[] {
 /** Principles that any anchor item tests, sorted. */
 function principlesAnchored(items: Item[]): string[] {
   return [...new Set(items.flatMap((it) => (it.anchor ? [it.anchor.principle] : [])))].sort();
-}
-
-function sortDiags(d: Diagnostic[]): Diagnostic[] {
-  return [...d].sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line || a.col - b.col || a.code.localeCompare(b.code));
-}
-
-export function canonicalJson(v: unknown): string {
-  return JSON.stringify(v, (_k, val: unknown) =>
-    val && typeof val === 'object' && !Array.isArray(val)
-      ? Object.fromEntries(Object.entries(val as Record<string, unknown>).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
-      : val,
-  );
 }

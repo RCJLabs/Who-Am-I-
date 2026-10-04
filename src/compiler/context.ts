@@ -45,6 +45,8 @@ export interface Env {
   principlesFile: ParsedFile;
   domainsFile: ParsedFile;
   loadedTerms: string[];
+  /** Party and politician names (content/named-politics.txt), checked in the analysis pack. */
+  namedPolitics: string[];
 }
 
 export interface CompiledTopic {

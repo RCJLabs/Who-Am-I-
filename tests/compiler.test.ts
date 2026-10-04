@@ -78,6 +78,181 @@ describe('good fixtures', () => {
   });
 });
 
+describe('analysis pack', () => {
+  const src = fixtureSources();
+  const { bundle, analysis, diagnostics } = compile(src);
+
+  it('compiles beside the content without changing its version', () => {
+    expect(formatPretty(diagnostics)).toBe('');
+    const without = compile({ ...src, analysis: undefined });
+    expect(formatPretty(without.diagnostics)).toBe('');
+    expect(without.analysis).toBeNull();
+    expect(without.bundle!.contentVersion).toBe(bundle!.contentVersion);
+    expect(analysis!.version).toMatch(/^[0-9a-f]{12}$/);
+    expect(compile(fixtureSources()).analysis!.version).toBe(analysis!.version);
+  });
+
+  it('ships traditions without their side, and resolves what readings argue for', () => {
+    expect(analysis!.compare).toEqual(['autonomy', 'life']);
+    expect(analysis!.traditions.map((t) => t.id)).toEqual(['reformers', 'planners', 'keepers', 'marketeers', 'moderates']);
+    expect(analysis!.traditions.some((t) => 'side' in t)).toBe(false);
+    expect(analysis!.traditions[0]!.divided).toEqual([]);
+    expect(analysis!.traditions[1]!.divided).toEqual(['life']);
+    expect(analysis!.readings['reformers_one']!.about).toEqual({ axis: 'social', pole: 1 });
+    expect(analysis!.readings['keepers_one']!.about).toEqual({ axis: 'social', pole: 0 });
+    expect(analysis!.readings['reformers_two']).toMatchObject({ kind: 'essay', in: 'Test Journal' });
+    expect('about' in analysis!.readings['reformers_two']!).toBe(false);
+  });
+
+  it('needs both files', () => {
+    const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { traditions: src.analysis!.traditions! } });
+    expect(a).toBeNull();
+    expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E002', src.analysis!.traditions!.path, 2]]);
+  });
+});
+
+describe('analysis pack lint', () => {
+  type PackFile = 'traditions' | 'readings';
+  interface Case {
+    name: string;
+    edits: [PackFile, string, string][];
+    /** Code, file, and text on the line it should point at ('' for the file's first line). */
+    expect: [string, PackFile, string][];
+  }
+  const T = 'traditions' as const;
+  const R = 'readings' as const;
+  const ROOT_T = '- id: reformers';
+  const ROOT_R = 'id: reformers_one, author: Ada';
+  const cases: Case[] = [
+    { name: 'E002 an unknown key', edits: [[T, 'adherents: reformers\n', 'adherents: reformers\n    colour: red\n']], expect: [['E002', T, 'colour: red']] },
+    { name: 'E002 a reading without a year', edits: [[R, 'title: The Case for Change, year: 1990, ', 'title: The Case for Change, ']], expect: [['E002', R, 'Ada Reform']] },
+    { name: 'E003 a neighbour listed twice', edits: [[T, '      - { id: moderates, split: Reformers want change sooner than moderates do. }', '      - { id: moderates, split: Reformers want change sooner than moderates do. }\n      - { id: planners, split: Again. }']], expect: [['E003', T, 'split: Again.']] },
+    { name: 'E003 a principle compared twice', edits: [[T, 'compare: [autonomy, life]', 'compare: [autonomy, life, life]']], expect: [['E003', T, 'compare:']] },
+    { name: 'E004 an unknown reading', edits: [[T, 'outside: [keepers_one, moderates_one]\n  - id: planners', 'outside: [keepers_one, moderates_none]\n  - id: planners']], expect: [['E004', T, 'moderates_none']] },
+    { name: 'E004 an unknown voice', edits: [[R, 'voice: marketeers, note: Argues for a small state.', 'voice: traders, note: Argues for a small state.']], expect: [['E004', R, 'Hal Market']] },
+    { name: 'E004 a pole that is not on the spectrum', edits: [[R, 'toward: Progress', 'toward: Forward']], expect: [['E004', R, 'Ada Reform']] },
+    { name: 'E004 an unknown spectrum', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, wealth: 0.2 }']], expect: [['E004', T, 'wealth: 0.2']] },
+    {
+      name: 'E014 every tradition is placed on every political spectrum',
+      edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7 }']],
+      expect: [['E014', T, 'positions: { social: 0.7 }'], ['E014', T, ROOT_T]],
+    },
+    { name: 'E014 only political spectrums are placed', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, warmth: 0.5 }']], expect: [['E014', T, 'warmth: 0.5']] },
+    { name: 'E014 a planned spectrum is not placed', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, future: 0.5 }']], expect: [['E014', T, 'future: 0.5']] },
+    {
+      name: 'E014 principles are exactly the compare list',
+      edits: [
+        [T, 'principles: { autonomy: -0.4, life: 0.8 }', 'principles: { autonomy: -0.4 }'],
+        [T, 'principles: { autonomy: 0.8, life: 0.2 }', 'principles: { autonomy: 0.8, life: 0.2, duty: 0.3 }'],
+      ],
+      expect: [['E014', T, 'principles: { autonomy: -0.4 }'], ['E014', T, 'duty: 0.3']],
+    },
+    { name: 'E014 divided only on what it places', edits: [[T, 'divided: [life]', 'divided: [duty]']], expect: [['E014', T, 'divided: [duty]']] },
+    { name: 'E014 two traditions toward each pole', edits: [[T, 'positions: { social: -0.4, civil: -0.6 }', 'positions: { social: -0.2, civil: -0.6 }']], expect: [['E014', T, ROOT_T]] },
+    {
+      name: 'E014 a divided placement does not count toward balance',
+      edits: [[T, 'positions: { social: -0.7, civil: 0.4 }', 'positions: { social: -0.7, civil: 0.4 }\n    divided: [social]']],
+      expect: [['E014', T, ROOT_T]],
+    },
+    {
+      name: 'E014 left and right within one of each other',
+      edits: [[T, 'adherents: marketeers\n    side: right', 'adherents: marketeers\n    side: left']],
+      expect: [
+        ['E014', T, ROOT_T],
+        ['E014', T, 'outside: [marketeers_one, moderates_two]'],
+        ['E014', T, 'outside: [planners_one, moderates_two]'],
+        ['W111', R, ROOT_R],
+      ],
+    },
+    {
+      name: 'E014 neighbours list each other',
+      edits: [[T, '      - { id: reformers, split: Planners trust a common plan; reformers trust people to choose. }', '      - { id: moderates, split: Planners plan; moderates step. }']],
+      expect: [['E014', T, 'Reformers trust people to choose; planners'], ['E014', T, 'Planners plan; moderates step.']],
+    },
+    {
+      name: 'E014 a tradition is not its own neighbour',
+      edits: [[T, '      - { id: keepers, split: Marketeers value free exchange; keepers value order. }', '      - { id: keepers, split: Marketeers value free exchange; keepers value order. }\n      - { id: marketeers, split: Itself. }']],
+      expect: [['E014', T, 'split: Itself.']],
+    },
+    { name: 'E014 inside readings are voiced from inside', edits: [[T, 'inside: [keepers_one, keepers_two]', 'inside: [keepers_one, moderates_two]']], expect: [['E014', T, 'inside: [keepers_one, moderates_two]']] },
+    {
+      name: 'E014 outside readings are voiced from outside',
+      edits: [[R, 'voice: moderates, note: Argues for gradual change.', 'voice: reformers, note: Argues for gradual change.']],
+      expect: [['E014', T, 'outside: [keepers_one, moderates_one]'], ['E014', T, 'inside: [moderates_one, moderates_two]']],
+    },
+    { name: 'E014 the first critique comes from the other side', edits: [[T, 'outside: [keepers_one, moderates_one]', 'outside: [moderates_one, keepers_one]']], expect: [['E014', T, 'outside: [moderates_one, keepers_one]']] },
+    {
+      name: "E014 a center tradition's first two critiques come one from each side",
+      edits: [[T, 'outside: [reformers_two, keepers_two]', 'outside: [reformers_two, planners_two]']],
+      expect: [['E014', T, 'outside: [reformers_two, planners_two]']],
+    },
+    {
+      name: 'W108 loaded terms in what users read',
+      edits: [
+        [T, 'summary: Change the rules when they stop serving people.', 'summary: Change the rules, whatever any anti-vaxxer says.'],
+        [R, 'note: Argues that change should be slow.', 'note: Argues against the baby killer charge.'],
+      ],
+      expect: [['W108', T, 'whatever any anti-vaxxer'], ['W108', R, 'Flo Keep']],
+    },
+    {
+      name: 'W108 and W112 skip titles, authors and where a reading appeared',
+      edits: [[R, 'author: Flo Keep, title: Slowly, year: 1975, kind: article, in: Test Review', 'author: Jane Placeholder, title: Slowly Says the Anti-Vaxxer, year: 1975, kind: article, in: The Example Party Review']],
+      expect: [],
+    },
+    { name: 'W112 a party or politician named', edits: [[T, 'split: Keepers value order; marketeers', 'split: As the Example Party says keepers value order; marketeers']], expect: [['W112', T, 'As the Example Party says']] },
+    {
+      name: 'W111 two inside readings each, and every reading used',
+      edits: [[T, 'inside: [planners_one, planners_two]', 'inside: [planners_one]']],
+      expect: [['W111', T, 'inside: [planners_one]'], ['W111', R, 'Di Plan']],
+    },
+    {
+      name: 'W111 every reading is listed',
+      edits: [[R, "voice: moderates, note: Argues for taking the best of each side. }", "voice: moderates, note: Argues for taking the best of each side. }\n- { id: spare, author: Kim Spare, title: Spare, year: 2010, kind: book, voice: moderates, note: Spare. }"]],
+      expect: [['W111', R, 'Kim Spare']],
+    },
+    {
+      name: 'W111 readings voiced from each side stay roughly even',
+      edits: [
+        [T, 'inside: [reformers_one, reformers_two]', 'inside: [reformers_one, reformers_two, r3, r4, r5]'],
+        [R, "voice: moderates, note: Argues for taking the best of each side. }", "voice: moderates, note: Argues for taking the best of each side. }\n- { id: r3, author: A, title: A, year: 2010, kind: book, voice: reformers, note: A. }\n- { id: r4, author: B, title: B, year: 2010, kind: book, voice: reformers, note: B. }\n- { id: r5, author: C, title: C, year: 2010, kind: book, voice: reformers, note: C. }"],
+      ],
+      expect: [['W111', R, ROOT_R]],
+    },
+    {
+      name: 'W111 critiques from each side stay roughly even',
+      edits: [
+        [T, 'outside: [reformers_one, moderates_one]', 'outside: [reformers_one, moderates_one, planners_two, reformers_two]'],
+        [T, 'outside: [planners_one, moderates_two]', 'outside: [planners_one, moderates_two, reformers_two]'],
+      ],
+      expect: [['W111', T, ROOT_T]],
+    },
+    {
+      name: 'W111 the poles readings argue for stay within one',
+      edits: [
+        [R, 'voice: keepers, note: Argues that change should be slow. }', 'voice: keepers, note: Argues that change should be slow., about: { axis: social, toward: Tradition } }'],
+        [R, 'voice: marketeers, note: Argues for a small state. }', 'voice: marketeers, note: Argues for a small state., about: { axis: social, toward: Tradition } }'],
+      ],
+      expect: [['W111', R, ROOT_R]],
+    },
+  ];
+
+  it.each(cases)('$name', ({ edits, expect: want }) => {
+    const src = fixtureSources();
+    const pack = { ...src.analysis! };
+    for (const [file, from, to] of edits) {
+      const f = pack[file]!;
+      expect(f.text.split(from).length - 1, `'${from}' must occur once in ${file}`).toBe(1);
+      pack[file] = { ...f, text: f.text.replace(from, to) };
+    }
+    const { analysis, diagnostics } = compile({ ...src, analysis: pack });
+    const lineOf = (file: PackFile, text: string) => (text ? pack[file]!.text.split('\n').findIndex((l) => l.includes(text)) + 1 : 2);
+    const got = diagnostics.map((d) => `${d.code} ${d.file}:${d.line}`).sort();
+    const expected = want.map(([code, file, text]) => `${code} ${pack[file]!.path}:${lineOf(file, text)}`).sort();
+    expect(got, formatPretty(diagnostics)).toEqual(expected);
+    expect(analysis === null).toBe(want.some(([code]) => code.startsWith('E')));
+  });
+});
+
 interface Expected {
   code: string;
   file: string;
