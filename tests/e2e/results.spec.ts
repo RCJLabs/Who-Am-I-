@@ -103,3 +103,26 @@ test('someone who has only described their personality gets a summary of that, a
   expect(suggested).toHaveLength(3);
   for (const topic of suggested) expect(sensitive.has(topic), topic).toBe(false);
 });
+
+test('the political traditions: where the answers sit, the map table, and readings from inside and out', async ({ page }) => {
+  await restorePersona(page, 'tests/sim/personas/religious_conservative.yaml');
+
+  // Named only as reference points, in the summary and the Politics section.
+  const traditions = page.getByTestId('traditions');
+  await expect(traditions).toHaveAttribute('data-status', /^(match|between)$/);
+  await expect(page.getByTestId('summary-tradition')).toContainText('Of the political traditions compared here, your answers sit');
+  await expect(page.getByTestId('summary-tradition')).toContainText('conservatism');
+  await expect(traditions.locator('[data-testid^="tradition-"]')).toHaveCount(3);
+  await expect(traditions).not.toContainText(/you are an? /i);
+
+  // The map marks every tradition, and its table says where each sits, in words.
+  const table = page.getByTestId('map-table');
+  await table.locator('summary').click();
+  await expect(table.locator('tbody tr')).toHaveCount(12);
+  await expect(table.locator('tbody tr').first()).toContainText('You');
+
+  // Readings: from inside the tradition, and critiques from outside it.
+  const readings = page.getByTestId('next-readings').locator('[data-testid^="rec-read-"]');
+  expect(await readings.count()).toBeGreaterThanOrEqual(2);
+  await expect(page.getByTestId('next-readings')).toContainText('from inside');
+});
