@@ -4,7 +4,7 @@
 import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec, SuggestionRec } from '../../engine/analysis/index.ts';
 import type { AnalysisFacts, Closeness, TraditionStatus } from '../../engine/analysis/types.ts';
 import type { AnalysisPack } from '../../model/analysis.ts';
-import { BAND, LIMIT } from '../../engine/analysis/constants.ts';
+import { BAND, LIMIT, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
 import type { AnswerState } from '../../engine/state.ts';
 import type { Tension } from '../../engine/tensions.ts';
 import type { AxisFamily, Bundle } from '../../model/content.ts';
@@ -129,7 +129,10 @@ function summary(i: ComposeInput): Summary {
     2,
   );
   const topPrinciples = endorsed(pub.principles).slice(0, 2);
-  const traits = personalityTraits(pub.axes.personality, bundle).slice(0, 2);
+  const traits = personalityTraits(
+    pub.axes.personality.filter((a) => !UNNAMED_TRAITS.has(a.axis)),
+    bundle,
+  ).slice(0, 2);
 
   let headline: string = A.headline.empty;
   if (leanings.length) headline = A.headline.leanings(leanings.map((l) => pole(bundle, l.axis, i.publicProfile.axes[l.axis]!.score!)));

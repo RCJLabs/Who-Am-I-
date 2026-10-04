@@ -36,6 +36,13 @@ export const LIMIT = {
  */
 export const SUGGEST = { confidence: 1, lean: 0.5, beyondMean: 0.5 } as const;
 
+/**
+ * Personality traits never named in the summary or used for a link from research: words about
+ * anxiety and mood read as a statement about mental health. The Personality section's read-out
+ * still describes them, beside the chart that shows them.
+ */
+export const UNNAMED_TRAITS: ReadonlySet<string> = new Set(['neuroticism']);
+
 /** Political traditions: reference points, never labels. See docs/ANALYSIS.md. */
 export const TRADITION = {
   /** Below this many scored political spectrums, or this much total confidence, no comparison. */

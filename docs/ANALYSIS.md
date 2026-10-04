@@ -21,7 +21,7 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 
 | Part | Uses |
 |---|---|
-| Summary: headline and leanings | public profile only |
+| Summary: headline and leanings | public profile only, never neuroticism |
 | Summary: counts (topics answered, challenges faced, open tensions) | every answer, so they match the sections below. Counts never say which topics or which way. |
 | Summary: the principle named in the tensions sentence | public tensions only |
 | Section read-outs | the private profile: they describe the chart beside them, which already shows those answers |
@@ -54,7 +54,10 @@ so far." to the read-out. 0.8 and over (`HIGH_CONFIDENCE`) counts as high.
 1. The two strongest leanings among the political and values spectrums: "You lean toward
    “Tradition” and “Markets”".
 2. The two most endorsed principles (score 0.4 or more): "You lean most on “Liberty”".
-3. The two strongest personality traits: "You describe yourself as very outgoing".
+3. The two strongest personality traits other than neuroticism: "You describe yourself as very
+   outgoing". Words about anxiety and mood would read as a statement about mental health in the
+   most visible line of the results (`UNNAMED_TRAITS`, shared with links from research). The
+   Personality read-out still describes it, beside the chart that shows it.
 4. "Your results so far".
 
 **Paragraph**, at most four sentences, in this order, each only when there is something to say:
