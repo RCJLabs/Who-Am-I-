@@ -16,9 +16,9 @@ traditions:
       life. They pursue this gradually, through elected majorities, strong unions, public and
       cooperative ownership and universal services, committed to keeping civil liberties and
       political pluralism. They accept higher taxes, firm limits on what owners and markets may
-      decide, the risks of forms of ownership not yet tried across a whole economy, such as
-      investment falling while ownership changes, and slow progress that votes can undo, as the
-      price of democratic control over economic life.
+      decide, the risks of forms of ownership not yet tried across a whole economy in a democracy,
+      such as investment falling while ownership changes, and slow progress that votes can undo, as
+      the price of democratic control over economic life.
     neighbours:
       - id: social_democrat
         split: >-
@@ -176,8 +176,8 @@ traditions:
       wages and redistribution. It holds that markets and individual choice should answer to the
       communities people belong to, and that a shared national identity is what makes people willing
       to share with one another. It accepts higher taxes, firmer limits on markets and on some
-      personal freedoms, and higher prices and some lost growth from protecting industry and
-      admitting fewer newcomers, as the price of secure work and settled communities.
+      personal freedoms, higher prices from protecting industry, and slower overall growth from that
+      and from admitting fewer newcomers, as the price of secure work and settled communities.
     neighbours:
       - id: social_democrat
         split: >-
@@ -411,10 +411,10 @@ traditions:
       rule of law and solidarity among citizens. It seeks borders the nation controls, newcomers who
       integrate, strong families, a public place for the nation's inherited religion and culture,
       and a state that shapes trade and industry for its own people rather than deferring to global
-      markets or supranational bodies. It accepts higher prices and some lost growth from protecting
-      industry and admitting fewer newcomers, fewer binding commitments to international bodies, and
-      firmer limits on some personal freedoms, as the price of cohesion, strong families and
-      democratic control.
+      markets or supranational bodies. It accepts higher prices from protecting industry, slower
+      overall growth from that and from admitting fewer newcomers, fewer binding commitments to
+      international bodies, and firmer limits on some personal freedoms, as the price of cohesion,
+      strong families and democratic control.
     neighbours:
       - id: traditional_conservative
         split: >-

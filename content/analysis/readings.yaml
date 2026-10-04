@@ -52,7 +52,7 @@
   note: Argues that modern economies spend natural capital as if it were income, and makes the case for human-scale enterprise, appropriate technology and meaningful work.
 - id: meadows_limits_to_growth
   author: Donella H. Meadows, Dennis L. Meadows, Jørgen Randers and William W. Behrens III
-  title: The Limits to Growth
+  title: "The Limits to Growth: A Report for the Club of Rome's Project on the Predicament of Mankind"
   year: 1972
   kind: book
   voice: green
@@ -115,7 +115,7 @@
   author: Martha C. Nussbaum
   title: Patriotism and Cosmopolitanism
   year: 1994
-  kind: essay
+  kind: article
   in: Boston Review
   voice: social_liberal
   note: Argues that people's first loyalty belongs to humanity as a whole, and that national pride can crowd out duties to outsiders.
@@ -139,7 +139,7 @@
   author: George Orwell
   title: "The Lion and the Unicorn: Socialism and the English Genius"
   year: 1941
-  kind: essay
+  kind: book
   voice: left_communitarian
   note: Argues that patriotism and democratic socialism belong together, and that Britain could win the war only through common ownership, capped incomes and democratic schooling.
 - id: lasch_true_and_only_heaven
@@ -161,7 +161,7 @@
 - id: craiutu_faces_of_moderation
   author: Aurelian Craiutu
   title: "Faces of Moderation: The Art of Balance in an Age of Extremes"
-  year: 2016
+  year: 2017
   kind: book
   voice: centrist
   note: Through portraits of five twentieth-century thinkers, argues that balance and compromise are a demanding political virtue that takes courage, not a lack of conviction.
@@ -244,7 +244,7 @@
   author: Lord Acton
   title: Nationality
   year: 1862
-  kind: essay
+  kind: article
   in: The Home and Foreign Review
   voice: classical_liberal
   note: Argues that states uniting several nations protect liberty better than states built around a single nation.
