@@ -1,30 +1,49 @@
 import { join } from 'node:path';
-import { compile } from '../src/compiler/compile.ts';
+import { compile, type CompileResult } from '../src/compiler/compile.ts';
 import { loadContentDir } from '../src/compiler/load.ts';
 import { formatPretty } from '../src/compiler/report.ts';
+import type { AnalysisPack } from '../src/model/analysis.ts';
 import type { AnswerEvent, Response, Via } from '../src/model/answers.ts';
 import type { Bundle } from '../src/model/content.ts';
 
 const FIX = 'tests/fixtures/content';
-let fixture: Bundle | null = null;
-let real: Bundle | null = null;
+let fixture: CompileResult | null = null;
+let real: CompileResult | null = null;
 
-/** The compiled good fixtures (alpha, beta, gamma, traits, tunes). */
-export function fixtureBundle(): Bundle {
+function fixtureResult(): CompileResult {
   if (!fixture) fixture = mustCompile(loadContentDir(join(FIX, 'base'), [join(FIX, 'good')]));
   return fixture;
 }
 
-/** The compiled real content/ directory. */
-export function realBundle(): Bundle {
+function realResult(): CompileResult {
   if (!real) real = mustCompile(loadContentDir('content'));
   return real;
 }
 
-function mustCompile(src: Parameters<typeof compile>[0]): Bundle {
-  const { bundle, diagnostics } = compile(src);
-  if (!bundle) throw new Error(`content failed to compile:\n${formatPretty(diagnostics)}`);
-  return bundle;
+/** The compiled good fixtures (alpha, beta, gamma, traits, tunes). */
+export function fixtureBundle(): Bundle {
+  return fixtureResult().bundle!;
+}
+
+/** The fixtures' analysis pack: five test traditions on the social and civil spectrums. */
+export function fixturePack(): AnalysisPack {
+  return fixtureResult().analysis!;
+}
+
+/** The compiled real content/ directory. */
+export function realBundle(): Bundle {
+  return realResult().bundle!;
+}
+
+/** The real analysis pack (content/analysis/), or null if there is none. */
+export function realPack(): AnalysisPack | null {
+  return realResult().analysis;
+}
+
+function mustCompile(src: Parameters<typeof compile>[0]): CompileResult {
+  const result = compile(src);
+  if (!result.bundle) throw new Error(`content failed to compile:\n${formatPretty(result.diagnostics)}`);
+  return result;
 }
 
 export const scale = (step: number): Response => ({ kind: 'scale', step });
