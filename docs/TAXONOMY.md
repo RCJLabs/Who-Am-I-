@@ -465,8 +465,10 @@ the personality answers only. How they are chosen is in
 ### Links
 
 Each reads from either end under one title: more interest at one pole, less of the same at the
-other. Where the meta-analyses differ, `r` is the lowest uncorrected estimate, from the largest and
-newest (Hurtado Rúa, Stead & Poklar, 2019: 34 studies, 43 samples, N = 19,872).
+other. Where the meta-analyses differ, `r` is the lowest estimate, from the largest and newest
+(Hurtado Rúa, Stead & Poklar, 2019: 34 studies, 43 samples, N = 19,872). That its pooled values are
+uncorrected isn't yet confirmed: they come from articles citing it, at least one of which writes
+them as ρ. The bar holds on Larson et al.'s values, and both links read "a little" either way.
 
 | Link | Trait, more interest toward | r used | Other estimates | Reads as | Kind |
 |---|---|---|---|---|---|
@@ -488,14 +490,15 @@ assertiveness, so both links are likely weaker for the app's scores than publish
 | Extraversion and Social interests (teaching, advising) | r = .21 (Hurtado Rúa et al.), .31 (Larson et al.). Same trait and kind as leading and negotiating, so it could never show; "helping others", from the reserved end, would read as caring less. |
 | Openness and Investigative interests | r = .17 in the largest meta-analysis (.28 in Larson et al.) |
 | Agreeableness and Social interests | r = .18 (Hurtado Rúa et al.), .19 (Larson et al.) |
-| Conscientiousness and Conventional interests | no pair at the bar |
+| Conscientiousness and Conventional interests | not among Larson et al.'s five correlations (abstract); no estimate at the bar found |
 | Openness and free time (reading, arts and cultural participation) or fields of study | the direction is consistent, but no uncorrected r of .20 or more could be read from full texts here. Leads, not yet checked: Kraaykamp & van Eijck (2005), Sander et al. (2021), Kuper et al. (2023), Vedel (2016) |
 
 ### Norms
 
 The gate needs an adult mean and SD for each trait a link reads. No published trait-level
 Mini-IPIP norms could be confirmed: Baldasaro, Shanahan & Bauer (2013), the planned source, print
-item statistics only. So they are computed from the Open-Source Psychometrics Project's BIG5 data:
+item statistics, coded with 1 as agree; whether they also print trait-level means and SDs couldn't
+be confirmed. So they are computed from the Open-Source Psychometrics Project's BIG5 data:
 an online test, about 2012, the same items on a 1 (Disagree) to 5 (Agree) scale. Of 19,719 rows,
 15,657 are adults (18 to 90) who answered all 16 items for extraversion, agreeableness,
 conscientiousness and openness: median age 25, 60% women, 43% in the US, 40% not native English
@@ -538,7 +541,9 @@ The reviewers are agents.
   the BIG5 data, and the Mini-IPIP keying. Corrected: Hurtado Rúa's moderators include publication
   year; Barrick's 41 samples come from 21 studies. Not confirmed: Hurtado Rúa's pair values, which
   come from articles citing it; whether the pooled correlations are uncorrected; that Baldasaro et
-  al. print no trait-level statistics; the data's licence.
+  al. print no trait-level statistics; the data's licence. Round 2 confirmed everything else again,
+  recomputed every number from the data, and softened three sentences that claimed more than was
+  checked (the two above, and why conscientiousness was dropped).
 
 ### Limitations
 

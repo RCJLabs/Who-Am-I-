@@ -10,9 +10,10 @@
 norms:
   # Internal only: they decide whether a link shows, and are never shown or compared with anyone.
   # Computed for this app, not published norms: no published Mini-IPIP trait means and SDs could
-  # be confirmed (Baldasaro, Shanahan & Bauer, 2013 print item statistics). Data: the Open-Source
-  # Psychometrics Project's BIG5 file (openpsychometrics.org/_rawdata/BIG5.zip, as mirrored at
-  # github.com/haghish/openpsychometrics, BIG5/data.csv, sha256
+  # be confirmed (Baldasaro, Shanahan & Bauer, 2013 print item statistics; trait-level ones
+  # weren't seen). Data: the Open-Source Psychometrics Project's BIG5 file
+  # (openpsychometrics.org/_rawdata/BIG5.zip, as mirrored at github.com/haghish/openpsychometrics,
+  # BIG5/data.csv, sha256
   # ccf2440c364b7cf4aa131b83968084aa7c7388be5808ff1920a27b3d6a07f3d9). 15,657 of 19,719 rows:
   # adults 18-90 who answered all 16 Mini-IPIP items for extraversion, agreeableness,
   # conscientiousness and openness. Trait = mean of the 4 keyed items, 1-5 (reversed items as
@@ -56,7 +57,7 @@ suggestions:
     # (61(2), 217-239): 24 samples, the SDS, Strong and VPI interest inventories against the
     # NEO-PI-R; r = .48 (abstract). Barrick, Mount & Gupta (2003; 41 samples from 21 studies,
     # N = 11,559): corrected rho = .39, support only. Not yet confirmed from full texts that the
-    # pooled r's are uncorrected. O*NET Artistic: "Work involves creating original visual
+    # pooled r's are uncorrected; at least one citing article writes Hurtado Rúa's values as rho. O*NET Artistic: "Work involves creating original visual
     # artwork, performances, written works, food, or music for a variety of media, or applying
     # artistic principles to the design of various objects and materials."
   - id: enterprising
