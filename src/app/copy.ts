@@ -5,6 +5,7 @@ import type { Evidence } from '../model/content.ts';
 const s = (n: number) => (n === 1 ? '' : 's');
 /** Quoted, for pole names, principles and topic titles inside sentences. */
 const q = (text: string) => `“${text}”`;
+const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 /** "a", "a and b", "a, b and c". */
 export function list(items: readonly string[]): string {
   if (items.length <= 1) return items[0] ?? '';
@@ -241,6 +242,44 @@ export const copy = {
     basedOn: (topics: number) => `Based on ${topics} topic${s(topics)}.`,
     basedOnSelf: (topics: number) => `Your self-description is based on ${topics} topic${s(topics)}.`,
     fewAnswers: 'Some results rest on few answers so far.',
+    // Political traditions are reference points: where the answers sit closest, never a label.
+    traditions: {
+      title: 'Political traditions',
+      note: "Reference points, placed from each tradition's own writers. Not a label, and not a recommendation.",
+      summary: {
+        match: (name: string) => `Of the political traditions compared here, your answers sit closest to ${q(name)}.`,
+        between: (a: string, b: string) => `Of the political traditions compared here, your answers sit between ${q(a)} and ${q(b)}.`,
+      },
+      lead: {
+        match: (name: string, next: readonly string[]) =>
+          `Your political answers sit closest to ${q(name)}${next.length ? `, then ${list(next.map(q))}` : ''}.`,
+        between: (a: string, b: string) => `Your political answers sit between ${q(a)} and ${q(b)}, about as close to each.`,
+        loose: (names: readonly string[]) =>
+          `None of the traditions compared here is a close fit; the nearest ${names.length === 1 ? 'is' : 'are'} ${list(names.map(q))}.`,
+        mixed: (names: readonly string[]) =>
+          `On average your political answers sit nearest ${list(names.map(q))}, but question by question they pull different ways, so no tradition is named.`,
+        insufficient: (spectrums: readonly string[]) =>
+          spectrums.length
+            ? `Answer topics on ${list(spectrums.map(q))} to see which political traditions your answers sit closest to.`
+            : 'Answer a few more political topics to see which traditions your answers sit closest to.',
+      },
+      basis: (spectrums: readonly string[], principles: readonly string[]) =>
+        `Compared on ${list(spectrums.map(q))}${principles.length ? `, and on the principles ${list(principles.map(q))}` : ''}.`,
+      closeness: { 'very-close': 'Very close', close: 'Close', some: 'Some overlap', little: 'A looser fit' },
+      further: (pole: string) => `You lean further toward ${q(pole)}`,
+      more: (principle: string) => `You put more weight on ${q(principle)}`,
+      less: (principle: string) => `You put less weight on ${q(principle)}`,
+      splitFrom: (name: string) => `How it differs from ${q(name)}`,
+      divided: (adherents: string, items: readonly string[]) => `${capitalize(adherents)} are divided on ${list(items.map(q))}.`,
+      tick: (name: string) => `Gray marks show where ${q(name)} sits.`,
+      reference: (name: string, position: string) => `The gray mark shows ${q(name)}: ${position}.`,
+      mapDesc: (n: number) => `Gray dots mark ${n} political traditions, for reference.`,
+      legend: { you: 'You', traditions: 'Political traditions', divided: 'Divided on one of these spectrums' },
+      table: { show: 'Where each tradition sits', who: 'Tradition', you: 'You', divided: 'Divided', none: 'Not enough answers' },
+      loading: 'Loading the political traditions…',
+      failed: "The political traditions couldn't load.",
+      reload: 'Reload',
+    },
     next: {
       title: 'Next steps',
       read: {
@@ -250,6 +289,16 @@ export const copy = {
         for: (topic: string) => `For your view on ${topic}`,
         met: { held: 'You held your view', distinguished: 'You named a difference', moved: 'You reconsidered' },
         otherSide: 'Put to people on the other side',
+      },
+      readings: {
+        title: 'Readings',
+        intro: (names: readonly string[]) =>
+          names.length === 1
+            ? `The case for ${q(names[0]!)} from inside it, and critiques from outside.`
+            : `The case for ${list(names.map(q))} from inside each, and critiques from outside.`,
+        inside: (name: string) => `The case for ${q(name)}, from inside it`,
+        outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
+        kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
       },
       explore: {
         title: 'Explore next',

@@ -1,6 +1,7 @@
 // Pure helpers shared by screens. No DOM, no stores: easy to test.
+import type { AnalysisPack } from '../model/analysis.ts';
 import type { Response } from '../model/answers.ts';
-import type { Axis, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
+import type { Axis, AxisId, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
 import { isScale, scalePoints } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import { BAND } from '../engine/analysis/constants.ts';
@@ -238,4 +239,55 @@ export function positionsByDomain(b: Bundle, topics: Profile['topics']): { domai
   return b.domains
     .map((domain) => ({ domain, topics: b.topics.filter((t) => t.domain === domain.id && t.stance && topics[t.id]?.stance != null) }))
     .filter((g) => g.topics.length);
+}
+
+/** A political tradition on the map. */
+export interface MapRef {
+  id: string;
+  name: string;
+  x: number;
+  y: number;
+  /** Its adherents split on either map spectrum: drawn hollow. */
+  divided: boolean;
+  /** Its place in the analysis list, nearest first, so it's labelled on the map; null when not listed. */
+  rank: number | null;
+  /** Named in the summary, so always labelled. */
+  named: boolean;
+}
+
+/** Every tradition placed on both map spectrums; the listed ones are labelled, nearest first. */
+export function traditionRefs(pack: AnalysisPack, mapAxes: readonly [AxisId, AxisId], listed: readonly string[], named: readonly string[] = []): MapRef[] {
+  const [ax, ay] = mapAxes;
+  return pack.traditions.flatMap((t) => {
+    const x = t.positions[ax];
+    const y = t.positions[ay];
+    if (x === undefined || y === undefined) return [];
+    const rank = listed.indexOf(t.id);
+    return [{ id: t.id, name: t.name, x, y, divided: t.divided.includes(ax) || t.divided.includes(ay), rank: rank < 0 ? null : rank, named: named.includes(t.id) }];
+  });
+}
+
+export interface PositionTable {
+  /** The political spectrums the traditions are placed on, in content order. */
+  columns: { id: AxisId; title: string }[];
+  /** The user first, then every tradition by name. */
+  rows: { id: string; name: string; cells: string[] }[];
+}
+
+/** Everyone's position on each political spectrum, in words: the map's text equivalent. */
+export function traditionTable(
+  b: Bundle,
+  pack: AnalysisPack,
+  profile: Pick<Profile, 'axes'>,
+  words: { you: string; divided: string; none: string },
+): PositionTable {
+  const axes = Object.values(b.axes).filter((a) => a.family === 'political' && pack.traditions.every((t) => a.id in t.positions));
+  const you = axes.map((a) => {
+    const score = profile.axes[a.id]?.score;
+    return score === null || score === undefined ? words.none : positionLabel(score, a.poles);
+  });
+  const rows = [...pack.traditions]
+    .sort((x, y) => x.name.localeCompare(y.name))
+    .map((t) => ({ id: t.id, name: t.name, cells: axes.map((a) => (t.divided.includes(a.id) ? words.divided : positionLabel(t.positions[a.id]!, a.poles))) }));
+  return { columns: axes.map((a) => ({ id: a.id, title: a.title })), rows: [{ id: 'you', name: words.you, cells: you }, ...rows] };
 }

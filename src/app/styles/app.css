@@ -19,6 +19,9 @@
   --chart-step-1: #818cf8;
   --chart-step-2: #5b5bd6;
   --chart-step-3: #3730a3;
+  /* Reference marks (political traditions): gray on purpose, context rather than a series; at
+     least 3:1 on every surface and well apart from --chart-mark, in normal and colour-blind vision. */
+  --chart-ref: #7c7c85;
   --shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 4px 16px rgb(0 0 0 / 5%);
   --radius: 14px;
   --radius-sm: 10px;
@@ -47,6 +50,7 @@
     --chart-step-1: #4b4fc4;
     --chart-step-2: #7f80f3;
     --chart-step-3: #b3b5fb;
+    --chart-ref: #7a7a84;
     --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 16px rgb(0 0 0 / 30%);
   }
 }

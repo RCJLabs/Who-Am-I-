@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Social democracy: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: social_democrat
+sources:
+  - Eduard Bernstein, The Preconditions of Socialism (1899)
+  - C. A. R. Crosland, The Future of Socialism (1956)
+  - Tony Judt, Ill Fares the Land (2010)
+answers:
+  # Political questions
+  fairness.stance: 6   # inequality corrodes trust and life chances, so gaps should be far narrower (Judt, Ill Fares the Land)
+  abortion.stance: 6   # freeing abortion law belongs to a freer private life (Crosland, The Future of Socialism); late limits kept
+  vaccine_mandates.stance: 6   # health as a shared good; backed health-worker mandates and vaccine passes in serious outbreaks
+  death_penalty.stance: 1   # abolition in all cases is settled across these traditions
+  paternalism.stance: 6   # alcohol monopolies, tobacco curbs and sugar taxes as public health; the harms fall hardest on the poor
+  organ_donation.stance: 2   # organs are given, not sold, with donors' costs reimbursed (Titmuss, The Gift Relationship)
+  surrogacy.stance: 3   # altruistic surrogacy with costs met; paid surrogacy seen as commodifying women (some Nordic adherents ban all)
+  gene_editing.stance: 3   # pro-research but wary of eugenics and a genetic divide; heritable editing on hold until proven safe
+  free_speech.stance: 6   # incitement-to-hatred laws protect equal citizenship; most use an intended-or-likely test
+  guns.stance: 2   # licensed hunting and sport only; self-defense is not accepted as a reason
+  surveillance.stance: 5   # in government has accepted bulk powers under judicial oversight
+  religious_liberty.stance: 3   # equality law applies broadly, with narrow exemptions for religious bodies and roles
+  protest.stance: 3   # civil disobedience respected, but change comes through democratic law (Bernstein, The Preconditions of Socialism)
+  torture.stance: 1   # absolute prohibition under human-rights law
+  public_safety.stance: 3   # due process and the rule of law, with special measures for terrorism
+  taxes.stance: 6   # substantial redistribution through progressive taxes and universal benefits (Crosland, The Future of Socialism)
+  healthcare.stance: 5   # universal care by need (Bevan, In Place of Fear); private cover tolerated on top
+  welfare.stance: 5   # benefits to live on plus active help back into work (Rehn-Meidner model)
+  minimum_wage.stance: 6   # about 60% of median, the EU benchmark; Nordic adherents set floors by collective agreement instead
+  regulation.stance: 6   # markets need firm public rules; deregulated finance showed the cost (Judt, Ill Fares the Land)
+  unions.stance: 7   # unions are the democratic element in industry (Bernstein, The Preconditions of Socialism); broad bargaining coverage
+  trade.stance: 5   # open trade paired with retraining and welfare for those who lose out
+  housing.stance: 5   # tenant protection with rises held near inflation (German rent brake, Swedish negotiated rents)
+  inheritance.stance: 5   # inherited wealth is the least defensible inequality (Crosland, The Future of Socialism)
+  policing.stance: 5   # more neighborhood officers, alongside prevention
+  same_sex_marriage.stance: 7   # full marriage and adoption rights, and schools teaching that all families are equal
+  gender_roles.stance: 6   # individual taxation, childcare and reserved fathers' leave pioneered by Nordic welfare states
+  prisons.stance: 5   # rehabilitation first; community sentences for first offenders, prison for violent or repeat ones
+  climate.stance: 5   # net zero by about 2045-2050, with a just transition for workers
+  cooperation.stance: 5   # binding, enforceable agreements, while the nation-state stays the home of welfare (Judt, Ill Fares the Land)
+  foreign_aid.stance: 6   # the UN 0.7% target is championed; Nordic donors have given about 1%
+  marriage.stance: 6   # no-fault divorce as part of liberty in private life (Crosland, The Future of Socialism)
+  gambling.stance: 3   # gambling harms fall hardest on poorer families; firm deposit limits and curbs on advertising
+  # Principle statements, five-point
+  moral_foundations.loyalty_1: 4   # civic patriotism; equal citizenship gives workers a stake in the nation (Bernstein, The Preconditions of Socialism)
+  moral_foundations.equality_3: 1   # equal opportunity alone breeds a new hierarchy; rewards must be egalitarian enough to minimize resentment (Crosland, The Future of Socialism)
+  moral_foundations.liberty_3: 4   # shared provision and regulation mean some freedoms yield to common goods
+  moral_foundations.deserts_1: 3   # work should pay, but need and equality temper reward
+  moral_foundations.equality_1: 5   # greater equality is the central aim (Crosland, The Future of Socialism)
+  moral_foundations.loyalty_3: 2   # solidarity implies duties to one's community and country
+  moral_foundations.deserts_2: 4   # reciprocity matters; rights come with a duty to contribute
+  moral_foundations.liberty_1: 2   # the democratic state is a shared instrument, not an intruder (Judt, Ill Fares the Land)
+  moral_foundations.equality_2: 4   # large gaps corrode trust, health and civic life (Judt, Ill Fares the Land)
+  moral_foundations.deserts_3: 4   # a secure floor for all comes before rewarding effort
+  moral_foundations.loyalty_2: 3   # solidarity is prized, but held as universal rather than tribal
+  moral_foundations.liberty_2: 3   # accepts democratic rules but defends liberty in private life (Crosland, The Future of Socialism)
+  # Principle statements, seven-point
+  organ_donation.anchor_ml: 6   # paying for organs preys on the poor (Titmuss, The Gift Relationship)
+  surrogacy.anchor_ml: 6   # commercial surrogacy commodifies women's bodies and is banned across these countries
+  free_speech.anchor_liberty: 3   # free expression valued, but hatred curbed to protect equal dignity
+  surveillance.anchor_liberty: 3   # privacy valued, but warranted access to messages accepted for serious crime
+  healthcare.anchor_ml: 3   # dislike buying faster care, but prefer a strong public service to banning private medicine
+  welfare.anchor_desert: 1   # protecting people who cannot find work is the welfare state's purpose
+  unions.anchor_loyal: 6   # solidarity; a democratically called strike binds members
+  inheritance.anchor_desert: 5   # large inheritances are unearned, though modest bequests are accepted (Crosland, The Future of Socialism)
+  war.anchor_loyal: 2   # dissent over a mistaken war is legitimate; Bernstein himself broke with the war effort in 1915
+  marriage.anchor_lib: 6   # freedom to leave a marriage, not least for women (Crosland, The Future of Socialism)
+  family_crime.anchor_loyal: 2   # the law applies equally, relatives included
+  work.anchor_cw: 5   # work as service to the community; idle wealth criticized (Tawney, The Acquisitive Society)
+  work.anchor_lib: 2   # legal and bargained limits on hours are a founding labor-movement gain
+  health.anchor_cw: 7   # pooling everyone's risk is the point of universal care (Bevan, In Place of Fear)
+  gambling.anchor_lib: 3   # freedom to bet accepted only within firm limits
+divided:
+  - assisted_dying.stance   # legal help to die for the terminally ill or beyond (Australian, Dutch, Spanish) vs opposition to protect the vulnerable (much of Nordic)
+  - drug_policy.stance   # stop punishing users, with harm reduction (Portuguese) vs penalties for users plus treatment (Swedish, Norwegian, British)
+  - sex_work.stance   # criminalize buyers on the Nordic model (Swedish, Norwegian, French) vs decriminalize or license (New Zealand, Australian, German)
+  - sex_work.anchor_ml   # the same split; Nordic-model supporters agree, decriminalizers disagree
+  - immigration.stance   # lower numbers to protect wages and welfare (Danish, Swedish, British) vs steady or higher for labor needs and refuge (Spanish, many German)
+  - transgender.stance   # legal sex by self-declaration (Danish, Norwegian, Finnish, German) vs medical gatekeeping and sex-based spaces (much of British)

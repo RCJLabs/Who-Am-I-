@@ -4,11 +4,15 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { z } from 'zod';
+import { ReadingsFileSchema, SheetSchema, TraditionsFileSchema } from '../src/model/analysis.ts';
 import { TopicFileSchema } from '../src/model/authored.ts';
 import { ProfileSchema } from '../src/model/profile.ts';
 
 const outputs = [
   { path: 'schema/topic.schema.json', schema: TopicFileSchema, title: 'Who Am I topic file' },
+  { path: 'schema/analysis/traditions.schema.json', schema: TraditionsFileSchema, title: 'Who Am I political traditions' },
+  { path: 'schema/analysis/readings.schema.json', schema: ReadingsFileSchema, title: 'Who Am I readings' },
+  { path: 'schema/analysis/sheet.schema.json', schema: SheetSchema, title: 'Who Am I answer sheet for a political tradition' },
   { path: 'docs/profile.schema.json', schema: ProfileSchema, title: 'Who Am I profile (profileVersion 1)' },
 ];
 

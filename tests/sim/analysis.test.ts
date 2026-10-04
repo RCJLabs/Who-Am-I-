@@ -14,19 +14,21 @@ import { observe } from '../../src/engine/observe.ts';
 import { buildProfile } from '../../src/engine/profile.ts';
 import { mulberry32 } from '../../src/engine/rng.ts';
 import { detectTensions } from '../../src/engine/tensions.ts';
-import { realBundle } from '../helpers.ts';
+import { realBundle, realPack } from '../helpers.ts';
 import { engineTensions, runRespondent, type RunResult } from './harness.ts';
 import { personaResponses, randomPolicy, scriptedPolicy } from './policies.ts';
 
 const b = realBundle();
+const pack = realPack();
 const terms = termMatchers(parseTerms(readFileSync('content/loaded-terms.txt', 'utf8')));
 const TONE = [/\byou should\b/i, /\byou must\b/i, /\byou are an? \b/i, /\bmost people\b/i, /\bnormal\b/i, /\bwrong\b/i, /%/];
 const CONTRAST = /\b(but|though|although|yet|however|despite)\b/i;
 // Citations quote published titles verbatim, so (as in lint rule W108) they're left out of the
 // loaded-terms check.
-const citations = b.topics
-  .flatMap((t) => [t.source, ...t.items.map((it) => (it.type === 'challenge' ? it.source : undefined))])
-  .filter((c): c is string => !!c);
+const citations = [
+  ...b.topics.flatMap((t) => [t.source, ...t.items.map((it) => (it.type === 'challenge' ? it.source : undefined))]),
+  ...Object.values(pack?.readings ?? {}).flatMap((r) => [r.title, r.author, r.in]),
+].filter((c): c is string => !!c);
 const uncited = (text: string): string => citations.reduce((t, c) => t.split(c).join(''), text);
 const sensitive = new Set(b.topics.filter((t) => t.sensitive).map((t) => t.id));
 const sensitiveWords = new RegExp(
@@ -46,8 +48,8 @@ function profiles(run: RunResult) {
 function composeRun(run: RunResult): Analysis {
   const { profile, publicProfile } = profiles(run);
   const tensions = detectTensions(run.state, observe(run.state, { includeSensitive: true }), run.resolutions);
-  const facts = analyse({ state: run.state, profile, publicProfile, tensions, mapAxes: MAP_AXES });
-  return composeAnalysis({ bundle: b, state: run.state, facts, profile, publicProfile, tensions, interests: interestList(profile.interests, run.state) });
+  const facts = analyse({ state: run.state, profile, publicProfile, tensions, mapAxes: MAP_AXES, pack });
+  return composeAnalysis({ bundle: b, state: run.state, facts, profile, publicProfile, tensions, interests: interestList(profile.interests, run.state), pack });
 }
 
 /** The summary and read-out sentences (not next-step items, whose titles and sources are content). */
@@ -114,6 +116,16 @@ describe('analysis of the personas', () => {
     expect(politics('libertarian')).toMatch(/strongly toward [^.]*“Liberty”/);
     expect(politics('communitarian')).toMatch(/toward [^.]*“Authority”/);
     expect(politics('communitarian')).toMatch(/toward [^.]*“Equality”/);
+  });
+
+  it('names a political tradition for each persona, with readings from inside it and critiques from outside', () => {
+    for (const [name, a] of analyses) {
+      expect(a.summary.tradition, name).toMatch(/^Of the political traditions compared here, your answers sit /);
+      expect(a.readouts.politics!.sentences.at(-1), name).toBe(a.traditions!.lead);
+      const readings = a.next.find((g) => g.id === 'readings')!.items.map((x) => x.meta ?? '');
+      expect(readings.some((m) => m.includes('The case for')), name).toBe(true);
+      expect(readings.some((m) => m.includes('A critique of')), name).toBe(true);
+    }
   });
 
   it('says the How you think note counts only the self-description, not the challenges', () => {

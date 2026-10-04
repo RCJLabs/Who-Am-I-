@@ -89,3 +89,33 @@ test('deleting all data really empties the app', async ({ page }) => {
   await page.getByTestId('nav-results').click();
   await expect(page.getByText('Answer a few topics and your results will appear here.')).toBeVisible();
 });
+
+test('the political traditions download only for someone with answers, then once per visit', async ({ page }) => {
+  // The analysis pack ships as its own chunk, analysis-<hash>.js (see vite.config.ts).
+  const packs: string[] = [];
+  page.on('request', (r) => {
+    if (/\/assets\/analysis-[^/]*\.js$/.test(r.url())) packs.push(r.url());
+  });
+  await freshStart(page);
+  await page.getByTestId('nav-topics').click();
+  await page.getByTestId('nav-results').click();
+  await expect(page.getByText('Answer a few topics and your results will appear here.')).toBeVisible();
+  expect(packs).toEqual([]);
+
+  const file = join(mkdtempSync(join(tmpdir(), 'whoami-')), 'backup.json');
+  execFileSync('node', ['scripts/persona-backup.ts', 'tests/sim/personas/libertarian.yaml', file]);
+  await page.getByTestId('nav-settings').click();
+  await page.getByTestId('backup-file').setInputFiles(file);
+  await page.getByTestId('restore-replace').click();
+  await expect(page.getByText('Backup restored.')).toBeVisible();
+  await page.getByTestId('nav-results').click();
+  await expect(page.getByTestId('traditions')).toHaveAttribute('data-status', 'match');
+  expect(packs).toHaveLength(1);
+
+  // With answers saved, the next visit fetches the pack as the app starts, before Results opens.
+  const prefetch = page.waitForRequest(/\/assets\/analysis-[^/]*\.js$/);
+  await page.goto('#/');
+  await page.reload();
+  await prefetch;
+  expect(packs).toHaveLength(2);
+});

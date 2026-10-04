@@ -1,0 +1,13 @@
+# Test sheet: social 0.15, civil 0; autonomy 0.15, life 0.15.
+tradition: moderates
+sources:
+  - Ivy Middle, One Step at a Time (2000)
+answers:
+  alpha.stance: 4
+  alpha.circ: 4
+  alpha.circ_deep: 3
+  beta.stance: 4
+  alpha.anchor_auto: 4
+  beta.anchor_auto: 5
+  alpha.anchor_life: 4
+  beta.anchor_life: 5

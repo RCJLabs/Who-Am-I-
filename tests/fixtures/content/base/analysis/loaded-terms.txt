@@ -1,0 +1,2 @@
+# Test terms loaded only in the analysis pack
+mainstream

@@ -4,7 +4,8 @@ import { observe } from '../../engine/observe.ts';
 import { buildProfile } from '../../engine/profile.ts';
 import { buildAnswerState } from '../../engine/state.ts';
 import { detectTensions } from '../../engine/tensions.ts';
-import { fixtureBundle, Log, scale } from '../../../tests/helpers.ts';
+import type { ReadingRec, TraditionFacts } from '../../engine/analysis/types.ts';
+import { fixtureBundle, fixturePack, Log, scale } from '../../../tests/helpers.ts';
 import { interestList } from '../view.ts';
 import { composeAnalysis, type Analysis } from './compose.ts';
 
@@ -111,5 +112,112 @@ describe('analysis next steps', () => {
         cta: 'Think it through',
       },
     ]);
+  });
+});
+
+describe('political traditions in the analysis', () => {
+  const pack = fixturePack();
+
+  /** Composes with these tradition facts, as if the answers had led to them. */
+  function withTraditions(traditions: TraditionFacts | null, readings: ReadingRec[] = [], withPack = true): Analysis {
+    const log = new Log();
+    log.add('alpha.stance', scale(1));
+    log.add('beta.stance', scale(7));
+    const s = buildAnswerState(b, log.events);
+    const o = { appVersion: 't', now: 'x', resolutions: [] };
+    const profile = buildProfile(s, { ...o, includeSensitive: true });
+    const publicProfile = buildProfile(s, { ...o, includeSensitive: false });
+    const tensions = detectTensions(s, observe(s, { includeSensitive: true }), []);
+    const facts = analyse({ state: s, profile, publicProfile, tensions, mapAxes: ['social', 'civil'] });
+    facts.public.traditions = traditions;
+    facts.next.readings = readings;
+    return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack: withPack ? pack : null });
+  }
+
+  const base = { compared: ['social', 'civil'], missing: [], principles: [], fit: { gap: 0.2, questions: 4 } };
+  const match: TraditionFacts = {
+    ...base,
+    status: 'match',
+    named: ['reformers'],
+    fits: [
+      { tradition: 'reformers', distance: 0.1, closeness: 'very-close', differences: [] },
+      { tradition: 'moderates', distance: 0.4, closeness: 'little', differences: [{ kind: 'axis', axis: 'civil', toward: 0, gap: 0.5 }] },
+      { tradition: 'planners', distance: 0.5, closeness: 'little', differences: [{ kind: 'principle', principle: 'autonomy', more: true, gap: 0.8 }] },
+    ],
+  };
+
+  it('names the nearest tradition in the summary and the politics read-out', () => {
+    const a = withTraditions(match);
+    expect(a.summary.tradition).toBe('Of the political traditions compared here, your answers sit closest to “Reform”.');
+    expect(a.readouts.politics!.sentences.at(-1)).toBe('Your political answers sit closest to “Reform”, then “Moderation” and “Planning”.');
+    expect(a.traditions).toMatchObject({ status: 'match', basis: 'Compared on “Social” and “Civil”.', reference: { id: 'reformers', name: 'Reform' } });
+  });
+
+  it('lists each tradition with its band, differences, and what divides it from the nearest', () => {
+    const rows = withTraditions(match).traditions!.rows;
+    expect(rows.map((r) => [r.name, r.band, r.differences])).toEqual([
+      ['Reform', 'Very close', []],
+      ['Moderation', 'A looser fit', ['You lean further toward “Liberty”']],
+      ['Planning', 'A looser fit', ['You put more weight on “Autonomy”']],
+    ]);
+    expect(rows[1]!.split).toEqual({ from: 'Reform', text: 'Reformers want change sooner than moderates do.' });
+    expect(rows[2]!.split).toEqual({ from: 'Reform', text: 'Reformers trust people to choose; planners trust a common plan.' });
+    expect(rows[0]!.split).toBeNull();
+    expect(rows[2]!.divided).toBe('Planners are divided on “Life”.');
+  });
+
+  it('names two traditions when the answers sit between them', () => {
+    const a = withTraditions({ ...match, status: 'between', named: ['reformers', 'planners'] });
+    expect(a.summary.tradition).toBe('Of the political traditions compared here, your answers sit between “Reform” and “Planning”.');
+    expect(a.traditions!.lead).toBe('Your political answers sit between “Reform” and “Planning”, about as close to each.');
+  });
+
+  it('names no tradition when none fits closely or the answers pull apart', () => {
+    const loose = withTraditions({ ...match, status: 'loose', named: [] });
+    expect(loose.summary.tradition).toBeNull();
+    expect(loose.traditions).toMatchObject({ reference: null, lead: 'None of the traditions compared here is a close fit; the nearest are “Reform”, “Moderation” and “Planning”.' });
+    const mixed = withTraditions({ ...match, status: 'mixed', named: [], fits: match.fits.slice(0, 2), fit: { gap: 0.8, questions: 4 } });
+    expect(mixed.traditions!.lead).toBe(
+      'On average your political answers sit nearest “Reform” and “Moderation”, but question by question they pull different ways, so no tradition is named.',
+    );
+    expect(mixed.readouts.politics!.sentences.at(-1)).toBe(mixed.traditions!.lead);
+    expect(mixed.summary.tradition).toBeNull();
+  });
+
+  it('says which spectrums need answers, outside the politics read-out', () => {
+    const a = withTraditions({ ...base, status: 'insufficient', named: [], fits: [], compared: ['social'], missing: ['civil'], fit: null });
+    expect(a.traditions).toMatchObject({ basis: null, rows: [], lead: 'Answer topics on “Civil” to see which political traditions your answers sit closest to.' });
+    expect(a.readouts.politics!.sentences).not.toContain(a.traditions!.lead);
+    expect(a.summary.tradition).toBeNull();
+  });
+
+  it('offers readings from inside a named tradition and its critics', () => {
+    const readings: ReadingRec[] = [
+      { kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' },
+      { kind: 'reading', reading: 'keepers_one', tradition: 'reformers', view: 'outside' },
+    ];
+    const group = withTraditions(match, readings).next.find((g) => g.id === 'readings')!;
+    expect(group.intro).toBe('The case for “Reform” from inside it, and critiques from outside.');
+    expect(group.items).toEqual([
+      {
+        testid: 'rec-read-reformers_one',
+        title: 'The Case for Change',
+        detail: 'Argues that rules should change with the times.',
+        meta: 'Ada Reform (1990) · Book · The case for “Reform”, from inside it',
+      },
+      {
+        testid: 'rec-read-keepers_one',
+        title: 'What Has Worked',
+        detail: 'Argues for keeping what works.',
+        meta: 'Ed Keep (1970) · Book · A critique of “Reform”, from “Keeping”',
+      },
+    ]);
+  });
+
+  it('shows nothing about traditions without the pack', () => {
+    const a = withTraditions(match, [{ kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' }], false);
+    expect(a.traditions).toBeNull();
+    expect(a.next.some((g) => g.id === 'readings')).toBe(false);
+    expect(strings(a).join(' ')).not.toMatch(/Reform/);
   });
 });

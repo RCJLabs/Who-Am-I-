@@ -1,0 +1,86 @@
+{
+  "title": "Who Am I readings",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "minItems": 1,
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "author": {
+        "type": "string",
+        "minLength": 1,
+        "description": "As on the title page"
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Verbatim"
+      },
+      "year": {
+        "type": "integer",
+        "minimum": 1500,
+        "maximum": 2100,
+        "description": "Year of first publication"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "book",
+          "essay",
+          "article",
+          "speech",
+          "lecture"
+        ]
+      },
+      "in": {
+        "description": "The book or journal an essay or article appeared in",
+        "type": "string",
+        "minLength": 1
+      },
+      "voice": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "description": "The tradition the author writes from"
+      },
+      "note": {
+        "type": "string",
+        "minLength": 1,
+        "description": "One neutral line on what it argues"
+      },
+      "about": {
+        "description": "The pole it mainly argues for",
+        "type": "object",
+        "properties": {
+          "axis": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "toward": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A pole of that spectrum, as written in axes.yaml"
+          }
+        },
+        "required": [
+          "axis",
+          "toward"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "id",
+      "author",
+      "title",
+      "year",
+      "kind",
+      "voice",
+      "note"
+    ],
+    "additionalProperties": false
+  }
+}

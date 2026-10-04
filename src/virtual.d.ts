@@ -7,3 +7,9 @@ declare module 'virtual:content' {
   /** Loads one domain's full topics, for each domain that has any. */
   export const loaders: Record<string, () => Promise<{ default: import('./model/content.ts').Topic[] }>>;
 }
+
+declare module 'virtual:analysis' {
+  /** The analysis pack (content/analysis/): political traditions and readings; null without one. */
+  const pack: import('./model/analysis.ts').AnalysisPack | null;
+  export default pack;
+}

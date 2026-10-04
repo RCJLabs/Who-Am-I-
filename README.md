@@ -7,7 +7,10 @@ challenges aimed at whichever side you took. A game built on the profile comes l
 
 Results come with a written analysis: a summary, a short read-out for each section, and next
 steps (the strongest cases on both sides of your firmest positions, topics to explore, and
-tensions worth a second look). It's worked out on the device by fixed rules, with no AI service.
+tensions worth a second look). Eleven political traditions serve as reference points: which of
+them your political answers sit closest to, with readings from inside each and critiques from
+outside. Never a label, a party or a recommendation. It's all worked out on the device by fixed
+rules, with no AI service.
 
 All answers stay on your device: no server, no account, no analytics.
 
@@ -31,6 +34,7 @@ Extras:
 ```sh
 node scripts/persona-backup.ts tests/sim/personas/libertarian.yaml out.json   # a test persona as an importable backup
 node scripts/gen-icons.ts                                                     # re-render app icons after a design change
+node scripts/tradition-targets.ts                                             # where each tradition's answer sheet places it
 ```
 
 ## Layout
@@ -38,6 +42,7 @@ node scripts/gen-icons.ts                                                     # 
 | Path | What |
 |---|---|
 | `content/` | the question bank (YAML): domains, axes, principles, topics |
+| `content/analysis/` | political traditions, their answer sheets, and readings (shipped as a separate, lazily loaded chunk) |
 | `src/model/` | schemas and types: authored content, bundle, answers, profile |
 | `src/engine/` | pure, DOM-free logic: conditions, flow, scoring, tensions, profile, results analysis |
 | `src/compiler/` | content compiler and lint (Node), plus the Vite plugin |
@@ -50,5 +55,5 @@ node scripts/gen-icons.ts                                                     # 
 - [Content guide](docs/CONTENT_GUIDE.md): how to write topics, challenges and anchors
 - [Taxonomy](docs/TAXONOMY.md): everything the app will cover, and the anchor matrix
 - [Profile format](docs/PROFILE_FORMAT.md): the public output contract
-- [Results analysis](docs/ANALYSIS.md): the rules behind the summary and next steps
+- [Results analysis](docs/ANALYSIS.md): the rules behind the summary, next steps and political traditions
 - [Privacy policy (draft)](docs/PRIVACY.md)

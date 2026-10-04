@@ -1,6 +1,7 @@
 <script lang="ts">
   // One spectrum as a compact row: title and position on one line, the dot on a thin track below,
-  // and the description, confidence and feeding topics behind a tap.
+  // and the description, confidence and feeding topics behind a tap. A gray tick can mark where a
+  // political tradition sits, for reference.
   import type { Topic } from '../../../model/content.ts';
   import { copy } from '../../copy.ts';
   import { to } from '../../routes.ts';
@@ -15,6 +16,7 @@
     mixed = false,
     feeders = [],
     drivers = [],
+    reference = null,
     testid,
   }: {
     title: string;
@@ -26,12 +28,15 @@
     feeders?: Topic[];
     /** The topics that pulled toward each pole, strongest first. */
     drivers?: { pole: string; topics: { id: string; title: string }[] }[];
+    /** A tradition's position, drawn as a gray tick. */
+    reference?: { name: string; score: number } | null;
     testid?: string | undefined;
   } = $props();
 
   const position = $derived(score === null ? '' : positionLabel(score, poles));
   const pct = $derived(score === null ? 50 : toPercent(score));
   const low = $derived(score !== null && confidence < 0.5);
+  const refLine = $derived(reference ? copy.analysis.traditions.reference(reference.name, positionLabel(reference.score, poles)) : '');
 </script>
 
 <details class="row" data-testid={testid}>
@@ -46,9 +51,10 @@
       <span class="chev" aria-hidden="true"></span>
     </span>
     {#if score !== null}
-      <span class="visually-hidden">, {Math.round(pct)}% of the way from {poles[0]} to {poles[1]}</span>
+      <span class="visually-hidden">, {Math.round(pct)}% of the way from {poles[0]} to {poles[1]}{reference ? `. ${refLine}` : ''}</span>
       <span class="track" aria-hidden="true">
         <span class="mid"></span>
+        {#if reference}<span class="ref" data-testid={testid ? `${testid}-ref` : undefined} style:left="{toPercent(reference.score)}%"></span>{/if}
         <span class="dot" class:low style:left="{pct}%"></span>
       </span>
       <span class="poles small" aria-hidden="true"><span>{poles[0]}</span><span>{poles[1]}</span></span>
@@ -71,6 +77,9 @@
           {/if}
         {/each}
       </ul>
+    {/if}
+    {#if score !== null && reference}
+      <p class="muted">{refLine}</p>
     {/if}
     {#if score !== null}
       <p class="muted">{copy.results.confidence(confidence)}</p>
@@ -154,6 +163,16 @@
     width: 1px;
     background: var(--muted);
     opacity: 0.6;
+  }
+  .ref {
+    position: absolute;
+    top: 50%;
+    width: 3px;
+    height: 14px;
+    margin: -7px 0 0 -1.5px;
+    border-radius: 2px;
+    background: var(--chart-ref);
+    box-shadow: 0 0 0 1.5px var(--surface);
   }
   .dot {
     position: absolute;

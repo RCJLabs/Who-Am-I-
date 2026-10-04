@@ -12,7 +12,13 @@ content/
   axes.yaml          spectrums shown in results: poles + evidence rules
   principles.yaml    moral principles tracked across topics
   loaded-terms.txt   words that signal a side (lint warning W108)
+  named-politics.txt party and politician names the analysis pack must not use (W112)
   topics/<domain>/<topic>.yaml
+  analysis/          reference material for the results analysis (optional; shipped separately)
+    traditions.yaml  political traditions: names, summaries, neighbours and readings
+    sheets/<id>.yaml each tradition's answer sheet, which places it on the political spectrums
+    readings.yaml    readings from inside and outside each tradition
+    loaded-terms.txt words loaded only in descriptions of traditions (W108, pack only)
 ```
 
 Each topic file starts with `# yaml-language-server: $schema=../../../schema/topic.schema.json`, so
@@ -456,6 +462,76 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
   losses. Screens stay about social media and phones, and no case involves AI assistants or AI
   companies: the writer has a stake.
 
+## Political traditions (`content/analysis/`)
+
+The results compare a person's political answers with a set of political traditions, as reference
+points: never a label for anyone, never a party, never a recommendation. The rules for matching
+are in [ANALYSIS.md](ANALYSIS.md#political-traditions-traditionsts).
+
+**Answer sheets place a tradition; nothing else does.** Each tradition has
+`sheets/<id>.yaml`: every shareable political question, and the statements behind the compared
+principles, answered as a thoughtful present-day adherent in a Western democracy would, with a
+one-line reason citing the tradition's own writers. The compiler scores the sheet with the
+engine, so its positions sit on the same scales as everyone's answers and can't be tuned by hand.
+
+- **Write a sheet blind.** Its author gets the tradition's name and sources and
+  `node scripts/tradition-targets.ts --questionnaire out.md`, never the personas, the simulation
+  or the other traditions.
+- **The middle step is a position,** not a way to avoid committing; nor is the last rung the
+  default. Pick the step thoughtful adherents actually choose.
+- **`divided` is for real splits** within the tradition, where both camps can be named, often by
+  country, and sit on opposite sides of the middle step. When both camps lean the same way (steps 1
+  and 3, say), answer the step between them instead. A split question counts at the middle of its
+  scale when the sheet is scored, where the tradition as a whole sits on it, and is left out of the
+  question-by-question fit, so neither camp is held against the other. A spectrum or principle is
+  divided when split questions carry half its weight or more: it then counts half, and the results
+  draw no tick for it.
+- **A new political question needs an answer in every sheet** (E015 lists what's missing): a
+  sheet that skipped it would quietly place its tradition on less evidence than everyone else.
+- `node scripts/tradition-targets.ts` prints the positions the sheets give.
+
+**traditions.yaml**
+
+- `name` is what adherents call the tradition; `adherents` the plural they use, lower case.
+- `summary`: two or three sentences in adherents' own terms: what it aims at, and the costs or
+  trade-offs it accepts. Not opponents' account of it, not its most extreme members.
+- `neighbours`: the traditions it is most often confused with, listed both ways, each with one
+  sentence, fair to both, on what divides them. The results show it when a neighbor is listed
+  under the nearest tradition.
+- `inside`: readings written from inside the tradition, best first; the results show two.
+  `outside`: critiques, best first; the results show two. The first comes from the other side of
+  politics; a center tradition's first two, one from each side (E014). `side` exists only for that
+  check and for balance; it is never shown.
+- `compare`: the principles compared besides the spectrums. Never purity or sanctity of life,
+  which would stand in for religiosity, and only principles at least three shareable topics feed.
+
+**readings.yaml**: books, essays, articles, speeches and lectures, never links. Author, exact
+title and year of first publication, checked in two fact-check rounds. `voice` is the tradition
+the work is written from; `note` is one neutral line on what it argues. No living politicians as
+authors, and no scripture, encyclicals or sermons: the Christian-democratic strand is represented
+by philosophers.
+
+**Wording.** Every rule in [Neutral wording](#neutral-wording) applies, plus:
+
+| Prefer | Avoid |
+|---|---|
+| centrists, described by their own commitments (pluralism, step-by-step reform, compromise) | moderates; the sensible, reasonable or mainstream view |
+| social liberal, classical liberal | "liberal" on its own |
+| socialist, only for democratic socialism | socialist or communist for any other tradition |
+| free-market libertarianism | "libertarian" alone in a summary (in some languages it means the anarchist left) |
+| green politics, political ecology | care for nature as what defines it (other traditions share it) |
+| communitarianism, naming both its civic and Christian-democratic strands | a religious label for anyone matched to it |
+| left communitarianism | "the real working-class left", or a party faction's name |
+| what a critique argues | a diagnosis of adherents' motives or psychology |
+
+`content/analysis/loaded-terms.txt` adds words that are fine in a question but loaded in a
+description of a tradition ("moderate", "mainstream", "extreme", "regressive"). Party and
+politician names (`content/named-politics.txt`) are flagged anywhere in the pack (W112); titles,
+authors and `in` are citations and exempt.
+
+**Review.** Each tradition gets a check by an adherent and by a reviewer from the other side of
+politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
+
 ## Review checklist
 
 - [ ] Lint clean: no errors and no warnings.
@@ -466,6 +542,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 - [ ] Factual claims are accurate and sourced.
 - [ ] Anchors use the shared frame; the matrix in `TAXONOMY.md` is updated.
 - [ ] No loaded terms; "yield" options are dignified.
+- [ ] A new political question is answered (or listed as divided) in every tradition's sheet.
 
 ## Lint rules
 
@@ -474,7 +551,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | E001 | YAML syntax or duplicate key |
 | E002 | schema violation (unknown key, wrong type, reserved id) |
 | E003 | duplicate id |
-| E004 | unresolved reference (item, axis, principle, domain) |
+| E004 | unresolved reference (item, axis, principle, domain; in the analysis pack, tradition, reading or pole) |
 | E005 | reference to a later item |
 | E006 | condition syntax or type error |
 | E007 | item can never be shown (or a reask can never run) |
@@ -484,6 +561,8 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | E011 | choice with item-level effects needs option values |
 | E012 | sensitivity rules (no opt-out; identity items don't score) |
 | E013 | anchor not keyed toward its principle |
+| E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum (0.2 or beyond, not divided); left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
+| E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |
 | W103 | reachability couldn't be proven (sampled) |
@@ -491,6 +570,8 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | W105 | challenge without a source |
 | W106 | option without effects |
 | W107 | unused axis/principle, or principle anchored in one topic |
-| W108 | loaded term |
+| W108 | loaded term (in the analysis pack, also `content/analysis/loaded-terms.txt`) |
 | W109 | anchor loads a second principle |
 | W110 | choice/pair options average away from 0 on an axis (an undecided respondent gets pushed one way) |
+| W111 | readings: fewer than two inside or outside a tradition, unused, or uneven between the sides or poles |
+| W112 | a party or politician named in the analysis pack (titles and authors, as citations, are exempt) |

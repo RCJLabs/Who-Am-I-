@@ -1,0 +1,111 @@
+{
+  "title": "Who Am I political traditions",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "compare": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "description": "Principles every tradition is placed on"
+    },
+    "traditions": {
+      "minItems": 2,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The name adherents use, e.g. \"Social democracy\""
+          },
+          "adherents": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Plural noun for adherents, lower case, e.g. \"social democrats\""
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ],
+            "description": "Left, center or right: used only to check balance, never shown"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What the tradition stands for, in its adherents' own terms"
+          },
+          "neighbours": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$",
+                  "description": "A nearby tradition"
+                },
+                "split": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "One line on what divides the two, fair to both"
+                }
+              },
+              "required": [
+                "id",
+                "split"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "inside": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "description": "Readings voiced from inside this tradition, best first"
+          },
+          "outside": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "description": "Critiques from outside it, best first. The first comes from the other side (for a center tradition, the first two: one left, one right)"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "adherents",
+          "side",
+          "summary",
+          "neighbours",
+          "inside",
+          "outside"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "compare",
+    "traditions"
+  ],
+  "additionalProperties": false
+}

@@ -1,8 +1,9 @@
 // Turns the analysis facts into what the results page shows: a summary, a short read-out per
 // section and next steps. Pure, so it's tested in node. Sentence templates live in copy.analysis;
 // this file only chooses which parts go into them.
-import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReflectRec } from '../../engine/analysis/index.ts';
-import type { AnalysisFacts } from '../../engine/analysis/types.ts';
+import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec } from '../../engine/analysis/index.ts';
+import type { AnalysisFacts, Closeness, TraditionStatus } from '../../engine/analysis/types.ts';
+import type { AnalysisPack } from '../../model/analysis.ts';
 import { BAND, LIMIT } from '../../engine/analysis/constants.ts';
 import type { AnswerState } from '../../engine/state.ts';
 import type { Tension } from '../../engine/tensions.ts';
@@ -31,6 +32,8 @@ export interface Summary {
   headline: string;
   sentences: string[];
   tiles: Tile[];
+  /** The political tradition (or two) the answers sit closest to, when one is named. */
+  tradition: string | null;
 }
 
 export interface NextItem {
@@ -45,15 +48,45 @@ export interface NextItem {
 }
 
 export interface NextGroup {
-  id: 'read' | 'explore' | 'reflect';
+  id: 'read' | 'readings' | 'explore' | 'reflect';
   title: string;
   intro: string;
   items: NextItem[];
 }
 
+export interface TraditionRow {
+  id: string;
+  name: string;
+  closeness: Closeness;
+  /** The closeness in words: "Very close", "Some overlap"… */
+  band: string;
+  /** Where the answers differ most: "You lean further toward “Liberty”". */
+  differences: string[];
+  summary: string;
+  /** What divides it from the nearest tradition, when the two are neighbours. */
+  split: { from: string; text: string } | null;
+  /** "Social democrats are divided on “Civil”." */
+  divided: string | null;
+}
+
+export interface TraditionsView {
+  status: TraditionStatus;
+  /** What the comparison found, in one sentence. */
+  lead: string;
+  /** What it compared: "Compared on “Economic” and “Civil”." Null without a comparison. */
+  basis: string | null;
+  rows: TraditionRow[];
+  /** The traditions the summary names, nearest first. */
+  named: string[];
+  /** The named tradition drawn as gray reference marks on the spectrums. */
+  reference: { id: string; name: string } | null;
+}
+
 export interface Analysis {
   summary: Summary;
   readouts: Partial<Record<SectionId, Readout>>;
+  /** Null until the analysis pack has loaded, or if there is none. */
+  traditions: TraditionsView | null;
   next: NextGroup[];
 }
 
@@ -69,12 +102,15 @@ export interface ComposeInput {
   tensions: readonly Tension[];
   interests: readonly InterestEntry[];
   alwaysDeep?: boolean;
+  /** Political traditions and readings, once loaded. */
+  pack?: AnalysisPack | null;
 }
 
 const A = copy.analysis;
 
 export function composeAnalysis(i: ComposeInput): Analysis {
-  return { summary: summary(i), readouts: readouts(i), next: next(i) };
+  const traditions = traditionsView(i);
+  return { summary: summary(i), readouts: readouts(i, traditions), traditions, next: next(i) };
 }
 
 // --- Summary ---------------------------------------------------------------------------------
@@ -112,12 +148,16 @@ function summary(i: ComposeInput): Summary {
     { id: 'challenges', label: A.tiles.challenges, value: totals.asked, detail: totals.asked ? A.tiles.reconsidered(totals.moved) : '' },
     { id: 'tensions', label: A.tiles.tensions, value: open, detail: A.tiles.tensionsSee },
   ];
-  return { headline, sentences: sentences.length ? sentences.slice(0, 4) : [A.summaryEmpty], tiles };
+  const t = pub.traditions;
+  const name = (id: string) => i.pack?.traditions.find((x) => x.id === id)?.name ?? id;
+  const tradition =
+    t?.status === 'match' ? A.traditions.summary.match(name(t.named[0]!)) : t?.status === 'between' ? A.traditions.summary.between(name(t.named[0]!), name(t.named[1]!)) : null;
+  return { headline, sentences: sentences.length ? sentences.slice(0, 4) : [A.summaryEmpty], tiles, tradition };
 }
 
 // --- Section read-outs -----------------------------------------------------------------------
 
-function readouts(i: ComposeInput): Partial<Record<SectionId, Readout>> {
+function readouts(i: ComposeInput, traditions: TraditionsView | null): Partial<Record<SectionId, Readout>> {
   const { facts, bundle } = i;
   const out: Partial<Record<SectionId, Readout>> = {};
   const lean = (id: SectionId, intro: string, family: AxisFamily, extra: string[] = [], note = A.basedOn) => {
@@ -127,7 +167,8 @@ function readouts(i: ComposeInput): Partial<Record<SectionId, Readout>> {
   };
 
   const pulls = facts.axes.political.filter((a) => a.mixed && a.drivers[0].length && a.drivers[1].length).slice(0, 1).map((a) => pullSentence(a, bundle, i.state));
-  lean('politics', A.intro.politics, 'political', pulls);
+  const tradition = traditions && traditions.status !== 'insufficient' ? [traditions.lead] : [];
+  lean('politics', A.intro.politics, 'political', [...pulls, ...tradition]);
   lean('values', A.intro.values, 'values');
 
   // The note counts only the self-description topics, so it says so: the challenge record spans them all.
@@ -164,6 +205,9 @@ function next(i: ComposeInput): NextGroup[] {
   const groups: NextGroup[] = [];
   const read = i.facts.next.cases.map((c) => caseItem(i, c)).filter((x): x is NextItem => x !== null);
   if (read.length) groups.push({ id: 'read', title: A.next.read.title, intro: A.next.read.intro, items: read });
+  const readings = i.facts.next.readings.map((r) => readingItem(i, r)).filter((x): x is NextItem => x !== null);
+  const named = (i.facts.public.traditions?.named ?? []).map((id) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id);
+  if (readings.length) groups.push({ id: 'readings', title: A.next.readings.title, intro: A.next.readings.intro(named), items: readings });
   const explore = i.facts.next.explore.map((r) => exploreItem(i, r));
   if (explore.length) groups.push({ id: 'explore', title: A.next.explore.title, intro: A.next.explore.intro, items: explore });
   const reflect = i.facts.next.reflect.map((r) => reflectItem(i.bundle, r));
@@ -213,11 +257,80 @@ function exploreItem(i: ComposeInput, r: ExploreRec): NextItem {
   return { testid: `rec-explore-${r.topic}`, title: t.title, detail, href: to.flow(r.topic), cta: started ? A.next.explore.ctaContinue : A.next.explore.cta };
 }
 
+function readingItem(i: ComposeInput, r: ReadingRec): NextItem | null {
+  const reading = i.pack?.readings[r.reading];
+  if (!reading) return null;
+  const name = (id: string) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id;
+  const view = r.view === 'inside' ? A.next.readings.inside(name(r.tradition)) : A.next.readings.outside(name(r.tradition), name(reading.voice));
+  return {
+    testid: `rec-read-${reading.id}`,
+    title: reading.title,
+    detail: reading.note,
+    meta: [`${reading.author} (${reading.year})`, A.next.readings.kind[reading.kind], view].join(' · '),
+  };
+}
+
 function reflectItem(b: Bundle, r: ReflectRec): NextItem {
   const label = principleLabel(b, r.principle);
   const lead = A.next.reflect.lead[r.variant](label, r.hi.context, r.lo.context);
   const ask = r.lo.against ? A.next.reflect.ask(r.lo.against) : A.next.reflect.askOpen;
   return { testid: `rec-reflect-${r.principle}`, title: label, detail: `${lead} ${ask}`, href: to.tension(r.tension), cta: A.next.reflect.cta };
+}
+
+// --- Political traditions --------------------------------------------------------------------
+
+function traditionsView(i: ComposeInput): TraditionsView | null {
+  const facts = i.facts.public.traditions;
+  const pack = i.pack;
+  if (!facts || !pack) return null;
+  const T = A.traditions;
+  const byId = new Map(pack.traditions.map((t) => [t.id, t]));
+  const name = (id: string) => byId.get(id)?.name ?? id;
+  const spectrum = (id: string) => i.bundle.axes[id]?.title ?? id;
+  const names = facts.fits.map((f) => name(f.tradition));
+  let lead: string;
+  switch (facts.status) {
+    case 'match':
+      lead = T.lead.match(name(facts.named[0]!), names.filter((x) => x !== name(facts.named[0]!)));
+      break;
+    case 'between':
+      lead = T.lead.between(name(facts.named[0]!), name(facts.named[1]!));
+      break;
+    case 'loose':
+      lead = T.lead.loose(names);
+      break;
+    case 'mixed':
+      lead = T.lead.mixed(names);
+      break;
+    default:
+      lead = T.lead.insufficient(facts.missing.map(spectrum));
+  }
+  const nearest = facts.fits[0] ? byId.get(facts.fits[0].tradition) : undefined;
+  const rows = facts.fits.map((f, k): TraditionRow => {
+    const t = byId.get(f.tradition)!;
+    const split = k > 0 ? nearest?.neighbours.find((n) => n.id === t.id) : undefined;
+    const divided = t.divided.map((id) => i.bundle.axes[id]?.title ?? principleLabel(i.bundle, id));
+    return {
+      id: t.id,
+      name: t.name,
+      closeness: f.closeness,
+      band: T.closeness[f.closeness],
+      differences: f.differences.map((d) =>
+        d.kind === 'axis' ? T.further(i.bundle.axes[d.axis]?.poles[d.toward] ?? d.axis) : d.more ? T.more(principleLabel(i.bundle, d.principle)) : T.less(principleLabel(i.bundle, d.principle)),
+      ),
+      summary: t.summary,
+      split: split && nearest ? { from: nearest.name, text: split.split } : null,
+      divided: divided.length ? T.divided(t.adherents, divided) : null,
+    };
+  });
+  return {
+    status: facts.status,
+    lead,
+    basis: facts.status === 'insufficient' ? null : T.basis(facts.compared.map(spectrum), facts.principles.map((p) => principleLabel(i.bundle, p))),
+    rows,
+    named: [...facts.named],
+    reference: facts.named[0] ? { id: facts.named[0], name: name(facts.named[0]) } : null,
+  };
 }
 
 // --- Parts -----------------------------------------------------------------------------------

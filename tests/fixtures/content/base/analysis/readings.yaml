@@ -1,0 +1,11 @@
+# Test readings: two from inside each test tradition.
+- { id: reformers_one, author: Ada Reform, title: The Case for Change, year: 1990, kind: book, voice: reformers, note: Argues that rules should change with the times., about: { axis: social, toward: Progress } }
+- { id: reformers_two, author: Ben Reform, title: Changing Well, year: 1995, kind: essay, in: Test Journal, voice: reformers, note: Argues for careful change. }
+- { id: planners_one, author: Cy Plan, title: A Common Plan, year: 1980, kind: book, voice: planners, note: Argues for shared rules set together., about: { axis: civil, toward: Authority } }
+- { id: planners_two, author: Di Plan, title: Planning Together, year: 1985, kind: lecture, voice: planners, note: Argues that goals are best pursued together. }
+- { id: keepers_one, author: Ed Keep, title: What Has Worked, year: 1970, kind: book, voice: keepers, note: Argues for keeping what works., about: { axis: social, toward: Tradition } }
+- { id: keepers_two, author: Flo Keep, title: Slowly, year: 1975, kind: article, in: Test Review, voice: keepers, note: Argues that change should be slow. }
+- { id: marketeers_one, author: Gus Market, title: Free to Trade, year: 1960, kind: book, voice: marketeers, note: Argues for free exchange., about: { axis: civil, toward: Liberty } }
+- { id: marketeers_two, author: Hal Market, title: The Small State, year: 1965, kind: speech, voice: marketeers, note: Argues for a small state. }
+- { id: moderates_one, author: Ivy Middle, title: One Step at a Time, year: 2000, kind: book, voice: moderates, note: Argues for gradual change. }
+- { id: moderates_two, author: Jo Middle, title: The Best of Both, year: 2005, kind: essay, voice: moderates, note: Argues for taking the best of each side. }

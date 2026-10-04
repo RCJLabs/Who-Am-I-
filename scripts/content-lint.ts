@@ -15,15 +15,18 @@ const format = opt('--format') ?? 'pretty';
 const maxWarnings = Number(opt('--max-warnings') ?? Infinity);
 const dir = opt('--dir') ?? 'content';
 
-const { bundle, diagnostics } = compile(loadContentDir(dir));
+const { bundle, analysis, diagnostics } = compile(loadContentDir(dir));
 const { errors, warnings } = counts(diagnostics);
 
 if (diagnostics.length) {
   console.log(formatPretty(diagnostics));
   if (format === 'github') console.log(formatGithub(diagnostics));
 }
+const pack = analysis
+  ? `; ${analysis.traditions.length} traditions, ${Object.keys(analysis.readings).length} readings, analysis version ${analysis.version}`
+  : '';
 const stats = bundle
-  ? `${bundle.topics.length} topics, ${bundle.topics.reduce((n, t) => n + t.items.length, 0)} items, content version ${bundle.contentVersion}`
+  ? `${bundle.topics.length} topics, ${bundle.topics.reduce((n, t) => n + t.items.length, 0)} items, content version ${bundle.contentVersion}${pack}`
   : 'no bundle (fix errors first)';
 console.log(`\n${errors} error(s), ${warnings} warning(s) — ${stats}`);
 

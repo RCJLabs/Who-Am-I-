@@ -13,7 +13,48 @@ export const HIGH_CONFIDENCE = 0.8;
 export const FIRM_POSITION = 0.5;
 
 /** How many of each kind of recommendation to show. */
-export const LIMIT = { positions: 3, against: 1, for: 1, explore: 3, reflect: 3, drivers: 2 } as const;
+export const LIMIT = {
+  positions: 3,
+  against: 1,
+  for: 1,
+  explore: 3,
+  reflect: 3,
+  drivers: 2,
+  /** Political traditions listed, and differences named for each. */
+  traditions: 3,
+  differences: 2,
+  /** Readings for a matched tradition (for two traditions, one of each from both). */
+  readings: { inside: 2, outside: 2 },
+} as const;
+
+/** Political traditions: reference points, never labels. See docs/ANALYSIS.md. */
+export const TRADITION = {
+  /** Below this many scored political spectrums, or this much total confidence, no comparison. */
+  minAxes: 2,
+  minConfidence: 1,
+  /** A spectrum or principle a tradition's adherents split on counts this much. */
+  dividedWeight: 0.5,
+  /** Share of the squared distance that compared principles take, once there's enough evidence. */
+  principleShare: 0.25,
+  /** Summed confidence of the scored compared principles before they count. */
+  principleEvidence: 3,
+  /** Political questions the answers and the nearest tradition's sheet must share before comparing. */
+  minQuestions: 4,
+  /**
+   * A tradition is named only when the answers follow it question by question: an RMS gap to its
+   * sheet's answers of at most this (-1..1 scales; one step on a 7-point scale is 0.33). Above it,
+   * the answers pull different ways and only average out near the tradition.
+   */
+  fit: 0.55,
+  /** Nearest distance at or above this: no tradition is a close fit. */
+  loose: 0.35,
+  /** Second nearest within this of the nearest: between the two. */
+  between: 0.04,
+  /** Closeness bands by distance: very close, close, then some overlap below `loose`. */
+  band: { veryClose: 0.15, close: 0.25 },
+  /** Gaps at least this large are named as differences. */
+  difference: 0.35,
+} as const;
 
 /**
  * Explore-next weighting by spectrum family: how much firming up a result in each family is

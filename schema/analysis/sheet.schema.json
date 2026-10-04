@@ -1,0 +1,48 @@
+{
+  "title": "Who Am I answer sheet for a political tradition",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "tradition": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "The tradition this sheet places"
+    },
+    "sources": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "The writers the answers draw on, e.g. \"Eduard Bernstein, The Preconditions of Socialism (1899)\""
+    },
+    "answers": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 7
+      },
+      "description": "The step a thoughtful adherent would choose, by question (topic.item)"
+    },
+    "divided": {
+      "description": "Questions the tradition's adherents split on, listed instead of answered",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+      }
+    }
+  },
+  "required": [
+    "tradition",
+    "sources",
+    "answers"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,13 @@
+# Test sheet: social -0.7, civil 0.35; autonomy -0.35, life 0.85.
+tradition: keepers
+sources:
+  - Ed Keep, What Has Worked (1970)
+answers:
+  alpha.stance: 2
+  alpha.circ: 1
+  alpha.circ_deep: 2
+  beta.stance: 5
+  alpha.anchor_auto: 3
+  beta.anchor_auto: 3
+  alpha.anchor_life: 7
+  beta.anchor_life: 6

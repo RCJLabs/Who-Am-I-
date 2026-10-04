@@ -62,6 +62,25 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.enjoys': [[['Jazz', 'Rock']]],
   'analysis.basedOn': [[1], [7]],
   'analysis.basedOnSelf': [[1], [2]],
+  'analysis.traditions.summary.match': [['Social democracy']],
+  'analysis.traditions.summary.between': [['Social democracy', 'Green politics']],
+  'analysis.traditions.lead.match': [['Libertarianism', []], ['Libertarianism', ['Classical liberalism', 'Centrism']]],
+  'analysis.traditions.lead.between': [['Social democracy', 'Green politics']],
+  'analysis.traditions.lead.loose': [[['Centrism']], [['Centrism', 'Social liberalism']]],
+  'analysis.traditions.lead.mixed': [[['Centrism', 'Communitarianism']]],
+  'analysis.traditions.lead.insufficient': [[[]], [['Diplomatic']], [['Civil', 'Cultural']]],
+  'analysis.traditions.basis': [[['Economic', 'Civil'], []], [['Economic', 'Civil', 'Cultural', 'Diplomatic'], ['Equality', 'Liberty']]],
+  'analysis.traditions.further': [['Liberty']],
+  'analysis.traditions.more': [['Equality']],
+  'analysis.traditions.less': [['Loyalty']],
+  'analysis.traditions.splitFrom': [['Democratic socialism']],
+  'analysis.traditions.divided': [['social democrats', ['Civil']], ['libertarians', ['Diplomatic', 'Liberty']]],
+  'analysis.traditions.tick': [['Social democracy']],
+  'analysis.traditions.reference': [['Social democracy', 'Leans Equality']],
+  'analysis.traditions.mapDesc': [[11]],
+  'analysis.next.readings.intro': [[['Social democracy']], [['Social democracy', 'Green politics']]],
+  'analysis.next.readings.inside': [['Social democracy']],
+  'analysis.next.readings.outside': [['Social democracy', 'Classical liberalism']],
   'analysis.next.read.against': [['Abortion']],
   'analysis.next.read.for': [['Abortion']],
   'analysis.next.explore.map': [['Civil']],
@@ -108,7 +127,12 @@ describe('app wording', () => {
 
   it('uses no loaded terms', () => {
     const terms = termMatchers(parseTerms(readFileSync('content/loaded-terms.txt', 'utf8')));
-    const hits = render().flatMap(({ path, text }) => findTerms(text, terms).map((t) => `${path}: "${t}" in ${JSON.stringify(text)}`));
+    // Wording about the political traditions answers to the pack's own terms too.
+    const pack = [...terms, ...termMatchers(parseTerms(readFileSync('content/analysis/loaded-terms.txt', 'utf8')))];
+    const aboutTraditions = (path: string) => path.startsWith('analysis.traditions.') || path.startsWith('analysis.next.readings.');
+    const hits = render().flatMap(({ path, text }) =>
+      findTerms(text, aboutTraditions(path) ? pack : terms).map((t) => `${path}: "${t}" in ${JSON.stringify(text)}`),
+    );
     expect(hits).toEqual([]);
   });
 

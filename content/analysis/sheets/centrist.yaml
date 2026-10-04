@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Centrism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: centrist
+sources:
+  - Arthur M. Schlesinger Jr., The Vital Center (1949)
+  - Karl Popper, The Open Society and Its Enemies (1945)
+  - Aurelian Craiutu, Faces of Moderation (2017)
+  - George Savile, Marquess of Halifax, The Character of a Trimmer (1688)
+answers:
+  fairness.stance: 3   # Inequality is acceptable above a guaranteed floor; the state shields the economically weak (Popper, Open Society)
+  abortion.stance: 5   # Legal on request early, with limits later: a settlement between two serious claims, as in most European law
+  assisted_dying.stance: 5   # For terminal illness with safeguards, reviewed step by step before any widening (Popper, Open Society)
+  vaccine_mandates.stance: 5   # Requirements kept targeted: school entry and high-risk jobs, not blanket passes
+  drug_policy.stance: 2   # Prison for dealers, fines or diversion to treatment for users; reform by tested steps (Popper, Open Society)
+  paternalism.stance: 5   # Seatbelts, helmets and sugar levies pass where the harm is serious and the freedom lost is small
+  organ_donation.stance: 2   # Cover donors' costs and lost earnings, but keep organs out of the market
+  gene_editing.stance: 3   # Irreversible changes wait until shown safe, since reform must stay correctable (Popper, Open Society)
+  surveillance.stance: 5   # Some bulk collection, checked by judges and parliament: power limited by institutions (Popper, Open Society)
+  religious_liberty.stance: 3   # Equality law binds everyone, with narrow carve-outs for religious bodies so rival moral communities can coexist
+  protest.stance: 2   # No cause stands above the law, and none is punished extra for its message (Halifax, Character of a Trimmer)
+  torture.stance: 2   # An absolute legal ban that still admits tragic clashes of values, after Berlin (Craiutu, Faces of Moderation)
+  public_safety.stance: 3   # Due process is the rule, with narrow exceptions for terrorism (Schlesinger, Vital Center on civil liberties)
+  taxes.stance: 5   # Progressive taxes fund a welfare state within a market economy (Schlesinger, Vital Center)
+  welfare.stance: 3   # Support paired with firm job-search duties: rights with responsibilities
+  minimum_wage.stance: 5   # A floor near half of median pay, raised step by step on independent advice
+  regulation.stance: 5   # Markets need rules, made and revised piecemeal (Popper, Open Society)
+  unions.stance: 5   # Unions as one organized interest among many, able to strike within fair limits (Schlesinger, Vital Center)
+  trade.stance: 5   # Open trade, with adjustment help for workers who lose out
+  housing.stance: 3   # Light caps on sudden spikes, while building more homes does the main work
+  inheritance.stance: 5   # Substantial on large estates, with allowances for ordinary bequests, to keep opportunity open
+  policing.stance: 5   # More officers together with accountability; rejects both defunding and wider stop powers
+  same_sex_marriage.stance: 6   # Full marriage and adoption rights, without the state prescribing what schools teach about family values
+  gender_roles.stance: 5   # Childcare and shareable leave so both parents can work, without steering couples to one model
+  prisons.stance: 5   # Community sentences for most first offenders, prison for repeat or violent ones
+  climate.stance: 5   # Net zero by mid-century through steady, legislated steps, accepting some cost
+  cooperation.stance: 5   # Binding rules enforced by bodies the country has joined, with lawmaking kept at home
+  foreign_aid.stance: 5   # Steady aid at a level both sides of politics can sustain, judged by results
+  marriage.stance: 5   # No-fault divorce after about a year apart, with support where children are involved
+  gambling.stance: 5   # Legal and licensed, with curbs on advertising and checks on heavy losses
+  moral_foundations.loyalty_1: 4   # The trimmer's one near-idolatry is his country, not its rulers (Halifax, Character of a Trimmer)
+  moral_foundations.equality_3: 4   # A fair chance and a decent floor matter more than the size of the gaps
+  moral_foundations.liberty_3: 4   # Unlimited freedom defeats itself, so law must limit it (Popper, Open Society: paradox of freedom)
+  moral_foundations.deserts_1: 4   # Rewards should broadly track contribution in a market economy
+  moral_foundations.equality_1: 4   # Narrower gaps would help, short of leveling
+  moral_foundations.loyalty_3: 2   # Civic duty to country and community is real (Halifax, Character of a Trimmer)
+  moral_foundations.deserts_2: 4   # Reciprocity: rights come with responsibilities
+  moral_foundations.liberty_1: 2   # A democratic state is an instrument of freedom more than an intruder (Schlesinger, Vital Center)
+  moral_foundations.equality_2: 2   # Gaps are judged by how they arise and whether a floor holds, not in themselves
+  moral_foundations.deserts_3: 4   # The floor comes first; above it effort should pay (Popper, Open Society)
+  moral_foundations.loyalty_2: 2   # Judgment over group loyalty: the trimmer shifts weight when his own side overreaches (Halifax, Character of a Trimmer)
+  moral_foundations.liberty_2: 3   # accepts limited protective rules, but government should not aim at making people happy (Popper, "Utopia and Violence")
+  organ_donation.anchor_ml: 5   # Compensation for costs yes, a market in kidneys no
+  free_speech.anchor_liberty: 5   # An open society needs free criticism, with a limit at incitement (Popper, Open Society: paradox of tolerance)
+  surveillance.anchor_liberty: 5   # Private messages stay private unless a judge's warrant says otherwise
+  healthcare.anchor_ml: 2   # Paid private care beside public provision is allowed across most Western systems
+  welfare.anchor_desert: 2   # A safety net should not hang on desert alone (Popper, Open Society)
+  unions.anchor_loyal: 2   # Individual conscience over collective pressure
+  inheritance.anchor_desert: 3   # Bequests are legitimate, though large unearned fortunes may fairly be taxed
+  war.anchor_loyal: 3   # Loyal opposition: one can serve the country while opposing a mistaken war
+  marriage.anchor_lib: 6   # Ending a marriage is a personal freedom, with safeguards for children
+  family_crime.anchor_loyal: 2   # The rule of law outranks family loyalty when the crime is serious
+  work.anchor_cw: 5   # Contributing is a civic virtue, though not one to enforce on those who can afford otherwise
+  work.anchor_lib: 3   # Rules on hours protect health, leaving room for flexible agreements
+  health.anchor_cw: 6   # Pooling risk between healthy and sick underpins both universal and mandated-insurance systems
+  gambling.anchor_lib: 5   # Adults may bet their own money, within rules that protect people at risk
+divided:
+  - death_penalty.stance   # European, Canadian and Australian centrists back abolition (1); many American centrists keep it for the worst murders (5)
+  - sex_work.stance   # Centrists in Sweden, France and Ireland back criminalizing buyers (2); those in Germany, the Netherlands and New Zealand back licensed legal sex work (6)
+  - surrogacy.stance   # American centrists accept paid surrogacy under strict rules (5); British, Canadian and Australian centrists allow only unpaid surrogacy with costs covered (3)
+  - free_speech.stance   # American centrists hold the First Amendment line (1); European and Commonwealth centrists back incitement-to-hatred laws (5)
+  - guns.stance   # American centrists treat ownership as a right with background checks or licensing (5-6); European and Australian centrists allow only licensed hunting or sport (2)
+  - healthcare.stance   # American, Dutch, German and Swiss centrists favor mandatory insurance with subsidies (3); British, Nordic and southern European centrists favor tax-funded care with private cover on top (5)
+  - immigration.stance   # American centrists mostly want legal intake somewhat higher than now (5); many European, British and Canadian centrists want it somewhat lower (3)
+  - transgender.stance   # British and American centrists mostly keep medical gatekeeping and sex-based spaces (3); many continental European centrists back legal sex by self-declaration (5-6)
+  - sex_work.anchor_ml   # Nordic-model centrists agree paying for sex should be barred; regulation-model centrists in Germany, the Netherlands and New Zealand disagree
+  - surrogacy.anchor_ml   # Most European and Commonwealth centrists agree paid surrogacy should be barred; most American centrists disagree

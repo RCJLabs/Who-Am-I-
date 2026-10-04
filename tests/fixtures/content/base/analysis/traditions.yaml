@@ -1,0 +1,52 @@
+# Test traditions: two on each side of both political spectrums, and a center one near the middle.
+# Their positions come from the answer sheets in sheets/.
+compare: [autonomy, life]
+traditions:
+  - id: reformers
+    name: Reform
+    adherents: reformers
+    side: left
+    summary: Change the rules when they stop serving people.
+    neighbours:
+      - { id: planners, split: Reformers trust people to choose; planners trust a common plan. }
+      - { id: moderates, split: Reformers want change sooner than moderates do. }
+    inside: [reformers_one, reformers_two]
+    outside: [keepers_one, moderates_one]
+  - id: planners
+    name: Planning
+    adherents: planners
+    side: left
+    summary: Shared goals, pursued together and on purpose.
+    neighbours:
+      - { id: reformers, split: Planners trust a common plan; reformers trust people to choose. }
+    inside: [planners_one, planners_two]
+    outside: [marketeers_one, moderates_two]
+  - id: keepers
+    name: Keeping
+    adherents: keepers
+    side: right
+    summary: Keep what has worked, and change it slowly.
+    neighbours:
+      - { id: marketeers, split: Keepers value order; marketeers value free exchange. }
+      - { id: moderates, split: Keepers want change later than moderates do. }
+    inside: [keepers_one, keepers_two]
+    outside: [reformers_one, moderates_one]
+  - id: marketeers
+    name: Free exchange
+    adherents: marketeers
+    side: right
+    summary: Let people trade and choose, with the state kept small.
+    neighbours:
+      - { id: keepers, split: Marketeers value free exchange; keepers value order. }
+    inside: [marketeers_one, marketeers_two]
+    outside: [planners_one, moderates_two]
+  - id: moderates
+    name: Moderation
+    adherents: moderates
+    side: center
+    summary: Take the best of each side, one step at a time.
+    neighbours:
+      - { id: reformers, split: Moderates want change later than reformers do. }
+      - { id: keepers, split: Moderates want change sooner than keepers do. }
+    inside: [moderates_one, moderates_two]
+    outside: [reformers_two, keepers_two]

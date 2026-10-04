@@ -22,6 +22,19 @@ export interface ContentSources {
   principles: SourceFile;
   topics: SourceFile[];
   loadedTerms?: SourceFile;
+  /** Party and politician names the analysis pack must not use (W112). */
+  namedPolitics?: SourceFile;
+  /** content/analysis/: reference material for the results analysis. Optional: no pack, no feature. */
+  analysis?: AnalysisSources;
+}
+
+export interface AnalysisSources {
+  traditions?: SourceFile;
+  readings?: SourceFile;
+  /** One answer sheet per tradition (content/analysis/sheets/). */
+  sheets?: SourceFile[];
+  /** Terms loaded only when describing political traditions ("moderate", "mainstream"): checked in the pack on top of loadedTerms. */
+  loadedTerms?: SourceFile;
 }
 
 /** Rule codes. Errors fail the build; warnings are budgeted by --max-warnings. */
@@ -39,6 +52,8 @@ export const RULES: Readonly<Record<string, string>> = {
   E011: 'option-values',
   E012: 'sensitivity',
   E013: 'anchor-keying',
+  E014: 'tradition-balance',
+  E015: 'answer-sheet',
   W101: 'keying-balance',
   W102: 'cross-topic-ref',
   W103: 'unproven-reachability',
@@ -49,4 +64,6 @@ export const RULES: Readonly<Record<string, string>> = {
   W108: 'loaded-term',
   W109: 'anchor-cross-load',
   W110: 'lopsided-options',
+  W111: 'reading-balance',
+  W112: 'named-politics',
 };

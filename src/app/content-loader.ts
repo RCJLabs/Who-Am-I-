@@ -1,9 +1,11 @@
 // Loads domains' content on demand and folds it into the bundle. Plain TypeScript so it can be
 // unit-tested; stores/content.svelte.ts mirrors its state for the screens.
+import type { AnalysisPack } from '../model/analysis.ts';
 import type { Bundle, Topic } from '../model/content.ts';
 import { withTopics } from '../engine/bundle-split.ts';
 
 export type Loaders = Readonly<Record<string, () => Promise<{ default: Topic[] }>>>;
+export type PackLoad = () => Promise<{ default: AnalysisPack | null }>;
 
 export class ContentLoader {
   private current: Bundle;
@@ -81,5 +83,29 @@ export class ContentLoader {
       p.catch(() => this.pending.delete(domain));
     }
     return p;
+  }
+}
+
+/**
+ * Loads the analysis pack once, on first use. After a failure the next call tries again, though a
+ * browser may keep failing the same import until the page reloads.
+ */
+export class PackLoader {
+  private pending: Promise<AnalysisPack | null> | null = null;
+  private readonly load: PackLoad;
+
+  constructor(load: PackLoad) {
+    this.load = load;
+  }
+
+  ensure(): Promise<AnalysisPack | null> {
+    if (!this.pending) {
+      const p = this.load().then((m) => m.default);
+      this.pending = p;
+      p.catch(() => {
+        if (this.pending === p) this.pending = null;
+      });
+    }
+    return this.pending;
   }
 }

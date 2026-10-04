@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import type { Bundle, Topic } from '../model/content.ts';
 import { splitBundle } from '../engine/bundle-split.ts';
 import { realBundle } from '../../tests/helpers.ts';
-import { ContentLoader, type Loaders } from './content-loader.ts';
+import type { AnalysisPack } from '../model/analysis.ts';
+import { ContentLoader, PackLoader, type Loaders } from './content-loader.ts';
 
 /** Loaders over the real content that count calls and can be made to fail. */
 function setup(fail = new Set<string>()) {
@@ -73,5 +74,39 @@ describe('loading content by domain', () => {
     const { loader } = setup();
     expect(await loader.ensureAll()).toBe(true);
     expect(loader.bundle).toEqual(realBundle());
+  });
+});
+
+describe('loading the analysis pack', () => {
+  const pack = { format: 'whoami.analysis', schema: 1, version: 'test', compare: [], traditions: [], readings: {} } as AnalysisPack;
+  const counting = (results: (AnalysisPack | null | Error)[]) => {
+    const calls = { n: 0 };
+    const load = async () => {
+      const r = results[Math.min(calls.n++, results.length - 1)]!;
+      if (r instanceof Error) throw r;
+      return { default: r };
+    };
+    return { calls, loader: new PackLoader(load) };
+  };
+
+  it('loads only when asked, once, however many ask at the same time', async () => {
+    const { calls, loader } = counting([pack]);
+    expect(calls.n).toBe(0);
+    const [a, b] = await Promise.all([loader.ensure(), loader.ensure()]);
+    expect(a).toBe(pack);
+    expect(b).toBe(pack);
+    await loader.ensure();
+    expect(calls.n).toBe(1);
+  });
+
+  it('resolves to null when there is no pack', async () => {
+    expect(await counting([null]).loader.ensure()).toBeNull();
+  });
+
+  it('tries again after a failure', async () => {
+    const { calls, loader } = counting([new Error('offline'), pack]);
+    await expect(loader.ensure()).rejects.toThrow('offline');
+    expect(await loader.ensure()).toBe(pack);
+    expect(calls.n).toBe(2);
   });
 });

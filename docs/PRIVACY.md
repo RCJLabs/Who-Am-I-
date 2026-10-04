@@ -27,7 +27,8 @@ No AI service writes them, and nothing is sent anywhere to make them. They never
 topics (religion and worldview, identity, and other questions marked sensitive): those answers
 appear only in their own sections of your results. The counts in the summary (topics answered,
 challenges faced, open tensions) include every answer, but never say which topics or how you
-answered.
+answered. The comparison with political traditions uses only answers that could be shared, so
+religion and other sensitive answers can never move it.
 
 ## Exporting and sharing
 
