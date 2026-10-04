@@ -179,7 +179,8 @@ describe('analysis pack lint', () => {
     { name: 'E004 a pole that is not on the spectrum', edits: [[R, 'toward: Progress', 'toward: Forward']], expect: [['E004', R, 'Ada Reform']] },
     { name: 'E004 an unknown question', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  alpha.nothing: 3\n']], expect: [['E004', S('reformers'), 'alpha.nothing: 3']] },
     // A sheet's own errors point at its first answer.
-    { name: 'E015 every political question answered or divided', edits: [[S('reformers'), '  beta.stance: 3\n', '']], expect: [['E015', S('reformers'), 'alpha.stance:']] },
+    // alpha.stance and alpha.circ still place the spectrum, so only the missing answer is at fault.
+    { name: 'E015 every political question answered or divided', edits: [[S('reformers'), '  alpha.circ_deep: 4\n', '']], expect: [['E015', S('reformers'), 'alpha.stance:']] },
     { name: 'E015 only questions that place a tradition', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  traits.t1: 3\n']], expect: [['E015', S('reformers'), 'traits.t1: 3']] },
     { name: 'E015 only questions that could be shared', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  gamma.belief: 3\n']], expect: [['E015', S('reformers'), 'gamma.belief: 3']] },
     { name: 'E015 only scale questions', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  alpha.limit: 2\n']], expect: [['E015', S('reformers'), 'alpha.limit: 2']] },
