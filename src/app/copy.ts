@@ -300,6 +300,11 @@ export const copy = {
         outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
         kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
       },
+      foryou: {
+        title: 'For you',
+        intro: 'Ideas from how you described yourself, and from published research on what people who describe themselves that way tend to enjoy. Invitations, not advice: take what fits.',
+        because: (poles: readonly string[]) => `Because you lean toward ${list(poles.map(q))}`,
+      },
       explore: {
         title: 'Explore next',
         intro: 'The topics that would add most to your results.',

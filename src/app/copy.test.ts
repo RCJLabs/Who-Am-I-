@@ -81,6 +81,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.next.readings.intro': [[['Social democracy']], [['Social democracy', 'Green politics']]],
   'analysis.next.readings.inside': [['Social democracy']],
   'analysis.next.readings.outside': [['Social democracy', 'Classical liberalism']],
+  'analysis.next.foryou.because': [[['Reserved']], [['Reserved', 'Organized']]],
   'analysis.next.read.against': [['Abortion']],
   'analysis.next.read.for': [['Abortion']],
   'analysis.next.explore.map': [['Civil']],

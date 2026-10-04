@@ -1,6 +1,8 @@
 <script lang="ts">
-  // Recommendations, one card per kind: cases to read from both sides, topics to explore next,
-  // and tensions worth a second look. Each item links to where you can act on it.
+  // Recommendations, one card per kind: cases to read from both sides, readings on the political
+  // traditions named, personal suggestions, topics to explore next, and tensions worth a second
+  // look. Items that lead somewhere link to where you can act on them; readings and suggestions
+  // are plain cards.
   import type { NextGroup } from '../../analysis/compose.ts';
   import Icon from '../Icon.svelte';
 

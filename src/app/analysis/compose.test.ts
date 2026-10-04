@@ -214,6 +214,31 @@ describe('political traditions in the analysis', () => {
     ]);
   });
 
+  it('suggests what people who describe themselves the same way tend to enjoy, and why', () => {
+    const log = new Log();
+    for (const [item, step] of [['traits.t1', 5], ['traits.t2', 1], ['traits.t3', 5]] as const) log.add(item, scale(step));
+    const s = buildAnswerState(b, log.events);
+    const o = { appVersion: 't', now: 'x', resolutions: [] };
+    const profile = buildProfile(s, { ...o, includeSensitive: true });
+    const publicProfile = buildProfile(s, { ...o, includeSensitive: false });
+    const tensions = detectTensions(s, observe(s, { includeSensitive: true }), []);
+    const run = (pack: ReturnType<typeof fixturePack> | null) => {
+      const facts = analyse({ state: s, profile, publicProfile, tensions, pack });
+      return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack });
+    };
+    const group = run(fixturePack()).next.find((g) => g.id === 'foryou')!;
+    expect(group.title).toBe('For you');
+    expect(group.items).toEqual([
+      {
+        testid: 'rec-foryou-warm_company',
+        title: 'Long talks with friends',
+        detail: 'People who describe themselves as warm tend to enjoy long talks with close friends.',
+        meta: 'Because you lean toward “Warm” · Ada Trait, Test Journal (2001)',
+      },
+    ]);
+    expect(run(null).next.some((g) => g.id === 'foryou')).toBe(false);
+  });
+
   it('shows nothing about traditions without the pack', () => {
     const a = withTraditions(match, [{ kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' }], false);
     expect(a.traditions).toBeNull();

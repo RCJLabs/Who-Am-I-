@@ -1,7 +1,7 @@
 // Turns the analysis facts into what the results page shows: a summary, a short read-out per
 // section and next steps. Pure, so it's tested in node. Sentence templates live in copy.analysis;
 // this file only chooses which parts go into them.
-import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec } from '../../engine/analysis/index.ts';
+import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec, SuggestionRec } from '../../engine/analysis/index.ts';
 import type { AnalysisFacts, Closeness, TraditionStatus } from '../../engine/analysis/types.ts';
 import type { AnalysisPack } from '../../model/analysis.ts';
 import { BAND, LIMIT } from '../../engine/analysis/constants.ts';
@@ -48,7 +48,7 @@ export interface NextItem {
 }
 
 export interface NextGroup {
-  id: 'read' | 'readings' | 'explore' | 'reflect';
+  id: 'read' | 'readings' | 'foryou' | 'explore' | 'reflect';
   title: string;
   intro: string;
   items: NextItem[];
@@ -208,6 +208,8 @@ function next(i: ComposeInput): NextGroup[] {
   const readings = i.facts.next.readings.map((r) => readingItem(i, r)).filter((x): x is NextItem => x !== null);
   const named = (i.facts.public.traditions?.named ?? []).map((id) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id);
   if (readings.length) groups.push({ id: 'readings', title: A.next.readings.title, intro: A.next.readings.intro(named), items: readings });
+  const foryou = i.facts.next.suggestions.map((r) => suggestionItem(i, r)).filter((x): x is NextItem => x !== null);
+  if (foryou.length) groups.push({ id: 'foryou', title: A.next.foryou.title, intro: A.next.foryou.intro, items: foryou });
   const explore = i.facts.next.explore.map((r) => exploreItem(i, r));
   if (explore.length) groups.push({ id: 'explore', title: A.next.explore.title, intro: A.next.explore.intro, items: explore });
   const reflect = i.facts.next.reflect.map((r) => reflectItem(i.bundle, r));
@@ -268,6 +270,13 @@ function readingItem(i: ComposeInput, r: ReadingRec): NextItem | null {
     detail: reading.note,
     meta: [`${reading.author} (${reading.year})`, A.next.readings.kind[reading.kind], view].join(' · '),
   };
+}
+
+function suggestionItem(i: ComposeInput, r: SuggestionRec): NextItem | null {
+  const g = i.pack?.suggestions.find((x) => x.id === r.suggestion);
+  if (!g) return null;
+  const poles = r.basis.map((b) => i.bundle.axes[b.axis]?.poles[b.pole] ?? b.axis);
+  return { testid: `rec-foryou-${g.id}`, title: g.title, detail: g.text, meta: [A.next.foryou.because(poles), g.source].join(' · ') };
 }
 
 function reflectItem(b: Bundle, r: ReflectRec): NextItem {

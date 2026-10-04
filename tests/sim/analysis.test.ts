@@ -21,6 +21,7 @@ import { personaResponses, randomPolicy, scriptedPolicy } from './policies.ts';
 const b = realBundle();
 const pack = realPack();
 const terms = termMatchers(parseTerms(readFileSync('content/loaded-terms.txt', 'utf8')));
+const blocked = termMatchers(parseTerms(readFileSync('content/analysis/blocked-advice.txt', 'utf8')));
 const TONE = [/\byou should\b/i, /\byou must\b/i, /\byou are an? \b/i, /\bmost people\b/i, /\bnormal\b/i, /\bwrong\b/i, /%/];
 const CONTRAST = /\b(but|though|although|yet|however|despite)\b/i;
 // Citations quote published titles verbatim, so (as in lint rule W108) they're left out of the
@@ -28,6 +29,7 @@ const CONTRAST = /\b(but|though|although|yet|however|despite)\b/i;
 const citations = [
   ...b.topics.flatMap((t) => [t.source, ...t.items.map((it) => (it.type === 'challenge' ? it.source : undefined))]),
   ...Object.values(pack?.readings ?? {}).flatMap((r) => [r.title, r.author, r.in]),
+  ...(pack?.suggestions ?? []).map((g) => g.source),
 ].filter((c): c is string => !!c);
 const uncited = (text: string): string => citations.reduce((t, c) => t.split(c).join(''), text);
 const sensitive = new Set(b.topics.filter((t) => t.sensitive).map((t) => t.id));
@@ -91,6 +93,14 @@ function checkAnalysis(a: Analysis, who: string): void {
   expect(reflect.length, who).toBeLessThanOrEqual(3);
   expect(new Set(reflect.map((x) => x.testid)).size, who).toBe(reflect.length);
   expect(a.next.find((g) => g.id === 'explore')?.items.length ?? 0, who).toBeLessThanOrEqual(3);
+  // Personal suggestions: at most three, worded as tendencies, never touching a blocked subject.
+  const foryou = a.next.find((g) => g.id === 'foryou')?.items ?? [];
+  expect(foryou.length, who).toBeLessThanOrEqual(3);
+  for (const item of foryou) {
+    const text = uncited([item.title, item.detail, item.meta ?? ''].join(' '));
+    for (const re of TONE) expect(text, `${who}: ${re} in ${item.testid}`).not.toMatch(re);
+    expect(findTerms(text, blocked), `${who}: blocked subject in ${item.testid}`).toEqual([]);
+  }
 }
 
 describe('analysis of the personas', () => {
