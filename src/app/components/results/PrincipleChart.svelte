@@ -2,6 +2,7 @@
   // Principles as a diverging bar chart, most endorsed first: bars grow right (endorses) or left
   // (rejects) from a shared center line. Each row opens to the definition, consistency, any open
   // tensions, and a topic-by-topic dot strip that shows where the principle was applied unevenly.
+  import { LOW_CONFIDENCE } from '../../../engine/analysis/constants.ts';
   import { copy } from '../../copy.ts';
   import { to } from '../../routes.ts';
   import { endorsementLabel, toPercent, type RankedPrinciple } from '../../view.ts';
@@ -15,6 +16,9 @@
     topicTitle: (id: string) => string;
     tensions: Map<string, { key: string; label: string }[]>;
   } = $props();
+
+  // Rows resting on few answers are drawn lighter, and say so in words.
+  const anyLow = $derived(rows.some((r) => r.result.confidence < LOW_CONFIDENCE));
 
   /** Left offset and width (percent of the bar area) for a -1..1 score. */
   function bar(score: number): { left: number; width: number } {
@@ -31,17 +35,21 @@
       <span><span class="swatch"></span>{copy.results.endorses}</span>
     </span>
   </div>
+  {#if anyLow}
+    <p class="small muted low-key"><span class="swatch faded" aria-hidden="true"></span>{copy.results.lighter}</p>
+  {/if}
   {#each rows as r (r.principle.id)}
     {@const b = bar(r.score)}
     {@const byTopic = Object.entries(r.result.byTopic).sort((x, y) => y[1] - x[1])}
     {@const open = tensions.get(r.principle.id) ?? []}
+    {@const low = r.result.confidence < LOW_CONFIDENCE}
     <details class="prow" data-testid="principle-{r.principle.id}">
       <summary>
         <span class="label">{r.principle.label}</span>
-        <span class="visually-hidden">: {endorsementLabel(r.score)}</span>
+        <span class="visually-hidden">: {endorsementLabel(r.score)}{low ? `, ${copy.results.lowConfidence.toLowerCase()}` : ''}</span>
         <span class="area" aria-hidden="true">
           <span class="zero"></span>
-          <span class="bar" class:neg={r.score < 0} style:left="{b.left}%" style:width="{b.width}%"></span>
+          <span class="bar" class:neg={r.score < 0} class:low style:left="{b.left}%" style:width="{b.width}%"></span>
         </span>
       </summary>
       <div class="more small">
@@ -153,6 +161,16 @@
   .bar.neg {
     background: var(--chart-reject);
     border-radius: 4px 0 0 4px;
+  }
+  .bar.low,
+  .swatch.faded {
+    opacity: 0.45;
+  }
+  .low-key {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 6px;
   }
   .more {
     padding: 2px 0 12px;

@@ -14,6 +14,7 @@
     description,
     mixed = false,
     feeders = [],
+    drivers = [],
     testid,
   }: {
     title: string;
@@ -23,6 +24,8 @@
     description?: string | undefined;
     mixed?: boolean;
     feeders?: Topic[];
+    /** The topics that pulled toward each pole, strongest first. */
+    drivers?: { pole: string; topics: { id: string; title: string }[] }[];
     testid?: string | undefined;
   } = $props();
 
@@ -56,6 +59,19 @@
   </summary>
   <div class="more small">
     {#if description}<p>{description}</p>{/if}
+    {#if score !== null && drivers.some((d) => d.topics.length)}
+      <p class="muted pulled">{copy.results.pulledBy}</p>
+      <ul class="drivers">
+        {#each drivers as d (d.pole)}
+          {#if d.topics.length}
+            <li>
+              {copy.results.toward(d.pole)}
+              {#each d.topics as t, i (t.id)}{i > 0 ? ', ' : ' '}<a href={to.topicResults(t.id)}>{t.title}</a>{/each}
+            </li>
+          {/if}
+        {/each}
+      </ul>
+    {/if}
     {#if score !== null}
       <p class="muted">{copy.results.confidence(confidence)}</p>
     {:else if !feeders.length}
@@ -174,5 +190,12 @@
   }
   .more p {
     margin: 0 0 6px;
+  }
+  .pulled {
+    margin-bottom: 2px !important;
+  }
+  .drivers {
+    margin: 0 0 8px;
+    padding-left: 18px;
   }
 </style>

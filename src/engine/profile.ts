@@ -40,6 +40,8 @@ function weightedMean(list: readonly Observation[]): number {
 export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
   const b = s.ix.bundle;
   const included = (t: Topic): boolean => o.includeSensitive || !t.sensitive;
+  // Items can be sensitive inside a topic that isn't (e.g. the moral question on smacking).
+  const shown = (it: Item): boolean => o.includeSensitive || !it.sensitive;
   const answered = (t: Topic): boolean => t.items.some((i) => s.latest.has(i.id));
   const topics = b.topics.filter((t) => included(t) && answered(t));
 
@@ -68,7 +70,7 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
   let answeredCount = 0;
 
   for (const t of topics) {
-    for (const it of t.items) if (s.values.has(it.id)) answeredCount++;
+    for (const it of t.items) if (shown(it) && s.values.has(it.id)) answeredCount++;
 
     const stanceItem = t.stance ? s.ix.items.get(t.stance) : undefined;
     const stanceHist = t.stance ? itemHistory(s, t.stance) : null;
@@ -76,7 +78,7 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
     const summary = challengeSummary(s, t);
     const circumstances: Record<string, number> = {};
     for (const it of t.items) {
-      if (!it.tags.includes('circumstance')) continue;
+      if (!it.tags.includes('circumstance') || !shown(it)) continue;
       const r = s.values.get(it.id);
       if (r?.kind === 'scale' && s.visible.get(it.id)) circumstances[it.key] = r4(r.v);
     }
@@ -99,7 +101,7 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
 
     for (const it of t.items) {
       const r = s.values.get(it.id);
-      if (!r) continue;
+      if (!r || !shown(it)) continue;
       if (r.kind === 'multi' && it.tags.includes('interest') && t.domain !== 'identity') {
         for (const [opt, v] of r.picks) interests[`${it.id}.${opt}`] = r4(v);
       } else if (it.type === 'rating' && it.tags.includes('interest') && r.kind === 'scale') {

@@ -46,6 +46,28 @@ describe('good fixtures', () => {
     expect(alpha.items.find((i) => i.key === 'importance')!.unsure).toBe(false);
   });
 
+  it('lists the axes a topic feeds and the principles it anchors, for screens that only have the index', () => {
+    const alpha = bundle!.topics.find((t) => t.id === 'alpha')!;
+    expect(alpha.feeds).toEqual(['social']);
+    expect(alpha.anchors).toEqual(['autonomy', 'life']);
+    expect(bundle!.topics.find((t) => t.id === 'tunes')!.anchors).toEqual([]);
+  });
+
+  it('flags loaded terms in axis, principle and domain wording, which results quote', () => {
+    const src = fixtureSources();
+    const withTerm = (f: { path: string; text: string }, from: string, to: string) => ({ ...f, text: f.text.replace(from, to) });
+    const { diagnostics: d } = compile({
+      ...src,
+      principles: withTerm(src.principles, 'definition: Test principle.', 'definition: Never call anyone an anti-vaxxer.'),
+      domains: withTerm(src.domains, src.domains.text.match(/blurb: .*/)![0], 'blurb: Not for any baby killer.'),
+    });
+    const w108 = d.filter((x) => x.code === 'W108');
+    expect(w108.map((x) => [x.file, x.message.match(/"(.*)"/)![1]])).toEqual([
+      [src.domains.path, 'baby killer'],
+      [src.principles.path, 'anti-vaxxer'],
+    ]);
+  });
+
   it('orders topics by domain, then order, then id', () => {
     expect(bundle!.topics.map((t) => t.id)).toEqual(['alpha', 'beta', 'gamma', 'traits', 'tunes']);
   });

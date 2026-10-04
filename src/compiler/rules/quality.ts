@@ -2,6 +2,7 @@
 // W108 loaded terms · W110 lopsided option sets
 import type { Path } from '../yaml.ts';
 import { itemLoc, topicLoc, type RuleCtx } from '../context.ts';
+import { findTerms, termMatchers } from '../loaded-terms.ts';
 
 export function qualityRules(ctx: RuleCtx): void {
   const { rep, env } = ctx;
@@ -106,16 +107,29 @@ export function qualityRules(ctx: RuleCtx): void {
     }
   }
 
-  // W108: loaded terms in anything the user reads.
-  const terms = env.loadedTerms.map((t) => ({ term: t, re: new RegExp(`(^|[^a-z0-9])${escapeRe(t)}($|[^a-z0-9])`, 'i') }));
+  // W108: loaded terms in anything the user reads: topics, and the axis, principle and domain
+  // wording that results and the analysis quote.
+  const terms = termMatchers(env.loadedTerms);
   if (!terms.length) return;
+  const flag = (text: string, loc: Parameters<typeof rep.report>[2]) => {
+    for (const term of findTerms(text, terms)) rep.report('W108', `Loaded term "${term}": use neutral wording, or justify it (e.g. inside a quotation)`, loc);
+  };
   for (const ct of ctx.topics) {
-    for (const [path, text] of userText(ct.tc.tf)) {
-      for (const { term, re } of terms) {
-        if (re.test(text)) rep.report('W108', `Loaded term "${term}": use neutral wording, or justify it (e.g. inside a quotation)`, topicLoc(ct, ...path));
-      }
-    }
+    for (const [path, text] of userText(ct.tc.tf)) flag(text, topicLoc(ct, ...path));
   }
+  [...env.axes.values()].forEach((a, i) => {
+    flag(a.title, { pf: env.axesFile, path: [i, 'title'] });
+    flag(a.description, { pf: env.axesFile, path: [i, 'description'] });
+    a.poles.forEach((pole, k) => flag(pole, { pf: env.axesFile, path: [i, 'poles', k] }));
+  });
+  [...env.principles.values()].forEach((p, i) => {
+    flag(p.label, { pf: env.principlesFile, path: [i, 'label'] });
+    flag(p.definition, { pf: env.principlesFile, path: [i, 'definition'] });
+  });
+  [...env.domains.values()].forEach((d, i) => {
+    flag(d.title, { pf: env.domainsFile, path: [i, 'title'] });
+    flag(d.blurb, { pf: env.domainsFile, path: [i, 'blurb'] });
+  });
 }
 
 function* userText(tf: RuleCtx['topics'][number]['tc']['tf']): Generator<[Path, string]> {
@@ -135,10 +149,6 @@ function* userText(tf: RuleCtx['topics'][number]['tc']['tf']): Generator<[Path, 
       if (it.anchor.against) yield [at('anchor', 'against'), it.anchor.against];
     }
   }
-}
-
-function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function round(n: number): number {

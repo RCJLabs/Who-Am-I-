@@ -2,6 +2,10 @@
   // Two political spectrums as a map: economic across (Equality ← → Markets) and civil up
   // (Liberty ↓ ↑ Authority), the familiar layout. One series, so no legend; the caption below
   // spells out the position in words for anyone who can't read the chart.
+  import { copy } from '../../copy.ts';
+
+  // Unique per instance, so two maps on one page don't share title ids.
+  const uid = $props.id();
   let {
     x,
     y,
@@ -31,9 +35,9 @@
 </script>
 
 <figure class="map" data-testid="political-map">
-  <svg viewBox="0 0 300 300" role="img" aria-labelledby="map-title map-desc">
-    <title id="map-title">Your political map</title>
-    <desc id="map-desc">{caption}</desc>
+  <svg viewBox="0 0 300 300" role="img" aria-labelledby="{uid}-title {uid}-desc">
+    <title id="{uid}-title">{copy.results.politicalMap}</title>
+    <desc id="{uid}-desc">{caption}</desc>
     <rect class="frame" x={LO} y={LO} width={SIZE} height={SIZE} rx="10" />
     {#each ticks as t (t)}
       <line class="grid" x1={px(t)} x2={px(t)} y1={LO} y2={LO + SIZE} />

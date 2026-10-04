@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { TensionResolution } from '../model/answers.ts';
 import { ProfileSchema } from '../model/profile.ts';
-import { fixtureBundle, Log, multi, pick, scale } from '../../tests/helpers.ts';
+import { fixtureBundle, Log, multi, pick, realBundle, scale } from '../../tests/helpers.ts';
 import { engineTensions, runRespondent } from '../../tests/sim/harness.ts';
 import { ideologyPolicy, scriptedPolicy } from '../../tests/sim/policies.ts';
 import { observe } from './observe.ts';
@@ -170,5 +170,18 @@ describe('profile', () => {
     expect(shared.scope.topics).toEqual(['alpha']);
     expect(Object.keys(shared.topics)).toEqual(['alpha']);
     expect(JSON.stringify(shared)).not.toContain('gamma');
+  });
+
+  it('leaves out sensitive items inside a topic that is not sensitive', () => {
+    const log = new Log();
+    log.add('physical_punishment.stance', scale(4));
+    log.add('physical_punishment.moral', scale(5));
+    log.add('physical_punishment.school', scale(2));
+    const s = buildAnswerState(realBundle(), log.events);
+    const all = buildProfile(s, { includeSensitive: true, appVersion: 't', now: 'x', resolutions: [] });
+    const shared = buildProfile(s, { includeSensitive: false, appVersion: 't', now: 'x', resolutions: [] });
+    expect(all.topics['physical_punishment']!.circumstances).toEqual({ moral: 1, school: -0.5 });
+    expect(shared.topics['physical_punishment']!.circumstances).toEqual({ school: -0.5 });
+    expect(all.completeness.answered - shared.completeness.answered).toBe(1);
   });
 });

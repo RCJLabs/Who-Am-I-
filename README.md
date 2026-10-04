@@ -5,6 +5,10 @@ are: personality, values, moral principles, positions on issues, worldview, rela
 lifestyle and interests. It asks questions, probes circumstances, and poses thought-experiment
 challenges aimed at whichever side you took. A game built on the profile comes later.
 
+Results come with a written analysis: a summary, a short read-out for each section, and next
+steps (the strongest cases on both sides of your firmest positions, topics to explore, and
+tensions worth a second look). It's worked out on the device by fixed rules, with no AI service.
+
 All answers stay on your device: no server, no account, no analytics.
 
 ## Development
@@ -35,15 +39,16 @@ node scripts/gen-icons.ts                                                     # 
 |---|---|
 | `content/` | the question bank (YAML): domains, axes, principles, topics |
 | `src/model/` | schemas and types: authored content, bundle, answers, profile |
-| `src/engine/` | pure, DOM-free logic: conditions, flow, scoring, tensions, profile |
+| `src/engine/` | pure, DOM-free logic: conditions, flow, scoring, tensions, profile, results analysis |
 | `src/compiler/` | content compiler and lint (Node), plus the Vite plugin |
 | `src/app/` | the Svelte app |
 | `tests/` | fixtures, compiler tests, simulated-respondent suite |
-| `docs/` | content guide, taxonomy, profile format, privacy policy draft |
+| `docs/` | content guide, taxonomy, profile format, results analysis, privacy policy draft |
 
 ## Docs
 
 - [Content guide](docs/CONTENT_GUIDE.md): how to write topics, challenges and anchors
 - [Taxonomy](docs/TAXONOMY.md): everything the app will cover, and the anchor matrix
 - [Profile format](docs/PROFILE_FORMAT.md): the public output contract
+- [Results analysis](docs/ANALYSIS.md): the rules behind the summary and next steps
 - [Privacy policy (draft)](docs/PRIVACY.md)
