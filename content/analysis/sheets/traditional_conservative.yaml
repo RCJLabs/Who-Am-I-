@@ -33,7 +33,7 @@ answers:
   inheritance.stance: 1          # perpetuating property in families binds the generations and sustains society (Burke, Reflections)
   immigration.stance: 3          # settlement at a pace that communities can absorb and integrate (Scruton, How to Be a Conservative)
   policing.stance: 5             # order is the first condition of freedom; more officers for visible, local policing by consent
-  transgender.stance: 2   # both camps keep sex at birth in sport, prisons and single-sex spaces; American conservatives allow no legal change, British and Commonwealth ones allow it after diagnosis, so the split runs from step 1 to 3
+  transgender.stance: 2   # both camps keep sex at birth in sport, prisons and single-sex spaces; American conservatives mostly allow no legal change, British ones allow it after diagnosis, and Australian ones have defended a surgery requirement, so the camps run from step 1 to 3
   gender_roles.stance: 2         # families are the first little platoons; tax policy should not penalize a parent who stays home (after Burke, Reflections)
   prisons.stance: 2              # punishment should fit the crime, and repeat offenders should be kept from the public (James Q. Wilson, Thinking About Crime)
   climate.stance: 3              # stewardship of an inherited home, pursued locally and steadily rather than by costly top-down targets (Scruton, Green Philosophy)

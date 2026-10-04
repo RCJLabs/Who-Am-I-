@@ -14,28 +14,28 @@ sources:
 answers:
   fairness.stance: 3   # Mutual loyalty means a decent floor for fellow citizens, not equal shares (Hazony, The Virtue of Nationalism)
   assisted_dying.stance: 1   # Law should shield the old, sick and disabled from pressure to die; palliative care instead
-  drug_policy.stance: 2   # Addictive substances harm families and public life (National Conservatism: A Statement of Principles); prison for dealers, required treatment for users
+  drug_policy.stance: 2   # Dangerous and addictive substances damage public life (National Conservatism: A Statement of Principles); prison for dealers, required treatment for users
   paternalism.stance: 5   # The state may guard citizens against addictive and destructive products, not every small risk
   organ_donation.stance: 2   # The body is not for sale; cover donors' costs but allow no market in organs
   sex_work.stance: 2   # Commercial sex exploits and degrades; punish buyers and traffickers, not the people selling
   surrogacy.stance: 1   # Breaks the bond between mother and child; banned, as in several European states
   gene_editing.stance: 2   # Human heredity is not for remaking; keep heritable editing out of people, research under limits
   free_speech.stance: 2   # Open debate about nation, faith and immigration must stay free; only narrow exceptions like genocide denial
-  religious_liberty.stance: 6   # each faith free to run its own institutions and raise its children (National Conservatism: A Statement of Principles); one law of the land still binds all, so no blanket exemption (Scruton, The Need for Nations)
+  religious_liberty.stance: 6   # Minority faiths too are free to govern their own institutions and raise their children (National Conservatism: A Statement of Principles); one law of the land still binds all, so no blanket exemption (Scruton, The Need for Nations)
   protest.stance: 2   # Citizens and government alike must abide by the law (National Conservatism: A Statement of Principles); a political motive earns no discount
   torture.stance: 3   # The nation's survival can force a terrible choice, but torture stays unlawful and answerable in court
-  public_safety.stance: 5   # Public order first in serious cases, within the inherited common law of due process (National Conservatism: A Statement of Principles)
+  public_safety.stance: 5   # Public disorder must be swiftly put to an end (National Conservatism: A Statement of Principles); public safety first in serious cases, within the protections of the common law
   taxes.stance: 3   # Transfers should support families and work; equalizing incomes is not the aim
   welfare.stance: 3   # Help should reinforce work, the basis of dignity and family life (Cass, The Once and Future Worker)
   minimum_wage.stance: 5   # A full-time wage should support a family; a firm floor also reduces reliance on low-wage migrant labor
   regulation.stance: 4   # The free market cannot be absolute (National Conservatism: A Statement of Principles); fewer rules on producers, tighter checks on corporate power
   unions.stance: 3   # Workers need a voice, ideally cooperative rather than adversarial (Cass, The Once and Future Worker); strikes within firm limits
-  trade.stance: 3   # Trade serves the nation; mostly open, but protect industries vital to defense and manufacturing (National Conservatism: A Statement of Principles)
+  trade.stance: 3   # Trade serves the nation: protect industries vital to defense and manufacturing (National Conservatism: A Statement of Principles), while keeping most trade open
   housing.stance: 2   # Affordable homes come from building more and easing demand, not standing rent controls
   inheritance.stance: 2   # What families build should pass to their children; tax only the largest estates, and lightly
-  immigration.stance: 2   # Much more restrictive until newcomers can be assimilated (National Conservatism: A Statement of Principles; Huntington, Who Are We?)
+  immigration.stance: 2   # Much more restrictive until immigration policy becomes balanced and assimilationist (National Conservatism: A Statement of Principles; Huntington, Who Are We?)
   policing.stance: 5   # Visible policing restores order and public trust; hire more officers
-  same_sex_marriage.stance: 3   # Marriage is a lifelong bond of a man and a woman (National Conservatism: A Statement of Principles); civil partnerships for others
+  same_sex_marriage.stance: 3   # The traditional family is built around a lifelong bond between a man and a woman (National Conservatism: A Statement of Principles); civil partnerships for others
   transgender.stance: 1   # law should follow bodily sex; legal sex is the sex recorded at birth
   gender_roles.stance: 2   # Raising children is a priority of the highest order (National Conservatism: A Statement of Principles); don't penalize a parent at home
   prisons.stance: 2   # Protecting the law-abiding comes first; repeat and violent offenders belong in prison for longer

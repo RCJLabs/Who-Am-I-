@@ -381,9 +381,10 @@ side of politics; a center tradition's first two, one from each side.
 | National conservatism | Hazony, *The Virtue of Nationalism*; Scruton, *The Need for Nations* | Nussbaum, "Patriotism and Cosmopolitanism" (social liberal); Acton, "Nationality" (classical liberal) |
 
 Forty-four readings in all. The first fact-check round checked every citation and claim; the
-second re-checked every change the first made. No living politicians as authors, and no
-scripture, encyclicals or sermons: the Christian democratic strand of communitarianism is
-represented by Maritain.
+second re-checked every change the first made. One year is unsettled: Craiutu's *Faces of
+Moderation* came out in January 2017, but some listings give © 2016; the app uses 2017. No living
+politicians as authors, and no scripture, encyclicals or sermons: the Christian democratic strand
+of communitarianism is represented by Maritain.
 
 ### Decisions
 
@@ -427,7 +428,7 @@ then an adherent sign-off. The reviewers are agents.
 | Social liberalism | Nozick as the first critique; the split with classical liberalism is how far beyond a basic floor; housing and guns split | signed off |
 | Left communitarianism | splits with communitarianism are about equality and the nation; costs stated as for national conservatism | signed off |
 | Centrism | the summary says rival interests and convictions must share power | signed off after one change: "keeping each step reversible" in the split with classical liberalism |
-| Communitarianism | Christian democracy named in the summary; housing answered as recent Dutch and Austrian law | signed off after two small changes |
+| Communitarianism | Christian democracy named in the summary; housing answered as recent Dutch law | signed off after two small changes |
 | Classical liberalism | the summary adds free trade and living as one chooses; Sandel's *What Money Can't Buy* as a critique | signed off |
 | Libertarianism | Nisbet replaces Kirk as the conservative critique; Boaz cited as *The Libertarian Mind* | signed off |
 | Traditional conservatism | vaccine requirements split; the summary names the limits law and custom place on choice | signed off after one change: transgender people and the law answered at step 2, not split |
