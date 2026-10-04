@@ -169,10 +169,11 @@ answers a, as values from −1 to 1 (one step on a 7-point scale is 0.33).
    missing.
 2. **Distance.** D_A² = Σ w(u − t)² / Σ w, with w = c, halved (`dividedWeight` 0.5) on spectrums the
    tradition's adherents split on (questions they split on carry half the spectrum's weight or
-   more; split questions count at the middle of their scale in the target). Once the compared principles have summed confidence of at least
-   3 (`principleEvidence`), D = √(0.75·D_A² + 0.25·D_P²), D_P being the same over those principles;
-   otherwise D = D_A. Distances are rounded to 4 places and ties go to pack order, so the result is
-   always the same for the same answers.
+   more; split questions count at the middle of their scale in the target). Once the compared
+   principles have summed confidence of at least 3 (`principleEvidence`),
+   D = √(0.75·D_A² + 0.25·D_P²), D_P being the same over those principles; otherwise D = D_A.
+   Distances are rounded to 4 places and ties go to pack order, so the result is always the same
+   for the same answers.
 3. **Fit.** F = √(mean of (v − a)²) over the political questions both you and the tradition
    answered. Questions a tradition's adherents split on aren't in its answers.
 4. **Status**, the first that applies:
@@ -197,6 +198,33 @@ answers a, as values from −1 to 1 (one step on a 7-point scale is 0.33).
 7. **Differences:** for each listed tradition, its two biggest gaps of at least 0.35 (`difference`),
    on spectrums (and, when they count, principles) with confidence at least 0.5, never where its
    adherents split: "further toward “Liberty”", "more weight on “Equality”".
+
+### How well it tells them apart
+
+`tests/sim/traditions.test.ts` runs the matching on the real content and pack. The bounds it
+asserts are in brackets; the numbers are today's.
+
+| Respondents | Result |
+|---|---|
+| Each tradition's own sheet, with split questions at the middle | all 11 named as themselves, fit 0 |
+| 40 noisy adherents per tradition: 30% of answers moved one or two steps, 15% skipped, split questions answered by camp | 405 of 440 named, alone or between it and a neighbor (≥ 80%); each tradition 34 to 40 (≥ 24) |
+| The personas | libertarian: libertarianism, with classical liberalism second; religious conservative: between national and traditional conservatism; secular progressive: between social liberalism and green politics; communitarian: communitarianism |
+| Agree/disagree statements only | not enough answers: only stance questions feed the political spectrums |
+| Always the first step, or always the last | a loose fit, never named |
+| Always the middle step | centrism (fit 0.41) |
+| 300 random respondents, half on a few topics | 4 named (≤ 30), no tradition more than 3 times (≤ 9) |
+| A grid of consistent respondents, 5 points on each spectrum | every tradition nearest in 13 or more of the 625 cells (≥ 7); mean best distance 0.389 for left-leaning cells and 0.406 for right-leaning ones (within 0.05) |
+
+Two results to know about:
+
+- **Answering "Torn / it depends" everywhere sits closest to centrism.** The centrist sheet answers
+  25 of its 30 political questions one step from the middle, so those answers follow it closely
+  enough to pass the fit. The wording only says the answers sit closest to it, which is true; the
+  test keeps it that way on purpose.
+- **Green politics and democratic socialism sit about 0.1 apart.** Their noisy adherents are named
+  mostly as between the two (green alone 8 times in 40, democratic socialism 16). No compared
+  principle measures growth, scale or nature's own standing, where the green reviewer says the two
+  part ways; adding one would need new statements answered in every sheet.
 
 ### Readings (`readings.ts`)
 

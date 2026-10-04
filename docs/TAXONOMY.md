@@ -311,3 +311,145 @@ saving and health would track income, health and caring duties as much as values
 social media for under-16s would score as authority, as a smacking ban would, though both sides
 back them. The moral foundations are principles, not spectrums: the moral foundations topic
 measures them directly, and issue topics add to them.
+
+## Political traditions
+
+Eleven traditions act as reference points in the results: which of them a person's political
+answers sit closest to. They are never a label for anyone, never a party, never a recommendation.
+How they are matched is in [ANALYSIS.md](ANALYSIS.md#political-traditions-traditionsts); how they
+are written, in [CONTENT_GUIDE.md](CONTENT_GUIDE.md#political-traditions-contentanalysis).
+
+### Placement
+
+Each tradition is placed only by its answer sheet (`content/analysis/sheets/<id>.yaml`), scored by
+the engine like anyone's answers. Spectrums run from −1 to 1: Equality ↔ Markets, Liberty ↔
+Authority, Tradition ↔ Progress, National ↔ Global. `side` is used only to check balance, never
+shown.
+
+| Tradition | Side | Economic | Civil | Cultural | Diplomatic | Adherents split on |
+|---|---|---|---|---|---|---|
+| Democratic socialism | left | −0.80 | −0.10 | 0.50 | 0.45 | |
+| Green politics | left | −0.75 | −0.10 | 0.60 | 0.55 | |
+| Social democracy | left | −0.45 | 0.15 | 0.35 | 0.35 | |
+| Social liberalism | left | −0.30 | −0.15 | 0.65 | 0.45 | Things money shouldn't buy |
+| Left communitarianism | left | −0.40 | 0.10 | −0.25 | −0.10 | |
+| Centrism | center | −0.10 | 0.15 | 0.20 | 0.20 | Things money shouldn't buy |
+| Communitarianism | center | −0.15 | 0.30 | −0.15 | 0.35 | |
+| Classical liberalism | right | 0.60 | −0.45 | 0.35 | 0.10 | |
+| Libertarianism | right | 0.95 | −0.75 | 0.40 | −0.55 | |
+| Traditional conservatism | right | 0.35 | 0.20 | −0.40 | −0.35 | Collective welfare |
+| National conservatism | right | 0.25 | 0.25 | −0.55 | −0.45 | |
+
+The compared principles, from −1 to 1:
+
+| Tradition | Equality | Just deserts | Loyalty | Liberty | Collective welfare | Things money shouldn't buy |
+|---|---|---|---|---|---|---|
+| Democratic socialism | 0.85 | −0.25 | −0.15 | −0.10 | 0.65 | 0.40 |
+| Green politics | 0.85 | −0.55 | −0.30 | −0.10 | 0.50 | 0.35 |
+| Social democracy | 0.85 | −0.15 | 0.05 | −0.25 | 0.65 | 0.25 |
+| Social liberalism | 0.15 | −0.15 | −0.35 | 0.20 | 0.15 | 0.00 |
+| Left communitarianism | 0.65 | −0.10 | 0.55 | 0.00 | 0.65 | 0.60 |
+| Centrism | −0.15 | −0.10 | −0.20 | 0.05 | 0.50 | −0.10 |
+| Communitarianism | 0.15 | −0.15 | 0.15 | −0.25 | 0.65 | 0.50 |
+| Classical liberalism | −0.65 | −0.05 | −0.25 | 0.60 | −0.50 | −0.75 |
+| Libertarianism | −0.65 | 0.05 | −0.65 | 1.00 | −0.85 | −1.00 |
+| Traditional conservatism | −0.65 | 0.05 | 0.30 | −0.05 | 0.15 | 0.35 |
+| National conservatism | −0.35 | −0.05 | 0.35 | −0.15 | 0.35 | 0.40 |
+
+Split questions count at the middle of their scale, where the tradition as a whole sits. A
+spectrum or principle counts as split when those questions carry half its weight or more; today
+no spectrum is split for any tradition. `node scripts/tradition-targets.ts` prints these numbers
+from the sheets.
+
+### Readings
+
+The results show the first two of each list. Every critique's first entry comes from the other
+side of politics; a center tradition's first two, one from each side.
+
+| Tradition | From inside | First critiques (written from) |
+|---|---|---|
+| Democratic socialism | Cohen, *Why Not Socialism?*; Wright, *How to Be an Anticapitalist in the Twenty-First Century* | Hayek, *The Road to Serfdom* (classical liberal); Crosland, *The Future of Socialism* (social democrat) |
+| Green politics | Schumacher, *Small Is Beautiful*; Meadows et al., *The Limits to Growth* | Simon, *The Ultimate Resource* (libertarian); Pollin, "De-Growth vs a Green New Deal" (social democrat) |
+| Social democracy | Judt, *Ill Fares the Land*; Crosland, *The Future of Socialism* | de Jouvenel, *The Ethics of Redistribution* (classical liberal); Przeworski, *Capitalism and Social Democracy* (democratic socialist) |
+| Social liberalism | Hobhouse, *Liberalism*; Rawls, *A Theory of Justice* | Nozick, *Anarchy, State, and Utopia* (libertarian); Sandel, *Liberalism and the Limits of Justice* (communitarian) |
+| Left communitarianism | Orwell, *The Lion and the Unicorn*; Lasch, *The True and Only Heaven* | Olson, *The Rise and Decline of Nations* (classical liberal); Appiah, *The Lies That Bind* (social liberal) |
+| Centrism | Schlesinger, *The Vital Center*; Craiutu, *Faces of Moderation* | Mouffe, *On the Political* (democratic socialist); Mises, "Middle-of-the-Road Policy Leads to Socialism" (libertarian) |
+| Communitarianism | Etzioni, *The Spirit of Community*; Maritain, *Man and the State* | Holmes, *The Anatomy of Antiliberalism* (social liberal); Kukathas, *The Liberal Archipelago* (classical liberal) |
+| Classical liberalism | Friedman, *Capitalism and Freedom*; Hayek, *The Constitution of Liberty* | Polanyi, *The Great Transformation* (democratic socialist); Sandel, *What Money Can't Buy* (communitarian) |
+| Libertarianism | Nozick, *Anarchy, State, and Utopia*; Boaz, *The Libertarian Mind* | Anderson, *Private Government* (social democrat); Nisbet, "Conservatives and Libertarians: Uneasy Cousins" (traditional conservative) |
+| Traditional conservatism | Burke, *Reflections on the Revolution in France*; Oakeshott, "On Being Conservative" | Paine, *Rights of Man* (social liberal); Hayek, "Why I Am Not a Conservative" (classical liberal) |
+| National conservatism | Hazony, *The Virtue of Nationalism*; Scruton, *The Need for Nations* | Nussbaum, "Patriotism and Cosmopolitanism" (social liberal); Acton, "Nationality" (classical liberal) |
+
+Forty-four readings in all. The first fact-check round checked every citation and claim; the
+second re-checked every change the first made. No living politicians as authors, and no
+scripture, encyclicals or sermons: the Christian democratic strand of communitarianism is
+represented by Maritain.
+
+### Decisions
+
+- **The eleven** were set when the work was planned. Christian democracy is a strand of
+  communitarianism rather than a tradition of its own: the summary names both strands, and the
+  first two inside readings cover both (Etzioni, civic; Maritain, Christian democratic). Names are
+  the ones adherents use; "left communitarianism" was kept after its adherent review.
+- **Sides** check balance only: five left, two center, four right. The lint (E014) requires at
+  least two traditions 0.2 or more toward each pole of every political spectrum, not counting
+  those split on it, and left and right counts within one of each other.
+- **Compared principles.** Equality, just deserts, loyalty, liberty, collective welfare, and
+  things money shouldn't buy. Left out:
+  - purity and sanctity of life, which would stand in for religiosity;
+  - care and respect for authority, together: every tradition claims both, so the scores would
+    show whose suffering and which authority someone has in mind, and comparing them would build
+    in "the right cares less" and "the left respects no authority";
+  - personal responsibility, which overlaps just deserts and is one side's phrase;
+  - national self-government, which repeats the diplomatic spectrum;
+  - deciding locally, which too few topics feed yet.
+
+  Caution with the irreversible was proposed to separate green politics from social democracy
+  and isn't compared yet (see Limitations).
+- **Neighbors** (`neighbours`). Twenty pairs, each with one line fair to both on what divides
+  them: the fifteen from the design review, plus centrism and social democracy, communitarianism
+  and social democracy, communitarianism and national conservatism, libertarianism and
+  traditional conservatism, and green politics and social liberalism.
+- **Words.** `content/analysis/loaded-terms.txt` adds words that are fine in a question but loaded
+  in a description of a tradition, such as "moderate", "mainstream" and "regressive". Party and
+  politician names are flagged anywhere in the pack.
+
+### Reviews and sign-offs
+
+Each tradition had a sympathetic review (an adherent) and an opposing one (from the other side),
+then an adherent sign-off. The reviewers are agents.
+
+| Tradition | Main changes from review | Sign-off |
+|---|---|---|
+| Democratic socialism | the summary names the risks of ownership not yet tried across a whole economy in a democracy; assisted dying split | signed off |
+| Green politics | Pollin added as a left critique of degrowth; the split with social democracy is whether growth can be decoupled | signed off |
+| Social democracy | Przeworski replaces Wright as the second critique; new neighbours centrism and communitarianism | signed off after one change: "choice in private life" in the split with communitarianism |
+| Social liberalism | Nozick as the first critique; the split with classical liberalism is how far beyond a basic floor; housing and guns split | signed off |
+| Left communitarianism | splits with communitarianism are about equality and the nation; costs stated as for national conservatism | signed off |
+| Centrism | the summary says rival interests and convictions must share power | signed off after one change: "keeping each step reversible" in the split with classical liberalism |
+| Communitarianism | Christian democracy named in the summary; housing answered as recent Dutch and Austrian law | signed off after two small changes |
+| Classical liberalism | the summary adds free trade and living as one chooses; Sandel's *What Money Can't Buy* as a critique | signed off |
+| Libertarianism | Nisbet replaces Kirk as the conservative critique; Boaz cited as *The Libertarian Mind* | signed off |
+| Traditional conservatism | vaccine requirements split; the summary names the limits law and custom place on choice | signed off after one change: transgender people and the law answered at step 2, not split |
+| National conservatism | the summary adds firmer limits on some freedoms and fewer binding international commitments | signed off after comment fixes: the Statement of Principles cited only for what it says |
+
+Kept against an opposing reviewer, who wanted both split: classical liberals' answer on the death
+penalty (abolish; the adherent reviewer found present-day classical liberals outside the United
+States almost all abolitionists, and most American ones making the abolitionist case), and
+communitarians' on same-sex marriage (allowed, which the adherent reviewer found most present-day
+adherents hold).
+
+### Limitations
+
+- **No human adherent has read these yet.** Every review and sign-off so far is by agents.
+- **Green politics and democratic socialism sit about 0.1 apart.** Their noisy adherents are
+  mostly named as between the two. No compared principle measures growth, scale or nature's own
+  standing; caution with the irreversible or future generations would, but every sheet would need
+  their statements answered.
+- **Libertarians read National on the diplomatic spectrum** (−0.55), next to national
+  conservatives. Free trade sits on the economic spectrum, so the diplomatic one measures only
+  shared rules, foreign aid and immigration, where many libertarians reject international bodies
+  and aid.
+- **Sheets describe present-day adherents in Western democracies.** Where American and European
+  adherents differ (healthcare and the minimum wage for traditional conservatives, guns and
+  housing for social liberals), the question is split, so neither camp is held against the other.
