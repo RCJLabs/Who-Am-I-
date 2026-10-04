@@ -300,6 +300,24 @@ export const copy = {
         outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
         kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
       },
+      links: {
+        title: 'Links from research',
+        note: 'From your personality answers only.',
+        intro:
+          "Large studies, using longer personality questionnaires than this one, found that people whose answers lean the way yours do report more or less interest in some activities, on average. Many people don't fit these averages. About interest, not ability. Not advice, not career guidance, and not a judgment of what you do now.",
+        kind: { working: 'Ways of working', free_time: 'Free time', subjects: 'Subjects to explore' },
+        strength: { little: 'a little', somewhat: 'somewhat' },
+        more: {
+          interest: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} report ${strength} more interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} take part in ${what} ${strength} more often, on average.`,
+        },
+        less: {
+          interest: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} report ${strength} less interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} take part in ${what} ${strength} less often, on average.`,
+        },
+        caveat: "Many don't, so this may not fit you.",
+        because: (pole: string) => `Your answers lean toward ${q(pole)}`,
+      },
       explore: {
         title: 'Explore next',
         intro: 'The topics that would add most to your results.',
@@ -365,6 +383,9 @@ export const copy = {
     questionsTitle: 'Questions',
     alwaysDeep: 'Always ask deep-dive questions',
     alwaysDeepNote: "Normally they're skipped for topics you say matter little to you.",
+    resultsTitle: 'Results',
+    showLinks: 'Show links from research',
+    showLinksNote: 'What large studies found about personality and interests, under Next steps. Worked out on this device from your personality answers, and never saved or shared.',
     storageTitle: 'Storage',
     persisted: 'Protected: the browser has agreed not to clear your answers to free up space.',
     notPersisted: 'Not protected: the browser may clear your answers if the device runs low on space.',

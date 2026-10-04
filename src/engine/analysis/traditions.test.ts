@@ -232,9 +232,10 @@ describe('traditions in the analysis', () => {
     const withPack = analyse({ ...input(log), pack });
     expect(without.public.traditions).toBeNull();
     expect(without.next.readings).toEqual([]);
+    expect(without.next.suggestions).toEqual([]);
     // Two fixture topics aren't enough evidence to compare.
     expect(withPack.public.traditions).toMatchObject({ status: 'insufficient', compared: ['social', 'civil'] });
-    expect({ ...withPack, public: { ...withPack.public, traditions: null }, next: { ...withPack.next, readings: [] } }).toEqual(without);
+    expect({ ...withPack, public: { ...withPack.public, traditions: null }, next: { ...withPack.next, readings: [], suggestions: [] } }).toEqual(without);
   });
 
   it('compares only answers that could be shared', () => {

@@ -78,7 +78,7 @@ describe('loading content by domain', () => {
 });
 
 describe('loading the analysis pack', () => {
-  const pack = { format: 'whoami.analysis', schema: 1, version: 'test', compare: [], traditions: [], readings: {} } as AnalysisPack;
+  const pack = { format: 'whoami.analysis', schema: 1, version: 'test', compare: [], traditions: [], readings: {}, suggestions: [], norms: {} } as AnalysisPack;
   const counting = (results: (AnalysisPack | null | Error)[]) => {
     const calls = { n: 0 };
     const load = async () => {

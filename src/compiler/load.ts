@@ -4,7 +4,7 @@ import { join, relative, sep } from 'node:path';
 import type { AnalysisSources, ContentSources, SourceFile } from './types.ts';
 
 /** The analysis pack's files, under content/analysis/. */
-const PACK_FILES = ['traditions', 'readings'] as const;
+const PACK_FILES = ['traditions', 'readings', 'suggestions'] as const;
 
 function read(path: string): SourceFile {
   return { path: relative(process.cwd(), path).split(sep).join('/'), text: readFileSync(path, 'utf8') };
@@ -39,6 +39,8 @@ export function loadContentDir(dir: string, topicDirs: string[] = [join(dir, 'to
     if (sheets.length) pack.sheets = sheets.map(read);
     const packTerms = join(dir, 'analysis', 'loaded-terms.txt');
     if (existsSync(packTerms)) pack.loadedTerms = read(packTerms);
+    const blocked = join(dir, 'analysis', 'blocked-advice.txt');
+    if (existsSync(blocked)) pack.blockedAdvice = read(blocked);
     sources.analysis = pack;
   }
   return sources;
@@ -55,6 +57,7 @@ export function contentFilePaths(dir: string): string[] {
     'named-politics.txt',
     ...PACK_FILES.map((f) => join('analysis', `${f}.yaml`)),
     join('analysis', 'loaded-terms.txt'),
+    join('analysis', 'blocked-advice.txt'),
   ]
     .map((f) => join(dir, f))
     .filter(existsSync);

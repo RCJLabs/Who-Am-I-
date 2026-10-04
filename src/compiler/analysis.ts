@@ -1,16 +1,18 @@
 // The analysis pack (content/analysis/): political traditions, the answer sheets that place
-// them, and the readings the results analysis offers. Compiled with the content, so it's checked
-// against the same spectrums, principles and word lists, but hashed on its own: editing it never
-// changes contentVersion.
+// them, the readings the results analysis offers, and personal suggestions. Compiled with the
+// content, so it's checked against the same spectrums, principles and word lists, but hashed on
+// its own: editing it never changes contentVersion.
 import { createHash } from 'node:crypto';
 import {
   ReadingsFileSchema,
   SheetSchema,
+  SuggestionsFileSchema,
   TraditionsFileSchema,
   type AnalysisPack,
   type Reading,
   type ReadingsFile,
   type SheetFile,
+  type SuggestionsFile,
   type Tradition,
   type TraditionsFile,
 } from '../model/analysis.ts';
@@ -18,6 +20,7 @@ import type { Bundle } from '../model/content.ts';
 import type { Env, Loc, Reporter } from './context.ts';
 import { packRules, positionRules } from './rules/analysis.ts';
 import { scoreSheet, type SheetTargets } from './sheets.ts';
+import { compileSuggestions } from './suggestions.ts';
 import type { AnalysisSources } from './types.ts';
 import { canonicalJson, checkUnique, validate } from './validate.ts';
 import { parseYaml, type ParsedFile } from './yaml.ts';
@@ -26,27 +29,36 @@ export interface ParsedPack {
   traditions: { pf: ParsedFile; file: TraditionsFile };
   readings: { pf: ParsedFile; file: ReadingsFile };
   sheets: { pf: ParsedFile; file: SheetFile }[];
+  /** Optional: a pack without suggestions has none. */
+  suggestions: { pf: ParsedFile; file: SuggestionsFile } | null;
 }
 
 /** Parses and validates the pack's files. Null when there is no pack, or it doesn't validate. */
 export function parsePack(src: AnalysisSources | undefined, rep: Reporter): ParsedPack | null {
-  if (!src || (!src.traditions && !src.readings && !src.sheets?.length)) return null;
+  if (!src || (!src.traditions && !src.readings && !src.sheets?.length && !src.suggestions)) return null;
   const tpf = src.traditions ? parseYaml(src.traditions, rep.diagnostics) : null;
   const rpf = src.readings ? parseYaml(src.readings, rep.diagnostics) : null;
+  const gpf = src.suggestions ? parseYaml(src.suggestions, rep.diagnostics) : null;
   const traditions = tpf && validate(tpf, TraditionsFileSchema, rep);
   const readings = rpf && validate(rpf, ReadingsFileSchema, rep);
+  const suggestions = gpf && validate(gpf, SuggestionsFileSchema, rep);
   const sheets = (src.sheets ?? []).map((f) => {
     const pf = parseYaml(f, rep.diagnostics);
     const file = pf && validate(pf, SheetSchema, rep);
     return pf && file ? { pf, file } : null;
   });
   if (!src.traditions || !src.readings) {
-    const pf = tpf ?? rpf ?? sheets.find((x) => x)?.pf;
+    const pf = tpf ?? rpf ?? sheets.find((x) => x)?.pf ?? gpf;
     if (pf) rep.report('E002', 'The analysis pack needs both traditions.yaml and readings.yaml', { pf, path: [] });
     return null;
   }
-  if (!tpf || !rpf || !traditions || !readings || sheets.some((x) => !x)) return null;
-  return { traditions: { pf: tpf, file: traditions }, readings: { pf: rpf, file: readings }, sheets: sheets.filter((x) => x !== null) };
+  if (!tpf || !rpf || !traditions || !readings || sheets.some((x) => !x) || (src.suggestions && !suggestions)) return null;
+  return {
+    traditions: { pf: tpf, file: traditions },
+    readings: { pf: rpf, file: readings },
+    sheets: sheets.filter((x) => x !== null),
+    suggestions: gpf && suggestions ? { pf: gpf, file: suggestions } : null,
+  };
 }
 
 /** References, duplicates and the pack rules that don't need the compiled content. */
@@ -57,7 +69,8 @@ export function checkPack(p: ParsedPack, env: Env, rep: Reporter): void {
 
 /**
  * Scores each tradition's answer sheet with the engine, checks the balance of the positions that
- * gives, and builds the pack the app loads. Null if any sheet has errors.
+ * gives, checks the links from research against the items they read, and builds the pack the app
+ * loads. Null if any sheet or link has errors.
  */
 export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): AnalysisPack | null {
   const compare = p.traditions.file.compare;
@@ -67,7 +80,8 @@ export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): 
     if (t) targets.set(sheet.file.tradition, t);
   }
   const list = p.traditions.file.traditions;
-  if (list.some((t) => !targets.has(t.id))) return null;
+  const links = p.suggestions ? compileSuggestions(p.suggestions, env, b, rep) : { suggestions: [], norms: {} };
+  if (list.some((t) => !targets.has(t.id)) || !links) return null;
   positionRules({ pack: p, env, rep }, targets);
 
   const traditions = list.map((t): Tradition => {
@@ -87,7 +101,15 @@ export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): 
     };
   });
   const readings = Object.fromEntries(p.readings.file.map((r) => [r.id, reading(r, env)]));
-  const body = { format: 'whoami.analysis' as const, schema: 1 as const, compare: p.traditions.file.compare, traditions, readings };
+  const body = {
+    format: 'whoami.analysis' as const,
+    schema: 1 as const,
+    compare: p.traditions.file.compare,
+    traditions,
+    readings,
+    suggestions: links.suggestions,
+    norms: links.norms,
+  };
   const version = createHash('sha256').update(canonicalJson(body)).digest('hex').slice(0, 12);
   return { ...body, version };
 }
@@ -101,10 +123,11 @@ function reading(r: ReadingsFile[number], env: Env): Reading {
 }
 
 /** E003 for repeats, E004 for anything that names a spectrum, principle, tradition or reading that doesn't exist. */
-function checkReferences({ traditions: T, readings: R, sheets }: ParsedPack, env: Env, rep: Reporter): void {
+function checkReferences({ traditions: T, readings: R, sheets, suggestions: G }: ParsedPack, env: Env, rep: Reporter): void {
   const list = T.file.traditions;
   checkUnique(list, 'tradition', T.pf, ['traditions'], rep);
   checkUnique(R.file, 'reading', R.pf, [], rep);
+  if (G) checkUnique(G.file.suggestions, 'suggestion', G.pf, ['suggestions'], rep);
   const traditionIds = new Set(list.map((t) => t.id));
   const readingIds = new Set(R.file.map((r) => r.id));
 

@@ -1,0 +1,160 @@
+{
+  "title": "Who Am I personal suggestions",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "norms": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the norms come from"
+        },
+        "traits": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mean": {
+                "type": "number",
+                "description": "Mean of the 4 items, on their 1-5 scale"
+              },
+              "sd": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "reversals": {
+                "description": "Pairs of items that say opposite things: agreeing with both voids the trait",
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+                    }
+                  ],
+                  "additionalItems": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "echo": {
+                "description": "Words from the trait's own items, which a link must not restate",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "mean",
+              "sd"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "source",
+        "traits"
+      ],
+      "additionalProperties": false
+    },
+    "suggestions": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "working",
+              "free_time",
+              "subjects"
+            ],
+            "description": "At most one of each kind is shown"
+          },
+          "trait": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "The personality spectrum the association runs on (never neuroticism)"
+          },
+          "toward": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The pole whose answers report more interest, as written in axes.yaml"
+          },
+          "r": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Uncorrected correlation from the source; at least 0.20. Under 0.30 reads \"a little\", from 0.30 \"somewhat\""
+          },
+          "strength": {
+            "description": "Read \"a little\" whatever r says, where the app's items likely carry the link more weakly than the source's; never stronger",
+            "type": "string",
+            "enum": [
+              "little"
+            ]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "interest",
+              "participation"
+            ],
+            "description": "Whether the source measured interest or voluntary participation"
+          },
+          "interest": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What the source measured, as a noun phrase: \"artistic activities, such as creating visual art, designs or music\""
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The same from either end, naming the interest: \"Interest in artistic activities\""
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The meta-analysis or large replicated study"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "trait",
+          "toward",
+          "r",
+          "outcome",
+          "interest",
+          "title",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "norms",
+    "suggestions"
+  ],
+  "additionalProperties": false
+}

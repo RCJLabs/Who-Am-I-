@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../schema/analysis/suggestions.schema.json
+# Links from research: published associations between one personality trait and an interest. Each
+# reads from either end under the same title: more interest toward `toward`, less of the same at the
+# other pole, never an attraction the study didn't measure. A link needs a meta-analysis, or N of at
+# least 1,000 replicated independently, an interest or participation outcome, and an uncorrected r
+# of at least .20 (lint E016); where estimates differ, `r` is the lowest. Examples come from what
+# the study measured (here O*NET's descriptions of the RIASEC interest types), never a job title.
+# Evidence, reviews and the candidates dropped are in TAXONOMY.md.
+
+norms:
+  # Internal only: they decide whether a link shows, and are never shown or compared with anyone.
+  # Computed for this app, not published norms: no published Mini-IPIP trait means and SDs could
+  # be confirmed (Baldasaro, Shanahan & Bauer, 2013 print item statistics; trait-level ones
+  # weren't seen). Data: the Open-Source Psychometrics Project's BIG5 file
+  # (openpsychometrics.org/_rawdata/BIG5.zip, as mirrored at github.com/haghish/openpsychometrics,
+  # BIG5/data.csv, sha256
+  # ccf2440c364b7cf4aa131b83968084aa7c7388be5808ff1920a27b3d6a07f3d9). 15,657 of 19,719 rows:
+  # adults 18-90 who answered all 16 Mini-IPIP items for extraversion, agreeableness,
+  # conscientiousness and openness. Trait = mean of the 4 keyed items, 1-5 (reversed items as
+  # 6 - x); sample SD. The sample: online volunteers c. 2012, median age 25, 60% women, 43% in
+  # the US, 40% not native English speakers; agree/disagree anchors where the app asks how
+  # accurately each statement describes you. Agreeableness 3.94 (0.85) and conscientiousness 3.27
+  # (0.89) aren't listed, as no link reads them.
+  source: "Computed from the Open-Source Psychometrics Project's BIG5 data (2012): adults with all 16 E/A/C/O Mini-IPIP items (N = 15,657)"
+  traits:
+    # Reversal pairs: a positive item and the reversed item that negates it. Agreeing with both
+    # voids the trait (response style). Echo: the items' own words, which a link never uses.
+    extraversion:
+      mean: 2.92
+      sd: 1.02
+      reversals: [[mini_ipip.e1, mini_ipip.e4], [mini_ipip.e3, mini_ipip.e2]]
+      echo: [life of the party, party, parties, talk, background]
+    openness:
+      mean: 4.04
+      sd: 0.77
+      reversals: [[mini_ipip.i1, mini_ipip.i4]]
+      echo: [imagination, abstract, idea, vivid]
+
+suggestions:
+  - id: artistic
+    kind: working
+    trait: openness
+    toward: Imaginative
+    r: 0.36
+    # Read "a little", not "somewhat": the Mini-IPIP's openness items are about imagination and
+    # abstract ideas, with nothing on art or aesthetics, the content that carries this link, and
+    # they are less reliable (alpha .68 in the norm sample) than the scales the studies used.
+    strength: little
+    outcome: interest
+    interest: artistic activities, such as creating visual art, designs or music
+    title: Interest in artistic activities
+    source: "Hurtado Rúa, Stead & Poklar, Journal of Career Assessment (2019); Larson, Rottinghaus & Borgen, Journal of Vocational Behavior (2002)"
+    # evidence: Hurtado Rúa et al. (27(3), 527-543): multivariate meta-analysis, 34 studies,
+    # 43 samples, N = 19,872; moderators mean age, country, publication year and the FFM and
+    # RIASEC scales used. Pooled correlations ran from -.08 to .36 (abstract); that .36 is
+    # Openness-Artistic comes from articles citing it, not the paper itself. Larson et al.
+    # (61(2), 217-239): 24 samples, the SDS, Strong and VPI interest inventories against the
+    # NEO-PI-R; r = .48 (abstract). Barrick, Mount & Gupta (2003; 41 samples from 21 studies,
+    # N = 11,559): corrected rho = .39, support only. Not yet confirmed from full texts that the
+    # pooled r's are uncorrected; at least one citing article writes Hurtado Rúa's values as rho. O*NET Artistic: "Work involves creating original visual
+    # artwork, performances, written works, food, or music for a variety of media, or applying
+    # artistic principles to the design of various objects and materials."
+  - id: enterprising
+    kind: working
+    trait: extraversion
+    toward: Outgoing
+    r: 0.27
+    outcome: interest
+    interest: leading or negotiating
+    title: Interest in leading and negotiating
+    source: "Hurtado Rúa, Stead & Poklar, Journal of Career Assessment (2019); Larson, Rottinghaus & Borgen, Journal of Vocational Behavior (2002)"
+    # evidence: Extraversion-Enterprising r = .27 (Hurtado Rúa et al., from articles citing it)
+    # and .41 (Larson et al., abstract); Barrick et al. corrected rho = .41. "A little" on the
+    # lower estimate; the bar holds on Larson's. The Mini-IPIP's extraversion items are about
+    # sociability, not assertiveness, so expect a weaker link for the app's scores. O*NET
+    # Enterprising: "Work involves managing, negotiating, marketing, or selling, typically in a
+    # business setting, or leading or advising people in political and legal situations";
+    # managing, marketing, selling, politics and law left out. Same limits as above.

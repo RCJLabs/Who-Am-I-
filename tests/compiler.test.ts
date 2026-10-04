@@ -104,6 +104,64 @@ describe('analysis pack', () => {
     expect('about' in analysis!.readings['reformers_two']!).toBe(false);
   });
 
+  it('compiles each link from research, and the norms in the app\'s units', () => {
+    expect(analysis!.suggestions).toEqual([
+      {
+        id: 'helping',
+        kind: 'working',
+        trait: 'warmth',
+        toward: 1,
+        strength: 'somewhat',
+        outcome: 'interest',
+        interest: 'helping and teaching others',
+        title: 'Interest in helping and teaching',
+        source: 'Ada Trait, Test Journal (2001)',
+      },
+      {
+        id: 'crafts',
+        kind: 'free_time',
+        trait: 'warmth',
+        toward: 0,
+        strength: 'little',
+        outcome: 'participation',
+        interest: 'making things by hand',
+        title: 'Making things by hand',
+        source: 'Ben Trait, Test Journal (2002)',
+      },
+    ]);
+    // 3.5 on the items' 1-5 scale is 0.25; an SD of 0.8 is 0.4.
+    expect(analysis!.norms).toEqual({ warmth: { mean: 0.25, sd: 0.4, reversals: [['traits.t1', 'traits.t2']] } });
+    // A link can be read more weakly than its r, never more strongly.
+    const G = src.analysis!.suggestions!;
+    const weaker = compile({ ...src, analysis: { ...src.analysis!, suggestions: { ...G, text: G.text.replace('r: 0.31,', 'r: 0.31, strength: little,') } } });
+    expect(weaker.diagnostics).toEqual([]);
+    expect(weaker.analysis!.suggestions[0]).toMatchObject({ id: 'helping', strength: 'little' });
+    const stronger = compile({ ...src, analysis: { ...src.analysis!, suggestions: { ...G, text: G.text.replace('r: 0.22,', 'r: 0.22, strength: somewhat,') } } });
+    expect(stronger.diagnostics.map((x) => x.code)).toEqual(['E002']);
+    // The file is optional: without it, the pack has none.
+    const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { ...src.analysis!, suggestions: undefined } });
+    expect(d).toEqual([]);
+    expect(a).toMatchObject({ suggestions: [], norms: {} });
+  });
+
+  it('never rests a link on neuroticism, and needs norms for every trait it reads', () => {
+    const axis = (id: string) => `- id: ${id}\n  family: personality\n  title: ${id}\n  description: Test.\n  poles: [Low, High]\n  minWeight: 1\n  fullWeight: 2\n  planned: true\n`;
+    const G = src.analysis!.suggestions!;
+    const run = (trait: string) => {
+      const suggestions = { ...G, text: G.text.replace('trait: warmth, toward: Warm', `trait: ${trait}, toward: High`) };
+      return compile({ ...src, axes: { ...src.axes, text: src.axes.text + axis(trait) }, analysis: { ...src.analysis!, suggestions } });
+    };
+    for (const [trait, message] of [
+      ['neuroticism', 'other than neuroticism'],
+      ['grit', "No norms for 'grit'"],
+    ]) {
+      const { analysis: a, diagnostics: d } = run(trait!);
+      expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E016', G.path, 7]]);
+      expect(d[0]!.message).toContain(message);
+      expect(a).toBeNull();
+    }
+  });
+
   it('checks its own loaded terms in the pack only', () => {
     // "view" is in the fixture questions, "sooner" in two split lines.
     const loadedTerms = { path: 'tests/fixtures/content/base/analysis/loaded-terms.txt', text: '# Pack only\nsooner\nview\n' };
@@ -157,7 +215,7 @@ describe('analysis pack', () => {
 
 describe('analysis pack lint', () => {
   /** traditions.yaml, readings.yaml, or a tradition's answer sheet. */
-  type PackFile = 'traditions' | 'readings' | `sheet:${string}`;
+  type PackFile = 'traditions' | 'readings' | 'suggestions' | `sheet:${string}`;
   interface Case {
     name: string;
     edits: [PackFile, string, string][];
@@ -167,6 +225,7 @@ describe('analysis pack lint', () => {
   const T = 'traditions' as const;
   const R = 'readings' as const;
   const S = (tradition: string): PackFile => `sheet:${tradition}`;
+  const G = 'suggestions' as const;
   const ROOT_T = '- id: reformers';
   const ROOT_R = 'id: reformers_one, author: Ada';
   const cases: Case[] = [
@@ -286,18 +345,46 @@ describe('analysis pack lint', () => {
       ],
       expect: [['W111', R, ROOT_R]],
     },
+    { name: 'E002 an unknown key in a link', edits: [[G, 'kind: working,', 'kind: working, link: x,']], expect: [['E002', G, 'link: x']] },
+    { name: 'E003 a link listed twice', edits: [[G, 'id: crafts', 'id: helping']], expect: [['E003', G, 'Making things by hand']] },
+    { name: 'E004 an unknown spectrum', edits: [[G, 'trait: warmth, toward: Warm', 'trait: kindness, toward: Warm']], expect: [['E004', G, 'kindness']] },
+    { name: 'E004 a pole the spectrum does not have', edits: [[G, 'toward: Cool', 'toward: Chilly']], expect: [['E004', G, 'Chilly']] },
+    { name: 'E016 only personality spectrums', edits: [[G, 'trait: warmth, toward: Warm', 'trait: novelty, toward: Novel']], expect: [['E016', G, 'novelty']] },
+    { name: 'E016 the evidence bar', edits: [[G, 'r: 0.22', 'r: 0.15']], expect: [['E016', G, 'r: 0.15']] },
+    { name: 'E016 a blocked subject, in any form', edits: [[G, 'interest: "helping and teaching others"', 'interest: "helping others with diets"']], expect: [['E016', G, 'with diets']] },
+    { name: 'E016 never to the reader', edits: [[G, 'title: Interest in helping and teaching,', 'title: Helping you teach,']], expect: [['E016', G, 'Helping you teach']] },
+    { name: 'E016 nothing prescriptive', edits: [[G, 'title: Making things by hand,', 'title: Making what needs to be made,']], expect: [['E016', G, 'needs to be made']] },
+    { name: 'E016 no numbers', edits: [[G, 'title: Making things by hand,', 'title: Making 3 things by hand,']], expect: [['E016', G, 'Making 3 things']] },
+    { name: 'E016 nothing double-ended', edits: [[G, 'interest: "making things by hand"', 'interest: "making things by hand but also buying them"']], expect: [['E016', G, 'but also']] },
+    { name: "E016 never the trait's own questions", edits: [[G, 'title: Interest in helping and teaching,', 'title: Helping cold callers,']], expect: [['E016', G, 'cold callers']] },
+    { name: 'E016 a published source', edits: [[G, 'source: "Ben Trait, Test Journal (2002)"', 'source: Original scenario']], expect: [['E016', G, 'Original scenario']] },
+    { name: "E016 norms on the items' scale", edits: [[G, 'mean: 3.5', 'mean: 7']], expect: [['E016', G, 'mean: 7']] },
+    { name: 'E016 a reversal pairs opposite keys', edits: [[G, 'reversals: [[traits.t1, traits.t2]]', 'reversals: [[traits.t1, traits.t3]]']], expect: [['E016', G, 'traits.t3']] },
+    { name: 'E004 a reversal reads the trait', edits: [[G, 'reversals: [[traits.t1, traits.t2]]', 'reversals: [[traits.t1, alpha.stance]]']], expect: [['E004', G, 'alpha.stance']] },
+    {
+      name: 'W108 and W112 in links, never in their sources',
+      edits: [
+        [G, 'interest: "helping and teaching others"', 'interest: "helping any anti-vaxxer"'],
+        [G, 'title: Making things by hand,', 'title: Making things for the Example Party,'],
+        [G, 'source: "Ada Trait, Test Journal (2001)"', 'source: "Ada Trait, Anti-vaxxer Review (2001)"'],
+      ],
+      expect: [
+        ['W108', G, 'id: helping'],
+        ['W112', G, 'id: crafts'],
+      ],
+    },
   ];
 
   it.each(cases)('$name', ({ edits, expect: want }) => {
     const src = fixtureSources();
     const pack: AnalysisSources = { ...src.analysis! };
     const get = (file: PackFile): SourceFile =>
-      file === 'traditions' || file === 'readings' ? pack[file]! : pack.sheets!.find((f) => f.path.endsWith(`/${file.slice(6)}.yaml`))!;
+      file === 'traditions' || file === 'readings' || file === 'suggestions' ? pack[file]! : pack.sheets!.find((f) => f.path.endsWith(`/${file.slice(6)}.yaml`))!;
     for (const [file, from, to] of edits) {
       const f = get(file);
       expect(f.text.split(from).length - 1, `'${from}' must occur once in ${file}`).toBe(1);
       const edited = { ...f, text: f.text.replace(from, to) };
-      if (file === 'traditions' || file === 'readings') pack[file] = edited;
+      if (file === 'traditions' || file === 'readings' || file === 'suggestions') pack[file] = edited;
       else pack.sheets = pack.sheets!.map((x) => (x.path === f.path ? edited : x));
     }
     const { analysis, diagnostics } = compile({ ...src, analysis: pack });

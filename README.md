@@ -9,8 +9,10 @@ Results come with a written analysis: a summary, a short read-out for each secti
 steps (the strongest cases on both sides of your firmest positions, topics to explore, and
 tensions worth a second look). Eleven political traditions serve as reference points: which of
 them your political answers sit closest to, with readings from inside each and critiques from
-outside. Never a label, a party or a recommendation. It's all worked out on the device by fixed
-rules, with no AI service.
+outside. Never a label, a party or a recommendation. Under next steps, links from research say
+what large studies found people who describe their personality as you did report more or less
+interest in, on average (collapsed until opened, and Settings can turn them off). It's all worked
+out on the device by fixed rules, with no AI service.
 
 All answers stay on your device: no server, no account, no analytics.
 
@@ -42,7 +44,7 @@ node scripts/tradition-targets.ts                                             # 
 | Path | What |
 |---|---|
 | `content/` | the question bank (YAML): domains, axes, principles, topics |
-| `content/analysis/` | political traditions, their answer sheets, and readings (shipped as a separate, lazily loaded chunk) |
+| `content/analysis/` | political traditions, their answer sheets, readings, and links from research (shipped as a separate, lazily loaded chunk) |
 | `src/model/` | schemas and types: authored content, bundle, answers, profile |
 | `src/engine/` | pure, DOM-free logic: conditions, flow, scoring, tensions, profile, results analysis |
 | `src/compiler/` | content compiler and lint (Node), plus the Vite plugin |
@@ -55,5 +57,5 @@ node scripts/tradition-targets.ts                                             # 
 - [Content guide](docs/CONTENT_GUIDE.md): how to write topics, challenges and anchors
 - [Taxonomy](docs/TAXONOMY.md): everything the app will cover, and the anchor matrix
 - [Profile format](docs/PROFILE_FORMAT.md): the public output contract
-- [Results analysis](docs/ANALYSIS.md): the rules behind the summary, next steps and political traditions
+- [Results analysis](docs/ANALYSIS.md): the rules behind the summary, next steps, political traditions and links from research
 - [Privacy policy (draft)](docs/PRIVACY.md)

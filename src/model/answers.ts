@@ -61,6 +61,10 @@ export const SettingsSchema = z.object({
   alwaysDeep: z.boolean(),
   lastBackupAt: z.number().nullable(),
   seed: z.string(),
+  /** Show links from research under Next steps. */
+  showLinks: z.boolean(),
+  /** Whether the links group was last left open. */
+  linksOpen: z.boolean(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 

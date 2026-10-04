@@ -1,7 +1,7 @@
 // Turns the analysis facts into what the results page shows: a summary, a short read-out per
 // section and next steps. Pure, so it's tested in node. Sentence templates live in copy.analysis;
 // this file only chooses which parts go into them.
-import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec } from '../../engine/analysis/index.ts';
+import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec, SuggestionRec } from '../../engine/analysis/index.ts';
 import type { AnalysisFacts, Closeness, TraditionStatus } from '../../engine/analysis/types.ts';
 import type { AnalysisPack } from '../../model/analysis.ts';
 import { BAND, LIMIT } from '../../engine/analysis/constants.ts';
@@ -48,10 +48,12 @@ export interface NextItem {
 }
 
 export interface NextGroup {
-  id: 'read' | 'readings' | 'explore' | 'reflect';
+  id: 'read' | 'readings' | 'links' | 'explore' | 'reflect';
   title: string;
   intro: string;
   items: NextItem[];
+  /** Closed until opened, with this line saying what it draws on. */
+  collapsed?: { note: string };
 }
 
 export interface TraditionRow {
@@ -102,8 +104,10 @@ export interface ComposeInput {
   tensions: readonly Tension[];
   interests: readonly InterestEntry[];
   alwaysDeep?: boolean;
-  /** Political traditions and readings, once loaded. */
+  /** Political traditions, readings and links from research, once loaded. */
   pack?: AnalysisPack | null;
+  /** Show links from research (a setting; on unless turned off). */
+  links?: boolean;
 }
 
 const A = copy.analysis;
@@ -208,6 +212,8 @@ function next(i: ComposeInput): NextGroup[] {
   const readings = i.facts.next.readings.map((r) => readingItem(i, r)).filter((x): x is NextItem => x !== null);
   const named = (i.facts.public.traditions?.named ?? []).map((id) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id);
   if (readings.length) groups.push({ id: 'readings', title: A.next.readings.title, intro: A.next.readings.intro(named), items: readings });
+  const links = i.links === false ? [] : i.facts.next.suggestions.map((r) => linkItem(i, r)).filter((x): x is NextItem => x !== null);
+  if (links.length) groups.push({ id: 'links', title: A.next.links.title, intro: A.next.links.intro, items: links, collapsed: { note: A.next.links.note } });
   const explore = i.facts.next.explore.map((r) => exploreItem(i, r));
   if (explore.length) groups.push({ id: 'explore', title: A.next.explore.title, intro: A.next.explore.intro, items: explore });
   const reflect = i.facts.next.reflect.map((r) => reflectItem(i.bundle, r));
@@ -267,6 +273,21 @@ function readingItem(i: ComposeInput, r: ReadingRec): NextItem | null {
     title: reading.title,
     detail: reading.note,
     meta: [`${reading.author} (${reading.year})`, A.next.readings.kind[reading.kind], view].join(' · '),
+  };
+}
+
+function linkItem(i: ComposeInput, r: SuggestionRec): NextItem | null {
+  const g = i.pack?.suggestions.find((x) => x.id === r.suggestion);
+  const lean = r.basis[0];
+  const pole = lean ? i.bundle.axes[lean.axis]?.poles[lean.pole] : undefined;
+  if (!g || !pole) return null;
+  const L = A.next.links;
+  const sentence = (r.end === 'toward' ? L.more : L.less)[g.outcome](pole, L.strength[g.strength], g.interest);
+  return {
+    testid: `rec-link-${g.id}`,
+    title: g.title,
+    detail: [sentence, L.caveat].join(' '),
+    meta: [L.kind[g.kind], L.because(pole), g.source].join(' · '),
   };
 }
 

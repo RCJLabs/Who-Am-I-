@@ -214,6 +214,41 @@ describe('political traditions in the analysis', () => {
     ]);
   });
 
+  it('reports links from research for the end the answers lean to, collapsed, and only when shown', () => {
+    const log = new Log();
+    for (const [item, step] of [['traits.t1', 5], ['traits.t2', 1], ['traits.t3', 5], ['traits.t4', 1]] as const) log.add(item, scale(step));
+    const s = buildAnswerState(b, log.events);
+    const o = { appVersion: 't', now: 'x', resolutions: [] };
+    const profile = buildProfile(s, { ...o, includeSensitive: true });
+    const publicProfile = buildProfile(s, { ...o, includeSensitive: false });
+    const tensions = detectTensions(s, observe(s, { includeSensitive: true }), []);
+    const run = (pack: ReturnType<typeof fixturePack> | null, links?: boolean) => {
+      const facts = analyse({ state: s, profile, publicProfile, tensions, pack });
+      return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack, ...(links === undefined ? {} : { links }) });
+    };
+    const group = run(fixturePack()).next.find((g) => g.id === 'links')!;
+    expect(group).toMatchObject({ title: 'Links from research', collapsed: { note: 'From your personality answers only.' } });
+    expect(group.items).toEqual([
+      {
+        testid: 'rec-link-helping',
+        title: 'Interest in helping and teaching',
+        detail:
+          "In large studies, people whose answers lean toward “Warm” report somewhat more interest in helping and teaching others, on average. Many don't, so this may not fit you.",
+        meta: 'Ways of working · Your answers lean toward “Warm” · Ada Trait, Test Journal (2001)',
+      },
+      {
+        // Read from the other end: the same title, and less of the same activity.
+        testid: 'rec-link-crafts',
+        title: 'Making things by hand',
+        detail:
+          "In large studies, people whose answers lean toward “Warm” take part in making things by hand a little less often, on average. Many don't, so this may not fit you.",
+        meta: 'Free time · Your answers lean toward “Warm” · Ben Trait, Test Journal (2002)',
+      },
+    ]);
+    expect(run(fixturePack(), false).next.some((g) => g.id === 'links')).toBe(false);
+    expect(run(null).next.some((g) => g.id === 'links')).toBe(false);
+  });
+
   it('shows nothing about traditions without the pack', () => {
     const a = withTraditions(match, [{ kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' }], false);
     expect(a.traditions).toBeNull();

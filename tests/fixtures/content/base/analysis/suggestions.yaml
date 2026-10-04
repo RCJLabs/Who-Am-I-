@@ -1,0 +1,8 @@
+# Test links: warmth norms, and two associations, one with each pole as the end with more interest.
+norms:
+  source: "Cy Norm, Test Journal (2010)"
+  traits:
+    warmth: { mean: 3.5, sd: 0.8, reversals: [[traits.t1, traits.t2]], echo: [cold] }
+suggestions:
+  - { id: helping, kind: working, trait: warmth, toward: Warm, r: 0.31, outcome: interest, interest: "helping and teaching others", title: Interest in helping and teaching, source: "Ada Trait, Test Journal (2001)" }
+  - { id: crafts, kind: free_time, trait: warmth, toward: Cool, r: 0.22, outcome: participation, interest: "making things by hand", title: Making things by hand, source: "Ben Trait, Test Journal (2002)" }
