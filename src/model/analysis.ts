@@ -3,7 +3,7 @@
 // outside each. Each tradition is placed by an answer sheet: the app's own questions answered as
 // a thoughtful adherent would, scored by the engine like anyone's answers, so no position is ever
 // written by hand. Links from research (suggestions) report one published association between a
-// personality trait and an interest, from both ends, gated by published norms; never advice.
+// personality trait and an interest, from both ends, gated by adult norms; never advice.
 // Authored as YAML, compiled with the content but hashed and shipped separately. Strict objects, as
 // in authored.ts; these schemas also generate schema/analysis/*.schema.json.
 import { z } from 'zod';
@@ -98,7 +98,7 @@ export const SuggestionSchema = z.strictObject({
   source: z.string().min(1).describe('The meta-analysis or large replicated study'),
 });
 
-/** Published adult norms for each trait, on its items' own scale (1 to 5): used only to gate, never shown. */
+/** Adult norms for each trait, on its items' own scale (1 to 5), with their source: used only to gate, never shown. */
 export const NormsSchema = z.strictObject({
   source: z.string().min(1).describe('Where the norms come from'),
   traits: z.record(
@@ -177,7 +177,7 @@ export interface Suggestion {
   source: string;
 }
 
-/** A trait's published norms in the app's units (-1..1), and the item pairs that void it. */
+/** A trait's norms in the app's units (-1..1), and the item pairs that void it. */
 export interface TraitNorm {
   mean: number;
   sd: number;

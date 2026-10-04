@@ -1,7 +1,7 @@
 // Links from research: published associations between a personality trait and an interest, shown
 // only where the person's own answers clearly lean one way. A trait counts only with all its items
 // answered, at least 0.5 toward a pole on its own scale, and at least half a standard deviation
-// beyond the published adult mean in the same direction (norms only gate; nothing compares the
+// beyond the adult mean in the norms, in the same direction (norms only gate; nothing compares the
 // person with anyone). Agreeing with both items of a reversal pair voids a trait. Each link shows
 // the end the answers lean to: the one with more interest, or the other, where the same activity
 // plays a small part. One per kind, the clearest lean first; ties go to authored order.
