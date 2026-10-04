@@ -9,6 +9,7 @@ import { composeAnalysis, type Analysis } from '../../src/app/analysis/compose.t
 import { interestList } from '../../src/app/view.ts';
 import { findTerms, parseTerms, termMatchers } from '../../src/compiler/loaded-terms.ts';
 import { exploreNext } from '../../src/engine/analysis/explore.ts';
+import { UNNAMED_TRAITS } from '../../src/engine/analysis/constants.ts';
 import { analyse } from '../../src/engine/analysis/index.ts';
 import { observe } from '../../src/engine/observe.ts';
 import { buildProfile } from '../../src/engine/profile.ts';
@@ -37,6 +38,12 @@ const sensitiveWords = new RegExp(
   [...b.topics.filter((t) => t.sensitive).map((t) => t.title), ...Object.values(b.axes).filter((a) => a.family === 'worldview').flatMap((a) => [a.title, ...a.poles])]
     .map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     .join('|'),
+  'i',
+);
+
+/** The poles of traits the summary never names (UNNAMED_TRAITS): "reactive", "even-keeled". */
+const unnamedWords = new RegExp(
+  [...UNNAMED_TRAITS].flatMap((id) => b.axes[id]!.poles).map((p) => `\\b${p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).join('|'),
   'i',
 );
 
@@ -79,8 +86,9 @@ function checkAnalysis(a: Analysis, who: string): void {
   for (const text of written(a)) for (const re of TONE) expect(text, `${who}: ${re} in ${JSON.stringify(text)}`).not.toMatch(re);
   // The self-description and the challenge record are reported side by side, never set against each other.
   for (const text of a.readouts.thinking?.sentences ?? []) expect(text, `${who}: thinking read-out`).not.toMatch(CONTRAST);
-  // The summary and next steps never draw on sensitive topics.
+  // The summary and next steps never draw on sensitive topics, and never name emotional reactivity.
   expect(JSON.stringify(a.summary), `${who}: summary`).not.toMatch(sensitiveWords);
+  expect(JSON.stringify(a.summary), `${who}: summary`).not.toMatch(unnamedWords);
   for (const g of a.next) {
     for (const item of g.items) {
       const topics = [...item.testid.matchAll(/^rec-(?:case|explore)-([a-z0-9_]+)/g)].map((m) => m[1]!);
@@ -188,5 +196,19 @@ describe('analysis of random respondents', () => {
     const partial = analyses.filter((_, i) => i % 2);
     const explored = partial.filter((a) => a.next.find((g) => g.id === 'explore')?.items.length === 3);
     expect(explored.length).toBe(partial.length);
+  });
+});
+
+describe('a summary of personality alone', () => {
+  // Very reactive, fairly outgoing, middling otherwise.
+  const answers: Record<string, number> = {};
+  for (const trait of ['e', 'a', 'c', 'n', 'i']) for (const k of [1, 2, 3, 4]) answers[`mini_ipip.${trait}${k}`] = 3;
+  Object.assign(answers, { 'mini_ipip.n1': 5, 'mini_ipip.n2': 1, 'mini_ipip.n3': 5, 'mini_ipip.n4': 1, 'mini_ipip.e1': 4, 'mini_ipip.e2': 2, 'mini_ipip.e3': 4, 'mini_ipip.e4': 2 });
+  const a = composeRun(runRespondent(b, scriptedPolicy(personaResponses(answers)), { topics: ['mini_ipip'] }));
+
+  it('names the strongest traits other than emotional reactivity, which only the Personality read-out describes', () => {
+    expect(a.summary.headline).toMatch(/^You describe yourself as fairly outgoing and /);
+    expect(a.summary.headline).not.toMatch(unnamedWords);
+    expect(a.readouts.personality!.sentences[0]).toMatch(/^You describe yourself as very reactive/);
   });
 });

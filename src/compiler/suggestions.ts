@@ -4,14 +4,13 @@
 // least 0.20. Its wording names activities, never a kind of person: no subject from the
 // blocked-advice list in any form, no second person, nothing prescriptive, no numbers, nothing
 // double-ended, and none of the trait's own item words. Norms convert to the app's units here.
+import { UNNAMED_TRAITS } from '../engine/analysis/constants.ts';
 import type { Suggestion, SuggestionsFile, TraitNorm } from '../model/analysis.ts';
 import type { Bundle } from '../model/content.ts';
 import type { Env, Loc, Reporter } from './context.ts';
 import { findTerms, termMatchers } from './loaded-terms.ts';
 import type { ParsedFile } from './yaml.ts';
 
-/** Never a basis: links from it would read as advice about anxiety or mood. */
-const NEVER: ReadonlySet<string> = new Set(['neuroticism']);
 /** The evidence bar: the typical size of an individual-differences effect. */
 export const MIN_R = 0.2;
 /** From here, "somewhat more"; below, "a little more". */
@@ -49,7 +48,7 @@ export function compileSuggestions(
       rep.report('E004', `Unknown spectrum '${trait}'`, at());
       continue;
     }
-    if (axis.family !== 'personality' || NEVER.has(trait)) rep.report('E016', `Links rest only on personality spectrums other than neuroticism; '${trait}' isn't one`, at());
+    if (axis.family !== 'personality' || UNNAMED_TRAITS.has(trait)) rep.report('E016', `Links rest only on personality spectrums other than neuroticism; '${trait}' isn't one`, at());
     if (n.mean < 1 || n.mean > 5) rep.report('E016', `A mean on the items' 1-5 scale, not ${n.mean}`, at('mean'));
     const reversals: [string, string][] = [];
     (n.reversals ?? []).forEach((pair, k) => {
@@ -72,7 +71,7 @@ export function compileSuggestions(
       rep.report('E004', `Unknown spectrum '${s.trait}'`, at('trait'));
       return;
     }
-    if (axis.family !== 'personality' || NEVER.has(s.trait)) rep.report('E016', `Links rest only on personality spectrums other than neuroticism; '${s.trait}' isn't one`, at('trait'));
+    if (axis.family !== 'personality' || UNNAMED_TRAITS.has(s.trait)) rep.report('E016', `Links rest only on personality spectrums other than neuroticism; '${s.trait}' isn't one`, at('trait'));
     else if (!g.file.norms.traits[s.trait]) rep.report('E016', `No norms for '${s.trait}': add them under norms.traits`, at('trait'));
     const toward = axis.poles.indexOf(s.toward);
     if (toward !== 0 && toward !== 1) rep.report('E004', `'${s.toward}' isn't a pole of '${axis.id}' (${axis.poles.join(' or ')})`, at('toward'));

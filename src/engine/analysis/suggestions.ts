@@ -10,7 +10,7 @@ import type { AxisId, ItemId } from '../../model/content.ts';
 import type { Profile } from '../../model/profile.ts';
 import { numericValue } from '../normalize.ts';
 import type { AnswerState } from '../state.ts';
-import { LIMIT, SUGGEST } from './constants.ts';
+import { LIMIT, SUGGEST, UNNAMED_TRAITS } from './constants.ts';
 import type { SuggestionRec } from './types.ts';
 
 export function suggestionsFor(pack: AnalysisPack, profile: Pick<Profile, 'axes'>, s: Pick<AnswerState, 'values'>, n: number = LIMIT.suggestions): SuggestionRec[] {
@@ -21,6 +21,7 @@ export function suggestionsFor(pack: AnalysisPack, profile: Pick<Profile, 'axes'
   };
   const leaning = new Map<AxisId, { pole: 0 | 1; margin: number }>();
   for (const [trait, norm] of Object.entries(pack.norms)) {
+    if (UNNAMED_TRAITS.has(trait)) continue;
     const a = profile.axes[trait];
     if (!a || a.score === null || a.confidence < SUGGEST.confidence - 1e-9) continue;
     if (norm.reversals.some(([x, y]) => agrees(x) && agrees(y))) continue;
