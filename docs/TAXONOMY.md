@@ -468,7 +468,8 @@ Each reads from either end under one title: more interest at one pole, less of t
 other. Where the meta-analyses differ, `r` is the lowest estimate, from the largest and newest
 (Hurtado Rúa, Stead & Poklar, 2019: 34 studies, 43 samples, N = 19,872). That its pooled values are
 uncorrected isn't yet confirmed: they come from articles citing it, at least one of which writes
-them as ρ. The bar holds on Larson et al.'s values, and both links read "a little" either way.
+them as ρ. The bar still holds on Larson et al.'s values (.41 and .48, written as r in its abstract,
+with room to spare even if they too were corrected), and both links read "a little" either way.
 
 | Link | Trait, more interest toward | r used | Other estimates | Reads as | Kind |
 |---|---|---|---|---|---|
