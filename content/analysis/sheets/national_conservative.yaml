@@ -14,15 +14,15 @@ sources:
 answers:
   fairness.stance: 3   # Mutual loyalty means a decent floor for fellow citizens, not equal shares (Hazony, The Virtue of Nationalism)
   assisted_dying.stance: 1   # Law should shield the old, sick and disabled from pressure to die; palliative care instead
-  drug_policy.stance: 2   # Addictive substances harm families and public life; prison for dealers, required treatment for users (National Conservatism: A Statement of Principles)
-  paternalism.stance: 5   # The state may guard citizens against addictive and destructive products, not every small risk (National Conservatism: A Statement of Principles)
+  drug_policy.stance: 2   # Addictive substances harm families and public life (National Conservatism: A Statement of Principles); prison for dealers, required treatment for users
+  paternalism.stance: 5   # The state may guard citizens against addictive and destructive products, not every small risk
   organ_donation.stance: 2   # The body is not for sale; cover donors' costs but allow no market in organs
   sex_work.stance: 2   # Commercial sex exploits and degrades; punish buyers and traffickers, not the people selling
-  surrogacy.stance: 1   # Breaks the lifelong bond between parents and children (National Conservatism: A Statement of Principles); banned, as in several European states
+  surrogacy.stance: 1   # Breaks the bond between mother and child; banned, as in several European states
   gene_editing.stance: 2   # Human heredity is not for remaking; keep heritable editing out of people, research under limits
   free_speech.stance: 2   # Open debate about nation, faith and immigration must stay free; only narrow exceptions like genocide denial
   religious_liberty.stance: 6   # each faith free to run its own institutions and raise its children (National Conservatism: A Statement of Principles); one law of the land still binds all, so no blanket exemption (Scruton, The Need for Nations)
-  protest.stance: 2   # Citizens and government alike must abide by the law; a political motive earns no discount (National Conservatism: A Statement of Principles)
+  protest.stance: 2   # Citizens and government alike must abide by the law (National Conservatism: A Statement of Principles); a political motive earns no discount
   torture.stance: 3   # The nation's survival can force a terrible choice, but torture stays unlawful and answerable in court
   public_safety.stance: 5   # Public order first in serious cases, within the inherited common law of due process (National Conservatism: A Statement of Principles)
   taxes.stance: 3   # Transfers should support families and work; equalizing incomes is not the aim
@@ -42,7 +42,7 @@ answers:
   climate.stance: 2   # Stewardship grows from love of home, not global targets (Scruton, Green Philosophy); affordable, secure energy comes first
   cooperation.stance: 3   # Treaties and alliances among independent nations, no transfer of authority to supranational bodies (Hazony, The Virtue of Nationalism; Manent, Democracy Without Nations?)
   foreign_aid.stance: 3   # Duties run first to fellow citizens; modest aid where it serves national interests and stability abroad
-  gambling.stance: 3   # Betting firms profit from obsessive, destructive habits; firm loss limits and no advertising (National Conservatism: A Statement of Principles)
+  gambling.stance: 3   # Betting firms profit from obsessive, destructive habits; firm loss limits and no advertising
   moral_foundations.loyalty_1: 5   # National loyalty is what lets citizens accept governments they oppose (Scruton, The Need for Nations)
   moral_foundations.equality_3: 3   # Cohesion matters more than inequality; mobility alone does not justify leaders detached from the nation (Huntington, Who Are We?)
   moral_foundations.liberty_3: 4   # Freedom rests on a cohesive nation and its limits, not on individual consent alone (Hazony, The Virtue of Nationalism)
