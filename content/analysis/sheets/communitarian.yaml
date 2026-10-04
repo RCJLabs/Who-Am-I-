@@ -7,7 +7,7 @@ sources:
   - Amitai Etzioni, The Spirit of Community (1993)
   - Michael J. Sandel, Democracy's Discontent (1996)
   - Jacques Maritain, Man and the State (1951)
-  - Wilhelm Röpke, A Humane Economy (1958)
+  - Wilhelm Röpke, A Humane Economy (1958; English 1960)
 answers:
   fairness.stance: 4   # Fairly earned gaps are legitimate, but not once they split rich and poor into separate worlds (Sandel, Democracy's Discontent)
   abortion.stance: 5   # Early access with counseling and later limits: the life-protecting compromise most adherents defend
@@ -33,7 +33,7 @@ answers:
   regulation.stance: 5   # Markets need a firm legal and moral framework to stay humane (Röpke, A Humane Economy)
   unions.stance: 5   # Social partnership: strong unions and employers bargain as equals, with strikes kept within fair limits
   trade.stance: 5   # Open trade under shared rules, with help for the workers and places that lose out
-  housing.stance: 3   # Shield families from steep rises that uproot communities, without the general rent control Röpke opposed
+  housing.stance: 5   # homes anchor families and neighborhoods: limits that keep rises near inflation, as Christian democrats in the Netherlands, Germany and Austria have recently legislated
   inheritance.stance: 3   # Families should hand on homes, farms and firms; tax large estates modestly, with generous allowances
   immigration.stance: 3   # Settlement should match what communities can integrate; most adherents now want somewhat fewer
   policing.stance: 5   # More officers rooted in the communities they serve

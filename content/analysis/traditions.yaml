@@ -111,6 +111,11 @@ traditions:
           universal services and progressive taxes; centrists judge inequality by whether everyone
           has a decent floor and a fair chance, and treat unions as one organized interest among
           many.
+      - id: communitarian
+        split: >-
+          Social democrats and communitarians both back a strong welfare state and unions; social
+          democrats look to universal public services and personal freedom, communitarians want
+          families and civil society to carry more of it and uphold shared moral standards.
     inside:
       - judt_ill_fares_the_land
       - crosland_future_of_socialism
@@ -240,15 +245,15 @@ traditions:
     adherents: communitarians
     side: center
     summary: >-
-      Communitarianism, in its civic strand and in the older Christian democratic tradition, seeks a
-      common good built by families, local communities, employers, unions and the other bodies of
-      civil society, with each task left to the smallest body able to carry it and the state
-      supporting them rather than taking their place. It pairs a social market economy, where
-      employers and workers bargain as partners, with shared moral standards and binding cooperation
-      among nations. It accepts substantial taxes and social contributions, being outvoted at times
-      in the international bodies it joins, personal choice that sometimes gives way to duties
-      toward others, and some goods kept out of the market, as the price of solidarity, sturdier
-      families and a stronger civic life.
+      Communitarianism, in its civic strand and in the Christian democratic tradition, seeks a
+      common good that respects the dignity of every person and is built by families, local
+      communities, employers, unions and the other bodies of civil society, with each task left to
+      the smallest body able to carry it and the state supporting them rather than taking their
+      place. It pairs a social market economy, where employers and workers bargain as partners, with
+      shared moral standards and binding cooperation among nations. It accepts substantial taxes and
+      social contributions, being outvoted at times in the international bodies it joins, personal
+      choice that sometimes gives way to duties toward others, and some goods kept out of the
+      market, as the price of solidarity, sturdier families and a stronger civic life.
     neighbours:
       - id: centrist
         split: >-
@@ -269,6 +274,11 @@ traditions:
           Communitarians and national conservatives both value family and civil society;
           communitarians share authority among nations through binding cooperation, national
           conservatives keep law-making within the nation.
+      - id: social_democrat
+        split: >-
+          Communitarians and social democrats both back a strong welfare state and unions;
+          communitarians want families and civil society to carry more of it and uphold shared moral
+          standards, social democrats look to universal public services and personal freedom.
     inside:
       - etzioni_spirit_of_community
       - maritain_man_and_the_state
