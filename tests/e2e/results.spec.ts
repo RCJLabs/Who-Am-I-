@@ -78,6 +78,10 @@ test('the results open on an overview: a summary, the pattern, a link to each ar
   await link.click();
   await expect(page.locator('#sec-tensions h1')).toBeFocused();
   await expect(page.getByTestId('tension-row').first()).toBeVisible();
+  // Each principle's card leads with its most pressing pair, worded as a question to think over.
+  const card = page.locator('[data-testid^="tension-group-"]').first();
+  await expect(card).toContainText(/You (endorsed|were neutral on)/);
+  await expect(card).toContainText('Think it through');
   await page.getByTestId('area-back').click();
   await expect(summary).toBeVisible();
   await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(Math.round(y));
@@ -86,8 +90,12 @@ test('the results open on an overview: a summary, the pattern, a link to each ar
   await expect(page.getByTestId('section-tensions')).toBeVisible();
   await page.goBack();
 
-  // Next steps: both sides of the firmest positions, no sensitive topics to explore, three reflections at most.
-  await expect(page.getByTestId('next-read').locator('[data-testid^="rec-case-"]').first()).toBeVisible();
+  // Next steps: both sides of the firmest positions, two at first and the rest on request, no
+  // sensitive topics to explore, three reflections at most.
+  const read = page.getByTestId('next-read').locator('[data-testid^="rec-case-"]');
+  await expect(read).toHaveCount(2);
+  await page.getByTestId('next-more-read').click();
+  expect(await read.count()).toBeGreaterThan(2);
   for (const topic of await suggestedTopics(page)) expect(sensitive.has(topic), topic).toBe(false);
   const reflections = page.locator('[data-testid^="rec-reflect-"]');
   await expect(reflections).toHaveCount(3);

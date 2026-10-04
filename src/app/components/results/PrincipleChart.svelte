@@ -1,6 +1,7 @@
 <script lang="ts">
   // Principles as a diverging bar chart, most endorsed first: bars grow right (endorses) or left
-  // (rejects) from a shared center line. Each row opens to the definition, consistency, any open
+  // (rejects) from a shared center line, each with how many topics it came up in. The first few
+  // show at once and the rest on request. Each row opens to the definition, consistency, any open
   // tensions, and a topic-by-topic dot strip that shows where the principle was applied unevenly.
   import { LOW_CONFIDENCE } from '../../../engine/analysis/constants.ts';
   import { copy } from '../../copy.ts';
@@ -17,6 +18,10 @@
     tensions: Map<string, { key: string; label: string }[]>;
   } = $props();
 
+  /** Rows shown before "Show all", unless only one more would be left. */
+  const SHOWN = 8;
+  let showAll = $state(false);
+  const shown = $derived(showAll || rows.length <= SHOWN + 1 ? rows : rows.slice(0, SHOWN));
   // Rows resting on few answers are drawn lighter, and say so in words.
   const anyLow = $derived(rows.some((r) => r.result.confidence < LOW_CONFIDENCE));
 
@@ -38,14 +43,17 @@
   {#if anyLow}
     <p class="small muted low-key"><span class="swatch faded" aria-hidden="true"></span>{copy.results.lighter}</p>
   {/if}
-  {#each rows as r (r.principle.id)}
+  {#each shown as r (r.principle.id)}
     {@const b = bar(r.score)}
     {@const byTopic = Object.entries(r.result.byTopic).sort((x, y) => y[1] - x[1])}
     {@const open = tensions.get(r.principle.id) ?? []}
     {@const low = r.result.confidence < LOW_CONFIDENCE}
     <details class="prow" data-testid="principle-{r.principle.id}">
       <summary>
-        <span class="label">{r.principle.label}</span>
+        <span class="name">
+          <span class="label">{r.principle.label}</span>
+          <span class="topics small muted">{copy.results.topicCount(r.result.topics)}</span>
+        </span>
         <span class="visually-hidden">: {endorsementLabel(r.score)}{low ? `, ${copy.results.lowConfidence.toLowerCase()}` : ''}</span>
         <span class="area" aria-hidden="true">
           <span class="zero"></span>
@@ -80,6 +88,11 @@
       </div>
     </details>
   {/each}
+  {#if shown.length < rows.length || showAll}
+    <button type="button" class="btn ghost all" data-testid="show-all-principles" aria-expanded={showAll} onclick={() => (showAll = !showAll)}>
+      {showAll ? copy.results.showFewer : copy.results.showAll(rows.length)}
+    </button>
+  {/if}
 </div>
 
 <style>
@@ -129,10 +142,23 @@
   summary::-webkit-details-marker {
     display: none;
   }
+  .name {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
   .label {
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.25;
+  }
+  .topics {
+    font-size: 0.75rem;
+  }
+  .all {
+    width: 100%;
+    margin-top: 6px;
   }
   details[open] .label {
     color: var(--accent);
@@ -140,7 +166,7 @@
   .area,
   .mini {
     position: relative;
-    height: 12px;
+    height: 14px;
   }
   .zero {
     position: absolute;
@@ -154,7 +180,7 @@
   .bar {
     position: absolute;
     top: 1px;
-    height: 10px;
+    height: 12px;
     background: var(--chart-mark);
     border-radius: 0 4px 4px 0;
   }

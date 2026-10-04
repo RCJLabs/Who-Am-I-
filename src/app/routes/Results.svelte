@@ -8,7 +8,7 @@
   import { analyse } from '../../engine/analysis/index.ts';
   import { BAND, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
   import { isMixed } from '../../engine/score.ts';
-  import { composeAnalysis } from '../analysis/compose.ts';
+  import { composeAnalysis, tensionGroups, type TensionLead } from '../analysis/compose.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { router } from '../router.svelte.ts';
@@ -18,6 +18,7 @@
     axisFeeders,
     challengeTotals,
     compareWith,
+    endorsementLabel,
     firmestLeans,
     interestList,
     mapTraditions,
@@ -25,6 +26,7 @@
     patternGroups,
     positionsByDomain,
     rankedPrinciples,
+    toPercent,
     traditionTable,
     type PatternArea,
   } from '../view.ts';
@@ -139,16 +141,13 @@
   const ranked = $derived(rankedPrinciples(principles, profile.principles));
   const totals = $derived(challengeTotals(profile.topics));
 
-  // Tensions: one card per principle, most pressing first; open before resolved.
-  const tensions = $derived([...answers.tensions].sort((a, b) => Number(a.status !== 'open') - Number(b.status !== 'open') || b.rank - a.rank));
-  const tensionGroups = $derived.by(() => {
-    const groups = new Map<string, typeof tensions>();
-    for (const t of tensions) groups.set(t.principle, [...(groups.get(t.principle) ?? []), t]);
-    return [...groups].map(([principle, items]) => ({ principle, items }));
-  });
+  // Tensions: one card per principle, most pressing first, open before thought through; each led by
+  // its most pressing pair.
+  const tensions = $derived(answers.tensions);
+  const tensionCards = $derived(tensionGroups(content.bundle, answers.state, tensions));
   const openTensions = $derived(tensions.filter((t) => t.status === 'open'));
   let showAllTensions = $state(false);
-  const shownGroups = $derived(showAllTensions ? tensionGroups : tensionGroups.slice(0, TENSION_GROUPS_SHOWN));
+  const shownGroups = $derived(showAllTensions ? tensionCards : tensionCards.slice(0, TENSION_GROUPS_SHOWN));
   const pairLabel = (a: string, b: string) => `${topicTitle(a)} vs. ${topicTitle(b)}`;
   const openByPrinciple = $derived.by(() => {
     const m = new Map<string, { key: string; label: string }[]>();
@@ -348,28 +347,53 @@
   </ResultSection>
 {/snippet}
 
+{#snippet twoDots(sides: TensionLead['sides'])}
+  {@const [hi, lo] = sides}
+  {@const right = toPercent(hi.e)}
+  {@const left = toPercent(lo.e)}
+  <span class="two" aria-hidden="true">
+    <span class="two-label hi" style:right="{100 - right}%" style:max-width="{right}%">{hi.title}</span>
+    <span class="two-rail">
+      <span class="two-gap" style:left="{left}%" style:width="{right - left}%"></span>
+      <span class="two-dot" class:neg={lo.e < 0} style:left="{left}%"></span>
+      <span class="two-dot" class:neg={hi.e < 0} style:left="{right}%"></span>
+    </span>
+    <span class="two-label" style:left="{left}%" style:max-width="{100 - left}%">{lo.title}</span>
+    <span class="two-ends small"><span>{copy.results.rejects}</span><span>{copy.results.endorses}</span></span>
+  </span>
+  <span class="visually-hidden">{hi.title}: {endorsementLabel(hi.e)}. {lo.title}: {endorsementLabel(lo.e)}.</span>
+{/snippet}
+
 {#snippet tensionsPage()}
   <ResultSection id="tensions" title={S.tensions} readout={analysis!.readouts.tensions}>
-    {#if tensionGroups.length}
+    {#if tensionCards.length}
       {#each shownGroups as g (g.principle)}
-        <div class="card tension">
-          <p class="tension-title"><strong>{content.bundle.principles[g.principle]?.label}</strong></p>
-          {#each g.items as t (t.key)}
-            <a class="pair" href={to.tension(t.key)} data-testid="tension-row">
+        <div class="card tension" data-testid="tension-group-{g.principle}">
+          <div class="tension-head">
+            <h2 class="tension-title">{g.label}</h2>
+            <span class="count small">{g.count}</span>
+          </div>
+          <a class="lead-pair" href={g.lead.href} data-testid="tension-row">
+            <span class="lead-text">{g.lead.lead}</span>
+            {@render twoDots(g.lead.sides)}
+            {#if g.lead.ask}<span class="ask">{g.lead.ask}</span>{/if}
+            {#if g.lead.status}<span class="small resolved">{g.lead.status}</span>{/if}
+            {#if g.lead.ask}<span class="cta">{copy.analysis.next.reflect.cta}<Icon name="right" size={18} /></span>{/if}
+          </a>
+          {#each g.others as p (p.key)}
+            <a class="pair" href={p.href} data-testid="tension-row">
               <span class="pair-text">
-                <span>{pairLabel(t.a.topic, t.b.topic)}</span>
-                {#if t.status !== 'open'}
-                  <span class="small resolved">{copy.results.status[t.resolution?.kind ?? 'acknowledged']}</span>
-                {/if}
+                <span>{p.label}</span>
+                {#if p.status}<span class="small resolved">{p.status}</span>{/if}
               </span>
               <Icon name="right" size={18} />
             </a>
           {/each}
         </div>
       {/each}
-      {#if tensionGroups.length > TENSION_GROUPS_SHOWN}
+      {#if tensionCards.length > TENSION_GROUPS_SHOWN}
         <button type="button" class="btn ghost more" data-testid="show-all-tensions" aria-expanded={showAllTensions} onclick={() => (showAllTensions = !showAllTensions)}>
-          {showAllTensions ? copy.results.showFewer : copy.results.showAll(tensionGroups.length)}
+          {showAllTensions ? copy.results.showFewer : copy.results.showAll(tensionCards.length)}
         </button>
       {/if}
     {:else}
@@ -638,10 +662,104 @@
     padding: 4px 0 16px;
   }
   .tension {
-    margin-top: 10px;
+    margin-top: 12px;
+    border-radius: 22px;
+    padding: 18px 18px 8px;
+  }
+  .tension-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
   }
   .tension-title {
-    margin: 0 0 2px;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .count {
+    flex: none;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .lead-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0 12px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .lead-pair + .pair {
+    border-top: 1px solid var(--border);
+  }
+  .ask {
+    font-weight: 600;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 2px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 650;
+  }
+  /* The principle as endorsed on one side and not the other: two dots on a reject-endorse line. */
+  .two {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 4px 9px 0;
+  }
+  .two-label {
+    position: relative;
+    align-self: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+  .two-label.hi {
+    align-self: flex-end;
+  }
+  .two-rail {
+    position: relative;
+    height: 18px;
+    background: linear-gradient(var(--track), var(--track)) center / 100% 4px no-repeat;
+  }
+  .two-gap {
+    position: absolute;
+    top: 50%;
+    height: 4px;
+    margin-top: -2px;
+    background: var(--chart-ref);
+  }
+  .two-dot {
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: var(--chart-mark);
+    box-shadow: 0 0 0 2px var(--surface);
+  }
+  .two-dot.neg {
+    background: var(--chart-reject);
+  }
+  .two-ends {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -9px;
+    color: var(--muted);
   }
   .pair {
     display: flex;

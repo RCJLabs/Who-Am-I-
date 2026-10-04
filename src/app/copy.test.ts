@@ -89,6 +89,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.traditions.map.showAll': [[11]],
   'analysis.traditions.map.alsoHere': [[['Green politics']], [['Green politics', 'Democratic socialism']]],
   'analysis.traditions.mapDesc': [[1], [11]],
+  'analysis.next.more': [[2], [4]],
   'analysis.next.links.more.interest': [['Imaginative', 'somewhat', 'artistic activities, such as drawing, design, writing or music']],
   'analysis.next.links.more.participation': [['Imaginative', 'a little', 'reading for pleasure']],
   'analysis.next.links.less.interest': [['Practical', 'somewhat', 'artistic activities, such as drawing, design, writing or music']],

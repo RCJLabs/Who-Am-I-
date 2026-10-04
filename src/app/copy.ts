@@ -327,6 +327,7 @@ export const copy = {
     },
     next: {
       title: 'Next steps',
+      more: (n: number) => `Show ${n} more`,
       read: {
         title: 'Read both sides',
         intro: 'The strongest cases on your firmest positions, from the sources the app cites.',

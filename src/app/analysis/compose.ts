@@ -2,6 +2,7 @@
 // section and next steps. Pure, so it's tested in node. Sentence templates live in copy.analysis;
 // this file only chooses which parts go into them.
 import type { AxisFact, CaseRec, ExploreRec, PrincipleFact, ReadingRec, ReflectRec, SuggestionRec } from '../../engine/analysis/index.ts';
+import { reflectOn } from '../../engine/analysis/reflect.ts';
 import type { AnalysisFacts, Closeness, TraditionStatus } from '../../engine/analysis/types.ts';
 import type { AnalysisPack } from '../../model/analysis.ts';
 import { BAND, LIMIT, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
@@ -299,6 +300,73 @@ function reflectItem(b: Bundle, r: ReflectRec): NextItem {
   const lead = A.next.reflect.lead[r.variant](label, r.hi.context, r.lo.context);
   const ask = r.lo.against ? A.next.reflect.ask(r.lo.against) : A.next.reflect.askOpen;
   return { testid: `rec-reflect-${r.principle}`, title: label, detail: `${lead} ${ask}`, href: to.tension(r.tension), cta: A.next.reflect.cta };
+}
+
+// --- Tensions page ----------------------------------------------------------------------------
+
+export interface TensionPair {
+  key: string;
+  href: string;
+  /** "Abortion vs. Vaccine requirements" */
+  label: string;
+  /** How it was thought through, or null while open. */
+  status: string | null;
+}
+
+export interface TensionLead extends TensionPair {
+  /** "You endorsed “Liberty” when it comes to speech, but rejected it when it comes to guns." */
+  lead: string;
+  /** The question to think it over with, while open. */
+  ask: string | null;
+  /** The topic that endorses the principle more, then the other, each with its endorsement (−1..1). */
+  sides: [{ title: string; e: number }, { title: string; e: number }];
+}
+
+export interface TensionGroup {
+  principle: string;
+  label: string;
+  /** "2 open · 1 thought through" */
+  count: string;
+  /** The most pressing pair, worded as on "Worth a second look". */
+  lead: TensionLead;
+  others: TensionPair[];
+}
+
+/**
+ * Every tension on the Tensions page, one group per principle, most pressing first and open before
+ * thought through. All tensions, sensitive ones included: this page is the user's own.
+ */
+export function tensionGroups(b: Bundle, state: AnswerState, tensions: readonly Tension[]): TensionGroup[] {
+  const sorted = [...tensions].sort((x, y) => Number(x.status !== 'open') - Number(y.status !== 'open') || y.rank - x.rank || (x.key < y.key ? -1 : 1));
+  const byPrinciple = new Map<string, Tension[]>();
+  for (const t of sorted) byPrinciple.set(t.principle, [...(byPrinciple.get(t.principle) ?? []), t]);
+  const pair = (t: Tension): TensionPair => ({
+    key: t.key,
+    href: to.tension(t.key),
+    label: `${topicTitle(state, t.a.topic)} vs. ${topicTitle(state, t.b.topic)}`,
+    status: t.status === 'open' ? null : copy.results.status[t.resolution?.kind ?? 'acknowledged'],
+  });
+  return [...byPrinciple].map(([principle, list]) => {
+    const label = principleLabel(b, principle);
+    const first = list[0]!;
+    const r = reflectOn(first);
+    const open = list.filter((t) => t.status === 'open').length;
+    return {
+      principle,
+      label,
+      count: A.overview.line.tensions(open, list.length - open),
+      lead: {
+        ...pair(first),
+        lead: A.next.reflect.lead[r.variant](label, r.hi.context, r.lo.context),
+        ask: first.status !== 'open' ? null : r.lo.against ? A.next.reflect.ask(r.lo.against) : A.next.reflect.askOpen,
+        sides: [
+          { title: topicTitle(state, r.hi.topic), e: r.hi.e },
+          { title: topicTitle(state, r.lo.topic), e: r.lo.e },
+        ],
+      },
+      others: list.slice(1).map(pair),
+    };
+  });
 }
 
 // --- Political traditions --------------------------------------------------------------------
