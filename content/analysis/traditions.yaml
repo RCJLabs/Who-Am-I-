@@ -114,8 +114,8 @@ traditions:
       - id: communitarian
         split: >-
           Social democrats and communitarians both back a strong welfare state and unions; social
-          democrats look to universal public services and personal freedom, communitarians want
-          families and civil society to carry more of it and uphold shared moral standards.
+          democrats look to universal public services and choice in private life, communitarians
+          want families and civil society to carry more of it and uphold shared moral standards.
     inside:
       - judt_ill_fares_the_land
       - crosland_future_of_socialism
@@ -278,7 +278,7 @@ traditions:
         split: >-
           Communitarians and social democrats both back a strong welfare state and unions;
           communitarians want families and civil society to carry more of it and uphold shared moral
-          standards, social democrats look to universal public services and personal freedom.
+          standards, social democrats look to universal public services and choice in private life.
     inside:
       - etzioni_spirit_of_community
       - maritain_man_and_the_state
