@@ -102,6 +102,29 @@ test('someone who has only described their personality gets a summary of that, a
   const suggested = await suggestedTopics(page);
   expect(suggested).toHaveLength(3);
   for (const topic of suggested) expect(sensitive.has(topic), topic).toBe(false);
+
+  // Links from research: closed until opened, one link from the clearest lean, and it remembers
+  // being opened. Warm answers add nothing: no link rests on agreeableness.
+  const links = page.getByTestId('next-links');
+  await expect(links).toBeVisible();
+  await expect(links).toContainText('From your personality answers only.');
+  const link = page.getByTestId('rec-link-enterprising');
+  await expect(link).toBeHidden();
+  await links.locator('summary').click();
+  await expect(link).toBeVisible();
+  await expect(link).toContainText('Leading and negotiating');
+  await expect(link).toContainText('people who describe themselves as more “Outgoing” report a little more interest in');
+  await expect(link).toContainText('Your answers lean toward “Outgoing”');
+  await expect(page.locator('[data-testid^="rec-link-"]')).toHaveCount(1);
+  await page.reload();
+  await expect(page.getByTestId('rec-link-enterprising')).toBeVisible();
+
+  // Settings can turn them off.
+  await page.getByTestId('nav-settings').click();
+  await page.getByTestId('setting-links').uncheck();
+  await page.getByTestId('nav-results').click();
+  await expect(page.getByTestId('summary-headline')).toBeVisible();
+  await expect(page.getByTestId('next-links')).toHaveCount(0);
 });
 
 test('the political traditions: where the answers sit, the map table, and readings from inside and out', async ({ page }) => {
