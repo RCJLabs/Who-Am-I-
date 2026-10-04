@@ -33,8 +33,12 @@ export interface AnalysisSources {
   readings?: SourceFile;
   /** One answer sheet per tradition (content/analysis/sheets/). */
   sheets?: SourceFile[];
+  /** Personal suggestions (optional): no file, no suggestions. */
+  suggestions?: SourceFile;
   /** Terms loaded only when describing political traditions ("moderate", "mainstream"): checked in the pack on top of loadedTerms. */
   loadedTerms?: SourceFile;
+  /** Subjects a personal suggestion must never touch ("diet", "debt", "dating"): E016. */
+  blockedAdvice?: SourceFile;
 }
 
 /** Rule codes. Errors fail the build; warnings are budgeted by --max-warnings. */
@@ -54,6 +58,7 @@ export const RULES: Readonly<Record<string, string>> = {
   E013: 'anchor-keying',
   E014: 'tradition-balance',
   E015: 'answer-sheet',
+  E016: 'suggestion-scope',
   W101: 'keying-balance',
   W102: 'cross-topic-ref',
   W103: 'unproven-reachability',
@@ -66,4 +71,5 @@ export const RULES: Readonly<Record<string, string>> = {
   W110: 'lopsided-options',
   W111: 'reading-balance',
   W112: 'named-politics',
+  W113: 'suggestion-balance',
 };

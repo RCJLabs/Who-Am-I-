@@ -104,6 +104,43 @@ describe('analysis pack', () => {
     expect('about' in analysis!.readings['reformers_two']!).toBe(false);
   });
 
+  it('compiles each suggestion with the poles its rule rests on', () => {
+    expect(analysis!.suggestions).toEqual([
+      {
+        id: 'warm_company',
+        kind: 'social',
+        when: { op: 'cmp', ref: 'warmth', cmp: '>', value: 0.25 },
+        basis: [{ axis: 'warmth', pole: 1 }],
+        title: 'Long talks with friends',
+        text: 'People who describe themselves as warm tend to enjoy long talks with close friends.',
+        source: 'Ada Trait, Test Journal (2001)',
+      },
+      {
+        id: 'cool_focus',
+        kind: 'work',
+        when: { op: 'cmp', ref: 'warmth', cmp: '<', value: -0.25 },
+        basis: [{ axis: 'warmth', pole: 0 }],
+        title: 'Work done alone',
+        text: 'People who describe themselves as cool tend to enjoy work they can do alone.',
+        source: 'Ben Trait, Test Journal (2002)',
+      },
+    ]);
+    // The file is optional: without it, the pack has none.
+    const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { ...src.analysis!, suggestions: undefined } });
+    expect(d).toEqual([]);
+    expect(a!.suggestions).toEqual([]);
+  });
+
+  it('never rests a suggestion on neuroticism', () => {
+    const neuroticism = '- id: neuroticism\n  family: personality\n  title: Neuroticism\n  description: Test.\n  poles: [Even-keeled, Reactive]\n  minWeight: 1\n  fullWeight: 2\n  planned: true\n';
+    const G = src.analysis!.suggestions!;
+    const suggestions = { ...G, text: G.text.replace('when: warmth > 0.25', 'when: warmth > 0.25 and neuroticism < -0.5') };
+    const { analysis: a, diagnostics: d } = compile({ ...src, axes: { ...src.axes, text: src.axes.text + neuroticism }, analysis: { ...src.analysis!, suggestions } });
+    expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E016', G.path, 2]]);
+    expect(d[0]!.message).toContain("never rest on 'neuroticism'");
+    expect(a).toBeNull();
+  });
+
   it('checks its own loaded terms in the pack only', () => {
     // "view" is in the fixture questions, "sooner" in two split lines.
     const loadedTerms = { path: 'tests/fixtures/content/base/analysis/loaded-terms.txt', text: '# Pack only\nsooner\nview\n' };
@@ -157,7 +194,7 @@ describe('analysis pack', () => {
 
 describe('analysis pack lint', () => {
   /** traditions.yaml, readings.yaml, or a tradition's answer sheet. */
-  type PackFile = 'traditions' | 'readings' | `sheet:${string}`;
+  type PackFile = 'traditions' | 'readings' | 'suggestions' | `sheet:${string}`;
   interface Case {
     name: string;
     edits: [PackFile, string, string][];
@@ -167,6 +204,7 @@ describe('analysis pack lint', () => {
   const T = 'traditions' as const;
   const R = 'readings' as const;
   const S = (tradition: string): PackFile => `sheet:${tradition}`;
+  const G = 'suggestions' as const;
   const ROOT_T = '- id: reformers';
   const ROOT_R = 'id: reformers_one, author: Ada';
   const cases: Case[] = [
@@ -286,18 +324,44 @@ describe('analysis pack lint', () => {
       ],
       expect: [['W111', R, ROOT_R]],
     },
+    { name: 'E002 an unknown key in a suggestion', edits: [[G, 'kind: work,', 'kind: work, link: x,']], expect: [['E002', G, 'link: x']] },
+    { name: 'E003 a suggestion listed twice', edits: [[G, 'id: cool_focus', 'id: warm_company']], expect: [['E003', G, 'Work done alone']] },
+    { name: 'E004 an unknown spectrum in a rule', edits: [[G, 'when: warmth > 0.25', 'when: kindness > 0.25']], expect: [['E004', G, 'kindness']] },
+    { name: 'E006 a rule that does not parse', edits: [[G, 'when: warmth > 0.25', 'when: warmth >']], expect: [['E006', G, 'when: warmth >,']] },
+    { name: 'E016 only personality, values and thinking', edits: [[G, 'when: warmth > 0.25', 'when: social > 0.5']], expect: [['E016', G, 'social > 0.5']] },
+    { name: 'E016 never taste', edits: [[G, 'when: warmth > 0.25', 'when: novelty > 0.5']], expect: [['E016', G, 'novelty > 0.5']] },
+    { name: 'E016 toward a pole, not near the middle', edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.1']], expect: [['E016', G, 'warmth > 0.1']] },
+    { name: 'E016 no exact values', edits: [[G, 'when: warmth > 0.25', 'when: warmth == 0.5']], expect: [['E016', G, 'warmth == 0.5']] },
+    { name: "E016 comparisons joined with 'and' only", edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.25 or warmth < -0.5']], expect: [['E016', G, 'or warmth']] },
+    { name: 'E016 each spectrum once', edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.25 and warmth > 0.5']], expect: [['E016', G, 'and warmth']] },
+    { name: 'E016 a subject suggestions never touch', edits: [[G, 'enjoy long talks with close friends.', 'enjoy long talks about diet.']], expect: [['E016', G, 'about diet']] },
+    { name: 'E016 prescriptive wording', edits: [[G, 'People who describe themselves as cool tend to enjoy', 'You should enjoy']], expect: [['E016', G, 'You should']] },
+    { name: 'E016 a published source', edits: [[G, 'source: "Ben Trait, Test Journal (2002)"', 'source: Original scenario']], expect: [['E016', G, 'Original scenario']] },
+    { name: 'W113 both poles of a spectrum', edits: [[G, 'when: warmth < -0.25', 'when: warmth > 0.5']], expect: [['W113', G, 'warm_company']] },
+    {
+      name: 'W108 and W112 in suggestions, never in their sources',
+      edits: [
+        [G, 'enjoy long talks with close friends.', 'enjoy long talks with any anti-vaxxer.'],
+        [G, 'enjoy work they can do alone.', 'enjoy work for the Example Party.'],
+        [G, 'source: "Ada Trait, Test Journal (2001)"', 'source: "Ada Trait, Anti-vaxxer Review (2001)"'],
+      ],
+      expect: [
+        ['W108', G, 'warm_company'],
+        ['W112', G, 'cool_focus'],
+      ],
+    },
   ];
 
   it.each(cases)('$name', ({ edits, expect: want }) => {
     const src = fixtureSources();
     const pack: AnalysisSources = { ...src.analysis! };
     const get = (file: PackFile): SourceFile =>
-      file === 'traditions' || file === 'readings' ? pack[file]! : pack.sheets!.find((f) => f.path.endsWith(`/${file.slice(6)}.yaml`))!;
+      file === 'traditions' || file === 'readings' || file === 'suggestions' ? pack[file]! : pack.sheets!.find((f) => f.path.endsWith(`/${file.slice(6)}.yaml`))!;
     for (const [file, from, to] of edits) {
       const f = get(file);
       expect(f.text.split(from).length - 1, `'${from}' must occur once in ${file}`).toBe(1);
       const edited = { ...f, text: f.text.replace(from, to) };
-      if (file === 'traditions' || file === 'readings') pack[file] = edited;
+      if (file === 'traditions' || file === 'readings' || file === 'suggestions') pack[file] = edited;
       else pack.sheets = pack.sheets!.map((x) => (x.path === f.path ? edited : x));
     }
     const { analysis, diagnostics } = compile({ ...src, analysis: pack });

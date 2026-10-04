@@ -116,6 +116,7 @@ export function compile(src: ContentSources): CompileResult {
     loadedTerms: parseTerms(src.loadedTerms?.text ?? ''),
     packTerms: parseTerms(src.analysis?.loadedTerms?.text ?? ''),
     namedPolitics: parseTerms(src.namedPolitics?.text ?? ''),
+    blockedAdvice: parseTerms(src.analysis?.blockedAdvice?.text ?? ''),
   };
 
   const byTopic = new Map<string, TopicCtx>();

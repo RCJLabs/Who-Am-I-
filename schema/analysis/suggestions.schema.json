@@ -1,0 +1,54 @@
+{
+  "title": "Who Am I personal suggestions",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "minItems": 1,
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "work",
+          "activity",
+          "learning",
+          "social"
+        ],
+        "description": "At most one suggestion of each kind is shown"
+      },
+      "when": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Who it applies to: personality, values or thinking spectrums, each compared toward a pole and joined with \"and\", e.g. \"extraversion < -0.25\""
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "description": "A few words on what is suggested"
+      },
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "description": "One sentence on the published association, as a tendency, never as advice"
+      },
+      "source": {
+        "type": "string",
+        "minLength": 1,
+        "description": "The study or meta-analysis the association comes from"
+      }
+    },
+    "required": [
+      "id",
+      "kind",
+      "when",
+      "title",
+      "text",
+      "source"
+    ],
+    "additionalProperties": false
+  }
+}

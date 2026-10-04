@@ -23,7 +23,7 @@ if (diagnostics.length) {
   if (format === 'github') console.log(formatGithub(diagnostics));
 }
 const pack = analysis
-  ? `; ${analysis.traditions.length} traditions, ${Object.keys(analysis.readings).length} readings, analysis version ${analysis.version}`
+  ? `; ${analysis.traditions.length} traditions, ${Object.keys(analysis.readings).length} readings, ${analysis.suggestions.length} suggestions, analysis version ${analysis.version}`
   : '';
 const stats = bundle
   ? `${bundle.topics.length} topics, ${bundle.topics.reduce((n, t) => n + t.items.length, 0)} items, content version ${bundle.contentVersion}${pack}`

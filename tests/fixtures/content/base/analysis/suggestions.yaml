@@ -1,0 +1,3 @@
+# Test suggestions: one toward each pole of warmth.
+- { id: warm_company, kind: social, when: warmth > 0.25, title: Long talks with friends, text: People who describe themselves as warm tend to enjoy long talks with close friends., source: "Ada Trait, Test Journal (2001)" }
+- { id: cool_focus, kind: work, when: warmth < -0.25, title: Work done alone, text: People who describe themselves as cool tend to enjoy work they can do alone., source: "Ben Trait, Test Journal (2002)" }

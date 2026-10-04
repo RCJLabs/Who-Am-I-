@@ -49,6 +49,8 @@ export interface Env {
   packTerms: string[];
   /** Party and politician names (content/named-politics.txt), checked in the analysis pack. */
   namedPolitics: string[];
+  /** Subjects personal suggestions never touch (content/analysis/blocked-advice.txt). */
+  blockedAdvice: string[];
 }
 
 export interface CompiledTopic {
