@@ -140,7 +140,7 @@ export const copy = {
     selfReport: 'These results reflect what you told the app. They are a mirror, not a diagnosis.',
     basedOn: (n: number, total: number) => `Based on ${n} of ${total} topics so far.`,
     politicalMap: 'Your political map',
-    mapNeeds: 'Answer topics in Economics and in Rights & liberties to see your political map.',
+    mapNeeds: 'Answer topics in Economics and Rights & Liberties, or in Society and Governance & the World, to see your political map.',
     challengesTitle: 'How you handled challenges',
     challengesTotal: (n: number) => `${n} challenge${n === 1 ? '' : 's'} so far`,
     challengeParts: { held: 'Held your view', distinguished: 'Named a difference', moved: 'Reconsidered' },
@@ -267,7 +267,7 @@ export const copy = {
     fewAnswers: 'Some results rest on few answers so far.',
     // Political traditions are reference points: where the answers sit closest, never a label.
     traditions: {
-      title: 'Political traditions',
+      title: 'Closest political traditions',
       note: "Reference points, placed from each tradition's own writers. Not a label, and not a recommendation.",
       summary: {
         match: (name: string) => `Of the political traditions compared here, your answers sit closest to ${q(name)}.`,
@@ -288,16 +288,38 @@ export const copy = {
       },
       basis: (spectrums: readonly string[], principles: readonly string[]) =>
         `Compared on ${list(spectrums.map(q))}${principles.length ? `, and on the principles ${list(principles.map(q))}` : ''}.`,
-      closeness: { 'very-close': 'Very close', close: 'Close', some: 'Some overlap', little: 'A looser fit' },
+      closeness: { 'very-close': 'Very close fit', close: 'Close fit', some: 'Some overlap', little: 'A looser fit' },
       further: (pole: string) => `You lean further toward ${q(pole)}`,
       more: (principle: string) => `You put more weight on ${q(principle)}`,
       less: (principle: string) => `You put less weight on ${q(principle)}`,
       splitFrom: (name: string) => `How it differs from ${q(name)}`,
       divided: (adherents: string, items: readonly string[]) => `${capitalize(adherents)} are divided on ${list(items.map(q))}.`,
-      tick: (name: string) => `Gray marks show where ${q(name)} sits.`,
-      reference: (name: string, position: string) => `The gray mark shows ${q(name)}: ${position}.`,
-      mapDesc: (n: number) => `Gray dots mark ${n} political traditions, for reference.`,
-      legend: { you: 'You', traditions: 'Political traditions', divided: 'Divided on one of these spectrums' },
+      // The answers beside one tradition, spectrum by spectrum.
+      compare: {
+        youAnd: (name: string) => `You and ${name}`,
+        at: (who: string, position: string) => `${who}: ${position}`,
+        split: 'its adherents split',
+      },
+      readings: {
+        title: 'Readings',
+        intro: (name: string) => `The case for ${q(name)} from inside it, and critiques from outside.`,
+        inside: (name: string) => `The case for ${q(name)}, from inside it`,
+        outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
+        kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
+      },
+      map: {
+        open: 'See it on a map',
+        sub: 'Two spectrums at a time, with the traditions',
+        views: 'Which two spectrums',
+        tap: 'Tap a tradition to see which it is.',
+        reference: 'a reference point, not a label',
+        alsoHere: (names: readonly string[]) => `Also here: ${list(names)}`,
+        showAll: (n: number) => `Show all ${n} traditions`,
+        showClosest: 'Show only the closest',
+        sure: 'How sure the app is',
+      },
+      mapDesc: (n: number) => `${n} political tradition${s(n)} marked for reference.`,
+      legend: { you: 'You', traditions: 'Tradition', divided: 'Divided on one of these spectrums' },
       table: { show: 'Where each tradition sits', who: 'Tradition', you: 'You', divided: 'Divided', none: 'Not enough answers' },
       loading: 'Loading the political traditions…',
       failed: "The political traditions couldn't load.",
@@ -312,16 +334,6 @@ export const copy = {
         for: (topic: string) => `For your view on ${topic}`,
         met: { held: 'You held your view', distinguished: 'You named a difference', moved: 'You reconsidered' },
         otherSide: 'Put to people on the other side',
-      },
-      readings: {
-        title: 'Readings',
-        intro: (names: readonly string[]) =>
-          names.length === 1
-            ? `The case for ${q(names[0]!)} from inside it, and critiques from outside.`
-            : `The case for ${list(names.map(q))} from inside each, and critiques from outside.`,
-        inside: (name: string) => `The case for ${q(name)}, from inside it`,
-        outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
-        kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
       },
       links: {
         title: 'Links from research',

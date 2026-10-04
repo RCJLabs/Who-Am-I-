@@ -48,7 +48,7 @@ export interface NextItem {
 }
 
 export interface NextGroup {
-  id: 'read' | 'readings' | 'links' | 'explore' | 'reflect';
+  id: 'read' | 'links' | 'explore' | 'reflect';
   title: string;
   intro: string;
   items: NextItem[];
@@ -60,7 +60,7 @@ export interface TraditionRow {
   id: string;
   name: string;
   closeness: Closeness;
-  /** The closeness in words: "Very close", "Some overlap"… */
+  /** The closeness in words: "Very close fit", "Some overlap"… */
   band: string;
   /** Where the answers differ most: "You lean further toward “Liberty”". */
   differences: string[];
@@ -69,6 +69,8 @@ export interface TraditionRow {
   split: { from: string; text: string } | null;
   /** "Social democrats are divided on “Civil”." */
   divided: string | null;
+  /** For a tradition the summary names: the case for it from inside, and critiques from outside. */
+  readings: NextItem[];
 }
 
 export interface TraditionsView {
@@ -211,9 +213,7 @@ function next(i: ComposeInput): NextGroup[] {
   const groups: NextGroup[] = [];
   const read = i.facts.next.cases.map((c) => caseItem(i, c)).filter((x): x is NextItem => x !== null);
   if (read.length) groups.push({ id: 'read', title: A.next.read.title, intro: A.next.read.intro, items: read });
-  const readings = i.facts.next.readings.map((r) => readingItem(i, r)).filter((x): x is NextItem => x !== null);
-  const named = (i.facts.public.traditions?.named ?? []).map((id) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id);
-  if (readings.length) groups.push({ id: 'readings', title: A.next.readings.title, intro: A.next.readings.intro(named), items: readings });
+  // Readings sit with their tradition on the Politics page (`TraditionRow.readings`).
   const links = i.links === false ? [] : i.facts.next.suggestions.map((r) => linkItem(i, r)).filter((x): x is NextItem => x !== null);
   if (links.length) groups.push({ id: 'links', title: A.next.links.title, intro: A.next.links.intro, items: links, collapsed: { note: A.next.links.note } });
   const explore = i.facts.next.explore.map((r) => exploreItem(i, r));
@@ -269,12 +269,13 @@ function readingItem(i: ComposeInput, r: ReadingRec): NextItem | null {
   const reading = i.pack?.readings[r.reading];
   if (!reading) return null;
   const name = (id: string) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id;
-  const view = r.view === 'inside' ? A.next.readings.inside(name(r.tradition)) : A.next.readings.outside(name(r.tradition), name(reading.voice));
+  const R = A.traditions.readings;
+  const view = r.view === 'inside' ? R.inside(name(r.tradition)) : R.outside(name(r.tradition), name(reading.voice));
   return {
     testid: `rec-read-${reading.id}`,
     title: reading.title,
     detail: reading.note,
-    meta: [`${reading.author} (${reading.year})`, A.next.readings.kind[reading.kind], view].join(' · '),
+    meta: [`${reading.author} (${reading.year})`, R.kind[reading.kind], view].join(' · '),
   };
 }
 
@@ -344,6 +345,10 @@ function traditionsView(i: ComposeInput): TraditionsView | null {
       summary: t.summary,
       split: split && nearest ? { from: nearest.name, text: split.split } : null,
       divided: divided.length ? T.divided(t.adherents, divided) : null,
+      readings: i.facts.next.readings
+        .filter((r) => r.tradition === t.id)
+        .map((r) => readingItem(i, r))
+        .filter((x): x is NextItem => x !== null),
     };
   });
   return {

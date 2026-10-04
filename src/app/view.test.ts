@@ -12,16 +12,18 @@ import {
   areaLean,
   axisFeeders,
   challengeTotals,
+  compareWith,
   endorsementLabel,
   firmestLeans,
   interestList,
+  mapTraditions,
+  mapViews,
   nextTopic,
   orderedOptions,
   patternGroups,
   positionLabel,
   positionsByDomain,
   rankedPrinciples,
-  traditionRefs,
   traditionTable,
   sources,
   strongestLeanings,
@@ -253,18 +255,42 @@ describe('political traditions on the map and in the table', () => {
   const b = fixtureBundle();
   const pack = fixturePack();
 
-  it('places every tradition on the two map spectrums, ranking the listed ones for labels', () => {
-    const refs = traditionRefs(pack, ['social', 'civil'], ['moderates', 'reformers'], ['moderates']);
-    expect(refs.map((r) => [r.id, r.x, r.y, r.rank, r.named])).toEqual([
-      ['reformers', 0.7, -0.35, 1, false],
-      ['planners', 0.5, 0.65, null, false],
-      ['keepers', -0.7, 0.35, null, false],
-      ['marketeers', -0.4, -0.65, null, false],
-      ['moderates', 0.15, 0, 0, true],
+  const scored = (score: number | null, confidence = 1) => ({ score, confidence, weight: 1, spread: 0, topics: 1, family: 'political' });
+
+  it('offers a map view only once both its spectrums are scored', () => {
+    const pairs = [['social', 'civil']] as const;
+    expect(mapViews(b, { social: scored(-0.5), civil: scored(null) } as Profile['axes'], pairs)).toEqual([]);
+    expect(mapViews(b, { social: scored(-0.5, 0.6), civil: scored(0.2) } as Profile['axes'], pairs)).toEqual([
+      {
+        id: 'social-civil',
+        x: { id: 'social', title: 'Social', poles: ['Tradition', 'Progress'], score: -0.5, confidence: 0.6 },
+        y: { id: 'civil', title: 'Civil', poles: ['Liberty', 'Authority'], score: 0.2, confidence: 1 },
+      },
     ]);
-    expect(refs.some((r) => r.divided)).toBe(false);
-    const divided = { ...pack, traditions: pack.traditions.map((t) => (t.id === 'keepers' ? { ...t, divided: ['civil'] } : t)) };
-    expect(traditionRefs(divided, ['social', 'civil'], []).find((r) => r.id === 'keepers')!.divided).toBe(true);
+  });
+
+  it('ranks the listed traditions in list order, with their closeness, and places every one', () => {
+    const traditions = mapTraditions(pack, [
+      { id: 'moderates', band: 'Very close' },
+      { id: 'reformers', band: 'Close' },
+    ]);
+    expect(traditions.map((t) => [t.id, t.rank, t.band, t.positions.social, t.positions.civil])).toEqual([
+      ['reformers', 1, 'Close', 0.7, -0.35],
+      ['planners', null, null, 0.5, 0.65],
+      ['keepers', null, null, -0.7, 0.35],
+      ['marketeers', null, null, -0.4, -0.65],
+      ['moderates', 0, 'Very close', 0.15, 0],
+    ]);
+  });
+
+  it('compares the answers with a tradition spectrum by spectrum, leaving out what is missing or split', () => {
+    const keepers = pack.traditions.find((t) => t.id === 'keepers')!;
+    const scores = { social: scored(-0.4), civil: scored(null) } as Profile['axes'];
+    expect(compareWith(b, scores, keepers)).toEqual([
+      { axis: 'social', title: 'Social', poles: ['Tradition', 'Progress'], you: -0.4, them: -0.7 },
+      { axis: 'civil', title: 'Civil', poles: ['Liberty', 'Authority'], you: null, them: 0.35 },
+    ]);
+    expect(compareWith(b, scores, { ...keepers, divided: ['civil'] }).map((c) => c.them)).toEqual([-0.7, null]);
   });
 
   it('lists the user, then each tradition by name, in words', () => {

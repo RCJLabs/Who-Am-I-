@@ -222,8 +222,8 @@ answers a, as values from −1 to 1 (one step on a 7-point scale is 0.33).
    traditions back some state powers (vaccine requirements, say) and oppose others (the death
    penalty, bulk surveillance). So the answers of a tradition's own adherents spread about as
    widely as random answers, and no spread threshold told them apart. The fit does.
-6. **Listed:** the nearest three (two when mixed), each with a closeness band: very close (< 0.15),
-   close (< 0.25), some overlap (< 0.35), or a looser fit. Never a percentage.
+6. **Listed:** the nearest three (two when mixed), each with a closeness band: a very close fit
+   (< 0.15), a close fit (< 0.25), some overlap (< 0.35), or a looser fit. Never a percentage.
 7. **Differences:** for each listed tradition, its two biggest gaps of at least 0.35 (`difference`),
    on spectrums (and, when they count, principles) with confidence at least 0.5, never where its
    adherents split: "further toward “Liberty”", "more weight on “Equality”".
@@ -261,7 +261,20 @@ Only for a tradition the summary names. For a match: its first two inside readin
 first two critiques, in authored order; the pack lint (E014) makes the first critique come from
 the other side of politics. For two traditions: one inside reading and one critique from each. A
 reading never appears twice. No status without a named tradition gets readings, so the summary and
-the readings always agree.
+the readings always agree. They are shown with their tradition, in its "You and …" comparison on
+the Politics page, rather than among the next steps.
+
+### On the Politics page
+
+Each listed tradition is numbered, nearest first, and shown beside the answers on every political
+spectrum it is placed on (`compareWith` in `src/app/view.ts`): a dot for the answers, a ring for
+the tradition, and nothing for the tradition where its adherents split. Opened, it reads as "You
+and …": the same comparison at full size with both positions in words, its differences, what it
+stands for, and its readings. The map is optional: two spectrums at a time (economic and civil, or
+cultural and diplomatic, each once both are scored), the listed traditions as the same numbered
+rings, the rest on request, and nothing labelled on the map itself. A tap names a mark, and every
+other mark within reach of the same tap, so marks drawn over each other stay findable. The table
+under it gives every position on every spectrum in words.
 
 ## Links from research (`suggestions.ts`)
 

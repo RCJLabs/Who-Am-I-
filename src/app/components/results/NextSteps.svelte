@@ -1,8 +1,8 @@
 <script lang="ts">
-  // Recommendations, one card per kind: cases to read from both sides, readings on the political
-  // traditions named, links from research, topics to explore next, and tensions worth a second
-  // look. Items that lead somewhere link to where you can act on them; readings and links are plain
-  // cards. A collapsed group stays closed until opened, and remembers which it was.
+  // Recommendations, one card per kind: cases to read from both sides, links from research, topics
+  // to explore next, and tensions worth a second look. Items that lead somewhere link to where you
+  // can act on them; links from research are plain cards. A collapsed group stays closed until
+  // opened, and remembers which it was.
   import type { NextGroup, NextItem } from '../../analysis/compose.ts';
   import Icon from '../Icon.svelte';
 

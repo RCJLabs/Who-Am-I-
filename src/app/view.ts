@@ -310,30 +310,80 @@ export function positionsByDomain(b: Bundle, topics: Profile['topics']): { domai
     .filter((g) => g.topics.length);
 }
 
-/** A political tradition on the map. */
-export interface MapRef {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  /** Its adherents split on either map spectrum: drawn hollow. */
-  divided: boolean;
-  /** Its place in the analysis list, nearest first, so it's labelled on the map; null when not listed. */
-  rank: number | null;
-  /** Named in the summary, so always labelled. */
-  named: boolean;
+// --- Political map and traditions -------------------------------------------------------------
+
+/** The map's two views, as [across, up]: each shows once both its spectrums are scored. */
+export const MAP_VIEWS = [
+  ['economic', 'civil'],
+  ['cultural', 'diplomatic'],
+] as const satisfies readonly (readonly [AxisId, AxisId])[];
+
+/** A political spectrum as one of the map's axes, with where the answers sit on it. */
+export interface MapAxis {
+  id: AxisId;
+  title: string;
+  poles: [string, string];
+  score: number;
+  confidence: number;
 }
 
-/** Every tradition placed on both map spectrums; the listed ones are labelled, nearest first. */
-export function traditionRefs(pack: AnalysisPack, mapAxes: readonly [AxisId, AxisId], listed: readonly string[], named: readonly string[] = []): MapRef[] {
-  const [ax, ay] = mapAxes;
-  return pack.traditions.flatMap((t) => {
-    const x = t.positions[ax];
-    const y = t.positions[ay];
-    if (x === undefined || y === undefined) return [];
-    const rank = listed.indexOf(t.id);
-    return [{ id: t.id, name: t.name, x, y, divided: t.divided.includes(ax) || t.divided.includes(ay), rank: rank < 0 ? null : rank, named: named.includes(t.id) }];
+export interface MapView {
+  id: string;
+  x: MapAxis;
+  y: MapAxis;
+}
+
+/** The map views whose two spectrums are both scored, in order. */
+export function mapViews(b: Bundle, scores: Profile['axes'], pairs: readonly (readonly [AxisId, AxisId])[] = MAP_VIEWS): MapView[] {
+  const axis = (id: AxisId): MapAxis | null => {
+    const a = b.axes[id];
+    const s = scores[id];
+    return a && s && s.score !== null ? { id, title: a.title, poles: a.poles, score: s.score, confidence: s.confidence } : null;
+  };
+  return pairs.flatMap(([xi, yi]) => {
+    const x = axis(xi);
+    const y = axis(yi);
+    return x && y ? [{ id: `${xi}-${yi}`, x, y }] : [];
   });
+}
+
+/** A political tradition, for the map: where it sits, and its place among the nearest. */
+export interface MapTradition {
+  id: string;
+  name: string;
+  positions: Readonly<Record<AxisId, number>>;
+  /** What its adherents split on: no single position there. */
+  divided: readonly string[];
+  /** Its place in the list of nearest traditions (0 = nearest), or null when not listed. */
+  rank: number | null;
+  /** How close it is, in words, when listed. */
+  band: string | null;
+}
+
+/** Every tradition in the pack, the listed (nearest) ones ranked in list order. */
+export function mapTraditions(pack: AnalysisPack, listed: readonly { id: string; band: string }[]): MapTradition[] {
+  return pack.traditions.map((t) => {
+    const rank = listed.findIndex((r) => r.id === t.id);
+    return { id: t.id, name: t.name, positions: t.positions, divided: t.divided, rank: rank < 0 ? null : rank, band: rank < 0 ? null : listed[rank]!.band };
+  });
+}
+
+/** One spectrum of a comparison between the answers and a tradition. */
+export interface Comparison {
+  axis: AxisId;
+  title: string;
+  poles: [string, string];
+  /** Where the answers sit, or null without enough of them. */
+  you: number | null;
+  /** Where the tradition sits, or null where its adherents split. */
+  them: number | null;
+}
+
+/** The answers beside a tradition on each political spectrum it is placed on, in content order. */
+export function compareWith(b: Bundle, scores: Profile['axes'], t: { positions: Readonly<Record<AxisId, number>>; divided: readonly string[] }): Comparison[] {
+  return Object.values(b.axes)
+    .filter((a) => a.family === 'political' && t.positions[a.id] !== undefined)
+    .map((a) => ({ axis: a.id, title: a.title, poles: a.poles, you: scores[a.id]?.score ?? null, them: t.divided.includes(a.id) ? null : t.positions[a.id]! }));
 }
 
 export interface PositionTable {

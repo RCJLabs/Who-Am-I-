@@ -2,7 +2,7 @@
   // One spectrum as a strip: title and position on one line, the question it asks, then the dot on
   // a track. A bar from the middle shows how strong the lean is and a shaded band how sure the app
   // is (wider means less evidence). What pulled each way, the confidence and the feeding topics sit
-  // behind a tap. A gray tick can mark where a political tradition sits, for reference.
+  // behind a tap.
   import { LOW_CONFIDENCE } from '../../../engine/analysis/constants.ts';
   import type { Topic } from '../../../model/content.ts';
   import { copy } from '../../copy.ts';
@@ -18,7 +18,6 @@
     mixed = false,
     feeders = [],
     drivers = [],
-    reference = null,
     color = 'var(--chart-mark)',
     testid,
   }: {
@@ -31,8 +30,6 @@
     feeders?: Topic[];
     /** The topics that pulled toward each pole, strongest first. */
     drivers?: { pole: string; topics: { id: string; title: string }[] }[];
-    /** A tradition's position, drawn as a gray tick. */
-    reference?: { name: string; score: number } | null;
     /** The area's mark colour (never used for text). */
     color?: string;
     testid?: string | undefined;
@@ -41,7 +38,6 @@
   const position = $derived(score === null ? '' : positionLabel(score, poles));
   const pct = $derived(score === null ? 50 : toPercent(score));
   const low = $derived(score !== null && confidence < LOW_CONFIDENCE);
-  const refLine = $derived(reference ? copy.analysis.traditions.reference(reference.name, positionLabel(reference.score, poles)) : '');
   // The band: wider with less evidence. A cue, not a statistical interval.
   const half = $derived((1 - Math.max(0, Math.min(1, confidence))) * 18 + 4);
   const bandLo = $derived(Math.max(0, pct - half));
@@ -61,13 +57,12 @@
     </span>
     {#if description}<span class="desc small">{description}</span>{/if}
     {#if score !== null}
-      <span class="visually-hidden">, {Math.round(pct)}% of the way from {poles[0]} to {poles[1]}{reference ? `. ${refLine}` : ''}</span>
+      <span class="visually-hidden">, {Math.round(pct)}% of the way from {poles[0]} to {poles[1]}</span>
       <span class="track" aria-hidden="true">
         <span class="line"></span>
         <span class="mid"></span>
         <span class="band" style:left="{bandLo}%" style:width="{bandHi - bandLo}%"></span>
         <span class="fill" style:left="{Math.min(50, pct)}%" style:width="{Math.abs(pct - 50)}%"></span>
-        {#if reference}<span class="ref" data-testid={testid ? `${testid}-ref` : undefined} style:left="{toPercent(reference.score)}%"></span>{/if}
         <span class="dot" class:low style:left="{pct}%"></span>
       </span>
       <span class="poles small" aria-hidden="true"><span>{poles[0]}</span><span>{poles[1]}</span></span>
@@ -89,9 +84,6 @@
           {/if}
         {/each}
       </ul>
-    {/if}
-    {#if score !== null && reference}
-      <p class="muted">{refLine}</p>
     {/if}
     {#if score !== null}
       <p class="muted">{copy.results.confidence(confidence)}</p>
@@ -202,16 +194,6 @@
     height: 4px;
     border-radius: 2px;
     background: color-mix(in srgb, var(--mark) 60%, transparent);
-  }
-  .ref {
-    position: absolute;
-    top: 50%;
-    width: 3px;
-    height: 16px;
-    margin: -8px 0 0 -1.5px;
-    border-radius: 2px;
-    background: var(--chart-ref);
-    box-shadow: 0 0 0 1.5px var(--surface);
   }
   .dot {
     position: absolute;
