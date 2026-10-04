@@ -23,8 +23,10 @@ try {
 }
 
 // Only the domains already answered load now; the rest load when a screen needs them.
-const content = new ContentStore(index, loaders);
+const content = new ContentStore(index, loaders, () => import('virtual:analysis'));
 await content.ensureForItems(loaded.events.map((e) => e.item));
+// Someone with answers will want the analysis pack on Results: start it now, without waiting.
+if (loaded.events.length) void content.ensureAnalysis();
 
 initApp({
   content,

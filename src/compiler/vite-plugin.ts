@@ -1,10 +1,13 @@
 // Vite plugin: `import index, { loaders } from 'virtual:content'` compiles content/ at build/dev
 // time. The index is the bundle without topics' items; `loaders[domain]()` imports that domain's
 // topics from `virtual:content/<domain>`, which Rollup emits as a chunk of its own.
+// `import('virtual:analysis')` is the analysis pack (content/analysis/), or null without one: its
+// own chunk too, loaded only once someone has answers to compare.
 // Lint errors fail `vite build` and show in the dev overlay, so unvalidated content can't ship
 // even if CI is skipped. Editing YAML triggers a full reload.
 import { resolve } from 'node:path';
 import type { Plugin, ViteDevServer } from 'vite';
+import type { AnalysisPack } from '../model/analysis.ts';
 import { splitBundle, type SplitBundle } from '../engine/bundle-split.ts';
 import { compile } from './compile.ts';
 import { contentFilePaths, loadContentDir } from './load.ts';
@@ -12,9 +15,17 @@ import { counts, formatPretty } from './report.ts';
 
 const VIRTUAL_ID = 'virtual:content';
 const RESOLVED_ID = '\0virtual:content';
+const ANALYSIS_ID = 'virtual:analysis';
+const RESOLVED_ANALYSIS = '\0virtual:analysis';
 
-/** Chunk file name for a domain's content, so it's recognizable in the network panel. */
-export function contentChunkName(facadeModuleId: string | null): string | null {
+const ours = (id: string): boolean => id === RESOLVED_ID || id.startsWith(`${RESOLVED_ID}/`) || id === RESOLVED_ANALYSIS;
+
+/**
+ * Chunk file names, recognizable in the network panel: content-<domain> for a domain's topics and
+ * analysis for the pack, which must never look like topic content (the first-visit test counts those).
+ */
+export function chunkName(facadeModuleId: string | null): string | null {
+  if (facadeModuleId === RESOLVED_ANALYSIS) return 'analysis';
   return facadeModuleId?.startsWith(`${RESOLVED_ID}/`) ? `content-${facadeModuleId.slice(RESOLVED_ID.length + 1)}` : null;
 }
 
@@ -29,14 +40,14 @@ function indexModule({ index, domains }: SplitBundle): string {
 export function contentPlugin(opts: { dir?: string } = {}): Plugin {
   const dir = resolve(opts.dir ?? 'content');
   let server: ViteDevServer | undefined;
-  // Compiled once and shared by the index and every domain module.
-  let split: SplitBundle | null = null;
+  // Compiled once and shared by the index, every domain module and the analysis pack.
+  let compiled: { split: SplitBundle; analysis: AnalysisPack | null } | null = null;
 
   const invalidate = (): void => {
-    split = null;
+    compiled = null;
     if (!server) return;
     for (const [id, mod] of server.moduleGraph.idToModuleMap) {
-      if (id === RESOLVED_ID || id.startsWith(`${RESOLVED_ID}/`)) server.moduleGraph.invalidateModule(mod);
+      if (ours(id)) server.moduleGraph.invalidateModule(mod);
     }
     server.ws.send({ type: 'full-reload' });
   };
@@ -44,26 +55,27 @@ export function contentPlugin(opts: { dir?: string } = {}): Plugin {
   return {
     name: 'whoami-content',
     buildStart() {
-      split = null;
+      compiled = null;
     },
     resolveId(id) {
-      return id === VIRTUAL_ID || id.startsWith(`${VIRTUAL_ID}/`) ? `\0${id}` : null;
+      return id === VIRTUAL_ID || id.startsWith(`${VIRTUAL_ID}/`) || id === ANALYSIS_ID ? `\0${id}` : null;
     },
     load(id) {
-      if (id !== RESOLVED_ID && !id.startsWith(`${RESOLVED_ID}/`)) return null;
+      if (!ours(id)) return null;
       for (const file of contentFilePaths(dir)) this.addWatchFile(file);
-      if (!split) {
-        const { bundle, diagnostics } = compile(loadContentDir(dir));
+      if (!compiled) {
+        const { bundle, analysis, diagnostics } = compile(loadContentDir(dir));
         const { errors, warnings } = counts(diagnostics);
         if (!bundle || errors) {
           this.error(`Content has ${errors} error(s):\n${formatPretty(diagnostics.filter((d) => d.severity === 'error'))}`);
         }
         if (warnings) this.warn(`Content has ${warnings} warning(s) (npm run content:lint for details)`);
-        split = splitBundle(bundle);
+        compiled = { split: splitBundle(bundle), analysis };
       }
-      if (id === RESOLVED_ID) return indexModule(split);
+      if (id === RESOLVED_ANALYSIS) return jsonModule(compiled.analysis);
+      if (id === RESOLVED_ID) return indexModule(compiled.split);
       const domain = id.slice(RESOLVED_ID.length + 1);
-      const topics = split.domains[domain];
+      const topics = compiled.split.domains[domain];
       if (!topics) this.error(`No topics in domain '${domain}'`);
       return jsonModule(topics);
     },
