@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Green politics: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: green
+sources:
+  - E. F. Schumacher, Small Is Beautiful (1973)
+  - Donella H. Meadows et al., The Limits to Growth (1972)
+  - Andrew Dobson, Green Political Thought (1990)
+answers:
+  fairness.stance: 6   # Social justice pillar: gaps should shrink a lot; a steady state limits top as well as bottom incomes (Daly, Steady-State Economics)
+  abortion.stance: 6   # Feminism and bodily autonomy are core green values; legal on request, with limits late in pregnancy
+  assisted_dying.stance: 6   # Autonomy and dignity at the end of life; most greens back access for unbearable incurable suffering
+  vaccine_mandates.stance: 6   # Public health as a shared good; most greens backed vaccine passes during serious outbreaks
+  death_penalty.stance: 1   # Nonviolence is one of the four founding pillars; no exceptions (Spretnak and Capra, Green Politics)
+  drug_policy.stance: 5   # Drug use as a health matter: decriminalise users, harm reduction, prescribed supply for the addicted
+  paternalism.stance: 6   # Backs health taxes and curbs on harmful products, though not criminal penalties for personal drug use
+  organ_donation.stance: 2   # Against giving the priceless a price; covering donors' costs is enough (Schumacher, Small Is Beautiful)
+  surrogacy.stance: 3   # Altruistic surrogacy with costs covered; commercial surrogacy seen as commodifying women's bodies
+  gene_editing.stance: 2   # Precautionary principle: no heritable changes in people, lab research only under strict rules
+  free_speech.stance: 5   # Respect for diversity: deliberately stirring up hatred against a group should be a crime
+  guns.stance: 2   # Nonviolence: guns only for licensed hunting and sport
+  surveillance.stance: 1   # Strong civil-liberties record: targeted judicial warrants only, opposed to data retention and bulk collection
+  religious_liberty.stance: 2   # Equality law should bind everyone, with room only for worship and the choice of clergy
+  protest.stance: 5   # Nonviolent direct action is part of the green repertoire; penalties should be light (Dobson, Green Political Thought)
+  torture.stance: 1   # Nonviolence and human rights admit no exceptions (Kelly, Fighting for Hope)
+  public_safety.stance: 2   # Due process first; greens have opposed most anti-terror curbs on the rights of suspects
+  taxes.stance: 6   # Strong redistribution, including taxes on wealth, to cut inequality sharply
+  healthcare.stance: 6   # Universal public healthcare for all, with private insurance only for extras
+  welfare.stance: 7   # An unconditional basic income is a long-standing green policy (Dobson, Green Political Thought)
+  minimum_wage.stance: 6   # A living wage, around 60% of median pay
+  regulation.stance: 7   # Ecological limits require far stronger rules on pollution and resource use (Meadows et al., The Limits to Growth)
+  unions.stance: 6   # Strong rights to organise and strike, alongside worker ownership (Schumacher, Small Is Beautiful)
+  trade.stance: 3   # Fair rather than free trade; local production for local needs comes first (Schumacher, Small Is Beautiful)
+  housing.stance: 6   # Housing is a need before it is an investment; strict rent controls for most rented homes
+  inheritance.stance: 5   # Large inherited fortunes entrench inequality and should be taxed substantially
+  immigration.stance: 5   # Global justice and respect for diversity: more safe, legal routes, especially for refugees
+  same_sex_marriage.stance: 7   # Respect for diversity: full equality, with schools teaching that all families are valid
+  transgender.stance: 6   # Self-determination of gender, with sport and prisons decided case by case
+  gender_roles.stance: 6   # Feminism: leave reserved for each parent so that care is shared
+  prisons.stance: 6   # Restorative justice and rehabilitation; prison only for those who are dangerous
+  climate.stance: 7   # Overshoot demands the fastest cuts possible, including in how people travel, eat and live (Meadows et al., The Limits to Growth)
+  cooperation.stance: 6   # Shared ecological problems need binding global rules, even when outvoted; decisions otherwise as local as possible
+  foreign_aid.stance: 6   # Meet the 0.7% target, aimed at the poorest through appropriate technology (Schumacher, Small Is Beautiful)
+  marriage.stance: 6   # No-fault divorce respects autonomy and lets people leave harmful marriages
+  gambling.stance: 3   # Gambling harm falls on families: firm loss limits and no advertising
+  moral_foundations.loyalty_1: 2   # Loyalty is owed to people and planet more than to a nation-state
+  moral_foundations.equality_3: 1   # Large inequality fuels status consumption and harms everyone (Jackson, Prosperity without Growth)
+  moral_foundations.liberty_3: 4   # Equilibrium trades freedoms like unlimited consumption for freedom from pollution and collapse (Meadows et al., The Limits to Growth)
+  moral_foundations.deserts_1: 2   # Need and sufficiency come first; income should not depend on paid contribution alone (Dobson, Green Political Thought)
+  moral_foundations.equality_1: 5   # Social justice within and between countries is a core green principle
+  moral_foundations.loyalty_3: 2   # Decentralisation and bioregionalism root duties in local community and place (Dobson, Green Political Thought)
+  moral_foundations.deserts_2: 2   # Unpaid care and community work count; a basic income accepts that not all work is paid
+  moral_foundations.liberty_1: 2   # Greens want more public action on ecological and social problems, not less
+  moral_foundations.equality_2: 4   # Large gaps are unjust in themselves as well as ecologically wasteful
+  moral_foundations.deserts_3: 5   # Sufficiency: the most well-being with the least consumption (Schumacher, Small Is Beautiful)
+  moral_foundations.loyalty_2: 2   # Universal care and conscience come before loyalty to a group
+  moral_foundations.liberty_2: 3   # Resists control of private life and identity, but accepts shared limits on how people live
+  organ_donation.anchor_ml: 6   # Paid kidney sales would exploit the poor; some things should not be bought
+  surrogacy.anchor_ml: 5   # Commercial surrogacy commodifies women's bodies, though some greens would allow regulated payment
+  free_speech.anchor_liberty: 3   # Free expression matters, but not as a licence to stir up hatred against minorities
+  surveillance.anchor_liberty: 6   # Private messages should stay private; opposed to message scanning and encryption backdoors
+  healthcare.anchor_ml: 5   # Care should follow need, not ability to pay; opposed to two-tier medicine
+  welfare.anchor_desert: 1   # A basic income rejects making support depend on earnings (Dobson, Green Political Thought)
+  unions.anchor_loyal: 5   # Solidarity and respect for a collective decision, with room for conscience
+  inheritance.anchor_desert: 5   # Large unearned fortunes entrench privilege, though modest bequests are fine
+  war.anchor_loyal: 1   # Rooted in the peace movement and nonviolence (Kelly, Fighting for Hope)
+  marriage.anchor_lib: 6   # Autonomy in personal relationships comes first
+  family_crime.anchor_loyal: 2   # For serious crimes, justice for victims comes before family loyalty
+  work.anchor_cw: 5   # Good work joins people in a common task, paid or unpaid (Schumacher, Small Is Beautiful)
+  work.anchor_lib: 2   # Legal limits on hours and a shorter working week (Gorz, Farewell to the Working Class)
+  health.anchor_cw: 6   # Shared risk and solidarity in healthcare
+  gambling.anchor_lib: 3   # Adults may gamble, but within firm limits that protect their families
+divided:
+  - sex_work.stance   # Nordic-model camp (criminalise buyers, not sellers) vs decriminalisation camp (treat it as work, New Zealand model)
+  - sex_work.anchor_ml   # Same split: feminists who see paying for sex as exploitation vs those who see it as consenting work
+  - policing.stance   # Reformers keeping or adding community officers under strict oversight vs greens moving police money to health, housing and prevention

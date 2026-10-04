@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Left communitarianism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: left_communitarian
+sources:
+  - George Orwell, The Lion and the Unicorn (1941)
+  - Christopher Lasch, The True and Only Heaven (1991)
+  - David Miller, On Nationality (1995)
+  - Adrian Pabst, Postliberal Politics (2021)
+answers:
+  fairness.stance: 6   # great gaps corrode a common life; top incomes capped at ten times the lowest (Orwell, The Lion and the Unicorn)
+  assisted_dying.stance: 1   # a legal right to die would put pressure on old, poor and disabled people; invest in care instead
+  vaccine_mandates.stance: 5   # protecting neighbors is a shared duty, but compulsion should stop at schools and frontline care
+  death_penalty.stance: 1   # the state should not kill in cold blood; the horror of an execution (Orwell, A Hanging)
+  drug_policy.stance: 2   # dealers prey on struggling towns; users need firm help into treatment, not a legal market
+  paternalism.stance: 5   # serious risks justify light rules, but no "Nosey Parker" policing of pleasures (Orwell, The Lion and the Unicorn)
+  organ_donation.stance: 2   # organs should be gifts, not goods; covering donors' costs is fair (Titmuss, The Gift Relationship)
+  sex_work.stance: 2   # sex should not be bought and sold; penalize buyers, not those selling
+  surrogacy.stance: 3   # women's bodies and children are not for sale; unpaid surrogacy with costs covered can be allowed
+  gene_editing.stance: 2   # a sense of limits: research yes, redesigning future generations no (Lasch, The True and Only Heaven)
+  free_speech.stance: 3   # liberty means the right to say unwelcome things; law only for the worst cases (Orwell, The Freedom of the Press)
+  surveillance.stance: 3   # the watching state is the warning, yet the state must still keep people safe (Orwell, Nineteen Eighty-Four)
+  religious_liberty.stance: 5   # faith communities are among the institutions that hold places together (Pabst, Postliberal Politics)
+  protest.stance: 3   # the labor movement owes much to lawbreaking protest, but blocking people's way to work has a cost
+  torture.stance: 1   # some things are never done to a person, whatever is at stake (Orwell, Nineteen Eighty-Four)
+  public_safety.stance: 5   # poorer neighborhoods suffer most from violent crime; fair trials still matter
+  taxes.stance: 5   # shared nationhood makes people willing to share; higher taxes on the well-off (Miller, On Nationality)
+  healthcare.stance: 5   # a common health service is solidarity in practice; private cover can sit on top
+  welfare.stance: 5   # enough to live on, with help back into work; contribution and reciprocity still count
+  minimum_wage.stance: 7   # a wage a family can live on, the founding demand of the living wage campaigns
+  regulation.stance: 6   # markets must be embedded in society; concentrated corporate and financial power needs watching (Polanyi, The Great Transformation)
+  unions.stance: 6   # unions are working people's own institution of solidarity and voice
+  trade.stance: 3   # protect the industries that sustain towns and national resilience; trade on fair terms
+  housing.stance: 5   # a home is a place to belong, not just an asset; keep rises close to inflation
+  inheritance.stance: 5   # families may pass on homes, farms and firms, but great fortunes should be taxed
+  immigration.stance: 3   # a nation may set its own intake, at a pace that protects wages, trust and integration (Miller, Strangers in Our Midst)
+  policing.stance: 5   # visible local officers; poorer areas bear the brunt of crime
+  transgender.stance: 3   # recognize transition in law, but keep sport, prisons and single-sex spaces by sex
+  gender_roles.stance: 2   # families should be able to afford a parent at home with young children, as in the family wage tradition
+  prisons.stance: 3   # swift, certain punishment protects neighborhoods, with a second chance for first offenders
+  climate.stance: 3   # cut emissions steadily, but not by raising working families' bills or closing industry
+  cooperation.stance: 3   # democracy and solidarity live in the nation, so enforcement should stay national (Miller, On Nationality)
+  foreign_aid.stance: 5   # duties to the world's poor are real but weaker than duties to compatriots (Miller, On Nationality)
+  marriage.stance: 5   # no return to fault, but a pause and counseling can save marriages for children's sake
+  gambling.stance: 3   # a small bet is fine, but an industry that profits from ruinous losses needs firm limits
+  moral_foundations.loyalty_1: 5   # loyal to the country while opposing its rulers: "a family with the wrong members in control" (Orwell, The Lion and the Unicorn)
+  moral_foundations.equality_3: 1   # mobility for a few is no substitute for a democratic spread of competence and property (Lasch, The Revolt of the Elites)
+  moral_foundations.liberty_3: 4   # the common good often sets limits on what individuals may do (Pabst, Postliberal Politics)
+  moral_foundations.deserts_1: 4   # reward should follow contribution, which is why unearned fortunes grate (Miller, Principles of Social Justice)
+  moral_foundations.equality_1: 5   # wealth and property widely held make for a democratic society (Lasch, The True and Only Heaven)
+  moral_foundations.loyalty_3: 1   # special duties to compatriots and community are the core of the tradition (Miller, On Nationality)
+  moral_foundations.deserts_2: 4   # reciprocity matters; those who can contribute should
+  moral_foundations.liberty_1: 3   # too little done for economic security, too much managing of family life (Lasch, Haven in a Heartless World)
+  moral_foundations.equality_2: 4   # great gulfs in wealth destroy fellowship and a common culture (Tawney, Equality)
+  moral_foundations.deserts_3: 4   # a decent life for all comes first, with effort rewarded above that floor
+  moral_foundations.loyalty_2: 4   # loyalty to family, workmates and neighbors is a core virtue, though not the only one
+  moral_foundations.liberty_2: 2   # people live within obligations to family, work and place, not as sovereign selves
+  organ_donation.anchor_ml: 6   # some things money should not buy (Sandel, What Money Can't Buy)
+  sex_work.anchor_ml: 6   # consent does not make sex a fit object of trade
+  surrogacy.anchor_ml: 6   # paying for pregnancy turns women and babies into goods
+  free_speech.anchor_liberty: 6   # "the right to tell people what they do not want to hear" (Orwell, The Freedom of the Press)
+  surveillance.anchor_liberty: 5   # private life deserves protection from the state, though not without limit (Orwell, Nineteen Eighty-Four)
+  healthcare.anchor_ml: 5   # buying a faster place in the queue offends the solidarity of a shared health service
+  welfare.anchor_desert: 2   # reciprocity matters, but solidarity does not leave people who can't find work in hardship
+  unions.anchor_loyal: 6   # solidarity means standing with workmates even when in doubt
+  inheritance.anchor_desert: 3   # passing on a home or family business is part of family continuity; great fortunes are another matter
+  war.anchor_loyal: 5   # patriotism holds in wartime, while democratic argument stays legitimate (Orwell, My Country Right or Left)
+  marriage.anchor_lib: 5   # people must be free to leave, but law and community should help marriages last
+  family_crime.anchor_loyal: 3   # family loyalty runs deep, but serious crime harms neighbors who are owed loyalty too
+  work.anchor_cw: 6   # work is a contribution to the common life, at the heart of the producer ethic (Lasch, The True and Only Heaven)
+  work.anchor_lib: 2   # limits on working hours were a founding gain of the labor movement; family time matters
+  health.anchor_cw: 6   # pooling the cost of care across the nation is solidarity in practice (Miller, On Nationality)
+  gambling.anchor_lib: 3   # adults may bet, but within limits when families pay for the losses
+divided:
+  - abortion.stance   # consistent-life adherents allow it only in rare cases; secular adherents accept early abortion with later limits
+  - guns.stance   # American adherents defend a licensed right to own guns; European adherents back strict licenses for hunting and sport
+  - same_sex_marriage.stance   # faith-rooted adherents keep marriage for a man and a woman; others accept same-sex marriage as family commitment

@@ -1,0 +1,320 @@
+# yaml-language-server: $schema=../../schema/analysis/readings.schema.json
+# Readings the results offer for a named tradition: two from inside it, then two critiques from
+# outside, the first from the other side of politics. Books, essays, articles, speeches and
+# lectures, never links. Author, title and year of first publication are verbatim citations; the
+# note says in one neutral line what the work argues. `voice` is the tradition it is written from.
+# No living politicians as authors, and no scripture, encyclicals or sermons.
+
+# Democratic socialism
+- id: cohen_why_not_socialism
+  author: G. A. Cohen
+  title: Why Not Socialism?
+  year: 2009
+  kind: book
+  voice: democratic_socialist
+  note: Uses a camping trip to argue that equality and community are attractive ideals, and that the hard question is how to design an economy that realizes them.
+- id: wright_anticapitalist
+  author: Erik Olin Wright
+  title: How to Be an Anticapitalist in the Twenty-First Century
+  year: 2019
+  kind: book
+  voice: democratic_socialist
+  note: Argues from equality, democracy and solidarity for taming capitalism and also eroding it, by building public services, cooperatives and a basic income within it.
+- id: polanyi_great_transformation
+  author: Karl Polanyi
+  title: The Great Transformation
+  year: 1944
+  kind: book
+  voice: democratic_socialist
+  note: Argues that a self-regulating market society is a recent invention that tears at social bonds and provokes movements to protect society from it.
+- id: mouffe_on_the_political
+  author: Chantal Mouffe
+  title: On the Political
+  year: 2005
+  kind: book
+  voice: democratic_socialist
+  note: Argues that politics seeking consensus beyond left and right hides real conflicts, which then return in harsher forms.
+
+# Green politics
+- id: schumacher_small_is_beautiful
+  author: E. F. Schumacher
+  title: "Small Is Beautiful: A Study of Economics As If People Mattered"
+  year: 1973
+  kind: book
+  voice: green
+  note: Argues that modern economies spend natural capital as if it were income, and makes the case for human-scale enterprise, appropriate technology and meaningful work.
+- id: meadows_limits_to_growth
+  author: Donella H. Meadows, Dennis L. Meadows, Jørgen Randers and William W. Behrens III
+  title: The Limits to Growth
+  year: 1972
+  kind: book
+  voice: green
+  note: Models the world system to argue that continued growth in population, industry and resource use would reach the planet's limits within a century, and that a stable balance is still possible.
+
+# Social democracy
+- id: judt_ill_fares_the_land
+  author: Tony Judt
+  title: Ill Fares the Land
+  year: 2010
+  kind: book
+  voice: social_democrat
+  note: Argues that the post-war welfare state was a moral and practical achievement, and that rising inequality and distrust of the state have hollowed out public life.
+- id: crosland_future_of_socialism
+  author: C. A. R. Crosland
+  title: The Future of Socialism
+  year: 1956
+  kind: book
+  voice: social_democrat
+  note: Argues that in a managed post-war economy public ownership matters less than social equality, pursued through growth, progressive taxation and reform of schooling.
+- id: anderson_private_government
+  author: Elizabeth Anderson
+  title: "Private Government: How Employers Rule Our Lives (and Why We Don't Talk about It)"
+  year: 2017
+  kind: book
+  voice: social_democrat
+  note: Argues that employers govern much of their workers' lives, so free markets alone do not make people free.
+
+# Social liberalism
+- id: hobhouse_liberalism
+  author: L. T. Hobhouse
+  title: Liberalism
+  year: 1911
+  kind: book
+  voice: social_liberal
+  note: Argues that freedom depends on social conditions the state should help secure, such as a living wage and public education, so that liberty and equality support each other.
+- id: rawls_theory_of_justice
+  author: John Rawls
+  title: A Theory of Justice
+  year: 1971
+  kind: book
+  voice: social_liberal
+  note: Argues that people choosing principles without knowing their place in society would secure equal basic liberties, fair equality of opportunity, and inequalities only where they benefit the least advantaged.
+- id: paine_rights_of_man
+  author: Thomas Paine
+  title: Rights of Man
+  year: 1791
+  kind: book
+  voice: social_liberal
+  note: Argues, against Burke, that each generation has the right to remake its government on the basis of natural rights.
+- id: nussbaum_patriotism_and_cosmopolitanism
+  author: Martha C. Nussbaum
+  title: Patriotism and Cosmopolitanism
+  year: 1994
+  kind: essay
+  in: Boston Review
+  voice: social_liberal
+  note: Argues that people's first loyalty belongs to humanity as a whole, and that national pride can crowd out duties to outsiders.
+- id: holmes_anatomy_of_antiliberalism
+  author: Stephen Holmes
+  title: The Anatomy of Antiliberalism
+  year: 1993
+  kind: book
+  voice: social_liberal
+  note: Argues that critics of rights-based politics misread what individual rights protect, including the freedom to join and leave communities.
+- id: appiah_lies_that_bind
+  author: Kwame Anthony Appiah
+  title: "The Lies That Bind: Rethinking Identity"
+  year: 2018
+  kind: book
+  voice: social_liberal
+  note: Argues that identities such as nation, class and culture are looser, more mixed and more open to choice than their defenders claim.
+
+# Left communitarianism
+- id: orwell_lion_and_unicorn
+  author: George Orwell
+  title: "The Lion and the Unicorn: Socialism and the English Genius"
+  year: 1941
+  kind: essay
+  voice: left_communitarian
+  note: Argues that patriotism and democratic socialism belong together, and that Britain could win the war only through common ownership, capped incomes and democratic schooling.
+- id: lasch_true_and_only_heaven
+  author: Christopher Lasch
+  title: "The True and Only Heaven: Progress and Its Critics"
+  year: 1991
+  kind: book
+  voice: left_communitarian
+  note: Argues that faith in endless progress has run into natural and moral limits, and finds a sounder hope in the small-producer traditions and local loyalties it pushed aside.
+
+# Centrism
+- id: schlesinger_vital_center
+  author: Arthur M. Schlesinger Jr.
+  title: "The Vital Center: The Politics of Freedom"
+  year: 1949
+  kind: book
+  voice: centrist
+  note: Argues that free societies must defend civil liberties, a mixed economy and gradual reform as a fighting faith against totalitarian movements of both left and right.
+- id: craiutu_faces_of_moderation
+  author: Aurelian Craiutu
+  title: "Faces of Moderation: The Art of Balance in an Age of Extremes"
+  year: 2016
+  kind: book
+  voice: centrist
+  note: Through portraits of five twentieth-century thinkers, argues that balance and compromise are a demanding political virtue that takes courage, not a lack of conviction.
+
+# Communitarianism
+- id: etzioni_spirit_of_community
+  author: Amitai Etzioni
+  title: "The Spirit of Community: Rights, Responsibilities, and the Communitarian Agenda"
+  year: 1993
+  kind: book
+  voice: communitarian
+  note: Argues that rights must be matched by responsibilities, and that families, schools and communities should revive a shared moral voice.
+- id: maritain_man_and_the_state
+  author: Jacques Maritain
+  title: Man and the State
+  year: 1951
+  kind: book
+  voice: communitarian
+  note: Argues that the state is an instrument serving the person and the body politic, grounds human rights in natural law, and calls for discarding the idea of sovereignty.
+- id: sandel_liberalism_and_the_limits_of_justice
+  author: Michael J. Sandel
+  title: Liberalism and the Limits of Justice
+  year: 1982
+  kind: book
+  voice: communitarian
+  note: Argues that a theory of justice built on free choice overlooks the attachments and communities that make people who they are.
+
+# Classical liberalism
+- id: friedman_capitalism_and_freedom
+  author: Milton Friedman
+  title: Capitalism and Freedom
+  year: 1962
+  kind: book
+  voice: classical_liberal
+  note: Argues that economic freedom is a condition of political freedom, and sets out a limited role for government, from a negative income tax to school vouchers.
+- id: hayek_constitution_of_liberty
+  author: F. A. Hayek
+  title: The Constitution of Liberty
+  year: 1960
+  kind: book
+  voice: classical_liberal
+  note: Defends liberty as freedom from coercion under general rules, and applies the rule of law to welfare, taxation, labor unions and housing.
+- id: hayek_road_to_serfdom
+  author: F. A. Hayek
+  title: The Road to Serfdom
+  year: 1944
+  kind: book
+  voice: classical_liberal
+  note: Argues that central economic planning, however democratic its aims, concentrates power and erodes personal freedom.
+- id: hayek_why_not_conservative
+  author: F. A. Hayek
+  title: Why I Am Not a Conservative
+  year: 1960
+  kind: essay
+  in: The Constitution of Liberty
+  voice: classical_liberal
+  note: Argues that conservatism can slow change but offers no principles of its own, and so cannot defend freedom against new kinds of control.
+- id: de_jouvenel_ethics_of_redistribution
+  author: Bertrand de Jouvenel
+  title: The Ethics of Redistribution
+  year: 1951
+  kind: book
+  voice: classical_liberal
+  note: Argues that redistribution through taxes and benefits ends up moving power and resources from individuals to the state.
+- id: kukathas_liberal_archipelago
+  author: Chandran Kukathas
+  title: "The Liberal Archipelago: A Theory of Diversity and Freedom"
+  year: 2003
+  kind: book
+  voice: classical_liberal
+  note: Argues that a free society needs no shared vision of the common good, only toleration among the many communities within it.
+- id: acton_nationality
+  author: Lord Acton
+  title: Nationality
+  year: 1862
+  kind: essay
+  in: The Home and Foreign Review
+  voice: classical_liberal
+  note: Argues that states uniting several nations protect liberty better than states built around a single nation.
+- id: olson_rise_and_decline_of_nations
+  author: Mancur Olson
+  title: The Rise and Decline of Nations
+  year: 1982
+  kind: book
+  voice: classical_liberal
+  note: Argues that organized interest groups, from cartels to unions, build up over time and slow economic growth.
+
+# Libertarianism
+- id: nozick_anarchy_state_and_utopia
+  author: Robert Nozick
+  title: Anarchy, State, and Utopia
+  year: 1974
+  kind: book
+  voice: libertarian
+  note: Argues that a minimal state, limited to protection against force, theft and fraud and to enforcing contracts, is justified, and that any more extensive state violates people's rights.
+- id: boaz_libertarianism_primer
+  author: David Boaz
+  title: "Libertarianism: A Primer"
+  year: 1997
+  kind: book
+  voice: libertarian
+  note: Traces libertarian ideas from their historical roots and sets out the case for individual rights, free markets and limited government.
+- id: mises_middle_of_the_road
+  author: Ludwig von Mises
+  title: Middle-of-the-Road Policy Leads to Socialism
+  year: 1950
+  kind: lecture
+  voice: libertarian
+  note: Argues that each intervention in markets creates problems that invite further intervention, so a middle way between markets and central planning cannot last.
+- id: simon_ultimate_resource
+  author: Julian L. Simon
+  title: The Ultimate Resource
+  year: 1981
+  kind: book
+  voice: libertarian
+  note: Argues that human ingenuity, spurred by prices and growth, has made resources more plentiful over time, not scarcer.
+
+# Traditional conservatism
+- id: burke_reflections
+  author: Edmund Burke
+  title: Reflections on the Revolution in France
+  year: 1790
+  kind: book
+  voice: traditional_conservative
+  note: Defends inherited institutions as stores of practical wisdom, and argues that reform should repair what exists rather than rebuild society on abstract principles.
+- id: oakeshott_on_being_conservative
+  author: Michael Oakeshott
+  title: On Being Conservative
+  year: 1962
+  kind: essay
+  in: Rationalism in Politics and Other Essays
+  voice: traditional_conservative
+  note: Describes conservatism as a disposition to prefer the familiar and tried to the untried, and casts government as an umpire keeping general rules rather than pursuing a grand design.
+- id: minogue_liberal_mind
+  author: Kenneth Minogue
+  title: The Liberal Mind
+  year: 1963
+  kind: book
+  voice: traditional_conservative
+  note: Argues that treating every hardship as a problem for politics to solve steadily widens the reach of the state.
+- id: kirk_chirping_sectaries
+  author: Russell Kirk
+  title: "Libertarians: The Chirping Sectaries"
+  year: 1981
+  kind: article
+  in: Modern Age
+  voice: traditional_conservative
+  note: Argues that a politics of individual liberty alone neglects the order, community and moral tradition that liberty depends on.
+- id: scruton_green_philosophy
+  author: Roger Scruton
+  title: "Green Philosophy: How to Think Seriously About the Planet"
+  year: 2012
+  kind: book
+  voice: traditional_conservative
+  note: Argues that care for the environment grows from love of home and local association, not from global campaigns or central regulation.
+
+# National conservatism
+- id: hazony_virtue_of_nationalism
+  author: Yoram Hazony
+  title: The Virtue of Nationalism
+  year: 2018
+  kind: book
+  voice: national_conservative
+  note: Argues that a world of independent nations, each governing itself by its own laws and traditions, secures freedom and peace better than a universal empire or global order.
+- id: scruton_need_for_nations
+  author: Roger Scruton
+  title: The Need for Nations
+  year: 2004
+  kind: book
+  voice: national_conservative
+  note: Argues that territorial national loyalty, rather than creed or ideology, underpins democracy, secular law and accountable government, and that transnational institutions erode it.

@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Libertarianism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: libertarian
+sources:
+  - "Robert Nozick, Anarchy, State, and Utopia (1974)"
+  - "Murray N. Rothbard, For a New Liberty (1973)"
+  - "David Boaz, Libertarianism: A Primer (1997)"
+  - "Michael Huemer, The Problem of Political Authority (2013)"
+answers:
+  fairness.stance: 1   # holdings are just if justly acquired and transferred, whatever the pattern (Nozick, Anarchy, State, and Utopia)
+  assisted_dying.stance: 7   # follows from self-ownership (Rothbard, For a New Liberty): competent adults decide, with willing helpers
+  vaccine_mandates.stance: 1   # bodily self-ownership bars state-compelled medical treatment (Rothbard, For a New Liberty)
+  drug_policy.stance: 7   # prohibition violates adults' rights over their own bodies (Huemer, "America's Unjust Drug War")
+  paternalism.stance: 1   # risks only to oneself are one's own business (Boaz, Libertarianism: A Primer)
+  organ_donation.stance: 7   # self-ownership includes the right to sell one's own kidney
+  sex_work.stance: 7   # a victimless exchange between consenting adults (Rothbard, For a New Liberty)
+  surrogacy.stance: 7   # freedom of contract over one's own body; ordinary contract law is enough
+  gene_editing.stance: 7   # the "genetic supermarket": parents choose, with no central decision (Nozick, Anarchy, State, and Utopia)
+  free_speech.stance: 1   # speech, however hateful, is not aggression; threats are (Rothbard, For a New Liberty)
+  guns.stance: 7   # self-defense grounds a weighty right to own guns (Huemer, "Is There a Right to Own a Gun?"); no permits or registries
+  surveillance.stance: 1   # wiretapping the innocent is a crime, warrant or not (Rothbard, For a New Liberty); never in bulk
+  religious_liberty.stance: 6   # freedom of association gives wide room to refuse, though some would keep limits for essential services
+  protest.stance: 2   # blocking others' way wrongs them whatever the cause; politics earns neither leniency nor extra penalty
+  torture.stance: 1   # rights are side constraints, not to be traded for better outcomes (Nozick, Anarchy, State, and Utopia)
+  public_safety.stance: 2   # side constraints protect the accused; Nozick leaves open only catastrophe (Anarchy, State, and Utopia)
+  taxes.stance: 1   # "taxation of earnings from labor is on a par with forced labor" (Nozick, Anarchy, State, and Utopia)
+  healthcare.stance: 1   # people buy the care and cover they choose; charity and mutual aid for those who cannot
+  welfare.stance: 1   # family, charity and mutual aid, not tax-funded support (Rothbard, For a New Liberty)
+  minimum_wage.stance: 1   # "compulsory unemployment" for the low-skilled (Rothbard, "Outlawing Jobs: The Minimum Wage, Once More")
+  regulation.stance: 1   # regulation mostly raises costs and shields incumbents; force and fraud are for the courts
+  unions.stance: 1   # voluntary unions are fine; compelling employers to bargain with them is not
+  trade.stance: 7   # free exchange across borders, with no tariffs (Boaz, Libertarianism: A Primer)
+  housing.stance: 1   # rent limits are price controls that shrink the supply of homes
+  inheritance.stance: 1   # bequest is a just transfer of justly held property (Nozick, Anarchy, State, and Utopia)
+  policing.stance: 3   # stop policing victimless crimes (Rothbard, For a New Liberty); anarcho-capitalists would go further
+  same_sex_marriage.stance: 6   # equal treatment, ideally marriage as private contract (Boaz, "Privatize Marriage"); not for schools to teach
+  gender_roles.stance: 3   # how couples divide work and care is their own business
+  prisons.stance: 5   # restitution to victims where possible (Rothbard, For a New Liberty); prison for violent or repeat offenders
+  climate.stance: 2   # no mandated cuts; pollution is a tort needing proof of harm (Rothbard, "Law, Property Rights, and Air Pollution")
+  cooperation.stance: 2   # voluntary arrangements with a right of exit; no international authority over citizens
+  foreign_aid.stance: 1   # aid props up governments, not people (Bauer, Dissent on Development); private giving instead
+  marriage.stance: 7   # no one may be held in a marriage against their will
+  gambling.stance: 7   # adults may bet their own money (Rothbard, For a New Liberty)
+  moral_foundations.loyalty_1: 2   # no duty of allegiance to a country or its state (Huemer, The Problem of Political Authority)
+  moral_foundations.equality_3: 4   # inequality can be fine, though just history, not opportunity, is the test (Nozick, Anarchy, State, and Utopia)
+  moral_foundations.liberty_3: 1   # "there is no social entity with a good" to sacrifice individuals for (Nozick, Anarchy, State, and Utopia)
+  moral_foundations.deserts_1: 4   # markets broadly reward what others value, though entitlement, not desert, is the test (Nozick, Anarchy, State, and Utopia)
+  moral_foundations.equality_1: 2   # equality is no goal in itself; growth that lifts the poor matters more
+  moral_foundations.loyalty_3: 4   # duties come from consent, not birthplace or membership (Rothbard, The Ethics of Liberty)
+  moral_foundations.deserts_2: 4   # objects when workers are made to carry those who choose not to work
+  moral_foundations.liberty_1: 5   # the core libertarian complaint (Boaz, Libertarianism: A Primer)
+  moral_foundations.equality_2: 1   # fairness depends on how holdings arose, not their size (Nozick, Anarchy, State, and Utopia)
+  moral_foundations.deserts_3: 2   # sufficiency is for charity and growth to secure; earned rewards should stand
+  moral_foundations.loyalty_2: 2   # anyone may leave a group; exit is a right, not a betrayal
+  moral_foundations.liberty_2: 5   # each person is sovereign over their own life
+  organ_donation.anchor_ml: 1   # self-ownership includes selling a kidney
+  sex_work.anchor_ml: 1   # consenting adults, no victim
+  surrogacy.anchor_ml: 1   # freedom of contract over one's own body
+  free_speech.anchor_liberty: 7   # speech is not aggression, however hateful
+  surveillance.anchor_liberty: 7   # privacy and encryption belong to the individual
+  healthcare.anchor_ml: 1   # patients and doctors may contract as they like
+  welfare.anchor_desert: 5   # no one is owed tax-funded support, but charity to the jobless is welcome
+  unions.anchor_loyal: 1   # each worker follows their own judgment; no duty of solidarity
+  inheritance.anchor_desert: 1   # gifts and bequests are just transfers, earned or not (Nozick, Anarchy, State, and Utopia)
+  war.anchor_loyal: 1   # no duty to back a war one thinks mistaken; war is how states grow (Rothbard, For a New Liberty)
+  marriage.anchor_lib: 7   # no one may be held in a marriage against their will
+  family_crime.anchor_loyal: 3   # no duty to inform, but family loyalty does not cancel a victim's claim
+  work.anchor_cw: 2   # no one owes the community their labor; working is their own choice
+  work.anchor_lib: 7   # freedom of contract over working hours
+  health.anchor_cw: 1   # a compelled cross-subsidy; insurance should be chosen, not imposed
+  gambling.anchor_lib: 7   # adults' own money, adults' own risk
+divided:
+  - abortion.stance   # pro-choice camp grounds it in the woman's self-ownership (Rothbard, For a New Liberty); pro-life camp extends rights to the unborn
+  - death_penalty.stance   # retributivists accept execution for murder (Rothbard, The Ethics of Liberty); abolitionists deny any state that power
+  - immigration.stance   # open borders (Huemer, "Is There a Right to Immigrate?") vs entry by invitation only (Hoppe; Rothbard, "Nations by Consent")
+  - transgender.stance   # cosmopolitan libertarians defer to self-identification and private rule-makers; paleolibertarians hold to sex at birth

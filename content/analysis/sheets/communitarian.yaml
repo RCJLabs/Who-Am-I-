@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Communitarianism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: communitarian
+sources:
+  - Amitai Etzioni, The Spirit of Community (1993)
+  - Michael J. Sandel, Democracy's Discontent (1996)
+  - Jacques Maritain, Man and the State (1951)
+  - Wilhelm Röpke, A Humane Economy (1958)
+answers:
+  fairness.stance: 4   # Fairly earned gaps are legitimate, but not once they split rich and poor into separate worlds (Sandel, Democracy's Discontent)
+  abortion.stance: 5   # Early access with counseling and later limits: the life-protecting compromise most adherents defend
+  assisted_dying.stance: 2   # Shield the frail from pressure to die and keep medicine on the side of life; palliative care first
+  vaccine_mandates.stance: 6   # Public health can outweigh individual objection (Etzioni, The Spirit of Community); in serious outbreaks that includes vaccination
+  death_penalty.stance: 1   # The dignity of every person, the guilty included, rules out execution
+  drug_policy.stance: 2   # Hard drugs wreck families and communities: prison for dealers, fines or required treatment for users
+  paternalism.stance: 5   # Risks to oneself also burden family and community; limit choice when the harm is serious and the intrusion small
+  organ_donation.stance: 2   # Organs should be given, not sold; repay donors' costs only (Etzioni, "Organ Donation: A Communitarian Approach")
+  sex_work.stance: 2   # Sex should not be bought: penalize buyers and help those who sell, as many Christian democrats now urge
+  surrogacy.stance: 2   # Pregnancy should not be for hire (Sandel, What Money Can't Buy); at most an unpaid gift between people already close
+  gene_editing.stance: 2   # Children are gifts, not designs (Sandel, The Case Against Perfection): no heritable editing in people, research under strict limits
+  guns.stance: 2   # Public safety comes before private arms (Etzioni, The Spirit of Community); licenses for hunting and sport only
+  surveillance.stance: 5   # Privacy is one good among others: some bulk data under strong oversight (Etzioni, The Limits of Privacy)
+  religious_liberty.stance: 5   # Duties of conscience are not mere preferences and deserve room (Sandel, Democracy's Discontent)
+  protest.stance: 2   # Civil disobedience keeps its meaning by accepting the ordinary penalty; public order is a shared good
+  torture.stance: 1   # The dignity of the person is inviolable, whatever is at stake
+  public_safety.stance: 5   # Rights carry responsibilities; in serious cases public safety comes first (Etzioni, The Spirit of Community)
+  taxes.stance: 5   # Solidarity calls for progressive taxes and transfers, short of leveling incomes
+  healthcare.stance: 3   # Subsidiarity: compulsory social insurance through self-governing funds, with help for those who can't pay
+  welfare.stance: 5   # A dignified minimum and help into work, matched by a duty to take work up
+  minimum_wage.stance: 5   # A just wage floor, with most pay set by employers and unions bargaining as partners
+  regulation.stance: 5   # Markets need a firm legal and moral framework to stay humane (Röpke, A Humane Economy)
+  unions.stance: 5   # Social partnership: strong unions and employers bargain as equals, with strikes kept within fair limits
+  trade.stance: 5   # Open trade under shared rules, with help for the workers and places that lose out
+  housing.stance: 3   # Shield families from steep rises that uproot communities, without the general rent control Röpke opposed
+  inheritance.stance: 3   # Families should hand on homes, farms and firms; tax large estates modestly, with generous allowances
+  immigration.stance: 3   # Settlement should match what communities can integrate; most adherents now want somewhat fewer
+  policing.stance: 5   # More officers rooted in the communities they serve
+  same_sex_marriage.stance: 6   # Committed unions strengthen families; most adherents now accept full marriage, though a traditional wing dissents
+  transgender.stance: 3   # Recognize a settled change of legal sex, while sex-based rules protect others in sport, prisons and single-sex spaces
+  gender_roles.stance: 3   # Freedom of choice: back parents' time with children whatever pattern a couple picks (Etzioni, The Spirit of Community)
+  prisons.stance: 3   # Certainty over severity: short, sure sentences, with restitution and community sanctions for first offenders
+  climate.stance: 5   # Stewardship for coming generations: net zero by mid-century, at a pace society can carry
+  cooperation.stance: 6   # Shared problems need shared authority above the nation (Maritain, Man and the State)
+  foreign_aid.stance: 6   # Solidarity reaches across borders: meet the UN's 0.7% target
+  marriage.stance: 5   # No-fault divorce, but slowed with a wait and counseling where children are involved (Etzioni, The Spirit of Community)
+  gambling.stance: 3   # Gambling losses fall on families: legal only with firm loss limits and no advertising
+  moral_foundations.loyalty_1: 4   # Loyalty is owed to the body politic, not to the government of the day (Maritain, Man and the State)
+  moral_foundations.equality_3: 2   # Open opportunity does not make deep inequality harmless to civic life (Sandel, Democracy's Discontent)
+  moral_foundations.liberty_3: 4   # Rights come with responsibilities to the community (Etzioni, The Spirit of Community)
+  moral_foundations.deserts_1: 4   # Contribution deserves its reward, above a floor of solidarity
+  moral_foundations.equality_1: 4   # Widely spread property makes for free, stable communities (Röpke, A Humane Economy)
+  moral_foundations.loyalty_3: 1   # Duties to one's own communities are at the heart of the tradition (Sandel, Democracy's Discontent)
+  moral_foundations.deserts_2: 4   # Reciprocity: those who can should do their share
+  moral_foundations.liberty_1: 3   # The deeper worry is the erosion of families and communities, by state and market alike
+  moral_foundations.equality_2: 2   # Inequality is not unfair in itself; what matters is its effect on the common good
+  moral_foundations.deserts_3: 4   # A dignified minimum for everyone comes before rewards for effort
+  moral_foundations.loyalty_2: 4   # Family and community bonds carry real obligations
+  moral_foundations.liberty_2: 2   # Communities rightly voice moral expectations of their members (Etzioni, The Spirit of Community)
+  organ_donation.anchor_ml: 6   # The human body is not a commodity
+  sex_work.anchor_ml: 6   # Some things money should not buy (Sandel, What Money Can't Buy)
+  surrogacy.anchor_ml: 6   # Paid surrogacy treats a woman's pregnancy and a child as goods for sale
+  surveillance.anchor_liberty: 3   # With a warrant, authorities should be able to read private messages (Etzioni, The Limits of Privacy)
+  welfare.anchor_desert: 2   # Solidarity: no one who cannot find work should be left in hardship
+  unions.anchor_loyal: 3   # Solidarity matters, but conscience is not surrendered to the group
+  inheritance.anchor_desert: 2   # Families are communities across generations; handing on what they built is legitimate
+  war.anchor_loyal: 3   # Loyal citizens may oppose a mistaken war; the state cannot command conscience (Maritain, Man and the State)
+  marriage.anchor_lib: 5   # Divorce must stay possible, though the law may slow it to save what can be saved
+  family_crime.anchor_loyal: 3   # Family ties matter, but serious crime wrongs the wider community
+  work.anchor_cw: 6   # Able people owe the community their contribution (Sandel, The Tyranny of Merit)
+  work.anchor_lib: 2   # Legal limits on hours and rest days protect family and community life
+  health.anchor_cw: 6   # Solidarity: the healthy carry the sick, as social health insurance does
+  gambling.anchor_lib: 3   # The freedom to bet is limited by duties to one's family
+divided:
+  - free_speech.stance   # European Christian democrats back laws against incitement to hatred; American communitarians (Etzioni) prefer the community's moral voice to bans
+  - free_speech.anchor_liberty   # Same split: Christian democrats accept incitement laws, while American communitarians leave speech free and answer hate socially
+  - healthcare.anchor_ml   # Sandel objects to paying to jump the medical queue (What Money Can't Buy); Christian democrats defend private tiers beside social insurance

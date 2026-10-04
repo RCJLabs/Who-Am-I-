@@ -1,0 +1,81 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# National conservatism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: national_conservative
+sources:
+  - "Yoram Hazony, The Virtue of Nationalism (2018)"
+  - "Pierre Manent, Democracy Without Nations? (2006)"
+  - "Roger Scruton, The Need for Nations (2004)"
+  - "Samuel P. Huntington, Who Are We? (2004)"
+  - "Edmund Burke Foundation, National Conservatism: A Statement of Principles (2022)"
+  - "Oren Cass, The Once and Future Worker (2018)"
+  - "Roger Scruton, Green Philosophy (2012)"
+answers:
+  fairness.stance: 3   # Mutual loyalty means a decent floor for fellow citizens, not equal shares (Hazony, The Virtue of Nationalism)
+  assisted_dying.stance: 1   # Law should shield the old, sick and disabled from pressure to die; palliative care instead
+  drug_policy.stance: 2   # Addictive substances harm families and public life; prison for dealers, required treatment for users (National Conservatism: A Statement of Principles)
+  paternalism.stance: 5   # The state may guard citizens against addictive and destructive products, not every small risk (National Conservatism: A Statement of Principles)
+  organ_donation.stance: 2   # The body is not for sale; cover donors' costs but allow no market in organs
+  sex_work.stance: 2   # Commercial sex exploits and degrades; punish buyers and traffickers, not the people selling
+  surrogacy.stance: 1   # Breaks the lifelong bond between parents and children (National Conservatism: A Statement of Principles); banned, as in several European states
+  gene_editing.stance: 2   # Human heredity is not for remaking; keep heritable editing out of people, research under limits
+  free_speech.stance: 2   # Open debate about nation, faith and immigration must stay free; only narrow exceptions like genocide denial
+  surveillance.stance: 5   # Protecting citizens from terror is a first duty of the national state; bulk powers under oversight
+  religious_liberty.stance: 5   # Room for conscience, but one territorial law of the land binds every faith alike (Scruton, The Need for Nations)
+  protest.stance: 2   # Citizens and government alike must abide by the law; a political motive earns no discount (National Conservatism: A Statement of Principles)
+  torture.stance: 3   # The nation's survival can force a terrible choice, but torture stays unlawful and answerable in court
+  public_safety.stance: 5   # Public order first in serious cases, within the inherited common law of due process (National Conservatism: A Statement of Principles)
+  taxes.stance: 3   # Transfers should support families and work; equalizing incomes is not the aim
+  welfare.stance: 3   # Help should reinforce work, the basis of dignity and family life (Cass, The Once and Future Worker)
+  minimum_wage.stance: 5   # A full-time wage should support a family; a firm floor also reduces reliance on low-wage migrant labor
+  regulation.stance: 4   # The free market cannot be absolute (National Conservatism: A Statement of Principles); fewer rules on producers, tighter checks on corporate power
+  unions.stance: 3   # Workers need a voice, ideally cooperative rather than adversarial (Cass, The Once and Future Worker); strikes within firm limits
+  trade.stance: 3   # Trade serves the nation; mostly open, but protect industries vital to defense and manufacturing (National Conservatism: A Statement of Principles)
+  housing.stance: 2   # Affordable homes come from building more and easing demand, not standing rent controls
+  inheritance.stance: 2   # What families build should pass to their children; tax only the largest estates, and lightly
+  immigration.stance: 2   # Much more restrictive until newcomers can be assimilated (National Conservatism: A Statement of Principles; Huntington, Who Are We?)
+  policing.stance: 5   # Visible policing restores order and public trust; hire more officers
+  same_sex_marriage.stance: 3   # Marriage is a lifelong bond of a man and a woman (National Conservatism: A Statement of Principles); civil partnerships for others
+  transgender.stance: 2   # Law should follow bodily sex; a legal change only for adults after surgery, never by self-declaration
+  gender_roles.stance: 2   # Raising children is a priority of the highest order (National Conservatism: A Statement of Principles); don't penalize a parent at home
+  prisons.stance: 2   # Protecting the law-abiding comes first; repeat and violent offenders belong in prison for longer
+  climate.stance: 2   # Stewardship grows from love of home, not global targets (Scruton, Green Philosophy); affordable, secure energy comes first
+  cooperation.stance: 3   # Treaties and alliances among independent nations, no transfer of authority to supranational bodies (Hazony, The Virtue of Nationalism; Manent, Democracy Without Nations?)
+  foreign_aid.stance: 3   # Duties run first to fellow citizens; modest aid where it serves national interests and stability abroad
+  marriage.stance: 3   # Marriage is meant to be lifelong; unilateral divorce should take years, for the children's sake (National Conservatism: A Statement of Principles)
+  gambling.stance: 3   # Betting firms profit from obsessive, destructive habits; firm loss limits and no advertising (National Conservatism: A Statement of Principles)
+  moral_foundations.loyalty_1: 5   # National loyalty is what lets citizens accept governments they oppose (Scruton, The Need for Nations)
+  moral_foundations.equality_3: 3   # Cohesion matters more than inequality; mobility alone does not justify leaders detached from the nation (Huntington, Who Are We?)
+  moral_foundations.liberty_3: 4   # Freedom rests on a cohesive nation and its limits, not on individual consent alone (Hazony, The Virtue of Nationalism)
+  moral_foundations.deserts_1: 4   # Reward should follow contribution to family, firm and nation, not rent-seeking
+  moral_foundations.equality_1: 2   # The aim is a cohesive nation and secure working families, not equal wealth
+  moral_foundations.loyalty_3: 1   # Special duties to one's own nation and community are the heart of the tradition (Hazony, The Virtue of Nationalism)
+  moral_foundations.deserts_2: 4   # Reciprocity binds a nation; those who contribute should not carry those who won't
+  moral_foundations.liberty_1: 4   # Bureaucracies at home and in transnational bodies reach too far into ordinary life
+  moral_foundations.equality_2: 2   # Differences in wealth are not unfair in themselves; what matters is how they arise and whether they divide the nation
+  moral_foundations.deserts_3: 3   # Both count: a decent floor for every member of the nation and real reward for work
+  moral_foundations.loyalty_2: 4   # Family and nation are bonds of mutual loyalty; betraying them is a grave wrong (Hazony, The Virtue of Nationalism)
+  moral_foundations.liberty_2: 2   # Inherited authority, faith and law rightly shape how people live; autonomy is not the highest good
+  organ_donation.anchor_ml: 6   # The body is not a commodity, whatever both parties agree
+  sex_work.anchor_ml: 6   # Consent does not make commercial sex harmless to the people involved or to society
+  surrogacy.anchor_ml: 7   # Motherhood and children are not for sale (National Conservatism: A Statement of Principles)
+  free_speech.anchor_liberty: 6   # Free debate is how a self-governing nation settles its disputes; misuse is the price
+  surveillance.anchor_liberty: 3   # Privacy matters, but the state must be able to reach those plotting violence against the nation
+  healthcare.anchor_ml: 2   # Paying for faster care is a free choice; public provision need not forbid it
+  welfare.anchor_desert: 3   # Expect work, but fellow citizens who cannot find a job should not be left in hardship
+  unions.anchor_loyal: 3   # Solidarity matters, but conscience and the wider good outrank a strike call
+  inheritance.anchor_desert: 1   # Passing on what parents built is how families endure across generations
+  war.anchor_loyal: 5   # Stand with the nation and its soldiers in war, while arguing openly for a better course
+  marriage.anchor_lib: 3   # Divorce must remain possible, but the law should not make walking out of a marriage easy
+  family_crime.anchor_loyal: 3   # Family loyalty weighs heavily, but the nation's law must prevail over clan loyalty (Hazony, The Virtue of Nationalism)
+  work.anchor_cw: 5   # Work is how people contribute to family and community (Cass, The Once and Future Worker); caring for children at home counts too
+  work.anchor_lib: 3   # Work should leave time for family and rest; limits on hours are legitimate
+  health.anchor_cw: 5   # Fellow citizens share burdens; pooling health costs is part of national solidarity
+  gambling.anchor_lib: 3   # Betting firms profit from addiction that harms families; the state may set limits
+divided:
+  - abortion.stance   # Many American and Polish adherents would allow it only in rare cases; many Western European ones keep early legal abortion with later limits
+  - vaccine_mandates.stance   # Some accept school and health-worker requirements as a civic duty; others, after the pandemic, reject mandates except in a true emergency
+  - death_penalty.stance   # American adherents mostly back it for the worst murders; most European adherents accept abolition and prefer whole-life terms
+  - guns.stance   # American adherents treat gun ownership as a right with background checks; most European adherents accept strict licensing
+  - healthcare.stance   # European adherents defend tax-funded care for all; American adherents prefer private insurance with public cover for the poor and elderly

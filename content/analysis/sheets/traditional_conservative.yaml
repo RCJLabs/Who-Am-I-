@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=../../../schema/analysis/sheet.schema.json
+# Traditional conservatism: the app's political questions, and the statements behind the compared principles,
+# answered as a thoughtful adherent would, from the tradition's own writers. Written blind: the
+# author saw only this tradition and its sources. The compiler scores it like anyone's answers.
+tradition: traditional_conservative
+sources:
+  - Edmund Burke, Reflections on the Revolution in France (1790)
+  - Michael Oakeshott, On Being Conservative (1962)
+  - Roger Scruton, The Meaning of Conservatism (1980)
+  - Roger Scruton, How to Be a Conservative (2014)
+  - Russell Kirk, The Conservative Mind (1953)
+answers:
+  fairness.stance: 3             # property is by nature unequal, but a decent floor is owed to all (Burke, Reflections; Scruton, How to Be a Conservative)
+  assisted_dying.stance: 2       # protects the vulnerable and distrusts rules that widen once begun; at most rare, grave exceptions (Burke, Reflections, on prudence)
+  vaccine_mandates.stance: 5     # accepts long-settled school and health-worker requirements as a duty to others; wary of wider compulsion
+  drug_policy.stance: 2          # hard drugs wreck the habits and families that order rests on; prison for dealers, fines or compulsory treatment for users
+  paternalism.stance: 3          # government is an umpire, not a tutor; settled safety rules yes, campaigns to remake private habits no (Oakeshott, On Being Conservative)
+  organ_donation.stance: 2       # some things should be given, not sold; keeps the settled gift system with costs covered
+  sex_work.stance: 2             # sex should not be a commodity; the law targets buyers and the trade rather than the often-exploited seller (Scruton, Sexual Desire)
+  surrogacy.stance: 3            # bearing a child should not be bought; tolerates unpaid surrogacy with costs covered (Scruton, The Meaning of Conservatism)
+  gene_editing.stance: 2         # the unborn are partners in society, not objects of design; no heritable editing in people (Burke, Reflections)
+  free_speech.stance: 3          # open debate is an inherited liberty; the criminal law should reach only the worst cases (Scruton, How to Be a Conservative)
+  surveillance.stance: 5         # security is a first duty of government, but powers must sit under law and independent oversight
+  religious_liberty.stance: 6    # faith is a foundation of civil society, so conscience gets wide room (Kirk, The Conservative Mind)
+  protest.stance: 2              # one law for all; a sincere cause does not license breaking it (Oakeshott, On Being Conservative)
+  torture.stance: 2              # forbidden by law and civilized order, though not blind to desperate moments (Burke, speeches on Warren Hastings)
+  public_safety.stance: 5        # liberty is liberty connected with order; in violent crime public safety weighs more, within due process (Burke, Speech at Bristol, 1774)
+  taxes.stance: 3                # some redistribution for a safety net, with taxes kept low to protect property, family and independence (Scruton, How to Be a Conservative)
+  welfare.stance: 3              # help should support work and family, not replace them, with firm conditions (Scruton, How to Be a Conservative)
+  regulation.stance: 3           # rules grown from experience serve; rules designed from above often stifle enterprise (Oakeshott, Rationalism in Politics)
+  unions.stance: 3               # unions are legitimate voluntary associations, but strike powers need firm legal limits
+  trade.stance: 6                # free exchange builds prosperity and ties between peoples, with exceptions for security (Burke, Two Letters on the Trade of Ireland, 1778)
+  housing.stance: 2              # rent limits weaken property and shrink the supply of homes; tolerable only in emergencies (Kirk, The Conservative Mind)
+  inheritance.stance: 1          # perpetuating property in families binds the generations and sustains society (Burke, Reflections)
+  immigration.stance: 3          # settlement at a pace that communities can absorb and integrate (Scruton, How to Be a Conservative)
+  policing.stance: 5             # order is the first condition of freedom; more officers for visible, local policing by consent
+  transgender.stance: 3          # keeps settled recognition after diagnosis and years of living so, but sex-based rules in sport, prisons and single-sex spaces
+  gender_roles.stance: 2         # families are the first little platoons; tax policy should not penalize a parent who stays home (after Burke, Reflections)
+  prisons.stance: 2              # punishment should fit the crime, and repeat offenders should be kept from the public (James Q. Wilson, Thinking About Crime)
+  climate.stance: 3              # stewardship of an inherited home, pursued locally and steadily rather than by costly top-down targets (Scruton, Green Philosophy)
+  cooperation.stance: 3          # honors treaties freely made, but law and its enforcement stay with accountable national institutions (Scruton, The Need for Nations)
+  foreign_aid.stance: 3          # charity is a duty, but aid should be small, targeted and serve the national interest rather than a fixed target
+  marriage.stance: 5             # marriage is an institution, not a mere contract; divorce is possible but slowed, with children in view (Scruton, The Meaning of Conservatism)
+  gambling.stance: 3             # no prohibition, but a trade that profits from weakness and hurts families needs loss limits and no advertising
+  moral_foundations.loyalty_1: 5      # loyalty is owed to the country and its settled ways, not to the government of the day (Scruton, How to Be a Conservative)
+  moral_foundations.equality_3: 4     # inequality is natural to a free society; open paths upward matter, though they are not the only test
+  moral_foundations.liberty_3: 4      # the restraints on men, as well as their liberties, are among their rights (Burke, Reflections)
+  moral_foundations.deserts_1: 4      # reward should follow contribution, though inheritance and duty have claims too
+  moral_foundations.equality_1: 2     # equal wealth is no goal; those who attempt to level never equalize (Burke, Reflections)
+  moral_foundations.loyalty_3: 1      # love of the little platoon is the first principle of public affections (Burke, Reflections)
+  moral_foundations.deserts_2: 4      # free-riding erodes the reciprocity that communities depend on
+  moral_foundations.liberty_1: 4      # government too often directs lives instead of keeping general rules (Oakeshott, On Being Conservative)
+  moral_foundations.equality_2: 1     # property is by nature unequal; difference is not injustice (Burke, Reflections)
+  moral_foundations.deserts_3: 2      # a floor is owed, but a society that stops rewarding effort loses the habits it lives by
+  moral_foundations.loyalty_2: 4      # family loyalty is the first school of obligation (Scruton, The Meaning of Conservatism)
+  moral_foundations.liberty_2: 2      # custom, family and faith rightly guide how people live; not all direction is imposition (Kirk, The Conservative Mind)
+  organ_donation.anchor_ml: 6         # the body and its organs belong outside the market
+  sex_work.anchor_ml: 6               # consent does not make sex a fit object of trade (Scruton, Sexual Desire)
+  surrogacy.anchor_ml: 6              # carrying a child should not be hired out, whatever the contract
+  free_speech.anchor_liberty: 6       # free speech is worth its abuses; censorship is the greater danger (Scruton, How to Be a Conservative)
+  surveillance.anchor_liberty: 3      # private life matters, but lawful access under warrant must remain possible
+  healthcare.anchor_ml: 2             # paying privately for care is a legitimate freedom alongside public provision
+  welfare.anchor_desert: 3            # effort should be rewarded, but a decent society does not leave the jobless in real hardship
+  unions.anchor_loyal: 2              # conscience comes before solidarity in a strike one thinks mistaken
+  inheritance.anchor_desert: 1        # inheritance is a bond between generations, not unearned gain (Burke, Reflections)
+  war.anchor_loyal: 5                 # loyalty to those who serve, though Burke opposed the war with America from within (Burke, Speech on Conciliation with America)
+  marriage.anchor_lib: 3              # the law should help save marriages that can be saved, not only ease the exit
+  family_crime.anchor_loyal: 3        # family ties are deep, but justice for a serious crime comes first
+  work.anchor_cw: 5                   # work is a duty and a source of dignity, though leisure and private life have their claims
+  work.anchor_lib: 5                  # freedom of contract on hours, within basic safety law
+  gambling.anchor_lib: 3              # free to bet, but not without limits where families bear the losses
+divided:
+  - abortion.stance              # pro-life conservatives, strongest in the United States, who allow it only to save life or after rape vs. British and Commonwealth conservatives who accept legal early abortion with later limits
+  - death_penalty.stance         # American conservatives who keep it for the worst murders vs. British, Commonwealth and European conservatives who accept its abolition
+  - guns.stance                  # American conservatives who hold gun ownership a constitutional right vs. British and Commonwealth conservatives who accept strict licensing
+  - healthcare.stance            # American conservatives who favor private insurance with public cover for the poor and elderly vs. British and Commonwealth conservatives who defend tax-funded national health services
+  - minimum_wage.stance          # American conservatives who keep a low floor to protect jobs vs. British and other conservatives who back a floor at half to two-thirds of typical pay
+  - same_sex_marriage.stance     # conservatives who keep marriage for a man and a woman and offer civil partnerships vs. those who back same-sex marriage as extending a stabilizing institution
+  - health.anchor_cw             # as with healthcare: American conservatives who prefer individual cover vs. British and Commonwealth conservatives who defend pooled national care
