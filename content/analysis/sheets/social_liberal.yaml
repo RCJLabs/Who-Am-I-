@@ -71,7 +71,7 @@ divided:
   - surrogacy.stance   # Unpaid surrogacy with costs covered, the usual European view, vs paid surrogacy under strict rules, common among American social liberals
   - free_speech.stance   # Intent-based incitement laws (Waldron, The Harm in Hate Speech) vs banning only threats and incitement to violence, mostly in the US (R. Dworkin)
   - guns.stance   # European adherents allow licensed hunting and sport only (2); many American adherents accept owning guns for self-defense with licensing and checks (3-5)
-  - housing.stance   # inflation-linked limits within longer tenancies, common among European adherents, vs caps only on steep rises, with building doing the main work, as in several American states
+  - housing.stance   # Inflation-linked limits within longer tenancies, common among European adherents, vs caps only on steep rises, with building doing the main work, as in several American states
   - immigration.stance   # More legal routes and higher numbers (Carens, "Aliens and Citizens") vs holding or trimming current levels for integration, varying by country
   - sex_work.anchor_ml   # Nordic-model supporters agree; decriminalizers who stress adult consent disagree
   - surrogacy.anchor_ml   # Supporters of unpaid-only surrogacy agree; those backing regulated paid surrogacy disagree
