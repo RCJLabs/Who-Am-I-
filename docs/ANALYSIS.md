@@ -27,6 +27,7 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Section read-outs | the private profile: they describe the chart beside them, which already shows those answers |
 | Next steps | public profile only; never a sensitive topic or item |
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
+| Personal suggestions ("For you") | public profile only: personality (never neuroticism), values and thinking spectrums |
 
 Worldview answers can never move the summary or a recommendation. The simulation test checks this
 for every persona and 200 random respondents; the e2e test checks it in the browser.
@@ -233,6 +234,30 @@ first two critiques, in authored order; the pack lint (E014) makes the first cri
 the other side of politics. For two traditions: one inside reading and one critique from each. A
 reading never appears twice. No status without a named tradition gets readings, so the summary and
 the readings always agree.
+
+## For you (`suggestions.ts`)
+
+Personal suggestions from the analysis pack (`content/analysis/suggestions.yaml`): kinds of work,
+activities, learning or company someone might enjoy, each tied to a published association and
+written as an invitation, never as advice. Each rule compares spectrums from the public profile,
+each toward a pole: `extraversion < -0.25 and conscientiousness > 0.25`. Lint (E016) allows only
+personality spectrums other than neuroticism, values and thinking; no political, worldview or
+taste spectrum and no single answer, and nothing about health, money, relationships, faith or
+politics (`content/analysis/blocked-advice.txt`). Every pole a rule relies on has a rule on the
+opposite pole (W113), so neither end reads as the better one.
+
+1. **Enough evidence.** A spectrum counts only when the public profile scores it with confidence
+   at least 0.75 (`SUGGEST.confidence`): for the personality short form, 3 of a trait's 4 items.
+   Otherwise the spectrum is unknown, and a rule that reads it never fires.
+2. **Every threshold cleared.** The answers must clear each comparison in a rule.
+3. **One of each kind** (work, activity, learning, social): the one the answers clear by the widest
+   margin, the margin being the smallest distance past any of the rule's thresholds; ties go to
+   authored order. At most three (`LIMIT.suggestions`), the clearest kind first.
+4. **What it rests on.** Each suggestion keeps the pole of each spectrum its rule reads, so the
+   results can say why it's there: "Because you described yourself as more “Reserved”".
+
+Scores are raw positions on the person's own answers, with no population norms, so a rule reads a
+self-description, not a standing relative to anyone else.
 
 ## Wording rules
 

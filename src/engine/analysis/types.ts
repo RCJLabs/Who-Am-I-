@@ -1,6 +1,6 @@
 // What the on-device analysis finds, as ids, numbers and enums. Wording happens later, in
 // src/app/analysis/compose.ts, so these stay testable without any copy.
-import type { ReadingId, TraditionId } from '../../model/analysis.ts';
+import type { ReadingId, SuggestionId, SuggestionKind, TraditionId } from '../../model/analysis.ts';
 import type { AxisFamily, AxisId, ItemId, PrincipleId, TopicId } from '../../model/content.ts';
 import type { AnchorSide } from '../tensions.ts';
 
@@ -128,6 +128,16 @@ export interface ReadingRec {
   view: 'inside' | 'outside';
 }
 
+/** A personal suggestion whose rule the answers clear, with the poles it rests on. */
+export interface SuggestionRec {
+  kind: 'suggestion';
+  suggestion: SuggestionId;
+  /** Work, activity, learning or social: at most one of each. */
+  about: SuggestionKind;
+  /** Each spectrum the rule reads and the pole the answers lean to: 0 = its first pole, 1 = its second. */
+  basis: { axis: AxisId; pole: 0 | 1 }[];
+}
+
 export interface AnalysisFacts {
   /** Results the user sees in each section (private: everything they answered). */
   axes: Record<AxisFamily, AxisFact[]>;
@@ -146,5 +156,7 @@ export interface AnalysisFacts {
     explore: ExploreRec[];
     reflect: ReflectRec[];
     readings: ReadingRec[];
+    /** Empty until the analysis pack has loaded, or if it has no suggestions. */
+    suggestions: SuggestionRec[];
   };
 }

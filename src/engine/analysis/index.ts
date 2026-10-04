@@ -14,6 +14,7 @@ import { exploreNext } from './explore.ts';
 import { firmPositions } from './positions.ts';
 import { readingsFor } from './readings.ts';
 import { publicTension, reflections } from './reflect.ts';
+import { suggestionsFor } from './suggestions.ts';
 import { matchTraditions, shareableAnswers } from './traditions.ts';
 import type { AnalysisFacts } from './types.ts';
 
@@ -53,6 +54,7 @@ export function analyse(i: AnalysisInput): AnalysisFacts {
       explore: exploreNext(s, i.publicProfile, { ...flow, ...(i.mapAxes ? { mapAxes: i.mapAxes } : {}) }),
       reflect: reflections(s, i.tensions),
       readings: i.pack && traditions ? readingsFor(i.pack, traditions) : [],
+    suggestions: i.pack ? suggestionsFor(i.pack, i.publicProfile) : [],
     },
   };
 }
