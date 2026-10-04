@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parse } from 'yaml';
 import { expect, test } from './fixtures.ts';
-import { freshStart } from './helpers.ts';
+import { freshStart, openArea } from './helpers.ts';
 
 test('the security policy is in place and the app works offline after the first visit', async ({ page, context }) => {
   await freshStart(page);
@@ -55,13 +55,17 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await page.getByTestId('restore-replace').click();
   await expect(page.getByText('Backup restored.')).toBeVisible();
 
-  await page.getByTestId('nav-results').click();
+  await openArea(page, 'politics');
   await expect(page.getByTestId('political-map')).toContainText('Economic: Markets');
-  await expect(page.getByTestId('challenge-bar')).toBeVisible();
-  await expect(page.getByTestId('principle-chart')).toBeVisible();
-  await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
   await expect(page.getByTestId('axis-cultural-position')).toContainText('Tradition');
+  await openArea(page, 'thinking');
+  await expect(page.getByTestId('challenge-bar')).toBeVisible();
+  await openArea(page, 'principles');
+  await expect(page.getByTestId('principle-chart')).toBeVisible();
+  await openArea(page, 'positions');
+  await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
   // The most pressing tension cards show first; the rest are one tap away.
+  await openArea(page, 'tensions');
   await expect(page.locator('.card.tension')).toHaveCount(Math.min(3, principles.size));
   await page.getByTestId('show-all-tensions').click();
   await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
@@ -74,6 +78,7 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await page.reload();
   await page.getByTestId('show-all-tensions').click();
   await expect(page.getByTestId('tension-row')).toHaveCount(tensions.length);
+  await openArea(page, 'positions');
   await expect(page.getByTestId('position-abortion')).toContainText("Illegal except to save the woman's life");
 });
 
@@ -108,7 +113,7 @@ test('the political traditions download only for someone with answers, then once
   await page.getByTestId('backup-file').setInputFiles(file);
   await page.getByTestId('restore-replace').click();
   await expect(page.getByText('Backup restored.')).toBeVisible();
-  await page.getByTestId('nav-results').click();
+  await openArea(page, 'politics');
   await expect(page.getByTestId('traditions')).toHaveAttribute('data-status', 'match');
   expect(packs).toHaveLength(1);
 

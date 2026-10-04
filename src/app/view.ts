@@ -1,10 +1,10 @@
 // Pure helpers shared by screens. No DOM, no stores: easy to test.
 import type { AnalysisPack } from '../model/analysis.ts';
 import type { Response } from '../model/answers.ts';
-import type { Axis, AxisId, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
+import type { Axis, AxisFamily, AxisId, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
 import { isScale, scalePoints } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
-import { BAND } from '../engine/analysis/constants.ts';
+import { BAND, LOW_CONFIDENCE } from '../engine/analysis/constants.ts';
 import { progress, type FlowOptions } from '../engine/flow.ts';
 import { hash32, mulberry32 } from '../engine/rng.ts';
 import type { AnswerState } from '../engine/state.ts';
@@ -165,6 +165,75 @@ export function strongestLeanings(axes: readonly Axis[], scores: Profile['axes']
     .sort((x, y) => y.strength - x.strength)
     .slice(0, n)
     .map(({ axis, title, label }) => ({ axis, title, label }));
+}
+
+// --- Results overview ------------------------------------------------------------------------
+// What the overview draws: all from the public profile (answers that could be shared), never
+// worldview or taste, and never a trait the summary leaves unnamed (see docs/ANALYSIS.md).
+
+/** The areas in the overview's pattern, in the ring order their colours were validated in. */
+export const PATTERN_AREAS = [
+  { area: 'politics', family: 'political' },
+  { area: 'personality', family: 'personality' },
+  { area: 'thinking', family: 'thinking' },
+  { area: 'values', family: 'values' },
+] as const satisfies readonly { area: string; family: AxisFamily }[];
+export type PatternArea = (typeof PATTERN_AREAS)[number]['area'];
+
+export interface PatternSpoke {
+  axis: AxisId;
+  title: string;
+  label: string;
+  /** How firmly the answers lean, either way: 0..1. */
+  strength: number;
+  /** Based on few answers so far, as the spectrum's hollow dot shows. */
+  low: boolean;
+}
+
+export interface PatternGroup {
+  area: PatternArea;
+  spokes: PatternSpoke[];
+}
+
+/** One spoke per scored spectrum, grouped by area in ring order; areas with none are left out. */
+export function patternGroups(axes: readonly Axis[], scores: Profile['axes'], unnamed: ReadonlySet<string>): PatternGroup[] {
+  return PATTERN_AREAS.map(({ area, family }) => ({
+    area,
+    spokes: axes.flatMap((a) => {
+      const s = scores[a.id];
+      if (a.family !== family || unnamed.has(a.id) || !s || s.score === null) return [];
+      return [{ axis: a.id, title: a.title, label: positionLabel(s.score, a.poles), strength: Math.min(1, Math.abs(s.score)), low: s.confidence < LOW_CONFIDENCE }];
+    }),
+  })).filter((g) => g.spokes.length > 0);
+}
+
+export interface FirmLean extends Leaning {
+  area: PatternArea;
+}
+
+/** The firmest leans across the pattern's spectrums, by the same rule as the summary's headline. */
+export function firmestLeans(axes: readonly Axis[], scores: Profile['axes'], unnamed: ReadonlySet<string>, n = 3): FirmLean[] {
+  const areaOf = new Map<AxisFamily, PatternArea>(PATTERN_AREAS.map((p) => [p.family, p.area]));
+  const pool = axes.filter((a) => areaOf.has(a.family) && !unnamed.has(a.id));
+  const family = new Map(pool.map((a) => [a.id, a.family]));
+  return strongestLeanings(pool, scores, n).map((l) => ({ ...l, area: areaOf.get(family.get(l.axis)!)! }));
+}
+
+/**
+ * An area card's line: the family's two clearest positions off the center ("Strongly Progress ·
+ * Global"), the best-evidenced first, or null.
+ */
+export function areaLean(axes: readonly Axis[], scores: Profile['axes'], family: AxisFamily, unnamed: ReadonlySet<string>): string | null {
+  const parts = axes
+    .flatMap((a) => {
+      const s = scores[a.id];
+      if (a.family !== family || unnamed.has(a.id) || !s || s.score === null || Math.abs(s.score) < BAND.center) return [];
+      return [{ label: positionLabel(s.score, a.poles), strength: Math.abs(s.score) * s.confidence }];
+    })
+    .sort((x, y) => y.strength - x.strength)
+    .slice(0, 2)
+    .map((p) => p.label);
+  return parts.length ? parts.join(' · ') : null;
 }
 
 export interface RankedPrinciple {

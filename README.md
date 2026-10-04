@@ -5,9 +5,10 @@ are: personality, values, moral principles, positions on issues, worldview, rela
 lifestyle and interests. It asks questions, probes circumstances, and poses thought-experiment
 challenges aimed at whichever side you took. A game built on the profile comes later.
 
-Results come with a written analysis: a summary, a short read-out for each section, and next
-steps (the strongest cases on both sides of your firmest positions, topics to explore, and
-tensions worth a second look). Eleven political traditions serve as reference points: which of
+Results open on an overview: a written summary, the pattern of your spectrums drawn as one ring,
+your firmest leans, a link to each area's own page (each with a short read-out beside its charts),
+and next steps (the strongest cases on both sides of your firmest positions, topics to explore,
+and tensions worth a second look). Eleven political traditions serve as reference points: which of
 them your political answers sit closest to, with readings from inside each and critiques from
 outside. Never a label, a party or a recommendation. Under next steps, links from research say
 what large studies found people who describe their personality as you did report more or less

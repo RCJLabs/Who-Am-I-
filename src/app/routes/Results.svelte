@@ -1,28 +1,36 @@
 <script lang="ts">
-  // Results: a written summary first, then one section per kind of result, each pairing a short
-  // read-out with its chart, then next steps. The analysis runs on this device (see
-  // docs/ANALYSIS.md); the summary and next steps use only answers that could ever be shared.
+  // Results: an overview (the written summary, the pattern of your spectrums, your firmest leans,
+  // a way into each area, then next steps), and a page per area pairing a short read-out with its
+  // charts. The analysis runs on this device (see docs/ANALYSIS.md); the overview uses only answers
+  // that could ever be shared, and each area's page shows everything.
   import { untrack } from 'svelte';
-  import type { AxisId, Item } from '../../model/content.ts';
+  import type { Axis, AxisFamily, AxisId, Item } from '../../model/content.ts';
   import { analyse } from '../../engine/analysis/index.ts';
+  import { BAND, LOW_CONFIDENCE, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
   import { isMixed } from '../../engine/score.ts';
-  import { composeAnalysis, type SectionId } from '../analysis/compose.ts';
+  import { composeAnalysis } from '../analysis/compose.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
-  import { to } from '../routes.ts';
+  import { router } from '../router.svelte.ts';
+  import { AREAS, to, type AreaId } from '../routes.ts';
   import {
+    areaLean,
     axisFeeders,
     challengeTotals,
+    firmestLeans,
     interestList,
+    patternGroups,
     positionLabel,
     positionsByDomain,
     rankedPrinciples,
     traditionRefs,
     traditionTable,
+    type PatternArea,
   } from '../view.ts';
+  import AreaLinks from '../components/results/AreaLinks.svelte';
   import ChallengeBar from '../components/results/ChallengeBar.svelte';
-  import JumpBar from '../components/results/JumpBar.svelte';
   import NextSteps from '../components/results/NextSteps.svelte';
+  import PatternRing from '../components/results/PatternRing.svelte';
   import PoliticalMap from '../components/results/PoliticalMap.svelte';
   import PositionRow from '../components/results/PositionRow.svelte';
   import PrincipleChart from '../components/results/PrincipleChart.svelte';
@@ -32,6 +40,8 @@
   import TraditionList from '../components/results/TraditionList.svelte';
   import Icon from '../components/Icon.svelte';
 
+  let { area = null }: { area?: AreaId | null } = $props();
+
   /** Tension cards shown before "Show all". */
   const TENSION_GROUPS_SHOWN = 3;
   /** Up to this many positions, every domain starts open. */
@@ -40,11 +50,24 @@
   const MAP_AXES = ['economic', 'civil'] as const;
   /** Topics listed per pole under "What pulled you". */
   const DRIVERS_SHOWN = 3;
+  /** Fewer spectrums than this make no pattern worth drawing. */
+  const PATTERN_MIN = 3;
+  /** Each coloured area's mark colour (see app.css); the other areas draw in the chart colour. */
+  const AREA_COLOR: Partial<Record<AreaId, string>> = {
+    politics: 'var(--area-politics)',
+    values: 'var(--area-values)',
+    thinking: 'var(--area-thinking)',
+    personality: 'var(--area-personality)',
+  };
+  const FAMILY_AREA: Partial<Record<AxisFamily, AreaId>> = { political: 'politics', values: 'values', thinking: 'thinking', personality: 'personality' };
+  const S = copy.analysis.sections;
+  const O = copy.analysis.overview;
 
   const { content, answers, settings } = app();
   const profile = $derived(answers.profile);
   const feeders = axisFeeders(content.bundle);
   const axes = Object.values(content.bundle.axes);
+  const principles = Object.values(content.bundle.principles);
   const political = axes.filter((a) => a.family === 'political');
   const values = axes.filter((a) => a.family === 'values');
   const thinking = axes.filter((a) => a.family === 'thinking');
@@ -110,8 +133,8 @@
   // Map
   const econ = $derived(profile.axes[MAP_AXES[0]]?.score ?? null);
   const civil = $derived(profile.axes[MAP_AXES[1]]?.score ?? null);
-  const mapLow = $derived(Math.min(profile.axes[MAP_AXES[0]]?.confidence ?? 0, profile.axes[MAP_AXES[1]]?.confidence ?? 0) < 0.5);
-  const ranked = $derived(rankedPrinciples(Object.values(content.bundle.principles), profile.principles));
+  const mapLow = $derived(Math.min(profile.axes[MAP_AXES[0]]?.confidence ?? 0, profile.axes[MAP_AXES[1]]?.confidence ?? 0) < LOW_CONFIDENCE);
+  const ranked = $derived(rankedPrinciples(principles, profile.principles));
   const totals = $derived(challengeTotals(profile.topics));
 
   // Tensions: one card per principle, most pressing first; open before resolved.
@@ -137,22 +160,81 @@
   const picks = $derived(interests.filter((e) => e.kind === 'pick'));
   const ratings = $derived(interests.filter((e) => e.kind === 'rating'));
 
-  // Sections in page order; the jump bar lists the ones that show.
-  const sections = $derived.by(() => {
-    const out: { id: SectionId | 'next'; label: string }[] = [];
-    const add = (id: SectionId | 'next', show: boolean) => show && out.push({ id, label: copy.analysis.sections[id] });
-    add('politics', true);
-    add('values', values.length > 0);
-    add('thinking', thinking.length > 0);
-    add('worldview', worldviewScored.length > 0);
-    add('personality', true);
-    add('principles', ranked.length > 0);
-    add('tensions', true);
-    add('positions', positionGroups.length > 0);
-    add('taste', tasteScored.length > 0 || interests.length > 0);
-    add('next', (analysis?.next.length ?? 0) > 0);
-    return out;
+  // The areas with something to show, in overview order.
+  const available = $derived.by(() => {
+    const show: Record<AreaId, boolean> = {
+      politics: true,
+      values: values.length > 0,
+      thinking: thinking.length > 0,
+      worldview: worldviewScored.length > 0,
+      personality: true,
+      principles: ranked.length > 0,
+      tensions: true,
+      positions: positionGroups.length > 0,
+      taste: tasteScored.length > 0 || interests.length > 0,
+    };
+    return AREAS.filter((id) => show[id]);
   });
+
+  // --- The overview: only answers that could be shared ---
+  const pub = $derived(answers.publicProfile);
+  const pattern = $derived(patternGroups(axes, pub.axes, UNNAMED_TRAITS));
+  const spokes = $derived(pattern.reduce((n, g) => n + g.spokes.length, 0));
+  const firm = $derived(firmestLeans(axes, pub.axes, UNNAMED_TRAITS));
+  const patternNames: Record<PatternArea, string> = { politics: S.politics, personality: S.personality, thinking: S.thinking, values: S.values };
+
+  function spectrumLine(family: AxisFamily): string {
+    const lean = areaLean(axes, pub.axes, family, UNNAMED_TRAITS);
+    if (lean) return lean;
+    const scored = axes.some((a) => a.family === family && !UNNAMED_TRAITS.has(a.id) && (pub.axes[a.id]?.score ?? null) !== null);
+    return scored ? O.line.middle : O.line.notYet;
+  }
+
+  function areaLine(id: AreaId): string {
+    switch (id) {
+      case 'politics':
+        return spectrumLine('political');
+      case 'values':
+      case 'thinking':
+      case 'personality':
+        return spectrumLine(id);
+      case 'worldview':
+        return O.line.sensitive;
+      case 'principles': {
+        const top = rankedPrinciples(principles, pub.principles)
+          .filter((r) => r.score >= BAND.leans)
+          .slice(0, 2)
+          .map((r) => r.principle.label);
+        return top.length ? O.line.principles(top) : O.line.principleCount(ranked.length);
+      }
+      case 'tensions':
+        return tensions.length ? O.line.tensions(openTensions.length, tensions.length - openTensions.length) : O.line.noTensions;
+      case 'positions':
+        return O.line.positions(positionCount, totals.moved);
+      case 'taste': {
+        const top = picks.slice(0, 2).map((e) => e.label);
+        return top.length ? O.line.enjoys(top) : (areaLean(axes, pub.axes, 'taste', UNNAMED_TRAITS) ?? O.line.notYet);
+      }
+    }
+  }
+
+  const areaItems = $derived(available.map((id) => ({ id, title: S[id], line: areaLine(id), color: AREA_COLOR[id] })));
+
+  // Coming back to the overview from one of its pages, pick up where you were.
+  $effect(() => {
+    if (area || !hasAny) return;
+    const from = router.previous?.name;
+    if (from !== 'area' && from !== 'tension' && from !== 'topic-results') return;
+    const y = router.scrolledAt(location.hash);
+    if (y) requestAnimationFrame(() => scrollTo(0, y));
+  });
+
+  /** The back link returns through history when it can, so Back doesn't lead here again. */
+  function back(e: MouseEvent): void {
+    if (router.previous?.name !== 'results') return;
+    e.preventDefault();
+    history.back();
+  }
 
   function topicTitle(id: string): string {
     return answers.state.ix.topics.get(id)?.title ?? id;
@@ -185,17 +267,11 @@
     window.addEventListener('beforeprint', open);
     return () => window.removeEventListener('beforeprint', open);
   });
-
-  function goTo(id: string): void {
-    const section = document.getElementById(`sec-${id}`);
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    section?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    section?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
-  }
 </script>
 
-{#snippet spectrum(a: (typeof axes)[number], withMixed: boolean)}
+{#snippet spectrum(a: Axis, withMixed: boolean)}
   {@const sc = profile.axes[a.id]!}
+  {@const home = FAMILY_AREA[a.family]}
   <SpectrumRow
     reference={a.family === 'political' ? referenceFor(a.id) : null}
     title={a.title}
@@ -206,29 +282,14 @@
     mixed={withMixed && isMixed(sc, content.bundle)}
     feeders={feeders.get(a.id) ?? []}
     drivers={drivers(a.id, a.poles)}
+    color={home ? AREA_COLOR[home] : undefined}
     testid="axis-{a.id}"
   />
 {/snippet}
 
-<div class="page">
-  <h1>{copy.results.title}</h1>
-
-  {#if !hasAny || !analysis}
-    <div class="card center">
-      <p>{copy.results.empty}</p>
-      <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
-    </div>
-  {:else}
-    <SummaryCard
-      summary={analysis.summary}
-      footer="{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}"
-      onTensions={() => goTo('tensions')}
-    />
-
-    <JumpBar {sections} />
-
-    <ResultSection id="politics" title={copy.analysis.sections.politics} readout={analysis.readouts.politics}>
-      {#if econ !== null || civil !== null}
+{#snippet politicsPage()}
+  <ResultSection id="politics" title={S.politics} readout={analysis!.readouts.politics} color={AREA_COLOR.politics}>
+    {#if econ !== null || civil !== null}
       <div class="card">
         {#if econ !== null && civil !== null && economicAxis && civilAxis}
           <PoliticalMap
@@ -245,160 +306,213 @@
           <p class="small muted flush">{copy.results.mapNeeds}</p>
         {/if}
       </div>
-      {/if}
-      <div class="card rows">
-        {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
-        {#if reference}<p class="small muted tick">{copy.analysis.traditions.tick(reference.name)}</p>{/if}
+    {/if}
+    <div class="card rows">
+      {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
+      {#if reference}<p class="small muted tick">{copy.analysis.traditions.tick(reference.name)}</p>{/if}
+    </div>
+    {#if traditionsShown}
+      <TraditionList view={analysis!.traditions} state={content.analysisState} />
+    {/if}
+  </ResultSection>
+{/snippet}
+
+{#snippet spectrumsPage(id: 'values' | 'thinking' | 'worldview', list: Axis[])}
+  <ResultSection {id} title={S[id]} readout={analysis!.readouts[id]} color={AREA_COLOR[id]}>
+    <div class="card rows">
+      {#each list as a (a.id)}{@render spectrum(a, true)}{/each}
+    </div>
+    {#if id === 'thinking' && totals.asked}
+      <div class="card">
+        <ChallengeBar {totals} />
       </div>
-      {#if traditionsShown}
-        <TraditionList view={analysis.traditions} state={content.analysisState} />
-      {/if}
-    </ResultSection>
-
-    {#if values.length}
-      <ResultSection id="values" title={copy.analysis.sections.values} readout={analysis.readouts.values}>
-        <div class="card rows">
-          {#each values as a (a.id)}{@render spectrum(a, true)}{/each}
-        </div>
-      </ResultSection>
     {/if}
+  </ResultSection>
+{/snippet}
 
-    {#if thinking.length}
-      <ResultSection id="thinking" title={copy.analysis.sections.thinking} readout={analysis.readouts.thinking}>
-        <div class="card rows">
-          {#each thinking as a (a.id)}{@render spectrum(a, true)}{/each}
-        </div>
-        {#if totals.asked}
-          <div class="card">
-            <ChallengeBar {totals} />
-          </div>
-        {/if}
-      </ResultSection>
-    {/if}
-
-    {#if worldviewScored.length}
-      <ResultSection id="worldview" title={copy.analysis.sections.worldview} readout={analysis.readouts.worldview}>
-        <div class="card rows">
-          {#each worldviewScored as a (a.id)}{@render spectrum(a, true)}{/each}
-        </div>
-      </ResultSection>
-    {/if}
-
-    <ResultSection id="personality" title={copy.analysis.sections.personality} readout={analysis.readouts.personality} note={copy.results.personalityNote}>
-      <div class="card" class:rows={personalityScored}>
-        {#if personalityScored}
-          {#each personality as a (a.id)}{@render spectrum(a, false)}{/each}
-        {:else}
-          <p class="small muted flush">
-            {copy.results.notEnough}
-            {#each feeders.get('extraversion') ?? [] as t (t.id)}<a href={to.flow(t.id)}>{t.title}</a>{/each}
-          </p>
-        {/if}
-      </div>
-    </ResultSection>
-
-    {#if ranked.length}
-      <ResultSection id="principles" title={copy.analysis.sections.principles} readout={analysis.readouts.principles} note={copy.results.principlesNote}>
-        <div class="card">
-          <PrincipleChart rows={ranked} {topicTitle} tensions={openByPrinciple} />
-        </div>
-      </ResultSection>
-    {/if}
-
-    <ResultSection id="tensions" title={copy.analysis.sections.tensions} readout={analysis.readouts.tensions}>
-      {#if tensionGroups.length}
-        {#each shownGroups as g (g.principle)}
-          <div class="card tension">
-            <p class="tension-title"><strong>{content.bundle.principles[g.principle]?.label}</strong></p>
-            {#each g.items as t (t.key)}
-              <a class="pair" href={to.tension(t.key)} data-testid="tension-row">
-                <span class="pair-text">
-                  <span>{pairLabel(t.a.topic, t.b.topic)}</span>
-                  {#if t.status !== 'open'}
-                    <span class="small resolved">{copy.results.status[t.resolution?.kind ?? 'acknowledged']}</span>
-                  {/if}
-                </span>
-                <Icon name="right" size={18} />
-              </a>
-            {/each}
-          </div>
-        {/each}
-        {#if tensionGroups.length > TENSION_GROUPS_SHOWN}
-          <button
-            type="button"
-            class="btn ghost more"
-            data-testid="show-all-tensions"
-            aria-expanded={showAllTensions}
-            onclick={() => (showAllTensions = !showAllTensions)}
-          >
-            {showAllTensions ? copy.results.showFewer : copy.results.showAll(tensionGroups.length)}
-          </button>
-        {/if}
+{#snippet personalityPage()}
+  <ResultSection id="personality" title={S.personality} readout={analysis!.readouts.personality} note={copy.results.personalityNote} color={AREA_COLOR.personality}>
+    <div class="card" class:rows={personalityScored}>
+      {#if personalityScored}
+        {#each personality as a (a.id)}{@render spectrum(a, false)}{/each}
       {:else}
-        <p class="muted small">{copy.results.tensionsEmpty}</p>
+        <p class="small muted flush">
+          {copy.results.notEnough}
+          {#each feeders.get('extraversion') ?? [] as t (t.id)}<a href={to.flow(t.id)}>{t.title}</a>{/each}
+        </p>
       {/if}
-    </ResultSection>
+    </div>
+  </ResultSection>
+{/snippet}
 
-    {#if positionGroups.length}
-      <ResultSection id="positions" title={copy.analysis.sections.positions} readout={analysis.readouts.positions}>
-        {#each positionGroups as g (g.domain.id)}
-          {@const moved = g.topics.reduce((n, t) => n + (profile.topics[t.id]?.challenges.moved ?? 0), 0)}
-          <details class="card domain" open={positionCount <= POSITIONS_OPEN}>
-            <summary>
-              <span class="domain-head">
-                <strong>{g.domain.title}</strong>
-                <span class="chev" aria-hidden="true"></span>
-              </span>
-              <span class="small muted">
-                {copy.results.topicCount(g.topics.length)}{moved ? ` · ${copy.results.reconsideredCount(moved)}` : ''}
-              </span>
-            </summary>
-            {#each g.topics as t (t.id)}
-              {@const r = profile.topics[t.id]!}
-              {@const stance = t.stance ? answers.state.ix.items.get(t.stance) : undefined}
-              <PositionRow
-                topic={t}
-                href={to.topicResults(t.id)}
-                label={r.stanceLabel ?? ''}
-                stance={r.stanceLabel === null ? null : r.stance}
-                initial={r.initialStance}
-                poles={stance && (stance.type === 'slider' || stance.type === 'rating') ? stance.poles : null}
-                moves={r.challenges.moves.filter((m) => m.steps).map((m) => copy.results.movedLine(sourceName(m.source), m.steps!, toward(stance, m.delta)))}
-              />
-            {/each}
-          </details>
-        {/each}
-      </ResultSection>
-    {/if}
+{#snippet principlesPage()}
+  <ResultSection id="principles" title={S.principles} readout={analysis!.readouts.principles} note={copy.results.principlesNote}>
+    <div class="card">
+      <PrincipleChart rows={ranked} {topicTitle} tensions={openByPrinciple} />
+    </div>
+  </ResultSection>
+{/snippet}
 
-    {#if tasteScored.length || interests.length}
-      <ResultSection id="taste" title={copy.analysis.sections.taste} readout={analysis.readouts.taste}>
-        <div class="card rows">
-          {#each tasteScored as a (a.id)}{@render spectrum(a, false)}{/each}
-          {#if picks.length || ratings.length}
-            <h3 class="enjoy-title">{copy.results.interests}</h3>
-            {#each ratings as e (e.key)}
-              <p class="rating" data-testid="interest-{e.key}">
-                <span class="small muted">{e.label}</span>
-                <span class="rating-answer">{e.answer}</span>
-                <span class="meter" aria-hidden="true"><span style:width="{e.v * 100}%"></span></span>
-              </p>
-            {/each}
-            {#if picks.length}
-              <div class="chips">
-                {#each picks as e (e.key)}
-                  <span class="chip enjoy" style:--strength={e.v} data-testid="interest-{e.key}">{e.label}</span>
-                {/each}
-              </div>
-            {/if}
-          {/if}
+{#snippet tensionsPage()}
+  <ResultSection id="tensions" title={S.tensions} readout={analysis!.readouts.tensions}>
+    {#if tensionGroups.length}
+      {#each shownGroups as g (g.principle)}
+        <div class="card tension">
+          <p class="tension-title"><strong>{content.bundle.principles[g.principle]?.label}</strong></p>
+          {#each g.items as t (t.key)}
+            <a class="pair" href={to.tension(t.key)} data-testid="tension-row">
+              <span class="pair-text">
+                <span>{pairLabel(t.a.topic, t.b.topic)}</span>
+                {#if t.status !== 'open'}
+                  <span class="small resolved">{copy.results.status[t.resolution?.kind ?? 'acknowledged']}</span>
+                {/if}
+              </span>
+              <Icon name="right" size={18} />
+            </a>
+          {/each}
         </div>
-      </ResultSection>
+      {/each}
+      {#if tensionGroups.length > TENSION_GROUPS_SHOWN}
+        <button type="button" class="btn ghost more" data-testid="show-all-tensions" aria-expanded={showAllTensions} onclick={() => (showAllTensions = !showAllTensions)}>
+          {showAllTensions ? copy.results.showFewer : copy.results.showAll(tensionGroups.length)}
+        </button>
+      {/if}
+    {:else}
+      <p class="muted small">{copy.results.tensionsEmpty}</p>
     {/if}
+  </ResultSection>
+{/snippet}
+
+{#snippet positionsPage()}
+  <ResultSection id="positions" title={S.positions} readout={analysis!.readouts.positions}>
+    {#each positionGroups as g (g.domain.id)}
+      {@const moved = g.topics.reduce((n, t) => n + (profile.topics[t.id]?.challenges.moved ?? 0), 0)}
+      <details class="card domain" open={positionCount <= POSITIONS_OPEN}>
+        <summary>
+          <span class="domain-head">
+            <strong>{g.domain.title}</strong>
+            <span class="chev" aria-hidden="true"></span>
+          </span>
+          <span class="small muted">
+            {copy.results.topicCount(g.topics.length)}{moved ? ` · ${copy.results.reconsideredCount(moved)}` : ''}
+          </span>
+        </summary>
+        {#each g.topics as t (t.id)}
+          {@const r = profile.topics[t.id]!}
+          {@const stance = t.stance ? answers.state.ix.items.get(t.stance) : undefined}
+          <PositionRow
+            topic={t}
+            href={to.topicResults(t.id)}
+            label={r.stanceLabel ?? ''}
+            stance={r.stanceLabel === null ? null : r.stance}
+            initial={r.initialStance}
+            poles={stance && (stance.type === 'slider' || stance.type === 'rating') ? stance.poles : null}
+            moves={r.challenges.moves.filter((m) => m.steps).map((m) => copy.results.movedLine(sourceName(m.source), m.steps!, toward(stance, m.delta)))}
+          />
+        {/each}
+      </details>
+    {/each}
+  </ResultSection>
+{/snippet}
+
+{#snippet tastePage()}
+  <ResultSection id="taste" title={S.taste} readout={analysis!.readouts.taste}>
+    <div class="card rows">
+      {#each tasteScored as a (a.id)}{@render spectrum(a, false)}{/each}
+      {#if picks.length || ratings.length}
+        <h3 class="enjoy-title">{copy.results.interests}</h3>
+        {#each ratings as e (e.key)}
+          <p class="rating" data-testid="interest-{e.key}">
+            <span class="small muted">{e.label}</span>
+            <span class="rating-answer">{e.answer}</span>
+            <span class="meter" aria-hidden="true"><span style:width="{e.v * 100}%"></span></span>
+          </p>
+        {/each}
+        {#if picks.length}
+          <div class="chips">
+            {#each picks as e (e.key)}
+              <span class="chip enjoy" style:--strength={e.v} data-testid="interest-{e.key}">{e.label}</span>
+            {/each}
+          </div>
+        {/if}
+      {/if}
+    </div>
+  </ResultSection>
+{/snippet}
+
+<div class="page">
+  {#if !hasAny || !analysis}
+    <h1>{copy.results.title}</h1>
+    <div class="card center">
+      <p>{copy.results.empty}</p>
+      <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
+    </div>
+  {:else if area}
+    <a class="back" href={to.results()} data-testid="area-back" onclick={back}><Icon name="left" size={20} />{O.back}</a>
+    {#if !available.includes(area)}
+      <ResultSection id={area} title={S[area]} color={AREA_COLOR[area]}>
+        <p class="muted">{copy.results.notEnough}</p>
+      </ResultSection>
+    {:else if area === 'politics'}
+      {@render politicsPage()}
+    {:else if area === 'values'}
+      {@render spectrumsPage('values', values)}
+    {:else if area === 'thinking'}
+      {@render spectrumsPage('thinking', thinking)}
+    {:else if area === 'worldview'}
+      {@render spectrumsPage('worldview', worldviewScored)}
+    {:else if area === 'personality'}
+      {@render personalityPage()}
+    {:else if area === 'principles'}
+      {@render principlesPage()}
+    {:else if area === 'tensions'}
+      {@render tensionsPage()}
+    {:else if area === 'positions'}
+      {@render positionsPage()}
+    {:else if area === 'taste'}
+      {@render tastePage()}
+    {/if}
+  {:else}
+    <h1>{copy.results.title}</h1>
+    <SummaryCard
+      summary={analysis.summary}
+      footer="{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}"
+      tensionsHref={to.area('tensions')}
+    />
+
+    {#if spokes >= PATTERN_MIN}
+      <section class="card block" aria-labelledby="pattern-title">
+        <h2 id="pattern-title" class="block-title">{O.pattern}</h2>
+        <p class="small muted help">{O.patternHelp}</p>
+        <PatternRing groups={pattern} names={patternNames} />
+      </section>
+    {/if}
+
+    {#if firm.length}
+      <section class="card block" aria-labelledby="firmest-title" data-testid="firmest">
+        <h2 id="firmest-title" class="block-title">{O.firmest}</h2>
+        <ol class="firm">
+          {#each firm as l, i (l.axis)}
+            <li data-testid="firm-{l.axis}">
+              <span class="n display" style:--tint="var(--area-{l.area})" aria-hidden="true">{i + 1}</span>
+              <span class="firm-body">
+                <span class="firm-label">{l.label}</span>
+                <span class="small muted">{S[l.area]} · {l.title}</span>
+              </span>
+            </li>
+          {/each}
+        </ol>
+      </section>
+    {/if}
+
+    <section class="card block" aria-labelledby="areas-title">
+      <h2 id="areas-title" class="block-title">{O.areas}</h2>
+      <AreaLinks items={areaItems} />
+    </section>
 
     {#if analysis.next.length}
-      <section class="section result" id="sec-next" aria-labelledby="sec-next-title">
-        <h2 class="section-title" id="sec-next-title" tabindex="-1">{copy.analysis.next.title}</h2>
+      <section class="next" id="sec-next" aria-labelledby="sec-next-title">
+        <h2 class="block-title" id="sec-next-title">{copy.analysis.next.title}</h2>
         <NextSteps
           groups={analysis.next}
           open={{ links: settings.linksOpen }}
@@ -414,6 +528,68 @@
 </div>
 
 <style>
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 44px;
+    margin: -8px 0 4px -6px;
+    padding-right: 10px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .block {
+    margin-top: 14px;
+    border-radius: 22px;
+    padding: 18px 18px 14px;
+  }
+  .block-title {
+    margin: 0 0 4px;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+  .help {
+    margin: 0 0 6px;
+  }
+  .firm {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .firm li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+  .firm li:first-child {
+    border-top: none;
+  }
+  .n {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    background: color-mix(in srgb, var(--tint) 30%, transparent);
+  }
+  .firm-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .firm-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .next {
+    margin-top: 28px;
+  }
   .rows {
     padding-top: 4px;
     padding-bottom: 4px;

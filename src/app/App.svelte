@@ -31,6 +31,7 @@
       case 'topics':
         return 'topics' as const;
       case 'results':
+      case 'area':
       case 'topic-results':
       case 'tension':
         return 'results' as const;
@@ -60,6 +61,8 @@
     <ContentGate domains={topicDomains(route.topic)}><Flow topicId={route.topic} edit={route.edit} /></ContentGate>
   {:else if route.name === 'results'}
     <Results />
+  {:else if route.name === 'area'}
+    <Results area={route.area} />
   {:else if route.name === 'topic-results'}
     <ContentGate domains={topicDomains(route.topic)}><TopicResults topicId={route.topic} /></ContentGate>
   {:else if route.name === 'tension'}

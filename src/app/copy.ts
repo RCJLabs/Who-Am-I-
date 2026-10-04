@@ -164,7 +164,6 @@ export const copy = {
   // pick (src/app/analysis/compose.ts). Describe and ask; never prescribe, never compare the user
   // with other people.
   analysis: {
-    jumpLabel: 'Sections',
     sections: {
       politics: 'Politics',
       values: 'Values',
@@ -176,6 +175,30 @@ export const copy = {
       positions: 'Positions',
       taste: 'Taste',
       next: 'Next steps',
+    },
+    // The overview: the summary, the pattern of your spectrums, your firmest leans, then a link to
+    // each area's own page. Built from answers that could be shared, like the summary.
+    overview: {
+      pattern: 'Your pattern',
+      patternHelp: 'Each line is one spectrum, grouped by area. The longer the line, the further your answers lean, whichever way.',
+      patternTap: 'Tap a line to see which spectrum it is.',
+      patternLabel: 'Your pattern: one line per spectrum',
+      patternLow: 'A hollow line rests on few answers so far.',
+      spectrums: (n: number) => `spectrum${s(n)}`,
+      firmest: 'Your firmest leans',
+      areas: 'Open an area',
+      back: 'Results',
+      line: {
+        middle: 'Near the middle so far',
+        notYet: 'Not enough answers yet',
+        sensitive: 'Sensitive: kept out of your summary',
+        principles: (labels: readonly string[]) => `Most endorsed: ${list(labels)}`,
+        principleCount: (n: number) => `${n} principle${s(n)} so far`,
+        tensions: (open: number, resolved: number) => [open ? `${open} open` : '', resolved ? `${resolved} thought through` : ''].filter(Boolean).join(' · '),
+        noTensions: 'None found so far',
+        positions: (n: number, moved: number) => `${n} topic${s(n)}${moved ? ` · ${moved} reconsidered` : ''}`,
+        enjoys: (labels: readonly string[]) => `You enjoy ${list(labels)}`,
+      },
     },
     summaryTitle: 'Summary',
     headline: {

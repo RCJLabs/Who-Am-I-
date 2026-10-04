@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from './fixtures.ts';
-import { answerFlow, freshStart } from './helpers.ts';
+import { answerFlow, freshStart, openArea } from './helpers.ts';
 
 test('a challenge can move you, the other side then challenges you, and results remember it', async ({ page }) => {
   await freshStart(page, '#/m/abortion');
@@ -26,6 +26,7 @@ test('a challenge can move you, the other side then challenges you, and results 
   await expect(page.getByTestId('moved').first()).toContainText('The violinist');
 
   await page.getByTestId('see-results').click();
+  await openArea(page, 'positions');
   await expect(page.getByTestId('position-abortion')).toContainText('Legal early in pregnancy, restricted later');
   await expect(page.getByTestId('moved-abortion').first()).toContainText('The violinist');
 
@@ -52,6 +53,7 @@ test('the personality short form shows an intro and produces Big Five results', 
   expect(end).toBe('done');
   expect(seen).toHaveLength(20);
   await page.getByTestId('see-results').click();
+  await openArea(page, 'personality');
   await expect(page.getByTestId('axis-extraversion-position')).toBeVisible();
 });
 
@@ -73,6 +75,7 @@ test('this-or-that choices place you on the values spectrums', async ({ page }) 
   expect(end).toBe('done');
   expect(seen).toHaveLength(10);
   await page.getByTestId('see-results').click();
+  await openArea(page, 'values');
   await expect(page.getByTestId('axis-change-position')).toHaveText('Strongly Change');
   await expect(page.getByTestId('axis-others-position')).toHaveText("Strongly Others' welfare");
 });
@@ -91,7 +94,7 @@ test('answering anchors very differently across topics raises a tension card', a
   await page.getByTestId('reason-harm_to_others').click();
   await expect(page.getByTestId('topic-done')).toBeVisible();
 
-  await page.goto('#/results');
+  await page.goto('#/area/tensions');
   await expect(page.getByTestId('tension-row')).toContainText('You named a difference');
 });
 

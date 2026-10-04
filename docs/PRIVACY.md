@@ -22,10 +22,10 @@ to export or share them.
 
 ## The written analysis
 
-The summary and suggestions on the Results screen are worked out **on your device** by fixed rules.
-No AI service writes them, and nothing is sent anywhere to make them. They never draw on sensitive
-topics (religion and worldview, identity, and other questions marked sensitive): those answers
-appear only in their own sections of your results. The counts in the summary (topics answered,
+The overview and suggestions on the Results screen are worked out **on your device** by fixed
+rules. No AI service writes them, and nothing is sent anywhere to make them. They never draw on
+sensitive topics (religion and worldview, identity, and other questions marked sensitive): those
+answers appear only on their own area's page of your results. The counts in the summary (topics answered,
 challenges faced, open tensions) include every answer, but never say which topics or how you
 answered. The comparison with political traditions uses only answers that could be shared, so
 religion and other sensitive answers can never move it.
