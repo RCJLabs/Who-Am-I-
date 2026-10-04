@@ -224,10 +224,10 @@ traditions:
           shared idea of the common good, rooted in families and communities.
       - id: classical_liberal
         split: >-
-          Centrists weigh the state's role case by case, within a mixed economy and a welfare state;
-          classical liberals hold to firm principles that keep government limited, with low taxes
-          and a basic safety net, warning that case-by-case decisions add up to an ever larger
-          state.
+          Centrists weigh the state's role case by case, within a mixed economy and a welfare state,
+          keeping each step reversible; classical liberals hold to firm principles that keep
+          government limited, with low taxes and a basic safety net, warning that case-by-case
+          decisions add up to an ever larger state.
       - id: social_democrat
         split: >-
           Centrists judge inequality by whether everyone has a decent floor and a fair chance, and
@@ -321,7 +321,7 @@ traditions:
           Classical liberals hold to firm principles that keep government limited, with low taxes
           and a basic safety net, warning that case-by-case decisions add up to an ever larger
           state; centrists weigh the state's role case by case, within a mixed economy and a welfare
-          state.
+          state, keeping each step reversible.
     inside:
       - friedman_capitalism_and_freedom
       - hayek_constitution_of_liberty
