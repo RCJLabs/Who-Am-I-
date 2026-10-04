@@ -462,6 +462,72 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
   losses. Screens stay about social media and phones, and no case involves AI assistants or AI
   companies: the writer has a stake.
 
+## Political traditions (`content/analysis/`)
+
+The results compare a person's political answers with a set of political traditions, as reference
+points: never a label for anyone, never a party, never a recommendation. The rules for matching
+are in [ANALYSIS.md](ANALYSIS.md#political-traditions-traditionsts).
+
+**Answer sheets place a tradition; nothing else does.** Each tradition has
+`sheets/<id>.yaml`: every shareable political question, and the statements behind the compared
+principles, answered as a thoughtful present-day adherent in a Western democracy would, with a
+one-line reason citing the tradition's own writers. The compiler scores the sheet with the
+engine, so its positions sit on the same scales as everyone's answers and can't be tuned by hand.
+
+- **Write a sheet blind.** Its author gets the tradition's name and sources and
+  `node scripts/tradition-targets.ts --questionnaire out.md`, never the personas, the simulation
+  or the other traditions.
+- **The middle step is a position,** not a way to avoid committing; nor is the last rung the
+  default. Pick the step thoughtful adherents actually choose.
+- **`divided` is for real splits** within the tradition, where both camps can be named, often by
+  country. A spectrum or principle is divided when split questions carry a third of its weight;
+  it then counts half, and the results draw no tick for it.
+- **A new political question needs an answer in every sheet** (E015 lists what's missing): a
+  sheet that skipped it would quietly place its tradition on less evidence than everyone else.
+- `node scripts/tradition-targets.ts` prints the positions the sheets give.
+
+**traditions.yaml**
+
+- `name` is what adherents call the tradition; `adherents` the plural they use, lower case.
+- `summary`: two or three sentences in adherents' own terms: what it aims at, and the costs or
+  trade-offs it accepts. Not opponents' account of it, not its most extreme members.
+- `neighbours`: the traditions it is most often confused with, listed both ways, each with one
+  sentence, fair to both, on what divides them. The results show it when a neighbor is listed
+  under the nearest tradition.
+- `inside`: readings written from inside the tradition, best first; the results show two.
+  `outside`: critiques, best first; the results show two. The first comes from the other side of
+  politics; a center tradition's first two, one from each side (E014). `side` exists only for that
+  check and for balance; it is never shown.
+- `compare`: the principles compared besides the spectrums. Never purity or sanctity of life,
+  which would stand in for religiosity, and only principles at least three shareable topics feed.
+
+**readings.yaml**: books, essays, articles, speeches and lectures, never links. Author, exact
+title and year of first publication, checked in two fact-check rounds. `voice` is the tradition
+the work is written from; `note` is one neutral line on what it argues. No living politicians as
+authors, and no scripture, encyclicals or sermons: the Christian-democratic strand is represented
+by philosophers.
+
+**Wording.** Every rule in [Neutral wording](#neutral-wording) applies, plus:
+
+| Prefer | Avoid |
+|---|---|
+| centrists, described by their own commitments (pluralism, step-by-step reform, compromise) | moderates; the sensible, reasonable or mainstream view |
+| social liberal, classical liberal | "liberal" on its own |
+| socialist, only for democratic socialism | socialist or communist for any other tradition |
+| free-market libertarianism | "libertarian" alone in a summary (in some languages it means the anarchist left) |
+| green politics, political ecology | care for nature as what defines it (other traditions share it) |
+| communitarianism, naming both its civic and Christian-democratic strands | a religious label for anyone matched to it |
+| left communitarianism | "the real working-class left", or a party faction's name |
+| what a critique argues | a diagnosis of adherents' motives or psychology |
+
+`content/analysis/loaded-terms.txt` adds words that are fine in a question but loaded in a
+description of a tradition ("moderate", "mainstream", "extreme", "regressive"). Party and
+politician names (`content/named-politics.txt`) are flagged anywhere in the pack (W112); titles,
+authors and `in` are citations and exempt.
+
+**Review.** Each tradition gets a check by an adherent and by a reviewer from the other side of
+politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
+
 ## Review checklist
 
 - [ ] Lint clean: no errors and no warnings.
@@ -472,6 +538,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 - [ ] Factual claims are accurate and sourced.
 - [ ] Anchors use the shared frame; the matrix in `TAXONOMY.md` is updated.
 - [ ] No loaded terms; "yield" options are dignified.
+- [ ] A new political question is answered (or listed as divided) in every tradition's sheet.
 
 ## Lint rules
 
