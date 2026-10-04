@@ -54,7 +54,7 @@ export function analyse(i: AnalysisInput): AnalysisFacts {
       explore: exploreNext(s, i.publicProfile, { ...flow, ...(i.mapAxes ? { mapAxes: i.mapAxes } : {}) }),
       reflect: reflections(s, i.tensions),
       readings: i.pack && traditions ? readingsFor(i.pack, traditions) : [],
-    suggestions: i.pack ? suggestionsFor(i.pack, i.publicProfile) : [],
+    suggestions: i.pack ? suggestionsFor(i.pack, i.publicProfile, s) : [],
     },
   };
 }

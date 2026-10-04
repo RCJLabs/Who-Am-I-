@@ -1,3 +1,8 @@
-# Test suggestions: one toward each pole of warmth.
-- { id: warm_company, kind: social, when: warmth > 0.25, title: Long talks with friends, text: People who describe themselves as warm tend to enjoy long talks with close friends., source: "Ada Trait, Test Journal (2001)" }
-- { id: cool_focus, kind: work, when: warmth < -0.25, title: Work done alone, text: People who describe themselves as cool tend to enjoy work they can do alone., source: "Ben Trait, Test Journal (2002)" }
+# Test links: warmth norms, and two associations, one with each pole as the end with more interest.
+norms:
+  source: "Cy Norm, Test Journal (2010)"
+  traits:
+    warmth: { mean: 3.5, sd: 0.8, reversals: [[traits.t1, traits.t2]], echo: [cold] }
+suggestions:
+  - { id: helping, kind: working, trait: warmth, toward: Warm, r: 0.31, outcome: interest, interest: "helping and teaching others", title: Helping and teaching, away: Work where helping and teaching play a small part, source: "Ada Trait, Test Journal (2001)" }
+  - { id: crafts, kind: free_time, trait: warmth, toward: Cool, r: 0.22, outcome: participation, interest: "making things by hand", title: Making things by hand, away: Free time with little making by hand, source: "Ben Trait, Test Journal (2002)" }

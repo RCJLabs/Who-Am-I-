@@ -98,6 +98,17 @@
   </section>
 
   <section class="card">
+    <h2>{copy.settings.resultsTitle}</h2>
+    <label class="toggle">
+      <input type="checkbox" bind:checked={settings.showLinks} onchange={() => settings.save()} data-testid="setting-links" />
+      <span>
+        {copy.settings.showLinks}
+        <span class="muted small block">{copy.settings.showLinksNote}</span>
+      </span>
+    </label>
+  </section>
+
+  <section class="card">
     <h2>{copy.settings.storageTitle}</h2>
     {#if persisted === true}
       <p class="small">{copy.settings.persisted}</p>

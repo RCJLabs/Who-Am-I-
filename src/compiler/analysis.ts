@@ -17,7 +17,7 @@ import {
   type TraditionsFile,
 } from '../model/analysis.ts';
 import type { Bundle } from '../model/content.ts';
-import { Reporter, type Env, type Loc } from './context.ts';
+import type { Env, Loc, Reporter } from './context.ts';
 import { packRules, positionRules } from './rules/analysis.ts';
 import { scoreSheet, type SheetTargets } from './sheets.ts';
 import { compileSuggestions } from './suggestions.ts';
@@ -65,12 +65,12 @@ export function parsePack(src: AnalysisSources | undefined, rep: Reporter): Pars
 export function checkPack(p: ParsedPack, env: Env, rep: Reporter): void {
   checkReferences(p, env, rep);
   packRules({ pack: p, env, rep });
-  if (p.suggestions) compileSuggestions(p.suggestions, env, rep);
 }
 
 /**
  * Scores each tradition's answer sheet with the engine, checks the balance of the positions that
- * gives, and builds the pack the app loads. Null if any sheet has errors.
+ * gives, checks the links from research against the items they read, and builds the pack the app
+ * loads. Null if any sheet or link has errors.
  */
 export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): AnalysisPack | null {
   const compare = p.traditions.file.compare;
@@ -80,7 +80,8 @@ export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): 
     if (t) targets.set(sheet.file.tradition, t);
   }
   const list = p.traditions.file.traditions;
-  if (list.some((t) => !targets.has(t.id))) return null;
+  const links = p.suggestions ? compileSuggestions(p.suggestions, env, b, rep) : { suggestions: [], norms: {} };
+  if (list.some((t) => !targets.has(t.id)) || !links) return null;
   positionRules({ pack: p, env, rep }, targets);
 
   const traditions = list.map((t): Tradition => {
@@ -100,9 +101,15 @@ export function compilePack(p: ParsedPack, b: Bundle, env: Env, rep: Reporter): 
     };
   });
   const readings = Object.fromEntries(p.readings.file.map((r) => [r.id, reading(r, env)]));
-  // Already checked (and reported) by checkPack, which runs first.
-  const suggestions = p.suggestions ? (compileSuggestions(p.suggestions, env, new Reporter()) ?? []) : [];
-  const body = { format: 'whoami.analysis' as const, schema: 1 as const, compare: p.traditions.file.compare, traditions, readings, suggestions };
+  const body = {
+    format: 'whoami.analysis' as const,
+    schema: 1 as const,
+    compare: p.traditions.file.compare,
+    traditions,
+    readings,
+    suggestions: links.suggestions,
+    norms: links.norms,
+  };
   const version = createHash('sha256').update(canonicalJson(body)).digest('hex').slice(0, 12);
   return { ...body, version };
 }
@@ -120,7 +127,7 @@ function checkReferences({ traditions: T, readings: R, sheets, suggestions: G }:
   const list = T.file.traditions;
   checkUnique(list, 'tradition', T.pf, ['traditions'], rep);
   checkUnique(R.file, 'reading', R.pf, [], rep);
-  if (G) checkUnique(G.file, 'suggestion', G.pf, [], rep);
+  if (G) checkUnique(G.file.suggestions, 'suggestion', G.pf, ['suggestions'], rep);
   const traditionIds = new Set(list.map((t) => t.id));
   const readingIds = new Set(R.file.map((r) => r.id));
 

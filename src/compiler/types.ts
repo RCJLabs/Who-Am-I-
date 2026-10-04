@@ -33,11 +33,11 @@ export interface AnalysisSources {
   readings?: SourceFile;
   /** One answer sheet per tradition (content/analysis/sheets/). */
   sheets?: SourceFile[];
-  /** Personal suggestions (optional): no file, no suggestions. */
+  /** Links from research and the norms that gate them (optional): no file, no links. */
   suggestions?: SourceFile;
   /** Terms loaded only when describing political traditions ("moderate", "mainstream"): checked in the pack on top of loadedTerms. */
   loadedTerms?: SourceFile;
-  /** Subjects a personal suggestion must never touch ("diet", "debt", "dating"): E016. */
+  /** Subjects a link from research must never touch ("diet", "debt", "dating"), in any form: E016. */
   blockedAdvice?: SourceFile;
 }
 
@@ -71,5 +71,4 @@ export const RULES: Readonly<Record<string, string>> = {
   W110: 'lopsided-options',
   W111: 'reading-balance',
   W112: 'named-politics',
-  W113: 'suggestion-balance',
 };

@@ -104,41 +104,57 @@ describe('analysis pack', () => {
     expect('about' in analysis!.readings['reformers_two']!).toBe(false);
   });
 
-  it('compiles each suggestion with the poles its rule rests on', () => {
+  it('compiles each link from research, and the norms in the app\'s units', () => {
     expect(analysis!.suggestions).toEqual([
       {
-        id: 'warm_company',
-        kind: 'social',
-        when: { op: 'cmp', ref: 'warmth', cmp: '>', value: 0.25 },
-        basis: [{ axis: 'warmth', pole: 1 }],
-        title: 'Long talks with friends',
-        text: 'People who describe themselves as warm tend to enjoy long talks with close friends.',
+        id: 'helping',
+        kind: 'working',
+        trait: 'warmth',
+        toward: 1,
+        strength: 'somewhat',
+        outcome: 'interest',
+        interest: 'helping and teaching others',
+        title: 'Helping and teaching',
+        away: 'Work where helping and teaching play a small part',
         source: 'Ada Trait, Test Journal (2001)',
       },
       {
-        id: 'cool_focus',
-        kind: 'work',
-        when: { op: 'cmp', ref: 'warmth', cmp: '<', value: -0.25 },
-        basis: [{ axis: 'warmth', pole: 0 }],
-        title: 'Work done alone',
-        text: 'People who describe themselves as cool tend to enjoy work they can do alone.',
+        id: 'crafts',
+        kind: 'free_time',
+        trait: 'warmth',
+        toward: 0,
+        strength: 'little',
+        outcome: 'participation',
+        interest: 'making things by hand',
+        title: 'Making things by hand',
+        away: 'Free time with little making by hand',
         source: 'Ben Trait, Test Journal (2002)',
       },
     ]);
+    // 3.5 on the items' 1-5 scale is 0.25; an SD of 0.8 is 0.4.
+    expect(analysis!.norms).toEqual({ warmth: { mean: 0.25, sd: 0.4, reversals: [['traits.t1', 'traits.t2']] } });
     // The file is optional: without it, the pack has none.
     const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { ...src.analysis!, suggestions: undefined } });
     expect(d).toEqual([]);
-    expect(a!.suggestions).toEqual([]);
+    expect(a).toMatchObject({ suggestions: [], norms: {} });
   });
 
-  it('never rests a suggestion on neuroticism', () => {
-    const neuroticism = '- id: neuroticism\n  family: personality\n  title: Neuroticism\n  description: Test.\n  poles: [Even-keeled, Reactive]\n  minWeight: 1\n  fullWeight: 2\n  planned: true\n';
+  it('never rests a link on neuroticism, and needs norms for every trait it reads', () => {
+    const axis = (id: string) => `- id: ${id}\n  family: personality\n  title: ${id}\n  description: Test.\n  poles: [Low, High]\n  minWeight: 1\n  fullWeight: 2\n  planned: true\n`;
     const G = src.analysis!.suggestions!;
-    const suggestions = { ...G, text: G.text.replace('when: warmth > 0.25', 'when: warmth > 0.25 and neuroticism < -0.5') };
-    const { analysis: a, diagnostics: d } = compile({ ...src, axes: { ...src.axes, text: src.axes.text + neuroticism }, analysis: { ...src.analysis!, suggestions } });
-    expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E016', G.path, 2]]);
-    expect(d[0]!.message).toContain("never rest on 'neuroticism'");
-    expect(a).toBeNull();
+    const run = (trait: string) => {
+      const suggestions = { ...G, text: G.text.replace('trait: warmth, toward: Warm', `trait: ${trait}, toward: High`) };
+      return compile({ ...src, axes: { ...src.axes, text: src.axes.text + axis(trait) }, analysis: { ...src.analysis!, suggestions } });
+    };
+    for (const [trait, message] of [
+      ['neuroticism', 'other than neuroticism'],
+      ['grit', "No norms for 'grit'"],
+    ]) {
+      const { analysis: a, diagnostics: d } = run(trait!);
+      expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E016', G.path, 7]]);
+      expect(d[0]!.message).toContain(message);
+      expect(a).toBeNull();
+    }
   });
 
   it('checks its own loaded terms in the pack only', () => {
@@ -324,30 +340,32 @@ describe('analysis pack lint', () => {
       ],
       expect: [['W111', R, ROOT_R]],
     },
-    { name: 'E002 an unknown key in a suggestion', edits: [[G, 'kind: work,', 'kind: work, link: x,']], expect: [['E002', G, 'link: x']] },
-    { name: 'E003 a suggestion listed twice', edits: [[G, 'id: cool_focus', 'id: warm_company']], expect: [['E003', G, 'Work done alone']] },
-    { name: 'E004 an unknown spectrum in a rule', edits: [[G, 'when: warmth > 0.25', 'when: kindness > 0.25']], expect: [['E004', G, 'kindness']] },
-    { name: 'E006 a rule that does not parse', edits: [[G, 'when: warmth > 0.25', 'when: warmth >']], expect: [['E006', G, 'when: warmth >,']] },
-    { name: 'E016 only personality, values and thinking', edits: [[G, 'when: warmth > 0.25', 'when: social > 0.5']], expect: [['E016', G, 'social > 0.5']] },
-    { name: 'E016 never taste', edits: [[G, 'when: warmth > 0.25', 'when: novelty > 0.5']], expect: [['E016', G, 'novelty > 0.5']] },
-    { name: 'E016 toward a pole, not near the middle', edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.1']], expect: [['E016', G, 'warmth > 0.1']] },
-    { name: 'E016 no exact values', edits: [[G, 'when: warmth > 0.25', 'when: warmth == 0.5']], expect: [['E016', G, 'warmth == 0.5']] },
-    { name: "E016 comparisons joined with 'and' only", edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.25 or warmth < -0.5']], expect: [['E016', G, 'or warmth']] },
-    { name: 'E016 each spectrum once', edits: [[G, 'when: warmth > 0.25', 'when: warmth > 0.25 and warmth > 0.5']], expect: [['E016', G, 'and warmth']] },
-    { name: 'E016 a subject suggestions never touch', edits: [[G, 'enjoy long talks with close friends.', 'enjoy long talks about diet.']], expect: [['E016', G, 'about diet']] },
-    { name: 'E016 prescriptive wording', edits: [[G, 'People who describe themselves as cool tend to enjoy', 'You should enjoy']], expect: [['E016', G, 'You should']] },
+    { name: 'E002 an unknown key in a link', edits: [[G, 'kind: working,', 'kind: working, link: x,']], expect: [['E002', G, 'link: x']] },
+    { name: 'E003 a link listed twice', edits: [[G, 'id: crafts', 'id: helping']], expect: [['E003', G, 'Making things by hand']] },
+    { name: 'E004 an unknown spectrum', edits: [[G, 'trait: warmth, toward: Warm', 'trait: kindness, toward: Warm']], expect: [['E004', G, 'kindness']] },
+    { name: 'E004 a pole the spectrum does not have', edits: [[G, 'toward: Cool', 'toward: Chilly']], expect: [['E004', G, 'Chilly']] },
+    { name: 'E016 only personality spectrums', edits: [[G, 'trait: warmth, toward: Warm', 'trait: novelty, toward: Novel']], expect: [['E016', G, 'novelty']] },
+    { name: 'E016 the evidence bar', edits: [[G, 'r: 0.22', 'r: 0.15']], expect: [['E016', G, 'r: 0.15']] },
+    { name: 'E016 a blocked subject, in any form', edits: [[G, 'interest: "helping and teaching others"', 'interest: "helping others with diets"']], expect: [['E016', G, 'with diets']] },
+    { name: 'E016 never to the reader', edits: [[G, 'title: Helping and teaching,', 'title: Helping you teach,']], expect: [['E016', G, 'Helping you teach']] },
+    { name: 'E016 nothing prescriptive', edits: [[G, 'away: Free time with little making by hand', 'away: Free time that needs to stay quiet']], expect: [['E016', G, 'needs to stay']] },
+    { name: 'E016 no numbers', edits: [[G, 'title: Making things by hand,', 'title: Making 3 things by hand,']], expect: [['E016', G, 'Making 3 things']] },
+    { name: 'E016 nothing double-ended', edits: [[G, 'interest: "making things by hand"', 'interest: "making things by hand but also buying them"']], expect: [['E016', G, 'but also']] },
+    { name: "E016 never the trait's own questions", edits: [[G, 'title: Helping and teaching,', 'title: Helping cold callers,']], expect: [['E016', G, 'cold callers']] },
     { name: 'E016 a published source', edits: [[G, 'source: "Ben Trait, Test Journal (2002)"', 'source: Original scenario']], expect: [['E016', G, 'Original scenario']] },
-    { name: 'W113 both poles of a spectrum', edits: [[G, 'when: warmth < -0.25', 'when: warmth > 0.5']], expect: [['W113', G, 'warm_company']] },
+    { name: "E016 norms on the items' scale", edits: [[G, 'mean: 3.5', 'mean: 7']], expect: [['E016', G, 'mean: 7']] },
+    { name: 'E016 a reversal pairs opposite keys', edits: [[G, 'reversals: [[traits.t1, traits.t2]]', 'reversals: [[traits.t1, traits.t3]]']], expect: [['E016', G, 'traits.t3']] },
+    { name: 'E004 a reversal reads the trait', edits: [[G, 'reversals: [[traits.t1, traits.t2]]', 'reversals: [[traits.t1, alpha.stance]]']], expect: [['E004', G, 'alpha.stance']] },
     {
-      name: 'W108 and W112 in suggestions, never in their sources',
+      name: 'W108 and W112 in links, never in their sources',
       edits: [
-        [G, 'enjoy long talks with close friends.', 'enjoy long talks with any anti-vaxxer.'],
-        [G, 'enjoy work they can do alone.', 'enjoy work for the Example Party.'],
+        [G, 'interest: "helping and teaching others"', 'interest: "helping any anti-vaxxer"'],
+        [G, 'away: Free time with little making by hand', 'away: Free time with the Example Party'],
         [G, 'source: "Ada Trait, Test Journal (2001)"', 'source: "Ada Trait, Anti-vaxxer Review (2001)"'],
       ],
       expect: [
-        ['W108', G, 'warm_company'],
-        ['W112', G, 'cool_focus'],
+        ['W108', G, 'id: helping'],
+        ['W112', G, 'id: crafts'],
       ],
     },
   ];

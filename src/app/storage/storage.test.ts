@@ -34,11 +34,11 @@ describe('db', () => {
     await putEvent(ev('e2'));
     await putEvents([ev('e3'), ev('e1')]);
     await putResolution(res('r1'));
-    await putSettings({ alwaysDeep: true, lastBackupAt: 5, seed: 's' });
+    await putSettings({ alwaysDeep: true, lastBackupAt: 5, seed: 's', showLinks: false, linksOpen: true });
     const loaded = await loadAll();
     expect(loaded.events.map((e) => e.id)).toEqual(['e1', 'e2', 'e3']);
     expect(loaded.resolutions.map((r) => r.id)).toEqual(['r1']);
-    expect(loaded.settings).toEqual({ alwaysDeep: true, lastBackupAt: 5, seed: 's' });
+    expect(loaded.settings).toEqual({ alwaysDeep: true, lastBackupAt: 5, seed: 's', showLinks: false, linksOpen: true });
     expect(loaded.dropped).toBe(0);
   });
 
@@ -58,7 +58,7 @@ describe('db', () => {
   it('deletes everything', async () => {
     await putEvent(ev('e1'));
     await putResolution(res('r1'));
-    await putSettings({ alwaysDeep: false, lastBackupAt: null, seed: 's' });
+    await putSettings({ alwaysDeep: false, lastBackupAt: null, seed: 's', showLinks: true, linksOpen: false });
     await clearAll();
     expect(await loadAll()).toEqual({ events: [], resolutions: [], settings: {}, dropped: 0 });
   });

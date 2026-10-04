@@ -27,7 +27,7 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Section read-outs | the private profile: they describe the chart beside them, which already shows those answers |
 | Next steps | public profile only; never a sensitive topic or item |
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
-| Personal suggestions ("For you") | public profile only: personality (never neuroticism), values and thinking spectrums |
+| Links from research | public profile only: the four personality spectrums other than neuroticism, and the answers to their own items (for the reversal check) |
 
 Worldview answers can never move the summary or a recommendation. The simulation test checks this
 for every persona and 200 random respondents; the e2e test checks it in the browser.
@@ -235,29 +235,37 @@ the other side of politics. For two traditions: one inside reading and one criti
 reading never appears twice. No status without a named tradition gets readings, so the summary and
 the readings always agree.
 
-## For you (`suggestions.ts`)
+## Links from research (`suggestions.ts`)
 
-Personal suggestions from the analysis pack (`content/analysis/suggestions.yaml`): kinds of work,
-activities, learning or company someone might enjoy, each tied to a published association and
-written as an invitation, never as advice. Each rule compares spectrums from the public profile,
-each toward a pole: `extraversion < -0.25 and conscientiousness > 0.25`. Lint (E016) allows only
-personality spectrums other than neuroticism, values and thinking; no political, worldview or
-taste spectrum and no single answer, and nothing about health, money, relationships, faith or
-politics (`content/analysis/blocked-advice.txt`). Every pole a rule relies on has a rule on the
-opposite pole (W113), so neither end reads as the better one.
+Published associations between one personality trait and an interest, from the analysis pack
+(`content/analysis/suggestions.yaml`), in three kinds: ways of working, free time, and subjects to
+explore. Each is one association with one citation, written from both ends: the end with more
+interest ("Artistic work") and the other end, which describes less of the same activity ("Work where
+art and design play a small part"), never an attraction the study didn't measure. They read only the
+personality form: never neuroticism, whose links would read as advice about anxiety or mood, and
+never values, thinking, taste, lifestyle or political answers. Lint (E016) holds the evidence bar
+(uncorrected r of at least 0.20, a published source) and the wording rules, and keeps every subject
+in `content/analysis/blocked-advice.txt` out, in any form.
 
-1. **Enough evidence.** A spectrum counts only when the public profile scores it with confidence
-   at least 0.75 (`SUGGEST.confidence`): for the personality short form, 3 of a trait's 4 items.
-   Otherwise the spectrum is unknown, and a rule that reads it never fires.
-2. **Every threshold cleared.** The answers must clear each comparison in a rule.
-3. **One of each kind** (work, activity, learning, social): the one the answers clear by the widest
-   margin, the margin being the smallest distance past any of the rule's thresholds; ties go to
-   authored order. At most three (`LIMIT.suggestions`), the clearest kind first.
-4. **What it rests on.** Each suggestion keeps the pole of each spectrum its rule reads, so the
-   results can say why it's there: "Because you described yourself as more “Reserved”".
+1. **Every item answered.** A trait counts only when all four of its items are answered
+   (`SUGGEST.confidence`).
+2. **No contradiction.** Agreeing with both items of a reversal pair ("Have a vivid imagination"
+   and "Do not have a good imagination") voids the trait, since the score may be response style
+   rather than self-description. The pairs are listed with the norms.
+3. **A clear lean.** The score is at least 0.5 toward a pole (`SUGGEST.lean`), where the chart's
+   label drops "slightly", and at least half an SD beyond the adult mean in the same direction
+   (`SUGGEST.beyondMean`). The norms only decide whether a link shows; no text compares the person
+   with anyone.
+4. **One of each kind:** the link on the trait the answers lean furthest on, in SDs beyond the mean,
+   with ties going to authored order. At most three (`LIMIT.suggestions`), the clearest first.
+5. **From the end the answers lean toward.** The title and sentence come from that end.
 
-Scores are raw positions on the person's own answers, with no population norms, so a rule reads a
-self-description, not a standing relative to anyone else.
+The sentence is copy with the link's fields filled in: "In large studies, people who describe
+themselves as more “Imaginative” report somewhat more interest in artistic activities, such as…, on
+average. Many don't, so this may not fit you." The strength word comes from the correlation: "a
+little" below 0.30, "somewhat" from 0.30. The meta line says what the link rests on ("Your answers
+lean toward “Imaginative”") and cites the source. The group stays collapsed until opened, with the
+state remembered on the device, and a Settings switch hides it.
 
 ## Wording rules
 

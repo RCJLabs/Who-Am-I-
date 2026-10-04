@@ -1,9 +1,8 @@
 // Analysis-pack rules. E014 keeps the political traditions balanced between the sides, on every
 // political spectrum, with each tradition's first critique coming from the other side.
 // W111 keeps the readings balanced. W108 and W112 keep loaded terms and party or politician names
-// out of what users read, suggestions included; titles, authors, `in` and suggestion sources are
-// citations, quoted as published, so exempt. Suggestions' own scope and balance are in
-// ../suggestions.ts.
+// out of what users read, links from research included; titles, authors, `in` and sources are
+// citations, quoted as published, so exempt. The links' own scope is checked in ../suggestions.ts.
 // The pack has its own loaded terms on top of the content's: words such as "moderate" or
 // "mainstream" are fine in a question but cast a tradition as the default.
 import type { Side } from '../../model/analysis.ts';
@@ -162,8 +161,7 @@ function wordingRules({ pack, env, rep }: PackCtx): void {
   });
   pack.readings.file.forEach((r, j) => flag(r.note, { pf: pack.readings.pf, path: [j, 'note'] }));
   const G = pack.suggestions;
-  G?.file.forEach((g, k) => {
-    flag(g.title, { pf: G.pf, path: [k, 'title'] });
-    flag(g.text, { pf: G.pf, path: [k, 'text'] });
+  G?.file.suggestions.forEach((g, k) => {
+    for (const field of ['title', 'away', 'interest'] as const) flag(g[field], { pf: G.pf, path: ['suggestions', k, field] });
   });
 }

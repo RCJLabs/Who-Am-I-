@@ -61,6 +61,7 @@
       <li><strong>Topics to explore.</strong> The ones that would add most to your results: a spectrum that can't show yet, or one resting on few answers.</li>
       <li><strong>Worth a second look.</strong> The places where your answers pull apart most, as questions. There's often a good reason.</li>
       <li><strong>Political traditions.</strong> Eleven traditions, from democratic socialism to national conservatism, serve as reference points: which of them your political answers sit closest to, with readings from inside and outside each. Each is placed by answering the app's own questions as its writers would. They are never a label for you, never a party, and never a recommendation, and a tradition is only named when your answers sit close to it and follow it question by question.</li>
+      <li><strong>Links from research.</strong> Under Next steps, closed until you open it: up to three things large studies found that people who describe themselves the way you did report more or less interest in, on average, such as ways of working, free time or subjects to explore. They come only from your personality answers, never the ones about emotional reactivity, and only where your answers lean clearly one way, judged against an average from a large study that is never shown. Group averages, not a mirror, and not advice. Settings can turn them off.</li>
       <li><strong>Never compared with other people.</strong> Like the scores, the analysis describes your own answers. It doesn't say how you compare with anyone else.</li>
     </ul>
   </section>

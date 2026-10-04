@@ -2,13 +2,13 @@
 // with. Political traditions are reference points, never labels; readings come from inside and
 // outside each. Each tradition is placed by an answer sheet: the app's own questions answered as
 // a thoughtful adherent would, scored by the engine like anyone's answers, so no position is ever
-// written by hand. Personal suggestions are invitations, each tied to a published association and
-// the self-description it rests on, never advice. Authored as YAML, compiled with the content but
-// hashed and shipped separately. Strict objects, as in authored.ts; these schemas also generate
-// schema/analysis/*.schema.json.
+// written by hand. Links from research (suggestions) report one published association between a
+// personality trait and an interest, from both ends, gated by published norms; never advice.
+// Authored as YAML, compiled with the content but hashed and shipped separately. Strict objects, as
+// in authored.ts; these schemas also generate schema/analysis/*.schema.json.
 import { z } from 'zod';
 import { ID_RE } from './authored.ts';
-import type { AxisId, Cond, ItemId, PrincipleId } from './content.ts';
+import type { AxisId, ItemId, PrincipleId } from './content.ts';
 
 const Id = z.string().regex(ID_RE, 'ids are snake_case: a-z, 0-9, _ (starting with a letter)');
 const QuestionId = z.string().regex(/^[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*$/, 'questions are written topic.item');
@@ -20,9 +20,13 @@ export type Side = (typeof SIDES)[number];
 export const READING_KINDS = ['book', 'essay', 'article', 'speech', 'lecture'] as const;
 export type ReadingKind = (typeof READING_KINDS)[number];
 
-/** What a personal suggestion is about; at most one of each is shown. */
-export const SUGGESTION_KINDS = ['work', 'activity', 'learning', 'social'] as const;
+/** What a link from research is about: ways of working, free time, subjects to explore. At most one of each is shown. */
+export const SUGGESTION_KINDS = ['working', 'free_time', 'subjects'] as const;
 export type SuggestionKind = (typeof SUGGESTION_KINDS)[number];
+
+/** What the source measured: how much interest people report, or how often they take part. */
+export const SUGGESTION_OUTCOMES = ['interest', 'participation'] as const;
+export type SuggestionOutcome = (typeof SUGGESTION_OUTCOMES)[number];
 
 export const TraditionSchema = z.strictObject({
   id: Id,
@@ -80,19 +84,41 @@ export const ReadingSchema = z.strictObject({
 
 export const ReadingsFileSchema = z.array(ReadingSchema).min(1);
 
+/** One published association between a personality trait and an interest, written from both ends. */
 export const SuggestionSchema = z.strictObject({
   id: Id,
-  kind: z.enum(SUGGESTION_KINDS).describe('At most one suggestion of each kind is shown'),
-  when: z
-    .string()
-    .min(1)
-    .describe('Who it applies to: personality, values or thinking spectrums, each compared toward a pole and joined with "and", e.g. "extraversion < -0.25"'),
-  title: z.string().min(1).describe('A few words on what is suggested'),
-  text: z.string().min(1).describe('One sentence on the published association, as a tendency, never as advice'),
-  source: z.string().min(1).describe('The study or meta-analysis the association comes from'),
+  kind: z.enum(SUGGESTION_KINDS).describe('At most one of each kind is shown'),
+  trait: Id.describe('The personality spectrum the association runs on (never neuroticism)'),
+  toward: z.string().min(1).describe('The pole whose answers report more interest, as written in axes.yaml'),
+  r: z.number().min(0).max(1).describe('Uncorrected correlation from the source; at least 0.20. Under 0.30 reads "a little", from 0.30 "somewhat"'),
+  outcome: z.enum(SUGGESTION_OUTCOMES).describe('Whether the source measured interest or voluntary participation'),
+  interest: z.string().min(1).describe('What the source measured, as a noun phrase: "artistic activities, such as drawing, design, writing or music"'),
+  title: z.string().min(1).describe('The end with more interest, as a noun phrase naming the activity'),
+  away: z.string().min(1).describe('The other end: the same activity playing a small part, never a deficit'),
+  source: z.string().min(1).describe('The meta-analysis or large replicated study'),
 });
 
-export const SuggestionsFileSchema = z.array(SuggestionSchema).min(1);
+/** Published adult norms for each trait, on its items' own scale (1 to 5): used only to gate, never shown. */
+export const NormsSchema = z.strictObject({
+  source: z.string().min(1).describe('Where the norms come from'),
+  traits: z.record(
+    Id,
+    z.strictObject({
+      mean: z.number().describe('Mean of the 4 items, on their 1-5 scale'),
+      sd: z.number().positive(),
+      reversals: z
+        .array(z.tuple([QuestionId, QuestionId]))
+        .optional()
+        .describe('Pairs of items that say opposite things: agreeing with both voids the trait'),
+      echo: z.array(z.string().min(1)).optional().describe("Words from the trait's own items, which a link must not restate"),
+    }),
+  ),
+});
+
+export const SuggestionsFileSchema = z.strictObject({
+  norms: NormsSchema,
+  suggestions: z.array(SuggestionSchema).min(1),
+});
 
 export type TraditionsFile = z.infer<typeof TraditionsFileSchema>;
 export type ReadingsFile = z.infer<typeof ReadingsFileSchema>;
@@ -139,13 +165,23 @@ export interface Reading {
 export interface Suggestion {
   id: SuggestionId;
   kind: SuggestionKind;
-  /** Comparisons of spectrum scores, joined with "and". */
-  when: Cond;
-  /** Each spectrum the rule relies on and the pole it points to: 0 = the axis's first pole, 1 = its second. */
-  basis: { axis: AxisId; pole: 0 | 1 }[];
+  trait: AxisId;
+  /** The pole whose answers report more interest: 0 = the axis's first pole, 1 = its second. */
+  toward: 0 | 1;
+  /** From the correlation: under 0.30 "a little", from 0.30 "somewhat". */
+  strength: 'little' | 'somewhat';
+  outcome: SuggestionOutcome;
+  interest: string;
   title: string;
-  text: string;
+  away: string;
   source: string;
+}
+
+/** A trait's published norms in the app's units (-1..1), and the item pairs that void it. */
+export interface TraitNorm {
+  mean: number;
+  sd: number;
+  reversals: [ItemId, ItemId][];
 }
 
 export interface AnalysisPack {
@@ -159,4 +195,6 @@ export interface AnalysisPack {
   readings: Record<ReadingId, Reading>;
   /** In authored order, which breaks ties. Empty when the pack has none. */
   suggestions: Suggestion[];
+  /** Norms for every trait a suggestion reads. */
+  norms: Record<AxisId, TraitNorm>;
 }

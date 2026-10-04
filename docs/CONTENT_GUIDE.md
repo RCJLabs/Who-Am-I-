@@ -18,9 +18,9 @@ content/
     traditions.yaml  political traditions: names, summaries, neighbours and readings
     sheets/<id>.yaml each tradition's answer sheet, which places it on the political spectrums
     readings.yaml    readings from inside and outside each tradition
-    suggestions.yaml personal suggestions: who each applies to, and the research behind it (optional)
+    suggestions.yaml links from research: trait and interest associations, and the norms that gate them (optional)
     loaded-terms.txt words loaded only in descriptions of traditions (W108, pack only)
-    blocked-advice.txt subjects personal suggestions never touch (E016)
+    blocked-advice.txt subjects links from research never touch, in any form (E016)
 ```
 
 Each topic file starts with `# yaml-language-server: $schema=../../../schema/topic.schema.json`, so
@@ -555,7 +555,7 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | E003 | duplicate id |
 | E004 | unresolved reference (item, axis, principle, domain; in the analysis pack, tradition, reading or pole) |
 | E005 | reference to a later item |
-| E006 | condition syntax or type error (topic `when`, and suggestion rules) |
+| E006 | condition syntax or type error |
 | E007 | item can never be shown (or a reask can never run) |
 | E008 | a stance side has no reachable challenge |
 | E009 | challenge contract (hold/distinguish + yield-with-revise; valid targets) |
@@ -565,7 +565,7 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | E013 | anchor not keyed toward its principle |
 | E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum (0.2 or beyond, not divided); left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
 | E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |
-| E016 | suggestion scope: a rule reads only personality (never neuroticism), values and thinking spectrums, each compared toward a pole at least 0.25 from the middle, joined with `and`, each spectrum once; no blocked-advice subject (`analysis/blocked-advice.txt`) and no prescriptive wording ("you should", "you are a", "most people", "normal", "wrong", %) in a title or text; a published source |
+| E016 | links from research: each rests on one personality spectrum other than neuroticism, which has norms (a mean on its items' 1-5 scale; each reversal pair keyed in opposite directions); `toward` is one of its poles; uncorrected r of at least 0.20; a published source. A title, `away` or `interest` never uses a blocked-advice subject in any form (`analysis/blocked-advice.txt`), the trait's own item words (`echo`), the second person, prescriptions ("should", "need to"), numbers, double-ended phrases ("at times", "but also", "both") or comparisons ("most people", "normal", "wrong") |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |
 | W103 | reachability couldn't be proven (sampled) |
@@ -578,4 +578,3 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | W110 | choice/pair options average away from 0 on an axis (an undecided respondent gets pushed one way) |
 | W111 | readings: fewer than two inside or outside a tradition, unused, or uneven between the sides or poles |
 | W112 | a party or politician named in the analysis pack (titles and authors, as citations, are exempt) |
-| W113 | suggestion balance: a pole of a spectrum has suggestions and its opposite has none, so one end reads as the better one |

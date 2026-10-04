@@ -48,10 +48,12 @@ export interface NextItem {
 }
 
 export interface NextGroup {
-  id: 'read' | 'readings' | 'foryou' | 'explore' | 'reflect';
+  id: 'read' | 'readings' | 'links' | 'explore' | 'reflect';
   title: string;
   intro: string;
   items: NextItem[];
+  /** Closed until opened, with this line saying what it draws on. */
+  collapsed?: { note: string };
 }
 
 export interface TraditionRow {
@@ -102,8 +104,10 @@ export interface ComposeInput {
   tensions: readonly Tension[];
   interests: readonly InterestEntry[];
   alwaysDeep?: boolean;
-  /** Political traditions and readings, once loaded. */
+  /** Political traditions, readings and links from research, once loaded. */
   pack?: AnalysisPack | null;
+  /** Show links from research (a setting; on unless turned off). */
+  links?: boolean;
 }
 
 const A = copy.analysis;
@@ -208,8 +212,8 @@ function next(i: ComposeInput): NextGroup[] {
   const readings = i.facts.next.readings.map((r) => readingItem(i, r)).filter((x): x is NextItem => x !== null);
   const named = (i.facts.public.traditions?.named ?? []).map((id) => i.pack?.traditions.find((t) => t.id === id)?.name ?? id);
   if (readings.length) groups.push({ id: 'readings', title: A.next.readings.title, intro: A.next.readings.intro(named), items: readings });
-  const foryou = i.facts.next.suggestions.map((r) => suggestionItem(i, r)).filter((x): x is NextItem => x !== null);
-  if (foryou.length) groups.push({ id: 'foryou', title: A.next.foryou.title, intro: A.next.foryou.intro, items: foryou });
+  const links = i.links === false ? [] : i.facts.next.suggestions.map((r) => linkItem(i, r)).filter((x): x is NextItem => x !== null);
+  if (links.length) groups.push({ id: 'links', title: A.next.links.title, intro: A.next.links.intro, items: links, collapsed: { note: A.next.links.note } });
   const explore = i.facts.next.explore.map((r) => exploreItem(i, r));
   if (explore.length) groups.push({ id: 'explore', title: A.next.explore.title, intro: A.next.explore.intro, items: explore });
   const reflect = i.facts.next.reflect.map((r) => reflectItem(i.bundle, r));
@@ -272,11 +276,19 @@ function readingItem(i: ComposeInput, r: ReadingRec): NextItem | null {
   };
 }
 
-function suggestionItem(i: ComposeInput, r: SuggestionRec): NextItem | null {
+function linkItem(i: ComposeInput, r: SuggestionRec): NextItem | null {
   const g = i.pack?.suggestions.find((x) => x.id === r.suggestion);
-  if (!g) return null;
-  const poles = r.basis.map((b) => i.bundle.axes[b.axis]?.poles[b.pole] ?? b.axis);
-  return { testid: `rec-foryou-${g.id}`, title: g.title, detail: g.text, meta: [A.next.foryou.because(poles), g.source].join(' · ') };
+  const lean = r.basis[0];
+  const pole = lean ? i.bundle.axes[lean.axis]?.poles[lean.pole] : undefined;
+  if (!g || !pole) return null;
+  const L = A.next.links;
+  const sentence = (r.end === 'toward' ? L.more : L.less)[g.outcome](pole, L.strength[g.strength], g.interest);
+  return {
+    testid: `rec-link-${g.id}`,
+    title: r.end === 'toward' ? g.title : g.away,
+    detail: [sentence, L.caveat, L.ask[r.end]].join(' '),
+    meta: [L.kind[g.kind], L.because(pole), g.source].join(' · '),
+  };
 }
 
 function reflectItem(b: Bundle, r: ReflectRec): NextItem {

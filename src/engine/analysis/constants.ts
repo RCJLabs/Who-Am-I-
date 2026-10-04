@@ -25,12 +25,16 @@ export const LIMIT = {
   differences: 2,
   /** Readings for a matched tradition (for two traditions, one of each from both). */
   readings: { inside: 2, outside: 2 },
-  /** Personal suggestions, at most one of each kind. */
+  /** Links from research, at most one of each kind. */
   suggestions: 3,
 } as const;
 
-/** Personal suggestions: a spectrum counts only with this much evidence (3 of a trait's 4 short-form items). */
-export const SUGGEST = { confidence: 0.75 } as const;
+/**
+ * Links from research: a trait counts with all its items answered (confidence 1), at least `lean`
+ * toward a pole on its own scale (the read-out's "fairly" band), and at least `beyondMean` standard
+ * deviations past the published adult mean in the same direction.
+ */
+export const SUGGEST = { confidence: 1, lean: 0.5, beyondMean: 0.5 } as const;
 
 /** Political traditions: reference points, never labels. See docs/ANALYSIS.md. */
 export const TRADITION = {

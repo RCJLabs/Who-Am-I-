@@ -300,10 +300,24 @@ export const copy = {
         outside: (name: string, voice: string) => `A critique of ${q(name)}, from ${q(voice)}`,
         kind: { book: 'Book', essay: 'Essay', article: 'Article', speech: 'Speech', lecture: 'Lecture' },
       },
-      foryou: {
-        title: 'For you',
-        intro: 'Ideas from how you described yourself, and from published research on what people who describe themselves that way tend to enjoy. Invitations, not advice: take what fits.',
-        because: (poles: readonly string[]) => `Because you lean toward ${list(poles.map(q))}`,
+      links: {
+        title: 'Links from research',
+        note: 'From your personality answers only.',
+        intro:
+          "What large studies found that people who describe themselves the way you did report more or less interest in, on average. Group averages, not a mirror: many people don't fit them. Not advice, not career guidance, and not a judgment of what you do now.",
+        kind: { working: 'Ways of working', free_time: 'Free time', subjects: 'Subjects to explore' },
+        strength: { little: 'a little', somewhat: 'somewhat' },
+        more: {
+          interest: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} report ${strength} more interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} take part in ${what} ${strength} more often, on average.`,
+        },
+        less: {
+          interest: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} report ${strength} less interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} take part in ${what} ${strength} less often, on average.`,
+        },
+        caveat: "Many don't, so this may not fit you.",
+        ask: { toward: 'Is it something you enjoy, or have wondered about?', away: 'Does that fit what you enjoy?' },
+        because: (pole: string) => `Your answers lean toward ${q(pole)}`,
       },
       explore: {
         title: 'Explore next',
@@ -370,6 +384,9 @@ export const copy = {
     questionsTitle: 'Questions',
     alwaysDeep: 'Always ask deep-dive questions',
     alwaysDeepNote: "Normally they're skipped for topics you say matter little to you.",
+    resultsTitle: 'Results',
+    showLinks: 'Show links from research',
+    showLinksNote: 'What large studies found about personality and interests, under Next steps. Worked out on this device from your personality answers, and never saved or shared.',
     storageTitle: 'Storage',
     persisted: 'Protected: the browser has agreed not to clear your answers to free up space.',
     notPersisted: 'Not protected: the browser may clear your answers if the device runs low on space.',

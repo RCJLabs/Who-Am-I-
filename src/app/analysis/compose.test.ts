@@ -214,29 +214,38 @@ describe('political traditions in the analysis', () => {
     ]);
   });
 
-  it('suggests what people who describe themselves the same way tend to enjoy, and why', () => {
+  it('reports links from research for the end the answers lean to, collapsed, and only when shown', () => {
     const log = new Log();
-    for (const [item, step] of [['traits.t1', 5], ['traits.t2', 1], ['traits.t3', 5]] as const) log.add(item, scale(step));
+    for (const [item, step] of [['traits.t1', 5], ['traits.t2', 1], ['traits.t3', 5], ['traits.t4', 1]] as const) log.add(item, scale(step));
     const s = buildAnswerState(b, log.events);
     const o = { appVersion: 't', now: 'x', resolutions: [] };
     const profile = buildProfile(s, { ...o, includeSensitive: true });
     const publicProfile = buildProfile(s, { ...o, includeSensitive: false });
     const tensions = detectTensions(s, observe(s, { includeSensitive: true }), []);
-    const run = (pack: ReturnType<typeof fixturePack> | null) => {
+    const run = (pack: ReturnType<typeof fixturePack> | null, links?: boolean) => {
       const facts = analyse({ state: s, profile, publicProfile, tensions, pack });
-      return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack });
+      return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack, ...(links === undefined ? {} : { links }) });
     };
-    const group = run(fixturePack()).next.find((g) => g.id === 'foryou')!;
-    expect(group.title).toBe('For you');
+    const group = run(fixturePack()).next.find((g) => g.id === 'links')!;
+    expect(group).toMatchObject({ title: 'Links from research', collapsed: { note: 'From your personality answers only.' } });
     expect(group.items).toEqual([
       {
-        testid: 'rec-foryou-warm_company',
-        title: 'Long talks with friends',
-        detail: 'People who describe themselves as warm tend to enjoy long talks with close friends.',
-        meta: 'Because you lean toward “Warm” · Ada Trait, Test Journal (2001)',
+        testid: 'rec-link-helping',
+        title: 'Helping and teaching',
+        detail:
+          "In large studies, people who describe themselves as more “Warm” report somewhat more interest in helping and teaching others, on average. Many don't, so this may not fit you. Is it something you enjoy, or have wondered about?",
+        meta: 'Ways of working · Your answers lean toward “Warm” · Ada Trait, Test Journal (2001)',
+      },
+      {
+        testid: 'rec-link-crafts',
+        title: 'Free time with little making by hand',
+        detail:
+          "In large studies, people who describe themselves as more “Warm” take part in making things by hand a little less often, on average. Many don't, so this may not fit you. Does that fit what you enjoy?",
+        meta: 'Free time · Your answers lean toward “Warm” · Ben Trait, Test Journal (2002)',
       },
     ]);
-    expect(run(null).next.some((g) => g.id === 'foryou')).toBe(false);
+    expect(run(fixturePack(), false).next.some((g) => g.id === 'links')).toBe(false);
+    expect(run(null).next.some((g) => g.id === 'links')).toBe(false);
   });
 
   it('shows nothing about traditions without the pack', () => {

@@ -128,13 +128,15 @@ export interface ReadingRec {
   view: 'inside' | 'outside';
 }
 
-/** A personal suggestion whose rule the answers clear, with the poles it rests on. */
+/** A link from research for a trait the answers clearly lean on, and which end of it they lean to. */
 export interface SuggestionRec {
   kind: 'suggestion';
   suggestion: SuggestionId;
-  /** Work, activity, learning or social: at most one of each. */
+  /** Ways of working, free time or subjects to explore: at most one of each. */
   about: SuggestionKind;
-  /** Each spectrum the rule reads and the pole the answers lean to: 0 = its first pole, 1 = its second. */
+  /** The end with more interest, or the other, where the same activity plays a small part. */
+  end: 'toward' | 'away';
+  /** The trait and the pole the answers lean to: 0 = its first pole, 1 = its second. */
   basis: { axis: AxisId; pole: 0 | 1 }[];
 }
 
@@ -156,7 +158,7 @@ export interface AnalysisFacts {
     explore: ExploreRec[];
     reflect: ReflectRec[];
     readings: ReadingRec[];
-    /** Empty until the analysis pack has loaded, or if it has no suggestions. */
+    /** Links from research. Empty until the analysis pack has loaded, or if it has none. */
     suggestions: SuggestionRec[];
   };
 }

@@ -1,54 +1,159 @@
 {
   "title": "Who Am I personal suggestions",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "minItems": 1,
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "string",
-        "pattern": "^[a-z][a-z0-9_]*$"
+  "type": "object",
+  "properties": {
+    "norms": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the norms come from"
+        },
+        "traits": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mean": {
+                "type": "number",
+                "description": "Mean of the 4 items, on their 1-5 scale"
+              },
+              "sd": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "reversals": {
+                "description": "Pairs of items that say opposite things: agreeing with both voids the trait",
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"
+                    }
+                  ],
+                  "additionalItems": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "echo": {
+                "description": "Words from the trait's own items, which a link must not restate",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "mean",
+              "sd"
+            ],
+            "additionalProperties": false
+          }
+        }
       },
-      "kind": {
-        "type": "string",
-        "enum": [
-          "work",
-          "activity",
-          "learning",
-          "social"
-        ],
-        "description": "At most one suggestion of each kind is shown"
-      },
-      "when": {
-        "type": "string",
-        "minLength": 1,
-        "description": "Who it applies to: personality, values or thinking spectrums, each compared toward a pole and joined with \"and\", e.g. \"extraversion < -0.25\""
-      },
-      "title": {
-        "type": "string",
-        "minLength": 1,
-        "description": "A few words on what is suggested"
-      },
-      "text": {
-        "type": "string",
-        "minLength": 1,
-        "description": "One sentence on the published association, as a tendency, never as advice"
-      },
-      "source": {
-        "type": "string",
-        "minLength": 1,
-        "description": "The study or meta-analysis the association comes from"
-      }
+      "required": [
+        "source",
+        "traits"
+      ],
+      "additionalProperties": false
     },
-    "required": [
-      "id",
-      "kind",
-      "when",
-      "title",
-      "text",
-      "source"
-    ],
-    "additionalProperties": false
-  }
+    "suggestions": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "working",
+              "free_time",
+              "subjects"
+            ],
+            "description": "At most one of each kind is shown"
+          },
+          "trait": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "The personality spectrum the association runs on (never neuroticism)"
+          },
+          "toward": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The pole whose answers report more interest, as written in axes.yaml"
+          },
+          "r": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Uncorrected correlation from the source; at least 0.20. Under 0.30 reads \"a little\", from 0.30 \"somewhat\""
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "interest",
+              "participation"
+            ],
+            "description": "Whether the source measured interest or voluntary participation"
+          },
+          "interest": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What the source measured, as a noun phrase: \"artistic activities, such as drawing, design, writing or music\""
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The end with more interest, as a noun phrase naming the activity"
+          },
+          "away": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The other end: the same activity playing a small part, never a deficit"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The meta-analysis or large replicated study"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "trait",
+          "toward",
+          "r",
+          "outcome",
+          "interest",
+          "title",
+          "away",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "norms",
+    "suggestions"
+  ],
+  "additionalProperties": false
 }

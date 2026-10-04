@@ -94,6 +94,7 @@
           interests,
           alwaysDeep: settings.alwaysDeep,
           pack,
+          links: settings.showLinks,
         })
       : null,
   );
@@ -397,7 +398,15 @@
     {#if analysis.next.length}
       <section class="section result" id="sec-next" aria-labelledby="sec-next-title">
         <h2 class="section-title" id="sec-next-title" tabindex="-1">{copy.analysis.next.title}</h2>
-        <NextSteps groups={analysis.next} />
+        <NextSteps
+          groups={analysis.next}
+          open={{ links: settings.linksOpen }}
+          ontoggle={(id, open) => {
+            if (id !== 'links' || open === settings.linksOpen) return;
+            settings.linksOpen = open;
+            void settings.save();
+          }}
+        />
       </section>
     {/if}
   {/if}
