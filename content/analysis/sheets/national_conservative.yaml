@@ -5,7 +5,7 @@
 tradition: national_conservative
 sources:
   - "Yoram Hazony, The Virtue of Nationalism (2018)"
-  - "Pierre Manent, Democracy Without Nations? (2006)"
+  - "Pierre Manent, Democracy Without Nations? (2007; French original La raison des nations, 2006)"
   - "Roger Scruton, The Need for Nations (2004)"
   - "Samuel P. Huntington, Who Are We? (2004)"
   - "Edmund Burke Foundation, National Conservatism: A Statement of Principles (2022)"
@@ -21,8 +21,7 @@ answers:
   surrogacy.stance: 1   # Breaks the lifelong bond between parents and children (National Conservatism: A Statement of Principles); banned, as in several European states
   gene_editing.stance: 2   # Human heredity is not for remaking; keep heritable editing out of people, research under limits
   free_speech.stance: 2   # Open debate about nation, faith and immigration must stay free; only narrow exceptions like genocide denial
-  surveillance.stance: 5   # Protecting citizens from terror is a first duty of the national state; bulk powers under oversight
-  religious_liberty.stance: 5   # Room for conscience, but one territorial law of the land binds every faith alike (Scruton, The Need for Nations)
+  religious_liberty.stance: 6   # each faith free to run its own institutions and raise its children (National Conservatism: A Statement of Principles); one law of the land still binds all, so no blanket exemption (Scruton, The Need for Nations)
   protest.stance: 2   # Citizens and government alike must abide by the law; a political motive earns no discount (National Conservatism: A Statement of Principles)
   torture.stance: 3   # The nation's survival can force a terrible choice, but torture stays unlawful and answerable in court
   public_safety.stance: 5   # Public order first in serious cases, within the inherited common law of due process (National Conservatism: A Statement of Principles)
@@ -37,13 +36,12 @@ answers:
   immigration.stance: 2   # Much more restrictive until newcomers can be assimilated (National Conservatism: A Statement of Principles; Huntington, Who Are We?)
   policing.stance: 5   # Visible policing restores order and public trust; hire more officers
   same_sex_marriage.stance: 3   # Marriage is a lifelong bond of a man and a woman (National Conservatism: A Statement of Principles); civil partnerships for others
-  transgender.stance: 2   # Law should follow bodily sex; a legal change only for adults after surgery, never by self-declaration
+  transgender.stance: 1   # law should follow bodily sex; legal sex is the sex recorded at birth
   gender_roles.stance: 2   # Raising children is a priority of the highest order (National Conservatism: A Statement of Principles); don't penalize a parent at home
   prisons.stance: 2   # Protecting the law-abiding comes first; repeat and violent offenders belong in prison for longer
   climate.stance: 2   # Stewardship grows from love of home, not global targets (Scruton, Green Philosophy); affordable, secure energy comes first
   cooperation.stance: 3   # Treaties and alliances among independent nations, no transfer of authority to supranational bodies (Hazony, The Virtue of Nationalism; Manent, Democracy Without Nations?)
   foreign_aid.stance: 3   # Duties run first to fellow citizens; modest aid where it serves national interests and stability abroad
-  marriage.stance: 3   # Marriage is meant to be lifelong; unilateral divorce should take years, for the children's sake (National Conservatism: A Statement of Principles)
   gambling.stance: 3   # Betting firms profit from obsessive, destructive habits; firm loss limits and no advertising (National Conservatism: A Statement of Principles)
   moral_foundations.loyalty_1: 5   # National loyalty is what lets citizens accept governments they oppose (Scruton, The Need for Nations)
   moral_foundations.equality_3: 3   # Cohesion matters more than inequality; mobility alone does not justify leaders detached from the nation (Huntington, Who Are We?)
@@ -59,7 +57,7 @@ answers:
   moral_foundations.liberty_2: 2   # Inherited authority, faith and law rightly shape how people live; autonomy is not the highest good
   organ_donation.anchor_ml: 6   # The body is not a commodity, whatever both parties agree
   sex_work.anchor_ml: 6   # Consent does not make commercial sex harmless to the people involved or to society
-  surrogacy.anchor_ml: 7   # Motherhood and children are not for sale (National Conservatism: A Statement of Principles)
+  surrogacy.anchor_ml: 7   # motherhood and children are not for sale
   free_speech.anchor_liberty: 6   # Free debate is how a self-governing nation settles its disputes; misuse is the price
   surveillance.anchor_liberty: 3   # Privacy matters, but the state must be able to reach those plotting violence against the nation
   healthcare.anchor_ml: 2   # Paying for faster care is a free choice; public provision need not forbid it
@@ -78,4 +76,6 @@ divided:
   - vaccine_mandates.stance   # Some accept school and health-worker requirements as a civic duty; others, after the pandemic, reject mandates except in a true emergency
   - death_penalty.stance   # American adherents mostly back it for the worst murders; most European adherents accept abolition and prefer whole-life terms
   - guns.stance   # American adherents treat gun ownership as a right with background checks; most European adherents accept strict licensing
+  - surveillance.stance   # European adherents back bulk counter-terror powers under oversight; many American adherents, distrusting the intelligence agencies, want a warrant before citizens' data is searched
   - healthcare.stance   # European adherents defend tax-funded care for all; American adherents prefer private insurance with public cover for the poor and elderly
+  - marriage.stance   # some American adherents would restore fault or years apart for unilateral divorce; European adherents mostly keep divorce without blame after a wait

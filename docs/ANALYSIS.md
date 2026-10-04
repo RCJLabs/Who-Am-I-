@@ -168,7 +168,8 @@ answers a, as values from −1 to 1 (one step on a 7-point scale is 0.33).
    answered (`minQuestions`). Otherwise the status is `insufficient`, naming the spectrums still
    missing.
 2. **Distance.** D_A² = Σ w(u − t)² / Σ w, with w = c, halved (`dividedWeight` 0.5) on spectrums the
-   tradition's adherents split on. Once the compared principles have summed confidence of at least
+   tradition's adherents split on (questions they split on carry half the spectrum's weight or
+   more; split questions count at the middle of their scale in the target). Once the compared principles have summed confidence of at least
    3 (`principleEvidence`), D = √(0.75·D_A² + 0.25·D_P²), D_P being the same over those principles;
    otherwise D = D_A. Distances are rounded to 4 places and ties go to pack order, so the result is
    always the same for the same answers.

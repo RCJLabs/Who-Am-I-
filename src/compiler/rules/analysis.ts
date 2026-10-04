@@ -16,8 +16,13 @@ export interface PackCtx {
   rep: Reporter;
 }
 
-/** A tradition counts as placed toward a pole from this far out. */
-const PLACED = 0.3;
+/**
+ * A tradition counts as placed toward a pole from this far out. Spectrums such as Civil mix
+ * questions that divide traditions in different directions, and questions a tradition splits on
+ * count at the middle, so real traditions seldom sit far out on every spectrum: 0.2 is still
+ * clearly to one side (the results call anything from 0.15 out a lean).
+ */
+const PLACED = 0.2;
 /** Traditions needed toward each pole of every political spectrum. */
 const PER_POLE = 2;
 const OPPOSITE: Record<Side, Side> = { left: 'right', right: 'left', center: 'center' };

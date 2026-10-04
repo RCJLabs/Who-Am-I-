@@ -11,18 +11,20 @@ traditions:
     adherents: democratic socialists
     side: left
     summary: >-
-      Democratic socialists aim to extend democracy from government into the economy, so that
-      wealth and power are shared far more equally and everyone has the real means to live a free
-      and full life. They pursue this gradually, through elected majorities, strong unions, public
-      and cooperative ownership and universal services, while keeping civil liberties and political
-      pluralism. They accept higher taxes, a larger public sector and firm limits on what owners and
-      markets may decide, and that change won by votes is slow and can be undone.
+      Democratic socialists aim to extend democracy from government into the economy, so that wealth
+      and power are shared far more equally and everyone has the real means to live a free and full
+      life. They pursue this gradually, through elected majorities, strong unions, public and
+      cooperative ownership and universal services, committed to keeping civil liberties and
+      political pluralism. They accept higher taxes, firm limits on what owners and markets may
+      decide, the risks of forms of ownership not yet tried across a whole economy, such as
+      investment falling while ownership changes, and slow progress that votes can undo, as the
+      price of democratic control over economic life.
     neighbours:
       - id: social_democrat
         split: >-
           Democratic socialists want to move beyond capitalism toward social and cooperative
-          ownership; social democrats keep a market economy and share its gains through welfare,
-          unions and taxes.
+          ownership; social democrats keep a market economy of mostly private firms and share its
+          gains through welfare, unions and taxes.
       - id: green
         split: >-
           Democratic socialists and greens both want deep economic change; democratic socialists
@@ -44,8 +46,9 @@ traditions:
       lasting society must live within them and hand on a living world to future generations and
       other species. It aims at decentralized, human-scale economies, grassroots democracy and
       nonviolence, with wealth shared far more equally within and between countries. It accepts
-      lower material consumption, higher prices for what harms nature, and an economy that no
-      longer treats growth as its goal.
+      lower material consumption in rich countries, higher prices for what harms nature, and an
+      economy that no longer treats growth as its goal, as the price of keeping the planet livable
+      for those who come after.
     neighbours:
       - id: democratic_socialist
         split: >-
@@ -54,8 +57,9 @@ traditions:
           class first.
       - id: social_democrat
         split: >-
-          Greens doubt that growth can go on within the planet's limits and put ecology first;
-          social democrats count on growth to pay for welfare and good jobs.
+          Greens doubt that growth can be made to fit within the planet's limits and want an economy
+          that no longer depends on it; social democrats count on growth, decoupled from emissions
+          and resource use, to keep paying for welfare and good jobs.
       - id: social_liberal
         split: >-
           Greens and social liberals share commitments to civil liberties and social justice;
@@ -66,6 +70,7 @@ traditions:
       - meadows_limits_to_growth
     outside:
       - simon_ultimate_resource
+      - pollin_degrowth_vs_green_new_deal
       - scruton_green_philosophy
 
   - id: social_democrat
@@ -76,33 +81,42 @@ traditions:
       Social democracy seeks a society of equals built by democratic reform rather than revolution,
       keeping the market economy but harnessing it through strong unions, universal public services
       and progressive taxes, so that freedom, security and life chances are widely shared. It
-      accepts high taxes, a large public sector and firm limits on what owners and employers may
-      do, and it depends on high employment and broad public trust to keep that bargain affordable.
+      accepts high taxes, a large public sector and firm limits on what owners and employers may do
+      as the price of that security, and it depends on high employment and broad public trust to
+      keep the bargain affordable.
     neighbours:
       - id: democratic_socialist
         split: >-
-          Social democrats keep a market economy and share its gains through welfare, unions and
-          taxes; democratic socialists want to move beyond capitalism toward social and
-          cooperative ownership.
+          Social democrats keep a market economy of mostly private firms and share its gains through
+          welfare, unions and taxes; democratic socialists want to move beyond capitalism toward
+          social and cooperative ownership.
       - id: green
         split: >-
-          Social democrats count on growth to pay for welfare and good jobs; greens doubt that
-          growth can go on within the planet's limits and put ecology first.
+          Social democrats count on growth, decoupled from emissions and resource use, to keep
+          paying for welfare and good jobs; greens doubt that growth can be made to fit within the
+          planet's limits and want an economy that no longer depends on it.
       - id: social_liberal
         split: >-
-          Social democrats build fairness around unions and collective bargaining; social liberals
-          put more weight on individual rights, competition and equal opportunity.
+          Social democrats seek greater equality through unions, collective bargaining and universal
+          services; social liberals put more weight on individual rights, competition and fair
+          opportunity.
       - id: left_communitarian
         split: >-
           Social democrats and left communitarians both want security for working people; social
-          democrats put more weight on personal freedom and openness, left communitarians on
-          family, place and nation.
+          democrats put more weight on choice in private life and on open trade and international
+          cooperation, left communitarians on family, place and nation.
+      - id: centrist
+        split: >-
+          Social democrats want much smaller gaps in income and wealth, won through strong unions,
+          universal services and progressive taxes; centrists judge inequality by whether everyone
+          has a decent floor and a fair chance, and treat unions as one organized interest among
+          many.
     inside:
       - judt_ill_fares_the_land
       - crosland_future_of_socialism
     outside:
       - de_jouvenel_ethics_of_redistribution
-      - wright_anticapitalist
+      - przeworski_capitalism_and_social_democracy
 
   - id: social_liberal
     name: Social liberalism
@@ -111,15 +125,18 @@ traditions:
     summary: >-
       Social liberalism aims at a society in which everyone can choose and pursue their own way of
       life and has the real means to do so: education, health care, security against poverty and
-      opportunities open to all. It shields speech, privacy and choices that harm no one else,
-      while expecting the state to set fair rules for markets and judging inequalities by whether
-      they also benefit the least advantaged. It accepts higher taxes on the well-off, closer
-      regulation of business, and the risk of people making unwise choices about their own lives.
+      opportunities open to all. It shields speech, privacy and choices that harm no one else, while
+      expecting the state to set fair rules for markets and judging inequalities by whether they
+      also benefit the least advantaged. It accepts higher taxes on the well-off, closer regulation
+      of business, people making unwise choices about their own lives, and some traditional ways of
+      life finding it harder to pass themselves on, as the price of freedom that is real for
+      everyone.
     neighbours:
       - id: social_democrat
         split: >-
-          Social liberals put more weight on individual rights, competition and equal opportunity;
-          social democrats build fairness around unions and collective bargaining.
+          Social liberals put more weight on individual rights, competition and fair opportunity;
+          social democrats seek greater equality through unions, collective bargaining and universal
+          services.
       - id: green
         split: >-
           Social liberals and greens share commitments to civil liberties and social justice;
@@ -127,49 +144,51 @@ traditions:
           growth can continue within ecological limits.
       - id: centrist
         split: >-
-          Social liberals reason from principles of individual rights and fair opportunity;
-          centrists distrust any single set of principles and seek compromises that rival views can
-          accept.
+          Social liberals give priority to individual rights and fair opportunity, and press them
+          further; centrists weigh individual rights against security and other goods case by case,
+          seeking settlements that rival views can accept.
       - id: classical_liberal
         split: >-
-          Social liberals think freedom needs the means to use it, such as education, health care
-          and an income floor; classical liberals take freedom to mean freedom from coercion, and
-          keep the state small.
+          Social liberals think freedom also needs the means to use it, and want public services and
+          redistribution to secure those means for everyone; classical liberals take freedom to mean
+          freedom from coercion, and keep the state small, with public help limited to a basic
+          floor.
     inside:
       - hobhouse_liberalism
       - rawls_theory_of_justice
     outside:
-      - minogue_liberal_mind
+      - nozick_anarchy_state_and_utopia
       - sandel_liberalism_and_the_limits_of_justice
+      - minogue_liberal_mind
 
   - id: left_communitarian
     name: Left communitarianism
     adherents: left communitarians
     side: left
     summary: >-
-      Left communitarianism aims at a common life in which working people have security, dignity
-      and a voice, with solidarity rooted in work, family, place and nation and upheld by unions,
-      decent wages and redistribution. It holds that markets and individual choice should answer to
-      the communities people belong to, and that a shared national identity is what makes people
-      willing to share with one another. It accepts higher taxes, firmer limits on markets and on
-      some personal freedoms, and less openness to immigration and trade, as the price of secure
-      work and settled communities.
+      Left communitarianism aims at a common life in which working people have security, dignity and
+      a voice, with solidarity rooted in work, family, place and nation and upheld by unions, decent
+      wages and redistribution. It holds that markets and individual choice should answer to the
+      communities people belong to, and that a shared national identity is what makes people willing
+      to share with one another. It accepts higher taxes, firmer limits on markets and on some
+      personal freedoms, and higher prices and some lost growth from protecting industry and
+      admitting fewer newcomers, as the price of secure work and settled communities.
     neighbours:
       - id: social_democrat
         split: >-
           Left communitarians and social democrats both want security for working people; left
-          communitarians put more weight on family, place and nation, social democrats on personal
-          freedom and openness.
+          communitarians put more weight on family, place and nation, social democrats on choice in
+          private life and on open trade and international cooperation.
       - id: communitarian
         split: >-
           Left communitarians and communitarians both ground solidarity in family and community;
-          left communitarians look more to unions, redistribution and the nation, communitarians to
-          partnership between employers and workers and to cooperation among nations.
+          left communitarians want wealth shared more equally and decisions kept within the nation,
+          communitarians accept fairly earned gaps and share authority among nations.
       - id: national_conservative
         split: >-
           Left communitarians and national conservatives share loyalty to nation, family and work;
-          left communitarians look to unions and redistribution, national conservatives lean more
-          on markets and business.
+          left communitarians look to unions and redistribution, national conservatives more to
+          private enterprise and lower taxes.
     inside:
       - orwell_lion_and_unicorn
       - lasch_true_and_only_heaven
@@ -182,25 +201,33 @@ traditions:
     adherents: centrists
     side: center
     summary: >-
-      Centrism aims to keep a plural society free and governable: since rival interests and
-      convictions must share power, it treats compromise as a value in itself and distrusts any
-      single doctrine that claims the whole truth. It prefers step-by-step reform that can be tested
-      and corrected, within a mixed economy, a welfare state and the rule of law. It accepts slower
-      change, untidy bargains and the charge of lacking conviction as the price of keeping mistakes
-      reversible and opponents inside shared institutions.
+      Centrism aims to keep a plural society free and governable: holding that rival interests and
+      convictions must share power, it treats compromise as a virtue rather than a surrender and
+      distrusts any single doctrine that claims the whole truth. It prefers step-by-step reform that
+      can be tested and corrected, within a mixed economy, a welfare state and the rule of law. It
+      accepts slower change, untidy bargains and forgoing sweeping reforms that might have worked,
+      as the price of keeping mistakes reversible and opponents inside shared institutions.
     neighbours:
       - id: social_liberal
         split: >-
-          Centrists distrust any single set of principles and seek compromises that rival views can
-          accept; social liberals reason from principles of individual rights and fair opportunity.
+          Centrists weigh individual rights against security and other goods case by case, seeking
+          settlements that rival views can accept; social liberals give priority to individual
+          rights and fair opportunity, and press them further.
       - id: communitarian
         split: >-
-          Centrists look for workable compromises among rival views; communitarians start from a
+          Centrists seek compromises among rival views of the good life; communitarians start from a
           shared idea of the common good, rooted in families and communities.
       - id: classical_liberal
         split: >-
-          Centrists distrust fixed principles and weigh the state's role case by case; classical
-          liberals hold to the principle that government should be limited.
+          Centrists weigh the state's role case by case, within a mixed economy and a welfare state;
+          classical liberals hold to firm principles that keep government limited, with low taxes
+          and a basic safety net, warning that case-by-case decisions add up to an ever larger
+          state.
+      - id: social_democrat
+        split: >-
+          Centrists judge inequality by whether everyone has a decent floor and a fair chance, and
+          treat unions as one organized interest among many; social democrats want much smaller gaps
+          in income and wealth, won through strong unions, universal services and progressive taxes.
     inside:
       - schlesinger_vital_center
       - craiutu_faces_of_moderation
@@ -217,25 +244,31 @@ traditions:
       common good built by families, local communities, employers, unions and the other bodies of
       civil society, with each task left to the smallest body able to carry it and the state
       supporting them rather than taking their place. It pairs a social market economy, where
-      employers and workers bargain as partners, with shared moral standards and binding
-      cooperation among nations. It accepts that personal choice will sometimes give way to duties
-      toward others, and that some goods are kept out of the market, as the price of sturdier
+      employers and workers bargain as partners, with shared moral standards and binding cooperation
+      among nations. It accepts substantial taxes and social contributions, being outvoted at times
+      in the international bodies it joins, personal choice that sometimes gives way to duties
+      toward others, and some goods kept out of the market, as the price of solidarity, sturdier
       families and a stronger civic life.
     neighbours:
       - id: centrist
         split: >-
           Communitarians start from a shared idea of the common good, rooted in families and
-          communities; centrists look for workable compromises among rival views.
+          communities; centrists seek compromises among rival views of the good life.
       - id: traditional_conservative
         split: >-
-          Communitarians want the state, employers and unions to work together for the common good;
-          traditional conservatives are warier of state action and prefer institutions that grew on
-          their own.
+          Communitarians want the state, employers and unions to work together for the common good,
+          and nations to accept binding shared rules; traditional conservatives are warier of state
+          action and keep law-making with national institutions.
       - id: left_communitarian
         split: >-
           Communitarians and left communitarians both ground solidarity in family and community;
-          communitarians look to partnership between employers and workers and to cooperation
-          among nations, left communitarians more to unions, redistribution and the nation.
+          communitarians accept fairly earned gaps and share authority among nations, left
+          communitarians want wealth shared more equally and decisions kept within the nation.
+      - id: national_conservative
+        split: >-
+          Communitarians and national conservatives both value family and civil society;
+          communitarians share authority among nations through binding cooperation, national
+          conservatives keep law-making within the nation.
     inside:
       - etzioni_spirit_of_community
       - maritain_man_and_the_state
@@ -249,11 +282,12 @@ traditions:
     side: right
     summary: >-
       Classical liberalism aims at a society of free individuals under general laws that bind
-      government as firmly as anyone else, where markets and voluntary exchange, rather than central
-      direction, coordinate economic life. Government is kept to defense, justice, public goods and
-      a basic safety net, paid for by low and simple taxes. It accepts large inequalities, rewards
-      that often bear little relation to merit, and hard consequences for some choices, as a
-      smaller cost than what the alternatives would take from liberty and prosperity.
+      government as firmly as anyone else, where people may speak, worship and live as they choose,
+      and where markets and free trade, rather than central direction, coordinate economic life.
+      Government is kept to defense, justice, public goods and a basic safety net, paid for by low
+      and simple taxes. It accepts large inequalities, rewards and losses that often bear little
+      relation to merit, and hard consequences for some choices, judging them a smaller cost than
+      what the alternatives would take from liberty and prosperity.
     neighbours:
       - id: libertarian
         split: >-
@@ -262,23 +296,28 @@ traditions:
           do without it.
       - id: social_liberal
         split: >-
-          Classical liberals take freedom to mean freedom from coercion, and keep the state small;
-          social liberals think freedom needs the means to use it, such as education, health care
-          and an income floor.
+          Classical liberals take freedom to mean freedom from coercion, and keep the state small,
+          with public help limited to a basic floor; social liberals think freedom also needs the
+          means to use it, and want public services and redistribution to secure those means for
+          everyone.
       - id: traditional_conservative
         split: >-
           Classical liberals and traditional conservatives both defend markets and limited
-          government; classical liberals welcome the changes free people choose, traditional
-          conservatives value inherited customs even when reason can't fully justify them.
+          government; classical liberals leave adults free to live as they choose and welcome the
+          changes that follow, traditional conservatives want law and custom to uphold an inherited
+          moral order and change it only gradually.
       - id: centrist
         split: >-
-          Classical liberals hold to the principle that government should be limited; centrists
-          distrust fixed principles and weigh the state's role case by case.
+          Classical liberals hold to firm principles that keep government limited, with low taxes
+          and a basic safety net, warning that case-by-case decisions add up to an ever larger
+          state; centrists weigh the state's role case by case, within a mixed economy and a welfare
+          state.
     inside:
       - friedman_capitalism_and_freedom
       - hayek_constitution_of_liberty
     outside:
       - polanyi_great_transformation
+      - sandel_what_money_cant_buy
       - hobhouse_liberalism
 
   - id: libertarian
@@ -299,12 +338,17 @@ traditions:
           Libertarians would confine the state to protecting people and property, and some would do
           without it; classical liberals accept a limited state with public goods and a basic
           safety net.
+      - id: traditional_conservative
+        split: >-
+          Libertarians and traditional conservatives both distrust a large state; libertarians would
+          leave adults free to live as they choose so long as they respect others' rights,
+          traditional conservatives want law and custom to uphold an inherited moral order.
     inside:
       - nozick_anarchy_state_and_utopia
-      - boaz_libertarianism_primer
+      - boaz_libertarian_mind
     outside:
       - anderson_private_government
-      - kirk_chirping_sectaries
+      - nisbet_uneasy_cousins
 
   - id: traditional_conservative
     name: Traditional conservatism
@@ -315,25 +359,31 @@ traditions:
       such as the family, religion, local community, the rule of law and the nation, on the view
       that these hold practical wisdom no single generation could design afresh. It favors limited
       government, private property and a strong civil society of voluntary associations, with the
-      state keeping order and a safety net rather than directing how people live. It accepts
-      lasting inequality, slower redress of some wrongs, and limits that custom places on
-      individual choice, as the cost of continuity, stability and belonging.
+      state keeping order and a safety net rather than directing how people live. It accepts lasting
+      inequality, slower redress of some wrongs, and limits that law and custom place on individual
+      choice, as the cost of continuity, stability and belonging.
     neighbours:
       - id: national_conservative
         split: >-
-          Traditional conservatives put continuity and gradual change first; national
-          conservatives put the nation's cohesion and self-government first, and will use the state
-          more actively to protect them, on trade and immigration too.
+          Traditional conservatives put continuity, gradual change and limited government first;
+          national conservatives put the nation's cohesion and self-government first, and will use
+          the state more actively to protect them, including on trade and immigration.
       - id: communitarian
         split: >-
-          Traditional conservatives are warier of state action and prefer institutions that grew on
-          their own; communitarians want the state, employers and unions to work together for the
-          common good.
+          Traditional conservatives are warier of state action and keep law-making with national
+          institutions; communitarians want the state, employers and unions to work together for the
+          common good, and nations to accept binding shared rules.
       - id: classical_liberal
         split: >-
           Traditional conservatives and classical liberals both defend markets and limited
-          government; traditional conservatives value inherited customs even when reason can't
-          fully justify them, classical liberals welcome the changes free people choose.
+          government; traditional conservatives want law and custom to uphold an inherited moral
+          order and change it only gradually, classical liberals leave adults free to live as they
+          choose and welcome the changes that follow.
+      - id: libertarian
+        split: >-
+          Traditional conservatives and libertarians both distrust a large state; traditional
+          conservatives want law and custom to uphold an inherited moral order, libertarians would
+          leave adults free to live as they choose so long as they respect others' rights.
     inside:
       - burke_reflections
       - oakeshott_on_being_conservative
@@ -348,23 +398,29 @@ traditions:
     summary: >-
       National conservatism holds that the independent nation, bound by shared territory, language,
       history and the loyalty of its members to one another, is the basis of self-government, the
-      rule of law and solidarity among citizens. It seeks borders the nation controls, newcomers
-      who integrate, strong families, a public place for the nation's inherited religion and
-      culture, and a state that shapes trade and industry for its own people rather than deferring
-      to global markets or supranational bodies. It accepts higher prices and some lost growth from
-      protecting industry and admitting fewer newcomers, and looser international commitments, as
-      the price of cohesion and democratic control.
+      rule of law and solidarity among citizens. It seeks borders the nation controls, newcomers who
+      integrate, strong families, a public place for the nation's inherited religion and culture,
+      and a state that shapes trade and industry for its own people rather than deferring to global
+      markets or supranational bodies. It accepts higher prices and some lost growth from protecting
+      industry and admitting fewer newcomers, fewer binding commitments to international bodies, and
+      firmer limits on some personal freedoms, as the price of cohesion, strong families and
+      democratic control.
     neighbours:
       - id: traditional_conservative
         split: >-
           National conservatives put the nation's cohesion and self-government first, and will use
-          the state more actively to protect them, on trade and immigration too; traditional
-          conservatives put continuity and gradual change first.
+          the state more actively to protect them, including on trade and immigration; traditional
+          conservatives put continuity, gradual change and limited government first.
       - id: left_communitarian
         split: >-
           National conservatives and left communitarians share loyalty to nation, family and work;
-          national conservatives lean more on markets and business, left communitarians on unions
-          and redistribution.
+          national conservatives look more to private enterprise and lower taxes, left
+          communitarians to unions and redistribution.
+      - id: communitarian
+        split: >-
+          National conservatives and communitarians both value family and civil society; national
+          conservatives keep law-making within the nation, communitarians share authority among
+          nations through binding cooperation.
     inside:
       - hazony_virtue_of_nationalism
       - scruton_need_for_nations

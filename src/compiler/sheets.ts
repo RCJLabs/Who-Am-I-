@@ -2,8 +2,10 @@
 // and the statements behind the compared principles, answered as a thoughtful adherent of a
 // tradition would. The engine scores a sheet like anyone's answers, so a tradition's positions sit
 // on the same scales as the user's and are never written by hand. Questions its adherents split on
-// are listed as divided and left out; a spectrum or principle is divided when such questions carry
-// a third of its weight or more. E015 keeps every sheet complete and on shareable questions only.
+// are listed as divided: they count at the middle of their scale, where the tradition as a whole
+// sits when its adherents divide into camps, and are left out of the question-by-question fit. A
+// spectrum or principle is divided when such questions carry half its weight or more.
+// E015 keeps every sheet complete and on shareable questions only.
 import type { AnswerEvent } from '../model/answers.ts';
 import type { SheetFile } from '../model/analysis.ts';
 import type { Bundle, Item, ItemId, Topic } from '../model/content.ts';
@@ -16,7 +18,7 @@ import type { Env, Loc, Reporter } from './context.ts';
 import type { ParsedFile } from './yaml.ts';
 
 /** Share of a spectrum's or principle's weight that split questions need to make it divided. */
-export const DIVIDED_SHARE = 1 / 3;
+export const DIVIDED_SHARE = 1 / 2;
 
 export interface SheetTargets {
   positions: Record<string, number>;
@@ -95,26 +97,25 @@ export function scoreSheet(b: Bundle, env: Env, sheet: { pf: ParsedFile; file: S
   }
   if (rep.errors > errors) return null;
 
-  const s = buildAnswerState(b, events(file.answers));
+  const answered = buildAnswerState(b, events(file.answers));
   for (const id of Object.keys(file.answers)) {
-    if (!s.values.has(id)) rep.report('E015', `'${id}' wouldn't be shown with these answers`, at('answers', id));
+    if (!answered.values.has(id)) rep.report('E015', `'${id}' wouldn't be shown with these answers`, at('answers', id));
   }
-  // The same weighted mean as anyone's score, without the evidence threshold: a target is a
-  // judgement about the tradition, not limited by how many questions its adherents agree on.
-  const obs = observe(s, { includeSensitive: false });
-  const mean = (target: string): number | null => {
-    const list = obs.filter((o) => o.target === target);
-    return list.length ? scoreGroup(list, { minWeight: 0, fullWeight: 1, minTopics: 0 }).score : null;
-  };
-  // The weight each target would get with the split questions answered too (at the middle: weight
-  // doesn't depend on the answer).
+  // Split questions answered at the middle step, where the tradition as a whole sits on them.
   const middle: Record<ItemId, number> = {};
   for (const id of split) {
     const it = questions.get(id)!.item;
     if (isScale(it)) middle[id] = Math.ceil(scalePoints(it) / 2);
   }
+  const obs = observe(buildAnswerState(b, events({ ...file.answers, ...middle })), { includeSensitive: false });
+  // The same weighted mean as anyone's score, without the evidence threshold: a target is a
+  // judgement about the tradition, not limited by how many questions its adherents agree on.
+  const mean = (target: string): number | null => {
+    const list = obs.filter((o) => o.target === target);
+    return list.length ? scoreGroup(list, { minWeight: 0, fullWeight: 1, minTopics: 0 }).score : null;
+  };
   const weight = new Map<string, { total: number; split: number }>();
-  for (const o of observe(buildAnswerState(b, events({ ...file.answers, ...middle })), { includeSensitive: false })) {
+  for (const o of obs) {
     const w = weight.get(o.target) ?? { total: 0, split: 0 };
     w.total += o.w;
     if (split.has(o.item)) w.split += o.w;
@@ -126,14 +127,13 @@ export function scoreSheet(b: Bundle, env: Env, sheet: { pf: ParsedFile; file: S
   };
 
   const out: SheetTargets = { positions: {}, principles: {}, divided: [], answers: {} };
-  // Where every question is split, the target is the middle (and divided).
   const place = (target: string, id: string, into: Record<string, number>) => {
     const v = mean(target);
-    if (v === null && !isDivided(target)) {
+    if (v === null) {
       rep.report('E015', `No answer places '${file.tradition}' on '${id}'`, at('answers'));
       return;
     }
-    into[id] = v === null ? 0 : round(v);
+    into[id] = round(v);
     if (isDivided(target)) out.divided.push(id);
   };
   for (const a of axes) place(`axis:${a}`, a, out.positions);

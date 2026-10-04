@@ -480,8 +480,10 @@ engine, so its positions sit on the same scales as everyone's answers and can't 
 - **The middle step is a position,** not a way to avoid committing; nor is the last rung the
   default. Pick the step thoughtful adherents actually choose.
 - **`divided` is for real splits** within the tradition, where both camps can be named, often by
-  country. A spectrum or principle is divided when split questions carry a third of its weight;
-  it then counts half, and the results draw no tick for it.
+  country. A split question counts at the middle of its scale when the sheet is scored, where the
+  tradition as a whole sits on it, and is left out of the question-by-question fit, so neither
+  camp is held against the other. A spectrum or principle is divided when split questions carry
+  half its weight or more: it then counts half, and the results draw no tick for it.
 - **A new political question needs an answer in every sheet** (E015 lists what's missing): a
   sheet that skipped it would quietly place its tradition on less evidence than everyone else.
 - `node scripts/tradition-targets.ts` prints the positions the sheets give.
@@ -557,7 +559,7 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | E011 | choice with item-level effects needs option values |
 | E012 | sensitivity rules (no opt-out; identity items don't score) |
 | E013 | anchor not keyed toward its principle |
-| E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum; left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
+| E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum (0.2 or beyond, not divided); left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
 | E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |

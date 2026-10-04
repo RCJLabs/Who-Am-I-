@@ -127,7 +127,8 @@ describe('analysis pack', () => {
   it('places each tradition from its answer sheet', () => {
     expect(analysis!.traditions.map((t) => [t.id, t.positions, t.principles])).toEqual([
       ['reformers', { social: 0.7, civil: -0.35 }, { autonomy: 0.65, life: -0.15 }],
-      ['planners', { social: 0.5, civil: 0.65 }, { autonomy: -0.15, life: 0.35 }],
+      // planners split on one of the two life statements, which counts at the middle.
+      ['planners', { social: 0.5, civil: 0.65 }, { autonomy: -0.15, life: 0.15 }],
       ['keepers', { social: -0.7, civil: 0.35 }, { autonomy: -0.35, life: 0.85 }],
       ['marketeers', { social: -0.4, civil: -0.65 }, { autonomy: 0.85, life: 0.15 }],
       ['moderates', { social: 0.15, civil: 0 }, { autonomy: 0.15, life: 0.15 }],

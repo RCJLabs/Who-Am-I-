@@ -11,10 +11,9 @@ sources:
 answers:
   fairness.stance: 6                # gaps should be much smaller, though not identical shares (Tawney, Equality)
   abortion.stance: 6                # bodily autonomy and free provision as healthcare; most accept limits late in pregnancy
-  assisted_dying.stance: 5          # backs choice for the terminally ill; wary that poverty and thin care could pressure others
-  vaccine_mandates.stance: 5        # public health as shared provision, but wary of penalising low-paid workers
+  vaccine_mandates.stance: 5        # public health as shared provision, but wary of penalizing low-paid workers
   death_penalty.stance: 1           # abolitionist without exception; it falls hardest on the poor
-  drug_policy.stance: 5             # addiction as a health issue: decriminalise use, safe supply, no commercial market
+  drug_policy.stance: 5             # addiction as a health issue: decriminalize use, safe supply, no commercial market
   paternalism.stance: 5             # targets harmful industries more than individuals; wary of regressive sin taxes
   organ_donation.stance: 2          # keep bodies out of the market, cover donors' costs (Titmuss, The Gift Relationship)
   surrogacy.stance: 3               # altruistic only; paid pregnancy commodifies women's bodies, often poorer women's
@@ -23,16 +22,16 @@ answers:
   guns.stance: 2                    # strict licensing for sport and hunting; public safety over private arms
   surveillance.stance: 2            # state surveillance has long targeted the left; warrants under strict oversight
   religious_liberty.stance: 2       # equality law binds employers and services; exemptions only for worship and clergy
-  protest.stance: 5                 # civil disobedience is part of labour and civil-rights history; light penalties at most
+  protest.stance: 5                 # civil disobedience is part of labor and civil-rights history; light penalties at most
   torture.stance: 1                 # an absolute human-rights bar
-  public_safety.stance: 2           # due process shields the poor and marginalised, who are most exposed to policing
+  public_safety.stance: 2           # due process shields the poor and marginalized, who are most exposed to policing
   taxes.stance: 6                   # progressive taxes and universal services to narrow incomes (Tawney, Equality)
   healthcare.stance: 6              # tax-funded universal care by need, not means (Bevan, In Place of Fear)
   welfare.stance: 6                 # generous, lightly conditioned support; some back basic income (Wright, How to Be an Anticapitalist)
   minimum_wage.stance: 7            # living-wage campaigns aim at or above two-thirds of median pay
   regulation.stance: 7              # corporate power needs much stronger democratic control (Harrington, Socialism)
   unions.stance: 7                  # sectoral bargaining so that agreements cover most workers
-  trade.stance: 3                   # fair trade with labour and environmental standards; protect strategic industries
+  trade.stance: 3                   # fair trade with labor and environmental standards; protect strategic industries
   housing.stance: 7                 # freezes or cuts where rents are excessive, alongside large-scale social housing
   inheritance.stance: 7             # break up dynastic fortunes while sparing modest bequests (Tawney, Equality)
   immigration.stance: 5             # internationalist: more legal routes and equal rights for migrant workers
@@ -40,7 +39,7 @@ answers:
   transgender.stance: 6             # self-ID as a civil right; a gender-critical socialist feminist minority dissents
   gender_roles.stance: 6            # socialist feminism: universal childcare and leave reserved for fathers
   prisons.stance: 6                 # decarceration: alternatives by default, prison for those who are dangerous
-  climate.stance: 6                 # fast decarbonisation through public investment and a just transition (Aronoff et al., A Planet to Win)
+  climate.stance: 7   # decarbonize as fast as possible through public investment and a just transition (Aronoff et al., A Planet to Win)
   cooperation.stance: 5             # internationalist, but wants agreed rules enforced by accountable bodies
   foreign_aid.stance: 6             # meet the 0.7% target, alongside debt relief and global tax justice
   marriage.stance: 6                # no-fault divorce underpins women's independence
@@ -51,16 +50,16 @@ answers:
   moral_foundations.deserts_1: 3    # reward work, not ownership (Tawney), but contribution often reflects luck (Cohen)
   moral_foundations.equality_1: 5   # the tradition's central aim (Cohen, Why Not Socialism?)
   moral_foundations.loyalty_3: 2    # duties of solidarity and community are central (Cohen's community principle)
-  moral_foundations.deserts_2: 2    # universal provision ignores contribution; idle wealth is the real free-riding (Tawney)
+  moral_foundations.deserts_2: 3   # idle wealth is the real free-riding (Tawney, The Acquisitive Society), but universal provision ignores contribution
   moral_foundations.liberty_1: 2    # bigger threats to daily freedom come from bosses, landlords and poverty
   moral_foundations.equality_2: 4   # large gaps deny equal standing and fellowship (Tawney, Equality)
   moral_foundations.deserts_3: 5    # meeting need comes before rewarding effort
   moral_foundations.loyalty_2: 2    # solidarity is chosen and principled; leaving an unjust group can be right
-  moral_foundations.liberty_2: 3    # resents domination by bosses and moralisers, but accepts democratically made rules
+  moral_foundations.liberty_2: 3    # resents domination by bosses and moralizers, but accepts democratically made rules
   organ_donation.anchor_ml: 6       # desperation makes "free" sales suspect (Titmuss, The Gift Relationship)
-  surrogacy.anchor_ml: 5            # leans against paid pregnancy as commodification; some favour regulated pay
+  surrogacy.anchor_ml: 5            # leans against paid pregnancy as commodification; some favor regulated pay
   free_speech.anchor_liberty: 4     # torn: defends dissent (Luxemburg, The Russian Revolution) but backs narrow incitement laws
-  surveillance.anchor_liberty: 6    # privacy protects dissent and organising
+  surveillance.anchor_liberty: 6    # privacy protects dissent and organizing
   healthcare.anchor_ml: 6           # opposes two-tier queues; care by need (Bevan, In Place of Fear)
   welfare.anchor_desert: 1          # unemployment is structural, not a personal failing; no one left in hardship
   unions.anchor_loyal: 6            # don't cross a picket line; abide by the collective decision
@@ -69,10 +68,11 @@ answers:
   marriage.anchor_lib: 6            # freedom to leave protects women's independence
   family_crime.anchor_loyal: 2      # accountability for serious harm comes first, including abuse within families
   work.anchor_cw: 5                 # all who can should serve (Tawney), though some reject the paid-work ethic (Weeks)
-  work.anchor_lib: 1                # limits on hours are a founding labour victory; contracts between unequals aren't free
+  work.anchor_lib: 1                # limits on hours are a founding labor victory; contracts between unequals aren't free
   health.anchor_cw: 7               # pooling everyone's risk is the principle of a national health service (Bevan)
   gambling.anchor_lib: 3            # the industry profits from losses that fall on poorer families
 divided:
-  - sex_work.stance                 # Nordic-model socialist feminists (Ekis Ekman, Being and Being Bought) vs decriminalisers backing sex workers' rights
+  - assisted_dying.stance   # choice for the terminally ill vs disability-rights socialists who fear pressure on poor and disabled people while care is underfunded
+  - sex_work.stance                 # Nordic-model socialist feminists (Ekis Ekman, Being and Being Bought) vs decriminalizers backing sex workers' rights
   - policing.stance                 # defund-and-reinvest camp (Vitale, The End of Policing) vs reformers wanting accountable community policing
-  - sex_work.anchor_ml              # same split: the Nordic-model camp agrees, decriminalisers disagree
+  - sex_work.anchor_ml              # same split: the Nordic-model camp agrees, decriminalizers disagree

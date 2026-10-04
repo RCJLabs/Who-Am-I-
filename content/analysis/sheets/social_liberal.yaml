@@ -12,12 +12,11 @@ answers:
   abortion.stance: 6   # Procreative autonomy, with clinical limits late in pregnancy (R. Dworkin, Life's Dominion)
   assisted_dying.stance: 6   # Each adult is sovereign over their own body and life, with safeguards against pressure (Mill, On Liberty)
   vaccine_mandates.stance: 5   # The harm principle allows compulsion to protect others from infection, short of general mandates (Mill, On Liberty)
-  death_penalty.stance: 1   # Irreversible, error-prone and at odds with equal dignity; Mill's 1868 defence of it is not followed today
+  death_penalty.stance: 1   # Irreversible, error-prone and at odds with equal dignity; Mill's 1868 defense of it is not followed today
   drug_policy.stance: 5   # Treat use as a health matter, not a crime; legal sale of hard drugs stays a minority view (Mill, On Liberty)
   paternalism.stance: 5   # Mill's anti-paternalism, softened: small, low-cost protections can serve autonomy (G. Dworkin, "Paternalism")
   organ_donation.stance: 2   # Cover donors' costs, but a price would press hardest on the poor (Satz, Why Some Things Should Not Be for Sale)
   gene_editing.stance: 5   # Preventing serious disease serves fair opportunity; enhancement raises justice worries (Buchanan et al., From Chance to Choice)
-  guns.stance: 2   # Not among the basic liberties (Rawls, A Theory of Justice); strict licensing for sport and hunting protects others
   surveillance.stance: 2   # Privacy needs targeted warrants and independent oversight, not blanket monitoring
   religious_liberty.stance: 2   # Conscience is free in belief and worship, but services to the public must treat citizens equally (Rawls, A Theory of Justice)
   protest.stance: 3   # Civil disobedience accepts the penalty, but courts should weigh conscience and lighten the sanction (Rawls, A Theory of Justice)
@@ -30,7 +29,6 @@ answers:
   regulation.stance: 5   # Rules keep markets fair, safe and competitive without the state running them (Hobhouse, Liberalism)
   unions.stance: 5   # Collective bargaining offsets workers' weaker position; strikes within fair limits (Hobhouse, Liberalism)
   trade.stance: 5   # Free trade widens opportunity (Mill, Principles of Political Economy); those who lose out are owed help to adjust
-  housing.stance: 5   # Secure tenancies with rises near inflation, alongside building more homes
   inheritance.stance: 5   # Large unearned fortunes undercut fair opportunity (Mill, Principles of Political Economy; Rawls, A Theory of Justice)
   policing.stance: 5   # More visible, accountable community policing, without wider powers
   same_sex_marriage.stance: 7   # Equal standing for all families, in law and in schools, secures everyone's self-respect (Rawls, A Theory of Justice)
@@ -59,7 +57,7 @@ answers:
   surveillance.anchor_liberty: 6   # Private communication protects free thought; access only by targeted warrant
   healthcare.anchor_ml: 3   # Private care may be bought, provided the public system serves everyone well (Daniels, Just Health)
   welfare.anchor_desert: 1   # Desert is not the basis of distributive justice; no one should suffer for joblessness they cannot help (Rawls, A Theory of Justice)
-  unions.anchor_loyal: 2   # Individual judgement outweighs group pressure; the right to strike includes the right not to (Mill, On Liberty)
+  unions.anchor_loyal: 2   # Individual judgment outweighs group pressure; the right to strike includes the right not to (Mill, On Liberty)
   inheritance.anchor_desert: 5   # Large inheritances are unearned and skew opportunity, though modest bequests are fine (Mill, Principles of Political Economy)
   war.anchor_loyal: 2   # Citizens may dissent from, and refuse to fight in, an unjust war (Rawls, A Theory of Justice)
   marriage.anchor_lib: 6   # Adults must be free to end a marriage, even if some that could be saved will end
@@ -69,9 +67,11 @@ answers:
   health.anchor_cw: 6   # Pooling health risks is what people would choose not knowing their own fortunes (Rawls, A Theory of Justice)
   gambling.anchor_lib: 5   # Gambling must be tolerated, though its promoters may be restrained (Mill, On Liberty)
 divided:
-  - sex_work.stance   # Decriminalisers citing autonomy and harm reduction (Nussbaum, "Taking Money for Bodily Services") vs Nordic-model supporters who criminalise buyers
+  - sex_work.stance   # Decriminalizers citing autonomy and harm reduction (Nussbaum, "Taking Money for Bodily Services") vs Nordic-model supporters who criminalize buyers
   - surrogacy.stance   # Unpaid surrogacy with costs covered, the usual European view, vs paid surrogacy under strict rules, common among American social liberals
   - free_speech.stance   # Intent-based incitement laws (Waldron, The Harm in Hate Speech) vs banning only threats and incitement to violence, mostly in the US (R. Dworkin)
+  - guns.stance   # European adherents allow licensed hunting and sport only (2); many American adherents accept owning guns for self-defense with licensing and checks (3-5)
+  - housing.stance   # inflation-linked limits within longer tenancies, common among European adherents, vs caps only on steep rises, with building doing the main work, as in several American states
   - immigration.stance   # More legal routes and higher numbers (Carens, "Aliens and Citizens") vs holding or trimming current levels for integration, varying by country
-  - sex_work.anchor_ml   # Nordic-model supporters agree; decriminalisers who stress adult consent disagree
+  - sex_work.anchor_ml   # Nordic-model supporters agree; decriminalizers who stress adult consent disagree
   - surrogacy.anchor_ml   # Supporters of unpaid-only surrogacy agree; those backing regulated paid surrogacy disagree

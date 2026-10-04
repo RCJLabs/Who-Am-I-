@@ -12,7 +12,6 @@ sources:
 answers:
   fairness.stance: 3             # property is by nature unequal, but a decent floor is owed to all (Burke, Reflections; Scruton, How to Be a Conservative)
   assisted_dying.stance: 2       # protects the vulnerable and distrusts rules that widen once begun; at most rare, grave exceptions (Burke, Reflections, on prudence)
-  vaccine_mandates.stance: 5     # accepts long-settled school and health-worker requirements as a duty to others; wary of wider compulsion
   drug_policy.stance: 2          # hard drugs wreck the habits and families that order rests on; prison for dealers, fines or compulsory treatment for users
   paternalism.stance: 3          # government is an umpire, not a tutor; settled safety rules yes, campaigns to remake private habits no (Oakeshott, On Being Conservative)
   organ_donation.stance: 2       # some things should be given, not sold; keeps the settled gift system with costs covered
@@ -34,7 +33,6 @@ answers:
   inheritance.stance: 1          # perpetuating property in families binds the generations and sustains society (Burke, Reflections)
   immigration.stance: 3          # settlement at a pace that communities can absorb and integrate (Scruton, How to Be a Conservative)
   policing.stance: 5             # order is the first condition of freedom; more officers for visible, local policing by consent
-  transgender.stance: 3          # keeps settled recognition after diagnosis and years of living so, but sex-based rules in sport, prisons and single-sex spaces
   gender_roles.stance: 2         # families are the first little platoons; tax policy should not penalize a parent who stays home (after Burke, Reflections)
   prisons.stance: 2              # punishment should fit the crime, and repeat offenders should be kept from the public (James Q. Wilson, Thinking About Crime)
   climate.stance: 3              # stewardship of an inherited home, pursued locally and steadily rather than by costly top-down targets (Scruton, Green Philosophy)
@@ -70,10 +68,12 @@ answers:
   work.anchor_lib: 5                  # freedom of contract on hours, within basic safety law
   gambling.anchor_lib: 3              # free to bet, but not without limits where families bear the losses
 divided:
-  - abortion.stance              # pro-life conservatives, strongest in the United States, who allow it only to save life or after rape vs. British and Commonwealth conservatives who accept legal early abortion with later limits
+  - abortion.stance   # conservatives, strongest in the United States, who would allow it only to save life or after rape vs British and Commonwealth conservatives who accept legal early abortion with later limits
+  - vaccine_mandates.stance   # conservatives who keep long-settled school requirements, as in the US, Germany and Australia, vs those who keep vaccination voluntary, as Britain has since 1948, or reject mandates beyond a few high-risk jobs
   - death_penalty.stance         # American conservatives who keep it for the worst murders vs. British, Commonwealth and European conservatives who accept its abolition
   - guns.stance                  # American conservatives who hold gun ownership a constitutional right vs. British and Commonwealth conservatives who accept strict licensing
   - healthcare.stance            # American conservatives who favor private insurance with public cover for the poor and elderly vs. British and Commonwealth conservatives who defend tax-funded national health services
   - minimum_wage.stance          # American conservatives who keep a low floor to protect jobs vs. British and other conservatives who back a floor at half to two-thirds of typical pay
   - same_sex_marriage.stance     # conservatives who keep marriage for a man and a woman and offer civil partnerships vs. those who back same-sex marriage as extending a stabilizing institution
+  - transgender.stance   # American conservatives who keep legal sex as recorded at birth vs British and Commonwealth conservatives who allow recognition after diagnosis and years of living so
   - health.anchor_cw             # as with healthcare: American conservatives who prefer individual cover vs. British and Commonwealth conservatives who defend pooled national care

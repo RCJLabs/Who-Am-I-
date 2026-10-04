@@ -46,7 +46,7 @@ answers:
   moral_foundations.loyalty_1: 2   # no duty of allegiance to a country or its state (Huemer, The Problem of Political Authority)
   moral_foundations.equality_3: 4   # inequality can be fine, though just history, not opportunity, is the test (Nozick, Anarchy, State, and Utopia)
   moral_foundations.liberty_3: 1   # "there is no social entity with a good" to sacrifice individuals for (Nozick, Anarchy, State, and Utopia)
-  moral_foundations.deserts_1: 4   # markets broadly reward what others value, though entitlement, not desert, is the test (Nozick, Anarchy, State, and Utopia)
+  moral_foundations.deserts_1: 3   # markets often track contribution, but no pattern of reward is owed; entitlement is the test (Nozick, Anarchy, State, and Utopia)
   moral_foundations.equality_1: 2   # equality is no goal in itself; growth that lifts the poor matters more
   moral_foundations.loyalty_3: 4   # duties come from consent, not birthplace or membership (Rothbard, The Ethics of Liberty)
   moral_foundations.deserts_2: 4   # objects when workers are made to carry those who choose not to work
@@ -72,7 +72,7 @@ answers:
   health.anchor_cw: 1   # a compelled cross-subsidy; insurance should be chosen, not imposed
   gambling.anchor_lib: 7   # adults' own money, adults' own risk
 divided:
-  - abortion.stance   # pro-choice camp grounds it in the woman's self-ownership (Rothbard, For a New Liberty); pro-life camp extends rights to the unborn
+  - abortion.stance   # one camp grounds a right to abortion in the woman's self-ownership (Rothbard, For a New Liberty); the other extends the right to life to the fetus
   - death_penalty.stance   # retributivists accept execution for murder (Rothbard, The Ethics of Liberty); abolitionists deny any state that power
   - immigration.stance   # open borders (Huemer, "Is There a Right to Immigrate?") vs entry by invitation only (Hoppe; Rothbard, "Nations by Consent")
   - transgender.stance   # cosmopolitan libertarians defer to self-identification and private rule-makers; paleolibertarians hold to sex at birth

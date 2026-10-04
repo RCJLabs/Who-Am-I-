@@ -36,6 +36,7 @@ answers:
   inheritance.stance: 5   # families may pass on homes, farms and firms, but great fortunes should be taxed
   immigration.stance: 3   # a nation may set its own intake, at a pace that protects wages, trust and integration (Miller, Strangers in Our Midst)
   policing.stance: 5   # visible local officers; poorer areas bear the brunt of crime
+  same_sex_marriage.stance: 6   # marriage as lasting family commitment, adoption included; a faith-rooted wing dissents
   transgender.stance: 3   # recognize transition in law, but keep sport, prisons and single-sex spaces by sex
   gender_roles.stance: 2   # families should be able to afford a parent at home with young children, as in the family wage tradition
   prisons.stance: 3   # swift, certain punishment protects neighborhoods, with a second chance for first offenders
@@ -52,10 +53,10 @@ answers:
   moral_foundations.loyalty_3: 1   # special duties to compatriots and community are the core of the tradition (Miller, On Nationality)
   moral_foundations.deserts_2: 4   # reciprocity matters; those who can contribute should
   moral_foundations.liberty_1: 3   # too little done for economic security, too much managing of family life (Lasch, Haven in a Heartless World)
-  moral_foundations.equality_2: 4   # great gulfs in wealth destroy fellowship and a common culture (Tawney, Equality)
+  moral_foundations.equality_2: 3   # great gaps are wrong for what they do to fellowship and a common life, not in themselves (Orwell, The Lion and the Unicorn)
   moral_foundations.deserts_3: 4   # a decent life for all comes first, with effort rewarded above that floor
   moral_foundations.loyalty_2: 4   # loyalty to family, workmates and neighbors is a core virtue, though not the only one
-  moral_foundations.liberty_2: 2   # people live within obligations to family, work and place, not as sovereign selves
+  moral_foundations.liberty_2: 3   # obligations to family and place bind, but officials managing family life are resented (Lasch, Haven in a Heartless World)
   organ_donation.anchor_ml: 6   # some things money should not buy (Sandel, What Money Can't Buy)
   sex_work.anchor_ml: 6   # consent does not make sex a fit object of trade
   surrogacy.anchor_ml: 6   # paying for pregnancy turns women and babies into goods
@@ -75,4 +76,3 @@ answers:
 divided:
   - abortion.stance   # consistent-life adherents allow it only in rare cases; secular adherents accept early abortion with later limits
   - guns.stance   # American adherents defend a licensed right to own guns; European adherents back strict licenses for hunting and sport
-  - same_sex_marriage.stance   # faith-rooted adherents keep marriage for a man and a woman; others accept same-sex marriage as family commitment

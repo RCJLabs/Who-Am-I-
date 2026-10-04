@@ -92,7 +92,7 @@ export interface Tradition {
   positions: Record<AxisId, number>;
   /** Exactly the pack's compare list, scored from the answer sheet. */
   principles: Record<PrincipleId, number>;
-  /** Spectrums and principles adherents split on: split questions carry a third of the weight or more. */
+  /** Spectrums and principles adherents split on: split questions carry half the weight or more. */
   divided: string[];
   /** The sheet's answers to the political questions, as values -1..1; split questions left out. */
   answers: Record<ItemId, number>;

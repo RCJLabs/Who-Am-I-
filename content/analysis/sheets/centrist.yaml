@@ -50,7 +50,7 @@ answers:
   moral_foundations.equality_2: 2   # Gaps are judged by how they arise and whether a floor holds, not in themselves
   moral_foundations.deserts_3: 4   # The floor comes first; above it effort should pay (Popper, Open Society)
   moral_foundations.loyalty_2: 2   # Judgment over group loyalty: the trimmer shifts weight when his own side overreaches (Halifax, Character of a Trimmer)
-  moral_foundations.liberty_2: 2   # Accepts direction from accountable institutions acting under law
+  moral_foundations.liberty_2: 3   # accepts limited protective rules, but government should not aim at making people happy (Popper, "Utopia and Violence")
   organ_donation.anchor_ml: 5   # Compensation for costs yes, a market in kidneys no
   free_speech.anchor_liberty: 5   # An open society needs free criticism, with a limit at incitement (Popper, Open Society: paradox of tolerance)
   surveillance.anchor_liberty: 5   # Private messages stay private unless a judge's warrant says otherwise

@@ -78,8 +78,14 @@ describe('political traditions on the real content', () => {
   });
 
   it("names each tradition's own answer sheet as itself", () => {
+    // The questions its adherents split on are answered at the middle, where its targets put them.
+    const middle = (id: string) => {
+      const it = items.get(id)!;
+      return isScale(it) ? Math.ceil(scalePoints(it) / 2) : 4;
+    };
     for (const sheet of sheets) {
-      const f = match(stateOf(sheet.answers));
+      const answers = { ...sheet.answers, ...Object.fromEntries((sheet.divided ?? []).map((id) => [id, middle(id)])) };
+      const f = match(stateOf(answers));
       expect(f, sheet.tradition).toMatchObject({ status: 'match', named: [sheet.tradition], fit: { gap: 0 } });
     }
   });

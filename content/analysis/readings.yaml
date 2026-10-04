@@ -19,14 +19,14 @@
   year: 2019
   kind: book
   voice: democratic_socialist
-  note: Argues from equality, democracy and solidarity for taming capitalism and also eroding it, by building public services, cooperatives and a basic income within it.
+  note: Argues from equality, democracy and solidarity that capitalism must be tamed by welfare and regulation and also eroded, by building public services, cooperatives and a basic income within it.
 - id: polanyi_great_transformation
   author: Karl Polanyi
   title: The Great Transformation
   year: 1944
   kind: book
   voice: democratic_socialist
-  note: Argues that a self-regulating market society is a recent invention that tears at social bonds and provokes movements to protect society from it.
+  note: Argues that the self-regulating market was created by deliberate state action, and that treating labor, land and money as commodities tears at social bonds and provokes movements to protect society from it.
 - id: mouffe_on_the_political
   author: Chantal Mouffe
   title: On the Political
@@ -34,6 +34,13 @@
   kind: book
   voice: democratic_socialist
   note: Argues that politics seeking consensus beyond left and right hides real conflicts, which then return in harsher forms.
+- id: przeworski_capitalism_and_social_democracy
+  author: Adam Przeworski
+  title: Capitalism and Social Democracy
+  year: 1985
+  kind: book
+  voice: democratic_socialist
+  note: Argues that social democrats, seeking power through elections, must court voters beyond the working class and keep private investment flowing, so their reforms make capitalism fairer without moving beyond it.
 
 # Green politics
 - id: schumacher_small_is_beautiful
@@ -58,7 +65,7 @@
   year: 2010
   kind: book
   voice: social_democrat
-  note: Argues that the post-war welfare state was a moral and practical achievement, and that rising inequality and distrust of the state have hollowed out public life.
+  note: Argues that the post-war welfare state was a moral and practical achievement, that rising inequality and distrust of the state have hollowed out public life, and that social democracy is worth renewing.
 - id: crosland_future_of_socialism
   author: C. A. R. Crosland
   title: The Future of Socialism
@@ -73,6 +80,14 @@
   kind: book
   voice: social_democrat
   note: Argues that employers govern much of their workers' lives, so free markets alone do not make people free.
+- id: pollin_degrowth_vs_green_new_deal
+  author: Robert Pollin
+  title: De-Growth vs a Green New Deal
+  year: 2018
+  kind: article
+  in: New Left Review
+  voice: social_democrat
+  note: Argues that shrinking the economy would cut emissions far too little while costing jobs and living standards, and that large yearly investment in clean energy and efficiency can bring emissions to zero as economies grow.
 
 # Social liberalism
 - id: hobhouse_liberalism
@@ -88,7 +103,7 @@
   year: 1971
   kind: book
   voice: social_liberal
-  note: Argues that people choosing principles without knowing their place in society would secure equal basic liberties, fair equality of opportunity, and inequalities only where they benefit the least advantaged.
+  note: Argues that people choosing principles without knowing their place in society would agree on equal basic liberties, fair equality of opportunity, and inequalities only where they are to the greatest benefit of the least advantaged.
 - id: paine_rights_of_man
   author: Thomas Paine
   title: Rights of Man
@@ -173,6 +188,13 @@
   kind: book
   voice: communitarian
   note: Argues that a theory of justice built on free choice overlooks the attachments and communities that make people who they are.
+- id: sandel_what_money_cant_buy
+  author: Michael J. Sandel
+  title: "What Money Can't Buy: The Moral Limits of Markets"
+  year: 2012
+  kind: book
+  voice: communitarian
+  note: Argues that as buying and selling spread into health, schooling, civic life and personal relations, markets can be unfair where people are unequal and can corrupt the goods they price.
 
 # Classical liberalism
 - id: friedman_capitalism_and_freedom
@@ -188,7 +210,7 @@
   year: 1960
   kind: book
   voice: classical_liberal
-  note: Defends liberty as freedom from coercion under general rules, and applies the rule of law to welfare, taxation, labor unions and housing.
+  note: Argues that liberty matters because no one can know enough to direct a society, defines it as freedom from coercion under general rules, and applies the rule of law to welfare, taxation, labor unions and housing.
 - id: hayek_road_to_serfdom
   author: F. A. Hayek
   title: The Road to Serfdom
@@ -228,7 +250,7 @@
   note: Argues that states uniting several nations protect liberty better than states built around a single nation.
 - id: olson_rise_and_decline_of_nations
   author: Mancur Olson
-  title: The Rise and Decline of Nations
+  title: "The Rise and Decline of Nations: Economic Growth, Stagflation, and Social Rigidities"
   year: 1982
   kind: book
   voice: classical_liberal
@@ -242,10 +264,10 @@
   kind: book
   voice: libertarian
   note: Argues that a minimal state, limited to protection against force, theft and fraud and to enforcing contracts, is justified, and that any more extensive state violates people's rights.
-- id: boaz_libertarianism_primer
+- id: boaz_libertarian_mind
   author: David Boaz
-  title: "Libertarianism: A Primer"
-  year: 1997
+  title: "The Libertarian Mind: A Manifesto for Freedom"
+  year: 2015
   kind: book
   voice: libertarian
   note: Traces libertarian ideas from their historical roots and sets out the case for individual rights, free markets and limited government.
@@ -262,7 +284,7 @@
   year: 1981
   kind: book
   voice: libertarian
-  note: Argues that human ingenuity, spurred by prices and growth, has made resources more plentiful over time, not scarcer.
+  note: Argues that scarcity raises prices that spur people to find substitutes and new supplies, so resources have grown more plentiful over time, and that a growing population adds to the ingenuity behind this.
 
 # Traditional conservatism
 - id: burke_reflections
@@ -287,14 +309,14 @@
   kind: book
   voice: traditional_conservative
   note: Argues that treating every hardship as a problem for politics to solve steadily widens the reach of the state.
-- id: kirk_chirping_sectaries
-  author: Russell Kirk
-  title: "Libertarians: The Chirping Sectaries"
-  year: 1981
+- id: nisbet_uneasy_cousins
+  author: Robert Nisbet
+  title: "Conservatives and Libertarians: Uneasy Cousins"
+  year: 1980
   kind: article
   in: Modern Age
   voice: traditional_conservative
-  note: Argues that a politics of individual liberty alone neglects the order, community and moral tradition that liberty depends on.
+  note: Argues that liberty depends on the authority of families, churches and local communities, and that libertarians, by treating all authority as a threat to freedom, neglect the difference between these and the power of the state.
 - id: scruton_green_philosophy
   author: Roger Scruton
   title: "Green Philosophy: How to Think Seriously About the Planet"
