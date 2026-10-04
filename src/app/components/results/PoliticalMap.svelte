@@ -1,11 +1,12 @@
 <script lang="ts">
   // Two political spectrums as a map: economic across (Equality ← → Markets) and civil up
   // (Liberty ↓ ↑ Authority), the familiar layout. Political traditions sit under the user's dot as
-  // small gray reference marks; only the ones the analysis lists are labelled. The caption spells
-  // out the position in words, and the table below gives every position on every political
-  // spectrum, for anyone who can't read the chart.
+  // small gray reference marks. The ones the analysis lists are labelled, nearest first, where a
+  // label hides nothing (the named ones always; see map-labels.ts). The caption spells out the
+  // position in words, and the table below gives every position on every political spectrum, for
+  // anyone who can't read the chart.
   import { copy } from '../../copy.ts';
-  import { CHAR_W, placeLabels, textBox, type Box } from '../../map-labels.ts';
+  import { estimate, layoutMap, LO, px, py, SIZE, type Measure } from '../../map-labels.ts';
   import type { MapRef, PositionTable } from '../../view.ts';
 
   // Unique per instance, so two maps on one page don't share title ids.
@@ -34,40 +35,26 @@
   } = $props();
 
   const T = copy.analysis.traditions;
-  const LO = 12;
-  const SIZE = 276;
-  const px = (v: number) => LO + ((v + 1) / 2) * SIZE;
-  const py = (v: number) => LO + (1 - (v + 1) / 2) * SIZE;
   const ticks = [-0.5, 0.5];
-  // Pole labels sit on the side of each axis away from the dot, so the two never overlap.
-  const xLabelY = $derived(y >= 0 ? py(0) + 18 : py(0) - 8);
-  const yLabelX = $derived(x >= 0 ? px(0) - 8 : px(0) + 8);
-  const yAnchor = $derived(x >= 0 ? 'end' : 'start');
 
-  // Labels keep clear of the dot, the pole labels and the other marks.
-  const POLE_W = CHAR_W * 1.1;
-  const labels = $derived.by(() => {
-    const listed = refs.filter((r) => r.labelled);
-    if (!listed.length) return [];
-    const avoid: Box[] = [
-      { x: px(x) - 18, y: py(y) - 18, w: 36, h: 36 },
-      textBox(yPoles[1], yLabelX, LO + 20, yAnchor, POLE_W, 14),
-      textBox(yPoles[0], yLabelX, LO + SIZE - 10, yAnchor, POLE_W, 14),
-      textBox(xPoles[0], LO + 10, xLabelY, 'start', POLE_W, 14),
-      textBox(xPoles[1], LO + SIZE - 10, xLabelY, 'end', POLE_W, 14),
-      ...refs.map((r) => ({ x: px(r.x) - 5, y: py(r.y) - 5, w: 10, h: 10 })),
-    ];
-    return placeLabels(
-      listed.map((r) => ({ id: r.id, name: r.name, cx: px(r.x), cy: py(r.y) })),
-      { x: LO, y: LO, w: SIZE, h: SIZE },
-      avoid,
-    );
+  // Labels are placed from the widths of the font on screen, measured once the map is drawn.
+  let svg: SVGSVGElement | undefined = $state();
+  let measure: Measure = $state(estimate);
+  $effect(() => {
+    const ctx = svg && document.createElement('canvas').getContext('2d');
+    if (!svg || !ctx) return;
+    const family = getComputedStyle(svg).fontFamily;
+    measure = (text, size) => {
+      ctx.font = `600 ${size}px ${family}`;
+      return ctx.measureText(text).width;
+    };
   });
+  const layout = $derived(layoutMap({ x, y }, { x: xPoles, y: yPoles }, refs, measure));
   const desc = $derived(refs.length ? `${caption}. ${T.mapDesc(refs.length)}` : caption);
 </script>
 
 <figure class="map" data-testid="political-map">
-  <svg viewBox="0 0 300 300" role="img" aria-labelledby="{uid}-title {uid}-desc">
+  <svg bind:this={svg} viewBox="0 0 300 300" role="img" aria-labelledby="{uid}-title {uid}-desc">
     <title id="{uid}-title">{copy.results.politicalMap}</title>
     <desc id="{uid}-desc">{desc}</desc>
     <rect class="frame" x={LO} y={LO} width={SIZE} height={SIZE} rx="10" />
@@ -77,14 +64,14 @@
     {/each}
     <line class="axis" x1={px(0)} x2={px(0)} y1={LO} y2={LO + SIZE} />
     <line class="axis" x1={LO} x2={LO + SIZE} y1={py(0)} y2={py(0)} />
-    <text class="label" x={yLabelX} y={LO + 20} text-anchor={yAnchor}>{yPoles[1]}</text>
-    <text class="label" x={yLabelX} y={LO + SIZE - 10} text-anchor={yAnchor}>{yPoles[0]}</text>
-    <text class="label" x={LO + 10} y={xLabelY} text-anchor="start">{xPoles[0]}</text>
-    <text class="label" x={LO + SIZE - 10} y={xLabelY} text-anchor="end">{xPoles[1]}</text>
+    {#each layout.poles as p, k (k)}
+      <text class="label" x={p.x} y={p.y} text-anchor={p.anchor}>{p.text}</text>
+    {/each}
     {#each refs as r (r.id)}
       <circle class="ref" class:divided={r.divided} cx={px(r.x)} cy={py(r.y)} r="4" />
     {/each}
-    {#each labels as l (l.id)}
+    {#each layout.labels as l (l.id)}
+      {#if l.leader}<line class="leader" x1={l.leader.x1} y1={l.leader.y1} x2={l.leader.x2} y2={l.leader.y2} />{/if}
       <text class="ref-label" x={l.x} y={l.y} text-anchor={l.anchor}>
         {#each l.lines as line, k (k)}<tspan x={l.x} dy={k ? 13 : 0}>{line}</tspan>{/each}
       </text>
@@ -171,6 +158,10 @@
     fill: var(--surface);
     stroke: var(--chart-ref);
     stroke-width: 1.5;
+  }
+  .leader {
+    stroke: var(--muted);
+    stroke-width: 1;
   }
   .ref-label {
     fill: var(--text);

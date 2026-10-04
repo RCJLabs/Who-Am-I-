@@ -76,6 +76,8 @@ export interface TraditionsView {
   /** What it compared: "Compared on “Economic” and “Civil”." Null without a comparison. */
   basis: string | null;
   rows: TraditionRow[];
+  /** The traditions the summary names, nearest first. */
+  named: string[];
   /** The named tradition drawn as gray reference marks on the spectrums. */
   reference: { id: string; name: string } | null;
 }
@@ -326,6 +328,7 @@ function traditionsView(i: ComposeInput): TraditionsView | null {
     lead,
     basis: facts.status === 'insufficient' ? null : T.basis(facts.compared.map(spectrum), facts.principles.map((p) => principleLabel(i.bundle, p))),
     rows,
+    named: [...facts.named],
     reference: facts.named[0] ? { id: facts.named[0], name: name(facts.named[0]) } : null,
   };
 }

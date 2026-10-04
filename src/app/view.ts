@@ -249,18 +249,21 @@ export interface MapRef {
   y: number;
   /** Its adherents split on either map spectrum: drawn hollow. */
   divided: boolean;
-  /** Listed by the analysis, so labelled on the map. */
-  labelled: boolean;
+  /** Its place in the analysis list, nearest first, so it's labelled on the map; null when not listed. */
+  rank: number | null;
+  /** Named in the summary, so always labelled. */
+  named: boolean;
 }
 
-/** Every tradition placed on both map spectrums; the listed ones are labelled. */
-export function traditionRefs(pack: AnalysisPack, mapAxes: readonly [AxisId, AxisId], listed: readonly string[]): MapRef[] {
+/** Every tradition placed on both map spectrums; the listed ones are labelled, nearest first. */
+export function traditionRefs(pack: AnalysisPack, mapAxes: readonly [AxisId, AxisId], listed: readonly string[], named: readonly string[] = []): MapRef[] {
   const [ax, ay] = mapAxes;
   return pack.traditions.flatMap((t) => {
     const x = t.positions[ax];
     const y = t.positions[ay];
     if (x === undefined || y === undefined) return [];
-    return [{ id: t.id, name: t.name, x, y, divided: t.divided.includes(ax) || t.divided.includes(ay), labelled: listed.includes(t.id) }];
+    const rank = listed.indexOf(t.id);
+    return [{ id: t.id, name: t.name, x, y, divided: t.divided.includes(ax) || t.divided.includes(ay), rank: rank < 0 ? null : rank, named: named.includes(t.id) }];
   });
 }
 

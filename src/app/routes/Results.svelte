@@ -99,7 +99,7 @@
   );
   const traditionsShown = $derived(content.analysisState !== 'ready' || analysis?.traditions !== null);
   // Reference marks: every tradition on the map, the named one on each political spectrum.
-  const refs = $derived(pack && analysis?.traditions ? traditionRefs(pack, MAP_AXES, analysis.traditions.rows.map((r) => r.id)) : []);
+  const refs = $derived(pack && analysis?.traditions ? traditionRefs(pack, MAP_AXES, analysis.traditions.rows.map((r) => r.id), analysis.traditions.named) : []);
   const table = $derived(pack ? traditionTable(content.bundle, pack, profile, copy.analysis.traditions.table) : null);
   const reference = $derived(pack && analysis?.traditions?.reference ? pack.traditions.find((t) => t.id === analysis!.traditions!.reference!.id) ?? null : null);
   const referenceFor = (axis: AxisId) =>

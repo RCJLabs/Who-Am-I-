@@ -201,14 +201,14 @@ describe('political traditions on the map and in the table', () => {
   const b = fixtureBundle();
   const pack = fixturePack();
 
-  it('places every tradition on the two map spectrums, labelling the listed ones', () => {
-    const refs = traditionRefs(pack, ['social', 'civil'], ['reformers', 'moderates']);
-    expect(refs.map((r) => [r.id, r.x, r.y, r.labelled])).toEqual([
-      ['reformers', 0.7, -0.35, true],
-      ['planners', 0.5, 0.65, false],
-      ['keepers', -0.7, 0.35, false],
-      ['marketeers', -0.4, -0.65, false],
-      ['moderates', 0.15, 0, true],
+  it('places every tradition on the two map spectrums, ranking the listed ones for labels', () => {
+    const refs = traditionRefs(pack, ['social', 'civil'], ['moderates', 'reformers'], ['moderates']);
+    expect(refs.map((r) => [r.id, r.x, r.y, r.rank, r.named])).toEqual([
+      ['reformers', 0.7, -0.35, 1, false],
+      ['planners', 0.5, 0.65, null, false],
+      ['keepers', -0.7, 0.35, null, false],
+      ['marketeers', -0.4, -0.65, null, false],
+      ['moderates', 0.15, 0, 0, true],
     ]);
     expect(refs.some((r) => r.divided)).toBe(false);
     const divided = { ...pack, traditions: pack.traditions.map((t) => (t.id === 'keepers' ? { ...t, divided: ['civil'] } : t)) };
