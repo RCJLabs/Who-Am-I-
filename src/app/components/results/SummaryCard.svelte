@@ -21,6 +21,9 @@
   {#if summary.sentences.length}
     <p class="lede">{summary.sentences.join(' ')}</p>
   {/if}
+  {#if summary.tradition}
+    <p class="tradition" data-testid="summary-tradition">{summary.tradition}</p>
+  {/if}
   <dl class="tiles">
     {#each summary.tiles as t (t.id)}
       <div class="tile" data-testid="stat-{t.id}">
@@ -55,6 +58,11 @@
   }
   .lede {
     margin: 0;
+  }
+  .tradition {
+    margin: 0;
+    padding-left: 12px;
+    border-left: 3px solid var(--chart-ref);
   }
   .tiles {
     display: grid;

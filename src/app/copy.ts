@@ -274,6 +274,7 @@ export const copy = {
       splitFrom: (name: string) => `How it differs from ${q(name)}`,
       divided: (adherents: string, items: readonly string[]) => `${capitalize(adherents)} are divided on ${list(items.map(q))}.`,
       tick: (name: string) => `Gray marks show where ${q(name)} sits.`,
+      reference: (name: string, position: string) => `The gray mark shows ${q(name)}: ${position}.`,
       mapDesc: (n: number) => `Gray dots mark ${n} political traditions, for reference.`,
       legend: { you: 'You', traditions: 'Political traditions', divided: 'Divided on one of these spectrums' },
       table: { show: 'Where each tradition sits', who: 'Tradition', you: 'You', divided: 'Divided', none: 'Not enough answers' },

@@ -77,6 +77,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.traditions.splitFrom': [['Democratic socialism']],
   'analysis.traditions.divided': [['social democrats', ['Civil']], ['libertarians', ['Diplomatic', 'Liberty']]],
   'analysis.traditions.tick': [['Social democracy']],
+  'analysis.traditions.reference': [['Social democracy', 'Leans Equality']],
   'analysis.traditions.mapDesc': [[11]],
   'analysis.next.readings.intro': [[['Social democracy']], [['Social democracy', 'Green politics']]],
   'analysis.next.readings.inside': [['Social democracy']],

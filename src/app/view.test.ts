@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
-import { fixtureBundle, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
+import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
 import { parseHash, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
@@ -18,6 +18,8 @@ import {
   positionLabel,
   positionsByDomain,
   rankedPrinciples,
+  traditionRefs,
+  traditionTable,
   sources,
   strongestLeanings,
   toFivePoint,
@@ -191,6 +193,46 @@ describe('results helpers', () => {
       { key: 'tunes.genres.jazz', kind: 'pick', label: 'Jazz', v: 1 },
       { key: 'tunes.love', kind: 'rating', label: 'How much does music matter to you?', answer: 'Leaning “Hugely”', v: 0.75 },
       { key: 'tunes.genres.rock', kind: 'pick', label: 'Rock', v: 0.4 },
+    ]);
+  });
+});
+
+describe('political traditions on the map and in the table', () => {
+  const b = fixtureBundle();
+  const pack = fixturePack();
+
+  it('places every tradition on the two map spectrums, labelling the listed ones', () => {
+    const refs = traditionRefs(pack, ['social', 'civil'], ['reformers', 'moderates']);
+    expect(refs.map((r) => [r.id, r.x, r.y, r.labelled])).toEqual([
+      ['reformers', 0.7, -0.4, true],
+      ['planners', 0.5, 0.5, false],
+      ['keepers', -0.7, 0.4, false],
+      ['marketeers', -0.4, -0.6, false],
+      ['moderates', 0.1, 0.1, true],
+    ]);
+    expect(refs.some((r) => r.divided)).toBe(false);
+    const divided = { ...pack, traditions: pack.traditions.map((t) => (t.id === 'keepers' ? { ...t, divided: ['civil'] } : t)) };
+    expect(traditionRefs(divided, ['social', 'civil'], []).find((r) => r.id === 'keepers')!.divided).toBe(true);
+  });
+
+  it('lists the user, then each tradition by name, in words', () => {
+    const log = new Log();
+    log.add('alpha.stance', scale(1));
+    const s = buildAnswerState(b, log.events);
+    const profile = buildProfile(s, { appVersion: 't', now: 'x', includeSensitive: false, resolutions: [] });
+    const words = { you: 'You', divided: 'Divided', none: 'Not enough answers' };
+    const table = traditionTable(b, pack, profile, words);
+    expect(table.columns).toEqual([
+      { id: 'social', title: 'Social' },
+      { id: 'civil', title: 'Civil' },
+    ]);
+    expect(table.rows.map((r) => [r.name, ...r.cells])).toEqual([
+      ['You', 'Strongly Tradition', 'Not enough answers'],
+      ['Free exchange', 'Tradition', 'Liberty'],
+      ['Keeping', 'Strongly Tradition', 'Authority'],
+      ['Moderation', 'Center', 'Center'],
+      ['Planning', 'Progress', 'Authority'],
+      ['Reform', 'Strongly Progress', 'Liberty'],
     ]);
   });
 });

@@ -2,6 +2,7 @@
   // Results: a written summary first, then one section per kind of result, each pairing a short
   // read-out with its chart, then next steps. The analysis runs on this device (see
   // docs/ANALYSIS.md); the summary and next steps use only answers that could ever be shared.
+  import { untrack } from 'svelte';
   import type { AxisId, Item } from '../../model/content.ts';
   import { analyse } from '../../engine/analysis/index.ts';
   import { isMixed } from '../../engine/score.ts';
@@ -9,7 +10,16 @@
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { to } from '../routes.ts';
-  import { axisFeeders, challengeTotals, interestList, positionLabel, positionsByDomain, rankedPrinciples } from '../view.ts';
+  import {
+    axisFeeders,
+    challengeTotals,
+    interestList,
+    positionLabel,
+    positionsByDomain,
+    rankedPrinciples,
+    traditionRefs,
+    traditionTable,
+  } from '../view.ts';
   import ChallengeBar from '../components/results/ChallengeBar.svelte';
   import JumpBar from '../components/results/JumpBar.svelte';
   import NextSteps from '../components/results/NextSteps.svelte';
@@ -19,6 +29,7 @@
   import ResultSection from '../components/results/ResultSection.svelte';
   import SpectrumRow from '../components/results/SpectrumRow.svelte';
   import SummaryCard from '../components/results/SummaryCard.svelte';
+  import TraditionList from '../components/results/TraditionList.svelte';
   import Icon from '../components/Icon.svelte';
 
   /** Tension cards shown before "Show all". */
@@ -50,6 +61,12 @@
   // Sensitive: shown once answered, never as a "not yet" nudge toward questions about religion.
   const worldviewScored = $derived(worldview.filter((a) => profile.axes[a.id]?.score !== null));
 
+  // Political traditions come in a separate pack, loaded once there are answers to compare.
+  $effect(() => {
+    if (hasAny) untrack(() => void content.ensureAnalysis());
+  });
+  const pack = $derived(content.analysisPack);
+
   // The written analysis. Lazy: the shared profile is only built when this page shows.
   const facts = $derived(
     hasAny
@@ -60,6 +77,7 @@
           tensions: answers.tensions,
           flow: { alwaysDeep: settings.alwaysDeep },
           mapAxes: MAP_AXES,
+          pack,
         })
       : null,
   );
@@ -75,9 +93,17 @@
           tensions: answers.tensions,
           interests,
           alwaysDeep: settings.alwaysDeep,
+          pack,
         })
       : null,
   );
+  const traditionsShown = $derived(content.analysisState !== 'ready' || analysis?.traditions !== null);
+  // Reference marks: every tradition on the map, the named one on each political spectrum.
+  const refs = $derived(pack && analysis?.traditions ? traditionRefs(pack, MAP_AXES, analysis.traditions.rows.map((r) => r.id)) : []);
+  const table = $derived(pack ? traditionTable(content.bundle, pack, profile, copy.analysis.traditions.table) : null);
+  const reference = $derived(pack && analysis?.traditions?.reference ? pack.traditions.find((t) => t.id === analysis!.traditions!.reference!.id) ?? null : null);
+  const referenceFor = (axis: AxisId) =>
+    reference && !reference.divided.includes(axis) && reference.positions[axis] !== undefined ? { name: reference.name, score: reference.positions[axis] } : null;
 
   // Map
   const econ = $derived(profile.axes[MAP_AXES[0]]?.score ?? null);
@@ -169,6 +195,7 @@
 {#snippet spectrum(a: (typeof axes)[number], withMixed: boolean)}
   {@const sc = profile.axes[a.id]!}
   <SpectrumRow
+    reference={a.family === 'political' ? referenceFor(a.id) : null}
     title={a.title}
     poles={a.poles}
     score={sc.score}
@@ -209,6 +236,8 @@
             yPoles={civilAxis.poles}
             caption="{economicAxis.title}: {positionLabel(econ, economicAxis.poles)} · {civilAxis.title}: {positionLabel(civil, civilAxis.poles)}{mapLow ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}"
             low={mapLow}
+            {refs}
+            {table}
           />
         {:else}
           <p class="small muted flush">{copy.results.mapNeeds}</p>
@@ -217,7 +246,11 @@
       {/if}
       <div class="card rows">
         {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
+        {#if reference}<p class="small muted tick">{copy.analysis.traditions.tick(reference.name)}</p>{/if}
       </div>
+      {#if traditionsShown}
+        <TraditionList view={analysis.traditions} state={content.analysisState} />
+      {/if}
     </ResultSection>
 
     {#if values.length}
@@ -377,6 +410,12 @@
   }
   .flush {
     margin: 0;
+  }
+  .tick {
+    margin: 4px 0 8px;
+  }
+  .rows + :global(.traditions) {
+    margin-top: 10px;
   }
   .tension {
     margin-top: 10px;
