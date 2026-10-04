@@ -1,8 +1,10 @@
 # Results analysis
 
-The Results screen opens with a written summary, gives each section a short read-out, and ends
-with next steps. All of it is worked out on the device by the fixed rules below. There is no AI
-model and no network call; the app's security policy (`connect-src 'self'`) would block one anyway.
+The Results screen opens on an overview: a written summary, the pattern of your spectrums, your
+firmest leans, a link to each area's own page, and next steps. Each area's page pairs a short
+read-out with its charts. All of it is worked out on the device by the fixed rules below. There is
+no AI model and no network call; the app's security policy (`connect-src 'self'`) would block one
+anyway.
 
 | Layer | Where | What |
 |---|---|---|
@@ -24,7 +26,8 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Summary: headline and leanings | public profile only, never neuroticism |
 | Summary: counts (topics answered, challenges faced, open tensions) | every answer, so they match the sections below. Counts never say which topics or which way. |
 | Summary: the principle named in the tensions sentence | public tensions only |
-| Section read-outs | the private profile: they describe the chart beside them, which already shows those answers |
+| Overview: the pattern, your firmest leans, and the line on each area's link | public profile only: the political, values, thinking and personality spectrums, never neuroticism, worldview or taste. The Worldview link says only that it is sensitive. Counts on the links (tensions, positions, principles when none is endorsed) use every answer, like the tiles. |
+| Section read-outs (each area's page) | the private profile: they describe the chart beside them, which already shows those answers |
 | Next steps | public profile only; never a sensitive topic or item |
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
 | Links from research | public profile only: the four personality spectrums other than neuroticism, and the answers to their own items (for the reversal check) |
@@ -60,19 +63,41 @@ so far." to the read-out. 0.8 and over (`HIGH_CONFIDENCE`) counts as high.
    Personality read-out still describes it, beside the chart that shows it.
 4. "Your results so far".
 
-**Paragraph**, at most four sentences, in this order, each only when there is something to say:
+**Paragraph**, at most three sentences, in this order, each only when there is something to say:
 
 1. Political leanings, grouped by band: "Politically, you lean strongly toward “Progress”, toward
    “Global” and “Equality”, and slightly toward “Liberty”."
 2. The most endorsed principles.
-3. The challenge record: "You faced 12 challenges: you held your view through 7 and named a
-   difference in 5."
-4. Open tensions, and the principle of the most pressing one that involves no sensitive answer.
+3. Open tensions, and the principle of the most pressing one that involves no sensitive answer.
 
-With none of these, a prompt to answer a few more topics.
+With none of these, a prompt to answer a few more topics. The challenge record isn't repeated
+here: it has its own tile, and the How you think read-out spells it out.
 
 **Tiles:** topics answered (of all topics), challenges faced (and how many you reconsidered),
-and open tensions (with a button that jumps to the Tensions section).
+and open tensions (with a link to the Tensions page).
+
+## Overview
+
+The rest of the overview, all from the public profile (helpers in `src/app/view.ts`):
+
+- **Your pattern** (`patternGroups`): one line per scored spectrum in four areas, grouped around a
+  ring in the order politics, personality, how you think, values (the order the area colours were
+  validated in, so neighbours stay apart in colour-blind vision). A line's length is the distance
+  from the middle, whichever way; below `LOW_CONFIDENCE` it is drawn hollow. Neuroticism is left
+  out, as in the headline. Drawn only with at least three spectrums.
+- **Your firmest leans** (`firmestLeans`): the headline's rule (distance × confidence, at least the
+  "X" band) over the same spectrums, top three.
+- **The line on each area's link** (`areaLean` and `Results.svelte`): for the four spectrum areas,
+  the two clearest positions off the middle (0.15 or more), best evidenced first; otherwise "Near
+  the middle so far" or "Not enough answers yet". Principles: the two most endorsed (0.4 or more),
+  or how many are scored. Tensions: how many are open and thought through. Positions: how many
+  topics, and how many reconsidered. Taste: the two strongest picks, or the taste spectrums.
+  Worldview: only that it is sensitive.
+
+No sensitive topic feeds a political, values, thinking or personality spectrum today, so the
+overview and the area pages agree on those. Sensitive topics do feed principles, so the principles
+link (public) can name different principles from the Principles page (everything), as the summary
+already can.
 
 ## Section read-outs
 

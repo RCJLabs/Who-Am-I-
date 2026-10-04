@@ -50,7 +50,7 @@ describe('analysis summary', () => {
     expect(compose(personality).summary.headline).toBe('You describe yourself as very warm');
   });
 
-  it('writes at most four sentences, never leaving a gap or a NaN', () => {
+  it('writes at most three sentences, never leaving a gap or a NaN', () => {
     const log = new Log();
     log.add('alpha.stance', scale(1));
     log.add('alpha.anchor_auto', scale(7));
@@ -59,9 +59,12 @@ describe('analysis summary', () => {
     log.add('beta.anchor_auto', scale(1));
     const a = compose(log);
     expect(a.summary.sentences.length).toBeGreaterThan(0);
-    expect(a.summary.sentences.length).toBeLessThanOrEqual(4);
+    expect(a.summary.sentences.length).toBeLessThanOrEqual(3);
     for (const text of strings(a)) expect(text).not.toMatch(/undefined|NaN|null|\s{2}|\(\)/);
     expect(a.summary.sentences).toContain('Politically, you lean strongly toward “Tradition” and “Authority”.');
+    // The challenge record has its own tile, so the paragraph leaves it out.
+    expect(a.summary.sentences.join(' ')).not.toMatch(/You faced/);
+    expect(a.summary.tiles.find((t) => t.id === 'challenges')!.value).toBe(1);
   });
 
   it('keeps sensitive answers out of the summary, while the section read-out shows them', () => {

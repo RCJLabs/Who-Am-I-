@@ -1,5 +1,5 @@
 <script lang="ts">
-  // The top of the results page: a headline, a few sentences on what the answers add up to, and
+  // The top of the results overview: a headline, a few sentences on what the answers add up to, and
   // three numbers. The numbers are plain stat tiles: the value is the chart.
   import type { Summary } from '../../analysis/compose.ts';
   import { copy } from '../../copy.ts';
@@ -7,16 +7,17 @@
   let {
     summary,
     footer,
-    onTensions,
+    tensionsHref,
   }: {
     summary: Summary;
     footer: string;
-    onTensions: () => void;
+    /** Where "See where" on the open tensions tile goes. */
+    tensionsHref: string;
   } = $props();
 </script>
 
 <section class="card summary" data-testid="results-summary" aria-labelledby="summary-headline">
-  <p class="section-title kicker">{copy.analysis.summaryTitle}</p>
+  <p class="kicker small muted">{copy.analysis.summaryTitle}</p>
   <h2 id="summary-headline" class="headline" data-testid="summary-headline">{summary.headline}</h2>
   {#if summary.sentences.length}
     <p class="lede">{summary.sentences.join(' ')}</p>
@@ -29,9 +30,9 @@
       <div class="tile" data-testid="stat-{t.id}">
         <dt class="small muted">{t.label}</dt>
         <dd>
-          <span class="value">{t.value}</span>
+          <span class="value display">{t.value}</span>
           {#if t.id === 'tensions' && t.value > 0}
-            <button type="button" class="link small" onclick={onTensions}>{t.detail}</button>
+            <a class="small" href={tensionsHref}>{t.detail}</a>
           {:else if t.id !== 'tensions' && t.detail}
             <span class="small muted">{t.detail}</span>
           {/if}
@@ -47,14 +48,19 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 20px 18px 18px;
+    border-radius: 22px;
   }
   .kicker {
     margin: 0;
+    font-weight: 600;
   }
   .headline {
     margin: 0;
-    font-size: 1.35rem;
-    line-height: 1.25;
+    font-size: 1.65rem;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
   .lede {
     margin: 0;
@@ -85,21 +91,13 @@
     flex-direction: column;
   }
   .value {
-    font-size: 1.6rem;
-    font-weight: 650;
+    font-size: 1.75rem;
+    font-weight: 700;
     line-height: 1.1;
   }
-  .link {
+  .tile a {
     align-self: flex-start;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    font-size: 0.875rem;
-    color: var(--accent);
-    text-decoration: underline;
     text-underline-offset: 3px;
-    cursor: pointer;
   }
   .footer {
     margin: 0;

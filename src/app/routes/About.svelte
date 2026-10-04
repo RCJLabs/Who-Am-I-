@@ -52,11 +52,11 @@
   <section class="section">
     <h2>How the analysis works</h2>
     <p>
-      The summary, the short read-out above each chart and the next steps are written on this device, by fixed rules, from
-      your answers. No AI writes them, and nothing is sent anywhere.
+      The summary, your pattern, the short read-out above each chart and the next steps are written on this device, by fixed
+      rules, from your answers. No AI writes them, and nothing is sent anywhere.
     </p>
     <ul>
-      <li><strong>Only what you could share.</strong> Sensitive topics, such as religion, never shape what the summary says about you or what it suggests next; they only add to its counts. Their own sections still show what you answered.</li>
+      <li><strong>Only what you could share.</strong> Sensitive topics, such as religion, never shape the overview (the summary, your pattern and your firmest leans) or what it suggests next; they only add to its counts. Their own area's page still shows what you answered.</li>
       <li><strong>Reading from both sides.</strong> On your firmest positions, the app points to the strongest cases it put to each side, with the sources it already cites.</li>
       <li><strong>Topics to explore.</strong> The ones that would add most to your results: a spectrum that can't show yet, or one resting on few answers.</li>
       <li><strong>Worth a second look.</strong> The places where your answers pull apart most, as questions. There's often a good reason.</li>

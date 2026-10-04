@@ -3,18 +3,21 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
-import { parseHash, to } from './routes.ts';
+import { AREAS, parseHash, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import {
   activeTopic,
   answerLabel,
+  areaLean,
   axisFeeders,
   challengeTotals,
   endorsementLabel,
+  firmestLeans,
   interestList,
   nextTopic,
   orderedOptions,
+  patternGroups,
   positionLabel,
   positionsByDomain,
   rankedPrinciples,
@@ -41,6 +44,9 @@ describe('routes', () => {
     ['#/results', { name: 'results' }],
     ['#/results/abortion', { name: 'topic-results', topic: 'abortion' }],
     ['#/tension/a%7Cb%7Cc', { name: 'tension', key: 'a|b|c' }],
+    ['#/area/politics', { name: 'area', area: 'politics' }],
+    ['#/area/nope', { name: 'results' }],
+    ['#/area', { name: 'results' }],
     ['#/settings', { name: 'settings' }],
     ['#/nope', { name: 'not-found', path: '/nope' }],
   ])('parses %j', (hash, route) => {
@@ -50,6 +56,7 @@ describe('routes', () => {
   it('round-trips hrefs', () => {
     expect(parseHash(to.flow('vaccine_mandates', 'anchor_ba'))).toEqual({ name: 'flow', topic: 'vaccine_mandates', edit: 'anchor_ba' });
     expect(parseHash(to.tension('bodily_autonomy|abortion|vaccine_mandates'))).toEqual({ name: 'tension', key: 'bodily_autonomy|abortion|vaccine_mandates' });
+    for (const area of AREAS) expect(parseHash(to.area(area))).toEqual({ name: 'area', area });
   });
 });
 
@@ -152,6 +159,51 @@ describe('results helpers', () => {
     const scores = { a: { ...scored(0.9, 0.5), family: 'political' }, b: { ...scored(-0.6), family: 'political' }, c: { ...scored(0.3), family: 'political' }, d: { ...scored(null), family: 'political' }, e: { ...scored(0.8), family: 'political' } } as Profile['axes'];
     expect(strongestLeanings(axes, scores).map((l) => l.label)).toEqual(['Strongly E+', 'B-', 'Strongly A+']);
     expect(strongestLeanings(axes, scores, 1)).toEqual([{ axis: 'e', title: 'E', label: 'Strongly E+' }]);
+  });
+
+  it('draws the overview pattern from four areas, without unnamed traits, unscored spectrums, worldview or taste', () => {
+    const ax = (id: string, family: Axis['family'], poles: [string, string]): Axis => ({ ...axis(id, poles), family });
+    const axes = [
+      ax('econ', 'political', ['Equality', 'Markets']),
+      ax('kind', 'personality', ['Tough', 'Warm']),
+      ax('moody', 'personality', ['Calm', 'Reactive']),
+      ax('change', 'values', ['Stability', 'Change']),
+      ax('god', 'worldview', ['Natural', 'More']),
+      ax('tune', 'taste', ['Popular', 'Niche']),
+      ax('steady', 'thinking', ['Steady', 'Flexible']),
+    ];
+    const scores = {
+      econ: { ...scored(-0.75, 0.6), family: 'political' },
+      kind: { ...scored(0.5, 0.4), family: 'personality' },
+      moody: { ...scored(0.9), family: 'personality' },
+      change: { ...scored(0.1), family: 'values' },
+      god: { ...scored(1), family: 'worldview' },
+      tune: { ...scored(-1), family: 'taste' },
+      steady: { ...scored(null), family: 'thinking' },
+    } as Profile['axes'];
+    const unnamed = new Set(['moody']);
+
+    // Ring order, one spoke per scored spectrum; the length ignores the evidence, which shows as hollow.
+    expect(patternGroups(axes, scores, unnamed)).toEqual([
+      { area: 'politics', spokes: [{ axis: 'econ', title: 'ECON', label: 'Strongly Equality', strength: 0.75, low: false }] },
+      { area: 'personality', spokes: [{ axis: 'kind', title: 'KIND', label: 'Warm', strength: 0.5, low: true }] },
+      { area: 'values', spokes: [{ axis: 'change', title: 'CHANGE', label: 'Center', strength: 0.1, low: false }] },
+    ]);
+    // The headline's rule: past "leans", by strength times evidence. Near the middle never counts.
+    expect(firmestLeans(axes, scores, unnamed)).toEqual([
+      { axis: 'econ', title: 'ECON', label: 'Strongly Equality', area: 'politics' },
+      { axis: 'kind', title: 'KIND', label: 'Warm', area: 'personality' },
+    ]);
+    expect(firmestLeans(axes, scores, unnamed, 1).map((l) => l.axis)).toEqual(['econ']);
+    expect(areaLean(axes, scores, 'personality', unnamed)).toBe('Warm');
+    expect(areaLean(axes, scores, 'values', unnamed)).toBeNull();
+    expect(areaLean(axes, scores, 'thinking', unnamed)).toBeNull();
+  });
+
+  it("an area card's line names its two clearest positions, best evidenced first", () => {
+    const axes = [axis('a', ['A-', 'A+']), axis('b', ['B-', 'B+']), axis('c', ['C-', 'C+'])];
+    const scores = { a: { ...scored(0.2), family: 'political' }, b: { ...scored(-0.8, 0.3), family: 'political' }, c: { ...scored(0.5), family: 'political' } } as Profile['axes'];
+    expect(areaLean(axes, scores, 'political', new Set())).toBe('C+ · Strongly B-');
   });
 
   it('ranks scored principles from most endorsed to most rejected', () => {

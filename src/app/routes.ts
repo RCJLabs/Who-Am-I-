@@ -1,10 +1,17 @@
 // Hash routes. Hash routing works on GitHub Pages and inside the Android app without server rules.
+
+/** The results areas, each with its own page under the overview, in overview order. */
+export const AREAS = ['politics', 'values', 'thinking', 'worldview', 'personality', 'principles', 'tensions', 'positions', 'taste'] as const;
+export type AreaId = (typeof AREAS)[number];
+const isArea = (x: string): x is AreaId => (AREAS as readonly string[]).includes(x);
+
 export type Route =
   | { name: 'home' }
   | { name: 'topics' }
   | { name: 'flow'; topic: string; edit?: string }
   | { name: 'results' }
   | { name: 'topic-results'; topic: string }
+  | { name: 'area'; area: AreaId }
   | { name: 'tension'; key: string }
   | { name: 'settings' }
   | { name: 'about' }
@@ -40,6 +47,8 @@ export function parseHash(hash: string): Route {
       return second ? { name: 'topic-results', topic: second } : { name: 'results' };
     case 'tension':
       return second ? { name: 'tension', key: second } : { name: 'results' };
+    case 'area':
+      return second && isArea(second) ? { name: 'area', area: second } : { name: 'results' };
     case 'settings':
       return { name: 'settings' };
     case 'about':
@@ -58,6 +67,7 @@ export const to = {
   flow: (topic: string, edit?: string) => `#/m/${encodeURIComponent(topic)}${edit ? `?edit=${encodeURIComponent(edit)}` : ''}`,
   results: () => '#/results',
   topicResults: (topic: string) => `#/results/${encodeURIComponent(topic)}`,
+  area: (area: AreaId) => `#/area/${area}`,
   tension: (key: string) => `#/tension/${encodeURIComponent(key)}`,
   settings: () => '#/settings',
   about: () => '#/about',

@@ -1,5 +1,5 @@
-// The results page as a whole: the written summary, the jump bar and the next steps, for a full
-// persona and for someone who has only described their personality.
+// The results as a whole: the overview (summary, pattern, a link to each area, next steps) and the
+// area pages, for a full persona and for someone who has only described their personality.
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -40,7 +40,7 @@ async function suggestedTopics(page: Page): Promise<string[]> {
   return page.locator('[data-testid^="rec-explore-"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-testid')!.slice('rec-explore-'.length)));
 }
 
-test('the results open with a summary, a jump bar to each section, and next steps', async ({ page }) => {
+test('the results open on an overview: a summary, the pattern, a link to each area, and next steps', async ({ page }) => {
   const persona = 'tests/sim/personas/religious_conservative.yaml';
   const { topics, expect: expected } = parse(readFileSync(persona, 'utf8')) as { topics: string[]; expect: { tensions: string[] } };
   await restorePersona(page, persona);
@@ -54,17 +54,37 @@ test('the results open with a summary, a jump bar to each section, and next step
   await expect(page.getByTestId('stat-tensions')).toContainText(String(expected.tensions.length));
   await expect(summary).not.toContainText(WORLDVIEW);
 
-  // The jump bar takes you to a section, puts its heading in view below the bar, and marks it current.
-  await page.getByTestId('jump-tensions').click();
-  const heading = page.locator('#sec-tensions h2');
-  await expect(heading).toBeFocused();
-  await expect(heading).toBeInViewport();
-  await expect(page.getByTestId('jump-tensions')).toHaveAttribute('aria-current', 'location');
-  const below = await page.evaluate(() => {
-    const bar = document.querySelector('[data-testid="jump-bar"]')!.getBoundingClientRect();
-    return document.querySelector('#sec-tensions h2')!.getBoundingClientRect().top >= bar.bottom - 1;
-  });
-  expect(below).toBe(true);
+  // The pattern: a line per spectrum, never the worldview one; tapping a line names it.
+  const spokes = page.locator('[data-testid^="spoke-"]');
+  expect(await spokes.count()).toBeGreaterThanOrEqual(10);
+  await expect(page.getByTestId('spoke-beyond_nature')).toHaveCount(0);
+  await page.getByTestId('spoke-cultural').click();
+  await expect(page.getByTestId('spoke-cultural')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByTestId('pattern-status')).toContainText(/Cultural · (Strongly )?Tradition/);
+  // The ring is one stop for the keyboard; arrow keys move round it a line at a time.
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByTestId('spoke-cultural')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByTestId('spoke-diplomatic')).toBeFocused();
+  await expect(page.getByTestId('pattern-status')).toContainText('Diplomatic ·');
+  await expect(page.locator('[data-testid^="spoke-"][tabindex="0"]')).toHaveCount(1);
+  await expect(page.getByTestId('firmest')).not.toContainText(WORLDVIEW);
+  await expect(page.getByTestId('area-worldview')).toContainText('Sensitive: kept out of your summary');
+
+  // Each area has its own page, which opens at its title; Results goes back to where you were.
+  const link = page.getByTestId('area-tensions');
+  await link.scrollIntoViewIfNeeded();
+  const y = await page.evaluate(() => scrollY);
+  expect(y).toBeGreaterThan(0);
+  await link.click();
+  await expect(page.locator('#sec-tensions h1')).toBeFocused();
+  await expect(page.getByTestId('tension-row').first()).toBeVisible();
+  await page.getByTestId('area-back').click();
+  await expect(summary).toBeVisible();
+  await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(Math.round(y));
+  // The open tensions tile leads to the same page.
+  await page.getByTestId('stat-tensions').getByRole('link').click();
+  await expect(page.getByTestId('section-tensions')).toBeVisible();
+  await page.goBack();
 
   // Next steps: both sides of the firmest positions, no sensitive topics to explore, three reflections at most.
   await expect(page.getByTestId('next-read').locator('[data-testid^="rec-case-"]').first()).toBeVisible();
@@ -91,10 +111,18 @@ test('someone who has only described their personality gets a summary of that, a
 
   await expect(page.getByTestId('summary-headline')).toContainText('You describe yourself as');
   await expect(page.getByTestId('stat-topics')).toContainText('1');
-  // Only the sections that have something to show are listed.
-  await expect(page.getByTestId('jump-personality')).toBeVisible();
-  for (const id of ['worldview', 'principles', 'positions']) await expect(page.getByTestId(`jump-${id}`)).toHaveCount(0);
+  // The pattern draws the four traits the summary may name, never emotional reactivity.
+  await expect(page.locator('[data-testid^="spoke-"]')).toHaveCount(4);
+  await expect(page.getByTestId('spoke-neuroticism')).toHaveCount(0);
+  await expect(page.getByTestId('firm-extraversion')).toContainText('Strongly Outgoing');
+  // Only the areas that have something to show are listed; the others say what's missing.
+  await expect(page.getByTestId('area-personality')).toContainText('Strongly Outgoing');
+  for (const id of ['worldview', 'principles', 'positions']) await expect(page.getByTestId(`area-${id}`)).toHaveCount(0);
+  await expect(page.getByTestId('area-politics')).toContainText('Not enough answers yet');
+  await page.getByTestId('area-politics').click();
+  await expect(page.getByTestId('section-politics')).toBeVisible();
   await expect(page.getByTestId('political-map')).toHaveCount(0);
+  await page.getByTestId('area-back').click();
 
   // Nothing to read both sides of or reflect on yet: just three topics to start, none of them sensitive.
   await expect(page.getByTestId('next-read')).toHaveCount(0);
@@ -130,11 +158,12 @@ test('someone who has only described their personality gets a summary of that, a
 test('the political traditions: where the answers sit, the map table, and readings from inside and out', async ({ page }) => {
   await restorePersona(page, 'tests/sim/personas/religious_conservative.yaml');
 
-  // Named only as reference points, in the summary and the Politics section.
-  const traditions = page.getByTestId('traditions');
-  await expect(traditions).toHaveAttribute('data-status', /^(match|between)$/);
+  // Named only as reference points, in the summary and on the Politics page.
   await expect(page.getByTestId('summary-tradition')).toContainText('Of the political traditions compared here, your answers sit');
   await expect(page.getByTestId('summary-tradition')).toContainText('conservatism');
+  await page.getByTestId('area-politics').click();
+  const traditions = page.getByTestId('traditions');
+  await expect(traditions).toHaveAttribute('data-status', /^(match|between)$/);
   await expect(traditions.locator('[data-testid^="tradition-"]')).toHaveCount(3);
   await expect(traditions).not.toContainText(/you are an? /i);
 
@@ -144,7 +173,8 @@ test('the political traditions: where the answers sit, the map table, and readin
   await expect(table.locator('tbody tr')).toHaveCount(12);
   await expect(table.locator('tbody tr').first()).toContainText('You');
 
-  // Readings: from inside the tradition, and critiques from outside it.
+  // Readings, among the next steps on the overview: from inside the tradition, and critiques from outside it.
+  await page.getByTestId('area-back').click();
   const readings = page.getByTestId('next-readings').locator('[data-testid^="rec-read-"]');
   expect(await readings.count()).toBeGreaterThanOrEqual(2);
   await expect(page.getByTestId('next-readings')).toContainText('from inside');

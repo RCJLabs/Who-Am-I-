@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { compile } from '../src/compiler/compile.ts';
 import { loadContentDir } from '../src/compiler/load.ts';
 import { formatPretty } from '../src/compiler/report.ts';
+import { PATTERN_AREAS } from '../src/app/view.ts';
 
 describe('real content', () => {
   const { bundle, analysis, diagnostics } = compile(loadContentDir('content'));
@@ -29,13 +30,23 @@ describe('real content', () => {
     expect(offenders).toEqual([]);
   });
 
-  // The map dot comes from everything answered and the traditions from shareable answers only;
-  // they agree because nothing sensitive feeds a political spectrum.
-  it('feeds the political spectrums from no sensitive topic or question', () => {
-    const political = new Set(Object.values(bundle!.axes).filter((a) => a.family === 'political').map((a) => `axis:${a.id}`));
+  // The map dot comes from everything answered and the traditions from shareable answers only, as
+  // do each area's page and the results overview (pattern, firmest leans, the line on each area's
+  // link). They agree because nothing sensitive feeds these spectrums.
+  it('feeds the political, values, thinking and personality spectrums from no sensitive topic or question', () => {
+    const families = new Set<string>(PATTERN_AREAS.map((p) => p.family));
+    const shared = new Set(Object.values(bundle!.axes).filter((a) => families.has(a.family)).map((a) => `axis:${a.id}`));
+    expect(shared.size).toBeGreaterThanOrEqual(12);
     const offenders = bundle!.topics.flatMap((t) =>
       t.items
-        .filter((it) => (t.sensitive || it.sensitive) && 'effects' in it && it.effects.some((e) => political.has(e.target)))
+        .filter((it) => {
+          if (!t.sensitive && !it.sensitive) return false;
+          const targets = [
+            ...('effects' in it ? it.effects.map((e) => e.target) : []),
+            ...('options' in it ? it.options.flatMap((o) => ('effects' in o ? o.effects.map((e) => e.target) : [])) : []),
+          ];
+          return targets.some((x) => shared.has(x));
+        })
         .map((it) => it.id),
     );
     expect(offenders).toEqual([]);

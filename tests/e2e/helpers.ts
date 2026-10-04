@@ -56,6 +56,13 @@ export async function answerFlow(page: Page, script: Script, max = 80): Promise<
   throw new Error(`flow did not finish within ${max} steps`);
 }
 
+/** Opens one area's page of the results, through the overview's link to it. */
+export async function openArea(page: Page, area: string): Promise<void> {
+  await page.getByTestId('nav-results').click();
+  await page.getByTestId(`area-${area}`).click();
+  await expect(page.getByTestId(`section-${area}`)).toBeVisible();
+}
+
 /** A fresh app with no stored answers. */
 export async function freshStart(page: Page, hash = '#/'): Promise<void> {
   await page.goto(hash);

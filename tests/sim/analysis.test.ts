@@ -96,7 +96,7 @@ function checkAnalysis(a: Analysis, who: string): void {
       for (const t of [...topics, ...fromHref]) expect(sensitive.has(t), `${who}: next step ${item.testid} uses sensitive ${t}`).toBe(false);
     }
   }
-  expect(a.summary.sentences.length, who).toBeLessThanOrEqual(4);
+  expect(a.summary.sentences.length, who).toBeLessThanOrEqual(3);
   const reflect = a.next.find((g) => g.id === 'reflect')?.items ?? [];
   expect(reflect.length, who).toBeLessThanOrEqual(3);
   expect(new Set(reflect.map((x) => x.testid)).size, who).toBe(reflect.length);

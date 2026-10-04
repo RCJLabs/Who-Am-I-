@@ -143,10 +143,9 @@ function summary(i: ComposeInput): Summary {
   const politics = leanSentence(A.intro.politics, pub.axes.political, bundle);
   if (politics) sentences.push(politics);
   if (topPrinciples.length) sentences.push(A.principlesTop(topPrinciples.map((p) => principleLabel(bundle, p.principle))));
+  // The challenge record is left to its tile and the How you think read-out. The count matches the
+  // tile (every open tension); the principle named comes only from tensions that could be shared.
   const totals = challengeTotals(i.profile.topics);
-  if (totals.asked) sentences.push(A.challenges(totals.asked, totals.held, totals.distinguished, totals.moved));
-  // The count matches the tile (every open tension); the principle named comes only from
-  // tensions that could be shared.
   const open = i.tensions.filter((t) => t.status === 'open').length;
   if (open && pub.tensions.top) sentences.push(A.tensionsSummary(open, principleLabel(bundle, pub.tensions.top)));
 
@@ -159,7 +158,7 @@ function summary(i: ComposeInput): Summary {
   const name = (id: string) => i.pack?.traditions.find((x) => x.id === id)?.name ?? id;
   const tradition =
     t?.status === 'match' ? A.traditions.summary.match(name(t.named[0]!)) : t?.status === 'between' ? A.traditions.summary.between(name(t.named[0]!), name(t.named[1]!)) : null;
-  return { headline, sentences: sentences.length ? sentences.slice(0, 4) : [A.summaryEmpty], tiles, tradition };
+  return { headline, sentences: sentences.length ? sentences : [A.summaryEmpty], tiles, tradition };
 }
 
 // --- Section read-outs -----------------------------------------------------------------------
