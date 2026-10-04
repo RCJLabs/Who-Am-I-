@@ -117,6 +117,9 @@ position by its evidence).
 
 ## Next steps
 
+Each group shows its first two items and the rest behind "Show N more" (all of them when only one
+more would be left), so the overview stays short. Links from research stay closed until opened.
+
 ### Read both sides (`cases.ts`)
 
 1. **Firmest positions.** Non-sensitive topics whose stance has a current scale answer at least
@@ -176,6 +179,11 @@ never nudges anyone toward questions about religion or identity.
   setting where you endorsed the principle least: "Is it the health of other people that makes the
   difference?" Without one: "What makes the difference for you?"
 - Each links to the tension's own page to think it through.
+- The Tensions page words every principle's most pressing pair the same way (`reflectOn`, and
+  `tensionGroups` in `compose.ts`), with all tensions there, sensitive ones included, since that
+  page is the user's own. It draws the pair as two dots on a line from rejecting the principle to
+  endorsing it, with the question and a way to think it through; the principle's other pairs
+  follow as a list.
 
 ## Political traditions (`traditions.ts`)
 

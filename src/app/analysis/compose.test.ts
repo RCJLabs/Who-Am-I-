@@ -7,7 +7,7 @@ import { detectTensions } from '../../engine/tensions.ts';
 import type { ReadingRec, TraditionFacts } from '../../engine/analysis/types.ts';
 import { fixtureBundle, fixturePack, Log, scale } from '../../../tests/helpers.ts';
 import { interestList } from '../view.ts';
-import { composeAnalysis, type Analysis } from './compose.ts';
+import { composeAnalysis, tensionGroups, type Analysis } from './compose.ts';
 
 const b = fixtureBundle();
 
@@ -115,6 +115,38 @@ describe('analysis next steps', () => {
         cta: 'Think it through',
       },
     ]);
+  });
+
+  it('groups every tension by principle for the Tensions page, led by its most pressing pair', () => {
+    const log = new Log();
+    log.add('alpha.anchor_auto', scale(7));
+    log.add('beta.anchor_auto', scale(1));
+    const s = buildAnswerState(b, log.events);
+    const open = detectTensions(s, observe(s, { includeSensitive: true }), []);
+    expect(tensionGroups(b, s, open)).toEqual([
+      {
+        principle: 'autonomy',
+        label: 'Autonomy',
+        count: '1 open',
+        lead: {
+          key: 'autonomy|alpha|beta',
+          href: '#/tension/autonomy%7Calpha%7Cbeta',
+          label: 'Alpha vs. Beta',
+          status: null,
+          lead: 'You endorsed “Autonomy” when it comes to alpha, but rejected it when it comes to beta.',
+          ask: "Is it other people's health that makes the difference?",
+          sides: [
+            { title: 'Alpha', e: 1 },
+            { title: 'Beta', e: -1 },
+          ],
+        },
+        others: [],
+      },
+    ]);
+    // Thought through: no question, and how it was settled.
+    const settled = open.map((t) => ({ ...t, status: 'resolved' as const, resolution: { id: 'r1', key: t.key, kind: 'distinguished' as const, basis: t.basis, at: 0 } }));
+    const [group] = tensionGroups(b, s, settled);
+    expect(group).toMatchObject({ count: '1 thought through', lead: { ask: null, status: 'You named a difference' } });
   });
 });
 

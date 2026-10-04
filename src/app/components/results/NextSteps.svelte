@@ -2,8 +2,10 @@
   // Recommendations, one card per kind: cases to read from both sides, links from research, topics
   // to explore next, and tensions worth a second look. Items that lead somewhere link to where you
   // can act on them; links from research are plain cards. A collapsed group stays closed until
-  // opened, and remembers which it was.
+  // opened, and remembers which it was. Each group shows its first two items, and the rest on
+  // request, so the list stays short.
   import type { NextGroup, NextItem } from '../../analysis/compose.ts';
+  import { copy } from '../../copy.ts';
   import Icon from '../Icon.svelte';
 
   let {
@@ -11,6 +13,11 @@
     open = {},
     ontoggle,
   }: { groups: NextGroup[]; open?: Partial<Record<NextGroup['id'], boolean>>; ontoggle?: (id: NextGroup['id'], open: boolean) => void } = $props();
+
+  /** Items a group shows before "Show more", unless only one more would be left. */
+  const SHOWN = 2;
+  let expanded = $state<Partial<Record<NextGroup['id'], boolean>>>({});
+  const visible = (g: NextGroup) => (expanded[g.id] || g.items.length <= SHOWN + 1 ? g.items : g.items.slice(0, SHOWN));
 </script>
 
 {#snippet items(list: NextItem[])}
@@ -56,10 +63,22 @@
         {@render items(g.items)}
       </details>
     {:else}
+      {@const list = visible(g)}
       <div class="card group" data-testid="next-{g.id}">
         <h3>{g.title}</h3>
         <p class="small muted intro">{g.intro}</p>
-        {@render items(g.items)}
+        {@render items(list)}
+        {#if list.length < g.items.length || expanded[g.id]}
+          <button
+            type="button"
+            class="btn ghost more"
+            data-testid="next-more-{g.id}"
+            aria-expanded={expanded[g.id] ?? false}
+            onclick={() => (expanded = { ...expanded, [g.id]: !expanded[g.id] })}
+          >
+            {expanded[g.id] ? copy.results.showFewer : copy.analysis.next.more(g.items.length - SHOWN)}
+          </button>
+        {/if}
       </div>
     {/if}
   {/each}
@@ -147,5 +166,9 @@
     margin-top: 2px;
     font-weight: 600;
     color: var(--accent);
+  }
+  .more {
+    width: 100%;
+    margin-top: 2px;
   }
 </style>

@@ -23,9 +23,14 @@ export function reflections(s: AnswerState, tensions: readonly Tension[], n: num
     if (out.length >= n) break;
     if (seen.has(t.principle)) continue;
     seen.add(t.principle);
-    const [hi, lo] = t.a.e >= t.b.e ? [t.a, t.b] : [t.b, t.a];
-    const variant: ReflectVariant = hi.e >= ENDORSE && lo.e <= -ENDORSE ? 'endorse-reject' : hi.e >= ENDORSE ? 'endorse-neutral' : 'neutral-reject';
-    out.push({ kind: 'reflect', tension: t.key, principle: t.principle, hi, lo, variant });
+    out.push(reflectOn(t));
   }
   return out;
+}
+
+/** One tension as a reflection: the side that endorses the principle more, the other, and how they differ. */
+export function reflectOn(t: Tension): ReflectRec {
+  const [hi, lo] = t.a.e >= t.b.e ? [t.a, t.b] : [t.b, t.a];
+  const variant: ReflectVariant = hi.e >= ENDORSE && lo.e <= -ENDORSE ? 'endorse-reject' : hi.e >= ENDORSE ? 'endorse-neutral' : 'neutral-reject';
+  return { kind: 'reflect', tension: t.key, principle: t.principle, hi, lo, variant };
 }
