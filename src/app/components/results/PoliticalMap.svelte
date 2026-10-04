@@ -1,95 +1,136 @@
 <script lang="ts">
-  // Two political spectrums as a map: economic across (Equality ← → Markets) and civil up
-  // (Liberty ↓ ↑ Authority), the familiar layout. Political traditions sit under the user's dot as
-  // small gray reference marks. The ones the analysis lists are labelled, nearest first, where a
-  // label hides nothing (the named ones always; see map-labels.ts). The caption spells out the
-  // position in words, and the table below gives every position on every political spectrum, for
-  // anyone who can't read the chart.
+  // Two political spectrums at a time as a map, with a switch between the pairs. The answers are
+  // the coloured dot, inside a band that widens with less evidence. The nearest political
+  // traditions are numbered rings (the same numbers as the list above); the rest show on request.
+  // Nothing is labelled on the map itself: tap a ring or dot to name it. The caption says where the
+  // answers sit in words, and the table gives everyone's position on every spectrum.
+  import { LOW_CONFIDENCE } from '../../../engine/analysis/constants.ts';
   import { copy } from '../../copy.ts';
-  import { estimate, layoutMap, LO, px, py, SIZE, type Measure } from '../../map-labels.ts';
-  import type { MapRef, PositionTable } from '../../view.ts';
+  import { positionLabel, type MapTradition, type MapView, type PositionTable } from '../../view.ts';
+  import Icon from '../Icon.svelte';
 
-  // Unique per instance, so two maps on one page don't share title ids.
-  const uid = $props.id();
-  let {
-    x,
-    y,
-    xPoles,
-    yPoles,
-    caption,
-    low = false,
-    refs = [],
-    table = null,
-  }: {
-    x: number;
-    y: number;
-    xPoles: [string, string];
-    yPoles: [string, string];
-    caption: string;
-    /** Either position rests on few answers: drawn hollow, as on the spectrum rows. */
-    low?: boolean;
-    /** Political traditions, for reference. */
-    refs?: MapRef[];
-    /** Everyone's positions in words. */
-    table?: PositionTable | null;
-  } = $props();
+  let { views, traditions, table = null }: { views: MapView[]; traditions: MapTradition[]; table?: PositionTable | null } = $props();
 
   const T = copy.analysis.traditions;
-  const ticks = [-0.5, 0.5];
+  const M = T.map;
+  /** Where the plot starts, as a share of the square: room for the dots at either end. */
+  const INSET = 7;
+  const at = (score: number) => INSET + ((score + 1) / 2) * (100 - 2 * INSET);
+  /** The evidence band's half-width, in plot units: the same rule as the spectrum strips. */
+  const half = (confidence: number) => (((1 - Math.max(0, Math.min(1, confidence))) * 18 + 4) / 50) * ((100 - 2 * INSET) / 2);
 
-  // Labels are placed from the widths of the font on screen, measured once the map is drawn.
-  let svg: SVGSVGElement | undefined = $state();
-  let measure: Measure = $state(estimate);
-  $effect(() => {
-    const ctx = svg && document.createElement('canvas').getContext('2d');
-    if (!svg || !ctx) return;
-    const family = getComputedStyle(svg).fontFamily;
-    measure = (text, size) => {
-      ctx.font = `600 ${size}px ${family}`;
-      return ctx.measureText(text).width;
-    };
-  });
-  const layout = $derived(layoutMap({ x, y }, { x: xPoles, y: yPoles }, refs, measure));
-  const desc = $derived(refs.length ? `${caption}. ${T.mapDesc(refs.length)}` : caption);
+  let viewId = $state<string | null>(null);
+  let showAll = $state(false);
+  let picked = $state<string | null>(null);
+  const view = $derived(views.find((v) => v.id === viewId) ?? views[0] ?? null);
+
+  const placed = $derived(
+    view
+      ? traditions.flatMap((t) => {
+          const x = t.positions[view.x.id];
+          const y = t.positions[view.y.id];
+          if (x === undefined || y === undefined) return [];
+          return [{ ...t, left: at(x), top: 100 - at(y), divided: t.divided.includes(view.x.id) || t.divided.includes(view.y.id) }];
+        })
+      : [],
+  );
+  const listed = $derived(placed.filter((t) => t.rank !== null).sort((a, b) => a.rank! - b.rank!));
+  const others = $derived(placed.filter((t) => t.rank === null));
+  // Drawn in this order, so the nearest tradition sits on top where they crowd together.
+  const shown = $derived([...(showAll ? others : []), ...[...listed].reverse()]);
+  const pickedOne = $derived(shown.find((t) => t.id === picked) ?? null);
+  /** Within this distance (in % of the map) marks overlap, so a tap names them all. */
+  const NEAR = 6;
+  const alsoHere = $derived(pickedOne ? shown.filter((t) => t.id !== pickedOne.id && Math.hypot(t.left - pickedOne.left, t.top - pickedOne.top) < NEAR) : []);
+  const low = $derived(view !== null && Math.min(view.x.confidence, view.y.confidence) < LOW_CONFIDENCE);
+  const caption = $derived(
+    view
+      ? `${view.x.title}: ${positionLabel(view.x.score, view.x.poles)} · ${view.y.title}: ${positionLabel(view.y.score, view.y.poles)}${low ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}`
+      : '',
+  );
+
+  function choose(id: string): void {
+    viewId = id;
+    picked = null;
+  }
 </script>
 
-<figure class="map" data-testid="political-map">
-  <svg bind:this={svg} viewBox="0 0 300 300" role="img" aria-labelledby="{uid}-title {uid}-desc">
-    <title id="{uid}-title">{copy.results.politicalMap}</title>
-    <desc id="{uid}-desc">{desc}</desc>
-    <rect class="frame" x={LO} y={LO} width={SIZE} height={SIZE} rx="10" />
-    {#each ticks as t (t)}
-      <line class="grid" x1={px(t)} x2={px(t)} y1={LO} y2={LO + SIZE} />
-      <line class="grid" x1={LO} x2={LO + SIZE} y1={py(t)} y2={py(t)} />
-    {/each}
-    <line class="axis" x1={px(0)} x2={px(0)} y1={LO} y2={LO + SIZE} />
-    <line class="axis" x1={LO} x2={LO + SIZE} y1={py(0)} y2={py(0)} />
-    {#each layout.poles as p, k (k)}
-      <text class="label" x={p.x} y={p.y} text-anchor={p.anchor}>{p.text}</text>
-    {/each}
-    {#each refs as r (r.id)}
-      <circle class="ref" class:divided={r.divided} cx={px(r.x)} cy={py(r.y)} r="4" />
-    {/each}
-    {#each layout.labels as l (l.id)}
-      {#if l.leader}<line class="leader" x1={l.leader.x1} y1={l.leader.y1} x2={l.leader.x2} y2={l.leader.y2} />{/if}
-      <text class="ref-label" x={l.x} y={l.y} text-anchor={l.anchor}>
-        {#each l.lines as line, k (k)}<tspan x={l.x} dy={k ? 13 : 0}>{line}</tspan>{/each}
-      </text>
-    {/each}
-    <circle class="halo" cx={px(x)} cy={py(y)} r="18" />
-    <circle class="dot" class:low cx={px(x)} cy={py(y)} r="8" />
-  </svg>
-  {#if refs.length}
-    <ul class="legend small">
-      <li><span class="key you" aria-hidden="true"></span>{T.legend.you}</li>
-      <li><span class="key ref" aria-hidden="true"></span>{T.legend.traditions}</li>
-      {#if refs.some((r) => r.divided)}
-        <li><span class="key ref divided" aria-hidden="true"></span>{T.legend.divided}</li>
-      {/if}
-    </ul>
+{#if !view}
+  <p class="small muted flush">{copy.results.mapNeeds}</p>
+{:else}
+  {#if views.length > 1}
+    <div class="views" role="group" aria-label={M.views}>
+      {#each views as v (v.id)}
+        <button type="button" aria-pressed={v.id === view.id} data-testid="map-view-{v.id}" onclick={() => choose(v.id)}>{v.x.title} × {v.y.title}</button>
+      {/each}
+    </div>
   {/if}
-  <figcaption class="small">{caption}</figcaption>
-</figure>
+
+  <figure class="map" data-testid="political-map">
+    <p class="edge top small" aria-hidden="true"><Icon name="up" size={14} />{view.y.poles[1]}</p>
+    <div class="plot" role="group" aria-label="{copy.results.politicalMap}: {caption}.{shown.length ? ` ${T.mapDesc(shown.length)}` : ''}">
+      <span class="line across" aria-hidden="true"></span>
+      <span class="line up" aria-hidden="true"></span>
+      <span
+        class="plot-band"
+        aria-hidden="true"
+        style:left="{at(view.x.score)}%"
+        style:top="{100 - at(view.y.score)}%"
+        style:width="{2 * half(view.x.confidence)}%"
+        style:height="{2 * half(view.y.confidence)}%"
+      ></span>
+      {#each shown as t (t.id)}
+        <button
+          type="button"
+          class="trad"
+          class:listed={t.rank !== null}
+          class:divided={t.divided}
+          class:picked={picked === t.id}
+          style:left="{t.left}%"
+          style:top="{t.top}%"
+          aria-label={t.name}
+          aria-pressed={picked === t.id}
+          data-testid="map-trad-{t.id}"
+          onclick={() => (picked = picked === t.id ? null : t.id)}
+        >
+          <span class="mark">{t.rank !== null ? t.rank + 1 : ''}</span>
+        </button>
+      {/each}
+      <span class="plot-you" class:low aria-hidden="true" data-testid="map-you" style:left="{at(view.x.score)}%" style:top="{100 - at(view.y.score)}%"></span>
+    </div>
+    <p class="edge bottom small" aria-hidden="true">
+      <span><Icon name="left" size={14} />{view.x.poles[0]}</span>
+      <span><Icon name="down" size={14} />{view.y.poles[0]}</span>
+      <span>{view.x.poles[1]}<Icon name="right" size={14} /></span>
+    </p>
+    <figcaption class="small">{caption}</figcaption>
+  </figure>
+
+  {#if placed.length}
+    <p class="status small" role="status" data-testid="map-status">
+      {#if pickedOne}
+        <strong>{pickedOne.name}</strong> · {pickedOne.band ?? M.reference}
+        {#if alsoHere.length}<br /><span class="muted">{M.alsoHere(alsoHere.map((t) => t.name))}</span>{/if}
+      {:else}
+        <span class="muted">{M.tap}</span>
+      {/if}
+    </p>
+  {/if}
+
+  <ul class="legend small">
+    <li><span class="key you" aria-hidden="true"></span>{T.legend.you}</li>
+    <li><span class="key band" aria-hidden="true"></span>{M.sure}</li>
+    {#if shown.length}<li><span class="key ring" aria-hidden="true"></span>{T.legend.traditions}</li>{/if}
+    {#if shown.some((t) => t.divided)}<li><span class="key ring dashed" aria-hidden="true"></span>{T.legend.divided}</li>{/if}
+  </ul>
+
+  {#if others.length}
+    <button type="button" class="btn block all" aria-pressed={showAll} data-testid="map-show-all" onclick={() => ((showAll = !showAll), (picked = null))}>
+      {showAll ? M.showClosest : M.showAll(placed.length)}
+    </button>
+  {/if}
+{/if}
+
 {#if table}
   <details class="table" data-testid="map-table">
     <summary class="small">{T.table.show}</summary>
@@ -115,82 +156,174 @@
 {/if}
 
 <style>
-  .map {
+  .flush {
     margin: 0;
   }
-  svg {
-    display: block;
-    width: 100%;
-    max-width: 340px;
-    height: auto;
+  .views {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    background: var(--surface-2);
+  }
+  .views button {
+    min-height: 44px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .views button[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+  .map {
     margin: 0 auto;
-    overflow: visible;
+    max-width: 340px;
   }
-  .frame {
-    fill: none;
-    stroke: var(--border);
-    stroke-width: 1;
-  }
-  .grid {
-    stroke: var(--border);
-    stroke-width: 1;
-  }
-  .axis {
-    stroke: var(--muted);
-    stroke-width: 1;
-    opacity: 0.55;
-  }
-  .label {
-    fill: var(--muted);
-    font-size: 12px;
+  .edge {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    color: var(--muted);
     font-weight: 600;
-    paint-order: stroke;
-    stroke: var(--surface);
-    stroke-width: 4px;
-    stroke-linejoin: round;
   }
-  .ref {
-    fill: var(--chart-ref);
-    stroke: var(--surface);
-    stroke-width: 1.5;
+  .edge.top {
+    justify-content: center;
+    margin-bottom: 4px;
   }
-  .ref.divided {
-    fill: var(--surface);
-    stroke: var(--chart-ref);
-    stroke-width: 1.5;
+  .edge.bottom {
+    justify-content: space-between;
+    margin-top: 4px;
   }
-  .leader {
-    stroke: var(--muted);
-    stroke-width: 1;
+  .edge.bottom span {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
   }
-  .ref-label {
-    fill: var(--text);
-    font-size: 11px;
-    font-weight: 600;
-    paint-order: stroke;
-    stroke: var(--surface);
-    stroke-width: 3px;
-    stroke-linejoin: round;
+  .plot {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 18px;
+    background: var(--surface-2);
+    overflow: hidden;
   }
-  .halo {
-    fill: var(--chart-mark);
-    opacity: 0.14;
+  .line {
+    position: absolute;
+    background: var(--border);
   }
-  .dot {
-    fill: var(--chart-mark);
-    stroke: var(--surface);
-    stroke-width: 3;
+  .line.across {
+    left: 4%;
+    right: 4%;
+    top: 50%;
+    height: 1px;
   }
-  .dot.low {
-    fill: var(--surface);
-    stroke: var(--chart-mark);
+  .line.up {
+    top: 4%;
+    bottom: 4%;
+    left: 50%;
+    width: 1px;
+  }
+  .plot-band,
+  .plot-you,
+  .trad {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition:
+      left 0.35s ease,
+      top 0.35s ease,
+      width 0.35s ease,
+      height 0.35s ease;
+  }
+  .plot-band {
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--area-politics) 22%, transparent);
+  }
+  .plot-you {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--area-politics);
+    box-shadow: 0 0 0 3px var(--surface-2);
+    pointer-events: none;
+  }
+  .plot-you.low {
+    background: var(--surface-2);
+    box-shadow:
+      inset 0 0 0 3px var(--area-politics),
+      0 0 0 3px var(--surface-2);
+  }
+  .trad {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .mark {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--chart-ref);
+    box-shadow: 0 0 0 2px var(--surface-2);
+  }
+  .trad.divided .mark {
+    background: var(--surface-2);
+    box-shadow:
+      inset 0 0 0 2px var(--chart-ref),
+      0 0 0 2px var(--surface-2);
+  }
+  .trad.listed .mark {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 2px solid var(--chart-ref);
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 0 0 0 2px var(--surface-2);
+  }
+  .trad.listed.divided .mark {
+    border-style: dashed;
+  }
+  .trad.picked .mark {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  figcaption {
+    margin-top: 6px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .status {
+    min-height: 44px;
+    margin: 10px 0 0;
+    padding: 12px 14px;
+    line-height: 1.4;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
   }
   .legend {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px 14px;
-    margin: 8px 0 0;
+    gap: 6px 16px;
+    margin: 10px 0 0;
     padding: 0;
     list-style: none;
     color: var(--muted);
@@ -201,30 +334,31 @@
     gap: 6px;
   }
   .key {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
     flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
   }
   .key.you {
-    background: var(--chart-mark);
+    background: var(--area-politics);
   }
-  .key.ref {
-    width: 8px;
-    height: 8px;
-    background: var(--chart-ref);
+  .key.band {
+    width: 22px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--area-politics) 30%, transparent);
   }
-  .key.ref.divided {
-    background: var(--surface);
-    box-shadow: inset 0 0 0 1.5px var(--chart-ref);
+  .key.ring {
+    border: 2px solid var(--chart-ref);
   }
-  figcaption {
-    margin-top: 8px;
-    text-align: center;
-    color: var(--muted);
+  .key.ring.dashed {
+    border-style: dashed;
+  }
+  .all {
+    margin-top: 12px;
+    border-radius: var(--radius-sm);
   }
   .table {
-    margin-top: 10px;
+    margin-top: 12px;
   }
   .table summary {
     cursor: pointer;

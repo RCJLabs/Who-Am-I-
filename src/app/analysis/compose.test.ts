@@ -159,7 +159,7 @@ describe('political traditions in the analysis', () => {
   it('lists each tradition with its band, differences, and what divides it from the nearest', () => {
     const rows = withTraditions(match).traditions!.rows;
     expect(rows.map((r) => [r.name, r.band, r.differences])).toEqual([
-      ['Reform', 'Very close', []],
+      ['Reform', 'Very close fit', []],
       ['Moderation', 'A looser fit', ['You lean further toward “Liberty”']],
       ['Planning', 'A looser fit', ['You put more weight on “Autonomy”']],
     ]);
@@ -194,14 +194,17 @@ describe('political traditions in the analysis', () => {
     expect(a.summary.tradition).toBeNull();
   });
 
-  it('offers readings from inside a named tradition and its critics', () => {
+  it('offers readings from inside a named tradition and its critics, with that tradition', () => {
     const readings: ReadingRec[] = [
       { kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' },
       { kind: 'reading', reading: 'keepers_one', tradition: 'reformers', view: 'outside' },
     ];
-    const group = withTraditions(match, readings).next.find((g) => g.id === 'readings')!;
-    expect(group.intro).toBe('The case for “Reform” from inside it, and critiques from outside.');
-    expect(group.items).toEqual([
+    const a = withTraditions(match, readings);
+    const [reform, ...others] = a.traditions!.rows;
+    // On the Politics page, not among the next steps.
+    expect(a.next.flatMap((g) => g.items).some((x) => x.testid.startsWith('rec-read-'))).toBe(false);
+    expect(others.every((r) => r.readings.length === 0)).toBe(true);
+    expect(reform!.readings).toEqual([
       {
         testid: 'rec-read-reformers_one',
         title: 'The Case for Change',
@@ -255,7 +258,6 @@ describe('political traditions in the analysis', () => {
   it('shows nothing about traditions without the pack', () => {
     const a = withTraditions(match, [{ kind: 'reading', reading: 'reformers_one', tradition: 'reformers', view: 'inside' }], false);
     expect(a.traditions).toBeNull();
-    expect(a.next.some((g) => g.id === 'readings')).toBe(false);
     expect(strings(a).join(' ')).not.toMatch(/Reform/);
   });
 });

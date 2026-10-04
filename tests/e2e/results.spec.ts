@@ -121,6 +121,8 @@ test('someone who has only described their personality gets a summary of that, a
   await expect(page.getByTestId('area-politics')).toContainText('Not enough answers yet');
   await page.getByTestId('area-politics').click();
   await expect(page.getByTestId('section-politics')).toBeVisible();
+  await page.getByTestId('map-open').click();
+  await expect(page.getByTestId('map-card')).toContainText('to see your political map');
   await expect(page.getByTestId('political-map')).toHaveCount(0);
   await page.getByTestId('area-back').click();
 
@@ -155,7 +157,7 @@ test('someone who has only described their personality gets a summary of that, a
   await expect(page.getByTestId('next-links')).toHaveCount(0);
 });
 
-test('the political traditions: where the answers sit, the map table, and readings from inside and out', async ({ page }) => {
+test('the political traditions: side by side with the answers, readings from inside and out, and the map', async ({ page }) => {
   await restorePersona(page, 'tests/sim/personas/religious_conservative.yaml');
 
   // Named only as reference points, in the summary and on the Politics page.
@@ -167,15 +169,39 @@ test('the political traditions: where the answers sit, the map table, and readin
   await expect(traditions.locator('[data-testid^="tradition-"]')).toHaveCount(3);
   await expect(traditions).not.toContainText(/you are an? /i);
 
-  // The map marks every tradition, and its table says where each sits, in words.
+  // The nearest opens as "You and …": each spectrum side by side, in words too, and readings from
+  // inside the tradition and critiques from outside it.
+  const nearest = traditions.locator('[data-testid^="you-and-"]').first();
+  await expect(nearest).toBeVisible();
+  await expect(nearest).toContainText('You and ');
+  await expect(nearest).toContainText('You: ');
+  expect(await nearest.locator('[data-testid^="rec-read-"]').count()).toBeGreaterThanOrEqual(2);
+  await expect(nearest).toContainText('from inside');
+
+  // The map is one tap away: the nearest traditions numbered as in the list, the rest on request,
+  // each named on a tap, and a second view with the other two spectrums.
+  await page.getByTestId('map-open').click();
+  const map = page.getByTestId('political-map');
+  await expect(map).toContainText('Economic: Markets');
+  const marks = page.locator('[data-testid^="map-trad-"]');
+  await expect(marks).toHaveCount(3);
+  // The nearest is drawn last, on top, so it can always be tapped.
+  await marks.last().click();
+  await expect(page.getByTestId('map-status')).toContainText(/ fit|overlap/);
+  await page.getByTestId('map-show-all').click();
+  await expect(marks).toHaveCount(11);
+  await page.getByTestId('map-view-cultural-diplomatic').click();
+  await expect(map).toContainText('Cultural: ');
+  await expect(marks).toHaveCount(11);
+
+  // Its table says where each sits, in words.
   const table = page.getByTestId('map-table');
   await table.locator('summary').click();
   await expect(table.locator('tbody tr')).toHaveCount(12);
   await expect(table.locator('tbody tr').first()).toContainText('You');
 
-  // Readings, among the next steps on the overview: from inside the tradition, and critiques from outside it.
+  // Readings live with their tradition now, not among the next steps.
   await page.getByTestId('area-back').click();
-  const readings = page.getByTestId('next-readings').locator('[data-testid^="rec-read-"]');
-  expect(await readings.count()).toBeGreaterThanOrEqual(2);
-  await expect(page.getByTestId('next-readings')).toContainText('from inside');
+  await expect(page.getByTestId('next-steps')).toBeVisible();
+  await expect(page.locator('[data-testid^="rec-read-"]')).toHaveCount(0);
 });

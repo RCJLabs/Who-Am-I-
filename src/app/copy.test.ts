@@ -81,12 +81,14 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.traditions.less': [['Loyalty']],
   'analysis.traditions.splitFrom': [['Democratic socialism']],
   'analysis.traditions.divided': [['social democrats', ['Civil']], ['libertarians', ['Diplomatic', 'Liberty']]],
-  'analysis.traditions.tick': [['Social democracy']],
-  'analysis.traditions.reference': [['Social democracy', 'Leans Equality']],
-  'analysis.traditions.mapDesc': [[11]],
-  'analysis.next.readings.intro': [[['Social democracy']], [['Social democracy', 'Green politics']]],
-  'analysis.next.readings.inside': [['Social democracy']],
-  'analysis.next.readings.outside': [['Social democracy', 'Classical liberalism']],
+  'analysis.traditions.compare.youAnd': [['Social liberalism']],
+  'analysis.traditions.compare.at': [['You', 'Leans Equality'], ['Social liberalism', 'its adherents split']],
+  'analysis.traditions.readings.intro': [['Social democracy']],
+  'analysis.traditions.readings.inside': [['Social democracy']],
+  'analysis.traditions.readings.outside': [['Social democracy', 'Classical liberalism']],
+  'analysis.traditions.map.showAll': [[11]],
+  'analysis.traditions.map.alsoHere': [[['Green politics']], [['Green politics', 'Democratic socialism']]],
+  'analysis.traditions.mapDesc': [[1], [11]],
   'analysis.next.links.more.interest': [['Imaginative', 'somewhat', 'artistic activities, such as drawing, design, writing or music']],
   'analysis.next.links.more.participation': [['Imaginative', 'a little', 'reading for pleasure']],
   'analysis.next.links.less.interest': [['Practical', 'somewhat', 'artistic activities, such as drawing, design, writing or music']],
@@ -140,7 +142,7 @@ describe('app wording', () => {
     const terms = termMatchers(parseTerms(readFileSync('content/loaded-terms.txt', 'utf8')));
     // Wording about the political traditions answers to the pack's own terms too.
     const pack = [...terms, ...termMatchers(parseTerms(readFileSync('content/analysis/loaded-terms.txt', 'utf8')))];
-    const aboutTraditions = (path: string) => path.startsWith('analysis.traditions.') || path.startsWith('analysis.next.readings.');
+    const aboutTraditions = (path: string) => path.startsWith('analysis.traditions.');
     const hits = render().flatMap(({ path, text }) =>
       findTerms(text, aboutTraditions(path) ? pack : terms).map((t) => `${path}: "${t}" in ${JSON.stringify(text)}`),
     );

@@ -140,7 +140,7 @@ describe('analysis of the personas', () => {
     for (const [name, a] of analyses) {
       expect(a.summary.tradition, name).toMatch(/^Of the political traditions compared here, your answers sit /);
       expect(a.readouts.politics!.sentences.at(-1), name).toBe(a.traditions!.lead);
-      const readings = a.next.find((g) => g.id === 'readings')!.items.map((x) => x.meta ?? '');
+      const readings = a.traditions!.rows.flatMap((r) => r.readings).map((x) => x.meta ?? '');
       expect(readings.some((m) => m.includes('The case for')), name).toBe(true);
       expect(readings.some((m) => m.includes('A critique of')), name).toBe(true);
     }

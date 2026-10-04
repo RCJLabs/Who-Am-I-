@@ -56,6 +56,7 @@ test('a restored backup brings back answers and the tensions they imply', async 
   await expect(page.getByText('Backup restored.')).toBeVisible();
 
   await openArea(page, 'politics');
+  await page.getByTestId('map-open').click();
   await expect(page.getByTestId('political-map')).toContainText('Economic: Markets');
   await expect(page.getByTestId('axis-cultural-position')).toContainText('Tradition');
   await openArea(page, 'thinking');

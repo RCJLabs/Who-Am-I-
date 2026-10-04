@@ -6,7 +6,7 @@
   import { untrack } from 'svelte';
   import type { Axis, AxisFamily, AxisId, Item } from '../../model/content.ts';
   import { analyse } from '../../engine/analysis/index.ts';
-  import { BAND, LOW_CONFIDENCE, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
+  import { BAND, UNNAMED_TRAITS } from '../../engine/analysis/constants.ts';
   import { isMixed } from '../../engine/score.ts';
   import { composeAnalysis } from '../analysis/compose.ts';
   import { app } from '../context.ts';
@@ -17,13 +17,14 @@
     areaLean,
     axisFeeders,
     challengeTotals,
+    compareWith,
     firmestLeans,
     interestList,
+    mapTraditions,
+    mapViews,
     patternGroups,
-    positionLabel,
     positionsByDomain,
     rankedPrinciples,
-    traditionRefs,
     traditionTable,
     type PatternArea,
   } from '../view.ts';
@@ -46,7 +47,7 @@
   const TENSION_GROUPS_SHOWN = 3;
   /** Up to this many positions, every domain starts open. */
   const POSITIONS_OPEN = 6;
-  /** The two spectrums drawn as the political map. */
+  /** The political map's first pair of spectrums, which explore suggestions help fill in. */
   const MAP_AXES = ['economic', 'civil'] as const;
   /** Topics listed per pole under "What pulled you". */
   const DRIVERS_SHOWN = 3;
@@ -74,8 +75,6 @@
   const worldview = axes.filter((a) => a.family === 'worldview');
   const personality = axes.filter((a) => a.family === 'personality');
   const taste = axes.filter((a) => a.family === 'taste');
-  const economicAxis = content.bundle.axes[MAP_AXES[0]];
-  const civilAxis = content.bundle.axes[MAP_AXES[1]];
 
   const hasAny = $derived(answers.events.length > 0);
   const answeredTopics = $derived(Object.values(profile.topics).length);
@@ -123,17 +122,20 @@
       : null,
   );
   const traditionsShown = $derived(content.analysisState !== 'ready' || analysis?.traditions !== null);
-  // Reference marks: every tradition on the map, the named one on each political spectrum.
-  const refs = $derived(pack && analysis?.traditions ? traditionRefs(pack, MAP_AXES, analysis.traditions.rows.map((r) => r.id), analysis.traditions.named) : []);
   const table = $derived(pack ? traditionTable(content.bundle, pack, profile, copy.analysis.traditions.table) : null);
-  const reference = $derived(pack && analysis?.traditions?.reference ? pack.traditions.find((t) => t.id === analysis!.traditions!.reference!.id) ?? null : null);
-  const referenceFor = (axis: AxisId) =>
-    reference && !reference.divided.includes(axis) && reference.positions[axis] !== undefined ? { name: reference.name, score: reference.positions[axis] } : null;
-
-  // Map
-  const econ = $derived(profile.axes[MAP_AXES[0]]?.score ?? null);
-  const civil = $derived(profile.axes[MAP_AXES[1]]?.score ?? null);
-  const mapLow = $derived(Math.min(profile.axes[MAP_AXES[0]]?.confidence ?? 0, profile.axes[MAP_AXES[1]]?.confidence ?? 0) < LOW_CONFIDENCE);
+  // The map: each pair of political spectrums once both are scored, every tradition placed, the
+  // listed (nearest) ones numbered as in the traditions list.
+  const views = $derived(mapViews(content.bundle, profile.axes));
+  const listed = $derived(analysis?.traditions?.rows ?? []);
+  const mapTrads = $derived(pack ? mapTraditions(pack, listed) : []);
+  const comparisons = $derived(
+    Object.fromEntries(
+      listed.flatMap((r) => {
+        const t = pack?.traditions.find((x) => x.id === r.id);
+        return t ? [[r.id, compareWith(content.bundle, profile.axes, t)]] : [];
+      }),
+    ),
+  );
   const ranked = $derived(rankedPrinciples(principles, profile.principles));
   const totals = $derived(challengeTotals(profile.topics));
 
@@ -273,7 +275,6 @@
   {@const sc = profile.axes[a.id]!}
   {@const home = FAMILY_AREA[a.family]}
   <SpectrumRow
-    reference={a.family === 'political' ? referenceFor(a.id) : null}
     title={a.title}
     poles={a.poles}
     score={sc.score}
@@ -289,31 +290,25 @@
 
 {#snippet politicsPage()}
   <ResultSection id="politics" title={S.politics} readout={analysis!.readouts.politics} color={AREA_COLOR.politics}>
-    {#if econ !== null || civil !== null}
-      <div class="card">
-        {#if econ !== null && civil !== null && economicAxis && civilAxis}
-          <PoliticalMap
-            x={econ}
-            y={civil}
-            xPoles={economicAxis.poles}
-            yPoles={civilAxis.poles}
-            caption="{economicAxis.title}: {positionLabel(econ, economicAxis.poles)} · {civilAxis.title}: {positionLabel(civil, civilAxis.poles)}{mapLow ? ` (${copy.results.lowConfidence.toLowerCase()})` : ''}"
-            low={mapLow}
-            {refs}
-            {table}
-          />
-        {:else}
-          <p class="small muted flush">{copy.results.mapNeeds}</p>
-        {/if}
-      </div>
-    {/if}
     <div class="card rows">
       {#each political as a (a.id)}{@render spectrum(a, true)}{/each}
-      {#if reference}<p class="small muted tick">{copy.analysis.traditions.tick(reference.name)}</p>{/if}
     </div>
     {#if traditionsShown}
-      <TraditionList view={analysis!.traditions} state={content.analysisState} />
+      <TraditionList view={analysis!.traditions} state={content.analysisState} {comparisons} />
     {/if}
+    <details class="card map-card" data-testid="map-card">
+      <summary data-testid="map-open">
+        <span class="map-icon" aria-hidden="true"><Icon name="map" size={24} /></span>
+        <span class="map-head">
+          <span class="map-title">{copy.analysis.traditions.map.open}</span>
+          <span class="small muted">{copy.analysis.traditions.map.sub}</span>
+        </span>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+      <div class="map-body">
+        <PoliticalMap {views} traditions={mapTrads} {table} />
+      </div>
+    </details>
   </ResultSection>
 {/snippet}
 
@@ -597,11 +592,50 @@
   .flush {
     margin: 0;
   }
-  .tick {
-    margin: 4px 0 8px;
-  }
   .rows + :global(.traditions) {
     margin-top: 10px;
+  }
+  .map-card {
+    margin-top: 12px;
+    padding: 0 16px;
+  }
+  .map-card summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 64px;
+    padding: 10px 0;
+    list-style: none;
+    cursor: pointer;
+  }
+  .map-card summary::-webkit-details-marker {
+    display: none;
+  }
+  .map-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--area-politics) 24%, transparent);
+  }
+  .map-head {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .map-title {
+    font-weight: 650;
+  }
+  .map-card[open] .chev {
+    transform: translateY(1px) rotate(-135deg);
+  }
+  .map-body {
+    padding: 4px 0 16px;
   }
   .tension {
     margin-top: 10px;
