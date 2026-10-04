@@ -285,8 +285,8 @@ function linkItem(i: ComposeInput, r: SuggestionRec): NextItem | null {
   const sentence = (r.end === 'toward' ? L.more : L.less)[g.outcome](pole, L.strength[g.strength], g.interest);
   return {
     testid: `rec-link-${g.id}`,
-    title: r.end === 'toward' ? g.title : g.away,
-    detail: [sentence, L.caveat, L.ask[r.end]].join(' '),
+    title: g.title,
+    detail: [sentence, L.caveat].join(' '),
     meta: [L.kind[g.kind], L.because(pole), g.source].join(' · '),
   };
 }

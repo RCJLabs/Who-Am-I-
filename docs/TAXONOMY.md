@@ -464,17 +464,22 @@ the personality answers only. How they are chosen is in
 
 ### Links
 
-Each is written from both ends: the end with more interest, and the other end, which describes
-less of the same activity. Where the meta-analyses differ, `r` is the lowest uncorrected estimate,
-from the largest and newest (Hurtado Rúa, Stead & Poklar, 2019: 43 samples, N = 19,872).
+Each reads from either end under one title: more interest at one pole, less of the same at the
+other. Where the meta-analyses differ, `r` is the lowest uncorrected estimate, from the largest and
+newest (Hurtado Rúa, Stead & Poklar, 2019: 34 studies, 43 samples, N = 19,872).
 
-| Link (toward / away) | Trait, toward | r used | Other estimates | Strength | Kind |
+| Link | Trait, more interest toward | r used | Other estimates | Reads as | Kind |
 |---|---|---|---|---|---|
-| Artistic work / Work where art and design play a small part | openness, Imaginative | .36 | .48 (Larson, Rottinghaus & Borgen, 2002); corrected ρ = .39 (Barrick, Mount & Gupta, 2003) | somewhat | ways of working |
-| Leading and negotiating / Work where leading and negotiating play a small part | extraversion, Outgoing | .27 | .41 (Larson et al.); corrected ρ = .41 (Barrick et al.) | a little | ways of working |
+| Interest in artistic activities | openness, Imaginative | .36 | .48 (Larson, Rottinghaus & Borgen, 2002); corrected ρ = .39 (Barrick, Mount & Gupta, 2003) | a little (weakened: see below) | ways of working |
+| Interest in leading and negotiating | extraversion, Outgoing | .27 | .41 (Larson et al.); corrected ρ = .41 (Barrick et al.) | a little | ways of working |
 
-Activities come from O*NET's descriptions of the Artistic and Enterprising interest types; for
-Enterprising, selling, finance, politics and law are left out.
+Activities come from O*NET's descriptions of the Artistic and Enterprising interest types. For
+Enterprising, managing, marketing, selling, politics and law are left out: "managing" reads as job
+level. The artistic link reads "a little" though its r is above .30: the Mini-IPIP's openness items
+are about imagination and abstract ideas, with nothing on art or aesthetics, the content that
+carries this link in the studies, and they are less reliable (α .68 in the norm sample) than the
+scales the studies used. The extraversion items, likewise, are about sociability rather than
+assertiveness, so both links are likely weaker for the app's scores than published.
 
 ### Checked and dropped
 
@@ -493,7 +498,9 @@ Mini-IPIP norms could be confirmed: Baldasaro, Shanahan & Bauer (2013), the plan
 item statistics only. So they are computed from the Open-Source Psychometrics Project's BIG5 data:
 an online test, about 2012, the same items on a 1 (Disagree) to 5 (Agree) scale. Of 19,719 rows,
 15,657 are adults (18 to 90) who answered all 16 items for extraversion, agreeableness,
-conscientiousness and openness. A trait is the mean of its 4 keyed items.
+conscientiousness and openness: median age 25, 60% women, 43% in the US, 40% not native English
+speakers. A trait is the mean of its 4 keyed items. The data's licence couldn't be checked; only
+these summary statistics are used, with attribution.
 
 | Trait | Mean | SD | In the app's units (−1..1) | Gate toward / away | Reversal pairs |
 |---|---|---|---|---|---|
@@ -501,10 +508,37 @@ conscientiousness and openness. A trait is the mean of its 4 keyed items.
 | Openness | 4.04 | 0.77 | 0.52, SD 0.385 | ≥ 0.75 / ≤ −0.5 | vivid imagination / not a good imagination |
 
 Agreeableness (3.94, SD 0.85) and conscientiousness (3.27, SD 0.89) aren't listed, since no link
-reads them. Applying the app's gate to the same 15,657 people: no link 35.3%, Artistic work 23.6%,
-Work where leading and negotiating play a small part 21.4%, Leading and negotiating 18.2%, Work
-where art and design play a small part 1.5%. The low end of openness is rare because few people
-describe themselves that way on these items.
+reads them. The norm only changes who sees a link at the "Imaginative" end, cutting it from 62% to
+39% of the sample; the other ends are decided by the 0.5 lean alone. Applying the app's gate to the
+same 15,657 people: no link 35.3%; interest in artistic activities 25.1% (23.6% more, 1.5% less);
+interest in leading and negotiating 39.6% (18.2% more, 21.4% less). The low end of openness is
+rare because few people describe themselves that way on these items. Ranking by SDs beyond the mean
+favours extraversion: of the 19.2% who qualify on both traits, 14.9 points see the extraversion
+link.
+
+### Reviews and fact-checks
+
+A sceptical personality researcher and a privacy reviewer reviewed the design, then the content.
+The reviewers are agents.
+
+- **Design.** The researcher replaced the planned condition rules with single-trait links read
+  from both ends, set the evidence bar, and asked for norms, the reversal check and all four items.
+  The privacy reviewer set the blocked subjects, the endings matched, the second-person and number
+  bans, the collapsed group, the Settings switch and the wording "Your answers lean toward".
+- **Content.** Both asked for one title from either end instead of a title naming the activity's
+  absence ("Work where leading and negotiating play a small part"), which read as a job filter and
+  a deficit; and for no closing question, since "Is it something you enjoy, or have wondered
+  about?" is hard to say no to. The researcher had artistic read "a little" and the sentence say
+  "people whose answers lean toward" rather than putting a self-description in people's mouths.
+  The privacy reviewer had "writing" and "managing" dropped from the examples (read as literacy
+  and job level), the links not worked out at all when switched off, and the PRIVACY and About
+  text matched to the code.
+- **Fact-check round 1.** Confirmed: every citation, Hurtado Rúa's samples, N and range, Larson's
+  five correlations (abstract), Barrick's corrected values, O*NET's wording (quoted exactly since),
+  the BIG5 data, and the Mini-IPIP keying. Corrected: Hurtado Rúa's moderators include publication
+  year; Barrick's 41 samples come from 21 studies. Not confirmed: Hurtado Rúa's pair values, which
+  come from articles citing it; whether the pooled correlations are uncorrected; that Baldasaro et
+  al. print no trait-level statistics; the data's licence.
 
 ### Limitations
 
@@ -512,8 +546,9 @@ describe themselves that way on these items.
   for evidence that clears the bar.
 - **The norms aren't published norms.** The sample is online volunteers answering agree/disagree,
   where the app asks how accurately each statement describes you.
-- **Mini-IPIP openness has no item on art or beauty,** unlike the NEO-PI-R used in the
-  meta-analyses, so the artistic link may be weaker for the app's scores.
-- **Four items per trait.** Near the cut, a retake can land on the other side of it.
-- **The reviewers are agents,** and no blind check (people choosing a link or its mirror without
-  the reason) has been run.
+- **The app's items don't match the studies' scales** (see Links), so both links are likely
+  weaker for the app's scores than published.
+- **Four items per trait.** Near the cut, a retake can land on the other side of it: on a
+  classical model with α as reliability, the researcher estimated that only about two in three
+  people past a cut would pass it again.
+- **No blind check** (people choosing a link or its mirror without the reason) has been run.

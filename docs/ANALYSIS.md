@@ -239,13 +239,13 @@ the readings always agree.
 
 Published associations between one personality trait and an interest, from the analysis pack
 (`content/analysis/suggestions.yaml`), in three kinds: ways of working, free time, and subjects to
-explore. Each is one association with one citation, written from both ends: the end with more
-interest ("Artistic work") and the other end, which describes less of the same activity ("Work where
-art and design play a small part"), never an attraction the study didn't measure. They read only the
-personality form: never neuroticism, whose links would read as advice about anxiety or mood, and
-never values, thinking, taste, lifestyle or political answers. Lint (E016) holds the evidence bar
-(uncorrected r of at least 0.20, a published source) and the wording rules, and keeps every subject
-in `content/analysis/blocked-advice.txt` out, in any form.
+explore. Each is one association with one citation, read from either end under the same title
+("Interest in artistic activities"): more interest at one pole, less of the same at the other, never
+an attraction the study didn't measure. They read only the personality form: never neuroticism,
+whose links would read as advice about anxiety or mood, and never values, thinking, taste,
+lifestyle or political answers. Lint (E016) holds the evidence bar (uncorrected r of at least 0.20,
+a published source) and the wording rules, and keeps every subject in
+`content/analysis/blocked-advice.txt` out, in any form.
 
 1. **Every item answered.** A trait counts only when all four of its items are answered
    (`SUGGEST.confidence`).
@@ -255,17 +255,23 @@ in `content/analysis/blocked-advice.txt` out, in any form.
 3. **A clear lean.** The score is at least 0.5 toward a pole (`SUGGEST.lean`), where the chart's
    label drops "slightly", and at least half an SD beyond the adult mean in the same direction
    (`SUGGEST.beyondMean`). The norms only decide whether a link shows; no text compares the person
-   with anyone.
+   with anyone. With today's norms, the second test only matters for the "Imaginative" end, whose
+   mean sits well above the middle.
 4. **One of each kind:** the link on the trait the answers lean furthest on, in SDs beyond the mean,
-   with ties going to authored order. At most three (`LIMIT.suggestions`), the clearest first.
-5. **From the end the answers lean toward.** The title and sentence come from that end.
+   with ties going to authored order. At most three (`LIMIT.suggestions`), the clearest first. SDs
+   favour extraversion: openness tops out 1.25 SDs above its mean, so someone leaning clearly both
+   ways is more often shown the extraversion link.
+5. **From the end the answers lean toward.** The sentence says more or less interest accordingly.
+6. **Only when shown.** With the switch in Settings off, links aren't worked out at all; with none
+   to show, the group doesn't appear.
 
-The sentence is copy with the link's fields filled in: "In large studies, people who describe
-themselves as more “Imaginative” report somewhat more interest in artistic activities, such as…, on
-average. Many don't, so this may not fit you." The strength word comes from the correlation: "a
-little" below 0.30, "somewhat" from 0.30. The meta line says what the link rests on ("Your answers
-lean toward “Imaginative”") and cites the source. The group stays collapsed until opened, with the
-state remembered on the device, and a Settings switch hides it.
+The sentence is copy with the link's fields filled in: "In large studies, people whose answers lean
+toward “Outgoing” report a little more interest in leading or negotiating, on average. Many don't,
+so this may not fit you." The strength word comes from the correlation, "a little" below 0.30 and
+"somewhat" from 0.30, unless the file weakens it (`strength: little`) where the app's items likely
+carry the link more weakly than the source's; it can never strengthen it. The meta line says what
+the link rests on ("Your answers lean toward “Outgoing”") and cites the source. The group stays
+collapsed until opened, with the state remembered on the device.
 
 ## Wording rules
 

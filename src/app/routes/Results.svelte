@@ -78,6 +78,7 @@
           flow: { alwaysDeep: settings.alwaysDeep },
           mapAxes: MAP_AXES,
           pack,
+          links: settings.showLinks,
         })
       : null,
   );

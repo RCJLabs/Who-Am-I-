@@ -181,15 +181,17 @@ describe('links from research on the real content', () => {
     expect(shown).toBeGreaterThan(2);
   }, 120_000);
 
-  it('read as tendencies, never touching a blocked subject, and hide when switched off', () => {
+  it('read as tendencies under one title from either end, never touching a blocked subject, and hide when switched off', () => {
     for (const g of pack.suggestions) {
+      const titles = new Set<string>();
       for (const at of [5, 1]) {
         const s = stateOf(form({ [g.trait]: at }));
         const items = composeLinks(s)!;
         expect(items.length, g.id).toBe(1);
         const item = items[0]!;
         const text = [item.title, item.detail, (item.meta ?? '').replace(g.source, '')].join(' ');
-        expect(item.detail, g.id).toMatch(/^In large studies, people who describe themselves as more “[^”]+” (report|take part)/);
+        titles.add(item.title);
+        expect(item.detail, g.id).toMatch(/^In large studies, people whose answers lean toward “[^”]+” (report|take part)/);
         expect(item.meta, g.id).toMatch(/· Your answers lean toward “[^”]+” ·/);
         for (const re of TONE) expect(text, `${g.id}: ${re}`).not.toMatch(re);
         expect(findTerms(text, blocked), g.id).toEqual([]);
@@ -197,6 +199,7 @@ describe('links from research on the real content', () => {
         expect(text).not.toMatch(/undefined|NaN|\bnull\b|\[object/);
         expect(composeLinks(s, false), g.id).toBeUndefined();
       }
+      expect([...titles], g.id).toEqual([g.title]);
     }
   });
 });

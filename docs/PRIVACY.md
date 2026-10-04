@@ -30,14 +30,16 @@ challenges faced, open tensions) include every answer, but never say which topic
 answered. The comparison with political traditions uses only answers that could be shared, so
 religion and other sensitive answers can never move it.
 
-**Links from research.** Up to three links between personality and interests, from published
-research about people in general. Your device picks them by fixed rules, from your answers to the
+**Links from research.** At most one link of each kind (ways of working, free time, subjects to
+explore) between personality and interests, from published research about people in general; with
+today's links, at most one in all. Your device picks them by fixed rules, from your answers to the
 personality questions only, never the ones about emotional reactivity. Your answers on politics,
 religion and worldview, identity, values, lifestyle and anything marked sensitive never shape them.
-A link shows only when your answers lean clearly one way, judged against an average from a large
-study that stays inside the app; nothing compares you with anyone. They're worked out each time the
-Results screen opens and never saved, so they're never in an exported file. They're not advice and
-not a judgment about you, and Settings can turn them off.
+A link shows only when your answers lean clearly one way, checked against an average worked out
+from a large public set of answers to the same statements. That average stays inside the app, and
+the app never says how you compare with anyone. Links are worked out each time the Results screen
+opens and never saved, so they're never in an exported file. They're not advice and not a judgment
+about you. Turning them off in Settings stops them being worked out.
 
 ## Exporting and sharing
 

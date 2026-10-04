@@ -112,8 +112,8 @@ test('someone who has only described their personality gets a summary of that, a
   await expect(link).toBeHidden();
   await links.locator('summary').click();
   await expect(link).toBeVisible();
-  await expect(link).toContainText('Leading and negotiating');
-  await expect(link).toContainText('people who describe themselves as more “Outgoing” report a little more interest in');
+  await expect(link).toContainText('Interest in leading and negotiating');
+  await expect(link).toContainText('people whose answers lean toward “Outgoing” report a little more interest in leading or negotiating');
   await expect(link).toContainText('Your answers lean toward “Outgoing”');
   await expect(page.locator('[data-testid^="rec-link-"]')).toHaveCount(1);
   await page.reload();

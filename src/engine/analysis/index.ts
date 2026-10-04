@@ -30,6 +30,8 @@ export interface AnalysisInput {
   mapAxes?: readonly AxisId[];
   /** Political traditions and readings, once loaded. Without it, those facts are empty. */
   pack?: AnalysisPack | null;
+  /** Work out links from research (a setting; on unless turned off). Off, none are worked out. */
+  links?: boolean;
 }
 
 export function analyse(i: AnalysisInput): AnalysisFacts {
@@ -54,7 +56,7 @@ export function analyse(i: AnalysisInput): AnalysisFacts {
       explore: exploreNext(s, i.publicProfile, { ...flow, ...(i.mapAxes ? { mapAxes: i.mapAxes } : {}) }),
       reflect: reflections(s, i.tensions),
       readings: i.pack && traditions ? readingsFor(i.pack, traditions) : [],
-    suggestions: i.pack ? suggestionsFor(i.pack, i.publicProfile, s) : [],
+    suggestions: i.pack && i.links !== false ? suggestionsFor(i.pack, i.publicProfile, s) : [],
     },
   };
 }

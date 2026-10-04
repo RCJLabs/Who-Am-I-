@@ -84,17 +84,20 @@ export const ReadingSchema = z.strictObject({
 
 export const ReadingsFileSchema = z.array(ReadingSchema).min(1);
 
-/** One published association between a personality trait and an interest, written from both ends. */
+/** One published association between a personality trait and an interest, read from either end. */
 export const SuggestionSchema = z.strictObject({
   id: Id,
   kind: z.enum(SUGGESTION_KINDS).describe('At most one of each kind is shown'),
   trait: Id.describe('The personality spectrum the association runs on (never neuroticism)'),
   toward: z.string().min(1).describe('The pole whose answers report more interest, as written in axes.yaml'),
   r: z.number().min(0).max(1).describe('Uncorrected correlation from the source; at least 0.20. Under 0.30 reads "a little", from 0.30 "somewhat"'),
+  strength: z
+    .enum(['little'])
+    .optional()
+    .describe('Read "a little" whatever r says, where the app\'s items likely carry the link more weakly than the source\'s; never stronger'),
   outcome: z.enum(SUGGESTION_OUTCOMES).describe('Whether the source measured interest or voluntary participation'),
-  interest: z.string().min(1).describe('What the source measured, as a noun phrase: "artistic activities, such as drawing, design, writing or music"'),
-  title: z.string().min(1).describe('The end with more interest, as a noun phrase naming the activity'),
-  away: z.string().min(1).describe('The other end: the same activity playing a small part, never a deficit'),
+  interest: z.string().min(1).describe('What the source measured, as a noun phrase: "artistic activities, such as creating visual art, designs or music"'),
+  title: z.string().min(1).describe('The same from either end, naming the interest: "Interest in artistic activities"'),
   source: z.string().min(1).describe('The meta-analysis or large replicated study'),
 });
 
@@ -168,12 +171,11 @@ export interface Suggestion {
   trait: AxisId;
   /** The pole whose answers report more interest: 0 = the axis's first pole, 1 = its second. */
   toward: 0 | 1;
-  /** From the correlation: under 0.30 "a little", from 0.30 "somewhat". */
+  /** From the correlation: under 0.30 "a little", from 0.30 "somewhat", unless the file weakens it. */
   strength: 'little' | 'somewhat';
   outcome: SuggestionOutcome;
   interest: string;
   title: string;
-  away: string;
   source: string;
 }
 

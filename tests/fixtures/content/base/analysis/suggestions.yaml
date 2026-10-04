@@ -4,5 +4,5 @@ norms:
   traits:
     warmth: { mean: 3.5, sd: 0.8, reversals: [[traits.t1, traits.t2]], echo: [cold] }
 suggestions:
-  - { id: helping, kind: working, trait: warmth, toward: Warm, r: 0.31, outcome: interest, interest: "helping and teaching others", title: Helping and teaching, away: Work where helping and teaching play a small part, source: "Ada Trait, Test Journal (2001)" }
-  - { id: crafts, kind: free_time, trait: warmth, toward: Cool, r: 0.22, outcome: participation, interest: "making things by hand", title: Making things by hand, away: Free time with little making by hand, source: "Ben Trait, Test Journal (2002)" }
+  - { id: helping, kind: working, trait: warmth, toward: Warm, r: 0.31, outcome: interest, interest: "helping and teaching others", title: Interest in helping and teaching, source: "Ada Trait, Test Journal (2001)" }
+  - { id: crafts, kind: free_time, trait: warmth, toward: Cool, r: 0.22, outcome: participation, interest: "making things by hand", title: Making things by hand, source: "Ben Trait, Test Journal (2002)" }

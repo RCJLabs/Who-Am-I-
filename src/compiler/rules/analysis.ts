@@ -162,6 +162,6 @@ function wordingRules({ pack, env, rep }: PackCtx): void {
   pack.readings.file.forEach((r, j) => flag(r.note, { pf: pack.readings.pf, path: [j, 'note'] }));
   const G = pack.suggestions;
   G?.file.suggestions.forEach((g, k) => {
-    for (const field of ['title', 'away', 'interest'] as const) flag(g[field], { pf: G.pf, path: ['suggestions', k, field] });
+    for (const field of ['title', 'interest'] as const) flag(g[field], { pf: G.pf, path: ['suggestions', k, field] });
   });
 }

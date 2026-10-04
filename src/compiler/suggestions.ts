@@ -1,5 +1,5 @@
 // Links from research (content/analysis/suggestions.yaml): published associations between a
-// personality trait and an interest, each written from both ends, and the norms that gate them.
+// personality trait and an interest, each read from either end, and the norms that gate them.
 // A link runs on one Big Five trait, never neuroticism, with an uncorrected correlation of at
 // least 0.20. Its wording names activities, never a kind of person: no subject from the
 // blocked-advice list in any form, no second person, nothing prescriptive, no numbers, nothing
@@ -79,7 +79,7 @@ export function compileSuggestions(
     if (s.r < MIN_R) rep.report('E016', `r = ${s.r} is under the evidence bar of ${MIN_R}`, at('r'));
     if (/^original\b/i.test(s.source.trim())) rep.report('E016', 'Cite the published study or meta-analysis the association comes from', at('source'));
     const echo = termMatchers(g.file.norms.traits[s.trait]?.echo ?? [], { inflected: true });
-    for (const field of ['title', 'away', 'interest'] as const) {
+    for (const field of ['title', 'interest'] as const) {
       for (const term of findTerms(s[field], blocked)) rep.report('E016', `"${term}" is a subject links never touch: name the activity instead`, at(field));
       for (const term of findTerms(s[field], echo)) rep.report('E016', `"${term}" restates the trait's own questions`, at(field));
       for (const [re, why] of WORDING) {
@@ -93,11 +93,10 @@ export function compileSuggestions(
         kind: s.kind,
         trait: s.trait,
         toward,
-        strength: s.r >= SOMEWHAT_R ? 'somewhat' : 'little',
+        strength: s.strength ?? (s.r >= SOMEWHAT_R ? 'somewhat' : 'little'),
         outcome: s.outcome,
         interest: s.interest,
         title: s.title,
-        away: s.away,
         source: s.source,
       });
     }

@@ -11,7 +11,7 @@ import { analyse } from './index.ts';
 import { suggestionsFor } from './suggestions.ts';
 
 function link(id: string, kind: Suggestion['kind'], trait: string, toward: 0 | 1): Suggestion {
-  return { id, kind, trait, toward, strength: 'somewhat', outcome: 'interest', interest: id, title: id, away: `${id}, less`, source: 'Test' };
+  return { id, kind, trait, toward, strength: 'somewhat', outcome: 'interest', interest: id, title: id, source: 'Test' };
 }
 const norm = (mean: number, sd: number, reversals: [string, string][] = []): TraitNorm => ({ mean, sd, reversals });
 const pack = (norms: Record<string, TraitNorm>, ...suggestions: Suggestion[]) =>
@@ -78,7 +78,7 @@ describe('links from research', () => {
     });
   });
 
-  it('read only the public profile, and need the pack', () => {
+  it('read only the public profile, and need the pack and the setting', () => {
     const b = fixtureBundle();
     const log = new Log();
     for (const [item, step] of [['traits.t1', 5], ['traits.t2', 1], ['traits.t3', 5], ['traits.t4', 1]] as const) log.add(item, scale(step));
@@ -95,5 +95,8 @@ describe('links from research', () => {
     const unscored = { ...publicProfile, axes: { ...publicProfile.axes, warmth: { ...publicProfile.axes['warmth']!, score: null } } };
     expect(analyse({ ...input, publicProfile: unscored }).next.suggestions).toEqual([]);
     expect(analyse({ ...input, pack: null }).next.suggestions).toEqual([]);
+    // Turned off in Settings, none are worked out.
+    expect(analyse({ ...input, links: false }).next.suggestions).toEqual([]);
+    expect(found(analyse({ ...input, links: true }))).toEqual(['helping:toward', 'crafts:away']);
   });
 });

@@ -231,16 +231,17 @@ describe('political traditions in the analysis', () => {
     expect(group.items).toEqual([
       {
         testid: 'rec-link-helping',
-        title: 'Helping and teaching',
+        title: 'Interest in helping and teaching',
         detail:
-          "In large studies, people who describe themselves as more “Warm” report somewhat more interest in helping and teaching others, on average. Many don't, so this may not fit you. Is it something you enjoy, or have wondered about?",
+          "In large studies, people whose answers lean toward “Warm” report somewhat more interest in helping and teaching others, on average. Many don't, so this may not fit you.",
         meta: 'Ways of working · Your answers lean toward “Warm” · Ada Trait, Test Journal (2001)',
       },
       {
+        // Read from the other end: the same title, and less of the same activity.
         testid: 'rec-link-crafts',
-        title: 'Free time with little making by hand',
+        title: 'Making things by hand',
         detail:
-          "In large studies, people who describe themselves as more “Warm” take part in making things by hand a little less often, on average. Many don't, so this may not fit you. Does that fit what you enjoy?",
+          "In large studies, people whose answers lean toward “Warm” take part in making things by hand a little less often, on average. Many don't, so this may not fit you.",
         meta: 'Free time · Your answers lean toward “Warm” · Ben Trait, Test Journal (2002)',
       },
     ]);

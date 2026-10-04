@@ -106,6 +106,13 @@
             "maximum": 1,
             "description": "Uncorrected correlation from the source; at least 0.20. Under 0.30 reads \"a little\", from 0.30 \"somewhat\""
           },
+          "strength": {
+            "description": "Read \"a little\" whatever r says, where the app's items likely carry the link more weakly than the source's; never stronger",
+            "type": "string",
+            "enum": [
+              "little"
+            ]
+          },
           "outcome": {
             "type": "string",
             "enum": [
@@ -117,17 +124,12 @@
           "interest": {
             "type": "string",
             "minLength": 1,
-            "description": "What the source measured, as a noun phrase: \"artistic activities, such as drawing, design, writing or music\""
+            "description": "What the source measured, as a noun phrase: \"artistic activities, such as creating visual art, designs or music\""
           },
           "title": {
             "type": "string",
             "minLength": 1,
-            "description": "The end with more interest, as a noun phrase naming the activity"
-          },
-          "away": {
-            "type": "string",
-            "minLength": 1,
-            "description": "The other end: the same activity playing a small part, never a deficit"
+            "description": "The same from either end, naming the interest: \"Interest in artistic activities\""
           },
           "source": {
             "type": "string",
@@ -144,7 +146,6 @@
           "outcome",
           "interest",
           "title",
-          "away",
           "source"
         ],
         "additionalProperties": false

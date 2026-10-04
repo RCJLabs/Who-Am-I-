@@ -304,19 +304,18 @@ export const copy = {
         title: 'Links from research',
         note: 'From your personality answers only.',
         intro:
-          "What large studies found that people who describe themselves the way you did report more or less interest in, on average. Group averages, not a mirror: many people don't fit them. Not advice, not career guidance, and not a judgment of what you do now.",
+          "Large studies, using longer personality questionnaires than this one, found that people whose answers lean the way yours do report more or less interest in some activities, on average. Many people don't fit these averages. About interest, not ability. Not advice, not career guidance, and not a judgment of what you do now.",
         kind: { working: 'Ways of working', free_time: 'Free time', subjects: 'Subjects to explore' },
         strength: { little: 'a little', somewhat: 'somewhat' },
         more: {
-          interest: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} report ${strength} more interest in ${what}, on average.`,
-          participation: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} take part in ${what} ${strength} more often, on average.`,
+          interest: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} report ${strength} more interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} take part in ${what} ${strength} more often, on average.`,
         },
         less: {
-          interest: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} report ${strength} less interest in ${what}, on average.`,
-          participation: (pole: string, strength: string, what: string) => `In large studies, people who describe themselves as more ${q(pole)} take part in ${what} ${strength} less often, on average.`,
+          interest: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} report ${strength} less interest in ${what}, on average.`,
+          participation: (pole: string, strength: string, what: string) => `In large studies, people whose answers lean toward ${q(pole)} take part in ${what} ${strength} less often, on average.`,
         },
         caveat: "Many don't, so this may not fit you.",
-        ask: { toward: 'Is it something you enjoy, or have wondered about?', away: 'Does that fit what you enjoy?' },
         because: (pole: string) => `Your answers lean toward ${q(pole)}`,
       },
       explore: {

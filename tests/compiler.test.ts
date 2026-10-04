@@ -114,8 +114,7 @@ describe('analysis pack', () => {
         strength: 'somewhat',
         outcome: 'interest',
         interest: 'helping and teaching others',
-        title: 'Helping and teaching',
-        away: 'Work where helping and teaching play a small part',
+        title: 'Interest in helping and teaching',
         source: 'Ada Trait, Test Journal (2001)',
       },
       {
@@ -127,12 +126,18 @@ describe('analysis pack', () => {
         outcome: 'participation',
         interest: 'making things by hand',
         title: 'Making things by hand',
-        away: 'Free time with little making by hand',
         source: 'Ben Trait, Test Journal (2002)',
       },
     ]);
     // 3.5 on the items' 1-5 scale is 0.25; an SD of 0.8 is 0.4.
     expect(analysis!.norms).toEqual({ warmth: { mean: 0.25, sd: 0.4, reversals: [['traits.t1', 'traits.t2']] } });
+    // A link can be read more weakly than its r, never more strongly.
+    const G = src.analysis!.suggestions!;
+    const weaker = compile({ ...src, analysis: { ...src.analysis!, suggestions: { ...G, text: G.text.replace('r: 0.31,', 'r: 0.31, strength: little,') } } });
+    expect(weaker.diagnostics).toEqual([]);
+    expect(weaker.analysis!.suggestions[0]).toMatchObject({ id: 'helping', strength: 'little' });
+    const stronger = compile({ ...src, analysis: { ...src.analysis!, suggestions: { ...G, text: G.text.replace('r: 0.22,', 'r: 0.22, strength: somewhat,') } } });
+    expect(stronger.diagnostics.map((x) => x.code)).toEqual(['E002']);
     // The file is optional: without it, the pack has none.
     const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { ...src.analysis!, suggestions: undefined } });
     expect(d).toEqual([]);
@@ -347,11 +352,11 @@ describe('analysis pack lint', () => {
     { name: 'E016 only personality spectrums', edits: [[G, 'trait: warmth, toward: Warm', 'trait: novelty, toward: Novel']], expect: [['E016', G, 'novelty']] },
     { name: 'E016 the evidence bar', edits: [[G, 'r: 0.22', 'r: 0.15']], expect: [['E016', G, 'r: 0.15']] },
     { name: 'E016 a blocked subject, in any form', edits: [[G, 'interest: "helping and teaching others"', 'interest: "helping others with diets"']], expect: [['E016', G, 'with diets']] },
-    { name: 'E016 never to the reader', edits: [[G, 'title: Helping and teaching,', 'title: Helping you teach,']], expect: [['E016', G, 'Helping you teach']] },
-    { name: 'E016 nothing prescriptive', edits: [[G, 'away: Free time with little making by hand', 'away: Free time that needs to stay quiet']], expect: [['E016', G, 'needs to stay']] },
+    { name: 'E016 never to the reader', edits: [[G, 'title: Interest in helping and teaching,', 'title: Helping you teach,']], expect: [['E016', G, 'Helping you teach']] },
+    { name: 'E016 nothing prescriptive', edits: [[G, 'title: Making things by hand,', 'title: Making what needs to be made,']], expect: [['E016', G, 'needs to be made']] },
     { name: 'E016 no numbers', edits: [[G, 'title: Making things by hand,', 'title: Making 3 things by hand,']], expect: [['E016', G, 'Making 3 things']] },
     { name: 'E016 nothing double-ended', edits: [[G, 'interest: "making things by hand"', 'interest: "making things by hand but also buying them"']], expect: [['E016', G, 'but also']] },
-    { name: "E016 never the trait's own questions", edits: [[G, 'title: Helping and teaching,', 'title: Helping cold callers,']], expect: [['E016', G, 'cold callers']] },
+    { name: "E016 never the trait's own questions", edits: [[G, 'title: Interest in helping and teaching,', 'title: Helping cold callers,']], expect: [['E016', G, 'cold callers']] },
     { name: 'E016 a published source', edits: [[G, 'source: "Ben Trait, Test Journal (2002)"', 'source: Original scenario']], expect: [['E016', G, 'Original scenario']] },
     { name: "E016 norms on the items' scale", edits: [[G, 'mean: 3.5', 'mean: 7']], expect: [['E016', G, 'mean: 7']] },
     { name: 'E016 a reversal pairs opposite keys', edits: [[G, 'reversals: [[traits.t1, traits.t2]]', 'reversals: [[traits.t1, traits.t3]]']], expect: [['E016', G, 'traits.t3']] },
@@ -360,7 +365,7 @@ describe('analysis pack lint', () => {
       name: 'W108 and W112 in links, never in their sources',
       edits: [
         [G, 'interest: "helping and teaching others"', 'interest: "helping any anti-vaxxer"'],
-        [G, 'away: Free time with little making by hand', 'away: Free time with the Example Party'],
+        [G, 'title: Making things by hand,', 'title: Making things for the Example Party,'],
         [G, 'source: "Ada Trait, Test Journal (2001)"', 'source: "Ada Trait, Anti-vaxxer Review (2001)"'],
       ],
       expect: [

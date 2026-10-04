@@ -32,7 +32,7 @@ export const LIMIT = {
 /**
  * Links from research: a trait counts with all its items answered (confidence 1), at least `lean`
  * toward a pole on its own scale (the read-out's "fairly" band), and at least `beyondMean` standard
- * deviations past the published adult mean in the same direction.
+ * deviations past the adult mean in the norms, in the same direction.
  */
 export const SUGGEST = { confidence: 1, lean: 0.5, beyondMean: 0.5 } as const;
 
