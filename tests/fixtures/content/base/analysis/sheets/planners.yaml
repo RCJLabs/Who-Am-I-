@@ -1,0 +1,14 @@
+# Test sheet: social 0.5, civil 0.65; autonomy -0.15, life 0.35 (divided).
+tradition: planners
+sources:
+  - Cy Plan, A Common Plan (1980)
+answers:
+  alpha.stance: 7
+  alpha.circ: 3
+  alpha.circ_deep: 3
+  beta.stance: 6
+  alpha.anchor_auto: 3
+  beta.anchor_auto: 4
+  alpha.anchor_life: 5
+divided:
+  - beta.anchor_life

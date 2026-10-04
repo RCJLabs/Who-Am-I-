@@ -256,10 +256,8 @@ export const copy = {
         between: (a: string, b: string) => `Your political answers sit between ${q(a)} and ${q(b)}, about as close to each.`,
         loose: (names: readonly string[]) =>
           `None of the traditions compared here is a close fit; the nearest ${names.length === 1 ? 'is' : 'are'} ${list(names.map(q))}.`,
-        mixed: (spectrums: readonly string[], names: readonly string[]) =>
-          `Your political answers pull different ways, most on ${list(spectrums.map(q))}, so no one tradition fits; the nearest are ${list(names.map(q))}.`,
-        mixedCenter: (names: readonly string[]) =>
-          `Your political answers average out near the middle, but they pull different ways from topic to topic, so no tradition is named; the nearest are ${list(names.map(q))}.`,
+        mixed: (names: readonly string[]) =>
+          `On average your political answers sit nearest ${list(names.map(q))}, but question by question they pull different ways, so no tradition is named.`,
         insufficient: (spectrums: readonly string[]) =>
           spectrums.length
             ? `Answer topics on ${list(spectrums.map(q))} to see which political traditions your answers sit closest to.`

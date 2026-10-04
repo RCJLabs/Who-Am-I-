@@ -35,6 +35,10 @@ export function loadContentDir(dir: string, topicDirs: string[] = [join(dir, 'to
       const path = join(dir, 'analysis', `${f}.yaml`);
       if (existsSync(path)) pack[f] = read(path);
     }
+    const sheets = walk(join(dir, 'analysis', 'sheets'));
+    if (sheets.length) pack.sheets = sheets.map(read);
+    const packTerms = join(dir, 'analysis', 'loaded-terms.txt');
+    if (existsSync(packTerms)) pack.loadedTerms = read(packTerms);
     sources.analysis = pack;
   }
   return sources;
@@ -50,8 +54,9 @@ export function contentFilePaths(dir: string): string[] {
     'loaded-terms.txt',
     'named-politics.txt',
     ...PACK_FILES.map((f) => join('analysis', `${f}.yaml`)),
+    join('analysis', 'loaded-terms.txt'),
   ]
     .map((f) => join(dir, f))
     .filter(existsSync);
-  return [...fixed, ...walk(join(dir, 'topics'))];
+  return [...fixed, ...walk(join(dir, 'topics')), ...walk(join(dir, 'analysis', 'sheets'))];
 }

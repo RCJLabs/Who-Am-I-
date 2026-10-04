@@ -1,14 +1,27 @@
 // Which political traditions the answers sit closest to. Reference points, never labels: a
-// tradition is named only when the answers are consistent enough and one (or two) clearly fit.
-// Always given the shareable profile, so worldview and sensitive answers can't move it.
+// tradition is named only when one (or two) clearly fit, and the answers follow its pattern
+// question by question, not just on average. Always given the shareable profile and answers, so
+// worldview and sensitive answers can't move it.
 // The rules and their reasons are in docs/ANALYSIS.md, "Political traditions".
 import type { AnalysisPack, Tradition } from '../../model/analysis.ts';
-import type { Axis, Bundle, PrincipleId } from '../../model/content.ts';
+import type { Axis, Bundle, ItemId, PrincipleId } from '../../model/content.ts';
 import type { Profile, Scored } from '../../model/profile.ts';
+import type { AnswerState } from '../state.ts';
 import { LIMIT, LOW_CONFIDENCE, TRADITION } from './constants.ts';
 import type { Closeness, TraditionDifference, TraditionFacts, TraditionFit } from './types.ts';
 
 type Scores = Pick<Profile, 'axes' | 'principles'>;
+/** Answer values (-1..1) by question. */
+export type Answers = ReadonlyMap<ItemId, number>;
+
+/** The answers matching may compare: scale answers in topics and items that could be shared. */
+export function shareableAnswers(s: AnswerState): Map<ItemId, number> {
+  const out = new Map<ItemId, number>();
+  for (const [id, r] of s.values) {
+    if (r.kind === 'scale' && !s.ix.topicOf.get(id)?.sensitive && !s.ix.items.get(id)?.sensitive) out.set(id, r.v);
+  }
+  return out;
+}
 
 interface Dim {
   id: string;
@@ -16,32 +29,32 @@ interface Dim {
   c: number;
 }
 
-export function matchTraditions(b: Bundle, profile: Scores, pack: AnalysisPack): TraditionFacts {
+export function matchTraditions(b: Bundle, profile: Scores, pack: AnalysisPack, answers: Answers): TraditionFacts {
   // The political spectrums every tradition is placed on (planned ones aren't), in content order.
   const political = Object.values(b.axes).filter((a) => a.family === 'political' && pack.traditions.every((t) => a.id in t.positions));
   const scored = dims(political.map((a) => a.id), profile.axes);
   const compared = scored.map((d) => d.id);
   const missing = political.map((a) => a.id).filter((id) => !compared.includes(id));
   const total = sum(scored.map((d) => d.c));
-  if (scored.length < TRADITION.minAxes || total < TRADITION.minConfidence) {
-    return { status: 'insufficient', named: [], fits: [], compared, missing, principles: [], spread: [], coherence: null };
-  }
+  const insufficient: TraditionFacts = { status: 'insufficient', named: [], fits: [], compared, missing, principles: [], fit: null };
+  if (scored.length < TRADITION.minAxes || total < TRADITION.minConfidence) return insufficient;
 
-  const coherence = round(sum(scored.map((d) => d.c * profile.axes[d.id]!.spread)) / total);
   const principleDims = dims(pack.compare, profile.principles);
   const usePrinciples = sum(principleDims.map((d) => d.c)) >= TRADITION.principleEvidence;
   const ranked = pack.traditions
     .map((t, order) => ({ t, order, distance: distance(t, scored, usePrinciples ? principleDims : null) }))
     .sort((x, y) => x.distance - y.distance || x.order - y.order);
 
-  const gated = (t: Tradition): boolean => rms(political.map((a) => t.positions[a.id] ?? 0)) < TRADITION.centerNorm && coherence > TRADITION.centerCoherence;
   const [first, second] = ranked;
+  const nearest = fit(first!.t, answers);
+  if (nearest.questions < TRADITION.minQuestions) return insufficient;
+  // Answers that pull different ways average out close to traditions they don't resemble, so a
+  // tradition is named only when the answers also follow it question by question.
+  const follows = (t: Tradition) => fit(t, answers).gap <= TRADITION.fit;
   let status: TraditionFacts['status'];
-  let reason: TraditionFacts['reason'];
-  if (coherence > TRADITION.mixed) [status, reason] = ['mixed', 'spread'];
-  else if (first!.distance >= TRADITION.loose) status = 'loose';
-  else if (gated(first!.t)) [status, reason] = ['mixed', 'center'];
-  else if (second && second.distance - first!.distance < TRADITION.between && second.distance < TRADITION.loose && !gated(second.t)) status = 'between';
+  if (first!.distance >= TRADITION.loose) status = 'loose';
+  else if (nearest.gap > TRADITION.fit) status = 'mixed';
+  else if (second && second.distance - first!.distance < TRADITION.between && second.distance < TRADITION.loose && follows(second.t)) status = 'between';
   else status = 'match';
 
   const listed = ranked.slice(0, status === 'mixed' ? 2 : LIMIT.traditions);
@@ -54,21 +67,31 @@ export function matchTraditions(b: Bundle, profile: Scores, pack: AnalysisPack):
     }),
   );
   const named = status === 'match' ? [first!.t.id] : status === 'between' ? [first!.t.id, second!.t.id] : [];
-  const spread = [...scored]
-    .sort((x, y) => profile.axes[y.id]!.spread - profile.axes[x.id]!.spread || compared.indexOf(x.id) - compared.indexOf(y.id))
-    .slice(0, 2)
-    .map((d) => d.id);
   return {
     status,
     named,
     fits,
-    ...(reason ? { reason } : {}),
     compared,
     missing,
     principles: usePrinciples ? principleDims.map((d) => d.id) : [],
-    spread,
-    coherence,
+    fit: { gap: nearest.gap, questions: nearest.questions },
   };
+}
+
+/**
+ * How closely the answers follow a tradition question by question: the RMS gap between each
+ * answer and the tradition's own (both -1..1), over the political questions both answered.
+ */
+export function fit(t: Tradition, answers: Answers): { gap: number; questions: number } {
+  let sq = 0;
+  let n = 0;
+  for (const [id, a] of Object.entries(t.answers)) {
+    const v = answers.get(id);
+    if (v === undefined) continue;
+    sq += (v - a) ** 2;
+    n++;
+  }
+  return { gap: n ? round(Math.sqrt(sq / n)) : 0, questions: n };
 }
 
 /** The scored entries among these ids, in order. */
@@ -126,10 +149,6 @@ function differences(t: Tradition, axes: readonly Dim[], principles: readonly Di
     .sort((x, y) => y.gap - x.gap || x.order - y.order)
     .slice(0, LIMIT.differences)
     .map(({ order: _order, ...rest }) => rest);
-}
-
-function rms(values: readonly number[]): number {
-  return values.length ? Math.sqrt(sum(values.map((v) => v * v)) / values.length) : 0;
 }
 
 function sum(values: readonly number[]): number {

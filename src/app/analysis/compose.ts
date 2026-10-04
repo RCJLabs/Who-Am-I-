@@ -298,7 +298,7 @@ function traditionsView(i: ComposeInput): TraditionsView | null {
       lead = T.lead.loose(names);
       break;
     case 'mixed':
-      lead = facts.reason === 'center' ? T.lead.mixedCenter(names) : T.lead.mixed(facts.spread.map(spectrum), names);
+      lead = T.lead.mixed(names);
       break;
     default:
       lead = T.lead.insufficient(facts.missing.map(spectrum));

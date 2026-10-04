@@ -26,7 +26,7 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Summary: the principle named in the tensions sentence | public tensions only |
 | Section read-outs | the private profile: they describe the chart beside them, which already shows those answers |
 | Next steps | public profile only; never a sensitive topic or item |
-| Political traditions and their readings | public profile only |
+| Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
 
 Worldview answers can never move the summary or a recommendation. The simulation test checks this
 for every persona and 200 random respondents; the e2e test checks it in the browser.
@@ -150,40 +150,47 @@ never nudges anyone toward questions about religion or identity.
 
 ## Political traditions (`traditions.ts`)
 
-Eleven political traditions from the analysis pack (`content/analysis/traditions.yaml`) act as
-reference points: which of them your political answers sit closest to. They are never labels for
-the person, never parties or politicians, and never recommendations. Each tradition's targets
-come from an answer sheet: the app's own political questions answered as a thoughtful adherent
-would, citing the tradition's writers, scored by the same engine as your answers. So both sit on
-the same scales. The comparison uses only the public profile, and isn't part of the exported
-profile.
+Political traditions from the analysis pack (`content/analysis/`) act as reference points: which
+of them your political answers sit closest to. They are never labels for the person, never parties
+or politicians, and never recommendations. Each tradition is placed by an answer sheet
+(`content/analysis/sheets/<id>.yaml`): the app's own political questions, and the statements
+behind the compared principles, answered as a thoughtful adherent would, citing the tradition's
+writers. The compiler scores each sheet with the same engine as your answers, so both sit on the
+same scales and no position is written by hand. The comparison uses only answers that could be
+shared, and isn't part of the exported profile.
 
-Notation: the scored political spectrums, each with your score u, confidence c and spread s; a
-tradition's target t on each.
+Notation: the scored political spectrums, each with your score u and confidence c, and a
+tradition's target t on each; on the political questions, your answers v and the tradition's
+answers a, as values from −1 to 1 (one step on a 7-point scale is 0.33).
 
 1. **Enough evidence.** At least 2 scored political spectrums and Σc ≥ 1.0 (`TRADITION.minAxes`,
-   `minConfidence`). Otherwise the status is `insufficient`, naming the spectrums still missing.
-2. **Coherence.** S̄ = Σ c·s / Σ c, the confidence-weighted mean spread of your answers.
-3. **Distance.** D_A² = Σ w(u − t)² / Σ w, with w = c, halved (`dividedWeight` 0.5) on spectrums the
+   `minConfidence`), and at least 4 political questions that both you and the nearest tradition
+   answered (`minQuestions`). Otherwise the status is `insufficient`, naming the spectrums still
+   missing.
+2. **Distance.** D_A² = Σ w(u − t)² / Σ w, with w = c, halved (`dividedWeight` 0.5) on spectrums the
    tradition's adherents split on. Once the compared principles have summed confidence of at least
    3 (`principleEvidence`), D = √(0.75·D_A² + 0.25·D_P²), D_P being the same over those principles;
    otherwise D = D_A. Distances are rounded to 4 places and ties go to pack order, so the result is
    always the same for the same answers.
+3. **Fit.** F = √(mean of (v − a)²) over the political questions both you and the tradition
+   answered. Questions a tradition's adherents split on aren't in its answers.
 4. **Status**, the first that applies:
 
    | Condition | Status | Named |
    |---|---|---|
-   | S̄ > 0.45 (`mixed`) | mixed: your answers spread widely | none |
    | D₁ ≥ 0.35 (`loose`) | loose: no tradition is a close fit | none |
-   | the nearest is near the middle and S̄ > 0.30 | mixed: see the center gate | none |
-   | D₂ − D₁ < 0.04, D₂ < 0.35, and the second isn't gated | between | the nearest two |
+   | F₁ > 0.55 (`fit`) | mixed: close on average, but not question by question | none |
+   | D₂ − D₁ < 0.04, D₂ < 0.35, and F₂ ≤ 0.55 | between | the nearest two |
    | otherwise | match | the nearest |
 
-5. **The center gate.** A tradition whose targets sit near the middle (RMS under 0.35,
-   `centerNorm`) is named only when your answers are consistent (S̄ ≤ 0.30, `centerCoherence`).
-   Answers that pull both ways average out near the middle too, and that isn't a moderate view.
-   Gated traditions are still listed, just not named. `centerNorm` equals `loose` on purpose:
-   someone at the exact middle is within the loose distance of exactly the gated traditions.
+5. **Why the fit.** Answers that pull different ways average out close to traditions they don't
+   resemble, most often near the middle. Distance alone would name a tradition for them, so a
+   tradition is named only when your answers also follow its own, question by question.
+   An earlier design used the spread of your answers on each spectrum instead, but the content's
+   spectrums mix questions that divide traditions in different directions: on "Civil", most
+   traditions back some state powers (vaccine requirements, say) and oppose others (the death
+   penalty, bulk surveillance). So the answers of a tradition's own adherents spread about as
+   widely as random answers, and no spread threshold told them apart. The fit does.
 6. **Listed:** the nearest three (two when mixed), each with a closeness band: very close (< 0.15),
    close (< 0.25), some overlap (< 0.35), or a looser fit. Never a percentage.
 7. **Differences:** for each listed tradition, its two biggest gaps of at least 0.35 (`difference`),

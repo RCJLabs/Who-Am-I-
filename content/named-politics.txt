@@ -1,0 +1,259 @@
+# Parties, movements and politicians the analysis pack must not name (W112): the traditions are
+# ideas, so describe what adherents hold instead. Only names that can't be read any other way:
+# party names of two or more words, party acronyms, and politicians' full or distinctive names.
+# Never a bare word the traditions need ("Labour", "Green", "Democrats", "Republican", "Tory"),
+# and not thinkers who also held office (Burke, Mill, Disraeli, Crosland): their ideas belong to
+# the traditions. Reading titles, authors and `in` are citations, so they aren't checked.
+
+# Parties and movements
+Democratic Party
+Republican Party
+Libertarian Party
+Green Party
+Constitution Party
+Reform Party
+Democratic Socialists of America
+Tea Party
+Freedom Caucus
+MAGA
+Make America Great Again
+Labour Party
+Labor Party
+New Labour
+Blue Labour
+Conservative Party
+Tory Party
+Tories
+Liberal Party
+Liberal Democrats
+Lib Dems
+Reform UK
+Brexit Party
+UK Independence Party
+Scottish National Party
+Plaid Cymru
+Social Democratic Party
+Democratic Unionist Party
+Sinn Féin
+Sinn Fein
+British National Party
+Socialist Party
+Social Democratic Party of Germany
+Christian Democratic Union
+Christian Social Union
+Free Democratic Party
+Alternative for Germany
+Alternative für Deutschland
+Die Linke
+Die Grünen
+National Rally
+Rassemblement National
+National Front
+Front National
+Les Républicains
+La France Insoumise
+En Marche
+Parti Socialiste
+Brothers of Italy
+Fratelli d'Italia
+Forza Italia
+Lega Nord
+Northern League
+Five Star Movement
+Movimento 5 Stelle
+Partito Democratico
+Partido Popular
+Podemos
+Party for Freedom
+GroenLinks
+Forum for Democracy
+Forum voor Democratie
+Freedom Party of Austria
+Austrian People's Party
+Sweden Democrats
+Sverigedemokraterna
+Moderate Party
+Danish People's Party
+Progress Party
+Finns Party
+True Finns
+Fidesz
+Law and Justice
+Civic Platform
+Syriza
+New Democracy
+Fianna Fáil
+Fine Gael
+New Democratic Party
+Bloc Québécois
+People's Party of Canada
+Australian Greens
+Pauline Hanson's One Nation
+New Zealand First
+NZ First
+ACT New Zealand
+European People's Party
+Party of European Socialists
+Renew Europe
+Identity and Democracy
+Patriots for Europe
+
+# Party acronyms
+GOP
+DNC
+RNC
+UKIP
+SNP
+DUP
+AfD
+SPD
+CDU
+CSU
+FDP
+FPÖ
+ÖVP
+PVV
+VVD
+CDA
+PSOE
+NDP
+ALP
+DSA
+EPP
+
+# Politicians
+Donald Trump
+Trumpism
+Joe Biden
+Biden
+Barack Obama
+Obama
+Hillary Clinton
+Bill Clinton
+Bernie Sanders
+Alexandria Ocasio-Cortez
+Ocasio-Cortez
+Kamala Harris
+JD Vance
+J. D. Vance
+Ron DeSantis
+DeSantis
+Ronald Reagan
+Reagan
+Reaganism
+George W. Bush
+George H. W. Bush
+Nancy Pelosi
+Elizabeth Warren
+Ron Paul
+Rand Paul
+Pat Buchanan
+Newt Gingrich
+Steve Bannon
+Franklin D. Roosevelt
+Lyndon B. Johnson
+Lyndon Johnson
+Margaret Thatcher
+Thatcher
+Thatcherism
+Thatcherite
+Tony Blair
+Blairite
+Jeremy Corbyn
+Corbyn
+Keir Starmer
+Starmer
+Boris Johnson
+Nigel Farage
+Farage
+Rishi Sunak
+Liz Truss
+David Cameron
+Theresa May
+Gordon Brown
+Clement Attlee
+Attlee
+Harold Wilson
+Enoch Powell
+Winston Churchill
+Kemi Badenoch
+Ed Miliband
+Nick Clegg
+Jacob Rees-Mogg
+Emmanuel Macron
+Macron
+Marine Le Pen
+Jean-Marie Le Pen
+Le Pen
+Jean-Luc Mélenchon
+Mélenchon
+Melenchon
+Éric Zemmour
+Zemmour
+Jordan Bardella
+François Mitterrand
+Mitterrand
+Charles de Gaulle
+de Gaulle
+Gaullism
+Gaullist
+Angela Merkel
+Merkel
+Olaf Scholz
+Friedrich Merz
+Helmut Kohl
+Konrad Adenauer
+Adenauer
+Willy Brandt
+Gerhard Schröder
+Sahra Wagenknecht
+Wagenknecht
+Alice Weidel
+Giorgia Meloni
+Meloni
+Matteo Salvini
+Salvini
+Silvio Berlusconi
+Berlusconi
+Beppe Grillo
+Mario Draghi
+Alcide De Gasperi
+Viktor Orbán
+Orbán
+Orban
+Geert Wilders
+Wilders
+Jörg Haider
+Olof Palme
+Pedro Sánchez
+Santiago Abascal
+Pablo Iglesias
+Alexis Tsipras
+Yanis Varoufakis
+Justin Trudeau
+Trudeau
+Pierre Poilievre
+Jacinda Ardern
+Ardern
+Anthony Albanese
+Pauline Hanson
+Jair Bolsonaro
+Bolsonaro
+Javier Milei
+Milei
+Hugo Chávez
+Chávez
+Chavez
+Fidel Castro
+Vladimir Putin
+Putin
+Narendra Modi
+Recep Tayyip Erdoğan
+Erdoğan
+Erdogan
+Xi Jinping
+Lenin
+Stalin
+Mao Zedong
+Hitler
+Mussolini

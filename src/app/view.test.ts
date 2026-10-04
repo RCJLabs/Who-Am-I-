@@ -204,11 +204,11 @@ describe('political traditions on the map and in the table', () => {
   it('places every tradition on the two map spectrums, labelling the listed ones', () => {
     const refs = traditionRefs(pack, ['social', 'civil'], ['reformers', 'moderates']);
     expect(refs.map((r) => [r.id, r.x, r.y, r.labelled])).toEqual([
-      ['reformers', 0.7, -0.4, true],
-      ['planners', 0.5, 0.5, false],
-      ['keepers', -0.7, 0.4, false],
-      ['marketeers', -0.4, -0.6, false],
-      ['moderates', 0.1, 0.1, true],
+      ['reformers', 0.7, -0.35, true],
+      ['planners', 0.5, 0.65, false],
+      ['keepers', -0.7, 0.35, false],
+      ['marketeers', -0.4, -0.65, false],
+      ['moderates', 0.15, 0, true],
     ]);
     expect(refs.some((r) => r.divided)).toBe(false);
     const divided = { ...pack, traditions: pack.traditions.map((t) => (t.id === 'keepers' ? { ...t, divided: ['civil'] } : t)) };
@@ -229,10 +229,10 @@ describe('political traditions on the map and in the table', () => {
     expect(table.rows.map((r) => [r.name, ...r.cells])).toEqual([
       ['You', 'Strongly Tradition', 'Not enough answers'],
       ['Free exchange', 'Tradition', 'Liberty'],
-      ['Keeping', 'Strongly Tradition', 'Authority'],
-      ['Moderation', 'Center', 'Center'],
+      ['Keeping', 'Strongly Tradition', 'Leans Authority'],
+      ['Moderation', 'Leans Progress', 'Center'],
       ['Planning', 'Progress', 'Authority'],
-      ['Reform', 'Strongly Progress', 'Liberty'],
+      ['Reform', 'Strongly Progress', 'Leans Liberty'],
     ]);
   });
 });

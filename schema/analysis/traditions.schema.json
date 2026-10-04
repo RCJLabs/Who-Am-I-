@@ -46,40 +46,6 @@
             "minLength": 1,
             "description": "What the tradition stands for, in its adherents' own terms"
           },
-          "positions": {
-            "type": "object",
-            "propertyNames": {
-              "type": "string",
-              "pattern": "^[a-z][a-z0-9_]*$"
-            },
-            "additionalProperties": {
-              "type": "number",
-              "minimum": -1,
-              "maximum": 1
-            },
-            "description": "Position on every political spectrum, -1..1, scored from the answer sheet in tests/sim/traditions"
-          },
-          "divided": {
-            "description": "Spectrums or compared principles adherents split on; they count half",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[a-z][a-z0-9_]*$"
-            }
-          },
-          "principles": {
-            "type": "object",
-            "propertyNames": {
-              "type": "string",
-              "pattern": "^[a-z][a-z0-9_]*$"
-            },
-            "additionalProperties": {
-              "type": "number",
-              "minimum": -1,
-              "maximum": 1
-            },
-            "description": "Endorsement of every principle in the compare list, -1..1"
-          },
           "neighbours": {
             "minItems": 1,
             "type": "array",
@@ -129,8 +95,6 @@
           "adherents",
           "side",
           "summary",
-          "positions",
-          "principles",
           "neighbours",
           "inside",
           "outside"

@@ -134,7 +134,7 @@ describe('political traditions in the analysis', () => {
     return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: [], pack: withPack ? pack : null });
   }
 
-  const base = { compared: ['social', 'civil'], missing: [], principles: [], spread: ['social', 'civil'], coherence: 0.1 };
+  const base = { compared: ['social', 'civil'], missing: [], principles: [], fit: { gap: 0.2, questions: 4 } };
   const match: TraditionFacts = {
     ...base,
     status: 'match',
@@ -176,15 +176,16 @@ describe('political traditions in the analysis', () => {
     const loose = withTraditions({ ...match, status: 'loose', named: [] });
     expect(loose.summary.tradition).toBeNull();
     expect(loose.traditions).toMatchObject({ reference: null, lead: 'None of the traditions compared here is a close fit; the nearest are “Reform”, “Moderation” and “Planning”.' });
-    const mixed = withTraditions({ ...match, status: 'mixed', reason: 'spread', named: [], fits: match.fits.slice(0, 2) });
-    expect(mixed.traditions!.lead).toBe('Your political answers pull different ways, most on “Social” and “Civil”, so no one tradition fits; the nearest are “Reform” and “Moderation”.');
-    const center = withTraditions({ ...match, status: 'mixed', reason: 'center', named: [], fits: match.fits.slice(0, 2) });
-    expect(center.traditions!.lead).toMatch(/^Your political answers average out near the middle/);
-    expect(center.readouts.politics!.sentences.at(-1)).toBe(center.traditions!.lead);
+    const mixed = withTraditions({ ...match, status: 'mixed', named: [], fits: match.fits.slice(0, 2), fit: { gap: 0.8, questions: 4 } });
+    expect(mixed.traditions!.lead).toBe(
+      'On average your political answers sit nearest “Reform” and “Moderation”, but question by question they pull different ways, so no tradition is named.',
+    );
+    expect(mixed.readouts.politics!.sentences.at(-1)).toBe(mixed.traditions!.lead);
+    expect(mixed.summary.tradition).toBeNull();
   });
 
   it('says which spectrums need answers, outside the politics read-out', () => {
-    const a = withTraditions({ ...base, status: 'insufficient', named: [], fits: [], compared: ['social'], missing: ['civil'], coherence: null });
+    const a = withTraditions({ ...base, status: 'insufficient', named: [], fits: [], compared: ['social'], missing: ['civil'], fit: null });
     expect(a.traditions).toMatchObject({ basis: null, rows: [], lead: 'Answer topics on “Civil” to see which political traditions your answers sit closest to.' });
     expect(a.readouts.politics!.sentences).not.toContain(a.traditions!.lead);
     expect(a.summary.tradition).toBeNull();

@@ -1,0 +1,13 @@
+# Test sheet: social -0.4, civil -0.65; autonomy 0.85, life 0.15.
+tradition: marketeers
+sources:
+  - Gus Market, Free to Trade (1960)
+answers:
+  alpha.stance: 3
+  alpha.circ: 2
+  alpha.circ_deep: 2
+  beta.stance: 2
+  alpha.anchor_auto: 7
+  beta.anchor_auto: 6
+  alpha.anchor_life: 5
+  beta.anchor_life: 4

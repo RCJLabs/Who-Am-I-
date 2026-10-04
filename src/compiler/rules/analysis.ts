@@ -1,11 +1,14 @@
-// Analysis-pack rules. E014 keeps the political traditions placed on every political spectrum and
-// balanced between the sides, with each tradition's first critique coming from the other side.
+// Analysis-pack rules. E014 keeps the political traditions balanced between the sides, on every
+// political spectrum, with each tradition's first critique coming from the other side.
 // W111 keeps the readings balanced. W108 and W112 keep loaded terms and party or politician names
 // out of what users read; titles, authors and `in` are citations, quoted as published, so exempt.
+// The pack has its own loaded terms on top of the content's: words such as "moderate" or
+// "mainstream" are fine in a question but cast a tradition as the default.
 import type { Side } from '../../model/analysis.ts';
 import type { ParsedPack } from '../analysis.ts';
 import type { Env, Loc, Reporter } from '../context.ts';
 import { findTerms, termMatchers } from '../loaded-terms.ts';
+import { politicalAxes, type SheetTargets } from '../sheets.ts';
 
 export interface PackCtx {
   pack: ParsedPack;
@@ -25,33 +28,30 @@ export function packRules(ctx: PackCtx): void {
   wordingRules(ctx);
 }
 
-function traditionRules({ pack, env, rep }: PackCtx): void {
+/** With the positions the answer sheets give: enough traditions toward each pole of every spectrum. */
+export function positionRules({ pack, env, rep }: PackCtx, targets: ReadonlyMap<string, SheetTargets>): void {
+  for (const id of politicalAxes(env)) {
+    const a = env.axes.get(id)!;
+    const placed = [...targets.values()].filter((t) => !t.divided.includes(id)).map((t) => t.positions[id] ?? 0);
+    for (const [k, n] of [placed.filter((v) => v <= -PLACED).length, placed.filter((v) => v >= PLACED).length].entries()) {
+      if (n < PER_POLE) {
+        rep.report('E014', `Only ${n} tradition${n === 1 ? '' : 's'} sit${n === 1 ? 's' : ''} toward ${a.poles[k]} on '${id}' (${k ? '' : '−'}${PLACED} or beyond, not divided); at least ${PER_POLE} are needed`, {
+          pf: pack.traditions.pf,
+          path: ['traditions'],
+        });
+      }
+    }
+  }
+}
+
+function traditionRules({ pack, rep }: PackCtx): void {
   const { pf, file } = pack.traditions;
-  const political = [...env.axes.values()].filter((a) => a.family === 'political' && !a.planned);
-  const compare = new Set(file.compare);
   const side = new Map(file.traditions.map((t) => [t.id, t.side]));
   const voice = new Map(pack.readings.file.map((r) => [r.id, r.voice]));
   const voiceSide = (reading: string | undefined): Side | undefined => side.get(voice.get(reading ?? '') ?? '');
 
   file.traditions.forEach((t, i) => {
     const at = (...path: (string | number)[]): Loc => ({ pf, path: ['traditions', i, ...path] });
-    for (const a of political) {
-      if (!(a.id in t.positions)) rep.report('E014', `'${t.id}' has no position on '${a.id}': place every tradition on every political spectrum`, at('positions'));
-    }
-    for (const id of Object.keys(t.positions)) {
-      const a = env.axes.get(id);
-      if (a && (a.family !== 'political' || a.planned)) rep.report('E014', `'${id}' isn't a political spectrum in use; traditions are placed only on those`, at('positions', id));
-    }
-    for (const id of file.compare) {
-      if (!(id in t.principles)) rep.report('E014', `'${t.id}' has no position on '${id}', which is in the compare list`, at('principles'));
-    }
-    for (const id of Object.keys(t.principles)) {
-      if (env.principles.has(id) && !compare.has(id)) rep.report('E014', `'${id}' isn't in the compare list`, at('principles', id));
-    }
-    (t.divided ?? []).forEach((id, k) => {
-      if (!(id in t.positions) && !(id in t.principles)) rep.report('E014', `'${t.id}' is divided on '${id}', which it doesn't place`, at('divided', k));
-    });
-
     t.neighbours.forEach((n, k) => {
       const other = file.traditions.find((x) => x.id === n.id);
       if (n.id === t.id) rep.report('E014', `'${t.id}' lists itself as a neighbour`, at('neighbours', k, 'id'));
@@ -85,17 +85,6 @@ function traditionRules({ pack, env, rep }: PackCtx): void {
     }
   });
 
-  for (const a of political) {
-    const placed = file.traditions.filter((t) => a.id in t.positions && !(t.divided ?? []).includes(a.id)).map((t) => t.positions[a.id]!);
-    for (const [k, n] of [placed.filter((v) => v <= -PLACED).length, placed.filter((v) => v >= PLACED).length].entries()) {
-      if (n < PER_POLE) {
-        rep.report('E014', `Only ${n} tradition${n === 1 ? '' : 's'} sit${n === 1 ? 's' : ''} toward ${a.poles[k]} on '${a.id}' (${k ? '' : '−'}${PLACED} or beyond, not divided); at least ${PER_POLE} are needed`, {
-          pf,
-          path: ['traditions'],
-        });
-      }
-    }
-  }
   const left = file.traditions.filter((t) => t.side === 'left').length;
   const right = file.traditions.filter((t) => t.side === 'right').length;
   if (Math.abs(left - right) > 1) rep.report('E014', `${left} traditions are on the left and ${right} on the right: keep them within one of each other`, { pf, path: ['traditions'] });
@@ -150,7 +139,7 @@ function readingRules({ pack, env, rep }: PackCtx): void {
 }
 
 function wordingRules({ pack, env, rep }: PackCtx): void {
-  const loaded = termMatchers(env.loadedTerms);
+  const loaded = termMatchers([...env.loadedTerms, ...env.packTerms]);
   const named = termMatchers(env.namedPolitics);
   const flag = (text: string, loc: Loc) => {
     for (const term of findTerms(text, loaded)) rep.report('W108', `Loaded term "${term}": use neutral wording`, loc);

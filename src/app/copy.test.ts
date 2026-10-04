@@ -67,8 +67,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.traditions.lead.match': [['Libertarianism', []], ['Libertarianism', ['Classical liberalism', 'Centrism']]],
   'analysis.traditions.lead.between': [['Social democracy', 'Green politics']],
   'analysis.traditions.lead.loose': [[['Centrism']], [['Centrism', 'Social liberalism']]],
-  'analysis.traditions.lead.mixed': [[['Economic', 'Civil'], ['Centrism', 'Communitarianism']]],
-  'analysis.traditions.lead.mixedCenter': [[['Centrism', 'Social liberalism']]],
+  'analysis.traditions.lead.mixed': [[['Centrism', 'Communitarianism']]],
   'analysis.traditions.lead.insufficient': [[[]], [['Diplomatic']], [['Civil', 'Cultural']]],
   'analysis.traditions.basis': [[['Economic', 'Civil'], []], [['Economic', 'Civil', 'Cultural', 'Diplomatic'], ['Equality', 'Liberty']]],
   'analysis.traditions.further': [['Liberty']],
@@ -128,7 +127,12 @@ describe('app wording', () => {
 
   it('uses no loaded terms', () => {
     const terms = termMatchers(parseTerms(readFileSync('content/loaded-terms.txt', 'utf8')));
-    const hits = render().flatMap(({ path, text }) => findTerms(text, terms).map((t) => `${path}: "${t}" in ${JSON.stringify(text)}`));
+    // Wording about the political traditions answers to the pack's own terms too.
+    const pack = [...terms, ...termMatchers(parseTerms(readFileSync('content/analysis/loaded-terms.txt', 'utf8')))];
+    const aboutTraditions = (path: string) => path.startsWith('analysis.traditions.') || path.startsWith('analysis.next.readings.');
+    const hits = render().flatMap(({ path, text }) =>
+      findTerms(text, aboutTraditions(path) ? pack : terms).map((t) => `${path}: "${t}" in ${JSON.stringify(text)}`),
+    );
     expect(hits).toEqual([]);
   });
 

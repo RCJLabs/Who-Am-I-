@@ -1,0 +1,13 @@
+# Test sheet: social 0.7, civil -0.35; autonomy 0.65, life -0.15.
+tradition: reformers
+sources:
+  - Ada Reform, The Case for Change (1990)
+answers:
+  alpha.stance: 6
+  alpha.circ: 5
+  alpha.circ_deep: 4
+  beta.stance: 3
+  alpha.anchor_auto: 6
+  beta.anchor_auto: 6
+  alpha.anchor_life: 3
+  beta.anchor_life: 4

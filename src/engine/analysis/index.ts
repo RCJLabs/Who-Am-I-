@@ -14,7 +14,7 @@ import { exploreNext } from './explore.ts';
 import { firmPositions } from './positions.ts';
 import { readingsFor } from './readings.ts';
 import { publicTension, reflections } from './reflect.ts';
-import { matchTraditions } from './traditions.ts';
+import { matchTraditions, shareableAnswers } from './traditions.ts';
 import type { AnalysisFacts } from './types.ts';
 
 export interface AnalysisInput {
@@ -37,7 +37,7 @@ export function analyse(i: AnalysisInput): AnalysisFacts {
   const flow = i.flow ?? {};
   const positions = firmPositions(s, i.publicProfile);
   const open = i.tensions.filter((t) => t.status === 'open' && publicTension(s, t)).sort((x, y) => y.rank - x.rank);
-  const traditions = i.pack ? matchTraditions(b, i.publicProfile, i.pack) : null;
+  const traditions = i.pack ? matchTraditions(b, i.publicProfile, i.pack, shareableAnswers(s)) : null;
   return {
     axes: axisFacts(b, i.profile, observe(s, { includeSensitive: true })),
     principles: principleFacts(b, i.profile),

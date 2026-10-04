@@ -1,4 +1,5 @@
 # Test traditions: two on each side of both political spectrums, and a center one near the middle.
+# Their positions come from the answer sheets in sheets/.
 compare: [autonomy, life]
 traditions:
   - id: reformers
@@ -6,8 +7,6 @@ traditions:
     adherents: reformers
     side: left
     summary: Change the rules when they stop serving people.
-    positions: { social: 0.7, civil: -0.4 }
-    principles: { autonomy: 0.6, life: -0.2 }
     neighbours:
       - { id: planners, split: Reformers trust people to choose; planners trust a common plan. }
       - { id: moderates, split: Reformers want change sooner than moderates do. }
@@ -18,9 +17,6 @@ traditions:
     adherents: planners
     side: left
     summary: Shared goals, pursued together and on purpose.
-    positions: { social: 0.5, civil: 0.5 }
-    divided: [life]
-    principles: { autonomy: -0.2, life: 0.4 }
     neighbours:
       - { id: reformers, split: Planners trust a common plan; reformers trust people to choose. }
     inside: [planners_one, planners_two]
@@ -30,8 +26,6 @@ traditions:
     adherents: keepers
     side: right
     summary: Keep what has worked, and change it slowly.
-    positions: { social: -0.7, civil: 0.4 }
-    principles: { autonomy: -0.4, life: 0.8 }
     neighbours:
       - { id: marketeers, split: Keepers value order; marketeers value free exchange. }
       - { id: moderates, split: Keepers want change later than moderates do. }
@@ -42,8 +36,6 @@ traditions:
     adherents: marketeers
     side: right
     summary: Let people trade and choose, with the state kept small.
-    positions: { social: -0.4, civil: -0.6 }
-    principles: { autonomy: 0.8, life: 0.2 }
     neighbours:
       - { id: keepers, split: Marketeers value free exchange; keepers value order. }
     inside: [marketeers_one, marketeers_two]
@@ -53,8 +45,6 @@ traditions:
     adherents: moderates
     side: center
     summary: Take the best of each side, one step at a time.
-    positions: { social: 0.1, civil: 0.1 }
-    principles: { autonomy: 0.1, life: 0.1 }
     neighbours:
       - { id: reformers, split: Moderates want change later than reformers do. }
       - { id: keepers, split: Moderates want change sooner than keepers do. }

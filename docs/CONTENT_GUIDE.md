@@ -15,8 +15,10 @@ content/
   named-politics.txt party and politician names the analysis pack must not use (W112)
   topics/<domain>/<topic>.yaml
   analysis/          reference material for the results analysis (optional; shipped separately)
-    traditions.yaml  political traditions, placed on the political spectrums
+    traditions.yaml  political traditions: names, summaries, neighbours and readings
+    sheets/<id>.yaml each tradition's answer sheet, which places it on the political spectrums
     readings.yaml    readings from inside and outside each tradition
+    loaded-terms.txt words loaded only in descriptions of traditions (W108, pack only)
 ```
 
 Each topic file starts with `# yaml-language-server: $schema=../../../schema/topic.schema.json`, so
@@ -488,7 +490,8 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | E011 | choice with item-level effects needs option values |
 | E012 | sensitivity rules (no opt-out; identity items don't score) |
 | E013 | anchor not keyed toward its principle |
-| E014 | tradition balance: every political spectrum and compared principle placed; two traditions toward each pole; left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
+| E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum; left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
+| E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |
 | W103 | reachability couldn't be proven (sampled) |
@@ -496,7 +499,7 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
 | W105 | challenge without a source |
 | W106 | option without effects |
 | W107 | unused axis/principle, or principle anchored in one topic |
-| W108 | loaded term |
+| W108 | loaded term (in the analysis pack, also `content/analysis/loaded-terms.txt`) |
 | W109 | anchor loads a second principle |
 | W110 | choice/pair options average away from 0 on an axis (an undecided respondent gets pushed one way) |
 | W111 | readings: fewer than two inside or outside a tradition, unused, or uneven between the sides or poles |

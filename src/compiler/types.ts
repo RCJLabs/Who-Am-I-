@@ -31,6 +31,10 @@ export interface ContentSources {
 export interface AnalysisSources {
   traditions?: SourceFile;
   readings?: SourceFile;
+  /** One answer sheet per tradition (content/analysis/sheets/). */
+  sheets?: SourceFile[];
+  /** Terms loaded only when describing political traditions ("moderate", "mainstream"): checked in the pack on top of loadedTerms. */
+  loadedTerms?: SourceFile;
 }
 
 /** Rule codes. Errors fail the build; warnings are budgeted by --max-warnings. */
@@ -49,6 +53,7 @@ export const RULES: Readonly<Record<string, string>> = {
   E012: 'sensitivity',
   E013: 'anchor-keying',
   E014: 'tradition-balance',
+  E015: 'answer-sheet',
   W101: 'keying-balance',
   W102: 'cross-topic-ref',
   W103: 'unproven-reachability',

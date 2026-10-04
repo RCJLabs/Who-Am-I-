@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { compile } from '../src/compiler/compile.ts';
 import { loadContentDir } from '../src/compiler/load.ts';
 import { formatGithub, formatPretty } from '../src/compiler/report.ts';
-import type { ContentSources, Diagnostic } from '../src/compiler/types.ts';
+import type { AnalysisSources, ContentSources, Diagnostic, SourceFile } from '../src/compiler/types.ts';
 
 const FIX = 'tests/fixtures/content';
 const fixtureSources = (): ContentSources => loadContentDir(join(FIX, 'base'), [join(FIX, 'good')]);
@@ -104,15 +104,59 @@ describe('analysis pack', () => {
     expect('about' in analysis!.readings['reformers_two']!).toBe(false);
   });
 
+  it('checks its own loaded terms in the pack only', () => {
+    // "view" is in the fixture questions, "sooner" in two split lines.
+    const loadedTerms = { path: 'tests/fixtures/content/base/analysis/loaded-terms.txt', text: '# Pack only\nsooner\nview\n' };
+    const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { ...src.analysis!, loadedTerms } });
+    const T = src.analysis!.traditions!;
+    const lines = T.text.split('\n').flatMap((l, i) => (l.includes('sooner') ? [i + 1] : []));
+    expect(lines).toHaveLength(2);
+    expect(d.map((x) => [x.code, x.file, x.line])).toEqual(lines.map((line) => ['W108', T.path, line]));
+    expect(a).not.toBeNull();
+    // Without a pack, its terms check nothing.
+    expect(compile({ ...src, analysis: { loadedTerms } }).diagnostics).toEqual([]);
+  });
+
   it('needs both files', () => {
     const { analysis: a, diagnostics: d } = compile({ ...src, analysis: { traditions: src.analysis!.traditions! } });
     expect(a).toBeNull();
-    expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E002', src.analysis!.traditions!.path, 2]]);
+    const root = src.analysis!.traditions!.text.split('\n').findIndex((l) => l.startsWith('compare:')) + 1;
+    expect(d.map((x) => [x.code, x.file, x.line])).toEqual([['E002', src.analysis!.traditions!.path, root]]);
+  });
+
+  it('places each tradition from its answer sheet', () => {
+    expect(analysis!.traditions.map((t) => [t.id, t.positions, t.principles])).toEqual([
+      ['reformers', { social: 0.7, civil: -0.35 }, { autonomy: 0.65, life: -0.15 }],
+      ['planners', { social: 0.5, civil: 0.65 }, { autonomy: -0.15, life: 0.35 }],
+      ['keepers', { social: -0.7, civil: 0.35 }, { autonomy: -0.35, life: 0.85 }],
+      ['marketeers', { social: -0.4, civil: -0.65 }, { autonomy: 0.85, life: 0.15 }],
+      ['moderates', { social: 0.15, civil: 0 }, { autonomy: 0.15, life: 0.15 }],
+    ]);
+    // Only the political questions ship, as values -1..1.
+    expect(analysis!.traditions[0]!.answers).toEqual({ 'alpha.stance': 0.6667, 'alpha.circ': 1, 'alpha.circ_deep': 0.5, 'beta.stance': -0.3333 });
+  });
+
+  it('needs an answer sheet for every tradition, and one each', () => {
+    const sheets = src.analysis!.sheets!;
+    const T = src.analysis!.traditions!;
+    const without = compile({ ...src, analysis: { ...src.analysis!, sheets: sheets.filter((f) => !f.path.endsWith('/keepers.yaml')) } });
+    const keepers = T.text.split('\n').findIndex((l) => l.includes('- id: keepers')) + 1;
+    expect(without.diagnostics.map((x) => [x.code, x.file, x.line])).toEqual([['E015', T.path, keepers]]);
+    const reformers = sheets.find((f) => f.path.endsWith('/reformers.yaml'))!.text;
+    const stray = { path: 'tests/fixtures/content/base/analysis/sheets/strays.yaml', text: reformers.replace('tradition: reformers', 'tradition: strays') };
+    const twice = { path: 'tests/fixtures/content/base/analysis/sheets/reformers-again.yaml', text: reformers };
+    const extra = compile({ ...src, analysis: { ...src.analysis!, sheets: [...sheets, stray, twice] } });
+    expect(extra.diagnostics.map((x) => [x.code, x.file, x.line])).toEqual([
+      ['E003', twice.path, 2],
+      ['E004', stray.path, 2],
+    ]);
+    expect(extra.analysis).toBeNull();
   });
 });
 
 describe('analysis pack lint', () => {
-  type PackFile = 'traditions' | 'readings';
+  /** traditions.yaml, readings.yaml, or a tradition's answer sheet. */
+  type PackFile = 'traditions' | 'readings' | `sheet:${string}`;
   interface Case {
     name: string;
     edits: [PackFile, string, string][];
@@ -121,6 +165,7 @@ describe('analysis pack lint', () => {
   }
   const T = 'traditions' as const;
   const R = 'readings' as const;
+  const S = (tradition: string): PackFile => `sheet:${tradition}`;
   const ROOT_T = '- id: reformers';
   const ROOT_R = 'id: reformers_one, author: Ada';
   const cases: Case[] = [
@@ -131,27 +176,27 @@ describe('analysis pack lint', () => {
     { name: 'E004 an unknown reading', edits: [[T, 'outside: [keepers_one, moderates_one]\n  - id: planners', 'outside: [keepers_one, moderates_none]\n  - id: planners']], expect: [['E004', T, 'moderates_none']] },
     { name: 'E004 an unknown voice', edits: [[R, 'voice: marketeers, note: Argues for a small state.', 'voice: traders, note: Argues for a small state.']], expect: [['E004', R, 'Hal Market']] },
     { name: 'E004 a pole that is not on the spectrum', edits: [[R, 'toward: Progress', 'toward: Forward']], expect: [['E004', R, 'Ada Reform']] },
-    { name: 'E004 an unknown spectrum', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, wealth: 0.2 }']], expect: [['E004', T, 'wealth: 0.2']] },
+    { name: 'E004 an unknown question', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  alpha.nothing: 3\n']], expect: [['E004', S('reformers'), 'alpha.nothing: 3']] },
+    // A sheet's own errors point at its first answer.
+    { name: 'E015 every political question answered or divided', edits: [[S('reformers'), '  beta.stance: 3\n', '']], expect: [['E015', S('reformers'), 'alpha.stance:']] },
+    { name: 'E015 only questions that place a tradition', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  traits.t1: 3\n']], expect: [['E015', S('reformers'), 'traits.t1: 3']] },
+    { name: 'E015 only questions that could be shared', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  gamma.belief: 3\n']], expect: [['E015', S('reformers'), 'gamma.belief: 3']] },
+    { name: 'E015 only scale questions', edits: [[S('reformers'), '  alpha.stance: 6\n', '  alpha.stance: 6\n  alpha.limit: 2\n']], expect: [['E015', S('reformers'), 'alpha.limit: 2']] },
+    { name: 'E015 a step on the scale', edits: [[S('reformers'), 'alpha.circ: 5', 'alpha.circ: 6']], expect: [['E015', S('reformers'), 'alpha.circ: 6']] },
+    { name: 'E015 answered or divided, not both', edits: [[S('planners'), '  - beta.anchor_life', '  - beta.anchor_life\n  - alpha.stance']], expect: [['E015', S('planners'), '- alpha.stance']] },
     {
-      name: 'E014 every tradition is placed on every political spectrum',
-      edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7 }']],
-      expect: [['E014', T, 'positions: { social: 0.7 }'], ['E014', T, ROOT_T]],
+      name: 'E015 every compared principle placed',
+      edits: [[T, 'compare: [autonomy, life]', 'compare: [autonomy, life, duty]']],
+      expect: ['reformers', 'planners', 'keepers', 'marketeers', 'moderates'].map((t): [string, PackFile, string] => ['E015', S(t), 'alpha.stance:']),
     },
-    { name: 'E014 only political spectrums are placed', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, warmth: 0.5 }']], expect: [['E014', T, 'warmth: 0.5']] },
-    { name: 'E014 a planned spectrum is not placed', edits: [[T, 'positions: { social: 0.7, civil: -0.4 }', 'positions: { social: 0.7, civil: -0.4, future: 0.5 }']], expect: [['E014', T, 'future: 0.5']] },
     {
-      name: 'E014 principles are exactly the compare list',
-      edits: [
-        [T, 'principles: { autonomy: -0.4, life: 0.8 }', 'principles: { autonomy: -0.4 }'],
-        [T, 'principles: { autonomy: 0.8, life: 0.2 }', 'principles: { autonomy: 0.8, life: 0.2, duty: 0.3 }'],
-      ],
-      expect: [['E014', T, 'principles: { autonomy: -0.4 }'], ['E014', T, 'duty: 0.3']],
+      name: 'E014 two traditions toward each pole',
+      edits: [[S('marketeers'), 'alpha.stance: 3\n  alpha.circ: 2\n  alpha.circ_deep: 2', 'alpha.stance: 4\n  alpha.circ: 3\n  alpha.circ_deep: 3']],
+      expect: [['E014', T, ROOT_T]],
     },
-    { name: 'E014 divided only on what it places', edits: [[T, 'divided: [life]', 'divided: [duty]']], expect: [['E014', T, 'divided: [duty]']] },
-    { name: 'E014 two traditions toward each pole', edits: [[T, 'positions: { social: -0.4, civil: -0.6 }', 'positions: { social: -0.2, civil: -0.6 }']], expect: [['E014', T, ROOT_T]] },
     {
       name: 'E014 a divided placement does not count toward balance',
-      edits: [[T, 'positions: { social: -0.7, civil: 0.4 }', 'positions: { social: -0.7, civil: 0.4 }\n    divided: [social]']],
+      edits: [[S('keepers'), '  alpha.stance: 2\n  alpha.circ: 1\n', ''], [S('keepers'), '  beta.anchor_life: 6\n', '  beta.anchor_life: 6\ndivided:\n  - alpha.stance\n  - alpha.circ\n']],
       expect: [['E014', T, ROOT_T]],
     },
     {
@@ -199,6 +244,11 @@ describe('analysis pack lint', () => {
       edits: [[R, 'author: Flo Keep, title: Slowly, year: 1975, kind: article, in: Test Review', 'author: Jane Placeholder, title: Slowly Says the Anti-Vaxxer, year: 1975, kind: article, in: The Example Party Review']],
       expect: [],
     },
+    {
+      name: "W108 the pack's own loaded terms",
+      edits: [[T, 'summary: Shared goals, pursued together and on purpose.', 'summary: Shared goals, pursued together and on purpose, as mainstream as it gets.']],
+      expect: [['W108', T, 'as mainstream as it gets']],
+    },
     { name: 'W112 a party or politician named', edits: [[T, 'split: Keepers value order; marketeers', 'split: As the Example Party says keepers value order; marketeers']], expect: [['W112', T, 'As the Example Party says']] },
     {
       name: 'W111 two inside readings each, and every reading used',
@@ -238,16 +288,20 @@ describe('analysis pack lint', () => {
 
   it.each(cases)('$name', ({ edits, expect: want }) => {
     const src = fixtureSources();
-    const pack = { ...src.analysis! };
+    const pack: AnalysisSources = { ...src.analysis! };
+    const get = (file: PackFile): SourceFile =>
+      file === 'traditions' || file === 'readings' ? pack[file]! : pack.sheets!.find((f) => f.path.endsWith(`/${file.slice(6)}.yaml`))!;
     for (const [file, from, to] of edits) {
-      const f = pack[file]!;
+      const f = get(file);
       expect(f.text.split(from).length - 1, `'${from}' must occur once in ${file}`).toBe(1);
-      pack[file] = { ...f, text: f.text.replace(from, to) };
+      const edited = { ...f, text: f.text.replace(from, to) };
+      if (file === 'traditions' || file === 'readings') pack[file] = edited;
+      else pack.sheets = pack.sheets!.map((x) => (x.path === f.path ? edited : x));
     }
     const { analysis, diagnostics } = compile({ ...src, analysis: pack });
-    const lineOf = (file: PackFile, text: string) => (text ? pack[file]!.text.split('\n').findIndex((l) => l.includes(text)) + 1 : 2);
+    const lineOf = (file: PackFile, text: string) => get(file).text.split('\n').findIndex((l) => l.includes(text)) + 1;
     const got = diagnostics.map((d) => `${d.code} ${d.file}:${d.line}`).sort();
-    const expected = want.map(([code, file, text]) => `${code} ${pack[file]!.path}:${lineOf(file, text)}`).sort();
+    const expected = want.map(([code, file, text]) => `${code} ${get(file).path}:${lineOf(file, text)}`).sort();
     expect(got, formatPretty(diagnostics)).toEqual(expected);
     expect(analysis === null).toBe(want.some(([code]) => code.startsWith('E')));
   });
@@ -282,7 +336,8 @@ describe('bad fixtures produce exactly their expected diagnostics', () => {
   it.each(files)('%s', (name) => {
     const path = `${dir}/${name}`;
     const text = readFileSync(path, 'utf8');
-    const src = fixtureSources();
+    // Topic rules only: the bad topics would leave the fixture pack's answer sheets incomplete.
+    const src = { ...fixtureSources(), analysis: undefined };
     src.topics.push({ path, text });
     const { bundle, diagnostics } = compile(src);
     const got = sorted(diagnostics.map((d: Diagnostic) => ({ code: d.code, file: d.file, line: d.line })));

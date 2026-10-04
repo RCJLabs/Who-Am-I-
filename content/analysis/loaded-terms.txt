@@ -1,0 +1,24 @@
+# Terms that are fine in a question but loaded in a description of a political tradition: they
+# cast one tradition as the default or the fringe ("moderate", "mainstream", "extreme"), or carry
+# one side's verdict on another ("regressive", "austerity", "utopian"). Flagged (W108) only in the
+# analysis pack, on top of content/loaded-terms.txt. Say what the tradition holds instead.
+collectivist
+collectivists
+watermelon
+watermelons
+regressive
+authoritarian
+authoritarians
+austerity
+utopian
+sensible
+pragmatic
+evidence-based
+common sense
+extreme
+moderate
+moderates
+reasonable
+mainstream
+communist
+communists

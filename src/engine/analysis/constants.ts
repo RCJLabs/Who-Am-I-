@@ -38,15 +38,14 @@ export const TRADITION = {
   principleShare: 0.25,
   /** Summed confidence of the scored compared principles before they count. */
   principleEvidence: 3,
+  /** Political questions the answers and the nearest tradition's sheet must share before comparing. */
+  minQuestions: 4,
   /**
-   * A tradition whose targets sit this close to the middle (RMS) is named only for consistent
-   * answers: average spread at most centerCoherence. Answers that pull both ways also average out
-   * near the middle, and that isn't a moderate view.
+   * A tradition is named only when the answers follow it question by question: an RMS gap to its
+   * sheet's answers of at most this (-1..1 scales; one step on a 7-point scale is 0.33). Above it,
+   * the answers pull different ways and only average out near the tradition.
    */
-  centerNorm: 0.35,
-  centerCoherence: 0.3,
-  /** Average spread above this: the answers pull too many ways to name a tradition. */
-  mixed: 0.45,
+  fit: 0.55,
   /** Nearest distance at or above this: no tradition is a close fit. */
   loose: 0.35,
   /** Second nearest within this of the nearest: between the two. */

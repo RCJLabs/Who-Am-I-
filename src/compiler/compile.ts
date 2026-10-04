@@ -26,7 +26,7 @@ import type {
 } from '../model/content.ts';
 import type { AnalysisPack } from '../model/analysis.ts';
 import { COND_KEYWORDS, mapRefs, parseCond, type RefUse } from '../engine/cond/parse.ts';
-import { compilePack, parsePack } from './analysis.ts';
+import { checkPack, compilePack, parsePack } from './analysis.ts';
 import { Reporter, type CompiledTopic, type Env, type Loc, type TopicCtx } from './context.ts';
 import { parseTerms } from './loaded-terms.ts';
 import { runRules } from './rules/index.ts';
@@ -114,6 +114,7 @@ export function compile(src: ContentSources): CompileResult {
     principlesFile: parsed.principles,
     domainsFile: parsed.domains,
     loadedTerms: parseTerms(src.loadedTerms?.text ?? ''),
+    packTerms: parseTerms(src.analysis?.loadedTerms?.text ?? ''),
     namedPolitics: parseTerms(src.namedPolitics?.text ?? ''),
   };
 
@@ -129,7 +130,7 @@ export function compile(src: ContentSources): CompileResult {
   }
 
   runRules({ topics: compiled, env, rep });
-  const analysis = pack ? compilePack(pack, env, rep) : null;
+  if (pack) checkPack(pack, env, rep);
 
   if (rep.errors > 0) return { bundle: null, analysis: null, diagnostics: sortDiags(rep.diagnostics) };
 
@@ -172,7 +173,11 @@ export function compile(src: ContentSources): CompileResult {
     config,
   };
   const contentVersion = createHash('sha256').update(canonicalJson(body)).digest('hex').slice(0, 12);
-  return { bundle: { ...body, contentVersion }, analysis, diagnostics: sortDiags(rep.diagnostics) };
+  const bundle: Bundle = { ...body, contentVersion };
+  // The answer sheets are scored by the engine, so they need the compiled content.
+  const analysis = pack ? compilePack(pack, bundle, env, rep) : null;
+  if (rep.errors > 0) return { bundle: null, analysis: null, diagnostics: sortDiags(rep.diagnostics) };
+  return { bundle, analysis, diagnostics: sortDiags(rep.diagnostics) };
 }
 
 function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep: Reporter): Topic {

@@ -39,12 +39,20 @@ describe('content plugin', () => {
   });
 
   it('serves the analysis pack as a module of its own', () => {
-    const p = plugin('tests/fixtures/content/base');
-    const id = p.resolve('virtual:analysis');
-    expect(id).toBe('\0virtual:analysis');
-    const pack = exported(p.load(id!)) as AnalysisPack;
-    expect(pack.format).toBe('whoami.analysis');
-    expect(pack.traditions.map((t) => t.id)).toEqual(['reformers', 'planners', 'keepers', 'marketeers', 'moderates']);
+    // The fixtures keep their topics apart from the base files; the answer sheets need both.
+    const dir = mkdtempSync(join(tmpdir(), 'whoami-pack-'));
+    try {
+      cpSync('tests/fixtures/content/base', dir, { recursive: true });
+      cpSync('tests/fixtures/content/good', join(dir, 'topics'), { recursive: true });
+      const p = plugin(dir);
+      const id = p.resolve('virtual:analysis');
+      expect(id).toBe('\0virtual:analysis');
+      const pack = exported(p.load(id!)) as AnalysisPack;
+      expect(pack.format).toBe('whoami.analysis');
+      expect(pack.traditions.map((t) => t.id)).toEqual(['reformers', 'planners', 'keepers', 'marketeers', 'moderates']);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it('serves null when the content has no pack', () => {

@@ -1,13 +1,15 @@
 // The analysis pack (content/analysis/): reference material the results analysis compares answers
 // with. Political traditions are reference points, never labels; readings come from inside and
-// outside each. Authored as YAML, compiled with the content but hashed and shipped separately.
+// outside each. Each tradition is placed by an answer sheet: the app's own questions answered as
+// a thoughtful adherent would, scored by the engine like anyone's answers, so no position is ever
+// written by hand. Authored as YAML, compiled with the content but hashed and shipped separately.
 // Strict objects, as in authored.ts; these schemas also generate schema/analysis/*.schema.json.
 import { z } from 'zod';
 import { ID_RE } from './authored.ts';
-import type { AxisId, PrincipleId } from './content.ts';
+import type { AxisId, ItemId, PrincipleId } from './content.ts';
 
 const Id = z.string().regex(ID_RE, 'ids are snake_case: a-z, 0-9, _ (starting with a letter)');
-const Position = z.number().min(-1).max(1);
+const QuestionId = z.string().regex(/^[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*$/, 'questions are written topic.item');
 
 /** Where a tradition sits, for balance checks only: never shipped or shown. */
 export const SIDES = ['left', 'center', 'right'] as const;
@@ -22,11 +24,6 @@ export const TraditionSchema = z.strictObject({
   adherents: z.string().min(1).describe('Plural noun for adherents, lower case, e.g. "social democrats"'),
   side: z.enum(SIDES).describe('Left, center or right: used only to check balance, never shown'),
   summary: z.string().min(1).describe("What the tradition stands for, in its adherents' own terms"),
-  positions: z
-    .record(Id, Position)
-    .describe('Position on every political spectrum, -1..1, scored from the answer sheet in tests/sim/traditions'),
-  divided: z.array(Id).optional().describe('Spectrums or compared principles adherents split on; they count half'),
-  principles: z.record(Id, Position).describe('Endorsement of every principle in the compare list, -1..1'),
   neighbours: z
     .array(
       z.strictObject({
@@ -45,6 +42,19 @@ export const TraditionSchema = z.strictObject({
 export const TraditionsFileSchema = z.strictObject({
   compare: z.array(Id).min(1).describe('Principles every tradition is placed on'),
   traditions: z.array(TraditionSchema).min(2),
+});
+
+/** One file per tradition in content/analysis/sheets/. */
+export const SheetSchema = z.strictObject({
+  tradition: Id.describe('The tradition this sheet places'),
+  sources: z
+    .array(z.string().min(1))
+    .min(1)
+    .describe('The writers the answers draw on, e.g. "Eduard Bernstein, The Preconditions of Socialism (1899)"'),
+  answers: z
+    .record(QuestionId, z.number().int().min(1).max(7))
+    .describe('The step a thoughtful adherent would choose, by question (topic.item)'),
+  divided: z.array(QuestionId).optional().describe("Questions the tradition's adherents split on, listed instead of answered"),
 });
 
 export const ReadingSchema = z.strictObject({
@@ -66,6 +76,7 @@ export const ReadingsFileSchema = z.array(ReadingSchema).min(1);
 
 export type TraditionsFile = z.infer<typeof TraditionsFileSchema>;
 export type ReadingsFile = z.infer<typeof ReadingsFileSchema>;
+export type SheetFile = z.infer<typeof SheetSchema>;
 
 // --- Compiled pack (what the app loads) ----------------------------------------------------------
 
@@ -77,12 +88,14 @@ export interface Tradition {
   name: string;
   adherents: string;
   summary: string;
-  /** Every non-planned political spectrum. */
+  /** Every non-planned political spectrum, scored from the answer sheet. */
   positions: Record<AxisId, number>;
-  /** Exactly the pack's compare list. */
+  /** Exactly the pack's compare list, scored from the answer sheet. */
   principles: Record<PrincipleId, number>;
-  /** Spectrums and principles adherents split on. */
+  /** Spectrums and principles adherents split on: split questions carry a third of the weight or more. */
   divided: string[];
+  /** The sheet's answers to the political questions, as values -1..1; split questions left out. */
+  answers: Record<ItemId, number>;
   neighbours: { id: TraditionId; split: string }[];
   inside: ReadingId[];
   outside: ReadingId[];

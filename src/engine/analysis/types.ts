@@ -107,18 +107,17 @@ export interface TraditionFacts {
   named: TraditionId[];
   /** Nearest first: three, or two when mixed; none without enough answers. */
   fits: TraditionFit[];
-  /** Why the answers read as mixed: they spread widely, or the nearest is a tradition near the middle. */
-  reason?: 'spread' | 'center';
   /** The scored political spectrums compared. */
   compared: AxisId[];
   /** Political spectrums without a score yet. */
   missing: AxisId[];
   /** Compared principles that counted (only with enough principle evidence). */
   principles: PrincipleId[];
-  /** The two compared spectrums the answers spread most on, for the mixed wording. */
-  spread: AxisId[];
-  /** Confidence-weighted mean spread; null without enough answers. */
-  coherence: number | null;
+  /**
+   * How closely the answers follow the nearest tradition question by question: the RMS gap over
+   * the political questions both answered. Null without enough answers.
+   */
+  fit: { gap: number; questions: number } | null;
 }
 
 /** A reading from inside or outside a named tradition. */
