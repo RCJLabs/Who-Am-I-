@@ -143,8 +143,12 @@ test('questions about you stay folded away, leave no readable trail, and show on
   const orientation = (...keys: string[]) => keys.map((k) => `about_orientation.${k}`).sort();
   expect(await storedAboutYou(page)).toEqual(orientation('words', 'more', 'attraction', 'attracted_to', 'romantic_same'));
 
-  // Reviewing goes to the About you page, in place of the questions.
+  // Reviewing goes to the About you page, in place of the questions: Back doesn't reopen them.
   await page.getByTestId('review-answers').click();
+  await expect(page.getByTestId('section-you')).toBeVisible();
+  await page.goBack();
+  expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
+  await page.goForward();
   await expect(page.getByTestId('section-you')).toBeVisible();
   await expect(page.getByTestId('identity-answers')).toHaveCount(0);
   await page.getByTestId('identity-show').click();
@@ -172,12 +176,14 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await expect(page.getByTestId('identity-answers')).toContainText("No, that's enough");
   await expect(page.getByTestId('identity-answers')).not.toContainText('Men, Women');
 
-  // Leaving a topic about you leaves no way back into it.
+  // Leaving a topic about you leaves no way back into it, with Back or Forward.
   await page.getByTestId('nav-topics').click();
   await page.getByTestId('about-you-open').click();
   await page.getByTestId('topic-about_family').click();
   await page.getByTestId('flow-exit').click();
   await expect(page.getByTestId('about-you')).toBeVisible();
+  await page.goForward();
+  expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
   await page.goBack();
   expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
 

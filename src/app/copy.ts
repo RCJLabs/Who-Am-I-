@@ -53,7 +53,7 @@ export const copy = {
       tag: 'optional and private',
       open: 'Show these questions',
       close: 'Hide these questions',
-      note: "These questions describe you: your family, roots, faith, gender and sexual orientation. Nothing here is scored, it's never in your summary, cards or suggestions, and backups leave it out unless you include it. Skip anything, and remove it all in one tap from Settings. Your answers stay on this device, so anyone who can open the app here can see them.",
+      note: "Questions about your family, roots, faith, gender and sexual orientation. They're never scored or in your summary, cards or suggestions, and backups leave them out unless you include them. Skip anything, or remove it all in Settings. Anyone who can open the app on this device can see your answers.",
     },
     deepDives: 'Deep dives',
     comingSoon: 'Coming soon',
