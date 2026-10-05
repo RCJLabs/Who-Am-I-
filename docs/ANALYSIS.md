@@ -26,7 +26,8 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Summary: headline and leanings | public profile only, never neuroticism |
 | Summary: counts (topics answered, challenges faced, open tensions) | every answer, so they match the sections below. Counts never say which topics or which way. |
 | Summary: the principle named in the tensions sentence | public tensions only |
-| Overview: the pattern, your firmest leans, and the line on each area's link | public profile only: the political, values, thinking and personality spectrums, never neuroticism, worldview or taste. The Worldview link says only that it is sensitive. Counts on the links (tensions, positions, principles when none is endorsed) use every answer, like the tiles. |
+| Overview: the pattern and your firmest leans | public profile only: the political, values, thinking and personality spectrums, never neuroticism, worldview or taste. |
+| Overview: the line on each area's link | public profile only. The Worldview link says only that it is sensitive; the Taste link names picks from the public profile's interests (no sensitive item is ever an interest: E012), or the taste spectrums. Counts on the links (tensions, positions, principles when none is endorsed) use every answer, like the tiles. |
 | Section read-outs (each area's page) | the private profile: they describe the chart beside them, which already shows those answers |
 | Next steps | public profile only; never a sensitive topic or item |
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
@@ -95,7 +96,8 @@ The rest of the overview, all from the public profile (helpers in `src/app/view.
   the two clearest positions off the middle (0.15 or more), best evidenced first; otherwise "Near
   the middle so far" or "Not enough answers yet". Principles: the two most endorsed (0.4 or more),
   or how many are scored. Tensions: how many are open and thought through. Positions: how many
-  topics, and how many reconsidered. Taste: the two strongest picks, or the taste spectrums.
+  topics, and how many reconsidered. Taste: "Favorites:" the strongest pick from each of the two
+  topics that matter most (`topPicks`), or the taste spectrums.
   Worldview: only that it is sensitive.
 
 No sensitive topic feeds a political, values, thinking or personality spectrum today, so the
@@ -131,7 +133,7 @@ marks as the results pages.
 | Section | Read-out |
 |---|---|
 | Politics | The leanings sentence. For the first political spectrum scored as mixed, which topics pulled which way: "On “Economic” your answers pull both ways: …". Up to two topics a side (`LIMIT.drivers`). |
-| Values, Worldview, Taste | The leanings sentence for that family. Taste adds your three strongest picks. |
+| Values, Worldview, Taste | The leanings sentence for that family. Taste adds, as for politics, which topics pull its first mixed spectrum each way, then "Your top picks:", a favorite from each of the three topics that matter most. |
 | How you think | Your self-description, then your challenge record, as **two separate sentences that are never contrasted**. How you describe your thinking and how you met challenges measure different things (see the note in `content/axes.yaml`); the simulation test fails on "but", "though", "although", "yet", "however" or "despite" here. The note under it says the self-description is based on N topics, since the challenge record spans every topic. |
 | Personality | Each trait in words: "very outgoing, fairly organized, neither … nor …". |
 | Principles | The three most endorsed; the most rejected, if 0.4 or more against; the most and least evenly applied, when at least two principles have a consistency score. |

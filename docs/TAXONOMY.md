@@ -179,17 +179,29 @@ user's own health, weight, savings, debt, drinking or betting; the one personal 
 own work is to you, is sensitive and includes "I'm not in paid work right now".
 
 ### Interests & taste
-| Topic | Tier | Evidence | Status |
-|---|---|---|---|
-| Music | core | for-fun | ✅ |
-| Sports (playing and watching; climbing, endurance, team, combat) | core | for-fun | ◻️ |
-| Movies and TV | core | for-fun | ◻️ |
-| Books | extended | for-fun | ◻️ |
-| Games (video, board, tabletop) | extended | for-fun | ◻️ |
-| Food and cuisine | extended | for-fun | ◻️ |
-| Art and design | extended | for-fun | ◻️ |
-| Outdoors | extended | for-fun | ◻️ |
-| Pets | extended | for-fun | ◻️ |
+| Topic | Tier | Evidence | Status | Notes |
+|---|---|---|---|---|
+| Music | core | for-fun | ✅ | 24 kinds, the big traditions outside North America and Europe named; devotional music as its own sensitive question; feeds all three taste spectrums |
+| Movies and TV | core | for-fun | ✅ | anime, K-dramas, Indian films, Turkish series, Nollywood, telenovelas; all three spectrums |
+| Food | core | for-fun | ✅ | asked as an interest, never "how much food matters"; regions as "X food"; Familiar or new only |
+| Sports | core | for-fun | ✅ | playing or watching in one list (climbing among them); Popular or lesser-known only, by how many people follow a sport, not how many around you (a cricket fan who moved to Ohio isn't "lesser-known") |
+| Books and stories | extended | for-fun | ✅ | print, screen, audio or braille all count; all three spectrums |
+| Games (video, board, card, tabletop) | extended | for-fun | ✅ | classic games named worldwide; nothing played for money; all three spectrums |
+| Outdoors | extended | for-fun | ✅ | places and things to do; a balcony counts; feeds nothing |
+| Climbing | extended | for-fun | ✅ | a self-gated deep dive: one question for people it isn't for, three for the curious, nine for climbers; feeds nothing |
+| Art and design | extended | for-fun | ✅ | making or looking; no fine-art-against-crafts split; feeds nothing |
+| Pets and animals | extended | for-fun | ✅ | which animals you enjoy, never whether you own one; feeds nothing |
+
+Two reviews came first, both AI agents: one on inclusion and privacy, one on taste research and
+leisure surveys. They agreed on most things: ask about enjoyment, never access (how often you get
+to a show tracks money, place and health, so it isn't an interest); name the world's big
+traditions instead of a "world" catch-all; cut options that stand in for faith, sexuality, health,
+politics, drinking or betting; group what you enjoy by topic, since ties went to Music. The owner
+settled three choices: climbing as one sport among many plus a deep dive among the extended topics
+(the owner coaches climbing, so it isn't placed ahead of the others); three taste spectrums, with
+Calm or intense fed by media only, rather than "taking part or taking it in" and "on your own or
+with others", which would have scored ability, money and living situation; and devotional music as
+its own sensitive question, so it counts without putting faith on the overview.
 
 ### About you (the `identity` domain: optional, sensitive, never scored)
 | Topic | Status | Notes |
@@ -307,7 +319,9 @@ pin these down.
 | Intuition or analysis | thinking | Intuition ↔ Analysis | changing your mind (four this-or-that pairs; which you lean on when the two conflict, not a type) |
 | The natural world or more | worldview | Only the natural world ↔ More than the natural world | God and religion; at half weight, life after death, whose ladder runs the other way so tapping one end everywhere doesn't push the spectrum (free will, right and wrong and personal identity feed nothing: each splits believers and nonbelievers alike) |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
-| Novelty, Mainstream | taste | Familiar ↔ Novel, Popular ↔ Niche | music |
+| Familiar or new | taste | Familiar ↔ New | music, movies and TV, food (within whatever you eat), books, games; shows from two topics |
+| Popular or lesser-known | taste | Popular ↔ Lesser-known | music, movies and TV, sports, books, games; shows from two topics |
+| Calm or intense | taste | Calm ↔ Intense | music, movies and TV, books, games: media only, since in sport or food "intense" would mean physical risk or spice; shows from two topics |
 
 In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges (see
 `CONTENT_GUIDE.md`, Effects). Animals, nuclear power, GM food, artificial intelligence, and nature

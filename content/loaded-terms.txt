@@ -939,3 +939,75 @@ pro-family
 pro-worker
 populist
 populists
+# Taste (Interests): words that grade what people enjoy, gender it, call some fans fake, or make
+# one region "the rest". Neither end of a taste spectrum is the better one; name a region's music,
+# films or food by the names its audiences use ("West African food", "Indian films"). The
+# Recording Academy renamed its "world music" Grammy in 2020 over connotations of colonialism and
+# "non-American".
+guilty pleasure
+guilty pleasures
+highbrow
+lowbrow
+middlebrow
+trashy
+trash tv
+uncultured
+philistine
+philistines
+snob
+snobs
+snobbish
+pretentious
+hipster
+hipsters
+chick flick
+chick flicks
+chick lit
+women's fiction
+real fan
+real fans
+fake fan
+fake fans
+bandwagon fan
+bandwagon fans
+glory hunter
+glory hunters
+real gamer
+real gamers
+casual gamer
+casual gamers
+weeb
+weebs
+weeaboo
+weeaboos
+picky eater
+picky eaters
+world music
+world cinema
+foreign film
+foreign films
+ethnic food
+exotic
+oriental
+third world
+true fan
+true fans
+plastic fan
+plastic fans
+poser
+posers
+normie
+normies
+world food
+foreign food
+ethnic music
+dad rock
+crusher
+crushers
+weekend warrior
+weekend warriors
+real climbing
+real climber
+real climbers
+gumby
+gumbies

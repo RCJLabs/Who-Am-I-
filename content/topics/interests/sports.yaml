@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Sports: playing, watching and following all count, so someone who can't play, for any reason,
+# can still say how much they love it. "Not much" ends the topic after the sports you enjoy. One
+# list, led by what's played and watched most widely (football, cricket, basketball), with kabaddi,
+# netball and the rest named; adapted versions count as the sport itself. Nothing about fitness,
+# weight, how often or at what level, and no "Gym", which presumes a membership. No hunting or
+# shooting (a political signal), no betting or fantasy sports for money (Lifestyle's rule), and
+# never which team or country you support, a known loyalty test. Para sports aren't a pick, which
+# could disclose a disability; the help text says adapted versions count. Only Popular or
+# lesser-known is fed here, by how many people follow a sport, not how many around you do, which
+# would score a cricket fan who moved to Ohio as lesser-known. Doing or watching, on your own or in
+# a team, and anything "intense" would track ability, health and age, so they feed nothing.
+id: sports
+domain: interests
+title: Sports
+summary: What you play, follow and watch.
+tier: core
+order: 4
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much does sport matter in your life?
+    help: "Watching, playing or following the scores: it all counts."
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which sports do you enjoy, playing or watching? Tap the ones you like, then rate how much.
+    help: "Any level, and men's, women's or mixed. Adapted versions count as the sport itself: wheelchair basketball is basketball."
+    options:
+      - { id: soccer, label: Football / soccer }
+      - { id: cricket, label: Cricket }
+      - { id: basketball, label: Basketball }
+      - { id: racket, label: "Tennis, badminton and table tennis" }
+      - { id: volleyball, label: Volleyball }
+      - { id: baseball, label: Baseball and softball }
+      - { id: american_football, label: American football }
+      - { id: rugby, label: Rugby }
+      - { id: hockey, label: Hockey (field or ice) }
+      - { id: kabaddi, label: Kabaddi }
+      - { id: netball, label: Netball }
+      - { id: handball, label: Handball }
+      - { id: running, label: Running and athletics }
+      - { id: cycling, label: Cycling }
+      - { id: swimming, label: Swimming and diving }
+      - { id: gymnastics, label: Gymnastics }
+      - { id: combat, label: "Boxing, wrestling and martial arts" }
+      - { id: climbing, label: Climbing and bouldering }
+      - { id: strength, label: Weights and strength training }
+      - { id: yoga, label: Yoga and stretching }
+      - { id: dance, label: Dance }
+      - { id: motorsport, label: Motorsport }
+      - { id: golf, label: Golf }
+      - { id: cue_sports, label: "Snooker, pool and darts" }
+      - { id: bowls, label: Bowls and boules }
+      - { id: aussie_rules, label: Australian rules football }
+      - { id: gaelic, label: "Gaelic games (hurling, Gaelic football)" }
+      - { id: board_sports, label: "Skateboarding, surfing and BMX" }
+      - { id: snow, label: "Skiing, ice skating and winter sports" }
+
+  - id: follow
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: The sports you enjoy are mostly…
+    poles: [Ones lots of people follow, Ones few people follow]
+    axes: { mainstream: 1 }
+
+  - id: play_or_watch
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Which do you enjoy more?
+    poles: [Watching or following, Playing or doing]
+
+  - id: team
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Individual or team sports?
+    poles: [Individual sports, Team sports]
+
+  - id: plays
+    type: choice
+    when: matters > -1 or not answered(matters)
+    text: Do you play or train in a sport?
+    options:
+      - { id: no, label: "No" }
+      - { id: used_to, label: I used to }
+      - { id: casual, label: "Yes, for fun" }
+      - { id: competitive, label: "Yes, competitively" }

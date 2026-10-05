@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Movies and TV: how much they matter, the kinds you enjoy, three taste sliders and two unscored
+# habits. "Not much" ends the topic after the kinds you enjoy. Kinds name the big traditions by
+# the names their audiences use (anime, K-dramas, Indian films, Nollywood, telenovelas, Turkish
+# series), never "foreign films" or "world cinema". No kind stands in for faith, sexuality or
+# politics (faith films, LGBTQ+ film as a category, adult films, news), and "Family films" rather
+# than kids' shows, which would hint at children at home.
+id: movies_tv
+domain: interests
+title: Movies and TV
+summary: What you watch, and how.
+tier: core
+order: 2
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do movies and shows matter in your life?
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which kinds of movies and shows do you enjoy? Tap the ones you like, then rate how much.
+    options:
+      - { id: comedy, label: Comedy }
+      - { id: drama, label: Drama }
+      - { id: action, label: Action and adventure }
+      - { id: crime, label: "Crime, mystery and thrillers" }
+      - { id: romance, label: Romance }
+      - { id: horror, label: Horror }
+      - { id: scifi, label: Science fiction }
+      - { id: fantasy, label: Fantasy }
+      - { id: superhero, label: Superhero films }
+      - { id: animation, label: Animation }
+      - { id: anime, label: Anime }
+      - { id: documentary, label: Documentaries }
+      - { id: reality, label: "Reality, game and talk shows" }
+      - { id: soaps, label: "Soaps, telenovelas and serials" }
+      - { id: asian_drama, label: K-dramas and other Asian dramas }
+      - { id: indian, label: "Indian films (Bollywood, Tamil, Telugu…)" }
+      - { id: turkish, label: Turkish series }
+      - { id: african, label: Nollywood and other African films }
+      - { id: arabic, label: Arabic series and films }
+      - { id: martial_arts, label: Martial arts films }
+      - { id: history, label: History and war films }
+      - { id: musicals, label: Musicals }
+      - { id: family, label: Family films }
+      - { id: online, label: Online videos and creators }
+
+  - id: rewatch
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: When you sit down to watch, you mostly pick…
+    poles: [A favorite I've seen before, Something I haven't seen]
+    axes: { novelty: 1 }
+
+  - id: hits
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: What you watch is mostly…
+    poles: [Big hits lots of people have seen, Lesser-known titles]
+    axes: { mainstream: 1 }
+
+  - id: mood
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: You're usually in the mood for something…
+    poles: [Calm and cozy, Tense and gripping]
+    axes: { intensity: 1 }
+
+  - id: pace
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: With a series you love, you…
+    poles: [Pace myself, Watch it all in one go]
+
+  - id: spoilers
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Spoilers…
+    poles: [Ruin it for me, Don't bother me]

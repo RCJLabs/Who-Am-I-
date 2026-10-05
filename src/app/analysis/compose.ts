@@ -12,7 +12,7 @@ import type { AxisFamily, Bundle } from '../../model/content.ts';
 import type { Profile } from '../../model/profile.ts';
 import { copy } from '../copy.ts';
 import { to } from '../routes.ts';
-import { challengeTotals, strongestLeanings, topicStatus, type InterestEntry } from '../view.ts';
+import { challengeTotals, strongestLeanings, topicStatus, topPicks, type InterestGroup } from '../view.ts';
 
 export type SectionId = 'politics' | 'values' | 'thinking' | 'worldview' | 'personality' | 'principles' | 'tensions' | 'positions' | 'taste';
 
@@ -105,7 +105,8 @@ export interface ComposeInput {
   publicProfile: Profile;
   /** All tensions, for the Tensions read-out. */
   tensions: readonly Tension[];
-  interests: readonly InterestEntry[];
+  /** What you enjoy, by topic (`interestGroups`), from the private profile like the other read-outs. */
+  interests: readonly InterestGroup[];
   alwaysDeep?: boolean;
   /** Political traditions, readings and links from research, once loaded. */
   pack?: AnalysisPack | null;
@@ -203,8 +204,11 @@ function readouts(i: ComposeInput, traditions: TraditionsView | null): Partial<R
     out.positions = { sentences: [A.firmest(firm), ...(totals.asked ? [A.reconsidered(moved)] : [])], basedOn: null };
   }
 
-  const picks = i.interests.filter((e) => e.kind === 'pick').slice(0, 3).map((e) => e.label);
-  lean('taste', A.intro.taste, 'taste', picks.length ? [A.enjoys(picks)] : []);
+  // Taste: like politics, which topics pull a mixed spectrum each way; then a favorite from each of
+  // the three topics that matter most.
+  const tastePulls = facts.axes.taste.filter((a) => a.mixed && a.drivers[0].length && a.drivers[1].length).slice(0, 1).map((a) => pullSentence(a, bundle, i.state));
+  const picks = topPicks(i.interests, 3);
+  lean('taste', A.intro.taste, 'taste', [...tastePulls, ...(picks.length ? [A.enjoys(picks)] : [])]);
   return out;
 }
 

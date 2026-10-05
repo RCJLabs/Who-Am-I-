@@ -281,36 +281,89 @@ export function challengeTotals(topics: Profile['topics']): ChallengeTotals {
   return t;
 }
 
-export interface InterestEntry {
+export interface InterestPick {
+  /** `topic.item.option` */
   key: string;
-  kind: 'pick' | 'rating';
-  /** The option picked, or the rating question. */
   label: string;
-  /** For ratings, the answer in words. */
-  answer?: string;
   /** 0..1 */
   v: number;
 }
 
+export interface InterestGroup {
+  topic: TopicId;
+  title: string;
+  /** How much the topic matters (its interest rating) in words; null when unanswered or "Not much". */
+  matters: string | null;
+  /** Strongest first; ties keep the order the options are listed in. */
+  picks: InterestPick[];
+}
+
 /**
- * Interests, strongest first: multi-select picks by their option label (`topic.item.option`) and
- * ratings by their question (`topic.item`).
+ * What you enjoy, by topic: the topics that matter most first, by their interest rating (E017
+ * allows one per topic). A topic whose rating is unanswered counts as the middle; ties go to
+ * content order, never to whichever topic happens to come first among equal picks. A topic is
+ * listed when it has picks or matters more than "Not much".
  */
-export function interestList(interests: Profile['interests'], s: AnswerState): InterestEntry[] {
-  const out: InterestEntry[] = [];
+export function interestGroups(interests: Profile['interests'], s: AnswerState): InterestGroup[] {
+  const ranked = new Map<TopicId, { rank: number; group: InterestGroup; order: Map<string, number> }>();
+  const entry = (topic: Topic) => {
+    let e = ranked.get(topic.id);
+    if (!e) {
+      e = { rank: 0.5, group: { topic: topic.id, title: topic.title, matters: null, picks: [] }, order: new Map() };
+      ranked.set(topic.id, e);
+    }
+    return e;
+  };
+  const listed = new Set<TopicId>();
   for (const [key, v] of Object.entries(interests)) {
     const parts = key.split('.');
-    if (parts.length === 3) {
-      const item = s.ix.items.get(`${parts[0]}.${parts[1]}`);
-      const label = item?.type === 'multi' ? item.options.find((o) => o.id === parts[2])?.label : undefined;
-      if (label) out.push({ key, kind: 'pick', label, v });
+    const item = s.ix.items.get(parts.slice(0, 2).join('.'));
+    const topic = item && s.ix.topicOf.get(item.id);
+    if (!item || !topic) continue;
+    if (parts.length === 3 && item.type === 'multi') {
+      const at = item.options.findIndex((o) => o.id === parts[2]);
+      if (at < 0) continue;
+      const e = entry(topic);
+      e.group.picks.push({ key, label: item.options[at]!.label, v });
+      e.order.set(key, s.ix.position.get(item.id)! * 1000 + at);
+      listed.add(topic.id);
     } else if (parts.length === 2) {
-      const item = s.ix.items.get(key);
       const ev = s.latest.get(key);
-      if (item && ev) out.push({ key, kind: 'rating', label: item.text, answer: answerLabel(item, ev.r), v });
+      const e = entry(topic);
+      e.rank = v;
+      if (ev && v > 0) {
+        e.group.matters = answerLabel(item, ev.r);
+        listed.add(topic.id);
+      }
     }
   }
-  return out.sort((a, b) => b.v - a.v);
+  const order = (t: TopicId) => s.ix.bundle.topics.findIndex((x) => x.id === t);
+  return [...ranked.values()]
+    .filter((e) => listed.has(e.group.topic))
+    .sort((a, b) => b.rank - a.rank || order(a.group.topic) - order(b.group.topic))
+    .map(({ group, order: at }) => ({ ...group, picks: group.picks.sort((x, y) => y.v - x.v || at.get(x.key)! - at.get(y.key)!) }));
+}
+
+/** A pick's label without its examples: "Indian films (Bollywood, Tamil, Telugu…)" → "Indian films". */
+export const shortLabel = (label: string): string => label.replace(/\s*\([^)]*\)$/, '');
+
+/**
+ * Up to `n` favorites for a one-line summary: the strongest pick from each topic in turn, the
+ * topics that matter most first, then the second strongest from each, and so on. Shortened, and
+ * never the same label twice ("Fantasy" can be a book and a film).
+ */
+export function topPicks(groups: readonly InterestGroup[], n: number): string[] {
+  const out: string[] = [];
+  for (let round = 0; out.length < n && groups.some((g) => g.picks.length > round); round++) {
+    for (const g of groups) {
+      const p = g.picks[round];
+      if (!p) continue;
+      const label = shortLabel(p.label);
+      if (!out.includes(label)) out.push(label);
+      if (out.length === n) break;
+    }
+  }
+  return out;
 }
 
 /** Topics with a stance answer, grouped by domain in content order. */

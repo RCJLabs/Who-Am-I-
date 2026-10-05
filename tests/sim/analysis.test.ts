@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import { composeAnalysis, type Analysis } from '../../src/app/analysis/compose.ts';
-import { interestList } from '../../src/app/view.ts';
+import { interestGroups, topPicks } from '../../src/app/view.ts';
 import { findTerms, parseTerms, termMatchers } from '../../src/compiler/loaded-terms.ts';
 import { exploreNext } from '../../src/engine/analysis/explore.ts';
 import { UNNAMED_TRAITS } from '../../src/engine/analysis/constants.ts';
@@ -58,7 +58,7 @@ function composeRun(run: RunResult): Analysis {
   const { profile, publicProfile } = profiles(run);
   const tensions = detectTensions(run.state, observe(run.state, { includeSensitive: true }), run.resolutions);
   const facts = analyse({ state: run.state, profile, publicProfile, tensions, mapAxes: MAP_AXES, pack });
-  return composeAnalysis({ bundle: b, state: run.state, facts, profile, publicProfile, tensions, interests: interestList(profile.interests, run.state), pack });
+  return composeAnalysis({ bundle: b, state: run.state, facts, profile, publicProfile, tensions, interests: interestGroups(profile.interests, run.state), pack });
 }
 
 /** The summary and read-out sentences (not next-step items, whose titles and sources are content). */
@@ -210,5 +210,43 @@ describe('a summary of personality alone', () => {
     expect(a.summary.headline).toMatch(/^You describe yourself as fairly outgoing and /);
     expect(a.summary.headline).not.toMatch(unnamedWords);
     expect(a.readouts.personality!.sentences[0]).toMatch(/^You describe yourself as very reactive/);
+  });
+});
+
+describe('taste on real content', () => {
+  // Music and Movies and TV matter a lot; old favorites in music, something new on screen. Music's
+  // devotional question is answered too, and sensitive: it must never reach a summary line.
+  const answers = personaResponses({
+    'music.matters': 5,
+    'music.genres': ['hiphop'],
+    'music.devotional': 5,
+    'music.discovery': 1,
+    'movies_tv.matters': 5,
+    'movies_tv.kinds': ['anime'],
+    'movies_tv.rewatch': 5,
+  });
+  const run = runRespondent(b, scriptedPolicy(answers, () => ({ kind: 'skip' })), { topics: ['music', 'movies_tv'] });
+  const { profile, publicProfile } = profiles(run);
+  const a = composeRun(run);
+
+  it('says which topics pull a mixed taste spectrum each way, then names the favorites', () => {
+    expect(profile.axes.novelty?.score).toBe(0);
+    expect(a.readouts.taste?.sentences).toEqual([
+      'In your taste, you sit in the middle on “Familiar or new”.',
+      'On “Familiar or new” your answers pull both ways: “Music” toward “Familiar”, and “Movies and TV” toward “New”.',
+      'Your top picks: Hip-hop / rap · Anime.',
+    ]);
+  });
+
+  it('needs two topics before a taste spectrum shows', () => {
+    const one = runRespondent(b, scriptedPolicy(answers, () => ({ kind: 'skip' })), { topics: ['music'] });
+    expect(profiles(one).profile.axes.novelty?.score).toBeNull();
+  });
+
+  it('keeps the devotional answer out of interests and everything shareable', () => {
+    expect(Object.keys(profile.interests).filter((k) => k.startsWith('music.devotional'))).toEqual([]);
+    expect(Object.keys(publicProfile.topics.music ?? {}).length).toBeGreaterThan(0);
+    expect(topPicks(interestGroups(publicProfile.interests, run.state), 2)).toEqual(['Hip-hop / rap', 'Anime']);
+    expect(written(a).join(' ')).not.toMatch(/devotional|hymn|gospel/i);
   });
 });

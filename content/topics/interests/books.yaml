@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Books and stories: print, screen, audio and braille all count, so the topic never treats reading
+# as a virtue. "Not much" ends the topic after the kinds you enjoy. No literary-against-genre
+# split, no count of books a year, no scripture (Religion & Worldview asks about practice,
+# privately), no LGBTQ+ fiction as a category, no erotica, and no children's books, which would
+# hint at children at home.
+id: books
+domain: interests
+title: Books and stories
+summary: What you read or listen to, and how.
+tier: extended
+order: 5
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do books and stories matter in your life?
+    help: "Print, screen, audio or braille: it all counts."
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which kinds of books and stories do you enjoy? Tap the ones you like, then rate how much.
+    options:
+      - { id: fantasy, label: Fantasy }
+      - { id: scifi, label: Science fiction }
+      - { id: crime, label: Crime and mystery }
+      - { id: thrillers, label: Thrillers }
+      - { id: romance, label: Romance }
+      - { id: horror, label: Horror }
+      - { id: historical, label: Historical fiction }
+      - { id: contemporary, label: Contemporary fiction }
+      - { id: classics, label: Classics }
+      - { id: young_adult, label: Young adult fiction }
+      - { id: comics, label: "Comics, manga and webtoons" }
+      - { id: web, label: "Web novels, serials and fan fiction" }
+      - { id: poetry, label: Poetry }
+      - { id: myths, label: "Myths, folk tales and epics" }
+      - { id: history, label: History }
+      - { id: memoir, label: Biography and memoir }
+      - { id: science, label: Science and nature }
+      - { id: ideas, label: Philosophy and big ideas }
+      - { id: society, label: Politics and society }
+      - { id: true_crime, label: True crime }
+      - { id: self_help, label: Self-help and personal growth }
+      - { id: business, label: Business and money }
+      - { id: travel, label: Travel and adventure writing }
+
+  - id: next
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: For your next book, you'd usually pick…
+    poles: [An author or series I already love, Someone new to me]
+    axes: { novelty: 1 }
+
+  - id: known
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: What you read is mostly…
+    poles: [Bestsellers and big names, Lesser-known books]
+    axes: { mainstream: 1 }
+
+  - id: mood
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: You usually want a book that's…
+    poles: [Calm and cozy, Tense and gripping]
+    axes: { intensity: 1 }
+
+  - id: format
+    type: choice
+    shuffle: true
+    when: matters > -1 or not answered(matters)
+    text: How do you mostly read?
+    options:
+      - { id: print, label: Printed or braille books }
+      - { id: ereader, label: E-reader or tablet }
+      - { id: phone, label: On my phone }
+      - { id: audio, label: Audiobooks }
+
+  - id: finish
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: If a book isn't grabbing you, you…
+    poles: [Finish it anyway, Put it down for good]

@@ -58,7 +58,7 @@ tests and CI (`--max-warnings 0`), so fix them too.
 |---|---|---|
 | `slider` | positions between two ends (stances, circumstances) | 5–11 discrete steps; bipolar, so no agree-bias |
 | `likert` | agree/disagree statements (anchors); validated instruments | `labels: accuracy` for IPIP |
-| `rating` | intensity (how much you enjoy X) | 5 points; tag `interest` to appear in interests |
+| `rating` | intensity (how much you enjoy X) | 5 points; tag `interest` to appear in interests (at most one per topic: it heads the topic on the Taste page) |
 | `importance` | "how much does this matter to you" | 4 points; gates deep items |
 | `choice` | one of several options | `shuffle: true` for unordered options |
 | `pair` | this-or-that trade-offs (values) | optional slightly/strongly |
@@ -487,6 +487,46 @@ caring duties as much as values, so no topic but gambling feeds a spectrum.
   losses. Screens stay about social media and phones, and no case involves AI assistants or AI
   companies: the writer has a stake.
 
+In Interests & Taste, nothing is a position and no answer is better than another. Picks are in
+the public profile and can show alone on the overview, so every option must be safe to show there.
+
+- **One shape per topic.** How much it matters first: a `rating` tagged `interest` with five worded
+  `labels`, which head the topic on the Taste page (one per topic, E017). Then the kinds you enjoy:
+  a `multi` with `intensity: true`, tagged `interest`. Everything after them waits behind
+  `when: matters > -1 or not answered(matters)`, so "Not much" ends the topic after the picks.
+  Only ratings and multi-selects carry the tag (E017), and never a sensitive item (E012).
+- **Enjoyment, not access.** Ask what people enjoy, never what they own, spend, attend or achieve,
+  or how often they manage it: those track money, health, age, place and caring duties. A
+  how-often item, if one is needed, says "get to", isn't an interest and feeds nothing (Music's
+  live shows). Never ask why someone stopped. Watching counts as much as playing, listening as
+  much as reading, a balcony as much as a garden.
+- **Lists that travel.** Name each region's big traditions by the names their audiences use
+  (cricket, kabaddi, Afrobeats, Indian films, Nollywood, telenovelas, K-dramas, anime) and lead
+  with what's widespread: options keep their authored order, and equal picks are listed in it. No
+  "world" option standing for everything outside North America and Europe. A label reads as a
+  thing, not a people ("Korean food", "Brazilian music", never "Korean" alone); examples go in a
+  trailing parenthesis, which summary lines drop.
+- **Nothing that stands in for identity.** No option whose main signal is religion (devotional
+  music, scripture, religious films, food rules, fasting, meditation), sexuality (LGBTQ+ media as a
+  category, erotica), health or the body (fitness level, diets, weight, injuries, para sports as a
+  pick), politics (news outlets, hunting and shooting, which team or country you support) or
+  Lifestyle's subjects (alcohol, tobacco, betting). Where leaving it out leaves people out, as with
+  devotional music, ask it as its own `sensitive: true` item. Keep options that are only
+  stereotyped (musicals, anime, country): cutting them would endorse the stereotype.
+- **No grading.** Neither end of a taste spectrum is the better one: no "adventurous" or
+  "discerning" for one end, no "safe" or "basic" for the other. No count of how many things
+  someone likes, no highbrow or lowbrow, no "real" fans.
+- **Spectrums only where both ends cost the same.** One slider per spectrum per topic, in the
+  topic's own words. Media feed all three; food feeds Familiar or new, and sports Popular or
+  lesser-known. Never travel, gear, restaurants, the outdoors, art or animals, where an answer
+  would track money, a body or a place. Each spectrum needs two topics before it shows.
+- **Disability is never a pick.** Help text says adapted versions count as the activity itself, and
+  that audio and braille count as reading.
+- **Climbing,** the owner's sport, is one option among many in Sports and a deep dive among the
+  extended topics, not ahead of them. No grades (only whether they matter to you), frequency,
+  gear, trips, weight or injuries; plain words; indoors counts as much as outdoors; access disputes
+  are positions, so they stay out.
+
 ## Political traditions (`content/analysis/`)
 
 The results compare a person's political answers with a set of political traditions, as reference
@@ -584,11 +624,12 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | E009 | challenge contract (hold/distinguish + yield-with-revise; valid targets) |
 | E010 | stance / importance / deep placement |
 | E011 | choice with item-level effects needs option values |
-| E012 | sensitivity and About you rules (no opt-out; About you topics start `about_` and nothing else does; their items are choice or multi, with no effects, ratings or "No opinion"; no condition crosses its boundary) |
+| E012 | sensitivity and About you rules (no opt-out; About you topics start `about_` and nothing else does; their items are choice or multi, with no effects, ratings or "No opinion"; no condition crosses its boundary; no item is both sensitive and tagged `interest`) |
 | E013 | anchor not keyed toward its principle |
 | E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum (0.2 or beyond, not divided); left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
 | E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |
 | E016 | links from research: each rests on one personality spectrum other than neuroticism, which has norms (a mean on its items' 1-5 scale; each reversal pair keyed in opposite directions); `toward` is one of its poles; uncorrected r of at least 0.20 (`strength: little` may weaken the word it reads as, never strengthen it); a published source. A title or `interest` never uses a blocked-advice subject in any form (`analysis/blocked-advice.txt`), the trait's own item words (`echo`), the second person, prescriptions ("should", "need to"), numbers, double-ended phrases ("at times", "but also", "both") or comparisons ("most people", "normal", "wrong") |
+| E017 | the `interest` tag: only on rating and multi items, and on at most one rating per topic |
 | W101 | agree/disagree keying imbalance on an axis |
 | W102 | cross-topic reference |
 | W103 | reachability couldn't be proven (sampled) |

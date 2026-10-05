@@ -1,0 +1,18 @@
+# expect: E017@17
+id: bad_two_ratings
+domain: interests
+title: Bad
+summary: Fixture.
+tier: core
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much does it matter in your life?
+    poles: [Not much, A lot]
+  - id: also
+    type: rating
+    text: And how much do you enjoy it?
+    tags: [interest]
+    poles: [Not much, A lot]

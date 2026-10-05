@@ -140,17 +140,35 @@
   fullWeight: 4
 
 # --- Taste ---
+# One slider per topic, weight 1 each. A taste in one area says little about another, so a
+# spectrum shows once two topics feed it and is fully based at three. Each is fed only where both
+# ends cost the same, so money, a body, free time or a big city never decide the answer: Familiar
+# or new by music, movies and TV, food, books and games; Popular or lesser-known by music, movies
+# and TV, sports, books and games; Calm or intense by music, movies and TV, books and games, never
+# by sport or food, where "intense" would mean physical risk or spice. Neither end is the better
+# one: no "adventurous" or "discerning", no "safe" or "basic". The ids are the old ones, so saved
+# answers keep feeding them.
 - id: novelty
   family: taste
-  title: Novelty
-  description: Comfort favorites, or constant discovery?
-  poles: [Familiar, Novel]
-  minWeight: 1
-  fullWeight: 2
+  title: Familiar or new
+  description: Old favorites, or something new?
+  poles: [Familiar, New]
+  minWeight: 2
+  fullWeight: 3
+  minTopics: 2
 - id: mainstream
   family: taste
-  title: Mainstream
-  description: Popular picks, or off the beaten path?
-  poles: [Popular, Niche]
-  minWeight: 1
-  fullWeight: 2
+  title: Popular or lesser-known
+  description: What lots of people love, or what few people know?
+  poles: [Popular, Lesser-known]
+  minWeight: 2
+  fullWeight: 3
+  minTopics: 2
+- id: intensity
+  family: taste
+  title: Calm or intense
+  description: Something soothing, or something gripping?
+  poles: [Calm, Intense]
+  minWeight: 2
+  fullWeight: 3
+  minTopics: 2

@@ -15,7 +15,7 @@ import {
   compareWith,
   endorsementLabel,
   firmestLeans,
-  interestList,
+  interestGroups,
   mapTraditions,
   mapViews,
   nextTopic,
@@ -24,12 +24,14 @@ import {
   positionLabel,
   positionsByDomain,
   rankedPrinciples,
-  traditionTable,
+  shortLabel,
   sources,
   strongestLeanings,
   toFivePoint,
   toPercent,
   topicStatus,
+  topPicks,
+  traditionTable,
 } from './view.ts';
 
 const b = fixtureBundle();
@@ -277,17 +279,77 @@ describe('results helpers', () => {
     expect(positionsByDomain(b, topics).map((g) => [g.domain.id, g.topics.map((t) => t.id)])).toEqual([['life', ['alpha']]]);
   });
 
-  it('lists interests strongest first: picks by option and ratings by question, with the answer', () => {
-    const log = new Log();
-    log.add('tunes.genres', multi({ jazz: 5, rock: 2 }));
-    log.add('tunes.love', scale(4));
-    const s = buildAnswerState(b, log.events);
-    const p = buildProfile(s, { includeSensitive: true, appVersion: 't', now: 'x', resolutions: [] });
-    expect(interestList(p.interests, s)).toEqual([
-      { key: 'tunes.genres.jazz', kind: 'pick', label: 'Jazz', v: 1 },
-      { key: 'tunes.love', kind: 'rating', label: 'How much does music matter to you?', answer: 'Leaning “Hugely”', v: 0.75 },
-      { key: 'tunes.genres.rock', kind: 'pick', label: 'Rock', v: 0.4 },
-    ]);
+  describe('what you enjoy', () => {
+    const groupsOf = (add: (log: Log) => void) => {
+      const log = new Log();
+      add(log);
+      const s = buildAnswerState(b, log.events);
+      return interestGroups(buildProfile(s, { includeSensitive: true, appVersion: 't', now: 'x', resolutions: [] }).interests, s);
+    };
+
+    it('groups picks by topic, the topic that matters most first, ties in the order the options are listed', () => {
+      const groups = groupsOf((log) => {
+        // Tapped out of order: equal picks still follow the option list, not the taps.
+        log.add('tunes.genres', multi({ pop: 3, rock: 5, jazz: 3 }));
+        log.add('tunes.love', scale(2));
+        log.add('snacks.matters', scale(5));
+        log.add('snacks.kinds', multi({ fruit: 3, rock: 5, chips: 3 }));
+      });
+      expect(groups).toEqual([
+        {
+          topic: 'snacks',
+          title: 'Snacks',
+          matters: 'A lot',
+          picks: [
+            { key: 'snacks.kinds.rock', label: 'Rock', v: 1 },
+            { key: 'snacks.kinds.chips', label: 'Chips', v: 0.6 },
+            { key: 'snacks.kinds.fruit', label: 'Fruit', v: 0.6 },
+          ],
+        },
+        {
+          topic: 'tunes',
+          title: 'Tunes',
+          matters: 'Leaning “Not at all”',
+          picks: [
+            { key: 'tunes.genres.rock', label: 'Rock', v: 1 },
+            { key: 'tunes.genres.jazz', label: 'Jazz', v: 0.6 },
+            { key: 'tunes.genres.pop', label: 'Pop', v: 0.6 },
+          ],
+        },
+      ]);
+    });
+
+    it('counts an unanswered rating as the middle, and lists a topic at "Not much" only for its picks', () => {
+      const groups = groupsOf((log) => {
+        log.add('tunes.genres', multi({ jazz: 2 }));
+        log.add('snacks.matters', scale(2));
+      });
+      expect(groups.map((g) => [g.topic, g.matters])).toEqual([
+        ['tunes', null],
+        ['snacks', 'A little'],
+      ]);
+      expect(groupsOf((log) => log.add('snacks.matters', scale(1)))).toEqual([]);
+      expect(groupsOf((log) => {
+        log.add('snacks.matters', scale(1));
+        log.add('snacks.kinds', multi({ nuts: 4 }));
+      })).toEqual([{ topic: 'snacks', title: 'Snacks', matters: null, picks: [{ key: 'snacks.kinds.nuts', label: 'Nuts (any kind)', v: 0.8 }] }]);
+    });
+
+    it('sums up with the strongest pick from each topic in turn, shortened and never repeated', () => {
+      const groups = groupsOf((log) => {
+        log.add('snacks.matters', scale(5));
+        log.add('snacks.kinds', multi({ rock: 5, nuts: 4, chips: 2 }));
+        log.add('tunes.love', scale(4));
+        log.add('tunes.genres', multi({ rock: 5, pop: 3 }));
+      });
+      // Round one: Rock from Snacks, then Rock again from Tunes (skipped); round two: Nuts, Pop.
+      expect(topPicks(groups, 2)).toEqual(['Rock', 'Nuts']);
+      expect(topPicks(groups, 3)).toEqual(['Rock', 'Nuts', 'Pop']);
+      expect(topPicks(groups, 9)).toEqual(['Rock', 'Nuts', 'Pop', 'Chips']);
+      expect(topPicks([], 2)).toEqual([]);
+      expect(shortLabel('Indian films (Bollywood, Tamil, Telugu…)')).toBe('Indian films');
+      expect(shortLabel('Hip-hop / rap')).toBe('Hip-hop / rap');
+    });
   });
 });
 

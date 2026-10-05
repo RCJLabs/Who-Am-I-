@@ -1,0 +1,14 @@
+# expect: E017@12
+id: bad_interest_slider
+domain: interests
+title: Bad
+summary: Fixture.
+tier: core
+evidence: for-fun
+items:
+  - id: q
+    type: slider
+    steps: 5
+    tags: [interest]
+    text: Old or new?
+    poles: [Old, New]

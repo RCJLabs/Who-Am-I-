@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Food: how much it is a hobby or an interest, the foods you enjoy, then how you like to eat.
+# "Not really" ends the topic after the foods you enjoy. Asked as an interest, never "how much does
+# food matter in your life", which lands hard on anyone who has known hunger or an eating
+# disorder. Every cuisine ends in "food", so a pick reads as a thing and never as a people, and
+# regions are named without national examples whose dishes are disputed. Nothing about diets or
+# food rules (each stands in for faith or health), alcohol, money (eating out, fine dining against
+# fast food) or "family recipes from where you're from", which is a roots question. Trying
+# something new feeds Familiar or new, as a preference with price set aside, within whatever you eat; spice, sweet or savory and cooking
+# feed nothing: who cooks at home is gendered in many households.
+id: food
+domain: interests
+title: Food
+summary: What you love to eat.
+tier: core
+order: 3
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much is food a hobby or an interest for you?
+    poles: [Not really, One of my biggest interests]
+    labels: [Not really, A little, Some, A lot, One of my biggest interests]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which foods do you enjoy? Tap the ones you like, then rate how much.
+    help: There's no need to say why you don't eat something.
+    options:
+      - { id: chinese, label: Chinese food }
+      - { id: japanese, label: Japanese food }
+      - { id: korean, label: Korean food }
+      - { id: southeast_asian, label: Southeast Asian food }
+      - { id: south_asian, label: South Asian food }
+      - { id: middle_eastern, label: Middle Eastern food }
+      - { id: central_asian, label: Central Asian and Caucasus food }
+      - { id: north_african, label: North African food }
+      - { id: west_african, label: West African food }
+      - { id: east_african, label: East African food }
+      - { id: southern_african, label: Southern African food }
+      - { id: mexican, label: Mexican and Central American food }
+      - { id: caribbean, label: Caribbean food }
+      - { id: south_american, label: South American food }
+      - { id: italian, label: Italian food }
+      - { id: french, label: French food }
+      - { id: iberian, label: Spanish and Portuguese food }
+      - { id: greek_balkan, label: Greek and Balkan food }
+      - { id: central_eastern_european, label: Central and Eastern European food }
+      - { id: british_irish, label: British and Irish food }
+      - { id: nordic, label: Nordic food }
+      - { id: north_american, label: US and Canadian food }
+      - { id: pacific, label: Pacific Island food }
+      - { id: street, label: Street food }
+      - { id: baking, label: Baking and desserts }
+
+  - id: try_new
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Given the choice, you'd rather eat…
+    help: Leaving price aside, and within whatever you eat.
+    poles: [Dishes I know and love, Something I've never tried]
+    axes: { novelty: 1 }
+
+  - id: spice
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: How hot do you like your food?
+    poles: [Mild, The hotter the better]
+
+  - id: sweet_savory
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Sweet or savory?
+    poles: [Sweet, Savory]
+
+  - id: cooking
+    type: rating
+    when: matters > -1 or not answered(matters)
+    text: How much do you enjoy cooking?
+    poles: [Not for me, Love it]

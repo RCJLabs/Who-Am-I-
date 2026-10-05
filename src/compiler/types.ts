@@ -59,6 +59,7 @@ export const RULES: Readonly<Record<string, string>> = {
   E014: 'tradition-balance',
   E015: 'answer-sheet',
   E016: 'suggestion-scope',
+  E017: 'interest-tag',
   W101: 'keying-balance',
   W102: 'cross-topic-ref',
   W103: 'unproven-reachability',

@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Outdoors: where you love to be outside and what you enjoy doing there; a balcony or a city park
+# counts as much as a mountain. "Not much" ends the topic after the places you love. Nothing about
+# how often you get outside, trips abroad, boats or land owned, or whether you go alone (for many
+# people that's about safety, not taste), and no hunting, shooting or off-roading. Feeds no
+# spectrum: going somewhere new costs money and time that going back doesn't.
+id: outdoors
+domain: interests
+title: Outdoors
+summary: Where you love to be outside, and what you do there.
+tier: extended
+order: 7
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much does time outdoors matter in your life?
+    help: "A balcony, a city park or a mountain: anywhere outside counts."
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: places
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Where outside do you love to be? Tap the ones you like, then rate how much.
+    options:
+      - { id: parks, label: Parks and gardens }
+      - { id: coast, label: Beaches and coasts }
+      - { id: water, label: Rivers and lakes }
+      - { id: mountains, label: Mountains and hills }
+      - { id: forests, label: Forests and jungles }
+      - { id: countryside, label: Countryside and farmland }
+      - { id: desert, label: Deserts }
+      - { id: snow, label: Snow and ice }
+      - { id: city, label: City streets and squares }
+      - { id: night_sky, label: Under the night sky }
+
+  - id: activities
+    type: multi
+    intensity: true
+    tags: [interest]
+    when: matters > -1 or not answered(matters)
+    text: What do you enjoy doing outside? Tap the ones you like, then rate how much.
+    help: "Adapted versions count as the activity itself: walking includes wheeling."
+    options:
+      - { id: relaxing, label: Relaxing outdoors }
+      - { id: walking, label: Walking and hiking }
+      - { id: picnics, label: Picnics and cooking outdoors }
+      - { id: gardening, label: Gardening (pots and balconies too) }
+      - { id: camping, label: Camping }
+      - { id: swimming, label: Outdoor swimming }
+      - { id: fishing, label: Fishing }
+      - { id: wildlife, label: Birdwatching and wildlife }
+      - { id: stargazing, label: Stargazing }
+      - { id: photography, label: Nature photography }
+      - { id: foraging, label: "Foraging (mushrooms, berries, herbs)" }
+      - { id: paddling, label: Canoeing and kayaking }
+
+  - id: return_or_new
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: When you head outside, you'd rather…
+    poles: [Go back to places I love, Find somewhere new]
+
+  - id: under_stars
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: A night camping under the stars sounds…
+    poles: [Not for me, Perfect]
+
+  - id: weather
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Your favorite weather for being outside?
+    poles: [Cool and crisp, Hot and sunny]
