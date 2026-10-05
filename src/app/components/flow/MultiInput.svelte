@@ -66,7 +66,9 @@
     <button class="btn primary" disabled={count === 0} data-testid="next-{item.key}" onclick={() => onsubmit({ kind: 'multi', picks: $state.snapshot(picks) })}>
       {copy.flow.next}
     </button>
-    <button class="btn ghost" data-testid="none-{item.key}" onclick={() => onsubmit({ kind: 'multi', picks: {} })}>{copy.flow.noneOfThese}</button>
+    {#if item.none !== false}
+      <button class="btn ghost" data-testid="none-{item.key}" onclick={() => onsubmit({ kind: 'multi', picks: {} })}>{item.none ?? copy.flow.noneOfThese}</button>
+    {/if}
   </div>
 </div>
 

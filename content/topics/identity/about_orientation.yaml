@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Sexual orientation: the words you use, if any, and who you're attracted to. Never scored, never
+# turned into a label, and never in the summary. Words are "choose any" (people hold two, like
+# asexual and lesbian), with Straight (heterosexual) first, Gay and Lesbian separate so each person
+# sees their own word back, and "I don't use a word for this" and "Not sure" for people without a
+# label. Words that already say who someone is attracted to, and "I don't use a word for this",
+# lead to an opt-in ("Would you like to say more…?"), so nobody is asked to prove a word and people
+# who don't think in these terms aren't pressed; asexual, queer, another word and not sure go
+# straight to attraction. The gate comes first, so not feeling attraction is one tap and never a
+# rating. Romantic follow-ups say "fall in love": a quick "same kinds of people?" for those who feel
+# sexual attraction, the full question for those who rarely or never do, or who use "asexual".
+id: about_orientation
+domain: identity
+title: Sexual orientation
+summary: The words you use, if any, and who you're attracted to.
+tier: core
+order: 5
+evidence: custom
+instructions: These questions describe you. Nothing here is scored or shared. Skip anything, or choose the closest answer.
+items:
+  - id: words
+    type: multi
+    none: false
+    text: Which words describe your sexual orientation? Choose any that fit.
+    options:
+      - { id: straight, label: Straight (heterosexual) }
+      - { id: gay, label: Gay }
+      - { id: lesbian, label: Lesbian }
+      - { id: bisexual, label: Bisexual }
+      - { id: pansexual, label: Pansexual }
+      - { id: asexual, label: Asexual }
+      - { id: queer, label: Queer }
+      - { id: another, label: Another word }
+      - { id: no_word, label: "I don't use a word for this" }
+      - { id: not_sure, label: Not sure }
+
+  - id: more
+    type: choice
+    when: >-
+      (words has straight or words has gay or words has lesbian or words has bisexual or
+      words has pansexual or words has no_word) and not (words has asexual or words has queer or
+      words has another or words has not_sure)
+    text: Would you like to say more about who, if anyone, you're attracted to?
+    options:
+      - { id: "yes", label: "Yes" }
+      - { id: "no", label: "No, that's enough" }
+
+  - id: attraction
+    type: choice
+    when: more is yes or words has asexual or words has queer or words has another or words has not_sure
+    text: Do you feel sexual attraction to other people?
+    help: This means wanting sexual closeness with a particular person, not just finding someone good-looking.
+    options:
+      - { id: "yes", label: "Yes" }
+      - { id: bond, label: "Only after I've formed a close bond with someone" }
+      - { id: rarely, label: Rarely }
+      - { id: "no", label: "No, never or almost never" }
+      - { id: not_sure, label: Not sure }
+
+  - id: attracted_to
+    type: multi
+    none: false
+    when: attraction is yes or attraction is bond or attraction is rarely or attraction is not_sure
+    text: Who are you sexually attracted to? Choose any that fit.
+    options:
+      - { id: men, label: Men }
+      - { id: women, label: Women }
+      - { id: non_binary, label: Non-binary people }
+
+  - id: romantic_same
+    type: choice
+    when: (attraction is yes or attraction is bond) and not (words has asexual)
+    text: Do you fall in love with the same kinds of people you're sexually attracted to?
+    help: This is about men, women or non-binary people in general, not anyone in particular.
+    options:
+      - { id: same, label: "Yes, mostly" }
+      - { id: different, label: "No, it's different" }
+      - { id: rarely, label: I rarely or never fall in love }
+      - { id: not_sure, label: Not sure }
+
+  - id: romantic
+    type: choice
+    when: attraction is rarely or attraction is no or attraction is not_sure or words has asexual
+    text: Do you fall in love with people?
+    options:
+      - { id: "yes", label: "Yes" }
+      - { id: rarely, label: Rarely }
+      - { id: "no", label: "No, never or almost never" }
+      - { id: not_sure, label: Not sure }
+
+  - id: romantic_to
+    type: multi
+    none: false
+    when: romantic is yes or romantic is rarely or romantic is not_sure or romantic_same is different or romantic_same is not_sure
+    text: Who do you fall in love with? Choose any that fit.
+    options:
+      - { id: men, label: Men }
+      - { id: women, label: Women }
+      - { id: non_binary, label: Non-binary people }

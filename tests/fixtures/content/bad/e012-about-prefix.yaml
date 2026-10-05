@@ -1,6 +1,6 @@
-# expect: E012@15
-id: about_bad_optout
-domain: identity
+# expect: E012@2
+id: about_not_identity
+domain: life
 title: Bad
 summary: Fixture.
 tier: core
@@ -12,4 +12,3 @@ items:
     options:
       - { id: a, label: A }
       - { id: b, label: B }
-    sensitive: false

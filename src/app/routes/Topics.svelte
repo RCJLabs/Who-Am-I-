@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { Topic } from '../../model/content.ts';
+  import { IDENTITY_DOMAIN, type Topic } from '../../model/content.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
-  import { to } from '../routes.ts';
+  import { router } from '../router.svelte.ts';
+  import { isIdentityTopic, to } from '../routes.ts';
   import { topicStatus } from '../view.ts';
   import EvidenceBadge from '../components/EvidenceBadge.svelte';
   import Icon from '../components/Icon.svelte';
@@ -17,18 +18,28 @@
   );
   const withTopics = $derived(groups.filter((g) => g.core.length || g.deep.length));
   const planned = $derived(groups.filter((g) => !g.core.length && !g.deep.length));
+  // Questions about you stay folded away, with no titles or progress showing, until asked for each
+  // time: the list may be open on a shared phone.
+  let aboutOpen = $state(false);
+
+  /** Topics about you open at their shared address, with the topic in history state (routes.ts). */
+  function open(e: MouseEvent, topic: Topic): void {
+    if (!isIdentityTopic(topic.id)) return;
+    e.preventDefault();
+    router.openFlow(topic.id);
+  }
 </script>
 
 {#snippet row(topic: Topic)}
   {@const st = topicStatus(answers.state, topic, opts)}
-  <a class="card row" href={to.flow(topic.id)} data-testid="topic-{topic.id}">
+  <a class="card row" href={to.flow(topic.id)} onclick={(e) => open(e, topic)} data-testid="topic-{topic.id}">
     <span class="main">
       <span class="title">
         {topic.title}
         {#if topic.sensitive}<span title={copy.topics.sensitive}><Icon name="lock" size={14} label={copy.topics.sensitive} /></span>{/if}
       </span>
       <span class="muted small">{topic.summary}</span>
-      <span class="meta"><EvidenceBadge evidence={topic.evidence} /></span>
+      {#if topic.domain !== IDENTITY_DOMAIN}<span class="meta"><EvidenceBadge evidence={topic.evidence} /></span>{/if}
     </span>
     <span class="status">
       {#if st.complete}
@@ -47,15 +58,32 @@
   <p class="muted">{copy.topics.intro}</p>
 
   {#each withTopics as g (g.domain.id)}
-    <section class="section">
-      <h2 class="domain">{g.domain.title}</h2>
-      <p class="muted small">{g.domain.blurb}</p>
-      {#each g.core as topic (topic.id)}{@render row(topic)}{/each}
-      {#if g.deep.length}
-        <h3 class="deep" data-testid="deep-dives-{g.domain.id}">{copy.topics.deepDives}</h3>
-        {#each g.deep as topic (topic.id)}{@render row(topic)}{/each}
-      {/if}
-    </section>
+    {#if g.domain.id === IDENTITY_DOMAIN}
+      <section class="section" data-testid="about-you">
+        <h2 class="domain">{g.domain.title} <span class="tag muted">· {copy.topics.aboutYou.tag}</span></h2>
+        <p class="muted small">{g.domain.blurb}</p>
+        {#if aboutOpen}
+          <p class="card note" data-testid="about-you-note">{copy.topics.aboutYou.note}</p>
+          {#each [...g.core, ...g.deep] as topic (topic.id)}{@render row(topic)}{/each}
+          <button class="btn ghost block fold" onclick={() => (aboutOpen = false)} data-testid="about-you-close">{copy.topics.aboutYou.close}</button>
+        {:else}
+          <button class="btn block fold" onclick={() => (aboutOpen = true)} data-testid="about-you-open">
+            <Icon name="lock" size={16} />
+            {copy.topics.aboutYou.open}
+          </button>
+        {/if}
+      </section>
+    {:else}
+      <section class="section">
+        <h2 class="domain">{g.domain.title}</h2>
+        <p class="muted small">{g.domain.blurb}</p>
+        {#each g.core as topic (topic.id)}{@render row(topic)}{/each}
+        {#if g.deep.length}
+          <h3 class="deep" data-testid="deep-dives-{g.domain.id}">{copy.topics.deepDives}</h3>
+          {#each g.deep as topic (topic.id)}{@render row(topic)}{/each}
+        {/if}
+      </section>
+    {/if}
   {/each}
 
   {#if planned.length}
@@ -72,6 +100,17 @@
 <style>
   .domain {
     margin-bottom: 2px;
+  }
+  .tag {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .note {
+    margin: 12px 0 4px;
+    font-size: 0.95rem;
+  }
+  .fold {
+    margin-top: 12px;
   }
   .deep {
     margin: 20px 0 0;

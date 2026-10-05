@@ -198,6 +198,25 @@ biological female
 biological females
 assigned male at birth
 assigned female at birth
+# One side's terms, or ones many people find hostile, in self-description (About you): ask
+# "Are you transgender?" with no word for "no"; say gay or lesbian people, transgender, Haredi,
+# Latter-day Saint, and a traditional or Indigenous religion. (A proper name such as the Book of
+# Mormon can still be quoted: W108 is a warning to justify, not a ban.)
+cisgender
+cis
+homosexuals
+transgendered
+transsexual
+transsexuals
+hermaphrodite
+hermaphrodites
+ultra-orthodox
+ultra orthodox
+mormon
+mormons
+animist
+animists
+animism
 amab
 afab
 men in women's sports

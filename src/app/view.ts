@@ -2,7 +2,7 @@
 import type { AnalysisPack } from '../model/analysis.ts';
 import type { Response } from '../model/answers.ts';
 import type { Axis, AxisFamily, AxisId, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
-import { isScale, scalePoints } from '../model/content.ts';
+import { IDENTITY_DOMAIN, isScale, scalePoints } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import { BAND, LOW_CONFIDENCE } from '../engine/analysis/constants.ts';
 import { progress, type FlowOptions } from '../engine/flow.ts';
@@ -22,23 +22,30 @@ export function topicStatus(s: AnswerState, topic: Topic, o: FlowOptions = {}): 
   return { started, answered: p.answered, remaining: p.remaining, complete: started && p.complete };
 }
 
-/** The topic of the most recent answer, if it isn't finished. */
+/**
+ * The topic of the most recent answer, if it isn't finished. Never a sensitive one: Home names it,
+ * where anyone glancing at the screen can read it.
+ */
 export function activeTopic(s: AnswerState, o: FlowOptions = {}): Topic | null {
   for (let i = s.events.length - 1; i >= 0; i--) {
     const topic = s.ix.topicOf.get(s.events[i]!.item);
-    if (topic) return topicStatus(s, topic, o).complete ? null : topic;
+    if (topic) return topic.sensitive || topicStatus(s, topic, o).complete ? null : topic;
   }
   return null;
 }
 
 /**
  * The first unfinished topic after `after` (wrapping around), core topics before deep dives, or
- * null if all are finished.
+ * null if all are finished. The app never leads anyone into a sensitive topic: one is offered only
+ * after another of the same domain that is sensitive too, as the next step through it, and never
+ * in About you, where each topic is chosen for itself (Family shouldn't lead to sexual orientation).
  */
 export function nextTopic(b: Bundle, s: AnswerState, after?: TopicId, o: FlowOptions = {}): Topic | null {
   const start = after ? b.topics.findIndex((t) => t.id === after) + 1 : 0;
+  const from = after ? b.topics[start - 1] : undefined;
+  const onward = (t: Topic): boolean => from?.sensitive === true && t.domain === from.domain && t.domain !== IDENTITY_DOMAIN;
   const open = Array.from({ length: b.topics.length }, (_, k) => b.topics[(start + k) % b.topics.length]!).filter(
-    (t) => t.id !== after && !topicStatus(s, t, o).complete,
+    (t) => t.id !== after && !topicStatus(s, t, o).complete && (!t.sensitive || onward(t)),
   );
   return open.find((t) => t.tier === 'core') ?? open[0] ?? null;
 }
@@ -75,7 +82,7 @@ export function answerLabel(item: Item, r: Response): string {
     case 'multi': {
       if (item.type !== 'multi') return '';
       const picked = item.options.filter((o) => o.id in r.picks);
-      if (!picked.length) return 'None of these';
+      if (!picked.length) return typeof item.none === 'string' ? item.none : 'None of these';
       return picked.map((o) => (typeof r.picks[o.id] === 'number' ? `${o.label} (${r.picks[o.id]}/5)` : o.label)).join(', ');
     }
   }

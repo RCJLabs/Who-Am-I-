@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Religious background: the religion you belong to, if any, and the one you were raised in. Never
+# scored. Belonging, not belief: what someone believes is asked in Religion & Worldview, and the two
+# are never combined. Each group is listed under its own name (self-identification decides who
+# counts as what), the faiths alphabetically, then the catch-alls, ending with "No religion".
+# Traditional and Indigenous religions are named rather than left to "Another". The same list
+# serves now and growing up, so a change shows as two plain answers; nothing here ever says
+# "converted", "left" or "lapsed". Branch items only for the three faiths whose members commonly
+# use a branch name; "Another branch" lets anyone use their own identification without the app
+# naming groups whose status is disputed. The Christian, Muslim and Jewish lists were checked
+# against Pew and JPR by AI agents only: each wants a reader from that tradition before it's
+# treated as settled.
+id: about_faith
+domain: identity
+title: Religious background
+summary: The religion you belong to, if any, and the one you were raised in.
+tier: core
+order: 3
+evidence: custom
+instructions: These questions describe you. Nothing here is scored or shared. Skip anything, or choose the closest answer.
+items:
+  - id: religion
+    type: choice
+    text: Which religion, if any, do you belong to?
+    help: This is about belonging, whatever you believe. What you believe is asked in Religion & Worldview.
+    options: &religions
+      - { id: buddhist, label: Buddhist }
+      - { id: christian, label: Christian }
+      - { id: hindu, label: Hindu }
+      - { id: jewish, label: Jewish }
+      - { id: muslim, label: Muslim }
+      - { id: sikh, label: Sikh }
+      - { id: traditional, label: "A traditional or Indigenous religion, such as an African traditional religion or Chinese folk religion" }
+      - { id: other, label: "Another religion, such as Bahá'í, Jain, Shinto or Taoist" }
+      - { id: several, label: More than one }
+      - { id: none, label: No religion }
+
+  - id: christian
+    type: multi
+    none: false
+    when: religion is christian
+    text: Which Christian tradition are you part of? Choose any that fit.
+    options:
+      - { id: african_independent, label: "African independent church, such as Aladura or Kimbanguist" }
+      - { id: anglican, label: Anglican or Episcopalian }
+      - { id: catholic, label: Catholic }
+      - { id: evangelical, label: "Evangelical, Pentecostal or charismatic" }
+      - { id: jehovahs_witness, label: "Jehovah's Witness" }
+      - { id: latter_day_saint, label: Latter-day Saint }
+      - { id: orthodox, label: "Orthodox, such as Greek, Russian, Coptic or Ethiopian" }
+      - { id: protestant, label: "Protestant, such as Adventist, Baptist, Lutheran, Methodist or Presbyterian" }
+      - { id: other_church, label: Another church }
+      - { id: just_christian, label: "Just Christian, no particular church" }
+
+  - id: muslim
+    type: choice
+    when: religion is muslim
+    text: Which branch of Islam, if any?
+    options:
+      - { id: shia, label: Shia }
+      - { id: sunni, label: Sunni }
+      - { id: other_branch, label: Another branch }
+      - { id: just_muslim, label: Just a Muslim }
+
+  # Merges the US movements with the four ways Israeli Jews describe themselves (Haredi, Dati,
+  # Masorti, Hiloni), in order of observance as Pew and the UK's JPR order them. "Jewish identity",
+  # not "your Judaism": many Jews are secular. "Traditional" stands alone, since most Israeli
+  # masortim call their stream Orthodox; "Masorti" is also the Conservative movement's name outside
+  # North America, so it gets its own option. Modern Orthodox and Religious Zionist Jews choose
+  # Orthodox; Hasidic Jews, Haredi or Orthodox.
+  - id: jewish
+    type: choice
+    when: religion is jewish
+    text: Which best describes your Jewish identity?
+    options:
+      - { id: haredi, label: Haredi (strictly Orthodox) }
+      - { id: orthodox, label: Orthodox }
+      - { id: traditional, label: Traditional }
+      - { id: conservative, label: Conservative or Masorti movement }
+      - { id: reform, label: "Reform, Liberal or Progressive" }
+      - { id: secular, label: Secular or cultural }
+      - { id: just_jewish, label: Just Jewish }
+      - { id: other, label: "Another movement, such as Reconstructionist or Renewal" }
+
+  - id: raised
+    type: choice
+    text: Which religion, if any, were you raised in?
+    options: *religions
+
+  - id: raised_part
+    type: choice
+    when: not (raised is none)
+    text: Growing up, how big a part of your home life was religion?
+    options:
+      - { id: central, label: A central part }
+      - { id: regular, label: A regular part }
+      - { id: small, label: A small part }
+      - { id: hardly, label: Hardly any part }

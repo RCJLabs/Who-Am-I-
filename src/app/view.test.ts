@@ -3,7 +3,7 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
-import { AREAS, CARD_IDS, parseHash, to } from './routes.ts';
+import { ABOUT_FLOW, AREAS, CARD_IDS, parseHash, routeOf, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import {
@@ -65,6 +65,22 @@ describe('routes', () => {
     for (const card of CARD_IDS) expect(parseHash(to.share(card))).toEqual({ name: 'share', card });
     expect(parseHash(to.share())).toEqual({ name: 'share', card: null });
   });
+
+  it('opens every question about you at one address, with the topic kept in history state', () => {
+    expect(to.flow('about_gender')).toBe(ABOUT_FLOW);
+    expect(to.flow('about_gender', 'trans')).toBe(ABOUT_FLOW);
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'about_gender', edit: 'trans' } })).toEqual({ name: 'flow', topic: 'about_gender', edit: 'trans' });
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'about_gender' } })).toEqual({ name: 'flow', topic: 'about_gender' });
+    // Without that state (typed, or opened in a new tab) it's the topic list; the state opens nothing else.
+    expect(routeOf(ABOUT_FLOW, null)).toEqual({ name: 'topics' });
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'abortion' } })).toEqual({ name: 'topics' });
+    // Other addresses ignore the state, and other topics keep readable ones.
+    expect(routeOf('#/m/abortion', { about: { topic: 'about_gender' } })).toEqual({ name: 'flow', topic: 'abortion' });
+    expect(to.flow('abortion', 'stance')).toBe('#/m/abortion?edit=stance');
+    // Their answers are shown together on the About you page, never on a page of their own.
+    expect(to.topicResults('about_gender')).toBe(to.area('you'));
+    expect(parseHash('#/results/about_gender')).toEqual({ name: 'area', area: 'you' });
+  });
 });
 
 describe('answerLabel', () => {
@@ -100,6 +116,25 @@ describe('topic navigation', () => {
     s = buildAnswerState(b, log.events);
     expect(topicStatus(s, topic('beta')).complete).toBe(true);
     expect(activeTopic(s)).toBeNull();
+  });
+
+  it('never names or suggests a sensitive topic outside it', () => {
+    // gamma is sensitive; give it a second question so one answer leaves it unfinished.
+    const b2 = structuredClone(b);
+    const gamma = b2.topics.find((t) => t.id === 'gamma')!;
+    gamma.items.push({ ...gamma.items[0]!, id: 'gamma.more', key: 'more' });
+    const log = new Log();
+    log.add('gamma.belief', scale(2));
+    const s = buildAnswerState(b2, log.events);
+    expect(gamma.sensitive).toBe(true);
+    expect(topicStatus(s, gamma).complete).toBe(false);
+    // Unfinished, but Home doesn't name it.
+    expect(activeTopic(s)).toBeNull();
+    // Whichever topic was just finished, the next one offered is never gamma.
+    for (const t of [undefined, ...b2.topics.map((x) => x.id)]) expect(nextTopic(b2, s, t)?.id).not.toBe('gamma');
+    // A topic that isn't sensitive is still picked up where it was left.
+    log.add('alpha.stance', scale(4));
+    expect(activeTopic(buildAnswerState(b2, log.events))?.id).toBe('alpha');
   });
 });
 

@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Response, TensionResolution, Via } from '../../model/answers.ts';
+  import { IDENTITY_DOMAIN } from '../../model/content.ts';
   import { nextStep, progress } from '../../engine/flow.ts';
   import { openTensions } from '../../engine/tensions.ts';
   import { app } from '../context.ts';
@@ -26,6 +27,7 @@
   let { topicId, edit }: { topicId: string; edit?: string | undefined } = $props();
   const { content, answers, settings } = app();
   const topic = $derived(content.bundle.topics.find((t) => t.id === topicId));
+  const identity = $derived(topic?.domain === IDENTITY_DOMAIN);
 
   // Per-visit state. Everything else is derived from the answer log.
   let tensionDone = $state(false);
@@ -71,7 +73,9 @@
     const current = answers.state.latest.get(e.itemId)?.r;
     if (!current || JSON.stringify(current) !== JSON.stringify(r)) await answers.record(e.itemId, r, e.via, note);
     editing = null;
-    if (e.then === 'back') router.back(to.topicResults(topicId));
+    // A changed answer about you leaves no entry for Forward to reopen.
+    if (e.then === 'back' && identity) router.go(to.topicResults(topicId), { replace: true });
+    else if (e.then === 'back') router.back(to.topicResults(topicId));
     else if (e.then === 'tension' && e.tensionKey) await finishRevision(e.tensionKey);
   }
 
@@ -104,8 +108,14 @@
       visitHistory = visitHistory.slice(0, -1);
       editing = { itemId: last, via: { kind: 'manual' }, then: 'stay' };
     } else {
-      router.back(to.topics());
+      leave();
     }
+  }
+
+  /** Back where you came from; but questions about you are replaced in history, so Back can't reopen them. */
+  function leave(): void {
+    if (identity) router.go(to.topics(), { replace: true });
+    else router.back(to.topics());
   }
 
   function reaskHeading(via: Via): string {
@@ -124,7 +134,7 @@
         <span class="name">{topic.title}</span>
         {#if step?.kind !== 'done'}<ProgressBar value={progressValue} label={topic.title} />{/if}
       </div>
-      <button class="icon-btn" aria-label={copy.flow.exit} data-testid="flow-exit" onclick={() => router.back(to.topics())}><Icon name="x" /></button>
+      <button class="icon-btn" aria-label={copy.flow.exit} data-testid="flow-exit" onclick={leave}><Icon name="x" /></button>
     </header>
 
     <main class="body">
@@ -137,7 +147,7 @@
         <section class="intro">
           <h1>{topic.title}</h1>
           <p class="muted">{topic.summary}</p>
-          <EvidenceBadge evidence={topic.evidence} />
+          {#if !identity}<EvidenceBadge evidence={topic.evidence} />{/if}
           <p class="instructions">{topic.instructions}</p>
           {#if topic.source}<p class="small muted">{topic.source}</p>{/if}
           <button class="btn primary block" data-testid="intro-start" onclick={() => (introDismissed = true)}>{copy.flow.start}</button>

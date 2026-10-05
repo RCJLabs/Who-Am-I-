@@ -418,6 +418,20 @@ function parseExpectations(text: string, path: string): Expected[] {
 const key = (d: Expected) => `${d.file}:${String(d.line).padStart(4, '0')}:${d.code}`;
 const sorted = (list: Expected[]) => [...list].sort((a, b) => key(a).localeCompare(key(b)));
 
+describe('identity boundary', () => {
+  it('stops other topics from depending on an identity answer', () => {
+    const src = { ...fixtureSources(), analysis: undefined };
+    const choice = 'type: choice\n    text: Q\n    options:\n      - { id: a, label: A }\n      - { id: b, label: B }';
+    src.topics.push(
+      { path: 'about.yaml', text: `id: about_me\ndomain: identity\ntitle: Me\nsummary: S.\ntier: core\nevidence: custom\nitems:\n  - id: q\n    ${choice}\n` },
+      { path: 'peek.yaml', text: `id: peek\ndomain: life\ntitle: Peek\nsummary: S.\ntier: core\nevidence: custom\nitems:\n  - id: q\n    when: about_me.q is a\n    ${choice}\n` },
+    );
+    const { bundle, diagnostics } = compile(src);
+    expect(diagnostics.map((d) => [d.code, d.file, d.line])).toEqual([['E012', 'peek.yaml', 9]]);
+    expect(bundle).toBeNull();
+  });
+});
+
 describe('bad fixtures produce exactly their expected diagnostics', () => {
   const dir = join(FIX, 'bad');
   const files = readdirSync(dir).filter((f) => f.endsWith('.yaml')).sort();

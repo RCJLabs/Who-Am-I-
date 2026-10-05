@@ -57,6 +57,7 @@
     </p>
     <ul>
       <li><strong>Only what you could share.</strong> Sensitive topics, such as religion, never shape the overview (the summary, your pattern and your firmest leans) or what it suggests next; they only add to its counts. Their own area's page still shows what you answered.</li>
+      <li><strong>About you.</strong> Your answers about your family, roots, religious background, gender and sexual orientation are never analysed, scored or used to suggest anything. They're only shown back to you, as you gave them, behind a tap on their own page.</li>
       <li><strong>Reading from both sides.</strong> On your firmest positions, the app points to the strongest cases it put to each side, with the sources it already cites.</li>
       <li><strong>Topics to explore.</strong> The ones that would add most to your results: a spectrum that can't show yet, or one resting on few answers.</li>
       <li><strong>Worth a second look.</strong> The places where your answers pull apart most, as questions. There's often a good reason.</li>

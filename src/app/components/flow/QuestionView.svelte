@@ -89,7 +89,8 @@
     {#if noteOpen}
       <label class="note">
         <span class="visually-hidden">{copy.flow.noteToggle}</span>
-        <textarea bind:value={note} rows="3" placeholder={copy.flow.notePlaceholder} maxlength="2000"></textarea>
+        <!-- No spell-check service or keyboard suggestions: what people write here stays on the device. -->
+        <textarea bind:value={note} rows="3" placeholder={copy.flow.notePlaceholder} maxlength="2000" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
       </label>
     {:else}
       <button class="link-btn" onclick={() => (noteOpen = true)}>{copy.flow.noteToggle}</button>

@@ -274,10 +274,18 @@ code {
   white-space: nowrap;
 }
 
+.print-only {
+  display: none;
+}
+
 @media print {
   nav,
-  .banner {
+  .banner,
+  .no-print {
     display: none !important;
+  }
+  .print-only {
+    display: block;
   }
   body {
     background: #fff;

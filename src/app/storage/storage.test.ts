@@ -3,7 +3,8 @@ import { createStore, set } from 'idb-keyval';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { AnswerEvent, TensionResolution } from '../../model/answers.ts';
 import { makeBackup, mergeById, parseBackup } from './backup.ts';
-import { clearAll, loadAll, putEvent, putEvents, putResolution, putSettings } from './db.ts';
+import { clearAll, deleteEvents, loadAll, putEvent, putEvents, putResolution, putSettings, writeEvents } from './db.ts';
+import { isStoredIdentity } from './identity.ts';
 import { ulid } from './ids.ts';
 
 const ev = (id: string, item = 'abortion.stance', step = 3): AnswerEvent => ({ id, item, r: { kind: 'scale', step }, at: 1, cv: 'v' });
@@ -52,6 +53,22 @@ describe('db', () => {
     await set('broken', { id: 'broken', item: 'x' }, createStore('whoami-events', 'events'));
     const loaded = await loadAll();
     expect(loaded.events.map((e) => e.id)).toEqual(['ok']);
+    expect(loaded.dropped).toBe(1);
+  });
+
+  it('writes and deletes events in one go', async () => {
+    await putEvents([ev('e1'), ev('e2')]);
+    await writeEvents([ev('e3')], ['e1', 'missing']);
+    expect((await loadAll()).events.map((e) => e.id)).toEqual(['e2', 'e3']);
+  });
+
+  it('deletes the stored events that match, unreadable ones included', async () => {
+    await putEvents([ev('e1', 'about_x.q'), ev('e2'), ev('e3', 'about_y.q')]);
+    await set('broken', { id: 'broken', item: 'about_z.q' }, createStore('whoami-events', 'events'));
+    await set('junk', 'not an event', createStore('whoami-events', 'events'));
+    await deleteEvents(isStoredIdentity);
+    const loaded = await loadAll();
+    expect(loaded.events.map((e) => e.id)).toEqual(['e2']);
     expect(loaded.dropped).toBe(1);
   });
 

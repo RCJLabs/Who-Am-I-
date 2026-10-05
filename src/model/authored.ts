@@ -122,6 +122,10 @@ export const MultiSchema = z.strictObject({
   options: z.array(z.strictObject({ id: Id, label: z.string().min(1) })).min(2),
   intensity: z.boolean().optional().describe('Rate each pick 1–5'),
   max: z.number().int().positive().optional(),
+  none: z
+    .union([z.string().min(1), z.literal(false)])
+    .optional()
+    .describe('Label for answering with no picks (default "None of these"), or false when every person fits an option'),
 });
 
 const ChallengeOptionSchema = OptionSchema.extend({

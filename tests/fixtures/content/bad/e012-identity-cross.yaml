@@ -1,5 +1,5 @@
-# expect: E012@15
-id: about_bad_optout
+# expect: E012@16
+id: about_bad_cross
 domain: identity
 title: Bad
 summary: Fixture.
@@ -12,4 +12,10 @@ items:
     options:
       - { id: a, label: A }
       - { id: b, label: B }
-    sensitive: false
+  - id: follow
+    when: alpha.stance > 0
+    type: choice
+    text: Follow-up
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }

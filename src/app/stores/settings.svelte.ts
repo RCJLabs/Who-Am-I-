@@ -20,6 +20,16 @@ export class SettingsStore {
     if (!initial.seed) void this.save();
   }
 
+  /** Back to the defaults, with a new seed: what "Delete all my data" leaves. */
+  async reset(): Promise<void> {
+    this.alwaysDeep = false;
+    this.lastBackupAt = null;
+    this.seed = ulid();
+    this.showLinks = true;
+    this.linksOpen = false;
+    await this.save();
+  }
+
   async save(): Promise<void> {
     try {
       await db.putSettings({

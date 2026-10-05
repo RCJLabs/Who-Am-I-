@@ -10,6 +10,13 @@ export type Target = `axis:${string}` | `principle:${string}`;
 export type Evidence = (typeof EVIDENCE)[number];
 export type AxisFamily = (typeof AXIS_FAMILIES)[number];
 
+/** The domain where people describe themselves: never scored, never shared (docs/CONTENT_GUIDE.md). */
+export const IDENTITY_DOMAIN = 'identity';
+/** Every Identity topic id starts with this, so its stored answers are known even after content changes. */
+export const IDENTITY_PREFIX = 'about_';
+/** Whether a stored answer's item id (`topic.item`) belongs to Identity. */
+export const isIdentityItem = (item: string): boolean => item.startsWith(IDENTITY_PREFIX);
+
 export interface Bundle {
   format: 'whoami.content';
   schema: 1;
@@ -172,6 +179,8 @@ export interface MultiItem extends ItemBase {
   options: { id: string; label: string }[];
   intensity: boolean;
   max?: number;
+  /** Label for answering with no picks; false: not offered; absent: the app's "None of these". */
+  none?: string | false;
 }
 
 export type Reaction = 'hold' | 'distinguish' | 'yield';

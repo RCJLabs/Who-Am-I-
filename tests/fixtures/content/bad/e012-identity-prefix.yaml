@@ -1,5 +1,5 @@
-# expect: E012@15
-id: about_bad_optout
+# expect: E012@2
+id: bad_identity_prefix
 domain: identity
 title: Bad
 summary: Fixture.
@@ -12,4 +12,3 @@ items:
     options:
       - { id: a, label: A }
       - { id: b, label: B }
-    sensitive: false

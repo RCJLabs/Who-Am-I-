@@ -75,7 +75,8 @@
     </div>
   {:else if mode === 'other'}
     <h3>{copy.tension.reasons.other}</h3>
-    <textarea bind:value={text} rows="3" placeholder={copy.tension.otherPlaceholder} maxlength="2000"></textarea>
+    <!-- No spell-check service or keyboard suggestions: what people write here stays on the device. -->
+    <textarea bind:value={text} rows="3" placeholder={copy.tension.otherPlaceholder} maxlength="2000" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
     <div class="btn-row">
       <button class="btn primary" onclick={() => onresolve({ kind: 'distinguished', reason: 'other', ...(text.trim() ? { text: text.trim() } : {}) })}>{copy.tension.save}</button>
       <button class="link-btn" onclick={() => (mode = 'ask')}>{copy.flow.back}</button>

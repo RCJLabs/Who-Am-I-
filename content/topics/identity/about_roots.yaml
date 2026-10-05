@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Roots: when and where you grew up, where you live now, and what you belong to. Never scored.
+# Birth decade rather than an age band, since answers stay on the device for years and a decade
+# never goes out of date. The app is for adults, so the list ends at the 2000s; add the 2010s in
+# 2028. The places use plain words that travel: "suburbs or outskirts" covers
+# both a wealthy suburb and a poor city edge. Nothing asks citizenship, legal status, region,
+# ethnicity or minority status. Belonging is capped at three picks rather than rated.
+id: about_roots
+domain: identity
+title: Roots
+summary: When and where you grew up, where you live now, and what you belong to.
+tier: core
+order: 2
+evidence: custom
+instructions: These questions describe you. Nothing here is scored or shared. Skip anything, or choose the closest answer.
+items:
+  - id: born
+    type: choice
+    text: When were you born?
+    options:
+      - { id: before_1950, label: Before 1950 }
+      - { id: d1950s, label: The 1950s }
+      - { id: d1960s, label: The 1960s }
+      - { id: d1970s, label: The 1970s }
+      - { id: d1980s, label: The 1980s }
+      - { id: d1990s, label: The 1990s }
+      - { id: d2000s, label: The 2000s }
+
+  - id: grew_up
+    type: choice
+    text: Where did you spend most of your childhood?
+    options:
+      - { id: big_city, label: A big city }
+      - { id: suburbs, label: The suburbs or outskirts of a big city }
+      - { id: town, label: A smaller city or a town }
+      - { id: village, label: A village or the countryside }
+      - { id: moved, label: We moved around a lot }
+
+  - id: lives
+    type: choice
+    text: Where do you live now?
+    options:
+      - { id: big_city, label: A big city }
+      - { id: suburbs, label: The suburbs or outskirts of a big city }
+      - { id: town, label: A smaller city or a town }
+      - { id: village, label: A village or the countryside }
+
+  - id: migration
+    type: multi
+    none: false
+    text: Which of these are true of you? Choose any that fit.
+    options:
+      - { id: born_here, label: I was born in the country where I live now }
+      - { id: came_child, label: I moved to this country as a child }
+      - { id: came_adult, label: I moved to this country as an adult }
+      - { id: parents_came, label: One or both of my parents moved here from another country }
+      - { id: abroad, label: "I've lived or worked in another country for a year or more" }
+      - { id: two_homes, label: More than one country feels like home }
+
+  - id: languages
+    type: choice
+    text: How many languages do you speak well enough to hold a conversation?
+    options:
+      - { id: one, label: One }
+      - { id: two, label: Two }
+      - { id: three, label: Three }
+      - { id: four_plus, label: Four or more }
+
+  - id: belonging
+    type: multi
+    max: 3
+    text: Which of these matter most to who you are? Choose up to three.
+    options:
+      - { id: family, label: My family }
+      - { id: faith, label: My faith or religious community }
+      - { id: country, label: My country }
+      - { id: people, label: "My ethnic group, people or race" }
+      - { id: clan, label: "My clan, tribe or caste" }
+      - { id: language, label: My language }
+      - { id: hometown, label: "The town, village or region I come from" }
+      - { id: work, label: My work or trade }
+      - { id: generation, label: My generation }
+      - { id: chosen, label: "Friends and communities I've chosen" }

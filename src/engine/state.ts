@@ -1,6 +1,7 @@
-// Derives the current answer state from the event log. Stored events are never rewritten:
-// events that no longer fit the content (unknown item, removed option, changed scale) become
-// orphans, which are kept and exported but not scored, and their item is asked again.
+// Derives the current answer state from the event log. Stored events are never rewritten, except
+// answers about you (app/storage/identity.ts): events that no longer fit the content (unknown
+// item, removed option, changed scale) become orphans, which are kept and exported but not
+// scored, and their item is asked again.
 import type { AnswerEvent } from '../model/answers.ts';
 import type { Bundle, ItemId } from '../model/content.ts';
 import { indexBundle, type BundleIndex } from './bundle-index.ts';

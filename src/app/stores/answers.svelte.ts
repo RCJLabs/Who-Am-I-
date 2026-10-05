@@ -1,13 +1,14 @@
 // The answer log and everything derived from it. Events are plain objects held in $state.raw
 // (deep proxies can't be stored in IndexedDB), replaced immutably on every change.
 import type { AnswerEvent, Backup, Response, TensionResolution, Via } from '../../model/answers.ts';
-import type { Bundle, ItemId } from '../../model/content.ts';
+import { isIdentityItem, type Bundle, type ItemId } from '../../model/content.ts';
 import { observe } from '../../engine/observe.ts';
 import { buildProfile } from '../../engine/profile.ts';
 import { buildAnswerState } from '../../engine/state.ts';
 import { detectTensions } from '../../engine/tensions.ts';
 import { mergeById } from '../storage/backup.ts';
 import * as db from '../storage/db.ts';
+import { identityLeftovers, isIdentityEvent, isStoredIdentity, withoutIdentity, withoutIdentityNotes } from '../storage/identity.ts';
 import { ulid } from '../storage/ids.ts';
 import type { ContentStore } from './content.svelte.ts';
 
@@ -72,13 +73,36 @@ export class AnswersStore {
   }
 
   async record(item: ItemId, r: Response, via?: Via, note?: string): Promise<AnswerEvent> {
-    const ev: AnswerEvent = { id: ulid(), item, r, at: Date.now(), cv: this.bundle().contentVersion };
-    if (via) ev.via = via;
-    if (note?.trim()) ev.note = note.trim();
-    this.events = [...this.events, ev];
-    await this.persist(() => db.putEvent(ev));
+    const identity = isIdentityItem(item);
+    // Plain copies: an edit's `via` comes from component state, and IndexedDB can't store Svelte's proxies.
+    const ev: AnswerEvent = { id: ulid(), item, r: $state.snapshot(r) as Response, at: Date.now(), cv: this.bundle().contentVersion };
+    if (via) ev.via = $state.snapshot(via) as Via;
+    // Answers about you never carry free text.
+    if (note?.trim() && !identity) ev.note = note.trim();
+    const next = [...this.events, ev];
+    // An answer about you replaces the last one, and deletes the answers to follow-ups it hides.
+    const gone = identity ? new Set(identityLeftovers(next, buildAnswerState(this.bundle(), next))) : new Set<AnswerEvent>();
+    this.events = gone.size ? next.filter((e) => !gone.has(e)) : next;
+    await this.persist(() => db.writeEvents([ev], [...gone].map((e) => e.id)));
     if (this.events.length === 1) void db.requestPersistence();
     return ev;
+  }
+
+  /**
+   * Deletes every answer about you, including ones the content no longer asks and stored records
+   * that don't parse, and tells other tabs. Tried even after an earlier storage error; false if
+   * storage refused.
+   */
+  async removeIdentity(): Promise<boolean> {
+    this.events = withoutIdentity(this.events);
+    try {
+      await db.deleteEvents(isStoredIdentity);
+      this.channel?.postMessage('changed');
+      return true;
+    } catch {
+      this.storageError = true;
+      return false;
+    }
   }
 
   async resolve(r: Omit<TensionResolution, 'id' | 'at'>): Promise<void> {
@@ -87,17 +111,26 @@ export class AnswersStore {
     await this.persist(() => db.putResolution(full));
   }
 
-  async importBackup(backup: Backup, mode: 'merge' | 'replace'): Promise<void> {
+  /** `identity`: bring in the file's answers about you too (only the newest of each survives). */
+  async importBackup(backup: Backup, mode: 'merge' | 'replace', identity = false): Promise<void> {
     // A plain copy: a reactive proxy can't be stored in IndexedDB, and the write would fail.
     const b = $state.snapshot(backup) as Backup;
-    await this.content.ensureForItems(b.events.map((e) => e.item));
-    const events = mode === 'merge' ? mergeById(this.events, b.events) : mergeById([], b.events);
+    const incoming = withoutIdentityNotes(identity ? b.events : withoutIdentity(b.events));
+    await this.content.ensureForItems(incoming.map((e) => e.item));
+    const merged = mode === 'merge' ? mergeById(this.events, incoming) : mergeById([], incoming);
+    const gone = new Set(merged.some(isIdentityEvent) ? identityLeftovers(merged, buildAnswerState(this.bundle(), merged)) : []);
+    const events = merged.filter((e) => !gone.has(e));
     const resolutions = mode === 'merge' ? mergeById(this.resolutions, b.resolutions) : mergeById([], b.resolutions);
+    // Only what's new is written, so nothing already deleted elsewhere is written back.
+    const had = new Set(mode === 'merge' ? this.events.map((e) => e.id) : []);
     if (mode === 'replace') await this.persist(() => db.clearAll());
     this.events = events;
     this.resolutions = resolutions;
     await this.persist(async () => {
-      await db.putEvents(events);
+      await db.writeEvents(
+        events.filter((e) => !had.has(e.id)),
+        [...gone].filter((e) => had.has(e.id)).map((e) => e.id),
+      );
       await db.putResolutions(resolutions);
     });
   }

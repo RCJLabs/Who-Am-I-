@@ -111,6 +111,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'share.card.alt': [['My pattern', ['14 spectrums: Politics and Values', 'Firmest leans: Strongly Progress (Cultural)', 'My results so far · 18 topics']]],
   'settings.lastBackup': [[null], ['3 Oct 2026']],
   'settings.restoreSummary': [[1, '3 Oct 2026'], [40, '3 Oct 2026']],
+  'settings.restoreIdentity': [[1], [12]],
   'settings.version': [['1.0.0', 'abc123def456']],
 };
 

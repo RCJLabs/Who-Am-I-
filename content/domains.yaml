@@ -39,6 +39,6 @@
   title: Interests & Taste
   blurb: Music, sports, culture and what you do for fun.
 - id: identity
-  title: Identity
-  blurb: Optional. Gender, sexuality and background, in your own words. Never scored.
+  title: About you
+  blurb: Family, roots, faith and more. Never scored.
   sensitive: true

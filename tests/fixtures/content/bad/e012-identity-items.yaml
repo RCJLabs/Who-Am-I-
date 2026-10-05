@@ -1,0 +1,26 @@
+# expect: E012@10, E012@15, E012@22
+id: about_bad_items
+domain: identity
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: rate
+    type: rating
+    text: Q
+    poles: [A, B]
+  - id: picks
+    type: multi
+    intensity: true
+    text: Q
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }
+  - id: opinion
+    type: choice
+    unsure: true
+    text: Q
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }
