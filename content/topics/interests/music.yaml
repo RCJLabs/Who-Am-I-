@@ -52,11 +52,13 @@ items:
       - { id: scores, label: Film & game scores }
       - { id: musicals, label: Musicals }
 
-  # Not a genre option, which would put faith on the overview, and not an interest.
+  # Not a genre option, which would put faith on the overview, and not an interest. The flow marks
+  # a sensitive item only with "Prefer not to say", so the help text says it's private.
   - id: devotional
     type: rating
     sensitive: true
     text: How much do you enjoy religious or devotional music, such as hymns, gospel, worship songs, nasheeds, bhajans, kirtan, qawwali or chant?
+    help: "Private: never in your summary, cards or suggestions."
     poles: [Not for me, Love it]
 
   - id: discovery
