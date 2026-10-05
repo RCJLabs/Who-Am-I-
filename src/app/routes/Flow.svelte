@@ -6,7 +6,7 @@
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { router } from '../router.svelte.ts';
-  import { fromRoute, to } from '../routes.ts';
+  import { to } from '../routes.ts';
   import { toasts } from '../stores/toasts.svelte.ts';
   import EvidenceBadge from '../components/EvidenceBadge.svelte';
   import FlowDone from '../components/flow/FlowDone.svelte';
@@ -26,11 +26,7 @@
 
   let { topicId, edit }: { topicId: string; edit?: string | undefined } = $props();
   const { content, answers, settings } = app();
-  // Topics about you arrive hashed (routes.ts).
-  const topic = $derived.by(() => {
-    const id = fromRoute(topicId, content.bundle.topics.map((t) => t.id));
-    return content.bundle.topics.find((t) => t.id === id);
-  });
+  const topic = $derived(content.bundle.topics.find((t) => t.id === topicId));
   const identity = $derived(topic?.domain === IDENTITY_DOMAIN);
 
   // Per-visit state. Everything else is derived from the answer log.
@@ -38,10 +34,7 @@
   let introDismissed = $state(false);
   // Opened from "Change" on the results page: edit that item, then go back. (The route remounts
   // this component, so reading the props once is enough.)
-  const initialEditing = (): Editing | null => {
-    const key = edit && topic ? fromRoute(edit, topic.items.map((i) => i.key)) : undefined;
-    return key ? { itemId: `${topic!.id}.${key}`, via: { kind: 'manual' }, then: 'back' } : null;
-  };
+  const initialEditing = (): Editing | null => (edit ? { itemId: `${topicId}.${edit}`, via: { kind: 'manual' }, then: 'back' } : null);
   let editing = $state<Editing | null>(initialEditing());
   let visitHistory = $state<string[]>([]);
 
@@ -80,7 +73,9 @@
     const current = answers.state.latest.get(e.itemId)?.r;
     if (!current || JSON.stringify(current) !== JSON.stringify(r)) await answers.record(e.itemId, r, e.via, note);
     editing = null;
-    if (e.then === 'back') router.back(to.topicResults(topic!.id));
+    // A changed answer about you leaves no entry for Forward to reopen.
+    if (e.then === 'back' && identity) router.go(to.topicResults(topicId), { replace: true });
+    else if (e.then === 'back') router.back(to.topicResults(topicId));
     else if (e.then === 'tension' && e.tensionKey) await finishRevision(e.tensionKey);
   }
 

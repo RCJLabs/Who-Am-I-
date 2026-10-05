@@ -53,7 +53,7 @@ export const copy = {
       tag: 'optional and private',
       open: 'Show these questions',
       close: 'Hide these questions',
-      note: "Questions about your family, roots, faith, gender and sexual orientation. They're never scored or in your summary, cards or suggestions, and backups leave them out unless you include them. Skip anything, or remove it all in Settings. Anyone who can open the app on this device can see your answers.",
+      note: "Questions about your family, roots, faith, gender and sexual orientation. They're never scored or in your summary, cards or suggestions, and backups leave them out unless you include them. Skip anything, and remove it all at any time, in Settings or on the About you page. Anyone who can open the app on this device can see your answers.",
     },
     deepDives: 'Deep dives',
     comingSoon: 'Coming soon',
@@ -433,10 +433,11 @@ export const copy = {
 
   // The About you page under Results: answers about you, behind a tap.
   aboutYou: {
-    intro: "How you've described yourself, kept on this device. It's never in your summary, cards or suggestions.",
+    intro: "How you've described yourself, kept on this device. It's never in your summary, cards or suggestions. Each topic shows only when you ask.",
     show: 'Show my answers',
-    hide: 'Hide my answers',
+    hide: 'Hide',
     change: 'Change',
+    none: 'No answers here yet.',
     notPrinted: "Answers about you aren't printed.",
   },
 
@@ -464,7 +465,7 @@ export const copy = {
     restoreTitle: 'Restore from backup',
     restoreSummary: (n: number, date: string) => `This backup has ${n} answer${n === 1 ? '' : 's'}, saved ${date}.`,
     restoreIdentity: (n: number) => `Also restore the ${n} answer${s(n)} about you in this file`,
-    restoreIdentityNote: "Left out unless you tick this. Answers you've given since are kept.",
+    restoreIdentityNote: 'Left out unless you tick this. "Replace my answers" removes the answers about you already here, ticked or not.',
     merge: 'Merge with my answers',
     replace: 'Replace my answers',
     cancel: 'Cancel',

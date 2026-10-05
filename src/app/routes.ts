@@ -11,21 +11,25 @@ export const CARD_IDS = ['pattern', 'politics', 'values', 'thinking', 'personali
 export type CardId = (typeof CARD_IDS)[number];
 export const isCardId = (x: string): x is CardId => (CARD_IDS as readonly string[]).includes(x);
 
-// Answers about you keep their topic and question names out of URLs, so browser history doesn't
-// list them: an Identity topic or question is written as a short hash ("~1x2y3z"), which Flow
-// matches against the Identity topics. Opaque at a glance, not a secret.
-const isIdentityTopic = (topic: string): boolean => topic.startsWith(IDENTITY_PREFIX);
+// Questions about you keep their names out of addresses, so browser history can't say which were
+// opened: every one opens at the same address, and which topic (and question, when changing an
+// answer) is kept in that history entry's state. A link there carries no state, so it is opened
+// with `router.openFlow` rather than followed.
+export const isIdentityTopic = (topic: string): boolean => topic.startsWith(IDENTITY_PREFIX);
+export const ABOUT_FLOW = '#/m/~';
 
-/** FNV-1a in base 36, after "~". */
-export function opaque(s: string): string {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 0x01000193) >>> 0;
-  return `~${h.toString(36)}`;
+export interface AboutState {
+  about: { topic: string; edit?: string };
 }
 
-/** The id a route names, written plainly or as `opaque(id)`. */
-export const fromRoute = (token: string, ids: readonly string[]): string | undefined =>
-  ids.find((id) => id === token || opaque(id) === token);
+/** What a history entry shows: its address, and for questions about you, the topic in its state. */
+export function routeOf(hash: string, state: unknown): Route {
+  const route = parseHash(hash);
+  if (route.name !== 'flow' || route.topic !== '~') return route;
+  const about = (state as Partial<AboutState> | null)?.about;
+  if (typeof about?.topic !== 'string' || !isIdentityTopic(about.topic)) return { name: 'topics' };
+  return typeof about.edit === 'string' ? { name: 'flow', topic: about.topic, edit: about.edit } : { name: 'flow', topic: about.topic };
+}
 
 export type Route =
   | { name: 'home' }
@@ -69,7 +73,7 @@ export function parseHash(hash: string): Route {
     case 'results':
       if (!second) return { name: 'results' };
       // Answers about you are shown together, behind a tap.
-      return isIdentityTopic(second) || second.startsWith('~') ? { name: 'area', area: 'you' } : { name: 'topic-results', topic: second };
+      return isIdentityTopic(second) ? { name: 'area', area: 'you' } : { name: 'topic-results', topic: second };
     case 'tension':
       return second ? { name: 'tension', key: second } : { name: 'results' };
     case 'area':
@@ -91,10 +95,9 @@ export function parseHash(hash: string): Route {
 export const to = {
   home: () => '#/',
   topics: () => '#/topics',
-  flow: (topic: string, edit?: string) => {
-    const name = isIdentityTopic(topic) ? opaque : encodeURIComponent;
-    return `#/m/${name(topic)}${edit ? `?edit=${name(edit)}` : ''}`;
-  },
+  /** For a topic about you, the shared address: open it with `router.openFlow`. */
+  flow: (topic: string, edit?: string) =>
+    isIdentityTopic(topic) ? ABOUT_FLOW : `#/m/${encodeURIComponent(topic)}${edit ? `?edit=${encodeURIComponent(edit)}` : ''}`,
   results: () => '#/results',
   topicResults: (topic: string) => (isIdentityTopic(topic) ? '#/area/you' : `#/results/${encodeURIComponent(topic)}`),
   area: (area: AreaId) => `#/area/${area}`,

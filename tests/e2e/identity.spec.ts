@@ -112,6 +112,7 @@ test('answers about you come back from a backup only when ticked, leave in one o
 
 test('questions about you stay folded away, leave no readable trail, and show only when asked', async ({ page }) => {
   await restorePersona(page, 'tests/sim/personas/religious_conservative.yaml');
+  const hash = () => new URL(page.url()).hash;
 
   // Folded on the topic list, with no titles or progress, until asked for each visit.
   await page.getByTestId('nav-topics').click();
@@ -120,10 +121,13 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await page.getByTestId('about-you-open').click();
   await expect(page.getByTestId('about-you-note')).toBeVisible();
 
-  // The topic's URL doesn't name it.
+  // Every topic about you opens at the same address, so history can't tell them apart; the topic
+  // survives a reload.
   await page.getByTestId('topic-about_orientation').click();
-  await expect(page.locator('article.question, [data-testid="intro-start"]').first()).toBeVisible();
-  expect(new URL(page.url()).hash).toMatch(/^#\/m\/~[0-9a-z]+$/);
+  await expect(page.getByTestId('intro-start')).toBeVisible();
+  expect(hash()).toBe('#/m/~');
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Sexual orientation' })).toBeVisible();
   await page.getByTestId('intro-start').click();
 
   // "Choose any" words, with no "None of these"; then attraction, if the person wants to say more.
@@ -139,7 +143,9 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await page.getByTestId('next-attracted_to').click();
   await page.getByTestId('opt-romantic_same-same').click();
   await expect(page.getByTestId('topic-done')).toBeVisible();
+  // No backup prompt, and no lead on to another topic about you.
   await expect(page.getByTestId('backup-nudge')).toHaveCount(0);
+  await expect(page.getByTestId('next-topic')).toHaveCount(0);
   const orientation = (...keys: string[]) => keys.map((k) => `about_orientation.${k}`).sort();
   expect(await storedAboutYou(page)).toEqual(orientation('words', 'more', 'attraction', 'attracted_to', 'romantic_same'));
 
@@ -147,34 +153,41 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await page.getByTestId('review-answers').click();
   await expect(page.getByTestId('section-you')).toBeVisible();
   await page.goBack();
-  expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
+  expect(hash()).not.toMatch(/^#\/m\//);
   await page.goForward();
   await expect(page.getByTestId('section-you')).toBeVisible();
-  await expect(page.getByTestId('identity-answers')).toHaveCount(0);
-  await page.getByTestId('identity-show').click();
-  await expect(page.getByTestId('identity-answers')).toContainText('Bisexual');
-  await expect(page.getByTestId('identity-answers')).toContainText('Men, Women');
+
+  // One topic at a time: showing one doesn't show another.
+  const answersOf = (topic: string) => page.getByTestId(`identity-answers-${topic}`);
+  await expect(answersOf('about_orientation')).toHaveCount(0);
+  await page.getByTestId('identity-show-about_orientation').click();
+  await expect(answersOf('about_orientation')).toContainText('Bisexual');
+  await expect(answersOf('about_orientation')).toContainText('Men, Women');
+  await expect(answersOf('about_family')).toHaveCount(0);
 
   // Going to the background hides them again.
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', { value: true, configurable: true });
     document.dispatchEvent(new Event('visibilitychange'));
   });
-  await expect(page.getByTestId('identity-answers')).toHaveCount(0);
+  await expect(answersOf('about_orientation')).toHaveCount(0);
   await page.evaluate(() => Object.defineProperty(document, 'hidden', { value: false, configurable: true }));
 
-  // A changed answer replaces the old one, and the answers it hides are deleted.
-  await page.getByTestId('identity-show').click();
+  // A changed answer replaces the old one, and the answers it hides are deleted. Changing one
+  // opens the same address, and leaves no entry for Forward.
+  await page.getByTestId('identity-show-about_orientation').click();
   await page.getByTestId('identity-answer-about_orientation.more').getByRole('link').click();
-  expect(new URL(page.url()).hash).not.toMatch(/about|orientation|more/);
+  expect(hash()).toBe('#/m/~');
   await page.getByTestId('opt-more-no').click();
   await expect(page.getByTestId('section-you')).toBeVisible();
   // Saved, not just shown: a failed write raises the storage warning.
   await expect(page.getByRole('alert')).toHaveCount(0);
   expect(await storedAboutYou(page)).toEqual(orientation('words', 'more'));
-  await page.getByTestId('identity-show').click();
-  await expect(page.getByTestId('identity-answers')).toContainText("No, that's enough");
-  await expect(page.getByTestId('identity-answers')).not.toContainText('Men, Women');
+  await page.goForward();
+  expect(hash()).not.toMatch(/^#\/m\//);
+  await page.getByTestId('identity-show-about_orientation').click();
+  await expect(answersOf('about_orientation')).toContainText("No, that's enough");
+  await expect(answersOf('about_orientation')).not.toContainText('Men, Women');
 
   // Leaving a topic about you leaves no way back into it, with Back or Forward.
   await page.getByTestId('nav-topics').click();
@@ -183,9 +196,9 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await page.getByTestId('flow-exit').click();
   await expect(page.getByTestId('about-you')).toBeVisible();
   await page.goForward();
-  expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
+  expect(hash()).not.toMatch(/^#\/m\//);
   await page.goBack();
-  expect(new URL(page.url()).hash).not.toMatch(/^#\/m\//);
+  expect(hash()).not.toMatch(/^#\/m\//);
 
   // The overview names the page but nothing on it; the cards and the summary never mention it.
   await page.goto('#/results');

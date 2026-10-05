@@ -4,7 +4,7 @@ import type { AnswerEvent, Response } from '../../model/answers.ts';
 import { compile } from '../../compiler/compile.ts';
 import { loadContentDir } from '../../compiler/load.ts';
 import { buildAnswerState } from '../../engine/state.ts';
-import { countIdentity, identityLeftovers, isStoredIdentity, withoutIdentity } from './identity.ts';
+import { countIdentity, identityLeftovers, isStoredIdentity, withoutIdentity, withoutIdentityNotes } from './identity.ts';
 
 const FIX = 'tests/fixtures/content';
 const ABOUT = `id: about_test
@@ -87,5 +87,14 @@ describe('answers about you', () => {
     expect(isStoredIdentity({ item: 'alpha.stance' })).toBe(false);
     expect(isStoredIdentity({ nope: 1 })).toBe(false);
     expect(isStoredIdentity(null)).toBe(false);
+  });
+
+  it('never bring free text in from a backup', () => {
+    const about = { ...ev('about_test.gate', pick('yes')), note: 'typed elsewhere' };
+    const other = { ...ev('alpha.stance', stance(4)), note: 'a reason' };
+    const [a, o] = withoutIdentityNotes([about, other]);
+    expect(a).not.toHaveProperty('note');
+    expect(a).toMatchObject({ id: about.id, item: about.item });
+    expect(o).toBe(other);
   });
 });

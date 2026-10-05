@@ -8,7 +8,7 @@ import { buildAnswerState } from '../../engine/state.ts';
 import { detectTensions } from '../../engine/tensions.ts';
 import { mergeById } from '../storage/backup.ts';
 import * as db from '../storage/db.ts';
-import { identityLeftovers, isIdentityEvent, isStoredIdentity, withoutIdentity } from '../storage/identity.ts';
+import { identityLeftovers, isIdentityEvent, isStoredIdentity, withoutIdentity, withoutIdentityNotes } from '../storage/identity.ts';
 import { ulid } from '../storage/ids.ts';
 import type { ContentStore } from './content.svelte.ts';
 
@@ -115,7 +115,7 @@ export class AnswersStore {
   async importBackup(backup: Backup, mode: 'merge' | 'replace', identity = false): Promise<void> {
     // A plain copy: a reactive proxy can't be stored in IndexedDB, and the write would fail.
     const b = $state.snapshot(backup) as Backup;
-    const incoming = identity ? b.events : withoutIdentity(b.events);
+    const incoming = withoutIdentityNotes(identity ? b.events : withoutIdentity(b.events));
     await this.content.ensureForItems(incoming.map((e) => e.item));
     const merged = mode === 'merge' ? mergeById(this.events, incoming) : mergeById([], incoming);
     const gone = new Set(merged.some(isIdentityEvent) ? identityLeftovers(merged, buildAnswerState(this.bundle(), merged)) : []);

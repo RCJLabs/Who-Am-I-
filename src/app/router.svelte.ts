@@ -1,7 +1,7 @@
-import { parseHash, type Route } from './routes.ts';
+import { ABOUT_FLOW, isIdentityTopic, routeOf, to, type AboutState, type Route } from './routes.ts';
 
 class Router {
-  route = $state<Route>(parseHash(location.hash));
+  route = $state<Route>(routeOf(location.hash, history.state));
   /** The route before this one, so a page can tell where you came from (null on first load). */
   previous: Route | null = null;
   /** How far each page was scrolled when it was last left, by hash. */
@@ -10,16 +10,33 @@ class Router {
 
   constructor() {
     addEventListener('hashchange', () => this.#enter());
+    // Back and Forward between entries at the same address (questions about you share one) change
+    // only the history state, which fires no hashchange.
+    addEventListener('popstate', () => {
+      if (location.hash === this.#hash) this.#enter();
+    });
   }
 
-  /** Navigate to an href from `to`. `replace` keeps the current entry out of history. */
-  go(href: string, opts: { replace?: boolean } = {}): void {
+  /**
+   * Navigate to an href from `to`. `replace` keeps the current entry out of history; `state` goes
+   * with the new entry (and a replaced entry keeps none).
+   */
+  go(href: string, opts: { replace?: boolean; state?: AboutState } = {}): void {
     if (opts.replace) {
-      history.replaceState(history.state, '', href);
+      history.replaceState(opts.state ?? null, '', href);
+      this.#enter();
+    } else if (opts.state) {
+      history.pushState(opts.state, '', href);
       this.#enter();
     } else {
       location.hash = href;
     }
+  }
+
+  /** Opens a topic's questions, or one question to change. Topics about you open at their shared address. */
+  openFlow(topic: string, edit?: string): void {
+    if (!isIdentityTopic(topic)) return this.go(to.flow(topic, edit));
+    this.go(ABOUT_FLOW, { state: { about: edit ? { topic, edit } : { topic } } });
   }
 
   back(fallback: string): void {
@@ -36,7 +53,7 @@ class Router {
     this.#scrolled.set(this.#hash, scrollY);
     this.#hash = location.hash;
     this.previous = this.route;
-    this.route = parseHash(location.hash);
+    this.route = routeOf(location.hash, history.state);
     scrollTo(0, 0);
   }
 }

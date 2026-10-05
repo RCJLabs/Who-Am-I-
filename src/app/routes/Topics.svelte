@@ -2,7 +2,8 @@
   import { IDENTITY_DOMAIN, type Topic } from '../../model/content.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
-  import { to } from '../routes.ts';
+  import { router } from '../router.svelte.ts';
+  import { isIdentityTopic, to } from '../routes.ts';
   import { topicStatus } from '../view.ts';
   import EvidenceBadge from '../components/EvidenceBadge.svelte';
   import Icon from '../components/Icon.svelte';
@@ -20,11 +21,18 @@
   // Questions about you stay folded away, with no titles or progress showing, until asked for each
   // time: the list may be open on a shared phone.
   let aboutOpen = $state(false);
+
+  /** Topics about you open at their shared address, with the topic in history state (routes.ts). */
+  function open(e: MouseEvent, topic: Topic): void {
+    if (!isIdentityTopic(topic.id)) return;
+    e.preventDefault();
+    router.openFlow(topic.id);
+  }
 </script>
 
 {#snippet row(topic: Topic)}
   {@const st = topicStatus(answers.state, topic, opts)}
-  <a class="card row" href={to.flow(topic.id)} data-testid="topic-{topic.id}">
+  <a class="card row" href={to.flow(topic.id)} onclick={(e) => open(e, topic)} data-testid="topic-{topic.id}">
     <span class="main">
       <span class="title">
         {topic.title}

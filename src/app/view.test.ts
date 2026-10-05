@@ -3,7 +3,7 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
-import { AREAS, CARD_IDS, fromRoute, opaque, parseHash, to } from './routes.ts';
+import { ABOUT_FLOW, AREAS, CARD_IDS, parseHash, routeOf, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import {
@@ -66,21 +66,20 @@ describe('routes', () => {
     expect(parseHash(to.share())).toEqual({ name: 'share', card: null });
   });
 
-  it('keeps the names of questions about you out of URLs', () => {
-    const href = to.flow('about_gender', 'trans');
-    expect(href).not.toMatch(/about|gender|trans/);
-    const route = parseHash(href);
-    expect(route).toEqual({ name: 'flow', topic: opaque('about_gender'), edit: opaque('trans') });
-    if (route.name !== 'flow') throw new Error('not a flow');
-    expect(fromRoute(route.topic, ['about_family', 'about_gender'])).toBe('about_gender');
-    expect(fromRoute(route.edit!, ['gender', 'trans'])).toBe('trans');
-    // Plain names still resolve, and other topics keep readable URLs.
-    expect(fromRoute('about_gender', ['about_gender'])).toBe('about_gender');
+  it('opens every question about you at one address, with the topic kept in history state', () => {
+    expect(to.flow('about_gender')).toBe(ABOUT_FLOW);
+    expect(to.flow('about_gender', 'trans')).toBe(ABOUT_FLOW);
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'about_gender', edit: 'trans' } })).toEqual({ name: 'flow', topic: 'about_gender', edit: 'trans' });
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'about_gender' } })).toEqual({ name: 'flow', topic: 'about_gender' });
+    // Without that state (typed, or opened in a new tab) it's the topic list; the state opens nothing else.
+    expect(routeOf(ABOUT_FLOW, null)).toEqual({ name: 'topics' });
+    expect(routeOf(ABOUT_FLOW, { about: { topic: 'abortion' } })).toEqual({ name: 'topics' });
+    // Other addresses ignore the state, and other topics keep readable ones.
+    expect(routeOf('#/m/abortion', { about: { topic: 'about_gender' } })).toEqual({ name: 'flow', topic: 'abortion' });
     expect(to.flow('abortion', 'stance')).toBe('#/m/abortion?edit=stance');
     // Their answers are shown together on the About you page, never on a page of their own.
     expect(to.topicResults('about_gender')).toBe(to.area('you'));
     expect(parseHash('#/results/about_gender')).toEqual({ name: 'area', area: 'you' });
-    expect(parseHash(`#/results/${opaque('about_gender')}`)).toEqual({ name: 'area', area: 'you' });
   });
 });
 

@@ -58,8 +58,9 @@
   {#if topic.domain !== IDENTITY_DOMAIN}<BackupNudge />{/if}
 
   <div class="actions">
-    {#if next}
-      <a class="btn primary block" href={to.flow(next.id)} onclick={onward} data-testid="next-topic">{copy.flow.nextTopic(next.title)}</a>
+    <!-- Each topic about you is chosen for itself: nothing leads on from one. -->
+    {#if next && topic.domain !== IDENTITY_DOMAIN}
+      <a class="btn primary block" href={to.flow(next.id)} data-testid="next-topic">{copy.flow.nextTopic(next.title)}</a>
     {/if}
     <a class="btn block" href={to.results()} onclick={onward} data-testid="see-results">{copy.flow.seeResults}</a>
     <a class="btn ghost block" href={to.topicResults(topic.id)} onclick={onward} data-testid="review-answers">{copy.flow.reviewAnswers}</a>

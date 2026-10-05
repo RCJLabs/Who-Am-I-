@@ -6,7 +6,7 @@ import { IDENTITY_DOMAIN } from '../src/model/content.ts';
 import { nextStep } from '../src/engine/flow.ts';
 import { buildProfile } from '../src/engine/profile.ts';
 import { buildAnswerState } from '../src/engine/state.ts';
-import { opaque } from '../src/app/routes.ts';
+import { nextTopic } from '../src/app/view.ts';
 import { declined, Log, multi, pick, realBundle, scale } from './helpers.ts';
 
 const b = realBundle();
@@ -46,10 +46,10 @@ describe('About you', () => {
     }
   });
 
-  it('gives every topic and question a distinct hashed URL name', () => {
-    const tokens = (ids: string[]) => new Set(ids.map(opaque)).size;
-    expect(tokens(b.topics.map((t) => t.id))).toBe(b.topics.length);
-    for (const t of topics) expect(tokens(t.items.map((i) => i.key)), t.id).toBe(t.items.length);
+  it('is never offered as the next topic, from anywhere, including from another topic about you', () => {
+    const s = buildAnswerState(b, []);
+    expect(nextTopic(b, s)?.domain).not.toBe(IDENTITY_DOMAIN);
+    for (const t of b.topics) expect(nextTopic(b, s, t.id)?.domain, t.id).not.toBe(IDENTITY_DOMAIN);
   });
 
   it('asks about attraction only when the words leave room, or when asked to', () => {

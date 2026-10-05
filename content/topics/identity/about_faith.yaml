@@ -39,12 +39,14 @@ items:
     when: religion is christian
     text: Which Christian tradition are you part of? Choose any that fit.
     options:
+      - { id: anglican, label: Anglican or Episcopalian }
       - { id: catholic, label: Catholic }
       - { id: evangelical, label: "Evangelical, Pentecostal or charismatic" }
       - { id: jehovahs_witness, label: "Jehovah's Witness" }
       - { id: latter_day_saint, label: Latter-day Saint }
       - { id: orthodox, label: "Orthodox, such as Greek, Russian, Coptic or Ethiopian" }
-      - { id: protestant, label: "Protestant, such as Anglican, Baptist, Lutheran, Methodist or Presbyterian" }
+      - { id: protestant, label: "Protestant, such as Adventist, Baptist, Lutheran, Methodist or Presbyterian" }
+      - { id: african_independent, label: "African independent church, such as Aladura or Kimbanguist" }
       - { id: other_church, label: Another church }
       - { id: just_christian, label: "Just Christian, no particular church" }
 
@@ -59,22 +61,25 @@ items:
       - { id: just_muslim, label: Just a Muslim }
 
   # Merges the US movements with the four ways Israeli Jews describe themselves (Haredi, Dati,
-  # Masorti, Hiloni). "Masorti" is both Israel's word for traditional Jews and, outside North
-  # America, the Conservative movement's name, so each gets its own option. Reviewed by AI agents
-  # only: wants a Jewish reader before it's treated as settled.
+  # Masorti, Hiloni), in order of observance as Pew and the UK's JPR order them. "Jewish identity",
+  # not "your Judaism": many Jews are secular. "Traditional" stands alone, since most Israeli
+  # masortim call their stream Orthodox; "Masorti" is also the Conservative movement's name outside
+  # North America, so it gets its own option. Modern Orthodox and Religious Zionist Jews choose
+  # Orthodox; Hasidic Jews, Haredi or Orthodox. Reviewed by AI agents only: wants a Jewish reader
+  # before it's treated as settled.
   - id: jewish
     type: choice
     when: religion is jewish
-    text: Which describes your Judaism best?
+    text: Which best describes your Jewish identity?
     options:
-      - { id: haredi, label: Haredi }
+      - { id: haredi, label: Haredi (strictly Orthodox) }
       - { id: orthodox, label: Orthodox }
-      - { id: traditional, label: "Traditional, though not Orthodox" }
-      - { id: conservative, label: "Conservative, or the Masorti movement" }
+      - { id: traditional, label: Traditional }
+      - { id: conservative, label: Conservative or Masorti movement }
       - { id: reform, label: "Reform, Liberal or Progressive" }
       - { id: secular, label: Secular or cultural }
       - { id: just_jewish, label: Just Jewish }
-      - { id: other, label: Another }
+      - { id: other, label: "Another movement, such as Reconstructionist or Renewal" }
 
   - id: raised
     type: choice

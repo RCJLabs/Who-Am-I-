@@ -26,4 +26,14 @@ export function identityLeftovers(events: readonly AnswerEvent[], s?: AnswerStat
 
 export const withoutIdentity = (events: readonly AnswerEvent[]): AnswerEvent[] => events.filter((e) => !isIdentityEvent(e));
 
+/** Answers about you never carry free text, whatever a backup file holds. */
+export function withoutIdentityNotes(events: readonly AnswerEvent[]): AnswerEvent[] {
+  return events.map((e) => {
+    if (!isIdentityEvent(e) || e.note === undefined) return e;
+    const plain = { ...e };
+    delete plain.note;
+    return plain;
+  });
+}
+
 export const countIdentity = (events: readonly AnswerEvent[]): number => events.filter(isIdentityEvent).length;

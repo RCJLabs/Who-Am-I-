@@ -2,7 +2,7 @@
 import type { AnalysisPack } from '../model/analysis.ts';
 import type { Response } from '../model/answers.ts';
 import type { Axis, AxisFamily, AxisId, Bundle, Domain, Item, Option, Principle, Topic, TopicId } from '../model/content.ts';
-import { isScale, scalePoints } from '../model/content.ts';
+import { IDENTITY_DOMAIN, isScale, scalePoints } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import { BAND, LOW_CONFIDENCE } from '../engine/analysis/constants.ts';
 import { progress, type FlowOptions } from '../engine/flow.ts';
@@ -37,13 +37,15 @@ export function activeTopic(s: AnswerState, o: FlowOptions = {}): Topic | null {
 /**
  * The first unfinished topic after `after` (wrapping around), core topics before deep dives, or
  * null if all are finished. The app never leads anyone into a sensitive topic: one is offered only
- * after another of the same domain that is sensitive too, as the next step through it.
+ * after another of the same domain that is sensitive too, as the next step through it, and never
+ * in About you, where each topic is chosen for itself (Family shouldn't lead to sexual orientation).
  */
 export function nextTopic(b: Bundle, s: AnswerState, after?: TopicId, o: FlowOptions = {}): Topic | null {
   const start = after ? b.topics.findIndex((t) => t.id === after) + 1 : 0;
   const from = after ? b.topics[start - 1] : undefined;
+  const onward = (t: Topic): boolean => from?.sensitive === true && t.domain === from.domain && t.domain !== IDENTITY_DOMAIN;
   const open = Array.from({ length: b.topics.length }, (_, k) => b.topics[(start + k) % b.topics.length]!).filter(
-    (t) => t.id !== after && !topicStatus(s, t, o).complete && (!t.sensitive || (from?.sensitive === true && t.domain === from.domain)),
+    (t) => t.id !== after && !topicStatus(s, t, o).complete && (!t.sensitive || onward(t)),
   );
   return open.find((t) => t.tier === 'core') ?? open[0] ?? null;
 }

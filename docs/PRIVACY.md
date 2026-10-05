@@ -59,9 +59,9 @@ about you. Turning them off in Settings stops them being worked out.
 
 ## Deleting your data
 
-- Settings → **Delete all my data** erases your answers and settings from this app at once.
+- Settings → **Delete all my data** deletes your answers and settings from this app at once.
   Clearing this site's data in your browser does too.
-- **Remove answers about you**, in Settings and on the About you page, erases just those.
+- **Remove answers about you**, in Settings and on the About you page, deletes just those.
 - Neither touches backup files or images you saved or sent, and neither clears your browser's
   history.
 - In the Android app, uninstalling may not erase your answers: Chrome can keep them until you
@@ -83,12 +83,15 @@ extra protection:
   you open them, each time.
 - **Never scored or used.** They never shape your summary, cards, suggestions or any score.
   Nothing elsewhere in the app depends on them, and they never depend on other answers.
-- **Shown only when asked.** Your answers appear on the About you page behind "Show my answers".
-  They hide again when the app goes to the background, and they're never printed.
+- **Shown only when asked.** Your answers appear on the About you page one topic at a time,
+  behind "Show my answers". They hide again when the app goes to the background, and they're
+  never printed.
 - **No history.** A changed answer replaces the old one, and answers to follow-up questions that
-  no longer apply are deleted. There's no box for your own words.
-- **Out of addresses.** The pages for these questions have coded addresses, so your browser
-  history doesn't name them, and leaving them doesn't leave a way back in with Back.
+  no longer apply are deleted. There's no box for your own words, and a restored backup can't
+  bring any in.
+- **Out of addresses.** Every one of these questions opens at the same address, so your browser
+  history doesn't say which you opened, and leaving them leaves no way back in with Back or
+  Forward. Finishing one never leads on to another.
 
 ## What the app can't protect you from
 
@@ -96,9 +99,12 @@ extra protection:
   behind a PIN.
 - **Copies you make:** screenshots, screen sharing, backup files and images you save or send.
 - **Malware or spyware** on your device.
-- **Your keyboard's suggestions.** The app asks keyboards not to learn what you type in a note,
-  but can't make them comply.
-- **Browser history.** It records when you visited the app, even where the addresses are coded.
+- **Someone who examines your device with forensic tools.** Deleted answers can stay in the
+  browser's storage files for a while and may be recovered.
+- **Your keyboard.** The app turns off suggestions and spell-check in notes, but your keyboard may
+  still learn what you type.
+- **Browser history.** It records when you used the app, including that you opened questions
+  about you, though not which.
 
 ## Age
 
