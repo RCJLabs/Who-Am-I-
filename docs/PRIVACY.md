@@ -90,8 +90,8 @@ extra protection:
   no longer apply are deleted. There's no box for your own words, and a restored backup can't
   bring any in.
 - **Out of addresses.** Every one of these questions opens at the same address, so your browser
-  history doesn't say which you opened, and leaving them leaves no way back in with Back or
-  Forward. Finishing one never leads on to another.
+  history doesn't say which you opened. Leaving them with the app's own buttons leaves no way back
+  in with Back or Forward. Finishing one never leads on to another.
 
 ## What the app can't protect you from
 
