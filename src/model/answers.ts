@@ -1,4 +1,5 @@
-// Answers are an append-only event log. These schemas validate backups on import, so they use
+// Answers are an event log, append-only except for answers about you (see
+// src/app/storage/identity.ts). These schemas validate backups on import, so they use
 // non-strict objects: a backup from a newer app version still imports (unknown keys are dropped).
 import { z } from 'zod';
 

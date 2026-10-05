@@ -1,7 +1,7 @@
 // On-device storage (IndexedDB via idb-keyval). One key per answer event, so two tabs appending
 // at the same time can't overwrite each other. Records are validated on load; anything that no
 // longer parses is skipped rather than crashing the app.
-import { clear, createStore, entries, set, setMany, values, type UseStore } from 'idb-keyval';
+import { clear, createStore, entries, promisifyRequest, set, setMany, values, type UseStore } from 'idb-keyval';
 import {
   AnswerEventSchema,
   SettingsSchema,
@@ -57,6 +57,29 @@ export function putEvent(ev: AnswerEvent): Promise<void> {
 
 export function putEvents(evs: readonly AnswerEvent[]): Promise<void> {
   return setMany(evs.map((e) => [e.id, e]), eventsDb());
+}
+
+/** Writes some events and deletes others in one transaction: both happen or neither does. */
+export function writeEvents(put: readonly AnswerEvent[], del: readonly string[]): Promise<void> {
+  return eventsDb()('readwrite', (store) => {
+    for (const e of put) store.put(e, e.id);
+    for (const id of del) store.delete(id);
+    return promisifyRequest(store.transaction);
+  });
+}
+
+/** Deletes every stored event that matches, including records that no longer parse. */
+export function deleteEvents(match: (raw: unknown) => boolean): Promise<void> {
+  return eventsDb()('readwrite', (store) => {
+    const cursor = store.openCursor();
+    cursor.onsuccess = () => {
+      const c = cursor.result;
+      if (!c) return;
+      if (match(c.value)) c.delete();
+      c.continue();
+    };
+    return promisifyRequest(store.transaction);
+  });
 }
 
 export function putResolution(r: TensionResolution): Promise<void> {
