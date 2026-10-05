@@ -238,6 +238,11 @@ describe('taste on real content', () => {
     ]);
   });
 
+  it('needs two topics before a taste spectrum shows', () => {
+    const one = runRespondent(b, scriptedPolicy(answers, () => ({ kind: 'skip' })), { topics: ['music'] });
+    expect(profiles(one).profile.axes.novelty?.score).toBeNull();
+  });
+
   it('keeps the devotional answer out of interests and everything shareable', () => {
     expect(Object.keys(profile.interests).filter((k) => k.startsWith('music.devotional'))).toEqual([]);
     expect(Object.keys(publicProfile.topics.music ?? {}).length).toBeGreaterThan(0);
