@@ -62,8 +62,8 @@ items:
     type: slider
     steps: 5
     when: matters > -1 or not answered(matters)
-    text: Which styles do you like more?
-    poles: [Traditional, Contemporary]
+    text: Which do you enjoy more?
+    poles: [Traditional styles, Contemporary styles]
 
   - id: makes
     type: choice

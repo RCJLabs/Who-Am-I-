@@ -64,7 +64,7 @@ items:
     steps: 5
     when: matters > -1 or not answered(matters)
     text: What you watch is mostly…
-    poles: [The big hits everyone's talking about, Lesser-known titles]
+    poles: [Big hits lots of people have seen, Lesser-known titles]
     axes: { mainstream: 1 }
 
   - id: mood

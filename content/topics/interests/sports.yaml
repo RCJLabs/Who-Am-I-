@@ -43,7 +43,8 @@ items:
       - { id: rugby, label: Rugby }
       - { id: hockey, label: Hockey (field or ice) }
       - { id: kabaddi, label: Kabaddi }
-      - { id: netball, label: Netball and handball }
+      - { id: netball, label: Netball }
+      - { id: handball, label: Handball }
       - { id: running, label: Running and athletics }
       - { id: cycling, label: Cycling }
       - { id: swimming, label: Swimming and diving }
@@ -55,8 +56,10 @@ items:
       - { id: dance, label: Dance }
       - { id: motorsport, label: Motorsport }
       - { id: golf, label: Golf }
-      - { id: bowls, label: "Bowls, boules and boccia" }
-      - { id: aussie_gaelic, label: Australian rules and Gaelic games }
+      - { id: cue_sports, label: "Snooker, pool and darts" }
+      - { id: bowls, label: Bowls and boules }
+      - { id: aussie_rules, label: Australian rules football }
+      - { id: gaelic, label: "Gaelic games (hurling, Gaelic football)" }
       - { id: board_sports, label: "Skateboarding, surfing and BMX" }
       - { id: snow, label: "Skiing, ice skating and winter sports" }
 

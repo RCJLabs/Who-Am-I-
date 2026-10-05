@@ -49,4 +49,4 @@ items:
     steps: 5
     when: matters > -1 or not answered(matters)
     text: Your ideal animal companion is…
-    poles: [Calm and independent, Lively and full of energy]
+    poles: [Calm and easygoing, Lively and full of energy]

@@ -1,11 +1,12 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # Music: how much it matters, the kinds you enjoy, then three taste sliders and a few unscored
-# questions about how you listen. "Not much" ends the topic after the kinds you enjoy. Genres keep
-# their ids, so saved answers survive relabeling, and are listed roughly by how widely each is
-# heard, with the big traditions outside North America and Europe named rather than left to a
-# catch-all at the end. Devotional music is its own sensitive question rather than a genre, so a
-# pick on the overview never says anything about faith. Seeing live music is asked as how often
-# you get to, which tracks money, place and health: it isn't an interest and feeds nothing.
+# questions about how you listen. "Not much" ends the topic after the kinds you enjoy and the
+# devotional question. Genres keep their ids, so saved answers survive relabeling, and are listed
+# roughly by how widely each is heard, with the big traditions outside North America and Europe
+# named rather than left to a catch-all at the end. Devotional music is its own sensitive question
+# rather than a genre, so a pick on the overview never says anything about faith. Seeing live
+# music is asked as how often you get to, which tracks money, place and health: it isn't an
+# interest and feeds nothing.
 id: music
 domain: interests
 title: Music
@@ -47,7 +48,7 @@ items:
       - { id: jazz, label: Jazz }
       - { id: blues, label: Blues }
       - { id: classical, label: Classical / opera }
-      - { id: indian_classical, label: Indian classical }
+      - { id: indian_classical, label: Indian classical music }
       - { id: folk, label: Folk / acoustic }
       - { id: traditional, label: "Traditional music, any culture" }
       - { id: scores, label: Film & game scores }

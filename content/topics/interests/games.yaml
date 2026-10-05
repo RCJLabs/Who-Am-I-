@@ -58,7 +58,7 @@ items:
     steps: 5
     when: matters > -1 or not answered(matters)
     text: The games you play are mostly…
-    poles: [Big well-known games, Smaller or lesser-known games]
+    poles: [Well-known games, Lesser-known games]
     axes: { mainstream: 1 }
 
   - id: feel
