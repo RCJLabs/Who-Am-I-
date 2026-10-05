@@ -10,6 +10,9 @@ test('the Taste page groups what you enjoy by topic, and the overview names favo
   for (const g of ['pop', 'hiphop', 'rock', 'rnb', 'electronic', 'latin', 'jazz']) await page.getByTestId(`opt-genres-${g}`).click();
   await page.getByRole('group', { name: 'Jazz' }).getByRole('button', { name: '5 of 5' }).click();
   await page.getByTestId('next-genres').click();
+  // Devotional music is asked privately: "Prefer not to say", and the private note.
+  await expect(page.getByTestId('declined-devotional')).toBeVisible();
+  await expect(page.getByTestId('q-devotional')).toContainText('Private: never in your summary, cards or suggestions');
   await page.getByTestId('scale-devotional-5').click();
   await page.getByTestId('scale-discovery-1').click();
   await expect(page.getByTestId('q-taste')).toBeVisible();
