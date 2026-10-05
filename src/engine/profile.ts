@@ -2,7 +2,7 @@
 // With includeSensitive: false everything is recomputed from non-sensitive answers, so sensitive
 // answers can't leak through derived scores.
 import type { TensionResolution } from '../model/answers.ts';
-import type { Item, Topic } from '../model/content.ts';
+import { IDENTITY_DOMAIN, type Bundle, type Item, type Topic } from '../model/content.ts';
 import type { Profile, Scored as ScoredOut, TopicResult } from '../model/profile.ts';
 import { importance01, progress } from './flow.ts';
 import { observe, type Observation } from './observe.ts';
@@ -102,14 +102,15 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
     for (const it of t.items) {
       const r = s.values.get(it.id);
       if (!r || !shown(it)) continue;
-      if (r.kind === 'multi' && it.tags.includes('interest') && t.domain !== 'identity') {
+      if (t.domain === IDENTITY_DOMAIN) {
+        // Described, never scored or counted as an interest; keyed by `topic.item`, so two topics'
+        // items can't overwrite each other.
+        const value = o.includeSensitive ? describeAnswer(it, s) : null;
+        if (value !== null) identity[it.id] = value;
+      } else if (r.kind === 'multi' && it.tags.includes('interest')) {
         for (const [opt, v] of r.picks) interests[`${it.id}.${opt}`] = r4(v);
       } else if (it.type === 'rating' && it.tags.includes('interest') && r.kind === 'scale') {
         interests[it.id] = r4((r.v + 1) / 2);
-      }
-      if (t.domain === 'identity' && o.includeSensitive) {
-        const value = describeAnswer(it, s);
-        if (value !== null) identity[it.key] = value;
       }
     }
   }
@@ -139,7 +140,9 @@ export function buildProfile(s: AnswerState, o: ProfileOptions): Profile {
     interests,
     tensions,
     evidence: Object.fromEntries(topics.map((t) => [t.id, t.evidence])),
-    completeness: { answered: answeredCount, orphaned: s.orphans.length },
+    // Without sensitive answers, only orphans from topics known to be shareable count: a count can
+    // still say something.
+    completeness: { answered: answeredCount, orphaned: o.includeSensitive ? s.orphans.length : s.orphans.filter((e) => shareableOrphan(b, e.item)).length },
   };
   if (o.includeSensitive && Object.keys(identity).length) profile.identity = identity;
   return profile;
@@ -152,6 +155,12 @@ export function scaleLabel(item: Item, s: AnswerState): string | null {
   if ((item.type === 'slider' || item.type === 'rating') && item.labels) return item.labels[r.step - 1] ?? null;
   if (item.type === 'likert' || item.type === 'importance') return item.labels[r.step - 1] ?? null;
   return null;
+}
+
+/** An orphaned answer whose topic still exists and isn't sensitive (its item was removed or renamed). */
+function shareableOrphan(b: Bundle, item: string): boolean {
+  const topic = b.topics.find((t) => t.id === item.split('.')[0]);
+  return topic !== undefined && !topic.sensitive;
 }
 
 function describeAnswer(item: Item, s: AnswerState): string | string[] | null {

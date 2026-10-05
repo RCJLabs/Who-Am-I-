@@ -1,0 +1,14 @@
+# expect: E012@2
+id: about_not_identity
+domain: life
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: choice
+    text: Q
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }

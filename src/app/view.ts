@@ -22,23 +22,28 @@ export function topicStatus(s: AnswerState, topic: Topic, o: FlowOptions = {}): 
   return { started, answered: p.answered, remaining: p.remaining, complete: started && p.complete };
 }
 
-/** The topic of the most recent answer, if it isn't finished. */
+/**
+ * The topic of the most recent answer, if it isn't finished. Never a sensitive one: Home names it,
+ * where anyone glancing at the screen can read it.
+ */
 export function activeTopic(s: AnswerState, o: FlowOptions = {}): Topic | null {
   for (let i = s.events.length - 1; i >= 0; i--) {
     const topic = s.ix.topicOf.get(s.events[i]!.item);
-    if (topic) return topicStatus(s, topic, o).complete ? null : topic;
+    if (topic) return topic.sensitive || topicStatus(s, topic, o).complete ? null : topic;
   }
   return null;
 }
 
 /**
  * The first unfinished topic after `after` (wrapping around), core topics before deep dives, or
- * null if all are finished.
+ * null if all are finished. The app never leads anyone into a sensitive topic: one is offered only
+ * after another of the same domain that is sensitive too, as the next step through it.
  */
 export function nextTopic(b: Bundle, s: AnswerState, after?: TopicId, o: FlowOptions = {}): Topic | null {
   const start = after ? b.topics.findIndex((t) => t.id === after) + 1 : 0;
+  const from = after ? b.topics[start - 1] : undefined;
   const open = Array.from({ length: b.topics.length }, (_, k) => b.topics[(start + k) % b.topics.length]!).filter(
-    (t) => t.id !== after && !topicStatus(s, t, o).complete,
+    (t) => t.id !== after && !topicStatus(s, t, o).complete && (!t.sensitive || (from?.sensitive === true && t.domain === from.domain)),
   );
   return open.find((t) => t.tier === 'core') ?? open[0] ?? null;
 }

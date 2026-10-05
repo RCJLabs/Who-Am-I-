@@ -10,6 +10,13 @@ export type Target = `axis:${string}` | `principle:${string}`;
 export type Evidence = (typeof EVIDENCE)[number];
 export type AxisFamily = (typeof AXIS_FAMILIES)[number];
 
+/** The domain where people describe themselves: never scored, never shared (docs/CONTENT_GUIDE.md). */
+export const IDENTITY_DOMAIN = 'identity';
+/** Every Identity topic id starts with this, so its stored answers are known even after content changes. */
+export const IDENTITY_PREFIX = 'about_';
+/** Whether a stored answer's item id (`topic.item`) belongs to Identity. */
+export const isIdentityItem = (item: string): boolean => item.startsWith(IDENTITY_PREFIX);
+
 export interface Bundle {
   format: 'whoami.content';
   schema: 1;

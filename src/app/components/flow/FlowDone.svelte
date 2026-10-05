@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Topic } from '../../../model/content.ts';
+  import { IDENTITY_DOMAIN, type Topic } from '../../../model/content.ts';
   import { challengeSummary } from '../../../engine/shifts.ts';
   import { app } from '../../context.ts';
   import { copy } from '../../copy.ts';
@@ -46,7 +46,8 @@
     </div>
   {/if}
 
-  <BackupNudge />
+  <!-- Never a prompt to export right after describing yourself. -->
+  {#if topic.domain !== IDENTITY_DOMAIN}<BackupNudge />{/if}
 
   <div class="actions">
     {#if next}

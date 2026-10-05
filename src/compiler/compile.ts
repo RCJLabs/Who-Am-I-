@@ -24,6 +24,7 @@ import type {
   Principle,
   Topic,
 } from '../model/content.ts';
+import { IDENTITY_DOMAIN, IDENTITY_PREFIX } from '../model/content.ts';
 import type { AnalysisPack } from '../model/analysis.ts';
 import { COND_KEYWORDS, mapRefs, parseCond, type RefUse } from '../engine/cond/parse.ts';
 import { checkPack, compilePack, parsePack } from './analysis.ts';
@@ -189,6 +190,14 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
     rep.report('E012', `Domain '${domain.id}' is sensitive; its topics can't opt out`, { pf, path: ['sensitive'] });
   }
   const sensitive = domain?.sensitive === true || tf.sensitive === true;
+  const identity = tf.domain === IDENTITY_DOMAIN;
+  if (identity !== tf.id.startsWith(IDENTITY_PREFIX)) {
+    rep.report(
+      'E012',
+      identity ? `Identity topic ids start with '${IDENTITY_PREFIX}', so their answers can be found and removed` : `Only Identity topic ids start with '${IDENTITY_PREFIX}'`,
+      { pf, path: ['id'] },
+    );
+  }
 
   for (const key of ['stance', 'importance'] as const) {
     const ref = tf[key];
@@ -211,6 +220,12 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
       }
       if (!allowCross) {
         rep.report('E005', `'${raw}' must be an earlier item in this topic`, loc);
+        return null;
+      }
+      // Nothing outside Identity may depend on it, or it on anything else: what a screen shows would
+      // give an identity answer away, and identity would be inferred from other answers.
+      if ((other.tf.domain === IDENTITY_DOMAIN) !== (tf.domain === IDENTITY_DOMAIN)) {
+        rep.report('E012', `'${raw}': no condition crosses into or out of Identity`, loc);
         return null;
       }
       rep.report('W102', `Cross-topic reference '${raw}': this item depends on another topic's answer`, loc);
@@ -327,7 +342,8 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
       tags: ai.tags ?? [],
       deep: ai.deep ?? false,
       sticky: ai.sticky ?? ai.type === 'challenge',
-      unsure: ai.unsure ?? (ai.type !== 'importance' && ai.type !== 'multi' && tf.evidence !== 'validated'),
+      // "No opinion" about yourself makes no sense: Identity items say "Not sure" as an option instead.
+      unsure: ai.unsure ?? (ai.type !== 'importance' && ai.type !== 'multi' && tf.evidence !== 'validated' && !identity),
       sensitive: ai.sensitive ?? sensitive,
     };
     if (sensitive && ai.sensitive === false) rep.report('E012', `Items in a sensitive topic can't opt out of sensitivity`, itemLoc(i, 'sensitive'));

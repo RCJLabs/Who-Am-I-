@@ -101,6 +101,25 @@ describe('topic navigation', () => {
     expect(topicStatus(s, topic('beta')).complete).toBe(true);
     expect(activeTopic(s)).toBeNull();
   });
+
+  it('never names or suggests a sensitive topic outside it', () => {
+    // gamma is sensitive; give it a second question so one answer leaves it unfinished.
+    const b2 = structuredClone(b);
+    const gamma = b2.topics.find((t) => t.id === 'gamma')!;
+    gamma.items.push({ ...gamma.items[0]!, id: 'gamma.more', key: 'more' });
+    const log = new Log();
+    log.add('gamma.belief', scale(2));
+    const s = buildAnswerState(b2, log.events);
+    expect(gamma.sensitive).toBe(true);
+    expect(topicStatus(s, gamma).complete).toBe(false);
+    // Unfinished, but Home doesn't name it.
+    expect(activeTopic(s)).toBeNull();
+    // Whichever topic was just finished, the next one offered is never gamma.
+    for (const t of [undefined, ...b2.topics.map((x) => x.id)]) expect(nextTopic(b2, s, t)?.id).not.toBe('gamma');
+    // A topic that isn't sensitive is still picked up where it was left.
+    log.add('alpha.stance', scale(4));
+    expect(activeTopic(buildAnswerState(b2, log.events))?.id).toBe('alpha');
+  });
 });
 
 describe('orderedOptions', () => {

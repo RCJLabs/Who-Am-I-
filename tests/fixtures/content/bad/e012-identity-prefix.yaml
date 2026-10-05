@@ -1,0 +1,14 @@
+# expect: E012@2
+id: bad_identity_prefix
+domain: identity
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: choice
+    text: Q
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }

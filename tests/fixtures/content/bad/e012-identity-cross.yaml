@@ -1,0 +1,21 @@
+# expect: E012@16
+id: about_bad_cross
+domain: identity
+title: Bad
+summary: Fixture.
+tier: core
+evidence: custom
+items:
+  - id: q
+    type: choice
+    text: Q
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }
+  - id: follow
+    when: alpha.stance > 0
+    type: choice
+    text: Follow-up
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }

@@ -1,6 +1,7 @@
 // E009 challenge contract · E010 stance/importance · E011 option values · E012 sensitivity ·
 // E013 anchor keying · W109 anchor cross-load · E007 reask that can never run
 import { itemLoc, REVISABLE, topicLoc, type RuleCtx } from '../context.ts';
+import { IDENTITY_DOMAIN } from '../../model/content.ts';
 
 export function structureRules(ctx: RuleCtx): void {
   const { rep, byId } = ctx;
@@ -88,7 +89,7 @@ export function structureRules(ctx: RuleCtx): void {
       }
 
       // E012: identity items describe, they don't score
-      if (topic.domain === 'identity') {
+      if (topic.domain === IDENTITY_DOMAIN) {
         const scores =
           ('effects' in it && it.effects.length > 0) ||
           ('options' in it && it.options.some((o) => ((o as { effects?: readonly unknown[] }).effects?.length ?? 0) > 0));

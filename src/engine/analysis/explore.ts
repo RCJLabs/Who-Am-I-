@@ -2,7 +2,7 @@
 // the most to the results: spectrums that can't show yet, results resting on few answers, and
 // strongly held principles tested in only one setting so far. Never sensitive topics, never
 // worldview or identity.
-import type { AxisId, Bundle, PrincipleId, Topic } from '../../model/content.ts';
+import { IDENTITY_DOMAIN, type AxisId, type Bundle, type PrincipleId, type Topic } from '../../model/content.ts';
 import type { Profile } from '../../model/profile.ts';
 import { progress, type FlowOptions } from '../flow.ts';
 import type { AnswerState } from '../state.ts';
@@ -14,7 +14,7 @@ export interface ExploreOptions extends FlowOptions {
   mapAxes?: readonly AxisId[];
 }
 
-const NEVER_SUGGESTED = new Set(['worldview', 'identity']);
+const NEVER_SUGGESTED = new Set(['worldview', IDENTITY_DOMAIN]);
 
 export function suggestable(b: Bundle, t: Topic): boolean {
   return !t.sensitive && !NEVER_SUGGESTED.has(t.domain) && !b.domains.find((d) => d.id === t.domain)?.sensitive;

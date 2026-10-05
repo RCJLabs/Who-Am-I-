@@ -1,5 +1,5 @@
 # expect: E012@14
-id: bad_e012_optout
+id: about_bad_optout
 domain: identity
 title: Bad
 summary: Fixture.

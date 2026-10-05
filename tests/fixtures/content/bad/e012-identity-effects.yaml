@@ -1,5 +1,5 @@
 # expect: E012@9
-id: bad_e012_effects
+id: about_bad_effects
 domain: identity
 title: Bad
 summary: Fixture.
