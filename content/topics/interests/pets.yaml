@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Pets and animals: which animals you enjoy, not whether you own one. Ownership tracks housing,
+# landlords, money and allergies, many households keep animals for work rather than company, and
+# "Do you have a pet?" with "I used to" invites grief. No breeds, which signal money and status.
+# "Not much" ends the topic after the animals you enjoy. Dogs or cats is for fun and feeds nothing.
+id: pets
+domain: interests
+title: Pets and animals
+summary: The animals you love to be around.
+tier: extended
+order: 10
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do animals matter in your life?
+    help: Any animals count, whether or not you have any.
+    poles: [Not much, They're a big part of it]
+    labels: [Not much, A little, Some, A lot, They're a big part of it]
+
+  - id: animals
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which animals do you enjoy being around? Tap the ones you like, then rate how much.
+    options:
+      - { id: dogs, label: Dogs }
+      - { id: cats, label: Cats }
+      - { id: birds, label: Birds }
+      - { id: fish, label: Fish }
+      - { id: small, label: Rabbits and other small animals }
+      - { id: reptiles, label: Reptiles and amphibians }
+      - { id: insects, label: Insects and spiders }
+      - { id: horses, label: "Horses, donkeys and camels" }
+      - { id: farm, label: "Farm animals (chickens, goats, cows…)" }
+      - { id: wildlife, label: Wildlife }
+
+  - id: dog_or_cat
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Dogs or cats?
+    poles: [Dogs, Cats]
+    labels: [Dogs all the way, Mostly dogs, Both the same, Mostly cats, Cats all the way]
+
+  - id: companion
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Your ideal animal companion is…
+    poles: [Calm and independent, Lively and full of energy]

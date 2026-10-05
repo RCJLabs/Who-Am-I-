@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Climbing: a short deep dive for climbers and anyone who's wondered. It gates itself on its first
+# question (a condition on Sports' answers would cross topics): never-climbers who aren't
+# interested see one question, the curious three, people who climb nine. Plain words for
+# non-climbers ("working out one hard climb over many tries", not "projecting"). No grades, only
+# whether they matter to you; nothing about how often, gear, gym fees, trips or crags visited;
+# nothing about weight, food, height or reach; no injuries, falls or accidents, and never why
+# someone stopped. Indoors or outdoors is a preference, and the wall is climbing as much as rock.
+# Fear is asked as craft ("staying calm when it's scary"), adaptive and para climbing count, and
+# access disputes (bolting, closures, sacred sites) are positions, not taste, so they stay out.
+# It feeds no spectrum, and it sits among the extended topics rather than ahead of them.
+id: climbing
+domain: interests
+title: Climbing
+summary: For climbers, and anyone who's wondered.
+tier: extended
+order: 8
+evidence: for-fun
+items:
+  - id: climbed
+    type: choice
+    unsure: false
+    text: Where are you with climbing?
+    help: Indoors or out, with a rope or without. Adaptive and para climbing count.
+    options:
+      - { id: climb, label: I climb }
+      - { id: tried, label: "I've tried it a few times" }
+      - { id: used_to, label: I used to climb }
+      - { id: curious, label: "Never, but I'm curious" }
+      - { id: not_for_me, label: "Never, and it's not for me" }
+
+  - id: matters
+    type: rating
+    tags: [interest]
+    when: climbed is climb or climbed is tried or climbed is used_to
+    text: How much does climbing matter in your life?
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    when: climbed is climb or climbed is tried or climbed is used_to
+    text: Which kinds of climbing do you enjoy? Tap the ones you like, then rate how much.
+    help: Adaptive and para climbing count as the kind itself.
+    options:
+      - { id: bouldering, label: "Bouldering (short climbs, no rope)" }
+      - { id: top_rope, label: Top-rope climbing }
+      - { id: sport, label: Sport and lead climbing }
+      - { id: trad, label: "Trad climbing (placing your own gear)" }
+      - { id: multipitch, label: Multi-pitch and big walls }
+      - { id: alpine, label: Alpine climbing and mountaineering }
+      - { id: ice, label: Ice and mixed climbing }
+      - { id: dws, label: "Deep-water soloing (above water)" }
+      - { id: scrambling, label: Scrambling and via ferratas }
+      - { id: boards, label: Board climbing }
+      - { id: speed, label: Speed climbing }
+      - { id: comps, label: Competing }
+
+  - id: where
+    type: slider
+    steps: 5
+    when: climbed is climb or climbed is tried or climbed is used_to
+    text: Given the choice, where would you rather climb?
+    poles: [Indoors at a wall, Outdoors on rock]
+
+  - id: projecting
+    type: slider
+    steps: 5
+    when: climbed is climb or climbed is used_to
+    text: Which sounds more fun?
+    poles: [Working out one hard climb over many tries, Trying lots of climbs for the first time]
+
+  - id: angle
+    type: slider
+    steps: 5
+    when: climbed is climb or climbed is used_to
+    text: Which suits you more?
+    poles: [Balance and footwork on slabs, Steep and powerful overhangs]
+
+  - id: grades
+    type: slider
+    steps: 5
+    when: climbed is climb or climbed is used_to
+    text: How much do grades matter to you?
+    poles: [Not at all, A lot]
+
+  - id: draws
+    type: multi
+    max: 3
+    when: not (climbed is not_for_me)
+    text: What draws you to climbing, or would? Choose up to three.
+    options:
+      - { id: movement, label: The movement }
+      - { id: puzzle, label: Working out the moves }
+      - { id: strength, label: Feeling strong }
+      - { id: nerve, label: "Staying calm when it's scary" }
+      - { id: focus, label: "The focus: everything else goes quiet" }
+      - { id: people, label: The people }
+      - { id: outdoors, label: Being outdoors }
+      - { id: adventure, label: Adventure }
+      - { id: progress, label: Getting better over time }
+      - { id: competing, label: Competing }
+
+  - id: watch
+    type: multi
+    when: not (climbed is not_for_me)
+    text: What climbing do you enjoy watching?
+    none: "I don't watch climbing"
+    options:
+      - { id: films, label: Climbing films }
+      - { id: comps, label: "Competitions (World Cups, Olympics, Paralympics)" }
+      - { id: online, label: Videos and streams online }
+      - { id: friends, label: Friends climbing }

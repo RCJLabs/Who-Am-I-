@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Games: video games, board and card games, puzzles and tabletop role-playing. "Not much" ends the
+# topic after the kinds you enjoy. Classic games are named by what's played worldwide (chess, go,
+# mahjong, ludo, carrom). No hardware owned, no hours a week, no "gamer" as an identity, no
+# "casual" before mobile games, and nothing played for money (poker, casinos, slots, loot boxes:
+# Lifestyle's rule). What you enjoy most in a game is unscored and not an interest.
+id: games
+domain: interests
+title: Games
+summary: Video games, board games and everything between.
+tier: extended
+order: 6
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do games matter in your life?
+    help: Video games, board and card games, puzzles and tabletop role-playing all count.
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which kinds of games do you enjoy? Tap the ones you like, then rate how much.
+    options:
+      - { id: puzzle, label: "Puzzle, word and trivia games" }
+      - { id: cards, label: Card games }
+      - { id: classics, label: "Classic board games (chess, go, mahjong, ludo, carrom…)" }
+      - { id: board, label: Modern board games }
+      - { id: tabletop_rpg, label: Tabletop role-playing }
+      - { id: mobile, label: Mobile games }
+      - { id: action, label: Action and shooters }
+      - { id: adventure, label: Adventure and story games }
+      - { id: rpg, label: Role-playing video games }
+      - { id: strategy, label: Strategy games }
+      - { id: sims, label: Simulation and life games }
+      - { id: building, label: Building and sandbox games }
+      - { id: sports_racing, label: Sports and racing games }
+      - { id: fighting, label: Fighting games }
+      - { id: horror, label: Horror games }
+      - { id: party, label: Party and music games }
+      - { id: watching, label: Watching streams and esports }
+
+  - id: replay
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: You mostly play…
+    poles: [Favorites I keep coming back to, Games that are new to me]
+    axes: { novelty: 1 }
+
+  - id: size
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: The games you play are mostly…
+    poles: [Big well-known games, Smaller or lesser-known games]
+    axes: { mainstream: 1 }
+
+  - id: feel
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: You like games that feel…
+    poles: [Calm and relaxing, Fast and intense]
+    axes: { intensity: 1 }
+
+  - id: rivalry
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Playing with others, you'd rather be…
+    poles: [On the same side, Up against each other]
+
+  - id: draws
+    type: multi
+    max: 3
+    when: matters > -1 or not answered(matters)
+    text: What do you enjoy most in a game? Choose up to three.
+    options:
+      - { id: story, label: The story }
+      - { id: exploring, label: Exploring }
+      - { id: strategy, label: Planning and strategy }
+      - { id: mastery, label: Mastering something hard }
+      - { id: winning, label: Winning }
+      - { id: creating, label: Building and creating }
+      - { id: completing, label: Collecting and completing }
+      - { id: friends, label: Playing with friends }
+      - { id: excitement, label: Action and excitement }
+      - { id: unwinding, label: Unwinding }

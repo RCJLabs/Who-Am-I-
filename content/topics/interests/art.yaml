@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Art and design: making or looking, anywhere, from pottery and henna to buildings, fashion and
+# theater. "Not much" ends the topic after the kinds you enjoy. No fine-art-against-crafts split,
+# no "museums and galleries" (a place, which tracks money and city life), no visits counted, and
+# no religious art as a category; calligraphy stays as an art form. Realistic or abstract feeds
+# nothing: it tracks openness and political leaning as much as taste.
+id: art
+domain: interests
+title: Art and design
+summary: What you love to look at, and to make.
+tier: extended
+order: 9
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do art and design matter in your life?
+    help: "Making or looking, anywhere: at home, online, in the street or in a museum."
+    poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
+
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which kinds of art and design do you enjoy, making or looking? Tap the ones you like, then rate how much.
+    options:
+      - { id: painting, label: Painting and drawing }
+      - { id: photography, label: Photography }
+      - { id: sculpture, label: Sculpture }
+      - { id: pottery, label: Pottery and ceramics }
+      - { id: textiles, label: "Textiles, sewing and knitting" }
+      - { id: woodwork, label: Woodwork and carving }
+      - { id: jewelry, label: Jewelry making }
+      - { id: calligraphy, label: Calligraphy and lettering }
+      - { id: henna, label: Henna and body art }
+      - { id: street, label: Street art and murals }
+      - { id: graphic, label: Graphic design and illustration }
+      - { id: digital, label: Digital art and animation }
+      - { id: architecture, label: Architecture }
+      - { id: interiors, label: Interiors and home design }
+      - { id: fashion, label: Fashion and style }
+      - { id: theater, label: Theater }
+      - { id: folk, label: Traditional and folk art }
+
+  - id: make_or_look
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: With art, you'd rather be…
+    poles: [Making it, Looking at it]
+
+  - id: style
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: You're drawn more to art that's…
+    poles: [Realistic, Abstract]
+
+  - id: era
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Which styles do you like more?
+    poles: [Traditional, Contemporary]
+
+  - id: makes
+    type: choice
+    when: matters > -1 or not answered(matters)
+    text: Do you make art or crafts?
+    options:
+      - { id: no, label: "No" }
+      - { id: used_to, label: I used to }
+      - { id: casual, label: "Yes, for fun" }
+      - { id: serious, label: "Yes, seriously or for work" }
