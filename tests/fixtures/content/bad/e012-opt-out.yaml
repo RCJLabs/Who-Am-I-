@@ -1,4 +1,4 @@
-# expect: E012@14
+# expect: E012@15
 id: about_bad_optout
 domain: identity
 title: Bad
@@ -7,8 +7,9 @@ tier: core
 evidence: custom
 items:
   - id: q
-    type: slider
-    steps: 5
+    type: choice
     text: Q
-    poles: [A, B]
+    options:
+      - { id: a, label: A }
+      - { id: b, label: B }
     sensitive: false

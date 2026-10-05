@@ -179,6 +179,8 @@ export interface MultiItem extends ItemBase {
   options: { id: string; label: string }[];
   intensity: boolean;
   max?: number;
+  /** Label for answering with no picks; false: not offered; absent: the app's "None of these". */
+  none?: string | false;
 }
 
 export type Reaction = 'hold' | 'distinguish' | 'yield';

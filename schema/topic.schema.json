@@ -912,6 +912,19 @@
                 "type": "integer",
                 "exclusiveMinimum": 0,
                 "maximum": 9007199254740991
+              },
+              "none": {
+                "description": "Label for answering with no picks (default \"None of these\"), or false when every person fits an option",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "boolean",
+                    "const": false
+                  }
+                ]
               }
             },
             "required": [

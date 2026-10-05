@@ -198,6 +198,15 @@ biological female
 biological females
 assigned male at birth
 assigned female at birth
+# One side's terms, or ones many people find hostile, in self-description (About you): ask
+# "Are you transgender?" with no word for "no"; say gay or lesbian people, Haredi, and a
+# traditional or Indigenous religion.
+cisgender
+cis
+homosexuals
+ultra-orthodox
+animist
+animism
 amab
 afab
 men in women's sports

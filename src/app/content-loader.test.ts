@@ -64,10 +64,11 @@ describe('loading content by domain', () => {
   });
 
   it('treats domains without topics as loaded', async () => {
-    const { loader, calls } = setup();
-    expect(loader.isLoaded('identity')).toBe(true);
-    expect(await loader.ensure(['identity'])).toBe(true);
-    expect(calls).toEqual([]);
+    const { index } = splitBundle(realBundle());
+    const planned: Bundle = { ...index, domains: [...index.domains, { id: 'planned', title: 'Planned', blurb: 'Not written yet.', sensitive: false }] };
+    const loader = new ContentLoader(planned, {}, () => {});
+    expect(loader.isLoaded('planned')).toBe(true);
+    expect(await loader.ensure(['planned'])).toBe(true);
   });
 
   it('loading everything gives back the compiled bundle', async () => {

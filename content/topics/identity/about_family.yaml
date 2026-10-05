@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../schema/topic.schema.json
+# Family: who you share your life with, your children, and your part in your family. Like everything
+# in About you, it describes and is never scored (no effects, E012), a changed answer replaces the
+# old one, and nothing here reaches the summary, cards, suggestions or a backup unless the person
+# includes it. Status is "choose any", so separated and seeing someone, or widowed with a new
+# partner, can both be said; every person fits one of its options, so it has no "None of these".
+# Spouses and partners are named together, and "promised to marry" and arranged marriages are there
+# for courtship and arranged-marriage cultures. Children count any the person thinks of as theirs.
+# Nothing asks whether someone wants children, or about a pregnancy.
+id: about_family
+domain: identity
+title: Family
+summary: Your relationships, your children and your part in your family.
+tier: core
+order: 1
+evidence: custom
+instructions: These questions describe you. Nothing here is scored or shared. Skip anything, or choose the closest answer.
+items:
+  - id: status
+    type: multi
+    none: false
+    text: Which describe you now? Choose any that fit.
+    options:
+      - { id: never_married, label: "Single, never married" }
+      - { id: seeing, label: "In a relationship, or seeing someone" }
+      - { id: engaged, label: "Engaged, or promised to marry" }
+      - { id: living_together, label: Living with a partner }
+      - { id: married, label: Married }
+      - { id: civil, label: In a civil partnership or civil union }
+      - { id: separated, label: Separated }
+      - { id: divorced, label: Divorced }
+      - { id: widowed, label: "Widowed, or my partner has died" }
+
+  - id: how_met
+    type: choice
+    when: status has married or status has engaged or status has civil or status has living_together
+    text: How did you and your spouse or partner come together?
+    options:
+      - { id: ourselves, label: We met and chose each other ourselves }
+      - { id: introduced, label: "We were introduced, by family, friends or a matchmaker, and chose each other" }
+      - { id: arranged_agreed, label: "Our families arranged it, and we agreed" }
+      - { id: arranged, label: Our families arranged it }
+      - { id: other, label: Another way }
+
+  - id: style
+    type: choice
+    text: What kind of relationship is right for you?
+    options:
+      - { id: one_for_life, label: "One spouse or partner, for life" }
+      - { id: one_at_a_time, label: One spouse or partner at a time }
+      - { id: several_spouses, label: Marriage with more than one spouse }
+      - { id: agreed_open, label: "More than one partner, with everyone's agreement" }
+      - { id: chosen_single, label: "A single life by choice, for example under a religious vow" }
+      - { id: not_looking, label: "I'm not looking for a relationship" }
+      - { id: not_sure, label: Not sure }
+
+  - id: children
+    type: multi
+    none: No children or grandchildren
+    text: Do you have children or grandchildren? Choose any that fit.
+    help: Count any children you think of as yours, by birth, adoption, marriage or raising them.
+    options:
+      - { id: under_18, label: Children under 18 }
+      - { id: grown, label: Grown-up children }
+      - { id: grandchildren, label: Grandchildren }
+      - { id: great_grandchildren, label: Great-grandchildren }
+      - { id: died, label: A child who has died }
+
+  - id: roles
+    type: multi
+    text: Which of these are part of your life now? Choose any that fit.
+    options:
+      - { id: raising, label: Raising children or grandchildren }
+      - { id: caring, label: Caring for a parent or relative who needs help }
+      - { id: supporting, label: "Sending money to support relatives, near or far" }
+      - { id: earner, label: Being the main earner in my household }
+      - { id: home, label: Running the home }
+      - { id: extended, label: "Living with extended family, such as grandparents, in-laws, aunts or uncles" }

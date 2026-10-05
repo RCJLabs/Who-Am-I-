@@ -80,7 +80,7 @@ export function answerLabel(item: Item, r: Response): string {
     case 'multi': {
       if (item.type !== 'multi') return '';
       const picked = item.options.filter((o) => o.id in r.picks);
-      if (!picked.length) return 'None of these';
+      if (!picked.length) return typeof item.none === 'string' ? item.none : 'None of these';
       return picked.map((o) => (typeof r.picks[o.id] === 'number' ? `${o.label} (${r.picks[o.id]}/5)` : o.label)).join(', ');
     }
   }

@@ -88,12 +88,17 @@ export function structureRules(ctx: RuleCtx): void {
         });
       }
 
-      // E012: identity items describe, they don't score
+      // E012: identity items describe, they don't score: plain choices, with no ratings and no "No opinion"
       if (topic.domain === IDENTITY_DOMAIN) {
         const scores =
           ('effects' in it && it.effects.length > 0) ||
           ('options' in it && it.options.some((o) => ((o as { effects?: readonly unknown[] }).effects?.length ?? 0) > 0));
         if (scores) rep.report('E012', `Identity items are context only and can't carry effects`, itemLoc(ct, it.key, 'id'));
+        if (it.type !== 'choice' && it.type !== 'multi') {
+          rep.report('E012', `Identity items are choice or multi questions; '${it.key}' is ${it.type}`, itemLoc(ct, it.key, 'type'));
+        }
+        if (it.type === 'multi' && it.intensity) rep.report('E012', `Identity items have no ratings: remove intensity`, itemLoc(ct, it.key, 'intensity'));
+        if (it.unsure) rep.report('E012', `Identity items offer "Not sure" as an option where it fits, never "No opinion"`, itemLoc(ct, it.key, 'unsure'));
       }
 
       // E013 / W109: anchors

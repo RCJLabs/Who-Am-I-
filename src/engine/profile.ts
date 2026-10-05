@@ -167,6 +167,9 @@ function describeAnswer(item: Item, s: AnswerState): string | string[] | null {
   const r = s.values.get(item.id);
   if (!r) return null;
   if (r.kind === 'option' && 'options' in item) return item.options.find((o) => o.id === r.option)?.label ?? null;
-  if (r.kind === 'multi' && item.type === 'multi') return item.options.filter((o) => r.picks.has(o.id)).map((o) => o.label);
+  if (r.kind === 'multi' && item.type === 'multi') {
+    const picked = item.options.filter((o) => r.picks.has(o.id)).map((o) => o.label);
+    return picked.length === 0 && typeof item.none === 'string' ? [item.none] : picked;
+  }
   return scaleLabel(item, s);
 }

@@ -403,6 +403,7 @@ function normalizeTopic(tc: TopicCtx, all: Map<string, TopicCtx>, env: Env, rep:
         checkUnique(ai.options, 'option', pf, ['items', i, 'options'], rep);
         const item: Item = { ...base, type: 'multi', options: ai.options.map((o) => ({ id: o.id, label: o.label })), intensity: ai.intensity ?? false };
         if (ai.max !== undefined) item.max = ai.max;
+        if (ai.none !== undefined) item.none = ai.none;
         return item;
       }
       case 'challenge': {
