@@ -1,4 +1,9 @@
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { expect, type Page } from '@playwright/test';
+import { parse } from 'yaml';
 
 /**
  * Scripted answers for `answerFlow`:
@@ -67,4 +72,29 @@ export async function openArea(page: Page, area: string): Promise<void> {
 export async function freshStart(page: Page, hash = '#/'): Promise<void> {
   await page.goto(hash);
   await expect(page.locator('#app > :not(.splash)').first()).toBeVisible();
+}
+
+/** Restores a persona's answers (a YAML file, see scripts/persona-backup.ts) and opens the results. */
+export async function restorePersona(page: Page, persona: string): Promise<void> {
+  const file = join(mkdtempSync(join(tmpdir(), 'whoami-')), 'backup.json');
+  execFileSync('node', ['scripts/persona-backup.ts', persona, file]);
+  await freshStart(page, '#/settings');
+  await page.getByTestId('backup-file').setInputFiles(file);
+  await page.getByTestId('restore-replace').click();
+  await expect(page.getByText('Backup restored.')).toBeVisible();
+  await page.getByTestId('nav-results').click();
+}
+
+/** Sensitive topics, by their own flag or their domain's, read from the content. */
+export function sensitiveTopics(): Set<string> {
+  const domains = new Set(
+    (parse(readFileSync('content/domains.yaml', 'utf8')) as { id: string; sensitive?: boolean }[]).filter((d) => d.sensitive).map((d) => d.id),
+  );
+  return new Set(
+    readdirSync('content/topics', { recursive: true, encoding: 'utf8' })
+      .filter((f) => f.endsWith('.yaml'))
+      .map((f) => parse(readFileSync(join('content/topics', f), 'utf8')) as { id: string; domain: string; sensitive?: boolean })
+      .filter((t) => t.sensitive || domains.has(t.domain))
+      .map((t) => t.id),
+  );
 }

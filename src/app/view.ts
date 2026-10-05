@@ -180,6 +180,9 @@ export const PATTERN_AREAS = [
 ] as const satisfies readonly { area: string; family: AxisFamily }[];
 export type PatternArea = (typeof PATTERN_AREAS)[number]['area'];
 
+/** Fewer spectrums than this make no pattern worth drawing. */
+export const PATTERN_MIN = 3;
+
 export interface PatternSpoke {
   axis: AxisId;
   title: string;

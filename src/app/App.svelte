@@ -13,6 +13,7 @@
   import NotFound from './routes/NotFound.svelte';
   import Results from './routes/Results.svelte';
   import Settings from './routes/Settings.svelte';
+  import Share from './routes/Share.svelte';
   import TensionView from './routes/TensionView.svelte';
   import TopicResults from './routes/TopicResults.svelte';
   import Topics from './routes/Topics.svelte';
@@ -34,6 +35,7 @@
       case 'area':
       case 'topic-results':
       case 'tension':
+      case 'share':
         return 'results' as const;
       case 'settings':
       case 'about':
@@ -67,6 +69,8 @@
     <ContentGate domains={topicDomains(route.topic)}><TopicResults topicId={route.topic} /></ContentGate>
   {:else if route.name === 'tension'}
     <TensionView tensionKey={route.key} />
+  {:else if route.name === 'share'}
+    <Share card={route.card} />
   {:else if route.name === 'settings'}
     <Settings />
   {:else if route.name === 'about'}

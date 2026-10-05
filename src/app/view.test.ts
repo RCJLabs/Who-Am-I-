@@ -3,7 +3,7 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
-import { AREAS, parseHash, to } from './routes.ts';
+import { AREAS, CARD_IDS, parseHash, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import {
@@ -49,6 +49,9 @@ describe('routes', () => {
     ['#/area/politics', { name: 'area', area: 'politics' }],
     ['#/area/nope', { name: 'results' }],
     ['#/area', { name: 'results' }],
+    ['#/share', { name: 'share', card: null }],
+    ['#/share/politics', { name: 'share', card: 'politics' }],
+    ['#/share/worldview', { name: 'share', card: null }],
     ['#/settings', { name: 'settings' }],
     ['#/nope', { name: 'not-found', path: '/nope' }],
   ])('parses %j', (hash, route) => {
@@ -59,6 +62,8 @@ describe('routes', () => {
     expect(parseHash(to.flow('vaccine_mandates', 'anchor_ba'))).toEqual({ name: 'flow', topic: 'vaccine_mandates', edit: 'anchor_ba' });
     expect(parseHash(to.tension('bodily_autonomy|abortion|vaccine_mandates'))).toEqual({ name: 'tension', key: 'bodily_autonomy|abortion|vaccine_mandates' });
     for (const area of AREAS) expect(parseHash(to.area(area))).toEqual({ name: 'area', area });
+    for (const card of CARD_IDS) expect(parseHash(to.share(card))).toEqual({ name: 'share', card });
+    expect(parseHash(to.share())).toEqual({ name: 'share', card: null });
   });
 });
 

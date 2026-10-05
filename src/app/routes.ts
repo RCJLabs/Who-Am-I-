@@ -5,6 +5,11 @@ export const AREAS = ['politics', 'values', 'thinking', 'worldview', 'personalit
 export type AreaId = (typeof AREAS)[number];
 const isArea = (x: string): x is AreaId => (AREAS as readonly string[]).includes(x);
 
+/** The cards that can be shared as images (src/app/share/), in the order they're offered. */
+export const CARD_IDS = ['pattern', 'politics', 'values', 'thinking', 'personality', 'principles'] as const;
+export type CardId = (typeof CARD_IDS)[number];
+export const isCardId = (x: string): x is CardId => (CARD_IDS as readonly string[]).includes(x);
+
 export type Route =
   | { name: 'home' }
   | { name: 'topics' }
@@ -13,6 +18,7 @@ export type Route =
   | { name: 'topic-results'; topic: string }
   | { name: 'area'; area: AreaId }
   | { name: 'tension'; key: string }
+  | { name: 'share'; card: CardId | null }
   | { name: 'settings' }
   | { name: 'about' }
   | { name: 'content' }
@@ -49,6 +55,8 @@ export function parseHash(hash: string): Route {
       return second ? { name: 'tension', key: second } : { name: 'results' };
     case 'area':
       return second && isArea(second) ? { name: 'area', area: second } : { name: 'results' };
+    case 'share':
+      return { name: 'share', card: second && isCardId(second) ? second : null };
     case 'settings':
       return { name: 'settings' };
     case 'about':
@@ -69,6 +77,7 @@ export const to = {
   topicResults: (topic: string) => `#/results/${encodeURIComponent(topic)}`,
   area: (area: AreaId) => `#/area/${area}`,
   tension: (key: string) => `#/tension/${encodeURIComponent(key)}`,
+  share: (card?: CardId) => (card ? `#/share/${card}` : '#/share'),
   settings: () => '#/settings',
   about: () => '#/about',
   content: () => '#/content',
