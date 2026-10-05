@@ -45,9 +45,11 @@ about you. Turning them off in Settings stops them being worked out.
 
 - **Export** creates a file with your answers, so you can back them up or move to another device.
   Where that file goes is up to you.
-- **Sharing** (when available) creates a code or image of the results *you* choose. Sensitive
-  topics (religion and worldview, and identity) are left out by default and only included if you
-  turn them on.
+- **Share cards** are images of your results, drawn on your device: your pattern, or one area such
+  as politics or personality. They use only answers that could be shared: never sensitive topics
+  (religion and worldview, identity, and other questions marked sensitive), and never the emotional
+  reactivity scale. Nothing leaves your device until you choose Share or Save image. After that,
+  where the image goes is up to you, and anyone you send it to can see what it shows.
 
 ## Deleting your data
 

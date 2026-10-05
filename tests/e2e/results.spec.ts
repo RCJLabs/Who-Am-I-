@@ -1,40 +1,20 @@
 // The results as a whole: the overview (summary, pattern, a link to each area, next steps) and the
 // area pages, for a full persona and for someone who has only described their personality.
-import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Page } from '@playwright/test';
 import { parse, stringify } from 'yaml';
 import { expect, test } from './fixtures.ts';
-import { freshStart } from './helpers.ts';
+import { restorePersona, sensitiveTopics } from './helpers.ts';
 
-/** Topics the analysis never suggests: sensitive ones, by their own flag or their domain's (see docs/ANALYSIS.md). */
-const sensitiveDomains = new Set(
-  (parse(readFileSync('content/domains.yaml', 'utf8')) as { id: string; sensitive?: boolean }[]).filter((d) => d.sensitive).map((d) => d.id),
-);
-const sensitive = new Set(
-  readdirSync('content/topics', { recursive: true, encoding: 'utf8' })
-    .filter((f) => f.endsWith('.yaml'))
-    .map((f) => parse(readFileSync(join('content/topics', f), 'utf8')) as { id: string; domain: string; sensitive?: boolean })
-    .filter((t) => t.sensitive || sensitiveDomains.has(t.domain))
-    .map((t) => t.id),
-);
+/** Topics the analysis never suggests (see docs/ANALYSIS.md). */
+const sensitive = sensitiveTopics();
 test('the list of sensitive topics is read from the content', () => {
   expect([...sensitive]).toEqual(expect.arrayContaining(['afterlife', 'aging_parents', 'god', 'supernatural']));
 });
 /** Words from the worldview spectrum, which the summary never uses. */
 const WORLDVIEW = /natural world|\bGod\b|afterlife/i;
-
-async function restorePersona(page: Page, persona: string): Promise<void> {
-  const file = join(mkdtempSync(join(tmpdir(), 'whoami-')), 'backup.json');
-  execFileSync('node', ['scripts/persona-backup.ts', persona, file]);
-  await freshStart(page, '#/settings');
-  await page.getByTestId('backup-file').setInputFiles(file);
-  await page.getByTestId('restore-replace').click();
-  await expect(page.getByText('Backup restored.')).toBeVisible();
-  await page.getByTestId('nav-results').click();
-}
 
 async function suggestedTopics(page: Page): Promise<string[]> {
   return page.locator('[data-testid^="rec-explore-"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-testid')!.slice('rec-explore-'.length)));

@@ -12,7 +12,8 @@
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { router } from '../router.svelte.ts';
-  import { AREAS, to, type AreaId } from '../routes.ts';
+  import { AREAS, isCardId, to, type AreaId } from '../routes.ts';
+  import { shareCards } from '../share/cards.ts';
   import {
     areaLean,
     axisFeeders,
@@ -24,6 +25,7 @@
     mapTraditions,
     mapViews,
     patternGroups,
+    PATTERN_MIN,
     positionsByDomain,
     rankedPrinciples,
     toPercent,
@@ -53,8 +55,6 @@
   const MAP_AXES = ['economic', 'civil'] as const;
   /** Topics listed per pole under "What pulled you". */
   const DRIVERS_SHOWN = 3;
-  /** Fewer spectrums than this make no pattern worth drawing. */
-  const PATTERN_MIN = 3;
   /** Each coloured area's mark colour (see app.css); the other areas draw in the chart colour. */
   const AREA_COLOR: Partial<Record<AreaId, string>> = {
     politics: 'var(--area-politics)',
@@ -220,12 +220,14 @@
   }
 
   const areaItems = $derived(available.map((id) => ({ id, title: S[id], line: areaLine(id), color: AREA_COLOR[id] })));
+  // The cards that could be shared as images, from the same answers as the overview.
+  const shareable = $derived(shareCards({ axes, principles, profile: pub }).map((c) => c.id));
 
   // Coming back to the overview from one of its pages, pick up where you were.
   $effect(() => {
     if (area || !hasAny) return;
     const from = router.previous?.name;
-    if (from !== 'area' && from !== 'tension' && from !== 'topic-results') return;
+    if (from !== 'area' && from !== 'tension' && from !== 'topic-results' && from !== 'share') return;
     const y = router.scrolledAt(location.hash);
     if (y) requestAnimationFrame(() => scrollTo(0, y));
   });
@@ -467,7 +469,12 @@
       <a class="btn primary" href={to.topics()}>{copy.results.emptyCta}</a>
     </div>
   {:else if area}
-    <a class="back" href={to.results()} data-testid="area-back" onclick={back}><Icon name="left" size={20} />{O.back}</a>
+    <div class="top">
+      <a class="back" href={to.results()} data-testid="area-back" onclick={back}><Icon name="left" size={20} />{O.back}</a>
+      {#if isCardId(area) && shareable.includes(area)}
+        <a class="btn share-link" href={to.share(area)} data-testid="area-share"><Icon name="share" size={18} />{copy.share.open}</a>
+      {/if}
+    </div>
     {#if !available.includes(area)}
       <ResultSection id={area} title={S[area]} color={AREA_COLOR[area]}>
         <p class="muted">{copy.results.notEnough}</p>
@@ -492,7 +499,12 @@
       {@render tastePage()}
     {/if}
   {:else}
-    <h1>{copy.results.title}</h1>
+    <div class="title-row">
+      <h1>{copy.results.title}</h1>
+      {#if shareable.length}
+        <a class="btn share-link" href={to.share()} data-testid="share-open"><Icon name="share" size={18} />{copy.share.open}</a>
+      {/if}
+    </div>
     <SummaryCard
       summary={analysis.summary}
       footer="{copy.results.selfReport} {copy.results.basedOn(answeredTopics, content.bundle.topics.length)}"
@@ -556,6 +568,29 @@
     padding-right: 10px;
     font-weight: 600;
     text-decoration: none;
+  }
+  .top,
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .top .share-link {
+    margin: -8px 0 4px;
+  }
+  .title-row {
+    margin-bottom: 0.5em;
+  }
+  .title-row h1 {
+    margin: 0;
+  }
+  .share-link {
+    flex: none;
+    min-height: 44px;
+    padding: 0 16px;
+    gap: 6px;
+    font-size: 0.95rem;
   }
   .block {
     margin-top: 14px;

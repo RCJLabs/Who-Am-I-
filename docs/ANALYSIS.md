@@ -31,6 +31,7 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Next steps | public profile only; never a sensitive topic or item |
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
 | Links from research | public profile only: the four personality spectrums other than neuroticism, and the answers to their own items (for the reversal check) |
+| Share cards | public profile only, like the overview: never worldview, taste or neuroticism. The topic count on a card counts shareable topics only, and the political tradition comes from the same comparison as above. |
 
 Worldview answers can never move the summary or a recommendation. The simulation test checks this
 for every persona and 200 random respondents; the e2e test checks it in the browser.
@@ -98,6 +99,29 @@ No sensitive topic feeds a political, values, thinking or personality spectrum t
 overview and the area pages agree on those. Sensitive topics do feed principles, so the principles
 link (public) can name different principles from the Principles page (everything), as the summary
 already can.
+
+## Share cards
+
+**Share** on the overview (or on an area's page, opening at that area's card) leads to up to six
+cards. Each is an image drawn on the device on a canvas (`src/app/share/`): 1080×1350 pixels, light
+or dark, in the app's own colours (kept in step with `app.css` by a test) and fonts, with the same
+marks as the results pages.
+
+| Card | What it shows (`cards.ts`) | Drawn when |
+|---|---|---|
+| My pattern | the overview's ring, and the firmest leans with their spectrums | at least three spectrums |
+| Politics, Values, How I think, Personality | the area's line (`areaLean`), then each scored spectrum as on its page. Politics adds the tradition the summary names: the closest, with how close, or the two it sits between. | at least one scored spectrum |
+| Principles | the most endorsed (0.4 or more) as the line. Up to six bars; past six, the most endorsed and up to two clearly rejected (0.15 or more against), with a gap between. | at least three scored principles |
+
+- **Only the public profile**, as in the overview, and first person ("My pattern", "How I think"),
+  since other people read it. The footer ("My results so far · 63 topics") counts shareable topics
+  only, so it can be lower than the summary's tile.
+- **Principles can differ** from the Principles page, which uses everything; the Share screen says
+  so under that card when they do.
+- **Nothing leaves the device** unless the person taps Share (the system share sheet, through the
+  Web Share API, where the browser can share files) or Save image (a download). Everything on a card
+  is also its alternative text.
+- Marks based on few answers are drawn hollow (principle bars lighter), and the card says so.
 
 ## Section read-outs
 
