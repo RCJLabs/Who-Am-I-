@@ -10,6 +10,7 @@ The profile is the app's public output: what results screens render, and what th
   fields, new axes, new topics. Consumers must ignore unknown keys. Renaming or removing fields, or
   changing meanings, requires `profileVersion: 2`.
 - **No raw answers.** The profile carries derived results, never the answer log or free-text notes.
+  `interests` comes closest: each pick's rating as given (see [Interests](#interests)).
 
 ## Sensitive data
 
@@ -45,6 +46,18 @@ The profile is the app's public output: what results screens render, and what th
 | `tensions[]` | `principle`, the two `topics`, `gap`, and `status`: `open`, `distinguished`, `revised` or `acknowledged` |
 | `evidence[topic]` | `validated`, `adapted`, `custom` or `for-fun` |
 | `completeness` | `answered` items; `orphaned` stored answers that no longer match the content |
+
+## Interests
+
+`interests` holds every pick on an interest multi-select with its rating as given, and each
+topic's one interest rating, how much the topic matters (lint E017). No sensitive item is ever an
+interest (E012), so the private and public views list the same ones. The taste spectrums
+(`novelty`, `mainstream`, `intensity`) are ordinary `axes`.
+
+That is close to the raw answers, and ordinary likes taken together predict private traits:
+Facebook Likes alone told gay from straight men in 88% of cases (Kosinski, Stillwell & Graepel,
+*PNAS*, 2013). So before share codes or a game export carry interests, show the person which ones
+would go and let them leave them out, and consider sending only each topic's top picks.
 
 ## Interpreting scores
 

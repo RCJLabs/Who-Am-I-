@@ -16,6 +16,11 @@ interest in, on average (collapsed until opened, and Settings can turn them off)
 your pattern, or one area, into an image to share or save, drawn on the device from answers that
 could be shared. It's all worked out on the device by fixed rules, with no AI service.
 
+Interests & Taste is the for-fun end: music, movies and TV, food, sports, books, games, the
+outdoors, climbing, art and animals. It shows what you enjoy, grouped by topic, and where you sit
+between familiar and new, popular and lesser-known, and calm and intense. It never grades taste or
+asks what anything costs.
+
 An optional About you section lets people describe their family, roots, religious background,
 gender and sexual orientation. Those answers are never scored or used anywhere else: they stay
 folded away on the topic list, show only behind a tap on their own results page, replace each
