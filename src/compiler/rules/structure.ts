@@ -1,5 +1,6 @@
-// E009 challenge contract · E010 stance/importance · E011 option values · E012 sensitivity ·
-// E013 anchor keying · W109 anchor cross-load · E007 reask that can never run
+// E009 challenge contract · E010 stance/importance · E011 option values · E012 sensitivity
+// (identity items; no sensitive interests) · E013 anchor keying · W109 anchor cross-load · E007
+// reask that can never run · E017 interest tag
 import { itemLoc, REVISABLE, topicLoc, type RuleCtx } from '../context.ts';
 import { IDENTITY_DOMAIN } from '../../model/content.ts';
 
@@ -67,6 +68,12 @@ export function structureRules(ctx: RuleCtx): void {
       });
     }
 
+    // E017: a topic's interest rating ("how much does it matter") heads its group on the Taste page.
+    const rated = topic.items.filter((i) => i.type === 'rating' && i.tags.includes('interest'));
+    if (rated.length > 1) {
+      rep.report('E017', `Only one rating per topic can be tagged interest; '${rated[0]!.key}' already is`, itemLoc(ct, rated[1]!.key, 'tags'));
+    }
+
     for (const it of topic.items) {
       // Reask items: revisable target, and something must be able to make them due.
       if (it.type === 'reask') {
@@ -99,6 +106,17 @@ export function structureRules(ctx: RuleCtx): void {
         }
         if (it.type === 'multi' && it.intensity) rep.report('E012', `Identity items have no ratings: remove intensity`, itemLoc(ct, it.key, 'intensity'));
         if (it.unsure) rep.report('E012', `Identity items offer "Not sure" as an option where it fits, never "No opinion"`, itemLoc(ct, it.key, 'unsure'));
+      }
+
+      // E012: interests are shown with the shareable picks (the Taste page, the overview line), so a
+      // sensitive answer is never one. Untagged, it shows only on its own topic's page.
+      if (it.sensitive && it.tags.includes('interest')) {
+        rep.report('E012', `A sensitive item can't be tagged interest: its answer would show among the shareable picks`, itemLoc(ct, it.key, 'tags'));
+      }
+
+      // E017: the profile reads interests from ratings and multi-selects only.
+      if (it.tags.includes('interest') && it.type !== 'rating' && it.type !== 'multi') {
+        rep.report('E017', `Only rating and multi items can be tagged interest; '${it.key}' is ${it.type}`, itemLoc(ct, it.key, 'tags'));
       }
 
       // E013 / W109: anchors

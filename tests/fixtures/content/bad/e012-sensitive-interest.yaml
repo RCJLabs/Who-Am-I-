@@ -1,0 +1,14 @@
+# expect: E012@12
+id: bad_sensitive_interest
+domain: interests
+title: Bad
+summary: Fixture.
+tier: core
+evidence: for-fun
+items:
+  - id: q
+    type: rating
+    sensitive: true
+    tags: [interest]
+    text: How much do you enjoy it?
+    poles: [Not much, A lot]

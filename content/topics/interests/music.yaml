@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
+# Music: how much it matters, the kinds you enjoy, then three taste sliders and a few unscored
+# questions about how you listen. "Not much" ends the topic after the kinds you enjoy. Genres keep
+# their ids, so saved answers survive relabeling, and are listed roughly by how widely each is
+# heard, with the big traditions outside North America and Europe named rather than left to a
+# catch-all at the end. Devotional music is its own sensitive question rather than a genre, so a
+# pick on the overview never says anything about faith. Seeing live music is asked as how often
+# you get to, which tracks money, place and health: it isn't an interest and feeds nothing.
 id: music
 domain: interests
 title: Music
@@ -12,6 +19,7 @@ items:
     tags: [interest]
     text: How much does music matter in your life?
     poles: [Not much, It's part of who I am]
+    labels: [Not much, A little, Some, A lot, It's part of who I am]
 
   - id: genres
     type: multi
@@ -20,27 +28,41 @@ items:
     text: Which kinds of music do you enjoy? Tap the ones you like, then rate how much.
     options:
       - { id: pop, label: Pop }
-      - { id: rock, label: Rock }
       - { id: hiphop, label: Hip-hop / rap }
+      - { id: rock, label: Rock }
       - { id: rnb, label: R&B / soul }
       - { id: electronic, label: Electronic / dance }
+      - { id: latin, label: Latin music }
+      - { id: asian_pop, label: K-pop / J-pop / C-pop }
+      - { id: south_asian, label: Bollywood and South Asian pop }
+      - { id: african, label: Afrobeats / African pop }
+      - { id: arabic, label: Arabic / Persian / Turkish music }
+      - { id: brazilian, label: Brazilian music }
+      - { id: reggae, label: Reggae / dancehall }
       - { id: country, label: Country }
-      - { id: folk, label: Folk / acoustic }
       - { id: indie, label: Indie / alternative }
       - { id: metal, label: Metal }
       - { id: punk, label: Punk }
       - { id: jazz, label: Jazz }
       - { id: blues, label: Blues }
-      - { id: classical, label: Classical }
-      - { id: latin, label: Latin }
-      - { id: reggae, label: Reggae }
-      - { id: asian_pop, label: K-pop / J-pop }
+      - { id: classical, label: Classical / opera }
+      - { id: indian_classical, label: Indian classical }
+      - { id: folk, label: Folk / acoustic }
+      - { id: traditional, label: "Traditional music, any culture" }
       - { id: scores, label: Film & game scores }
-      - { id: traditional, label: World / traditional }
+      - { id: musicals, label: Musicals }
+
+  # Not a genre option, which would put faith on the overview, and not an interest.
+  - id: devotional
+    type: rating
+    sensitive: true
+    text: How much do you enjoy religious or devotional music, such as hymns, gospel, worship songs, nasheeds, bhajans, kirtan, qawwali or chant?
+    poles: [Not for me, Love it]
 
   - id: discovery
     type: slider
     steps: 5
+    when: matters > -1 or not answered(matters)
     text: When you put music on, you mostly play…
     poles: [Favorites I already love, Things I haven't heard]
     axes: { novelty: 1 }
@@ -48,40 +70,54 @@ items:
   - id: taste
     type: slider
     steps: 5
-    text: Your taste is mostly…
-    poles: [What's popular, Off the beaten path]
+    when: matters > -1 or not answered(matters)
+    text: The music you like is mostly by…
+    poles: [Artists lots of people know, Artists few people know]
     axes: { mainstream: 1 }
+
+  - id: energy
+    type: slider
+    steps: 5
+    when: matters > -1 or not answered(matters)
+    text: Most of the music you put on is…
+    poles: [Calm and mellow, Intense and energetic]
+    axes: { intensity: 1 }
 
   - id: era
     type: slider
     steps: 5
+    when: matters > -1 or not answered(matters)
     text: Most of what you listen to is…
     poles: [From decades ago, From the last few years]
 
   - id: hook
     type: slider
     steps: 5
+    when: matters > -1 or not answered(matters)
     text: What grabs you first in a song?
     poles: [The lyrics, The sound]
 
   - id: listening
     type: choice
     shuffle: true
+    when: matters > -1 or not answered(matters)
     text: How do you most often listen?
     options:
       - { id: playlists, label: Streaming playlists or radio }
       - { id: albums, label: "Whole albums, start to finish" }
+      - { id: videos, label: Music videos online }
       - { id: live, label: Live shows }
       - { id: background, label: In the background while doing other things }
 
   - id: live_shows
     type: rating
-    tags: [interest]
-    text: How often do you go to see live music?
-    poles: [Never, All the time]
+    when: matters > -1 or not answered(matters)
+    text: How often do you get to see live music?
+    poles: [Rarely or never, All the time]
 
   - id: plays
     type: choice
+    when: matters > -1 or not answered(matters)
     text: Do you play an instrument or sing?
     options:
       - { id: no, label: "No" }
