@@ -29,6 +29,7 @@ export const ICONS = {
   tensions: ['M3 12h6', 'M15 12h6', 'M6 9l-3 3 3 3', 'M18 9l3 3-3 3'],
   positions: ['M5 21V4', 'M5 4h11l-2 4 2 4H5'],
   taste: ['M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z'],
+  you: ['M3 5h18v14H3z', 'M9 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 'M5.5 16.5c.7-1.5 2-2.3 3.5-2.3s2.8.8 3.5 2.3', 'M15 9h3', 'M15 13h3'],
 } as const;
 
 export type IconName = keyof typeof ICONS;

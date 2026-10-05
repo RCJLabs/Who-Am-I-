@@ -6,6 +6,7 @@ import { IDENTITY_DOMAIN } from '../src/model/content.ts';
 import { nextStep } from '../src/engine/flow.ts';
 import { buildProfile } from '../src/engine/profile.ts';
 import { buildAnswerState } from '../src/engine/state.ts';
+import { opaque } from '../src/app/routes.ts';
 import { declined, Log, multi, pick, realBundle, scale } from './helpers.ts';
 
 const b = realBundle();
@@ -43,6 +44,12 @@ describe('About you', () => {
         if (it.type === 'multi') expect(it.intensity, it.id).toBe(false);
       }
     }
+  });
+
+  it('gives every topic and question a distinct hashed URL name', () => {
+    const tokens = (ids: string[]) => new Set(ids.map(opaque)).size;
+    expect(tokens(b.topics.map((t) => t.id))).toBe(b.topics.length);
+    for (const t of topics) expect(tokens(t.items.map((i) => i.key)), t.id).toBe(t.items.length);
   });
 
   it('asks about attraction only when the words leave room, or when asked to', () => {

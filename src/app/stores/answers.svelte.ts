@@ -74,8 +74,9 @@ export class AnswersStore {
 
   async record(item: ItemId, r: Response, via?: Via, note?: string): Promise<AnswerEvent> {
     const identity = isIdentityItem(item);
-    const ev: AnswerEvent = { id: ulid(), item, r, at: Date.now(), cv: this.bundle().contentVersion };
-    if (via) ev.via = via;
+    // Plain copies: an edit's `via` comes from component state, and IndexedDB can't store Svelte's proxies.
+    const ev: AnswerEvent = { id: ulid(), item, r: $state.snapshot(r) as Response, at: Date.now(), cv: this.bundle().contentVersion };
+    if (via) ev.via = $state.snapshot(via) as Via;
     // Answers about you never carry free text.
     if (note?.trim() && !identity) ev.note = note.trim();
     const next = [...this.events, ev];

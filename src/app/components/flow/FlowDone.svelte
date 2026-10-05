@@ -3,6 +3,7 @@
   import { challengeSummary } from '../../../engine/shifts.ts';
   import { app } from '../../context.ts';
   import { copy } from '../../copy.ts';
+  import { router } from '../../router.svelte.ts';
   import { to } from '../../routes.ts';
   import { answerLabel, nextTopic } from '../../view.ts';
   import BackupNudge from '../BackupNudge.svelte';
@@ -17,6 +18,13 @@
   const started = $derived(stanceItem && stanceHistory.length ? answerLabel(stanceItem, stanceHistory[0]!.r) : null);
   const summary = $derived(challengeSummary(answers.state, topic));
   const next = $derived(nextTopic(content.bundle, answers.state, topic.id, { alwaysDeep: settings.alwaysDeep }));
+
+  /** Out of questions about you, every way on replaces this page in history, so Back can't reopen it. */
+  function onward(e: MouseEvent): void {
+    if (topic.domain !== IDENTITY_DOMAIN) return;
+    e.preventDefault();
+    router.go((e.currentTarget as HTMLAnchorElement).getAttribute('href')!, { replace: true });
+  }
 
   function sourceName(id: string): string {
     const item = answers.state.ix.items.get(id);
@@ -51,10 +59,10 @@
 
   <div class="actions">
     {#if next}
-      <a class="btn primary block" href={to.flow(next.id)} data-testid="next-topic">{copy.flow.nextTopic(next.title)}</a>
+      <a class="btn primary block" href={to.flow(next.id)} onclick={onward} data-testid="next-topic">{copy.flow.nextTopic(next.title)}</a>
     {/if}
-    <a class="btn block" href={to.results()} data-testid="see-results">{copy.flow.seeResults}</a>
-    <a class="btn ghost block" href={to.topicResults(topic.id)}>{copy.flow.reviewAnswers}</a>
+    <a class="btn block" href={to.results()} onclick={onward} data-testid="see-results">{copy.flow.seeResults}</a>
+    <a class="btn ghost block" href={to.topicResults(topic.id)} onclick={onward} data-testid="review-answers">{copy.flow.reviewAnswers}</a>
   </div>
 </section>
 

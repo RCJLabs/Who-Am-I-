@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { Response, TensionResolution, Via } from '../../model/answers.ts';
+  import { IDENTITY_DOMAIN } from '../../model/content.ts';
   import { nextStep, progress } from '../../engine/flow.ts';
   import { openTensions } from '../../engine/tensions.ts';
   import { app } from '../context.ts';
   import { copy } from '../copy.ts';
   import { router } from '../router.svelte.ts';
-  import { to } from '../routes.ts';
+  import { fromRoute, to } from '../routes.ts';
   import { toasts } from '../stores/toasts.svelte.ts';
   import EvidenceBadge from '../components/EvidenceBadge.svelte';
   import FlowDone from '../components/flow/FlowDone.svelte';
@@ -25,14 +26,22 @@
 
   let { topicId, edit }: { topicId: string; edit?: string | undefined } = $props();
   const { content, answers, settings } = app();
-  const topic = $derived(content.bundle.topics.find((t) => t.id === topicId));
+  // Topics about you arrive hashed (routes.ts).
+  const topic = $derived.by(() => {
+    const id = fromRoute(topicId, content.bundle.topics.map((t) => t.id));
+    return content.bundle.topics.find((t) => t.id === id);
+  });
+  const identity = $derived(topic?.domain === IDENTITY_DOMAIN);
 
   // Per-visit state. Everything else is derived from the answer log.
   let tensionDone = $state(false);
   let introDismissed = $state(false);
   // Opened from "Change" on the results page: edit that item, then go back. (The route remounts
   // this component, so reading the props once is enough.)
-  const initialEditing = (): Editing | null => (edit ? { itemId: `${topicId}.${edit}`, via: { kind: 'manual' }, then: 'back' } : null);
+  const initialEditing = (): Editing | null => {
+    const key = edit && topic ? fromRoute(edit, topic.items.map((i) => i.key)) : undefined;
+    return key ? { itemId: `${topic!.id}.${key}`, via: { kind: 'manual' }, then: 'back' } : null;
+  };
   let editing = $state<Editing | null>(initialEditing());
   let visitHistory = $state<string[]>([]);
 
@@ -71,7 +80,7 @@
     const current = answers.state.latest.get(e.itemId)?.r;
     if (!current || JSON.stringify(current) !== JSON.stringify(r)) await answers.record(e.itemId, r, e.via, note);
     editing = null;
-    if (e.then === 'back') router.back(to.topicResults(topicId));
+    if (e.then === 'back') router.back(to.topicResults(topic!.id));
     else if (e.then === 'tension' && e.tensionKey) await finishRevision(e.tensionKey);
   }
 
@@ -104,8 +113,14 @@
       visitHistory = visitHistory.slice(0, -1);
       editing = { itemId: last, via: { kind: 'manual' }, then: 'stay' };
     } else {
-      router.back(to.topics());
+      leave();
     }
+  }
+
+  /** Back where you came from; but questions about you are replaced in history, so Back can't reopen them. */
+  function leave(): void {
+    if (identity) router.go(to.topics(), { replace: true });
+    else router.back(to.topics());
   }
 
   function reaskHeading(via: Via): string {
@@ -124,7 +139,7 @@
         <span class="name">{topic.title}</span>
         {#if step?.kind !== 'done'}<ProgressBar value={progressValue} label={topic.title} />{/if}
       </div>
-      <button class="icon-btn" aria-label={copy.flow.exit} data-testid="flow-exit" onclick={() => router.back(to.topics())}><Icon name="x" /></button>
+      <button class="icon-btn" aria-label={copy.flow.exit} data-testid="flow-exit" onclick={leave}><Icon name="x" /></button>
     </header>
 
     <main class="body">
@@ -137,7 +152,7 @@
         <section class="intro">
           <h1>{topic.title}</h1>
           <p class="muted">{topic.summary}</p>
-          <EvidenceBadge evidence={topic.evidence} />
+          {#if !identity}<EvidenceBadge evidence={topic.evidence} />{/if}
           <p class="instructions">{topic.instructions}</p>
           {#if topic.source}<p class="small muted">{topic.source}</p>{/if}
           <button class="btn primary block" data-testid="intro-start" onclick={() => (introDismissed = true)}>{copy.flow.start}</button>

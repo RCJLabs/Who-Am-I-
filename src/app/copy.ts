@@ -49,6 +49,12 @@ export const copy = {
     left: (n: number) => `${n} left`,
     done: 'Done',
     sensitive: 'Private: never in your summary, cards or suggestions',
+    aboutYou: {
+      tag: 'optional and private',
+      open: 'Show these questions',
+      close: 'Hide these questions',
+      note: "These questions describe you: your family, roots, faith, gender and sexual orientation. Nothing here is scored, it's never in your summary, cards or suggestions, and backups leave it out unless you include it. Skip anything, and remove it all in one tap from Settings. Your answers stay on this device, so anyone who can open the app here can see them.",
+    },
     deepDives: 'Deep dives',
     comingSoon: 'Coming soon',
     comingSoonNote: 'These areas are planned and will be added over time.',
@@ -174,6 +180,7 @@ export const copy = {
       tensions: 'Tensions',
       positions: 'Positions',
       taste: 'Taste',
+      you: 'About you',
       next: 'Next steps',
     },
     // The overview: the summary, the pattern of your spectrums, your firmest leans, then a link to
@@ -192,6 +199,7 @@ export const copy = {
         middle: 'Near the middle so far',
         notYet: 'Not enough answers yet',
         sensitive: 'Sensitive: kept out of your summary',
+        private: 'Private: shown only when you ask',
         principles: (labels: readonly string[]) => `Most endorsed: ${list(labels)}`,
         principleCount: (n: number) => `${n} principle${s(n)} so far`,
         tensions: (open: number, resolved: number) => [open ? `${open} open` : '', resolved ? `${resolved} thought through` : ''].filter(Boolean).join(' · '),
@@ -421,6 +429,15 @@ export const copy = {
       across: (n: number, areas: readonly string[]) => `${n} spectrum${s(n)}: ${list(areas)}`,
       alt: (name: string, parts: readonly string[]) => `Who Am I, ${name}. ${parts.join('. ')}.`,
     },
+  },
+
+  // The About you page under Results: answers about you, behind a tap.
+  aboutYou: {
+    intro: "How you've described yourself, kept on this device. It's never in your summary, cards or suggestions.",
+    show: 'Show my answers',
+    hide: 'Hide my answers',
+    change: 'Change',
+    notPrinted: "Answers about you aren't printed.",
   },
 
   topicResults: {

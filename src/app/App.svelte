@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { IDENTITY_DOMAIN } from '../model/content.ts';
   import { app } from './context.ts';
   import { copy } from './copy.ts';
   import { router } from './router.svelte.ts';
@@ -22,6 +23,8 @@
   const route = $derived(router.route);
   /** What a topic's screens need loaded. An unknown topic needs nothing: it shows "not found". */
   const topicDomains = (topic: string): string[] => {
+    // A hashed topic is about you (routes.ts).
+    if (topic.startsWith('~')) return [IDENTITY_DOMAIN];
     const domain = content.topicDomain(topic);
     return domain ? [domain] : [];
   };

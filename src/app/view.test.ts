@@ -3,7 +3,7 @@ import type { Item } from '../model/content.ts';
 import { buildAnswerState } from '../engine/state.ts';
 import { buildProfile } from '../engine/profile.ts';
 import { fixtureBundle, fixturePack, Log, multi, pick, scale, skip } from '../../tests/helpers.ts';
-import { AREAS, CARD_IDS, parseHash, to } from './routes.ts';
+import { AREAS, CARD_IDS, fromRoute, opaque, parseHash, to } from './routes.ts';
 import type { Axis, Principle } from '../model/content.ts';
 import type { Profile } from '../model/profile.ts';
 import {
@@ -64,6 +64,23 @@ describe('routes', () => {
     for (const area of AREAS) expect(parseHash(to.area(area))).toEqual({ name: 'area', area });
     for (const card of CARD_IDS) expect(parseHash(to.share(card))).toEqual({ name: 'share', card });
     expect(parseHash(to.share())).toEqual({ name: 'share', card: null });
+  });
+
+  it('keeps the names of questions about you out of URLs', () => {
+    const href = to.flow('about_gender', 'trans');
+    expect(href).not.toMatch(/about|gender|trans/);
+    const route = parseHash(href);
+    expect(route).toEqual({ name: 'flow', topic: opaque('about_gender'), edit: opaque('trans') });
+    if (route.name !== 'flow') throw new Error('not a flow');
+    expect(fromRoute(route.topic, ['about_family', 'about_gender'])).toBe('about_gender');
+    expect(fromRoute(route.edit!, ['gender', 'trans'])).toBe('trans');
+    // Plain names still resolve, and other topics keep readable URLs.
+    expect(fromRoute('about_gender', ['about_gender'])).toBe('about_gender');
+    expect(to.flow('abortion', 'stance')).toBe('#/m/abortion?edit=stance');
+    // Their answers are shown together on the About you page, never on a page of their own.
+    expect(to.topicResults('about_gender')).toBe(to.area('you'));
+    expect(parseHash('#/results/about_gender')).toEqual({ name: 'area', area: 'you' });
+    expect(parseHash(`#/results/${opaque('about_gender')}`)).toEqual({ name: 'area', area: 'you' });
   });
 });
 

@@ -32,6 +32,7 @@
     traditionTable,
     type PatternArea,
   } from '../view.ts';
+  import AboutYou from '../components/results/AboutYou.svelte';
   import AreaLinks from '../components/results/AreaLinks.svelte';
   import ChallengeBar from '../components/results/ChallengeBar.svelte';
   import NextSteps from '../components/results/NextSteps.svelte';
@@ -173,6 +174,8 @@
       tensions: true,
       positions: positionGroups.length > 0,
       taste: tasteScored.length > 0 || interests.length > 0,
+      // Listed once something about you is answered; declining everything doesn't list it.
+      you: Object.keys(profile.identity ?? {}).length > 0,
     };
     return AREAS.filter((id) => show[id]);
   });
@@ -216,6 +219,8 @@
         const top = picks.slice(0, 2).map((e) => e.label);
         return top.length ? O.line.enjoys(top) : (areaLean(axes, pub.axes, 'taste', UNNAMED_TRAITS) ?? O.line.notYet);
       }
+      case 'you':
+        return O.line.private;
     }
   }
 
@@ -497,6 +502,8 @@
       {@render positionsPage()}
     {:else if area === 'taste'}
       {@render tastePage()}
+    {:else if area === 'you'}
+      <ResultSection id="you" title={S.you}><AboutYou /></ResultSection>
     {/if}
   {:else}
     <div class="title-row">

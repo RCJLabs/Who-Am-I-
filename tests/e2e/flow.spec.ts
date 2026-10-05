@@ -104,3 +104,17 @@ test('every question can be skipped, and a skipped stance gets no challenges', a
   expect(end).toBe('done');
   expect(seen.some((id) => id.includes('.ch_'))).toBe(false);
 });
+
+test('changing an answer from its results page saves it', async ({ page }) => {
+  await freshStart(page, '#/m/abortion');
+  await page.getByTestId('scale-stance-2').click(); // Illegal except to save the woman's life
+  await expect(page.getByTestId('q-importance')).toBeVisible();
+  await page.goto('#/results/abortion');
+  await page.getByTestId('answer-stance').getByRole('link').click();
+  await page.getByTestId('scale-stance-5').click(); // Legal early in pregnancy, restricted later
+  // Back on the results page, saved: a failed write would raise the storage warning.
+  await expect(page.getByTestId('answer-stance')).toContainText('Legal early in pregnancy, restricted later');
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await page.reload();
+  await expect(page.getByTestId('answer-stance')).toContainText('Legal early in pregnancy, restricted later');
+});
