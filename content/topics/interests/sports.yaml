@@ -7,8 +7,9 @@
 # shooting (a political signal), no betting or fantasy sports for money (Lifestyle's rule), and
 # never which team or country you support, a known loyalty test. Para sports aren't a pick, which
 # could disclose a disability; the help text says adapted versions count. Only Popular or
-# lesser-known is fed here, from what's big where you live: doing or watching, on your own or in a
-# team, and anything "intense" would track ability, health and age.
+# lesser-known is fed here, by how many people follow a sport, not how many around you do, which
+# would score a cricket fan who moved to Ohio as lesser-known. Doing or watching, on your own or in
+# a team, and anything "intense" would track ability, health and age, so they feed nothing.
 id: sports
 domain: interests
 title: Sports
@@ -30,9 +31,9 @@ items:
     intensity: true
     tags: [interest]
     text: Which sports do you enjoy, playing or watching? Tap the ones you like, then rate how much.
-    help: "Any level, men's or women's. Adapted versions count as the sport itself: wheelchair basketball is basketball."
+    help: "Any level, and men's, women's or mixed. Adapted versions count as the sport itself: wheelchair basketball is basketball."
     options:
-      - { id: soccer, label: Football (soccer) }
+      - { id: soccer, label: Football / soccer }
       - { id: cricket, label: Cricket }
       - { id: basketball, label: Basketball }
       - { id: racket, label: "Tennis, badminton and table tennis" }
@@ -54,15 +55,17 @@ items:
       - { id: dance, label: Dance }
       - { id: motorsport, label: Motorsport }
       - { id: golf, label: Golf }
+      - { id: bowls, label: "Bowls, boules and boccia" }
+      - { id: aussie_gaelic, label: Australian rules and Gaelic games }
       - { id: board_sports, label: "Skateboarding, surfing and BMX" }
-      - { id: snow, label: Skiing and winter sports }
+      - { id: snow, label: "Skiing, ice skating and winter sports" }
 
   - id: follow
     type: slider
     steps: 5
     when: matters > -1 or not answered(matters)
     text: The sports you enjoy are mostly…
-    poles: [The big ones where I live, Ones few people around me follow]
+    poles: [Ones lots of people follow, Ones few people follow]
     axes: { mainstream: 1 }
 
   - id: play_or_watch

@@ -234,7 +234,7 @@ describe('taste on real content', () => {
     expect(a.readouts.taste?.sentences).toEqual([
       'In your taste, you sit in the middle on “Familiar or new”.',
       'On “Familiar or new” your answers pull both ways: “Music” toward “Familiar”, and “Movies and TV” toward “New”.',
-      'Your top picks: Hip-hop / rap and Anime.',
+      'Your top picks: Hip-hop / rap · Anime.',
     ]);
   });
 

@@ -40,13 +40,13 @@ items:
       - { id: documentary, label: Documentaries }
       - { id: reality, label: "Reality, game and talk shows" }
       - { id: soaps, label: "Soaps, telenovelas and serials" }
-      - { id: asian_drama, label: K-dramas and other East Asian dramas }
+      - { id: asian_drama, label: K-dramas and other Asian dramas }
       - { id: indian, label: "Indian films (Bollywood, Tamil, Telugu…)" }
       - { id: turkish, label: Turkish series }
       - { id: african, label: Nollywood and other African films }
       - { id: arabic, label: Arabic series and films }
       - { id: martial_arts, label: Martial arts films }
-      - { id: history, label: History and war }
+      - { id: history, label: History and war films }
       - { id: musicals, label: Musicals }
       - { id: family, label: Family films }
       - { id: online, label: Online videos and creators }

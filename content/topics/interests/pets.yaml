@@ -16,8 +16,8 @@ items:
     tags: [interest]
     text: How much do animals matter in your life?
     help: Any animals count, whether or not you have any.
-    poles: [Not much, They're a big part of it]
-    labels: [Not much, A little, Some, A lot, They're a big part of it]
+    poles: [Not much, A big part of my life]
+    labels: [Not much, A little, Some, A lot, A big part of my life]
 
   - id: animals
     type: multi
@@ -28,7 +28,7 @@ items:
       - { id: dogs, label: Dogs }
       - { id: cats, label: Cats }
       - { id: birds, label: Birds }
-      - { id: fish, label: Fish }
+      - { id: fish, label: Fish and sea life }
       - { id: small, label: Rabbits and other small animals }
       - { id: reptiles, label: Reptiles and amphibians }
       - { id: insects, label: Insects and spiders }

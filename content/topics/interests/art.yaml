@@ -41,7 +41,7 @@ items:
       - { id: architecture, label: Architecture }
       - { id: interiors, label: Interiors and home design }
       - { id: fashion, label: Fashion and style }
-      - { id: theater, label: Theater }
+      - { id: theater, label: Theater and dance }
       - { id: folk, label: Traditional and folk art }
 
   - id: make_or_look

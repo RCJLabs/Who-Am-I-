@@ -88,7 +88,7 @@ describe('taste read-out', () => {
     log.add('snacks.matters', scale(5));
     log.add('snacks.kinds', multi({ nuts: 4 }));
     // Jazz is the strongest single pick, but Snacks matters more; Nuts loses its examples.
-    expect(compose(log).readouts.taste?.sentences).toEqual(['Your top picks: Nuts, Jazz and Pop.']);
+    expect(compose(log).readouts.taste?.sentences).toEqual(['Your top picks: Nuts · Jazz · Pop.']);
   });
 });
 

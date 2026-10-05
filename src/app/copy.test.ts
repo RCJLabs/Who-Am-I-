@@ -66,7 +66,7 @@ const SAMPLES: Record<string, unknown[][]> = {
   'analysis.tensionsRead': [[1, 1, 0], [12, 5, 3]],
   'analysis.firmest': [[['Guns']], [['Guns', 'Abortion', 'Taxes and redistribution']]],
   'analysis.reconsidered': [[0], [1], [3]],
-  'analysis.enjoys': [[['Jazz']], [['Hip-hop / rap', 'Korean food', 'Bouldering']]],
+  'analysis.enjoys': [[['Jazz']], [['Hip-hop / rap', 'Tennis, badminton and table tennis', 'Bouldering']]],
   'analysis.basedOn': [[1], [7]],
   'analysis.basedOnSelf': [[1], [2]],
   'analysis.traditions.summary.match': [['Social democracy']],

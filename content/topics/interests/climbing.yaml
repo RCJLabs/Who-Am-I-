@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # Climbing: a short deep dive for climbers and anyone who's wondered. It gates itself on its first
 # question (a condition on Sports' answers would cross topics): never-climbers who aren't
-# interested see one question, the curious three, people who climb nine. Plain words for
+# interested see one question, the curious three, people who climb nine ("Not much" ends it after
+# the kinds of climbing, as in the other topics). Plain words for
 # non-climbers ("working out one hard climb over many tries", not "projecting"). No grades, only
 # whether they matter to you; nothing about how often, gear, gym fees, trips or crags visited;
 # nothing about weight, food, height or reach; no injuries, falls or accidents, and never why
@@ -52,44 +53,44 @@ items:
       - { id: multipitch, label: Multi-pitch and big walls }
       - { id: alpine, label: Alpine climbing and mountaineering }
       - { id: ice, label: Ice and mixed climbing }
-      - { id: dws, label: "Deep-water soloing (above water)" }
+      - { id: dws, label: "Deep-water soloing (no rope, over water)" }
       - { id: scrambling, label: Scrambling and via ferratas }
       - { id: boards, label: Board climbing }
       - { id: speed, label: Speed climbing }
-      - { id: comps, label: Competing }
+      - { id: comps, label: Competition climbing }
 
   - id: where
     type: slider
     steps: 5
-    when: climbed is climb or climbed is tried or climbed is used_to
+    when: (climbed is climb or climbed is tried or climbed is used_to) and (matters > -1 or not answered(matters))
     text: Given the choice, where would you rather climb?
     poles: [Indoors at a wall, Outdoors on rock]
 
   - id: projecting
     type: slider
     steps: 5
-    when: climbed is climb or climbed is used_to
+    when: (climbed is climb or climbed is used_to) and (matters > -1 or not answered(matters))
     text: Which sounds more fun?
     poles: [Working out one hard climb over many tries, Trying lots of climbs for the first time]
 
   - id: angle
     type: slider
     steps: 5
-    when: climbed is climb or climbed is used_to
-    text: Which suits you more?
+    when: (climbed is climb or climbed is used_to) and (matters > -1 or not answered(matters))
+    text: Which do you enjoy more?
     poles: [Balance and footwork on slabs, Steep and powerful overhangs]
 
   - id: grades
     type: slider
     steps: 5
-    when: climbed is climb or climbed is used_to
+    when: (climbed is climb or climbed is used_to) and (matters > -1 or not answered(matters))
     text: How much do grades matter to you?
     poles: [Not at all, A lot]
 
   - id: draws
     type: multi
     max: 3
-    when: not (climbed is not_for_me)
+    when: not (climbed is not_for_me) and (matters > -1 or not answered(matters))
     text: What draws you to climbing, or would? Choose up to three.
     options:
       - { id: movement, label: The movement }
@@ -105,7 +106,7 @@ items:
 
   - id: watch
     type: multi
-    when: not (climbed is not_for_me)
+    when: not (climbed is not_for_me) and (matters > -1 or not answered(matters))
     text: What climbing do you enjoy watching?
     none: "I don't watch climbing"
     options:

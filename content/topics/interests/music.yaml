@@ -34,12 +34,13 @@ items:
       - { id: electronic, label: Electronic / dance }
       - { id: latin, label: Latin music }
       - { id: asian_pop, label: K-pop / J-pop / C-pop }
-      - { id: south_asian, label: Bollywood and South Asian pop }
+      - { id: south_asian, label: "South Asian film songs and pop (Bollywood, Tamil, Punjabi…)" }
+      - { id: southeast_asian, label: "Southeast Asian pop (OPM, dangdut, V-pop…)" }
       - { id: african, label: Afrobeats / African pop }
       - { id: arabic, label: Arabic / Persian / Turkish music }
       - { id: brazilian, label: Brazilian music }
       - { id: reggae, label: Reggae / dancehall }
-      - { id: country, label: Country }
+      - { id: country, label: Country music }
       - { id: indie, label: Indie / alternative }
       - { id: metal, label: Metal }
       - { id: punk, label: Punk }
@@ -53,12 +54,13 @@ items:
       - { id: musicals, label: Musicals }
 
   # Not a genre option, which would put faith on the overview, and not an interest. The flow marks
-  # a sensitive item only with "Prefer not to say", so the help text says it's private.
+  # a sensitive item only with "Prefer not to say", so the help text says it's private. Asked even
+  # after "Not much": some people don't count devotional singing as music at all.
   - id: devotional
     type: rating
     sensitive: true
-    text: How much do you enjoy religious or devotional music, such as hymns, gospel, worship songs, nasheeds, bhajans, kirtan, qawwali or chant?
-    help: "Private: never in your summary, cards or suggestions."
+    text: How much do you enjoy religious or devotional music?
+    help: "Hymns, gospel, worship songs, nasheeds, bhajans, kirtan, qawwali or chant, from any faith. Private: never in your summary, cards or suggestions."
     poles: [Not for me, Love it]
 
   - id: discovery

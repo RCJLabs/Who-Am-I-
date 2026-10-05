@@ -35,7 +35,7 @@ items:
       - { id: historical, label: Historical fiction }
       - { id: contemporary, label: Contemporary fiction }
       - { id: classics, label: Classics }
-      - { id: young_adult, label: Young adult }
+      - { id: young_adult, label: Young adult fiction }
       - { id: comics, label: "Comics, manga and webtoons" }
       - { id: web, label: "Web novels, serials and fan fiction" }
       - { id: poetry, label: Poetry }
@@ -80,7 +80,7 @@ items:
     when: matters > -1 or not answered(matters)
     text: How do you mostly read?
     options:
-      - { id: print, label: Printed books }
+      - { id: print, label: Printed or braille books }
       - { id: ereader, label: E-reader or tablet }
       - { id: phone, label: On my phone }
       - { id: audio, label: Audiobooks }

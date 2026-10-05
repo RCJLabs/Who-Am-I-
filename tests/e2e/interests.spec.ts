@@ -51,6 +51,6 @@ test('the Taste page groups what you enjoy by topic, and the overview names favo
   // Familiar in music, new in food: the spectrum says so, and the read-out says which way each pulls.
   await expect(page.getByTestId('axis-novelty')).toContainText('Mixed: your answers pull both ways');
   await expect(page.getByTestId('readout-taste')).toContainText('“Music” toward “Familiar”, and “Food” toward “New”');
-  await expect(page.getByTestId('readout-taste')).toContainText('Your top picks: Jazz, Korean food and Pop.');
+  await expect(page.getByTestId('readout-taste')).toContainText('Your top picks: Jazz · Korean food · Pop.');
   await expect(page.getByTestId('section-taste')).not.toContainText(/devotional|hymn/i);
 });

@@ -6,7 +6,7 @@
 # regions are named without national examples whose dishes are disputed. Nothing about diets or
 # food rules (each stands in for faith or health), alcohol, money (eating out, fine dining against
 # fast food) or "family recipes from where you're from", which is a roots question. Trying
-# something new feeds Familiar or new, within whatever you eat; spice, sweet or savory and cooking
+# something new feeds Familiar or new, as a preference with price set aside, within whatever you eat; spice, sweet or savory and cooking
 # feed nothing: who cooks at home is gendered in many households.
 id: food
 domain: interests
@@ -20,8 +20,8 @@ items:
     type: rating
     tags: [interest]
     text: How much is food a hobby or an interest for you?
-    poles: [Not really, One of my biggest]
-    labels: [Not really, A little, Some, A lot, One of my biggest]
+    poles: [Not really, One of my biggest interests]
+    labels: [Not really, A little, Some, A lot, One of my biggest interests]
 
   - id: kinds
     type: multi
@@ -36,6 +36,7 @@ items:
       - { id: southeast_asian, label: Southeast Asian food }
       - { id: south_asian, label: South Asian food }
       - { id: middle_eastern, label: Middle Eastern food }
+      - { id: central_asian, label: Central Asian and Caucasus food }
       - { id: north_african, label: North African food }
       - { id: west_african, label: West African food }
       - { id: east_african, label: East African food }
@@ -59,8 +60,8 @@ items:
     type: slider
     steps: 5
     when: matters > -1 or not answered(matters)
-    text: When you choose what to eat, you mostly go for…
-    help: Within whatever you eat.
+    text: Given the choice, you'd rather eat…
+    help: Leaving price aside, and within whatever you eat.
     poles: [Dishes I know and love, Something I've never tried]
     axes: { novelty: 1 }
 

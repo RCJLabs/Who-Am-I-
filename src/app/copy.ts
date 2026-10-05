@@ -270,7 +270,8 @@ export const copy = {
       }`,
     firmest: (titles: readonly string[]) => `Your firmest position${s(titles.length)} ${titles.length === 1 ? 'is' : 'are'} on ${list(titles.map(q))}.`,
     reconsidered: (n: number) => (n ? `You reconsidered ${n} position${s(n)} after a challenge.` : 'You held every position through its challenges.'),
-    enjoys: (labels: readonly string[]) => `Your top picks: ${list(labels)}.`,
+    // Joined with dots, not commas: many labels have commas of their own ("Tennis, badminton and table tennis").
+    enjoys: (labels: readonly string[]) => `Your top picks: ${labels.join(' · ')}.`,
     basedOn: (topics: number) => `Based on ${topics} topic${s(topics)}.`,
     basedOnSelf: (topics: number) => `Your self-description is based on ${topics} topic${s(topics)}.`,
     fewAnswers: 'Some results rest on few answers so far.',

@@ -43,7 +43,9 @@ items:
     tags: [interest]
     when: matters > -1 or not answered(matters)
     text: What do you enjoy doing outside? Tap the ones you like, then rate how much.
+    help: "Adapted versions count as the activity itself: walking includes wheeling."
     options:
+      - { id: relaxing, label: Relaxing outdoors }
       - { id: walking, label: Walking and hiking }
       - { id: picnics, label: Picnics and cooking outdoors }
       - { id: gardening, label: Gardening (pots and balconies too) }

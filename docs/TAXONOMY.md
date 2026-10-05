@@ -184,7 +184,7 @@ own work is to you, is sensitive and includes "I'm not in paid work right now".
 | Music | core | for-fun | ✅ | 24 kinds, the big traditions outside North America and Europe named; devotional music as its own sensitive question; feeds all three taste spectrums |
 | Movies and TV | core | for-fun | ✅ | anime, K-dramas, Indian films, Turkish series, Nollywood, telenovelas; all three spectrums |
 | Food | core | for-fun | ✅ | asked as an interest, never "how much food matters"; regions as "X food"; Familiar or new only |
-| Sports | core | for-fun | ✅ | playing or watching in one list (climbing among them); Popular or lesser-known only, from what's big where you live |
+| Sports | core | for-fun | ✅ | playing or watching in one list (climbing among them); Popular or lesser-known only, by how many people follow a sport, not how many around you (a cricket fan who moved to Ohio isn't "lesser-known") |
 | Books and stories | extended | for-fun | ✅ | print, screen, audio or braille all count; all three spectrums |
 | Games (video, board, card, tabletop) | extended | for-fun | ✅ | classic games named worldwide; nothing played for money; all three spectrums |
 | Outdoors | extended | for-fun | ✅ | places and things to do; a balcony counts; feeds nothing |
@@ -320,7 +320,7 @@ pin these down.
 | The natural world or more | worldview | Only the natural world ↔ More than the natural world | God and religion; at half weight, life after death, whose ladder runs the other way so tapping one end everywhere doesn't push the spectrum (free will, right and wrong and personal identity feed nothing: each splits believers and nonbelievers alike) |
 | Big Five (5 axes) | personality | e.g. Reserved ↔ Outgoing | Mini-IPIP |
 | Familiar or new | taste | Familiar ↔ New | music, movies and TV, food (within whatever you eat), books, games; shows from two topics |
-| Popular or lesser-known | taste | Popular ↔ Lesser-known | music, movies and TV, sports (what's big where you live), books, games; shows from two topics |
+| Popular or lesser-known | taste | Popular ↔ Lesser-known | music, movies and TV, sports, books, games; shows from two topics |
 | Calm or intense | taste | Calm ↔ Intense | music, movies and TV, books, games: media only, since in sport or food "intense" would mean physical risk or spice; shows from two topics |
 
 In topics with a stance, only the stance feeds spectrums, never the circumstances or challenges (see
