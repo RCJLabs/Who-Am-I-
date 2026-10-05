@@ -21,7 +21,7 @@
     compareWith,
     endorsementLabel,
     firmestLeans,
-    interestList,
+    interestGroups,
     mapTraditions,
     mapViews,
     patternGroups,
@@ -29,6 +29,7 @@
     positionsByDomain,
     rankedPrinciples,
     toPercent,
+    topPicks,
     traditionTable,
     type PatternArea,
   } from '../view.ts';
@@ -50,6 +51,8 @@
 
   /** Tension cards shown before "Show all". */
   const TENSION_GROUPS_SHOWN = 3;
+  // What you enjoy: the strongest picks per topic, then "+N more".
+  const PICKS_SHOWN = 5;
   /** Up to this many positions, every domain starts open. */
   const POSITIONS_OPEN = 6;
   /** The political map's first pair of spectrums, which explore suggestions help fill in. */
@@ -107,7 +110,10 @@
         })
       : null,
   );
-  const interests = $derived(interestList(profile.interests, answers.state));
+  // What you enjoy, by topic. The Taste page and its read-out describe everything answered; the
+  // overview line uses only what could be shared (below).
+  const interests = $derived(interestGroups(profile.interests, answers.state));
+  let morePicks = $state<string[]>([]);
   const analysis = $derived(
     facts
       ? composeAnalysis({
@@ -159,8 +165,6 @@
   // Positions, grouped by domain.
   const positionGroups = $derived(positionsByDomain(content.bundle, profile.topics));
   const positionCount = $derived(positionGroups.reduce((n, g) => n + g.topics.length, 0));
-  const picks = $derived(interests.filter((e) => e.kind === 'pick'));
-  const ratings = $derived(interests.filter((e) => e.kind === 'rating'));
 
   // The areas with something to show, in overview order.
   const available = $derived.by(() => {
@@ -182,6 +186,7 @@
 
   // --- The overview: only answers that could be shared ---
   const pub = $derived(answers.publicProfile);
+  const publicInterests = $derived(interestGroups(pub.interests, answers.state));
   const pattern = $derived(patternGroups(axes, pub.axes, UNNAMED_TRAITS));
   const spokes = $derived(pattern.reduce((n, g) => n + g.spokes.length, 0));
   const firm = $derived(firmestLeans(axes, pub.axes, UNNAMED_TRAITS));
@@ -216,7 +221,7 @@
       case 'positions':
         return O.line.positions(positionCount, totals.moved);
       case 'taste': {
-        const top = picks.slice(0, 2).map((e) => e.label);
+        const top = topPicks(publicInterests, 2);
         return top.length ? O.line.enjoys(top) : (areaLean(axes, pub.axes, 'taste', UNNAMED_TRAITS) ?? O.line.notYet);
       }
       case 'you':
@@ -444,23 +449,29 @@
 {#snippet tastePage()}
   <ResultSection id="taste" title={S.taste} readout={analysis!.readouts.taste}>
     <div class="card rows">
-      {#each tasteScored as a (a.id)}{@render spectrum(a, false)}{/each}
-      {#if picks.length || ratings.length}
+      {#each tasteScored as a (a.id)}{@render spectrum(a, true)}{/each}
+      {#if interests.length}
         <h3 class="enjoy-title">{copy.results.interests}</h3>
-        {#each ratings as e (e.key)}
-          <p class="rating" data-testid="interest-{e.key}">
-            <span class="small muted">{e.label}</span>
-            <span class="rating-answer">{e.answer}</span>
-            <span class="meter" aria-hidden="true"><span style:width="{e.v * 100}%"></span></span>
-          </p>
-        {/each}
-        {#if picks.length}
-          <div class="chips">
-            {#each picks as e (e.key)}
-              <span class="chip enjoy" style:--strength={e.v} data-testid="interest-{e.key}">{e.label}</span>
-            {/each}
+        {#each interests as g (g.topic)}
+          {@const open = morePicks.includes(g.topic)}
+          <div class="enjoy-group" data-testid="interest-group-{g.topic}">
+            <p class="enjoy-head">
+              <a href={to.topicResults(g.topic)}>{g.title}</a>{#if g.matters}<span class="muted">{` · ${g.matters}`}</span>{/if}
+            </p>
+            {#if g.picks.length}
+              <div class="chips">
+                {#each open ? g.picks : g.picks.slice(0, PICKS_SHOWN) as e (e.key)}
+                  <span class="chip enjoy" style:--strength={e.v} data-testid="interest-{e.key}">{e.label}</span>
+                {/each}
+                {#if !open && g.picks.length > PICKS_SHOWN}
+                  <button class="chip more" data-testid="interest-more-{g.topic}" onclick={() => (morePicks = [...morePicks, g.topic])}>
+                    {copy.results.morePicks(g.picks.length - PICKS_SHOWN)}
+                  </button>
+                {/if}
+              </div>
+            {/if}
           </div>
-        {/if}
+        {/each}
       {/if}
     </div>
   </ResultSection>
@@ -863,27 +874,12 @@
   .enjoy-title {
     margin-top: 16px;
   }
-  .rating {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin: 0 0 12px;
-  }
-  .rating-answer {
+  .enjoy-head {
+    margin: 0 0 8px;
     font-weight: 600;
   }
-  .meter {
-    display: block;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--track);
-    overflow: hidden;
-  }
-  .meter span {
-    display: block;
-    height: 100%;
-    border-radius: 999px;
-    background: var(--chart-mark);
+  .enjoy-head .muted {
+    font-weight: 400;
   }
   .chips {
     display: flex;
@@ -895,5 +891,12 @@
     font-size: 0.85rem;
     color: var(--text);
     background: color-mix(in srgb, var(--accent-soft) calc(var(--strength) * 100%), transparent);
+  }
+  .more {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: none;
+    cursor: pointer;
   }
 </style>

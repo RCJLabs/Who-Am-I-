@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { composeAnalysis, type NextItem } from '../../src/app/analysis/compose.ts';
-import { interestList } from '../../src/app/view.ts';
+import { interestGroups } from '../../src/app/view.ts';
 import { findTerms, parseTerms, termMatchers } from '../../src/compiler/loaded-terms.ts';
 import { LIMIT, SUGGEST } from '../../src/engine/analysis/constants.ts';
 import { analyse } from '../../src/engine/analysis/index.ts';
@@ -58,7 +58,7 @@ function composeLinks(s: AnswerState, show = true): NextItem[] | undefined {
   const profile = buildProfile(s, { ...o, includeSensitive: true });
   const publicProfile = publicOf(s);
   const facts = analyse({ state: s, profile, publicProfile, tensions: [], pack });
-  const a = composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions: [], interests: interestList(profile.interests, s), pack, links: show });
+  const a = composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions: [], interests: interestGroups(profile.interests, s), pack, links: show });
   return a.next.find((g) => g.id === 'links')?.items;
 }
 

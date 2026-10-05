@@ -1,0 +1,24 @@
+id: snacks
+domain: interests
+title: Snacks
+summary: Interest topic.
+tier: core
+evidence: for-fun
+items:
+  - id: matters
+    type: rating
+    tags: [interest]
+    text: How much do snacks matter to you?
+    poles: [Not much, A lot]
+    labels: [Not much, A little, Some, Quite a lot, A lot]
+  - id: kinds
+    type: multi
+    intensity: true
+    tags: [interest]
+    text: Which do you enjoy?
+    options:
+      - { id: chips, label: Chips }
+      - { id: nuts, label: "Nuts (any kind)" }
+      - { id: fruit, label: Fruit }
+      # The same label as a Tunes pick, for the summary line's no-repeats rule.
+      - { id: rock, label: Rock }

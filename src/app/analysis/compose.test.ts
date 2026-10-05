@@ -5,8 +5,8 @@ import { buildProfile } from '../../engine/profile.ts';
 import { buildAnswerState } from '../../engine/state.ts';
 import { detectTensions } from '../../engine/tensions.ts';
 import type { ReadingRec, TraditionFacts } from '../../engine/analysis/types.ts';
-import { fixtureBundle, fixturePack, Log, scale } from '../../../tests/helpers.ts';
-import { interestList } from '../view.ts';
+import { fixtureBundle, fixturePack, Log, multi, scale } from '../../../tests/helpers.ts';
+import { interestGroups } from '../view.ts';
 import { composeAnalysis, tensionGroups, type Analysis } from './compose.ts';
 
 const b = fixtureBundle();
@@ -18,7 +18,7 @@ function compose(log: Log): Analysis {
   const publicProfile = buildProfile(s, { ...o, includeSensitive: false });
   const tensions = detectTensions(s, observe(s, { includeSensitive: true }), []);
   const facts = analyse({ state: s, profile, publicProfile, tensions, mapAxes: ['social', 'civil'] });
-  return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: interestList(profile.interests, s) });
+  return composeAnalysis({ bundle: b, state: s, facts, profile, publicProfile, tensions, interests: interestGroups(profile.interests, s) });
 }
 
 /** Every string in an analysis. */
@@ -77,6 +77,18 @@ describe('analysis summary', () => {
     expect(a.readouts.politics!.sentences[1]).toBe('On “Social” your answers pull both ways: “Alpha” toward “Tradition”, and “Gamma” toward “Progress”.');
     expect(JSON.stringify(a.summary)).not.toContain('Gamma');
     expect(JSON.stringify(a.next)).not.toContain('gamma');
+  });
+});
+
+describe('taste read-out', () => {
+  it('names a favorite from each topic in turn, the topic that matters most first', () => {
+    const log = new Log();
+    log.add('tunes.love', scale(2));
+    log.add('tunes.genres', multi({ jazz: 5, pop: 3 }));
+    log.add('snacks.matters', scale(5));
+    log.add('snacks.kinds', multi({ nuts: 4 }));
+    // Jazz is the strongest single pick, but Snacks matters more; Nuts loses its examples.
+    expect(compose(log).readouts.taste?.sentences).toEqual(['Your top picks: Nuts, Jazz and Pop.']);
   });
 });
 
