@@ -26,8 +26,9 @@ The profile is the app's public output: what results screens render, and what th
   was a bug, fixed without a version change because it only removes data that was never meant to
   be there.
 - `scope.sensitiveIncluded` records which view this is.
-- Identity answers appear only in `identity`, only when `includeSensitive` is true, and never
-  affect scores.
+- Identity (About you) answers appear only in `identity`, keyed by `topic.item`
+  (`"about_gender.gender": "A woman"`; a multi-select gives a list), only when `includeSensitive` is
+  true, and never affect scores.
 
 ## Fields
 

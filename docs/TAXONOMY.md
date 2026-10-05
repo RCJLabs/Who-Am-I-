@@ -151,7 +151,7 @@ which institution moves with who holds power, so no stance names a single agency
 | Birth rates (policy only; immigration instead of births and paying for IVF as circumstances) | extended | custom | ✅ | Quebec's newborn allowance, workers per retiree in Japan, Ehrlich's predicted famines; South Korea's spending, Hungary's rise and fall, the UN Population Fund's 2025 survey |
 
 The design review cut four planned topics: faithfulness (same-sex marriage's item on more than
-two partners covers the law, and relationship style belongs in Identity), roles at home (gender
+two partners covers the law, and relationship style belongs in About you), roles at home (gender
 roles covers the policy), jealousy, and a child-rearing questionnaire, whose items mean different
 things by race, class and religion; a list of qualities to teach children, after the World Values
 Survey, is unscored in physical punishment instead. Friendship became family and the law, since
@@ -170,7 +170,7 @@ right.
 
 The design review replaced most of the planned list. Food and diet, city or country, and travel
 are habits, not positions, and scoring them would grade people: food and travel belong in
-Interests, city or country in Identity, and morning or night in Personality's chronotype. Drinking
+Interests, city or country in About you, and morning or night in Personality's chronotype. Drinking
 was cut: a stance on how much is safe would press on people in recovery and on religious
 abstainers, and the law on alcohol is in drug policy. Money habits became saving or spending (risk
 tolerance is a planned Personality topic), health and fitness became how much of health comes down
@@ -191,14 +191,26 @@ own work is to you, is sensitive and includes "I'm not in paid work right now".
 | Outdoors | extended | for-fun | ◻️ |
 | Pets | extended | for-fun | ◻️ |
 
-### Identity (optional, sensitive, never scored)
+### About you (the `identity` domain: optional, sensitive, never scored)
 | Topic | Status | Notes |
 |---|---|---|
-| Gender identity | ◻️ | self-described; free text allowed |
-| Sexual orientation | ◻️ | label, plus optional attraction sliders (men / women / nonbinary people; asexual option). Not a single Kinsey line |
-| Romantic orientation | ◻️ | |
-| Relationship status and style | ◻️ | |
-| Background (age range, region, upbringing religion) | ◻️ | context for comparisons only |
+| Family (`about_family`) | ✅ | status (choose any; engaged or promised; civil partnership; "Widowed, or my partner has died"), how a couple came together (including arranged), the kind of relationship that's right for you (including more than one spouse, agreed non-monogamy, a single life by choice or vow), children and grandchildren (any you think of as yours; a child who has died), roles at home |
+| Roots (`about_roots`) | ✅ | birth decade, where you grew up and live (city to countryside), moving countries, languages, what matters most to who you are (up to three) |
+| Religious background (`about_faith`) | ✅ | the religion you belong to and the one you were raised in (same list, traditional and Indigenous religions named), branch for Christians, Muslims and Jews, how big a part religion was at home |
+| Gender (`about_gender`) | ✅ | a man, a woman, non-binary or another way; "Are you transgender?" |
+| Sexual orientation (`about_orientation`) | ✅ | words (choose any); attraction only where the words leave room or on request, gate first; romantic follow-ups in "fall in love" words; no ratings |
+
+**How it was designed.** A brief went to three reviewers, all AI agents rather than people: inclusive
+measurement (survey methods for gender and sexuality), traditional, religious and Global South
+respondents, and privacy and safety. The product owner then chose a broad self-portrait, no free
+text in v1 and no intersex item in v1, and to launch on the shared github.io address. The final
+wording went back to all three, plus a check of the religious branch lists. Because the reviewers
+are agents, the Jewish, Christian and Muslim lists in particular still want a reader from each
+tradition before they're treated as settled.
+
+**Left out on purpose:** income, region, ethnicity or minority status, health and disability,
+drinking, pronouns, being out, sex at birth as a question, sexual behaviour, transition details,
+citizenship, and anything framed as "context for comparisons" (the app doesn't compare).
 
 **Left out of the core on purpose:** named wars, politicians, parties and elections. They date
 quickly and make the app read as partisan. A rotating "current events" pack can come later.

@@ -74,7 +74,7 @@ export const ProfileSchema = z.object({
   identity: z
     .record(z.string(), z.union([z.string(), z.array(z.string())]))
     .optional()
-    .describe('Self-reported, opt-in; present only when sensitive answers are included'),
+    .describe('About you answers as given, keyed "topic.item"; self-reported, opt-in, present only when sensitive answers are included'),
   tensions: z.array(TensionSummarySchema),
   evidence: z.record(z.string(), z.enum(EVIDENCE)),
   completeness: z.object({

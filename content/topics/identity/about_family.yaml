@@ -19,7 +19,7 @@ items:
   - id: status
     type: multi
     none: false
-    text: Which describe you now? Choose any that fit.
+    text: Which of these describe you now? Choose any that fit.
     options:
       - { id: never_married, label: "Single, never married" }
       - { id: seeing, label: "In a relationship, or seeing someone" }
@@ -33,7 +33,7 @@ items:
 
   - id: how_met
     type: choice
-    when: status has married or status has engaged or status has civil or status has living_together
+    when: status has married or status has engaged or status has civil or status has living_together or status has widowed
     text: How did you and your spouse or partner come together?
     options:
       - { id: ourselves, label: We met and chose each other ourselves }
@@ -50,7 +50,7 @@ items:
       - { id: one_at_a_time, label: One spouse or partner at a time }
       - { id: several_spouses, label: Marriage with more than one spouse }
       - { id: agreed_open, label: "More than one partner, with everyone's agreement" }
-      - { id: chosen_single, label: "A single life by choice, for example under a religious vow" }
+      - { id: chosen_single, label: "A single life by choice, or under a religious vow" }
       - { id: not_looking, label: "I'm not looking for a relationship" }
       - { id: not_sure, label: Not sure }
 

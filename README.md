@@ -16,6 +16,11 @@ interest in, on average (collapsed until opened, and Settings can turn them off)
 your pattern, or one area, into an image to share or save, drawn on the device from answers that
 could be shared. It's all worked out on the device by fixed rules, with no AI service.
 
+An optional About you section lets people describe their family, roots, religious background,
+gender and sexual orientation. Those answers are never scored or used anywhere else: they stay
+folded away on the topic list, show only behind a tap on their own results page, replace each
+other when changed, and are left out of backups unless ticked (docs/PRIVACY.md).
+
 All answers stay on your device: no server, no account, no analytics.
 
 ## Development

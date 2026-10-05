@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # Gender: how you describe yourself. Never scored, never turned into a label, and never in the
 # summary. The stem asks how people describe themselves in everyday words, without "gender
-# identity" or a theory of it. Non-binary and third gender are both named. The trans item asks
+# identity" or a theory of it. Non-binary is an option and third gender is named in the help, so
+# the answer shown back is the person's own ("In another way"), not an example. The trans item asks
 # directly ("Are you transgender?") rather than comparing gender with sex at birth: that comparison
 # was misread by people with less English in the 2021 England and Wales census, and a misread "No"
 # would store a false trans record. "Not sure" is last on both. No intersex item in v1.
@@ -17,11 +18,12 @@ items:
   - id: gender
     type: choice
     text: Do you describe yourself as a man, a woman, or in another way?
+    help: Another way includes third gender, and words from your own language or culture.
     options:
       - { id: man, label: A man }
       - { id: woman, label: A woman }
       - { id: non_binary, label: Non-binary }
-      - { id: another, label: "In another way, such as third gender" }
+      - { id: another, label: In another way }
       - { id: not_sure, label: Not sure }
 
   - id: trans

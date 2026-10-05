@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../schema/topic.schema.json
 # Roots: when and where you grew up, where you live now, and what you belong to. Never scored.
 # Birth decade rather than an age band, since answers stay on the device for years and a decade
-# never goes out of date. The places use plain words that travel: "suburbs or outskirts" covers
+# never goes out of date. The app is for adults, so the list ends at the 2000s; add the 2010s in
+# 2028. The places use plain words that travel: "suburbs or outskirts" covers
 # both a wealthy suburb and a poor city edge. Nothing asks citizenship, legal status, region,
 # ethnicity or minority status. Belonging is capped at three picks rather than rated.
 id: about_roots
@@ -24,7 +25,6 @@ items:
       - { id: d1980s, label: The 1980s }
       - { id: d1990s, label: The 1990s }
       - { id: d2000s, label: The 2000s }
-      - { id: d2010s, label: The 2010s }
 
   - id: grew_up
     type: choice

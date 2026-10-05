@@ -32,9 +32,12 @@ The analysis reads two profiles (see [PROFILE_FORMAT.md](PROFILE_FORMAT.md#sensi
 | Political traditions and their readings | public profile, and answers to questions that aren't sensitive |
 | Links from research | public profile only: the four personality spectrums other than neuroticism, and the answers to their own items (for the reversal check) |
 | Share cards | public profile only, like the overview: never worldview, taste or neuroticism. The topic count on a card counts shareable topics only, and the political tradition comes from the same comparison as above. |
+| About you | nothing: its answers carry no effects, so no score, read-out, suggestion or card can use them. They appear only in the private profile's `identity`, shown as given on the About you page, whose overview line says only that it's private. Topic and tile counts include About you topics answered, like other sensitive topics. |
 
 Worldview answers can never move the summary or a recommendation. The simulation test checks this
-for every persona and 200 random respondents; the e2e test checks it in the browser.
+for every persona and 200 random respondents; the e2e test checks it in the browser. About you
+answers are kept out the same way, checked in `tests/identity.test.ts` (never in the public
+profile) and `tests/e2e/identity.spec.ts` (never on the overview or a card).
 
 ## Bands and confidence
 

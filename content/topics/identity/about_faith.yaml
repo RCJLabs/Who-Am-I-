@@ -51,13 +51,17 @@ items:
   - id: muslim
     type: choice
     when: religion is muslim
-    text: Which branch of Islam?
+    text: Which branch of Islam, if any?
     options:
       - { id: shia, label: Shia }
       - { id: sunni, label: Sunni }
       - { id: other_branch, label: Another branch }
       - { id: just_muslim, label: Just a Muslim }
 
+  # Merges the US movements with the four ways Israeli Jews describe themselves (Haredi, Dati,
+  # Masorti, Hiloni). "Masorti" is both Israel's word for traditional Jews and, outside North
+  # America, the Conservative movement's name, so each gets its own option. Reviewed by AI agents
+  # only: wants a Jewish reader before it's treated as settled.
   - id: jewish
     type: choice
     when: religion is jewish
@@ -66,7 +70,7 @@ items:
       - { id: haredi, label: Haredi }
       - { id: orthodox, label: Orthodox }
       - { id: traditional, label: "Traditional, though not Orthodox" }
-      - { id: conservative, label: Conservative or Masorti }
+      - { id: conservative, label: "Conservative, or the Masorti movement" }
       - { id: reform, label: "Reform, Liberal or Progressive" }
       - { id: secular, label: Secular or cultural }
       - { id: just_jewish, label: Just Jewish }

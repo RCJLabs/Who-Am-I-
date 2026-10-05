@@ -54,20 +54,14 @@ describe('About you', () => {
 
   it('asks about attraction only when the words leave room, or when asked to', () => {
     const orientation = (script: Record<string, Response>) => walk('about_orientation', script);
-    // One word, and nothing more: two questions.
-    expect(orientation({ words: picks('straight'), more: pick('no') })).toEqual(['words', 'more']);
-    expect(orientation({ words: picks('lesbian'), more: pick('no') })).toEqual(['words', 'more']);
+    // Words that say who, or no word at all, and nothing more: two questions.
+    for (const word of ['straight', 'gay', 'lesbian', 'bisexual', 'pansexual', 'no_word']) {
+      expect(orientation({ words: picks(word), more: pick('no') }), word).toEqual(['words', 'more']);
+    }
     // Opting in.
     expect(
-      orientation({ words: picks('gay'), more: pick('yes'), attraction: pick('yes'), attracted_to: picks('men'), romantic_same: pick('same') }),
+      orientation({ words: picks('bisexual'), more: pick('yes'), attraction: pick('yes'), attracted_to: picks('men', 'women'), romantic_same: pick('same') }),
     ).toEqual(['words', 'more', 'attraction', 'attracted_to', 'romantic_same']);
-    // Words that leave room go straight to the gate.
-    expect(orientation({ words: picks('bisexual'), attraction: pick('yes'), attracted_to: picks('men', 'women'), romantic_same: pick('same') })).toEqual([
-      'words',
-      'attraction',
-      'attracted_to',
-      'romantic_same',
-    ]);
     // Asexual: no attraction is one tap, then whether they fall in love, and with whom.
     expect(orientation({ words: picks('asexual'), attraction: pick('no'), romantic: pick('yes'), romantic_to: picks('women') })).toEqual([
       'words',
@@ -79,6 +73,10 @@ describe('About you', () => {
     expect(
       orientation({ words: picks('asexual', 'lesbian'), attraction: pick('rarely'), attracted_to: picks('women'), romantic: pick('rarely'), romantic_to: picks('women') }),
     ).toEqual(['words', 'attraction', 'attracted_to', 'romantic', 'romantic_to']);
+    // Asexual, attracted only after a close bond: asked once whether they fall in love, not twice.
+    expect(
+      orientation({ words: picks('asexual'), attraction: pick('bond'), attracted_to: picks('men'), romantic: pick('yes'), romantic_to: picks('men') }),
+    ).toEqual(['words', 'attraction', 'attracted_to', 'romantic', 'romantic_to']);
     // Sexual attraction, but rarely falling in love.
     expect(orientation({ words: picks('queer'), attraction: pick('yes'), attracted_to: picks('non_binary'), romantic_same: pick('rarely') })).toEqual([
       'words',
@@ -86,10 +84,17 @@ describe('About you', () => {
       'attracted_to',
       'romantic_same',
     ]);
-    // Falling in love with different people.
+    // No word, opting in, and falling in love with different kinds of people.
     expect(
-      orientation({ words: picks('no_word'), attraction: pick('bond'), attracted_to: picks('women'), romantic_same: pick('different'), romantic_to: picks('men') }),
-    ).toEqual(['words', 'attraction', 'attracted_to', 'romantic_same', 'romantic_to']);
+      orientation({
+        words: picks('no_word'),
+        more: pick('yes'),
+        attraction: pick('bond'),
+        attracted_to: picks('women'),
+        romantic_same: pick('different'),
+        romantic_to: picks('men'),
+      }),
+    ).toEqual(['words', 'more', 'attraction', 'attracted_to', 'romantic_same', 'romantic_to']);
     // "Prefer not to say" ends the topic.
     expect(orientation({ words: declined })).toEqual(['words']);
   });
@@ -107,12 +112,13 @@ describe('About you', () => {
     expect(options('raised')).toMatchObject({ options: (options('religion') as { options: unknown }).options });
   });
 
-  it('asks how a couple came together only of people who have a spouse or partner', () => {
+  it('asks how a couple came together only of people who have, or had, a spouse or partner', () => {
     const family = (status: Response) =>
       walk('about_family', { status, how_met: pick('ourselves'), style: pick('one_for_life'), children: picks(), roles: picks('home') });
     expect(family(picks('married'))).toEqual(['status', 'how_met', 'style', 'children', 'roles']);
+    expect(family(picks('widowed'))).toEqual(['status', 'how_met', 'style', 'children', 'roles']);
     expect(family(picks('separated', 'seeing'))).toEqual(['status', 'style', 'children', 'roles']);
-    expect(family(picks('widowed'))).toEqual(['status', 'style', 'children', 'roles']);
+    expect(family(picks('never_married'))).toEqual(['status', 'style', 'children', 'roles']);
   });
 
   it('stays in the private profile, keyed by question, and never reaches the public one', () => {

@@ -62,7 +62,7 @@ tests and CI (`--max-warnings 0`), so fix them too.
 | `importance` | "how much does this matter to you" | 4 points; gates deep items |
 | `choice` | one of several options | `shuffle: true` for unordered options |
 | `pair` | this-or-that trade-offs (values) | optional slightly/strongly |
-| `multi` | pick several (genres, sports) | `intensity: true` rates each pick 1–5; tag `interest` to appear in interests |
+| `multi` | pick several (genres, sports) | `intensity: true` rates each pick 1–5; tag `interest` to appear in interests; `none:` names the no-picks button ("No children or grandchildren"), or `none: false` drops it when every person fits an option |
 | `challenge` | a thought experiment aimed at an answer | see below |
 | `reask` | "where do you land now?" | due automatically after a challenge to its target |
 
@@ -382,6 +382,29 @@ Domains `worldview` and `identity` are sensitive, and so are two topics in `epis
 excluded from shared output by default. Identity items **describe and never score**: no effects
 (E012). Never infer identity from other answers.
 
+### About you (the `identity` domain)
+
+People describe themselves here: family, roots, religious background, gender and sexual
+orientation. The app shows each answer back exactly as given and does nothing else with it.
+
+- **Topic ids start with `about_`,** and nothing else's does (E012). The app finds these answers by
+  that prefix to replace, remove, and keep them out of backups.
+- **Choice and multi questions only:** no effects, anchors or challenges, no 1–5 ratings
+  (`intensity`), and no "No opinion" button (E012). Where "not sure" is a real answer, write it as
+  the last option.
+- **No condition crosses into or out of About you** (E012): nothing elsewhere may show or hide
+  because of an answer here, or the reverse.
+- **Everyone first, most sensitive last.** Family, roots and faith apply to nearly everyone; gender
+  and orientation come last. Follow-ups show only where they apply, and declining a question
+  hides its follow-ups.
+- **Self-identification.** List groups under their own names ("Latter-day Saint", "Haredi"), with
+  a short "such as" where a catch-all would read as an afterthought. Never derive a label
+  ("cisgender", "LGBTQ+"); the loaded terms list catches the common ones. No box for free text.
+- **Never rename or remove an option id.** A changed answer replaces the old one, so there is no
+  history to fall back on: an answer whose option disappears is orphaned and asked again, and its
+  follow-ups' answers are deleted the next time the person answers here. Add a new id instead.
+- **Each topic's `instructions`** repeat, in one line, that nothing here is scored or shared.
+
 In worldview, the sides are believers and nonbelievers, not left and right:
 
 - **Same words on both sides.** A belief ladder runs from "Convinced there is none" to "Convinced
@@ -434,7 +457,7 @@ aging parents is sensitive: estrangement and abuse.
   abandonment.
 - **Policy, not people's own lives.** Nothing asks about the user's marriage, discipline or plans
   for children, and birth rates asks only what governments should do; nothing implies anyone ought
-  to have children. Who the user is belongs to Identity.
+  to have children. Who the user is belongs to About you (the `identity` domain).
 - **Each side in its holders' words.** A ban on smacking is equal protection met mostly with
   support, not prosecuting parents; divorce at either spouse's word is courts not judging reasons,
   not whim; owing parents nothing special still owes what the relationship calls for. Hold options
@@ -561,7 +584,7 @@ politics, and every citation two fact-check rounds; outcomes go in TAXONOMY.md.
 | E009 | challenge contract (hold/distinguish + yield-with-revise; valid targets) |
 | E010 | stance / importance / deep placement |
 | E011 | choice with item-level effects needs option values |
-| E012 | sensitivity rules (no opt-out; identity items don't score) |
+| E012 | sensitivity and About you rules (no opt-out; About you topics start `about_` and nothing else does; their items are choice or multi, with no effects, ratings or "No opinion"; no condition crosses its boundary) |
 | E013 | anchor not keyed toward its principle |
 | E014 | tradition balance: with the positions the answer sheets give, two traditions toward each pole of every political spectrum (0.2 or beyond, not divided); left and right within one; neighbours listed both ways; inside readings voiced from inside, critiques from outside, the first from the other side |
 | E015 | answer sheet: one per tradition; every shareable political question answered or listed as divided; only scale questions that place a tradition, never sensitive ones; steps on the scale; nothing both answered and divided; every spectrum and compared principle placed |

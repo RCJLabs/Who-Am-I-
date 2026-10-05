@@ -126,12 +126,13 @@ test('questions about you stay folded away, leave no readable trail, and show on
   expect(new URL(page.url()).hash).toMatch(/^#\/m\/~[0-9a-z]+$/);
   await page.getByTestId('intro-start').click();
 
-  // "Choose any" words, with no "None of these"; then attraction, as the words leave room.
+  // "Choose any" words, with no "None of these"; then attraction, if the person wants to say more.
   await expect(page.getByTestId('none-words')).toHaveCount(0);
   await expect(page.getByTestId('unsure-words')).toHaveCount(0);
   await expect(page.getByTestId('declined-words')).toBeVisible();
   await page.getByTestId('opt-words-bisexual').click();
   await page.getByTestId('next-words').click();
+  await page.getByTestId('opt-more-yes').click();
   await page.getByTestId('opt-attraction-yes').click();
   await page.getByTestId('opt-attracted_to-men').click();
   await page.getByTestId('opt-attracted_to-women').click();
@@ -139,7 +140,8 @@ test('questions about you stay folded away, leave no readable trail, and show on
   await page.getByTestId('opt-romantic_same-same').click();
   await expect(page.getByTestId('topic-done')).toBeVisible();
   await expect(page.getByTestId('backup-nudge')).toHaveCount(0);
-  expect(await storedAboutYou(page)).toEqual(['about_orientation.attracted_to', 'about_orientation.attraction', 'about_orientation.romantic_same', 'about_orientation.words'].sort());
+  const orientation = (...keys: string[]) => keys.map((k) => `about_orientation.${k}`).sort();
+  expect(await storedAboutYou(page)).toEqual(orientation('words', 'more', 'attraction', 'attracted_to', 'romantic_same'));
 
   // Reviewing goes to the About you page, in place of the questions.
   await page.getByTestId('review-answers').click();
@@ -159,17 +161,15 @@ test('questions about you stay folded away, leave no readable trail, and show on
 
   // A changed answer replaces the old one, and the answers it hides are deleted.
   await page.getByTestId('identity-show').click();
-  await page.getByTestId('identity-answer-about_orientation.words').getByRole('link').click();
-  expect(new URL(page.url()).hash).not.toMatch(/about|orientation|words/);
-  await page.getByTestId('opt-words-bisexual').click();
-  await page.getByTestId('opt-words-straight').click();
-  await page.getByTestId('next-words').click();
+  await page.getByTestId('identity-answer-about_orientation.more').getByRole('link').click();
+  expect(new URL(page.url()).hash).not.toMatch(/about|orientation|more/);
+  await page.getByTestId('opt-more-no').click();
   await expect(page.getByTestId('section-you')).toBeVisible();
   // Saved, not just shown: a failed write raises the storage warning.
   await expect(page.getByRole('alert')).toHaveCount(0);
-  expect(await storedAboutYou(page)).toEqual(['about_orientation.words']);
+  expect(await storedAboutYou(page)).toEqual(orientation('words', 'more'));
   await page.getByTestId('identity-show').click();
-  await expect(page.getByTestId('identity-answers')).toContainText('Straight (heterosexual)');
+  await expect(page.getByTestId('identity-answers')).toContainText("No, that's enough");
   await expect(page.getByTestId('identity-answers')).not.toContainText('Men, Women');
 
   // Leaving a topic about you leaves no way back into it.
