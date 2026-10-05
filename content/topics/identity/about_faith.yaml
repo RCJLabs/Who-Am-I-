@@ -7,7 +7,9 @@
 # serves now and growing up, so a change shows as two plain answers; nothing here ever says
 # "converted", "left" or "lapsed". Branch items only for the three faiths whose members commonly
 # use a branch name; "Another branch" lets anyone use their own identification without the app
-# naming groups whose status is disputed.
+# naming groups whose status is disputed. The Christian, Muslim and Jewish lists were checked
+# against Pew and JPR by AI agents only: each wants a reader from that tradition before it's
+# treated as settled.
 id: about_faith
 domain: identity
 title: Religious background
@@ -39,6 +41,7 @@ items:
     when: religion is christian
     text: Which Christian tradition are you part of? Choose any that fit.
     options:
+      - { id: african_independent, label: "African independent church, such as Aladura or Kimbanguist" }
       - { id: anglican, label: Anglican or Episcopalian }
       - { id: catholic, label: Catholic }
       - { id: evangelical, label: "Evangelical, Pentecostal or charismatic" }
@@ -46,7 +49,6 @@ items:
       - { id: latter_day_saint, label: Latter-day Saint }
       - { id: orthodox, label: "Orthodox, such as Greek, Russian, Coptic or Ethiopian" }
       - { id: protestant, label: "Protestant, such as Adventist, Baptist, Lutheran, Methodist or Presbyterian" }
-      - { id: african_independent, label: "African independent church, such as Aladura or Kimbanguist" }
       - { id: other_church, label: Another church }
       - { id: just_christian, label: "Just Christian, no particular church" }
 
@@ -65,8 +67,7 @@ items:
   # not "your Judaism": many Jews are secular. "Traditional" stands alone, since most Israeli
   # masortim call their stream Orthodox; "Masorti" is also the Conservative movement's name outside
   # North America, so it gets its own option. Modern Orthodox and Religious Zionist Jews choose
-  # Orthodox; Hasidic Jews, Haredi or Orthodox. Reviewed by AI agents only: wants a Jewish reader
-  # before it's treated as settled.
+  # Orthodox; Hasidic Jews, Haredi or Orthodox.
   - id: jewish
     type: choice
     when: religion is jewish

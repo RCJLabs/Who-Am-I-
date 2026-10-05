@@ -40,7 +40,7 @@ items:
       (words has straight or words has gay or words has lesbian or words has bisexual or
       words has pansexual or words has no_word) and not (words has asexual or words has queer or
       words has another or words has not_sure)
-    text: Would you like to say more about who you're attracted to?
+    text: Would you like to say more about who, if anyone, you're attracted to?
     options:
       - { id: "yes", label: "Yes" }
       - { id: "no", label: "No, that's enough" }
